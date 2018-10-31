@@ -1,5 +1,5 @@
 # Overview
-- Backend for: [https://eahub.azurewebsites.net](https://eahub.azurewebsites.net/)
+- Backend for: [http://40.91.201.107](http://40.91.201.107/)
 - Deployment works using [Docker + Azure](https://medium.com/@alexjsanchez/creating-and-deploying-a-flask-app-with-docker-on-azure-in-5-easy-9f7aa7a12145) instructions
 
 # Commands
