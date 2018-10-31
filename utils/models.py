@@ -10,9 +10,14 @@ Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'users'
-    uid = Column(Integer, primary_key=True)
+    id = Column('uid', Integer, primary_key=True)
     name = Column(Unicode)
     mail = Column(Unicode)
+
+class Group(Base):
+    __tablename__ = 'migrate_map_ea_group_migration'
+    id = Column('destid1', Integer, primary_key=True)
+    name = Column('sourceid1', Unicode)
 
 engine = create_engine(
     settings.DATABASE_CONNECTION_URL,
