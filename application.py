@@ -23,7 +23,7 @@ def api_users():
         {
             'id': x.id,
             'name': x.name,
-            #'email': x.mail hidden for security
+            'email': '- dedacted for now -'
         }
         for x in results
     ]
