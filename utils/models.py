@@ -20,10 +20,7 @@ class Group(Base):
     name = Column('sourceid1', Unicode)
 
 engine = create_engine(
-    settings.DATABASE_CONNECTION_URL,
-    pool_recycle=3600,
-    pool_size=20,
-    max_overflow=100
+    settings.DATABASE_CONNECTION_URL
 )
 
 Base.metadata.bind = engine
