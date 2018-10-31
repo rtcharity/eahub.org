@@ -4,8 +4,6 @@ from sqlalchemy import create_engine
 from sqlalchemy import Column, Integer, Text, Unicode
 from sqlalchemy.ext.declarative import declarative_base
 
-from utils import settings
-
 Base = declarative_base()
 
 class User(Base):
@@ -20,7 +18,7 @@ class Group(Base):
     name = Column('sourceid1', Unicode)
 
 engine = create_engine(
-    settings.DATABASE_CONNECTION_URL
+    os.environ['DATABASE_CONNECTION_URL']
 )
 
 Base.metadata.bind = engine

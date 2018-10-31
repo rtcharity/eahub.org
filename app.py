@@ -1,14 +1,18 @@
 from flask import Flask, jsonify
 from sqlalchemy.orm import sessionmaker
 
-from utils import settings
+from config import settings
 from utils.models import *
 
 app = Flask(__name__)
 
+def _jsonify(blob):
+    return jsonify(blob)
+    return jsonify(blob.encode('utf-8').strip())
+
 @app.route("/")
 def index():
-    return 'Endpoints: <ul>{}</ul>'.format(''.join([
+    return 'Basic api endpoints we have working: <ul>{}</ul>'.format(''.join([
             '<li><a href="api/{0}">First 100 {0}</a></li>'.format(endpoint)
             for endpoint in ['users', 'groups']
         ]))
@@ -23,12 +27,12 @@ def api_users():
         {
             'id': x.id,
             'name': x.name,
-            'email': '- dedacted for now -'
+            'email': 'redacted_for_now'
         }
         for x in results
     ]
     session.close()
-    return jsonify(results)
+    return _jsonify(results)
 
 @app.route("/api/groups")
 def api_groups():
@@ -44,4 +48,7 @@ def api_groups():
         for x in results
     ]
     session.close()
-    return jsonify(results)
+    return _jsonify(results)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=80, debug=True)
