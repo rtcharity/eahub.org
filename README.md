@@ -2,10 +2,9 @@
 [https://eahub.azurewebsites.net](https://eahub.azurewebsites.net/)
 
 # Deploying
+Taken from Taken from the [azure docs](https://docs.microsoft.com/en-us/azure/app-service/containers/quickstart-python)
 
 ## Setup
-Taken from the [azure docs](https://docs.microsoft.com/en-us/azure/app-service/containers/quickstart-python):
-- Install the [azure cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
 ```
 $ az login
 
