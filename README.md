@@ -1,9 +1,20 @@
-# Python Flask app on Azure Web App for Containers
+# Overview
+[https://eahub.azurewebsites.net](https://eahub.azurewebsites.net/)
 
-This is a minimal sample app that demonstrates how to run a Python Flask application on Azure App Service on Linux.
+# Deploying
 
-For more information, please see the [Python on App Service quickstart](https://docs.microsoft.com/en-us/azure/app-service/containers/quickstart-python).
+## Setup
+Taken from the [azure docs](https://docs.microsoft.com/en-us/azure/app-service/containers/quickstart-python):
+- Install the [azure cli](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest)
+```
+$ az login
 
-# Contributing
+$ az webapp deployment user set --user-name cli_eahub --password cli_password_1
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+$ git remote add azure http://eahub@eahub.scm.azurewebsites.net/eahub.git
+```
+
+## Deploying
+```
+git push azure master
+```
