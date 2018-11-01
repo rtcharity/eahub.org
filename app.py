@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, send_from_directory
 from sqlalchemy.orm import sessionmaker
 
 from config import settings
@@ -12,10 +12,14 @@ def _jsonify(blob):
 
 @app.route("/")
 def index():
-    return 'Basic api endpoints we have working: <ul>{}</ul>'.format(''.join([
+    return 'Basic api endpoints we have working: <ul>{}</ul>{}'.format(''.join([
             '<li><a href="api/{0}">First 100 {0}</a></li>'.format(endpoint)
             for endpoint in ['users', 'groups']
-        ]))
+        ]), '<a href="./frontend/index.html">Or try our fancy interface</a>')
+
+@app.route('/frontend/<path:path>')
+def send_js(path):
+    return send_from_directory('frontend', path)
 
 @app.route("/api/users")
 def api_users():
