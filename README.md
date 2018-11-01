@@ -3,6 +3,10 @@
 - Backend for: [http://40.91.201.107](http://40.91.201.107/)
 - Deployment works using [Docker + Azure](https://medium.com/@alexjsanchez/creating-and-deploying-a-flask-app-with-docker-on-azure-in-5-easy-9f7aa7a12145) instructions
 
+# Requirements
+* python 2.7
+* mysql-server libmysqlclient-dev (seems to be required by mysql connector)
+
 # Commands
 - I've set up [Fabric](http://www.fabfile.org) to make life super mega easy.
 - See the [/fabfile.py](/fabfile.py) for more details.
