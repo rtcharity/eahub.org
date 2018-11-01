@@ -11,6 +11,13 @@ $ fab run
 $ fab deploy
 ```
 
+# Local set up
+- you can start the local sever without Fabric with:
+```
+$ docker-compose build
+$ docker-compose run --service-ports web
+```
+
 # Docker Login
 - Images are privatly saved to our [Container Registry](https://portal.azure.com/#@dotimpact.org/resource/subscriptions/72a43e63-c361-434d-9b55-34301c8aa920/resourceGroups/eahub/providers/Microsoft.ContainerRegistry/registries/eahub/overview) on Azure
 ```
