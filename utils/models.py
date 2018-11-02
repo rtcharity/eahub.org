@@ -18,7 +18,9 @@ class Group(Base):
     name = Column('sourceid1', Unicode)
 
 engine = create_engine(
-    os.environ['DATABASE_CONNECTION_URL']
+    'mysql+mysqldb://eahub@eahub:{password}@eahub.mysql.database.azure.com/eahub?charset=utf8'.format(
+        password=os.environ['DATABASE_PASSWORD']
+    )    
 )
 
 Base.metadata.bind = engine

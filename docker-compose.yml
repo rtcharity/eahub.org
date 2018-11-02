@@ -5,4 +5,6 @@ services:
     ports:
      - "5000:80"
     volumes:
-            - .:/app
+      - .:/app
+    env_file:
+      - secrets.env

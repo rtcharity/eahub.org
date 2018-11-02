@@ -6,28 +6,33 @@
 # Requirements
 * python 2.7
 * mysql-server libmysqlclient-dev (seems to be required by mysql connector)
+* Fabric 2.0 (optional pip install)
+* Create a `secrets.env` file in the root directory which looks like [this](https://gist.github.com/Manoj-nathwani/3c956a0aa17aec2959fc95f53d1e8af6)
 
 # Commands
-- I've set up [Fabric](http://www.fabfile.org) to make life super mega easy.
-- See the [/fabfile.py](/fabfile.py) for more details.
+With [Fabric](http://www.fabfile.org) installed:
 ```
 $ fab run
 $ fab deploy
 ```
 
-# Local set up
-- you can start the local sever without Fabric with:
+Going vanilla without fabric:
 ```
+# run
 $ docker-compose build
 $ docker-compose run --service-ports web
+
+# deploy
+$ docker tag eahub eahub.azurecr.io/eahub:latest
+$ docker push eahub.azurecr.io/eahub:latest
 ```
 
-# Docker Login
+# Docker Image Registry Login
 - Images are privatly saved to our [Container Registry](https://portal.azure.com/#@dotimpact.org/resource/subscriptions/72a43e63-c361-434d-9b55-34301c8aa920/resourceGroups/eahub/providers/Microsoft.ContainerRegistry/registries/eahub/overview) on Azure
 ```
 $ docker login eahub.azurecr.io
 >>> username: eahub
->>> password: lW93AW4SfxOpdCv5b6Rebv/CTvDUXvOq
+>>> password: <see lastpass>
 ```
 
 # Database
@@ -38,6 +43,6 @@ $ docker login eahub.azurecr.io
     "host": "eahub.mysql.database.azure.com",
     "port": 3306,
     "username": "eahub@eahub",
-    "password": "password_5rlvsk959wV4iTR908ScAPPiThGY7URBOZv0hx2Ref2NJvjE9OAH4ky77dHI"
+    "password": <see lastpass>
 }
 ```
