@@ -1,6 +1,6 @@
 ![eahub.org reboot](https://i.imgur.com/02FNAlY.png)
 
-- Backend for: [http://40.91.201.107](http://40.91.201.107/)
+- Backend for: [http://51.145.154.197](http://51.145.154.197/)
 - Deployment works using [Docker + Azure](https://medium.com/@alexjsanchez/creating-and-deploying-a-flask-app-with-docker-on-azure-in-5-easy-9f7aa7a12145) instructions
 
 # Requirements

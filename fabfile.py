@@ -15,7 +15,7 @@ def deploy():
     _build()
     local('docker tag eahub eahub.azurecr.io/eahub:latest')
     local('docker push eahub.azurecr.io/eahub:latest')
-    print('Image will slowly be updated to: http://40.91.201.107')
+    print('Image will slowly be updated to: http://51.145.154.197')
 
 # notes
 # http://containertutorials.com/docker-compose/flask-simple-app.html
