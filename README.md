@@ -6,6 +6,11 @@
 # Requirements
 * python 2.7
 * mysql-server libmysqlclient-dev (seems to be required by mysql connector)
+* fabric 1. On ubuntu can be installed with:
+```
+$ pip2 install 'fabric<2.0
+```
+Note! Even if installion finish with `segmentation fault  pip2 install 'fabric<2.0'` most likely everything works ok.
 
 # Commands
 - I've set up [Fabric](http://www.fabfile.org) to make life super mega easy.
