@@ -1,0 +1,28 @@
+{% extends 'eahub/base.html' %}
+
+{% block content %}
+
+{% include 'eahub/components/heatmap.html' %}
+<br>
+
+<div class="alert alert-warning">The above chart is limited to 100 rows of data until we implement caching, as loading all 10,000 users takes too long &#x1f605;</div>
+<br>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>City</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for profile in profiles %}
+        <tr>
+            <td><a href="/profiles/{{ profile.id }}/">{{ profile.user.username }}</a></td>
+            <td class="text-muted">Coming soon...</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

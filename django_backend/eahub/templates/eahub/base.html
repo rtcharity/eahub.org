@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>EA Hub {{ page_name }}</title>
+
+    <!-- styles -->
+    <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/3.3/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <style>
+      #logo{
+        height: 30px;
+        margin-top: -3px;
+      }
+      .container {
+        max-width: 1000px;
+      }
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li><a href="/admin">Admin</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted"><a href="\"><img id="logo" src="{% static "eahub/logo.png" %}" /></a>{% if page_name %} / {{ page_name }}{% endif %}</h3>
+      </div>
+
+      {% block content %}
+      {% endblock %}
+      
+
+    </div>
+
+    <!-- scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script>
+
+  </body>
+</html>

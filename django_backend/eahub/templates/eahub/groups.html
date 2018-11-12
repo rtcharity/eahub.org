@@ -1,0 +1,26 @@
+{% extends 'eahub/base.html' %}
+
+{% block content %}
+
+{% include 'eahub/components/heatmap.html' %}
+<br>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Members</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for group in groups %}
+        <tr>
+            <td><a href="/groups/{{ group.id }}/">{{ group.name }}</a></td>
+            <td><a target="_blank" href="https://www.google.co.uk/maps/search/{{ group.lat }},{{ group.lon }}">View on map</a></td>
+            <td class="text-muted">Coming soon...</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
