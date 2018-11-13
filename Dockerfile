@@ -1,12 +1,15 @@
-# Use an official Python runtime as a parent image
-FROM python:2.7-slim-jessie
+FROM python:3.6
 
-WORKDIR /app
-ADD . /app
+RUN mkdir -p /opt/services/djangoapp/src
+WORKDIR /opt/services/djangoapp/src
 
-RUN apt-get update
-RUN apt-get install -y gcc
-RUN apt install -y libmysqlclient-dev
-RUN pip install --trusted-host pypi.python.org -r config/requirements.txt
+RUN pip install gunicorn django psycopg2-binary whitenoise
 
-CMD ["python", "app.py"]
+COPY . /opt/services/djangoapp/src
+
+EXPOSE 8000
+
+COPY init.sh /usr/local/bin/
+	
+RUN chmod u+x /usr/local/bin/init.sh
+ENTRYPOINT ["init.sh"]

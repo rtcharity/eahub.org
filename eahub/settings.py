@@ -13,10 +13,10 @@ SECRET_KEY = 'added_by_github.com/Manoj-nathwani______v3-&-)($)@$2rwefqh5(2rk^-_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('DEBUG_MODE') is not None else False
 
-ALLOWED_HOSTS = [
-    '0.0.0.0'
-]
-
+#ALLOWED_HOSTS = [
+#    '0.0.0.0'
+#]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -28,10 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    #'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -113,4 +115,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+#STATIC_URL = '/static/'
+#STATICFILES_DIRS = [
+#    os.path.join(BASE_DIR, "static"),
+#]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR,'eahub/static'),
+    os.path.join(BASE_DIR, 'static'),
+)

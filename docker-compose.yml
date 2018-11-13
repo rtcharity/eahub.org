@@ -1,10 +1,12 @@
 version: '3'
+
 services:
   web:
     build: .
-    ports:
-     - "5000:80"
+    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - .:/code
+    ports:
+      - "8000:8000"
     env_file:
-      - secrets.env
+      - .env
