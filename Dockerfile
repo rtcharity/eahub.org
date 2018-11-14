@@ -1,11 +1,11 @@
 FROM python:3.6
 
-RUN mkdir -p /opt/services/djangoapp/src
-WORKDIR /opt/services/djangoapp/src
+RUN mkdir -p /code
+WORKDIR /code
 
 RUN pip install gunicorn django psycopg2-binary whitenoise
 
-COPY . /opt/services/djangoapp/src
+COPY . /code/
 
 EXPOSE 8000
 
