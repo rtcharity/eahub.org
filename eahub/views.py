@@ -36,7 +36,8 @@ def profiles(request):
 
 def groups(request):
     rows = Group.objects\
-        .exclude(lat__isnull=True)
+        .exclude(lat__isnull=True)\
+        .order_by('country', 'city_or_town', 'name')
     map_data = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, label:"{name}", link: "{link}"'.format(

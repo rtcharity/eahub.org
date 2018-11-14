@@ -10,17 +10,103 @@
         <tr>
             <th>Name</th>
             <th>Location</th>
-            <th>Members</th>
+            <th>Community</th>
         </tr>
     </thead>
     <tbody>
         {% for group in groups %}
         <tr>
-            <td><a href="/groups/{{ group.id }}/">{{ group.name }}</a></td>
-            <td><a target="_blank" href="https://www.google.co.uk/maps/search/{{ group.lat }},{{ group.lon }}">View on map</a></td>
-            <td class="text-muted">Coming soon...</td>
+            <td>
+                <a
+                    href="#myModal"
+                    data-toggle="modal"
+                    data-target="#myModal"
+                    data-name="{{ group.name|default_if_none:'' }}"
+                    data-lat="{{ group.lat|default_if_none:'' }}"
+                    data-lon="{{ group.lon|default_if_none:'' }}"
+                    data-organiser="{{ group.organiser_name|default_if_none:'' }}"
+                    data-website="{{ group.website|default_if_none:'' }}"
+                    data-official_email="{{ group.official_email|default_if_none:'' }}"
+                    data-lean_email="{{ group.lean_email|default_if_none:'' }}"
+                >{{ group.name|default_if_none:'' }}</a>
+            </td>
+            <td>
+                {% if group.country %}{{ group.country }}{% endif %}
+                {% if group.country and group.city_or_town %}/{% endif %}
+                {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
+            </td>
+            <td>
+                {% if group.facebook_page %}
+                    <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
+                {% endif %} 
+                {% if group.facebook_group %}
+                    <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
+                {% endif %}                               
+            </td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Group Details</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id="static_google_map">
+                    </div>
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th id="name" colspan=2></th>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                                <tr><td>Organiser</td><td id="organiser"></td></tr>
+                                <tr><td>Website</td><td id="website"></td></tr>
+                                <tr><td>Email Address</td><td id="official_email"></td></tr>
+                                <tr><td>LEAN Email</td><td id="lean_email"></td></tr>
+                            </tbody>
+                        </table>                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href=""><button type="button" class="btn btn-default pull-right"><i class="fa fa-pencil"></i> Edit data</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    $( document ).ready(function() {
+        $('#myModal').on('show.bs.modal', function(e) {
+            $("#static_google_map").attr("src", 'https://maps.googleapis.com/maps/api/staticmap?center=' + $(e.relatedTarget).data('lat') + ',' + $(e.relatedTarget).data('lon') + '&zoom=13&size=400x200&markers=color:red%7C' + $(e.relatedTarget).data('lat') + ',' + $(e.relatedTarget).data('lon') + '&key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI');
+            
+            $(e.currentTarget).find('#name').text(
+                $(e.relatedTarget).data('name')
+            );
+            $(e.currentTarget).find('#organiser').text(
+                $(e.relatedTarget).data('organiser')
+            );
+            $(e.currentTarget).find('#website').text(
+                $(e.relatedTarget).data('website')
+            );
+            $(e.currentTarget).find('#official_email').text(
+                $(e.relatedTarget).data('official_email')
+            );
+            $(e.currentTarget).find('#lean_email').text(
+                $(e.relatedTarget).data('lean_email')
+            );
+        });
+    });    
+</script>
 {% endblock %}
