@@ -19,7 +19,7 @@ def profiles(request):
             'lat: {lat}, lng: {lon}, label:"{name}", link: "{link}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
-                name=x.user.username,
+                name=' '.join([x.user.first_name, x.user.last_name]),
                 link='/{obj}/{id}'.format(
                     obj='profile',
                     id=x.id
