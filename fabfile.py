@@ -11,3 +11,8 @@ def deploy():
     build()
     local('docker tag eahub eahub.azurecr.io/eahub:latest')
     local('docker push eahub.azurecr.io/eahub:latest')
+
+def ssh(container_id):
+    local('docker exec -t -i {container_id} bash'.format(
+        container_id=container_id
+    ))
