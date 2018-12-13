@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'users',
 ]
 
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.Profile'
 
 
 MIDDLEWARE = [

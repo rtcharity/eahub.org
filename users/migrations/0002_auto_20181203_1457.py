@@ -11,12 +11,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='customuser',
+            model_name='Profile',
             name='lat',
             field=models.DecimalField(decimal_places=6, max_digits=9, null=True),
         ),
         migrations.AddField(
-            model_name='customuser',
+            model_name='Profile',
             name='lon',
             field=models.DecimalField(decimal_places=6, max_digits=9, null=True),
         ),

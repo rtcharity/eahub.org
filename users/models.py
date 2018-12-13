@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 
-class CustomUserManager(UserManager):
+class ProfileManager(UserManager):
     pass
 
-class CustomUser(AbstractUser):
+class Profile(AbstractUser):
     # inherit django user object
-    objects = CustomUserManager()
+    objects = ProfileManager()
     USERNAME_FIELD = 'email'
     email = models.EmailField(blank=True, null=True, unique=True)
     REQUIRED_FIELDS = []

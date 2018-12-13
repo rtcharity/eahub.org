@@ -4,7 +4,7 @@ from django.template import loader
 from django.core.paginator import Paginator
 
 from .models import Group
-from users.models import CustomUser
+from users.models import Profile
 
 def index(request):
     return render(request, 'eahub/index.html', {
@@ -12,7 +12,7 @@ def index(request):
     })
 
 def profiles(request):
-    rows = CustomUser.objects\
+    rows = Profile.objects\
         .exclude(lat__isnull=True)
     rows = Paginator(rows, 100).get_page(1) # remove when caching is implemented
     map_data = ''.join([
