@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.paginator import Paginator
 
-from .models import Profile, Group
+from .models import Group
+from users.models import CustomUser
 
 def index(request):
     return render(request, 'eahub/index.html', {
@@ -11,7 +12,7 @@ def index(request):
     })
 
 def profiles(request):
-    rows = Profile.objects\
+    rows = CustomUser.objects\
         .exclude(lat__isnull=True)
     rows = Paginator(rows, 100).get_page(1) # remove when caching is implemented
     map_data = ''.join([

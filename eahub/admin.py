@@ -1,10 +1,6 @@
 from django.contrib import admin
 
-from .models import Profile, Group
-
-@admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'lat', 'lon')
+from .models import Group
 
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):

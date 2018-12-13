@@ -22,6 +22,7 @@
         max-width: 1000px;
       }
     </style>
+    {% block styles %}{% endblock %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -36,16 +37,23 @@
     <div class="container">
       <div class="header clearfix">
         <nav>
-          <ul class="nav nav-pills pull-right">
-            <li><a href="/admin">Admin</a></li>
+          <ul class="nav nav-pills pull-right">            
+            {% if user.is_authenticated %}
+              <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
+            {% else %}
+              <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
+              <li><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+            {% endif %}
+            {% if request.user.is_superuser %}
+            <li><a href="/admin"><i class="fa fa-pencil"></i> Admin</a></li>
+            {% endif %}
           </ul>
         </nav>
         <h3 class="text-muted"><a href="\"><img id="logo" src="{% static "eahub/logo.png" %}" /></a>{% if page_name %} / {{ page_name }}{% endif %}</h3>
       </div>
 
       {% block content %}
-      {% endblock %}
-      
+      {% endblock %}      
 
     </div>
 
