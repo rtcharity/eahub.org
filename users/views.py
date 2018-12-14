@@ -2,7 +2,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.http import JsonResponse
+from django.shortcuts import render
 
 from .models import Profile
 from .forms import ProfileCreationForm
@@ -20,9 +20,6 @@ class SignUp(generic.CreateView):
 
 @login_required(login_url=reverse_lazy('login'))
 def ProfileView(request):
-    return JsonResponse({
-        'user_id':request.user.id,
-        'first_name':request.user.first_name,
-        'last_name':request.user.last_name,
-        'email':request.user.email
+    return render(request, 'eahub/profile.html', {
+        'user': request.user
     })
