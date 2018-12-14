@@ -6,7 +6,7 @@ from .models import Profile
 class ProfileCreationForm(UserCreationForm):
     class Meta(UserCreationForm):
         model = Profile
-        fields = ('email',)
+        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
 
 class ProfileChangeForm(UserChangeForm):
     class Meta:

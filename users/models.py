@@ -8,7 +8,7 @@ class Profile(AbstractUser):
     # inherit django user object
     objects = ProfileManager()
     USERNAME_FIELD = 'email'
-    email = models.EmailField(blank=True, null=True, unique=True)
+    email = models.EmailField(unique=True)
     REQUIRED_FIELDS = []
     # add custom fields
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True)

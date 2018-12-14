@@ -39,7 +39,7 @@
         <nav>
           <ul class="nav nav-pills pull-right">            
             {% if user.is_authenticated %}
-              <li><a href="#"><i class="fa fa-user"></i> My Profile</a></li>
+              <li><a href="{% url 'profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
             {% else %}
               <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
               <li><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
