@@ -1,12 +1,39 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
+{% block header %}
+<style>
+.btn-lg{
+  width: 100%;
+}
+</style>
+{% endblock %}
 
+{% block content %}
 <div class="jumbotron">
-  <p>
-      <a class="btn btn-lg btn-success" href="/profiles" role="button">Profiles</a>
-      <a class="btn btn-lg btn-success" href="/groups" role="button">Groups</a>
-  </p>
+    <h1>eahub.org</h1>
+    <h2>Collaberation for the greater good</h2>
 </div>
-  {% endblock %}
+
+<div class="row">
+    <div class="col-xs-6">
+      <div class="jumbotron">
+          <p><i class="fa fa-user fa-5x" aria-hidden="true"></i></p>
+          <br>
+          <p>Build your profile and connect with over 2000 effective altruists</p>
+          <br>
+          <a class="btn btn-lg btn-success" href="/profiles" role="button">EA Profiles</a>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="jumbotron">
+          <p><i class="fa fa-users fa-5x" aria-hidden="true"></i></p>
+          <br>
+          <p>Find local effective altruist groups from over 30 different countries</p>
+          <br>
+          <a class="btn btn-lg btn-success" href="/groups" role="button">EA Groups</a>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
