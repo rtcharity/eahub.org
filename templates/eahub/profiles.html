@@ -16,9 +16,9 @@
     <tbody>
         {% for profile in profiles %}
         <tr>
-            <td><a href="/profiles/{{ profile.id }}/">{{ profile.first_name }} {{ profile.last_name }}</a></td>
-            <td class="text-muted">Coming soon...</td>
-            <td class="text-muted">Coming soon...</td>
+            <td><a href="/profiles/{{ profile.id }}/">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
+            <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
+            <td class="text-muted">{{ profile.country|default:'' }}</td>
         </tr>
         {% endfor %}
     </tbody>
