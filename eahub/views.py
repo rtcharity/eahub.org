@@ -6,8 +6,25 @@ from .models import Group
 from users.models import Profile
 
 def index(request):
+    rows = Group.objects\
+        .exclude(lat__isnull=True)\
+        .order_by('country', 'city_or_town', 'name')
+    map_data = ''.join([
+        '{' +
+            'lat: {lat}, lng: {lon}, label:"{name}", link: "{link}"'.format(
+                lat=str(x.lat),
+                lon=str(x.lon),
+                name=x.name,
+                link='/{obj}/{id}'.format(
+                    obj='group',
+                    id=x.id
+                )
+            )
+        + '},'
+        for x in rows
+    ])    
     return render(request, 'eahub/index.html', {
-        
+        'map_data': map_data
     })
 
 def profiles(request):

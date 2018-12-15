@@ -3,37 +3,199 @@
 
 {% block header %}
 <style>
-.btn-lg{
-  width: 100%;
+h1{
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+.jumbotron{
+    padding-bottom: 30px;
+}
+.thumbnail{
+    margin-bottom: 0;
+}
+.thumbnail img{
+    margin-top: 20px;
+    height: 100px;
+    border-radius: 20px;
+}
+.thumbnail h3{
+    font-size: 1.2em;
+}
+.btn{
+    margin-right: 10px;
 }
 </style>
 {% endblock %}
 
 {% block content %}
+
+<h1>Join the over 1700+ EAs from around the world</h1>
+
+{% include 'eahub/components/heatmap.html' %}
+<br>
+
 <div class="jumbotron">
-    <h1>eahub.org</h1>
-    <h2>Collaboration for the greater good</h2>
+    <h2 class="text-left">EA Profiles</h2>
+    <br>
+    <p class="text-left">EA Profiles let you see the beliefs, actions and more of others in the effective altruist community, showing interesting information like people’s favoured causes and charities, and the actions they’re taking to make the world a better place. Here is a random selection of some of the most complete showcase profiles.</p>
+    <br>
+    <div class="row">
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="http://www.gravatar.com/avatar/7124688b9c89a1ba55205b881c080771.jpg" />
+                <div class="caption">
+                    <h3>Peter Hurford</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="http://40.114.142.6/sites/eahub.org/files/styles/thumbnail/public/pictures/picture-5360-1412014199.jpg" />
+                <div class="caption">
+                    <h3>Jess Whittlestone</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="http://40.114.142.6/sites/eahub.org/files/styles/thumbnail/public/pictures/picture-5028-1422732847.jpg" />
+                <div class="caption">
+                    <h3>José Oliveira</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="http://40.114.142.6/sites/eahub.org/files/styles/thumbnail/public/pictures/picture-4987-1411708727.jpg" />
+                <div class="caption">
+                    <h3>Claire Zabel</h3>
+                </div>
+            </a>
+        </div>
+    </div>
+    <br><br>
+    <div class="text-left">
+        <a class="btn btn-success" href="{% url 'profiles' %}" role="button">Browse Profiles</a>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-xs-6">
-      <div class="jumbotron">
-          <p><i class="fa fa-user fa-5x" aria-hidden="true"></i></p>
-          <br>
-          <p>Build your profile and connect with over 2000 effective altruists</p>
-          <br>
-          <a class="btn btn-lg btn-success" href="/profiles" role="button">EA Profiles</a>
-      </div>
+<div class="jumbotron">
+    <h2 class="text-left">EA Groups</h2>
+    <br>
+    <p class="text-left">There is a large network of grassroots EA groups around the world. You may be interested in finding a group near you and attending one of its local meetups, or simply sending an email to ask any questions you have about effective altruism. If there are no groups near you, check out the map of effective altruists to find people near you who you can connect with, or get in touch to explore setting up a local presence - it can involve very minimal work to start with, and be quite high value.</p>
+    <br>
+    <div class="row">
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="https://i.imgur.com/90o8Ei9.png" />
+                <div class="caption">
+                    <h3>London Effective Altruism</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="https://i.imgur.com/90o8Ei9.png" />
+                <div class="caption">
+                    <h3>Bay Area Effective Altruists</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="https://i.imgur.com/90o8Ei9.png" />
+                <div class="caption">
+                    <h3>Vancouver Effective Altruism</h3>
+                </div>
+            </a>
+        </div>
+        <div class="col-sm-3">
+            <a class="thumbnail" href="#">
+                <img src="https://i.imgur.com/90o8Ei9.png" />
+                <div class="caption">
+                    <h3>Effective Altruism India</h3>
+                </div>
+            </a>
+        </div>
     </div>
-    <div class="col-xs-6">
-      <div class="jumbotron">
-          <p><i class="fa fa-users fa-5x" aria-hidden="true"></i></p>
-          <br>
-          <p>Find local effective altruist groups from over 30 different countries</p>
-          <br>
-          <a class="btn btn-lg btn-success" href="/groups" role="button">EA Groups</a>
-      </div>
+    <br><br>
+    <div class="text-left">
+        <a class="btn btn-success" href="{% url 'groups' %}" role="button">Browse Groups</a>
     </div>
 </div>
 
+<div class="jumbotron">
+    <h2 class="text-left">EA Donation Registry</h2>
+    <br>
+    <p class="text-left">One of the most important and action-relevant messages of effective altruism is that you can do a phenomenal amount of good through well-chosen donations. As a community, EAs also further this goal by <a href="http://effective-altruism.com/ea/7q/to_inspire_people_to_give_be_public_about_your">publicly establishing a norm</a> of giving to effective charities, making their own commitments to do so and encouraging others. So the EA Donation Registry lets people share plans to donate and record past donations. If you're currently planning to donate to a particular cause or have already done so, we'd encourage you to share this. Your plans need not be as certain as pledges - you can revoke them at any time, and it'd be both expected and understood that many will do so.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success disabled" href="{% url 'groups' %}" role="button">Browse Donations (Coming soon)</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h2 class="text-left">Discussion groups</h2>
+    <br>
+    <p class="text-left">There are a number of places where effective altruists congregate online to talk to one another. Among these, the two most popular are the community Facebook group, which has over 10,000 members posting and commenting, and the Effective Altruism Forum, which features longer posts and a more traditional forum structure.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success" href="https://www.facebook.com/groups/effective.altruists" role="button">EA Facebook Group</a>
+        <a class="btn btn-success" href="http://effective-altruism.com" role="button">EA Forum</a>
+        <a class="btn btn-success" href="http://eablogs.net" role="button">Posts accross the web</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h2 class="text-left">EARadio podcast</h2>
+    <br>
+    <p class="text-left">Created by Patrick Brinich-Langlois and Chris Calabro, A podcast of audio talks relevant to effective altruists, curated from video and audio around the web.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success" href="http://earad.io" role="button">Listen Online</a>
+        <a class="btn btn-success" href="https://itunes.apple.com/us/podcast/earadio/id929612068" role="button">Subscribe via iTunes</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h2 class="text-left">Share goods and services with other EAs</h2>
+    <br>
+    <p class="text-left">Created by Patrick Brinich-Langlois and Ozzie Gooen. Effective altruists have a lot to offer one another. But we're geographically dispersed, so it's hard to know whom to ask for help. Skillshare.im is built to fix this. It's a place for EAs to share their skills, items, and couches with one another.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success" href="http://skillshare.im" role="button">Use SkillShare</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h2 class="text-left">Jobs and volunteering</h2>
+    <br>
+    <p class="text-left">One way to make effective altruism a part of your life is to contribute to EA work - these links will show you how.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success" href="http://www.eawork.club" role="button">Jobs & volunteering opportunities</a>
+        <a class="btn btn-success" href="https://80000hours.org" role="button">Read research</a>
+        <a class="btn btn-success" href="https://www.facebook.com/groups/473795076132698" role="button">Discuss your options</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h2 class="text-left">Community Spaces</h2>
+    <br>
+    <p class="text-left">The EA Hangout Facebook group is a forum for people involved in the effective alruism community to hang out and either discuss EA casually or discuss non-EA topics.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success" href="https://www.facebook.com/groups/eahangout" role="button">EA Hangout group</a>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h2 class="text-left">EA Wiki</h2>
+    <br>
+    <p class="text-left">A collaboratively edited resource, which everyone's encouraged to edit and add to.</p>
+    <br>
+    <div class="text-left">
+        <a class="btn btn-success" href="https://wiki.eahub.org/wiki/Effective_Altruism_Wiki" role="button">Browse and edit</a>
+    </div>
+</div>
 {% endblock %}
