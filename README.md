@@ -8,10 +8,7 @@ Make sure to have Python3 & [Docker Compose](https://docs.docker.com/compose) in
 Create a `.env` file with:
 ```
 DEBUG_MODE=True
-DATABASE_HOST=<see lastpass>
-DATABASE_NAME=<see lastpass>
-DATABASE_USERNAME=<see lastpass>
-DATABASE_PASSWORD=<see lastpass>
+<see lastpass for the rest>
 ```
 
 # Running
