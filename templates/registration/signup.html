@@ -19,6 +19,7 @@
     margin-bottom: 0;
   }
 </style>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 {% endblock %}
 
 {% block content %}
@@ -78,6 +79,9 @@
                   <div class="alert alert-danger">{{ error }}</div>
               {% endfor %}
             {% endif %}
+          </div>
+          <div class="field">
+            <div class="g-recaptcha" data-sitekey="6Lc9-IEUAAAAAFDBa292skJISigDI3U2OHpgsxjB"></div>
           </div>
           <button type="submit" class="btn btn-default">Sign Up</button>
         </form>
