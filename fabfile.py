@@ -6,7 +6,8 @@ def build():
     local('y | docker system prune')
 
 def run():
-    local('docker-compose up')
+    local('docker-compose run --service-ports web') #  with ipdb support
+    # local('docker-compose up') #  without ipdb support
 
 def deploy():
     build()
