@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from .models import Group
+from groups.models import Group
 from users.models import Profile
 
 def index(request):
