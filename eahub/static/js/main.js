@@ -1,5 +1,5 @@
 $(document).ready( function () {
-    $('#table').DataTable( {
+    $('.table').DataTable( {
       lengthChange: false,
       pageLength: 100
     } );
