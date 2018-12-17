@@ -13,6 +13,7 @@
     <link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/3.3/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
       #logo{
         height: 30px;
@@ -30,7 +31,7 @@
     <![endif]-->
 
     {% block header %}{% endblock %}
-    
+
   </head>
 
   <body>
@@ -38,7 +39,7 @@
     <div class="container">
       <div class="header clearfix">
         <nav>
-          <ul class="nav nav-pills pull-right">            
+          <ul class="nav nav-pills pull-right">
             {% if user.is_authenticated %}
               <li><a href="{% url 'profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
               <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Log Out</a></li>
@@ -55,13 +56,15 @@
       </div>
 
       {% block content %}
-      {% endblock %}      
+      {% endblock %}
 
     </div>
 
     <!-- scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="/static/js/main.js"></script>
     {% block scripts %}{% endblock %}
 
   </body>

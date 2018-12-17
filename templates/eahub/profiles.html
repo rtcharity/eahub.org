@@ -5,7 +5,7 @@
 {% include 'eahub/components/heatmap.html' %}
 <br>
 
-<table class="table">
+<table id="table" class="table">
     <thead>
         <tr>
             <th>Name</th>
@@ -13,6 +13,7 @@
             <th>Country</th>
         </tr>
     </thead>
+    <div>
     <tbody>
         {% for profile in profiles %}
         <tr>
