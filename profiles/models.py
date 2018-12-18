@@ -17,3 +17,7 @@ class Profile(AbstractUser):
     lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, verbose_name='longitude')
     city_or_town = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
+
+    class Meta:
+        verbose_name = 'Profile'
+        verbose_name_plural = 'Profiles'

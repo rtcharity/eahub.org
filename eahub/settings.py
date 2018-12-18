@@ -26,10 +26,10 @@ INSTALLED_APPS = [
 
     'eahub.apps.EahubConfig',
     'groups',
-    'users',
+    'profiles',
 ]
 
-AUTH_USER_MODEL = 'users.Profile'
+AUTH_USER_MODEL = 'profiles.Profile'
 
 
 MIDDLEWARE = [
@@ -126,7 +126,7 @@ ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 
 LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
-LOGIN_URL = '/user/login/'
+LOGIN_URL = '/profile/login/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.sendgrid.net'

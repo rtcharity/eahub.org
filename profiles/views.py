@@ -25,7 +25,7 @@ def recaptcha_valid(recaptcha_response):
 class SignUp(generic.CreateView):
     template_name = 'registration/signup.html'    
     form_class = ProfileCreationForm
-    success_url = reverse_lazy('profile')
+    success_url = reverse_lazy('my_profile')
     def form_valid(self, form):
         valid = super(SignUp, self).form_valid(form)
         email, password = form.cleaned_data.get('email'), form.cleaned_data.get('password1')

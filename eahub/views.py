@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from groups.models import Group
-from users.models import Profile
+from profiles.models import Profile
 
 def index(request):
     rows = Group.objects\

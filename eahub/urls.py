@@ -10,7 +10,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('profiles/', views.profiles, name='profiles'),
     path('groups/', views.groups, name='groups'),
-    path('user/', include('users.urls')),
-    path('user/', include('django.contrib.auth.urls')),
+    path('profile/', include('profiles.urls')),
+    path('profile/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls, name='admin'),
 ]
