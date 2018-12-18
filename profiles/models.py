@@ -19,10 +19,18 @@ class Profile(AbstractUser):
     country = models.CharField(max_length=100, null=True)
 
     def full_name(self):
-        return ' '.join([self.first_name, self.last_name])
+        return ', '.join([
+            x
+            for x in [self.first_name, self.last_name]
+            if x not in [None, '']
+        ])
 
     def location(self):
-        return ', '.join([self.city_or_town, self.country])
+        return ', '.join([
+            x
+            for x in [self.city_or_town, self.country]
+            if x not in [None, '']
+        ])
 
     class Meta:
         verbose_name = 'Profile'
