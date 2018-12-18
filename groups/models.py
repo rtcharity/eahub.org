@@ -22,11 +22,11 @@ class Group(models.Model):
     serves_as = models.TextField(null=True)
 
     # table of donations
-    # example: {"donations":[{"Amount":"a","To":"b","When":"c","Any details (e.g. who donated)":"d"}]}
+    # example: {"donations":[{"amount":"a", "to":"b", "when":"c", "details":"d"}]}
     donations = models.TextField(null=True)
     
     # list of links
-    # example: {"links":[{"href":"a","label":"b"}]}
+    # example: {"links":[{"link":"a", "label":"b"}]}
     links = models.TextField(null=True)
 
     # list of links
