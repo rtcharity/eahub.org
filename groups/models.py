@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Profile
+from profiles.models import Profile
 
 class Group(models.Model):
     

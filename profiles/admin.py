@@ -6,7 +6,7 @@ from .models import Profile
 from .forms import ProfileCreationForm, ProfileChangeForm
 
 @admin.register(Profile)
-class ProfileAdmin(UserAdmin):
+class UserAdmin(UserAdmin):
     model = Profile
     add_form = ProfileCreationForm
     form = ProfileChangeForm
