@@ -7,8 +7,7 @@ from profiles.models import Profile
 
 def index(request):
     rows = Group.objects\
-        .exclude(lat__isnull=True)\
-        .order_by('country', 'city_or_town', 'name')
+        .exclude(lat__isnull=True)
     map_data = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
@@ -29,8 +28,7 @@ def index(request):
 
 def profiles(request):
     rows = Profile.objects\
-        .exclude(lat__isnull=True)\
-        .order_by('country', 'city_or_town', 'first_name', 'last_name')
+        .exclude(lat__isnull=True)
     map_data = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
@@ -53,8 +51,7 @@ def profiles(request):
 
 def groups(request):
     rows = Group.objects\
-        .exclude(lat__isnull=True)\
-        .order_by('country', 'city_or_town', 'name')
+        .exclude(lat__isnull=True)
     map_data = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
