@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<style>
+.jumbotron{
+    text-align: left !important;
+}
+.section p{
+    margin-bottom: 0;
+}
+.group-logo{
+    width: 100%;
+    border-radius: 3px;
+    margin-bottom: 20px;
+}
+h2{
+    margin-top: 0;
+}
+.text-block-from-database br{
+    margin-bottom: 20px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="">{{ group.name }}</h1>
+    {% if group.location %}<p><i class="fa fa-map-marker"></i> {{ group.location }}</p>{% endif %}
+</div>
+
+<!-- summary -->
+{% if group.summary %}
+<div class="row section">
+    <div class="col-sm-3">
+        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    </div>
+    <div class="col-sm-9">
+        <h2>Summary</h2>
+        <p class="text-block-from-database">{{ group.summary|linebreaksbr }}</p>
+    </div>
+</div>
+<hr>
+{% endif %}
+
+<!-- donations -->
+{% if group.get_donations %}
+<div class="row section">
+    <div class="col-sm-3">
+        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    </div>
+    <div class="col-sm-9">
+        <h2>Donations</h2>
+        <table class="table">
+            <thead>
+                <th>Amount</th>
+                <th>To</th>
+                <th>When</th>
+                <th>Any details (e.g. who donated)</th>
+            </thead>
+            <tbody>
+                {% for row in group.get_donations %}
+                <tr>
+                    <td class="text-right">{{ row.amount|default:'n/a' }}</td>
+                    <td>{{ row.to|default:'n/a' }}</td>
+                    <td class="text-right">{{ row.when|default:'n/a' }}</td>
+                    <td>{{ row.details|default:'n/a' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<hr>
+{% endif %}
+
+<!-- meetups -->
+{% if group.meetup_url or group.meetup_details %}
+<div class="row section">
+    <div class="col-sm-3">
+        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    </div>
+    <div class="col-sm-9">
+        <h2>Meetups</h2>
+        {% if group.meetup_url %}<p class="text-block-from-database"><a href="{{ group.meetup_url }}"><i class="fa fa-chevron-right"></i> {{ group.meetup_url }}</a></p>{% endif %}
+        {% if group.meetup_details %}<p class="text-block-from-database">{{ group.meetup_details|linebreaksbr }}</p>{% endif %}
+    </div>
+</div>
+<hr>
+{% endif %}
+
+<!-- links -->
+{% if group.get_links %}
+<div class="row section">
+    <div class="col-sm-3">
+        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    </div>
+    <div class="col-sm-9">
+        <h2>Links</h2>
+        {% for link in group.get_links %}
+        <p><a href="{{ link.link }}"><i class="fa fa-chevron-right"></i> {{ link.label }}</a></p>
+        {% endfor %}
+    </div>
+</div>
+<hr>
+{% endif %}
+
+<!-- other links -->
+{% if group.website or group.facebook_group or group.facebook_page %}
+<div class="row section">
+    <div class="col-sm-3">
+        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    </div>
+    <div class="col-sm-4">
+        <h2>Other Links</h2>
+        {% if group.website %}<p><a href="{{ group.website }}"><i class="fa fa-home"></i> Website</a></p>{% endif %}
+        {% if group.facebook_group %}<p><a href="{{ group.facebook_group }}"><i class="fa fa-facebook-square"></i> Facebook Group</a></p>{% endif %}
+        {% if group.facebook_page %}<p><a href="{{ group.facebook_page }}"><i class="fa fa-facebook-square"></i> Facebook Page</a></p>{% endif %}
+    </div>
+</div>
+<hr>
+{% endif %}
+
+<!-- organisers -->
+{% if group.organisers|length %}
+<div class="row section">
+    <div class="col-sm-3">
+        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    </div>
+    <div class="col-sm-9">
+        <h2>Organisers</h2>
+        <p class="text-block-from-database">{{ group.organisers|linebreaksbr }}</p>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

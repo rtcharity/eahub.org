@@ -11,11 +11,11 @@ def index(request):
         .order_by('country', 'city_or_town', 'name')
     map_data = ''.join([
         '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", link: "{link}"'.format(
+            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
-                link='/{obj}/{id}'.format(
+                path='/{obj}/{id}'.format(
                     obj='group',
                     id=x.id
                 )
@@ -33,11 +33,11 @@ def profiles(request):
         .order_by('country', 'city_or_town', 'first_name', 'last_name')
     map_data = ''.join([
         '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", link: "{link}"'.format(
+            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=' '.join([x.first_name, x.last_name]),
-                link='/{obj}/{id}'.format(
+                path='/{obj}/{id}'.format(
                     obj='profile',
                     id=x.id
                 )
@@ -57,11 +57,11 @@ def groups(request):
         .order_by('country', 'city_or_town', 'name')
     map_data = ''.join([
         '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", link: "{link}"'.format(
+            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
-                link='/{obj}/{id}'.format(
+                path='/{obj}/{id}'.format(
                     obj='group',
                     id=x.id
                 )
