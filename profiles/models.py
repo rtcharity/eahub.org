@@ -18,6 +18,12 @@ class Profile(AbstractUser):
     city_or_town = models.CharField(max_length=100, null=True)
     country = models.CharField(max_length=100, null=True)
 
+    def full_name(self):
+        return ' '.join([self.first_name, self.last_name])
+
+    def location(self):
+        return ', '.join([self.city_or_town, self.country])
+
     class Meta:
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'

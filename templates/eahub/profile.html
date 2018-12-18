@@ -1,35 +1,35 @@
 {% extends 'base.html' %}
 
+{% block header %}
+<style>
+.jumbotron{
+    text-align: left !important;
+}
+.jumbotron img{
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 3px;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="jumbotron">
-    <h1>Welcome back</h1>
-    <h2>{{ user.first_name }} {{ user.last_name }}!</h2>
+    <div class="row">
+        <div class="col-sm-9">
+            <h1 class="">{{ profile.full_name }}</h1>
+            <p><i class="fa fa-map-marker"></i> {{ profile.location }}</p>
+        </div>
+        <div class="col-sm-3">
+            <img src="https://i.imgur.com/90o8Ei9.png"/>
+        </div>
+    </div>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Data we have saved on you</h3>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>user_id</th>
-                <th>first_name</th>
-                <th>last_name</th>
-                <th>email</th>
-                <th>lat/lon</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.first_name }}</td>
-                <td>{{ user.last_name }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.lat }}, {{ user.lon }}</td>
-            </tr>
-        </tbody>
-    </table>
+
+<div class="well">
+    More info coming soon...
 </div>
+
 
 {% endblock %}

@@ -35,10 +35,19 @@ class SignUp(generic.CreateView):
         else:
             new_user.delete() # delete recaptcha failing user made by robot
         return valid
-            
+
+
+def ProfileView(request, profile_id):
+    row = Profile.objects\
+        .filter(id=profile_id)\
+        .first()
+    return render(request, 'eahub/profile.html', {
+        'profile': row
+    })
+
 
 @login_required(login_url=reverse_lazy('login'))
-def ProfileView(request):
-    return render(request, 'eahub/profile.html', {
+def MyProfileView(request):
+    return render(request, 'eahub/my_profile.html', {
         'user': request.user
     })
