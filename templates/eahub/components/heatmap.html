@@ -7,10 +7,38 @@
 </style>
 
 <div id="map"></div>
+<div id="map_selector">
+  <input type="radio" name="map_selector" value="individuals" id="map_selector_ind"> Individuals</input>
+  <input type="radio" name="map_selector" value="groups" id="map_selector_groups"> Groups</input>
+</div>
 <script>var isIE = false;</script><!--[if IE]><script>isIE = true;</script><![endif]-->
 <script>
 
-    function initMap() {
+    var selectedMap;
+    var mapSelectorInd = document.getElementById('map_selector_ind')
+    mapSelectorInd.onclick = function() {
+      selectedMap = 'individuals';
+      initMap(selectedMap);
+    };
+    var mapSelectorGroups = document.getElementById('map_selector_groups')
+    mapSelectorGroups.onclick = function() {
+      selectedMap = 'groups';
+      initMap(selectedMap);
+    }
+
+    function initMap(selectedMap) {
+      //handles map selection and checked attribute on radio buttons when page loads
+      if (selectedMap == undefined) {
+        if ("{{ page_name }}" == 'Profiles') {
+            selectedMap = 'individuals';
+            mapSelectorInd.setAttribute("checked", "checked")
+        } else {
+            selectedMap = 'groups';
+            mapSelectorGroups.setAttribute("checked", "checked")
+        }
+      }
+
+      var locations = selectedMap == 'individuals' ? [{{ map_data_profiles | safe}}] : [{{ map_data_groups | safe}}]
       var minClusterZoom = 14;
       var mapOptions = {
           // How zoomed in you want the map to start at (always required)
@@ -22,8 +50,8 @@
           scaleControl: false,
           streetViewControl: false,
           rotateControl: false,
-          // How you would like to style the map.
-          // Snazzpy maps style: pale
+
+          // Snazzy map: pale
           styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#6195a0"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"lightness":"0"},{"saturation":"0"},{"color":"#f5f5f2"},{"gamma":"1"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"lightness":"-3"},{"gamma":"1.00"}]},{"featureType":"landscape.natural.terrain","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#bae5ce"},{"visibility":"on"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45},{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#fac9a9"},{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"color":"#4e4e4e"}]},{"featureType":"road.arterial","elementType":"labels.text.fill","stylers":[{"color":"#787878"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"transit.station.airport","elementType":"labels.icon","stylers":[{"hue":"#0a00ff"},{"saturation":"-77"},{"gamma":"0.57"},{"lightness":"0"}]},{"featureType":"transit.station.rail","elementType":"labels.text.fill","stylers":[{"color":"#43321e"}]},{"featureType":"transit.station.rail","elementType":"labels.icon","stylers":[{"hue":"#ff6c00"},{"lightness":"4"},{"gamma":"0.75"},{"saturation":"-68"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#eaf6f8"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#c7eced"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":"-49"},{"saturation":"-53"},{"gamma":"0.79"}]}]
       };
 
@@ -31,10 +59,29 @@
         var map = new google.maps.Map(mapElement, mapOptions);
         var iw = new google.maps.InfoWindow();
 
+        //oms allows for spiderfying of clusters
         var oms = new OverlappingMarkerSpiderfier(map, {
           markersWontMove: true,
-          markersWontHide: true,
-          basicFormatEvents: true
+          markersWontHide: true
+        });
+
+        oms.addListener('format', function(marker, status) {
+          var iconURL = '';
+          if (status == OverlappingMarkerSpiderfier.markerStatus.SPIDERFIED) {
+              iconURL = '/static/imgs/marker-highlight.svg';
+          } else if (status == OverlappingMarkerSpiderfier.markerStatus.SPIDERFIABLE) {
+              iconURL = '/static/imgs/marker-plus.svg';
+          } else if (status == OverlappingMarkerSpiderfier.markerStatus.UNSPIDERFIABLE) {
+            iconURL = '/static/imgs/marker.svg';
+          } else {
+            iconURL = null;
+          }
+          var iconSize = new google.maps.Size(23, 32);
+          marker.setIcon({
+           url: iconURL,
+           size: iconSize,
+           scaledSize: iconSize  // makes SVG icons work in IE
+          });
         });
 
         oms.addListener('click', function(marker) {
@@ -45,33 +92,7 @@
         var markers = locations.map(function(location, i) {
             var marker = new google.maps.Marker({
                 position: location,
-<<<<<<< HEAD
-                icon: {
-                    url: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0', // url
-                    scaledSize: new google.maps.Size(10, 10), // scaled size
-                    origin: new google.maps.Point(0,0), // origin
-                    anchor: new google.maps.Point(0, 0) // anchor
-                }
-            });
-            marker.addListener('click', function() {
-                new google.maps.InfoWindow({
-                    content: '<div id="content">' 
-                        + '<table>'
-                        + '<tr><td><p><u>' + location.label + '</u></p></td></tr>'
-                        + '<tr><td><a href="http://' + window.location.host + location.path + '">EA Hub Profile</a></td></tr>'
-                        + '<tr><td><a target="_blank" href="https://www.facebook.com/search/top/?q=' + location.label + '">Facebook Page</a></td></tr>'
-                        + '</table>'
-                        + '</div>'
-                }).open(map, marker);
-=======
                 optimized: !isIE  // makes SVG icons work in IE
->>>>>>> add pale map style and spiderfying
-            });
-            var iconSize = new google.maps.Size(23, 32);
-            marker.setIcon({
-             url: '/static/imgs/marker.svg',
-             size: iconSize,
-             scaledSize: iconSize  // makes SVG icons work in IE
             });
             marker.desc = "<a href='" + location.link + "'>" + location.label + "</a>";
             oms.addMarker(marker);
@@ -90,9 +111,7 @@
           }
         });
     }
-    var locations = [
-        {{ map_data | safe}}
-    ]
+
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
 <script src="\static/heatmap/markerclusterer.js"></script>
