@@ -60,7 +60,7 @@ function map(page_name,map_data_profiles,map_data_groups) {
           });
           var iconSize = new google.maps.Size(23, 32);
           marker.setIcon({
-           url: '/static/imgs/marker.svg',
+           url: '/static/imgs/map_marker.svg',
            size: iconSize,
            scaledSize: iconSize  // makes SVG icons work in IE
           });
