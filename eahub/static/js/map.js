@@ -25,9 +25,9 @@ function map(page_name,map_data_profiles,map_data_groups) {
 
     var minClusterZoom = 14;
     var mapOptions = {
-        zoom: 1,
+        zoom: 1.5,
         maxZoom: minClusterZoom+1,
-        center: new google.maps.LatLng(51.5074, 0.1278), // london
+        center: new google.maps.LatLng(30, 30), // london
         mapTypeControl: false,
         scaleControl: false,
         streetViewControl: false,
@@ -44,26 +44,8 @@ function map(page_name,map_data_profiles,map_data_groups) {
       //oms allows for spiderfying of clusters
       var oms = new OverlappingMarkerSpiderfier(map, {
         markersWontMove: true,
-        markersWontHide: true
-      });
-
-      oms.addListener('format', function(marker, status) {
-        var iconURL = '';
-        if (status == OverlappingMarkerSpiderfier.markerStatus.SPIDERFIED) {
-            iconURL = '/static/imgs/marker-highlight.svg';
-        } else if (status == OverlappingMarkerSpiderfier.markerStatus.SPIDERFIABLE) {
-            iconURL = '/static/imgs/marker-plus.svg';
-        } else if (status == OverlappingMarkerSpiderfier.markerStatus.UNSPIDERFIABLE) {
-          iconURL = '/static/imgs/marker.svg';
-        } else {
-          iconURL = null;
-        }
-        var iconSize = new google.maps.Size(23, 32);
-        marker.setIcon({
-         url: iconURL,
-         size: iconSize,
-         scaledSize: iconSize  // makes SVG icons work in IE
-        });
+        markersWontHide: true,
+        basicFormatEvents: true
       });
 
       oms.addListener('click', function(marker) {
@@ -76,6 +58,12 @@ function map(page_name,map_data_profiles,map_data_groups) {
               position: location,
               optimized: !isIE  // makes SVG icons work in IE
           });
+          var iconSize = new google.maps.Size(23, 32);
+          marker.setIcon({
+           url: '/static/imgs/marker.svg',
+           size: iconSize,
+           scaledSize: iconSize  // makes SVG icons work in IE
+          });
           marker.desc = "<a href='" + location.link + "'>" + location.label + "</a>";
           oms.addMarker(marker);
           return marker;
@@ -83,7 +71,7 @@ function map(page_name,map_data_profiles,map_data_groups) {
 
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(
-          map, markers,{imagePath: '../static/heatmap/m', maxZoom: minClusterZoom}
+          map, markers,{imagePath: '../static/imgs/cluster/m', maxZoom: minClusterZoom}
       );
       // prevent map from zooming in too much when clicking on cluster
       google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
