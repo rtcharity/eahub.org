@@ -1,20 +1,16 @@
 {% block map %}
-<style>
-    #map {
-        height: 400px;
-        border-radius: 5px;
-    }
-</style>
 
-<div id="map"></div>
-<div id="map_selector">
-  <input type="radio" name="map_selector" value="individuals" id="map_selector_ind"> Individuals</input>
-  <input type="radio" name="map_selector" value="groups" id="map_selector_groups"> Groups</input>
+<div class="div_container">
+  <div id="map"></div>
+  <div id="map_selector">
+    <input type="radio" name="map_selector" value="individuals" id="map_selector_ind"> Individuals</input>
+    <input type="radio" name="map_selector" value="groups" id="map_selector_groups"> Groups</input>
+  </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
-<script src="/static/js/markerclusterer.js"></script>
-<script src="/static/js/map.js"></script>
+<script src="/static/js/heatmap/markerclusterer.js"></script>
+<script src="/static/js/heatmap/heatmap.js"></script>
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
 <script>
   function initMap() {
