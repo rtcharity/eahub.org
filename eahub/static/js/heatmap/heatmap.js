@@ -58,9 +58,9 @@ function map(page_name,map_data_profiles,map_data_groups) {
               position: location,
               optimized: !isIE  // makes SVG icons work in IE
           });
-          var iconSize = new google.maps.Size(23, 32);
+          var iconSize = new google.maps.Size(20, 23);
           marker.setIcon({
-           url: '/static/imgs/map_marker.svg',
+           url: '/static/imgs/marker.svg',
            size: iconSize,
            scaledSize: iconSize  // makes SVG icons work in IE
           });
