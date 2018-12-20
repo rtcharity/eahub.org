@@ -10,7 +10,7 @@
 
 .header {
   background-image: url("/static/imgs/LandingBanner.png");
-  background-position: 0px 0px;
+  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   display: block;
