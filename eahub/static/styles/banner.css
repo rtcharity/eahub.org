@@ -1,7 +1,31 @@
 .caption {
   color: white;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 240px;
+}
+
+.drop_down {
+  width: 100%
+}
+
+.drop_down_link {
+  color: black;
+  font-size: 16px;
+  padding-left: 10px;
+  padding-bottom: 2px;
+  font-weight: 500;
+  text-decoration: none;
+  opacity: 0.9;
+  display: block;
+}
+
+.drop_down_links {
+  background-color: rgba(220,220,220,0.7); /*light-grey*/
+  margin-top: 10px;
+  margin-right: 40px;
+  padding: 3px 10px 3px 3px;
+  text-align: right;
+  visibility: hidden;
 }
 
 .faces {
@@ -20,19 +44,39 @@
 
 #logo{
   height: 30px;
-  margin-top: -3px;
-  margin-left: 10px;
+}
+
+.logo_container {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.menu_bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+.menu_burger {
+  cursor: pointer;
+  float: right;
+  margin: 22px 40px 0 0;
 }
 
 @media(max-width: 768px) {
   .caption {
     font-size: 26px;
-    margin-top: 160px;
+    margin-top: 220px;
     padding-left: 10px;
     padding-right: 10px;
   }
 
-  .header {
+  .drop_down_links {
+    margin-right: 25px;
+  }
 
+  .menu_burger {
+    margin-right: 25px;
   }
 }
