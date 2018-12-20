@@ -2,7 +2,7 @@
   <link rel="stylesheet" type="text/css" href="/static/styles/banner.css">
 </head>
   <div class="header clearfix">
-    <nav class="drop_down">
+    <div class="drop_down">
       <div class="row">
         <h3 class="text-muted logo_container"><a href="\"><img id="logo" src="/static/imgs/logo_transparent.png" %}" /></a>{% if page_name %} / {{ page_name }}{% endif %}</h3>
         <label class="menu_burger" id="menu_burger">
@@ -23,9 +23,13 @@
           {% if request.user.is_superuser %}
           <li><a class="drop_down_link" href="/admin"><i class="fa fa-pencil"></i> Staff Portal</a></li>
           {% endif %}
+          <li><a class="drop_down_link" href="{% url 'profiles' %}">Profiles</a></li>
+          <li><a class="drop_down_link" href="{% url 'groups' %}">Groups</a></li>
+          <li><a class="drop_down_link" href="https://resources.eahub.org/">EA Resources</a></li>
+          <li><a class="drop_down_link" href="https://donationswap.eahub.org/">EA Donation Swap</a></li>
         </ul>
       </div>
-    </nav>
+    </div>
     <h1 class="caption">Join the over 1700+ EAs from around the world</h1>
   </div>
   <script src="/static/js/banner.js"></script>
