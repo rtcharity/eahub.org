@@ -1,12 +1,25 @@
+.caption {
+  color: white;
+  text-align: center;
+  margin-top: 200px;
+}
+
 .faces {
   width: 100%;
 }
 
 .header {
-  background-color: #7BB0A8;
+  background-image: url("/static/imgs/LandingBanner.png");
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: block;
+  height: 300px;
+  margin-bottom: 10px;
 }
 
 #logo{
   height: 30px;
   margin-top: -3px;
+  margin-left: 10px;
 }

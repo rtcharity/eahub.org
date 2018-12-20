@@ -31,8 +31,10 @@
     <div class="container">
     {% include 'eahub/banner.html' with user=user request=request %}
 
+      <div class="content">
       {% block content %}
       {% endblock %}
+      </div>
     </div>
 
 
