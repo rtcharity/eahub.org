@@ -6,24 +6,10 @@ from groups.models import Group
 from profiles.models import Profile
 
 def index(request):
-    rows = Group.objects\
-        .exclude(lat__isnull=True)
-    map_data = ''.join([
-        '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
-                lat=str(x.lat),
-                lon=str(x.lon),
-                name=x.name,
-                path='/{obj}/{id}'.format(
-                    obj='group',
-                    id=x.id
-                )
-            )
-        + '},'
-        for x in rows
-    ])
+    groupsData = getGroupsData()
     return render(request, 'eahub/index.html', {
-        'map_data': map_data
+        'page_name': 'Home',
+        'map_data_groups': groupsData["map_data"]
     })
 
 def profiles(request):

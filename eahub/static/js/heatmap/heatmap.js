@@ -1,4 +1,4 @@
-function map(page_name,map_data_profiles,map_data_groups) {
+function map(selected_map, map_data_profiles, map_data_groups, page_name) {
   var selectedMap, mapDataProfiles, mapDataGroups;
 
   //Toggle between individual and groups map
@@ -18,9 +18,11 @@ function map(page_name,map_data_profiles,map_data_groups) {
       mapSelectorGroups.setAttribute("checked", "checked")
   }
 
-  function renderMap(selectedMap = page_name,mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups) {
+  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups, page_name) {
     //checks whether to render groups or individuals
-    if (selectedMap == 'Profiles') selectedMap = 'individuals';
+    if (selectedMap == null) {
+      selectedMap = page_name == 'Profiles' ? 'individuals' : 'groups'
+    }
     var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
 
     var minClusterZoom = 14;
