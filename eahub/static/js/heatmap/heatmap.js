@@ -18,16 +18,16 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
       mapSelectorGroups.setAttribute("checked", "checked")
   }
 
-  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups, page_name) {
+  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups, pageName = page_name) {
     //checks whether to render groups or individuals
     if (selectedMap == null) {
-      selectedMap = page_name == 'Profiles' ? 'individuals' : 'groups'
+      selectedMap = pageName == 'Profiles' ? 'individuals' : 'groups'
     }
     var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
 
     var minClusterZoom = 14;
     var mapOptions = {
-        zoom: 1.5,
+        zoom: 1.6,
         maxZoom: minClusterZoom+1,
         center: new google.maps.LatLng(30, 30), // london
         mapTypeControl: false,

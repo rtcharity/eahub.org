@@ -7,9 +7,11 @@ from profiles.models import Profile
 
 def index(request):
     groupsData = getGroupsData()
+    profilesData = getProfilesData()
     return render(request, 'eahub/index.html', {
         'page_name': 'Home',
-        'map_data_groups': groupsData["map_data"]
+        'map_data_groups': groupsData["map_data"],
+        'map_data_profiles': profilesData["map_data"]
     })
 
 def profiles(request):
