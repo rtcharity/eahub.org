@@ -13,3 +13,10 @@
   padding-left: 50px;
   padding-right: 50px;
 }
+
+@media(max-width: 760px) {
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

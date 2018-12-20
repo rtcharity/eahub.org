@@ -23,3 +23,16 @@
   margin-top: -3px;
   margin-left: 10px;
 }
+
+@media(max-width: 768px) {
+  .caption {
+    font-size: 26px;
+    margin-top: 160px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .header {
+
+  }
+}
