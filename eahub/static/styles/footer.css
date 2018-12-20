@@ -1,0 +1,34 @@
+.footer {
+  background-color: #512B52; /* EAHub purple */;
+  bottom: 0;
+  color: hsla(0,0%,100%,.7); /* white-70 */
+  display: block;
+  left: 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+}
+
+.footer_copyright {
+  font-size: 20px;
+  color: hsla(0,0%,100%,.7); /* white-70 */
+}
+
+.footer_copyright:hover {
+  color: hsla(0,0%,100%,.7); /* white-70 */
+  opacity: 0.5;
+  text-decoration: none
+}
+
+.footer_license {
+  margin-top: 15px;
+}
+
+.footer_license a {
+  color: hsla(0,0%,100%,.7); /* white-70 */
+  text-decoration: none;
+}
+
+.footer_license a:hover {
+  opacity: 0.5;
+}
