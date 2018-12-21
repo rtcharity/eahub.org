@@ -1,4 +1,4 @@
-#map {
+.map {
     height: 400px;
-    border-radius: 5px;
+    max-width: 1000px;
 }
