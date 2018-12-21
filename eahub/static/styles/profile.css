@@ -18,13 +18,14 @@
 
 .profile_pic {
   border-radius: 3px;
-  max-width: 200px;
+  max-width: 90%;
   max-height: 150px;
 }
 
 .profile_pic_container {
   text-align: center;
   float: left;
+  max-width: 200px;
 }
 
 .profile_heading {
@@ -32,4 +33,20 @@
   padding-left: 20px;
   padding-right: 20px;
   text-align: center;
+}
+
+@media(max-width: 768px) {
+  .profile_pic_container {
+    width: 33%
+  }
+
+  .profile_name {
+    font-size: 26px;
+  }
+
+  .profile_contact {
+    height: 25px;
+    font-size: 14px;
+    line-height: 25px;
+  }
 }

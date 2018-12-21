@@ -8,7 +8,7 @@
 <div class="container-narrow content-min-height">
     <div class="row">
       <div class="profile_pic_container">
-          <img src="/static/imgs/profile_sub.png" class="profile_pic"/>
+          <img src="{% firstof profile.pic '/static/imgs/profile_sub.png' %}" class="profile_pic"/>
       </div>
       <div class="profile_heading">
         <h1 class="profile_name">{{ profile.full_name }}</h1>
