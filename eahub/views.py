@@ -6,8 +6,7 @@ from groups.models import Group
 from profiles.models import Profile
 
 def index(request):
-    return render(request, 'eahub/index.html', {
-    })
+    return render(request, 'eahub/index.html', {})
 
 def profiles(request):
     groupsData = getGroupsData()

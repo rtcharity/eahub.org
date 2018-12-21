@@ -1,20 +1,11 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<style>
-.jumbotron{
-    text-align: left !important;
-}
-.jumbotron img{
-    max-width: 200px;
-    max-height: 150px;
-    border-radius: 3px;
-}
-</style>
+<link rel="stylesheet" href="/static/styles/profile.css" />
 {% endblock %}
 
 {% block content %}
-<div class="jumbotron">
+<div class="jumbotron content-min-height">
     <div class="row">
         <div class="col-sm-9">
             <h1>{{ profile.full_name }}</h1>

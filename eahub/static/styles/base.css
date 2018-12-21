@@ -1,0 +1,30 @@
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  padding-left: 0px;
+  padding-right: 0px;
+  width: 100%;
+}
+
+.container_narrow {
+  max-width: 1000px;
+}
+
+.content {
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.content-min-height {
+  min-height: 90vh
+}
+
+@media(max-width: 760px) {
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
