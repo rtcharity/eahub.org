@@ -4,3 +4,5 @@ $(document).ready( function () {
       pageLength: 100
     } );
 } );
+
+$('.text-block-from-database').linkify();
