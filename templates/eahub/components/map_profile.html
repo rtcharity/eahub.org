@@ -1,0 +1,23 @@
+{% block map %}
+
+<link href="/static/styles/heatmap.css" rel="stylesheet">
+
+<div id="map_profile" class="map"></div>
+
+<script src="/static/js/heatmap/markerclusterer.js"></script>
+<script src="/static/js/heatmap/map_profile.js"></script>
+<script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
+<script>
+
+  function initMap() {
+    var lat = parseFloat("{{ lat }}");
+    var lon = parseFloat("{{ lon }}");
+    console.log({
+      lat,
+      lon
+    })
+    renderMap(lat, lon);
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+{% endblock %}

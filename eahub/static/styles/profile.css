@@ -1,8 +1,84 @@
-.jumbotron{
-    text-align: left !important;
+.profile .col-sm-6 {
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: center;
 }
-.jumbotron img{
-    max-width: 200px;
-    max-height: 150px;
-    border-radius: 3px;
+
+.profile-contact {
+  background-color: #512B52; /* EAHub purple */
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100px;
+}
+
+.profile-head {
+  margin-bottom: 40px;
+  text-align: center
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.profile-info p {
+  background-color: #d8d3d3; /* light grey */
+  padding: 20px 20px 20px 20px
+}
+
+.profile-key-facts {
+  border-radius: 5px;
+  color: white;
+  margin-top: 0px;
+  padding: 30px 10px 30px 10px;
+}
+
+.profile-key-facts h3 {
+  background-color: #512B52; /* EAHub purple */
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 30px 10px 30px 10px;
+  text-align: center;
+}
+
+.profile-key-facts ul {
+  background-color: rgba(81, 43, 82, 0.7); /* Lighter EAHub purple */
+  padding-bottom: 10px;
+  padding-top: 10px;
+  list-style: none;
+  padding-left: 15px;
+  text-align: left;
+}
+
+.profile-map {
+  padding: 30px 10px 10px 10px;
+}
+
+.profile-name {
+  font-size: 50px;
+  text-align: center;
+}
+
+.profile-pic {
+  border-radius: 3px;
+  max-width: 200px;
+  max-height: 150px;
+}
+
+@media(max-width: 768px) {
+
+  .profile-name {
+    font-size: 26px;
+  }
+
+  .profile-contact {
+    height: 25px;
+    font-size: 14px;
+    line-height: 25px;
+  }
 }
