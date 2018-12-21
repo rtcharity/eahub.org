@@ -1,25 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<style>
-.jumbotron{
-    text-align: left !important;
-}
-.section p{
-    margin-bottom: 0;
-}
-.group-logo{
-    width: 100%;
-    border-radius: 3px;
-    margin-bottom: 20px;
-}
-h2{
-    margin-top: 0;
-}
-.text-block-from-database br{
-    margin-bottom: 20px;
-}
-</style>
+<link rel="/static/styles/group.css"
 {% endblock %}
 
 {% block content %}
@@ -30,7 +12,7 @@ h2{
 
 <!-- summary -->
 {% if group.summary %}
-<div class="row section">
+<div class="row section content-min-height">
     <div class="col-sm-3">
         <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
     </div>

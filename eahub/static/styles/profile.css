@@ -1,0 +1,8 @@
+.jumbotron{
+    text-align: left !important;
+}
+.jumbotron img{
+    max-width: 200px;
+    max-height: 150px;
+    border-radius: 3px;
+}

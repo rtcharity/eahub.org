@@ -14,9 +14,12 @@
 }
 
 .content {
-  min-height: 100vh;
   padding-left: 50px;
   padding-right: 50px;
+}
+
+.content-min-height {
+  min-height: 90vh
 }
 
 @media(max-width: 760px) {
