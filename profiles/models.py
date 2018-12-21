@@ -5,7 +5,7 @@ class ProfileManager(UserManager):
     pass
 
 class Profile(AbstractUser):
-    
+
     # inherit django user object
     objects = ProfileManager()
     USERNAME_FIELD = 'email'
@@ -19,7 +19,7 @@ class Profile(AbstractUser):
     country = models.CharField(max_length=100, null=True)
 
     def full_name(self):
-        return ', '.join([
+        return ' '.join([
             x
             for x in [self.first_name, self.last_name]
             if x not in [None, '']

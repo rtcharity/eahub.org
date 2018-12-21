@@ -1,8 +1,35 @@
-.jumbotron{
-    text-align: left !important;
+.profile_contact {
+  background-color: #512B52;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  width: 100px;
 }
-.jumbotron img{
-    max-width: 200px;
-    max-height: 150px;
-    border-radius: 3px;
+
+.profile_name {
+  font-size: 50px;
+  text-align: center;
+}
+
+.profile_pic {
+  border-radius: 3px;
+  max-width: 200px;
+  max-height: 150px;
+}
+
+.profile_pic_container {
+  text-align: center;
+  float: left;
+}
+
+.profile_heading {
+  display: inline-block;
+  padding-left: 20px;
+  padding-right: 20px;
+  text-align: center;
 }
