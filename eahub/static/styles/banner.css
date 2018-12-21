@@ -1,7 +1,7 @@
 .caption {
   color: white;
   text-align: center;
-  margin-top: 30px;
+  margin-top: 160px;
 }
 
 .drop_down {
@@ -21,28 +21,41 @@
 .drop_down_links {
   background-color: rgba(220,220,220,0.7); /*light-grey*/
   margin-top: 10px;
-  margin-right: 40px;
+  margin-right: 25px;
   padding: 3px 10px 3px 3px;
+  position: absolute;
+  right: 0px;
   text-align: right;
   visibility: hidden;
+  z-index: 1;
 }
 
 .faces {
   width: 100%;
 }
 
-.header {
-  background-image: url("/static/imgs/LandingBanner.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+
+.header_large {
+  background-image: url("/static/imgs/LandingBanner_short.png");
+  background-position: center 0px;
+  background-repeat: repeat;
+  background-size: 1400px;
   display: block;
-  height: 300px;
+  height: 260px;
   margin-bottom: 10px;
+}
+
+.header_small {
+    background-color: #7BB0A8; /* EAHub Banner green */
+    background-size: cover;
+    display: block;
+    height: 60px;
+    margin-bottom: 10px;
 }
 
 #logo{
   height: 30px;
+  margin-top: -7px;
 }
 
 .logo_container {
@@ -60,19 +73,26 @@
 .menu_burger {
   cursor: pointer;
   float: right;
-  margin: 22px 40px 0 0;
+  margin: 15px 40px 0 0;
 }
 
 @media(max-width: 768px) {
   .caption {
-    font-size: 26px;
-    margin-top: 20px;
+    font-size: 20px;
+    margin-top: 100px;
     padding-left: 10px;
     padding-right: 10px;
   }
 
   .drop_down_links {
-    margin-right: 25px;
+    margin-right: 5px;
+  }
+
+  .header_large {
+    background-image: url("/static/imgs/LandingBanner.png");
+    background-position: center 5px;
+    background-size: cover;
+    height: 220px;
   }
 
   .menu_burger {

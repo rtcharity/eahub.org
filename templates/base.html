@@ -29,7 +29,7 @@
 
   <body>
     <div class="container">
-    {% include 'eahub/banner.html' with user=user request=request %}
+    {% include 'eahub/banner.html' with user=user request=request page_name=page_name %}
 
       <div class="content">
       {% block content %}

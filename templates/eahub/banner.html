@@ -1,10 +1,14 @@
 <head>
   <link rel="stylesheet" type="text/css" href="/static/styles/banner.css">
 </head>
-  <div class="header clearfix">
+  {% if page_name == "Home" %}
+  <div class="header_large clearfix">
+  {% else %}
+  <div class="header_small clearfix">
+  {% endif %}
     <div class="drop_down">
       <div class="row">
-        <h3 class="text-muted logo_container"><a href="\"><img id="logo" src="/static/imgs/logo_transparent.png" %}" /></a>{% if page_name %} / {{ page_name }}{% endif %}</h3>
+        <h3 class="text-muted logo_container"><a href="\"><img id="logo" src="/static/imgs/logo_transparent.png" %}" /></a>{% if page_name != "Home" %} / {{ page_name }}{% endif %}</h3>
         <label class="menu_burger" id="menu_burger">
           <div class="menu_bar"></div>
           <div class="menu_bar"></div>
@@ -30,6 +34,8 @@
         </ul>
       </div>
     </div>
+    {% if page_name == "Home" %}
     <h1 class="caption">Join the over 1700+ EAs from around the world</h1>
+    {% endif %}
   </div>
   <script src="/static/js/banner.js"></script>

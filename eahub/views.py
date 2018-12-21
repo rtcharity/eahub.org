@@ -21,8 +21,9 @@ def index(request):
             )
         + '},'
         for x in rows
-    ])    
+    ])
     return render(request, 'eahub/index.html', {
+        'page_name': 'Home',
         'map_data': map_data
     })
 
@@ -42,7 +43,7 @@ def profiles(request):
             )
         + '},'
         for x in rows
-    ])    
+    ])
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': rows,
@@ -65,7 +66,7 @@ def groups(request):
             )
         + '},'
         for x in rows
-    ])    
+    ])
     return render(request, 'eahub/groups.html', {
         'page_name': 'Groups',
         'groups': rows,
