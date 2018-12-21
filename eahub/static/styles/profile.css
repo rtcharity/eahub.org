@@ -1,3 +1,9 @@
+.profile .col-sm-6 {
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: center;
+}
+
 .profile-contact {
   background-color: #512B52; /* EAHub purple */
   border-radius: 5px;
@@ -11,22 +17,32 @@
   width: 100px;
 }
 
-.profile-container {
-  background-color: #f5f2f2; /*light grey */
-  border-radius: 5px;
+.profile-head {
+  margin-bottom: 40px;
+  text-align: center
+}
+
+.profile-info {
+  margin-bottom: 20px;
+}
+
+.profile-info p {
+  background-color: #d8d3d3; /* light grey */
+  padding: 20px 20px 20px 20px
 }
 
 .profile-key-facts {
   border-radius: 5px;
   color: white;
-  padding: 10px 10px 10px 10px;
+  margin-top: 0px;
+  padding: 30px 10px 30px 10px;
 }
 
 .profile-key-facts h3 {
   background-color: #512B52; /* EAHub purple */
+  margin-top: 0px;
   margin-bottom: 0px;
-  padding-bottom: 10px;
-  padding-top: 10px;
+  padding: 30px 10px 30px 10px;
   text-align: center;
 }
 
@@ -38,6 +54,10 @@
   padding-left: 15px;
 }
 
+.profile-map {
+  padding: 30px 10px 10px 10px;
+}
+
 .profile-name {
   font-size: 50px;
   text-align: center;
@@ -45,27 +65,11 @@
 
 .profile-pic {
   border-radius: 3px;
-  max-width: 90%;
+  max-width: 200px;
   max-height: 150px;
 }
 
-.profile-pic-container {
-  text-align: center;
-  float: left;
-  max-width: 200px;
-}
-
-.profile-heading {
-  display: inline-block;
-  padding-left: 20px;
-  padding-right: 20px;
-  text-align: center;
-}
-
 @media(max-width: 768px) {
-  .profile-pic-container {
-    width: 33%
-  }
 
   .profile-name {
     font-size: 26px;

@@ -32,12 +32,6 @@ class Profile(AbstractUser):
             if x not in [None, '']
         ])
 
-    def coord(self):
-        return {
-            "lat": self.lat,
-            "long": self.long
-        }
-
     class Meta:
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'
