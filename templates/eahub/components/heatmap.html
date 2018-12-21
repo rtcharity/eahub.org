@@ -1,12 +1,7 @@
 {% block map %}
-<style>
-    #map {
-        height: 400px;
-        border-radius: 5px;
-    }
-</style>
+<link rel="stylesheet" href="/static/styles/heatmap.css" />
 
-<div id="map"></div>
+<div id="map" class="map centered"></div>
 
 <script>
 
@@ -33,7 +28,7 @@
             });
             marker.addListener('click', function() {
                 new google.maps.InfoWindow({
-                    content: '<div id="content">' 
+                    content: '<div id="content">'
                         + '<table>'
                         + '<tr><td><p><u>' + location.label + '</u></p></td></tr>'
                         + '<tr><td><a href="http://' + window.location.host + location.path + '">EA Hub Profile</a></td></tr>'
