@@ -17,15 +17,25 @@
 }
 
 .profile-key-facts {
-  background-color: #512B52; /* EAHub purple */
-  opacity: 0.7;
+  border-radius: 5px;
   color: white;
+  padding: 10px 10px 10px 10px;
 }
 
-.profile-key-facts-heading {
+.profile-key-facts h3 {
   background-color: #512B52; /* EAHub purple */
-  opacity: 1;
+  margin-bottom: 0px;
+  padding-bottom: 10px;
+  padding-top: 10px;
   text-align: center;
+}
+
+.profile-key-facts ul {
+  background-color: rgba(81, 43, 82, 0.7); /* Lighter EAHub purple */
+  padding-bottom: 10px;
+  padding-top: 10px;
+  list-style: none;
+  padding-left: 15px;
 }
 
 .profile-name {
