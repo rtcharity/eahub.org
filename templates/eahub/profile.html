@@ -5,15 +5,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-narrow content-min-height">
-    <div class="row">
-      <div class="profile_pic_container">
-          <img src="{% firstof profile.pic '/static/imgs/profile_sub.png' %}" class="profile_pic"/>
+<div class="container-narrow content-min-height profile-container">
+    <div>
+      <div class="profile-pic-container">
+          <img src="{% firstof profile.pic '/static/imgs/profile_sub.png' %}" class="profile-pic"/>
       </div>
-      <div class="profile_heading">
-        <h1 class="profile_name">{{ profile.full_name }}</h1>
-        <div class="profile_contact">Connect</div>
+      <div class="profile-heading">
+        <h1 class="profile-name">{{ profile.full_name }}</h1>
+        <div class="profile-contact">Connect</div>
       </div>
+    </div>
+    <div>
+      <div class="profile-key-facts">
+        <h3 class="profile-key-facts-heading">Key facts</h3>
+        <ul>
+          <li>Cause areas: lorem ipsum risks</li>
+          <li>Donations: £1000 to Lorem Ipsum Foundation</li>
+          <li>Direct work hours: 10-15h a lorem</li>
+          <li>Expertise: lorem ipsum</li>
     </div>
 </div>
 
