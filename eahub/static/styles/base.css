@@ -4,7 +4,6 @@
 }
 
 .container {
-  min-height: 100%;
   padding-left: 0px;
   padding-right: 0px;
   width: 100%;
@@ -15,6 +14,7 @@
 }
 
 .content {
+  min-height: 100vh;
   padding-left: 50px;
   padding-right: 50px;
 }
