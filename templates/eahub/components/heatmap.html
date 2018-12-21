@@ -1,59 +1,26 @@
 {% block map %}
-<style>
-    #map {
-        height: 400px;
-        border-radius: 5px;
-    }
-</style>
+<link href="/static/styles/heatmap.css" rel="stylesheet">
 
-<div id="map"></div>
+<div class="div_container">
+  <div id="map"></div>
+  <div id="map_selector">
+    <input type="radio" name="map_selector" value="individuals" id="map_selector_ind"> Individuals</input>
+    <input type="radio" name="map_selector" value="groups" id="map_selector_groups"> Groups</input>
+  </div>
+</div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
+<script src="/static/js/heatmap/markerclusterer.js"></script>
+<script src="/static/js/heatmap/heatmap.js"></script>
+<script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
 <script>
 
-    function initMap() {
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 3,
-            center: {lat: 51.5074, lng: 0.1278}, // london
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: false,
-            rotateControl: false
-        });
-
-        var markers = locations.map(function(location, i) {
-            var marker = new google.maps.Marker({
-                position: location,
-                icon: {
-                    url: 'https://storage.googleapis.com/support-kms-prod/SNP_2752125_en_v0', // url
-                    scaledSize: new google.maps.Size(10, 10), // scaled size
-                    origin: new google.maps.Point(0,0), // origin
-                    anchor: new google.maps.Point(0, 0) // anchor
-                }
-            });
-            marker.addListener('click', function() {
-                new google.maps.InfoWindow({
-                    content: '<div id="content">' 
-                        + '<table>'
-                        + '<tr><td><p><u>' + location.label + '</u></p></td></tr>'
-                        + '<tr><td><a href="http://' + window.location.host + location.path + '">EA Hub Profile</a></td></tr>'
-                        + '<tr><td><a target="_blank" href="https://www.facebook.com/search/top/?q=' + location.label + '">Facebook Page</a></td></tr>'
-                        + '</table>'
-                        + '</div>'
-                }).open(map, marker);
-            });
-            return marker;
-        });
-
-        // Add a marker clusterer to manage the markers.
-        var markerCluster = new MarkerClusterer(
-            map, markers,{imagePath: '../static/heatmap/m'}
-        );
-    }
-    var locations = [
-        {{ map_data | safe}}
-    ]
+  function initMap() {
+    var map_data_profiles = [{{ map_data_profiles | safe}}];
+    var map_data_groups = [{{ map_data_groups | safe}}];
+    var page_name = "{{ page_name }}";
+    map(null,map_data_profiles,map_data_groups,page_name)
+  }
 </script>
-<script src="\static/heatmap/markerclusterer.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
 {% endblock %}
