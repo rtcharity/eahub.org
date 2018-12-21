@@ -13,7 +13,11 @@
         <div class="profile-contact">Connect</div>
       </div>
     </div>
+    {% if profile.lat and profile.lon %}
     <div class="profile-key-facts col-sm-6">
+    {% else %}
+    <div class="profile-key-facts col-sm-6 col-sm-offset-3">
+    {% endif %}
       <h3>Key facts</h3>
       <ul>
         <li><b>Cause areas:</b> lorem ipsum risks</li>
@@ -28,11 +32,14 @@
         <li><b>Org affililations:</b> Lorem Ipsum Charity</li>
       </ul>
     </div>
+
+    {% if profile.lat and profile.lon %}
     <div class="col-sm-6 profile-map">
       <a href="/profiles">
       {% include 'eahub/components/map_profile.html' with lat=profile.lat lon=profile.lon %}
       </a>
     </div>
+    {% endif %}
     <div class="col-sm-10 col-sm-offset-1 profile-info">
       <h3>Bio</h3>
       <p>
