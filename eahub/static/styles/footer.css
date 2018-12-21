@@ -3,6 +3,8 @@
   bottom: 0;
   color: hsla(0,0%,100%,.7); /* white-70 */
   display: block;
+  left: 0;
+  position: relative;
   text-align: center;
   width: 100%;
 }
