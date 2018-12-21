@@ -1,12 +1,16 @@
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .container {
   width: 100%;
   padding-left: 0px;
   padding-right: 0px;
 }
 
-.centered {
-  margin-left: auto;
-  margin-right: auto;
+.container_narrow {
+  max-width: 1000px;
 }
 
 .content {
