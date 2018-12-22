@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
 
+<head>
+  <link href="/static/styles/profiles.css" rel="stylesheet">
+</head>
+
 {% block content %}
+
+<div class="container-narrow centered">
 
 {% include 'eahub/components/heatmap.html' %}
 <br>
 
-<div class="container-narrow centered">
 <table class="table enable-datatable table-striped table-bordered dataTable">
     <thead>
         <tr>
