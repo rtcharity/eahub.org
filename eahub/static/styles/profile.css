@@ -21,8 +21,7 @@
 
 .profile-head {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 40px auto 40px auto;
   text-align: center
 }
 
