@@ -32,10 +32,12 @@
 
 .profile-info {
   margin-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .profile-info p {
-  background-color: #d8d3d3; /* light grey */
+  background-color: #f7f6f6; /* very light grey */
   padding: 20px 20px 20px 20px
 }
 
@@ -59,9 +61,7 @@
   font-size: 16px;
   line-height: 25px;
   list-style: none;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  padding-left: 15px;
+  padding: 20px 20px 20px 20px;
   text-align: left;
 }
 
