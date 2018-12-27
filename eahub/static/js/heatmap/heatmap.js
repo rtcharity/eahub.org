@@ -56,6 +56,10 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
       });
 
       var markers = locations.map(function(location, i) {
+          var label = location.label.toLowerCase()
+            .split(' ')
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(' ');
           var marker = new google.maps.Marker({
               position: location,
               optimized: !isIE  // makes SVG icons work in IE
@@ -66,7 +70,7 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
            size: iconSize,
            scaledSize: iconSize  // makes SVG icons work in IE
           });
-          marker.desc = "<a href='" + location.link + "'>" + location.label + "</a>";
+          marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
           oms.addMarker(marker);
           return marker;
       });
