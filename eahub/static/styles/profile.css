@@ -43,22 +43,24 @@
   border-radius: 5px;
   color: white;
   margin-top: 0px;
-  padding: 30px 10px 30px 10px;
+  padding: 10px 10px 10px 10px;
 }
 
 .profile-key-facts h3 {
   background-color: #512B52; /* EAHub purple */
   margin-top: 0px;
   margin-bottom: 0px;
-  padding: 0px 10px 30px 10px;
+  padding: 10px 10px 10px 10px;
   text-align: center;
 }
 
 .profile-key-facts ul {
   background-color: rgba(81, 43, 82, 0.7); /* Lighter EAHub purple */
+  font-size: 16px;
+  line-height: 25px;
+  list-style: none;
   padding-bottom: 10px;
   padding-top: 10px;
-  list-style: none;
   padding-left: 15px;
   text-align: left;
 }
