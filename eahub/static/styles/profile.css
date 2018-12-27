@@ -18,7 +18,10 @@
 }
 
 .profile-head {
+  display: block;
   margin-bottom: 40px;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center
 }
 
@@ -42,7 +45,7 @@
   background-color: #512B52; /* EAHub purple */
   margin-top: 0px;
   margin-bottom: 0px;
-  padding: 30px 10px 30px 10px;
+  padding: 0px 10px 30px 10px;
   text-align: center;
 }
 
@@ -66,6 +69,7 @@
 
 .profile-pic {
   border-radius: 3px;
+  margin-bottom: 60px;
   max-width: 200px;
   max-height: 150px;
 }
