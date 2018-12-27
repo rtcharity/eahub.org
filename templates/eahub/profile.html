@@ -9,7 +9,7 @@
     <div class="profile-head">
       <img src="{% firstof profile.pic '/static/imgs/profile_sub.png' %}" class="profile-pic centered"/>
       <div class="profile-heading">
-        <h1 class="profile-name">{{ profile.full_name }}</h1>
+        <h1 class="profile-name">{{ profile.full_name|title }}</h1>
         <div class="profile-contact">Connect</div>
       </div>
     </div>
