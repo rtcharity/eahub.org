@@ -5,29 +5,39 @@
 }
 
 .profile-contact {
-  background-color: #512B52; /* EAHub purple */
+  background-color: #7BB0A8; /* EAHub banner green */
   border-radius: 5px;
   color: white;
+  float: right;
   font-size: 20px;
   height: 50px;
   line-height: 50px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 25px;
   text-align: center;
   width: 100px;
 }
 
 .profile-head {
-  margin-bottom: 40px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   text-align: center
+}
+
+.profile-heading {
+  display: inline-block;
 }
 
 .profile-info {
   margin-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 .profile-info p {
-  background-color: #d8d3d3; /* light grey */
+  background-color: #f7f6f6; /* very light grey */
   padding: 20px 20px 20px 20px
 }
 
@@ -35,23 +45,23 @@
   border-radius: 5px;
   color: white;
   margin-top: 0px;
-  padding: 30px 10px 30px 10px;
+  padding: 10px 10px 10px 10px;
 }
 
 .profile-key-facts h3 {
   background-color: #512B52; /* EAHub purple */
   margin-top: 0px;
   margin-bottom: 0px;
-  padding: 30px 10px 30px 10px;
+  padding: 10px 10px 10px 10px;
   text-align: center;
 }
 
 .profile-key-facts ul {
   background-color: rgba(81, 43, 82, 0.7); /* Lighter EAHub purple */
-  padding-bottom: 10px;
-  padding-top: 10px;
+  font-size: 16px;
+  line-height: 25px;
   list-style: none;
-  padding-left: 15px;
+  padding: 20px 20px 20px 20px;
   text-align: left;
 }
 
@@ -60,12 +70,17 @@
 }
 
 .profile-name {
+  display: inline-block;
   font-size: 50px;
+  margin-right: 20px;
   text-align: center;
 }
 
 .profile-pic {
   border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-right: 10px;
   max-width: 200px;
   max-height: 150px;
 }
