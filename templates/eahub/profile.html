@@ -1,10 +1,9 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<link rel="stylesheet" href="/static/styles/profile.css" />
-{% endblock %}
-
 {% block content %}
+<head>
+  <link rel="stylesheet" type="text/css"  href="/static/styles/profile.css">
+</head>
 <div class="container-narrow profile">
     <div class="profile-head">
       <img src="{% firstof profile.pic '/static/imgs/profile_sub.png' %}" class="profile-pic centered"/>
