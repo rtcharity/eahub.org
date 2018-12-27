@@ -5,24 +5,29 @@
 }
 
 .profile-contact {
-  background-color: #512B52; /* EAHub purple */
+  background-color: #7BB0A8; /* EAHub banner green */
   border-radius: 5px;
   color: white;
+  float: right;
   font-size: 20px;
   height: 50px;
   line-height: 50px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 25px;
   text-align: center;
   width: 100px;
 }
 
 .profile-head {
   display: block;
-  margin-bottom: 40px;
   margin-left: auto;
   margin-right: auto;
   text-align: center
+}
+
+.profile-heading {
+  display: inline-block;
 }
 
 .profile-info {
@@ -63,13 +68,17 @@
 }
 
 .profile-name {
+  display: inline-block;
   font-size: 50px;
+  margin-right: 20px;
   text-align: center;
 }
 
 .profile-pic {
   border-radius: 3px;
-  margin-bottom: 60px;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-right: 10px;
   max-width: 200px;
   max-height: 150px;
 }
