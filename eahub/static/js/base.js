@@ -1,7 +1,12 @@
 $(document).ready( function () {
-    $('.enable-datatable').DataTable({
-      "columnDefs": [
-        { "orderable": false, "targets": 0 }
+    console.log("database3")
+    $('#enable-datatable').dataTable({
+      order: [[1, 'asc']],
+      columns: [
+        { "orderable": false, "targets": 0 },
+        null,
+        null,
+        null
       ],
       lengthChange: false,
       pageLength: 100
