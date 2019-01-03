@@ -6,11 +6,9 @@
 </head>
 <div class="container-narrow profile">
     <div class="profile-head">
-      <img src="{% firstof profile.pic '/static/imgs/profile_sub.png' %}" class="profile-pic centered"/>
-      <div class="profile-heading">
-        <h1 class="profile-name">{{ profile.full_name|title }}</h1>
-        <div class="profile-contact">Connect</div>
-      </div>
+      <img src="{% firstof profile.pic '/static/imgs/profile_avatar.png' %}" class="profile-pic"/>
+      <h1 class="profile-name">{{ profile.full_name|title }}</h1>
+      <div class="profile-contact">Connect</div>
     </div>
     <div class="row">
     {% if profile.lat and profile.lon %}

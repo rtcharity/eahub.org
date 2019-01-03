@@ -1,118 +1,57 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<link rel="/static/styles/group.css"
-{% endblock %}
-
 {% block content %}
-<div class="jumbotron">
-    <h1 class="">{{ group.name }}</h1>
-    {% if group.location %}<p><i class="fa fa-map-marker"></i> {{ group.location }}</p>{% endif %}
-</div>
+<head>
+  <link rel="stylesheet" type="text/css"  href="/static/styles/profile.css">
+  <link rel="stylesheet" type="text/css"  href="/static/styles/group.css">
+</head>
 
-<!-- summary -->
-{% if group.summary %}
-<div class="row section content-min-height">
-    <div class="col-sm-3">
-        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
-    </div>
-    <div class="col-sm-9">
-        <h2>Summary</h2>
-        <p class="text-block-from-database">{{ group.summary|linebreaksbr }}</p>
-    </div>
-</div>
-<hr>
-{% endif %}
+<div class="container-narrow profile">
+  <div class="profile-head">
+    <img src="{% firstof group.pic '/static/imgs/group_avatar.png' %}" class="profile-pic"/>
+    <h1 class="profile-name">{{ group.name|title }}</h1>
+    <div class="profile-contact">Connect</div>
+  </div>
 
-<!-- donations -->
-{% if group.get_donations %}
-<div class="row section">
-    <div class="col-sm-3">
-        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+  <div class="row">
+    {% if group.lat and group.lon %}
+    <div class="profile-key-facts col-sm-6">
+    {% else %}
+    <div class="profile-key-facts col-sm-6 col-sm-offset-3">
+    {% endif %}
+      <h3>Key facts</h3>
+      <ul>
+        <li><b><a href="">Social Media Link</a></b></li>
+        <li><b>Local or University Group:</b> Local</li>
+        <li><b>Meeting Frequency:</b> 2/lorem</li>
+        <li><b>Organiser:</b> Will MacLorem</li>
+        <li><b>No members:</b> 80000</li>
+        <li><b>Funds raised</b> 80000 Lorems-$</li>
+      </ul>
     </div>
-    <div class="col-sm-9">
-        <h2>Donations</h2>
-        <table class="table">
-            <thead>
-                <th>Amount</th>
-                <th>To</th>
-                <th>When</th>
-                <th>Any details (e.g. who donated)</th>
-            </thead>
-            <tbody>
-                {% for row in group.get_donations %}
-                <tr>
-                    <td class="text-right">{{ row.amount|default:'n/a' }}</td>
-                    <td>{{ row.to|default:'n/a' }}</td>
-                    <td class="text-right">{{ row.when|default:'n/a' }}</td>
-                    <td>{{ row.details|default:'n/a' }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-<hr>
-{% endif %}
 
-<!-- meetups -->
-{% if group.meetup_url or group.meetup_details %}
-<div class="row section">
-    <div class="col-sm-3">
-        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
+    {% if group.lat and group.lon %}
+    <div class="col-sm-6 profile-map">
+      <a href="/groups">
+      {% include 'eahub/components/map_profile.html' with lat=group.lat lon=group.lon %}
+      </a>
     </div>
-    <div class="col-sm-9">
-        <h2>Meetups</h2>
-        {% if group.meetup_url %}<p class="text-block-from-database"><a href="{{ group.meetup_url }}"><i class="fa fa-chevron-right"></i> {{ group.meetup_url }}</a></p>{% endif %}
-        {% if group.meetup_details %}<p class="text-block-from-database">{{ group.meetup_details|linebreaksbr }}</p>{% endif %}
-    </div>
-</div>
-<hr>
-{% endif %}
+    {% endif %}
+  </div>
 
-<!-- links -->
-{% if group.get_links %}
-<div class="row section">
-    <div class="col-sm-3">
-        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
-    </div>
-    <div class="col-sm-9">
-        <h2>Links</h2>
-        {% for link in group.get_links %}
-        <p><a href="{{ link.link }}"><i class="fa fa-chevron-right"></i> {{ link.label }}</a></p>
-        {% endfor %}
-    </div>
-</div>
-<hr>
-{% endif %}
+  <div class="profile-info">
+    <h3>Bio</h3>
+    <p>
+      Our local EA Group always have had a big passion for lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    </p>
+  </div>
 
-<!-- other links -->
-{% if group.website or group.facebook_group or group.facebook_page %}
-<div class="row section">
-    <div class="col-sm-3">
-        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
-    </div>
-    <div class="col-sm-4">
-        <h2>Other Links</h2>
-        {% if group.website %}<p><a href="{{ group.website }}"><i class="fa fa-home"></i> Website</a></p>{% endif %}
-        {% if group.facebook_group %}<p><a href="{{ group.facebook_group }}"><i class="fa fa-facebook-square"></i> Facebook Group</a></p>{% endif %}
-        {% if group.facebook_page %}<p><a href="{{ group.facebook_page }}"><i class="fa fa-facebook-square"></i> Facebook Page</a></p>{% endif %}
-    </div>
+  <div class="profile-info">
+    <h3>Custom</h3>
+    <p>
+      Here's some further info about our group: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    </p>
+  </div>
 </div>
-<hr>
-{% endif %}
-
-<!-- organisers -->
-{% if group.organisers|length %}
-<div class="row section">
-    <div class="col-sm-3">
-        <img class="group-logo" src="https://i.imgur.com/90o8Ei9.png"/>
-    </div>
-    <div class="col-sm-9">
-        <h2>Organisers</h2>
-        <p class="text-block-from-database">{{ group.organisers|linebreaksbr }}</p>
-    </div>
-</div>
-{% endif %}
 
 {% endblock %}
