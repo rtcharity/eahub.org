@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
 
-<head>
-  <link href="/static/styles/profiles.css" rel="stylesheet">
-</head>
-
 {% block content %}
+
+<head>
+  <link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
+</head>
 
 <div class="container-narrow centered">
 
 {% include 'eahub/components/heatmap.html' %}
 <br>
 
-<table class="table enable-datatable table-striped table-bordered dataTable">
+<table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
     <thead>
         <tr>
+            <th></th>
             <th>Name</th>
             <th>City/Town</th>
             <th>Country</th>
@@ -23,6 +24,11 @@
     <tbody>
         {% for profile in profiles %}
         <tr>
+            {% if profile.img %}
+            <td><img src="{% url 'profile' profile.img %}" class="profile-pic" /></td>
+            {% else %}
+            <td><img src="/static/imgs/profile_sub.png" class="profile-pic" /></td>
+            {% endif %}
             <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
             <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
             <td class="text-muted">{{ profile.country|default:'' }}</td>
