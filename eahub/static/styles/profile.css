@@ -19,6 +19,7 @@
 .profile-head {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin: 40px auto 40px auto;
   text-align: center
@@ -89,11 +90,13 @@
 
   .profile-name {
     font-size: 26px;
+    margin-right: 0px;
   }
 
   .profile-contact {
-    height: 25px;
     font-size: 14px;
+    height: 25px;
     line-height: 25px;
+    margin-top: 20px;
   }
 }
