@@ -88,6 +88,11 @@
 
 @media(max-width: 768px) {
 
+  .profile .col-sm-6 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
   .profile-name {
     font-size: 26px;
     margin-right: 0px;
