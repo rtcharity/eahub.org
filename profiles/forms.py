@@ -12,3 +12,13 @@ class ProfileChangeForm(UserChangeForm):
     class Meta:
         model = Profile
         fields = UserChangeForm.Meta.fields
+
+
+class EditProfileForm(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = (
+            'email',
+            'first_name', 'last_name',
+            'city_or_town', 'country'
+        )

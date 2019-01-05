@@ -4,11 +4,11 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import requests
 
 from .models import Profile
-from .forms import ProfileCreationForm
+from .forms import ProfileCreationForm, EditProfileForm
 
 
 def recaptcha_valid(recaptcha_response):
@@ -51,3 +51,17 @@ def MyProfileView(request):
     return render(request, 'eahub/my_profile.html', {
         'user': request.user
     })
+
+
+@login_required(login_url=reverse_lazy('login'))
+def edit_profile(request):
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('my_profile'))
+    else:
+        form = EditProfileForm(instance=request.user)
+        return render(request, 'eahub/edit_profile.html', {
+            'form': form
+        })
