@@ -26,11 +26,6 @@
   width: 200px;
 }
 
-.groups-map-link a {
-  background-color: black;
-}
+.groups-map-link {
 
-.groups-map-link a:hover {
-  opacity: 0.5;
-  background-color: black;
 }
