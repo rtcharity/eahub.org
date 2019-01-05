@@ -1,0 +1,15 @@
+#map {
+    height: 400px;
+}
+
+#map_profile_link {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+#map_groups_link {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}

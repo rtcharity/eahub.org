@@ -10,8 +10,8 @@
 <div class="container-narrow centered">
   <div class="col-sm-5">
     <div class="groups-actions">
-      <a href="/groups/start"  class="groups-actions-btn">
-        <div>
+      <a href="/groups/start" >
+        <div class="groups-actions-btn">
           Start a Group
         </div>
       </a>
@@ -28,7 +28,13 @@
     </div>
   </div>
   <div class="col-sm-7">
-    {% include 'eahub/components/heatmap.html' %}
+    <div class="groups-map-link">
+      <div>
+      <a href="/maps/groups">
+      {% include 'eahub/maps/groups_link.html' with map_data_groups=map_data_groups %}
+      </a>
+      </div?
+    </div>
   </div>
 
 

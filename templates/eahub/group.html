@@ -32,7 +32,7 @@
     {% if group.lat and group.lon %}
     <div class="col-sm-6 profile-map">
       <a href="/groups">
-      {% include 'eahub/components/map_profile.html' with lat=group.lat lon=group.lon %}
+      {% include 'eahub/maps/profile_link.html' with lat=group.lat lon=group.lon %}
       </a>
     </div>
     {% endif %}

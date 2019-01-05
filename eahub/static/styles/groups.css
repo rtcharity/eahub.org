@@ -10,8 +10,9 @@
 }
 
 .groups-actions a:hover {
-  text-decoration: none;
   color: white;
+  opacity: 0.7;
+  text-decoration: none;
 }
 
 .groups-actions-btn {
@@ -23,4 +24,13 @@
   margin-bottom: 20px;
   text-align: center;
   width: 200px;
+}
+
+.groups-map-link a {
+  background-color: black;
+}
+
+.groups-map-link a:hover {
+  opacity: 0.5;
+  background-color: black;
 }
