@@ -13,10 +13,10 @@ class Profile(AbstractUser):
     REQUIRED_FIELDS = []
 
     # add custom fields
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, verbose_name='latitude')
-    lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, verbose_name='longitude')
-    city_or_town = models.CharField(max_length=100, null=True)
-    country = models.CharField(max_length=100, null=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name='latitude')
+    lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name='longitude')
+    city_or_town = models.CharField(max_length=100, null=True, blank=True)
+    country = models.CharField(max_length=100, null=True, blank=True)
 
     def full_name(self):
         return ' '.join([
