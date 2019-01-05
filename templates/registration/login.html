@@ -1,68 +1,46 @@
-{% extends 'base.html' %}
+{% extends 'form.html' %}
 
 {% block title %}Login{% endblock %}
 
-{% block header %}
-<style>
-    h2{
-      margin-top: 5px;
-      margin-bottom: 20px;
-    }
-    form input{
-        max-width: 400px;
-    }
-    form .field{
-      margin-bottom: 20px;
-    }
-    .alert{
-      margin-top: 5px;
-      margin-bottom: 0;
-    }
-  </style>
-{% endblock %}
-
-{% block content %}
-<div class="col-md-6 col-md-offset-3">
-  <div class="panel panel-default">
-      <div class="panel-body">
-          <form method="post">
-            {% csrf_token %}        
-            <h2>Login</h2>        
-            <div class="field">
-                <label for="id_username">Email address</label>
-                <input type="username" name="username" id="id_username" class="form-control" placeholder="Email address" required autofocus>
-                {% if form.username.errors %}
-                  {% for error in form.username.errors %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                  {% endfor %}
-                {% endif %}
-            </div>
-            <div class="field">
-              <label for="id_password">Password</label>
-              <input type="password" name="password" id="id_password" class="form-control" placeholder="Password" required>
-              {% if form.password.errors %}
-                {% for error in form.password.errors %}
-                  <div class="alert alert-danger">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <div class="field">
-              {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-            </div>
-            <button type="submit" class="btn btn-default">Login</button>
-          </form>
-      </div>
-  </div>
-  
-  <div class="alert alert-info">
-      <h2>Login not working?</h2>
-      <p>Recently we updated the eahub.org website to a new platform. As your password was saved in a super secure way we were unable to transfer it to the new one. Don't worry, there's nothing to worry about. All you need to do is reset your password.</p>
-      <br>
-      <p><a href="{% url 'password_reset' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
-  </div>
+{% block form_fields %}
+<div class="field">
+  <label for="id_username">Email address</label>
+  <input type="username" name="username" id="id_username" class="form-control" placeholder="utilitarian_46@aol.com" required autofocus>
+  {% if form.username.errors %}
+    {% for error in form.username.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+  <label for="id_password">Password</label>
+  <input type="password" name="password" id="id_password" class="form-control" placeholder="password123" required>
+  {% if form.password.errors %}
+    {% for error in form.password.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+  {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}
+{% block submit_button_text %}Login{% endblock %}
+
+{% block content_after_form %}
+<div class="alert alert-info">
+  <h2>Login not working?</h2>
+  <p>Recently we updated the eahub.org website to a new platform. As your password was saved in a super secure way we were unable to transfer it to the new one. Don't worry, there's nothing to worry about. All you need to do is reset your password.</p>
+  <br>
+  <p><a href="{% url 'password_reset' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
+</div>
+{% endblock %}
+
+
+
+
+

@@ -1,90 +1,63 @@
-{% extends 'base.html' %}
+{% extends 'form.html' %}
 
 {% block title %}Sign Up{% endblock %}
 
-{% block header %}
-<style>
-  h2{
-    margin-top: 5px;
-    margin-bottom: 20px;
-  }
-  form input{
-      max-width: 400px;
-  }
-  form .field{
-    margin-bottom: 20px;
-  }
-  .alert{
-    margin-top: 5px;
-    margin-bottom: 0;
-  }
-</style>
-<script src='https://www.google.com/recaptcha/api.js'></script>
-{% endblock %}
-
-{% block content %}
-<div class="panel panel-default col-md-6 col-md-offset-3">
-    <div class="panel-body">
-        <form method="post">
-          {% csrf_token %}        
-          <h2>Sign up</h2>
-          <div class="field">
-            <label for="id_first_name">First Name</label>
-            <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Peter" required autofocus>
-            {% if form.first_name.errors %}
-              {% for error in form.first_name.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-            {% endif %}
-          </div>
-          <div class="field">
-            <label for="id_last_name">Last Name</label>
-            <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" required>
-            {% if form.last_name.errors %}
-              {% for error in form.last_name.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-            {% endif %}
-          </div>
-          <div class="field">
-              <label for="id_email">Email address</label>
-              <input type="email" name="email" id="id_email" class="form-control" placeholder="Email address" required>
-              {% if form.email.errors %}
-                {% for error in form.email.errors %}
-                  <div class="alert alert-danger">{{ error }}</div>
-                {% endfor %}
-              {% endif %}
-          </div>
-          <div class="field">
-            <label for="id_password1">Password</label>
-            <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Password" required>
-            {% if form.password1.errors %}
-              {% for error in form.password1.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-            {% endif %}
-          </div>
-          <div class="field">
-            <label for="id_password2">Password</label>
-            <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Password" required>
-            {% if form.password2.errors %}
-              {% for error in form.password2.errors %}
-                <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-            {% endif %}
-          </div>
-          <div class="field">
-            {% if form.non_field_errors %}
-              {% for error in form.non_field_errors %}
-                  <div class="alert alert-danger">{{ error }}</div>
-              {% endfor %}
-            {% endif %}
-          </div>
-          <div class="field">
-            <div class="g-recaptcha" data-sitekey="6Lc9-IEUAAAAAFDBa292skJISigDI3U2OHpgsxjB"></div>
-          </div>
-          <button type="submit" class="btn btn-default">Sign Up</button>
-        </form>
-    </div>
+{% block form_fields %}
+<div class="field">
+  <label for="id_first_name">First Name</label>
+  <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Peter" required autofocus>
+  {% if form.first_name.errors %}
+    {% for error in form.first_name.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+  <label for="id_last_name">Last Name</label>
+  <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" required>
+  {% if form.last_name.errors %}
+    {% for error in form.last_name.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+    <label for="id_email">Email address</label>
+    <input type="email" name="email" id="id_email" class="form-control" placeholder="utilitarian_46@aol.com" required>
+    {% if form.email.errors %}
+      {% for error in form.email.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+</div>
+<div class="field">
+  <label for="id_password1">Password</label>
+  <input type="password" name="password1" id="id_password1" class="form-control" placeholder="password123" required>
+  {% if form.password1.errors %}
+    {% for error in form.password1.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+  <label for="id_password2">Confirm Password</label>
+  <input type="password" name="password2" id="id_password2" class="form-control" placeholder="password123" required>
+  {% if form.password2.errors %}
+    {% for error in form.password2.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+  {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+<div class="field">
+  <div class="g-recaptcha" data-sitekey="6Lc9-IEUAAAAAFDBa292skJISigDI3U2OHpgsxjB"></div>
 </div>
 {% endblock %}
+
+{% block submit_button_text %}Sign Up{% endblock %}
