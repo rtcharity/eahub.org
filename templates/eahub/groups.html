@@ -1,13 +1,36 @@
 {% extends 'base.html' %}
 
-<head>
-  <link href="/static/styles/profiles.css" rel="stylesheet">
-</head>
 {% block content %}
+<head>
+  <link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
+  <link rel="stylesheet" type="text/css"  href="/static/styles/groups.css">
+</head>
+
 
 <div class="container-narrow centered">
-{% include 'eahub/components/heatmap.html' %}
-<br>
+  <div class="col-sm-5">
+    <div class="groups-actions">
+      <a href="/groups/start"  class="groups-actions-btn">
+        <div>
+          Start a Group
+        </div>
+      </a>
+      <a href="https://resources.eahub.org">
+        <div class="groups-actions-btn">
+          Group Resources
+        </div>
+      </a>
+      <a href="mailto:lean@eahub.org">
+        <div class="groups-actions-btn">
+          Contact LEAN
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="col-sm-7">
+    {% include 'eahub/components/heatmap.html' %}
+  </div>
+
 
 <table id="datatable-groups" class="table enable-datatable table-striped table-bordered">
     <thead>

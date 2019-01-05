@@ -1,0 +1,26 @@
+.groups-actions {
+  align-items: center;
+  background-color: #f7f6f6; /* very light grey */
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  margin: 0px 10px 10px 10px;
+  padding-top: 10px;
+}
+
+.groups-actions a:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.groups-actions-btn {
+  background-color: #512B52; /* EAHub purple */
+  color: white;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 200px;
+}
