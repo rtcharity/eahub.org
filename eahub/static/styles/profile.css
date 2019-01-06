@@ -16,6 +16,10 @@
   width: 100px;
 }
 
+.profile-contact:hover {
+  opacity: 0.5;
+}
+
 .profile-head {
   align-items: center;
   display: flex;
@@ -34,6 +38,10 @@
 .profile-info p {
   background-color: #f7f6f6; /* very light grey */
   padding: 20px 20px 20px 20px
+}
+
+.profile-info table {
+  background-color: #f7f6f6; /* very light grey */
 }
 
 .profile-key-facts {
