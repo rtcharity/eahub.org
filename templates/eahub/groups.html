@@ -1,44 +1,74 @@
 {% extends 'base.html' %}
 
-<head>
-  <link href="/static/styles/profiles.css" rel="stylesheet">
-</head>
 {% block content %}
+<head>
+  <link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
+  <link rel="stylesheet" type="text/css"  href="/static/styles/groups.css">
+</head>
 
-<div class="container-narrow centered">
-{% include 'eahub/components/heatmap.html' %}
-<br>
 
-<table id="datatable-groups" class="table enable-datatable table-striped table-bordered">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Community</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for group in groups %}
-        <tr>
-            <td>
-                <a href="{% url 'group' group.id %}">{{ group.name|default_if_none:'' }}</a>
-            </td>
-            <td>
-                {% if group.country %}{{ group.country }}{% endif %}
-                {% if group.country and group.city_or_town %}/{% endif %}
-                {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
-            </td>
-            <td>
-                {% if group.facebook_page %}
-                    <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
-                {% endif %}
-                {% if group.facebook_group %}
-                    <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container-narrow centered groups">
+  <div class="row groups-head">
+    <div class="col-sm-5">
+      <div class="groups-actions">
+        <a href="/groups/start" >
+          <div class="groups-actions-btn">
+            Start a Group
+          </div>
+        </a>
+        <a href="https://resources.eahub.org">
+          <div class="groups-actions-btn">
+            Group Resources
+          </div>
+        </a>
+        <a href="mailto:lean@eahub.org">
+          <div class="groups-actions-btn">
+            Contact LEAN
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <div class="groups-map-link">
+        <a href="/maps/groups">
+        {% include 'eahub/maps/groups_link.html' with map_data_groups=map_data_groups %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row groups-table">
+    <table id="datatable-groups" class="table enable-datatable table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Community</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for group in groups %}
+            <tr>
+                <td>
+                    <a href="{% url 'group' group.id %}">{{ group.name|default_if_none:'' }}</a>
+                </td>
+                <td>
+                    {% if group.country %}{{ group.country }}{% endif %}
+                    {% if group.country and group.city_or_town %}/{% endif %}
+                    {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
+                </td>
+                <td>
+                    {% if group.facebook_page %}
+                        <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
+                    {% endif %}
+                    {% if group.facebook_group %}
+                        <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

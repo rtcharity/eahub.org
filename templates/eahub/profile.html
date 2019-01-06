@@ -6,7 +6,7 @@
 </head>
 <div class="container-narrow profile">
     <div class="profile-head">
-      <img src="{% firstof profile.pic '/static/imgs/profile_Avatar10.png' %}" class="profile-pic"/>
+      <img src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}" class="profile-pic"/>
       <h1 class="profile-name">{{ profile.full_name|title }}</h1>
       <div class="profile-contact">Connect</div>
     </div>
@@ -34,7 +34,7 @@
     {% if profile.lat and profile.lon %}
     <div class="col-sm-6 profile-map">
       <a href="/profiles">
-      {% include 'eahub/components/map_profile.html' with lat=profile.lat lon=profile.lon %}
+      {% include 'eahub/maps/profile_link.html' with lat=profile.lat lon=profile.lon %}
       </a>
     </div>
     {% endif %}

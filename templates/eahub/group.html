@@ -7,7 +7,7 @@
 
 <div class="container-narrow profile">
   <div class="profile-head">
-    <img src="{% firstof group.pic '/static/imgs/group_avatar.png' %}" class="profile-pic"/>
+    <img src="{% firstof group.pic '/static/images/group_avatar.png' %}" class="profile-pic"/>
     <h1 class="profile-name">{{ group.name|title }}</h1>
     <div class="profile-contact">Connect</div>
   </div>
@@ -32,7 +32,7 @@
     {% if group.lat and group.lon %}
     <div class="col-sm-6 profile-map">
       <a href="/groups">
-      {% include 'eahub/components/map_profile.html' with lat=group.lat lon=group.lon %}
+      {% include 'eahub/maps/profile_link.html' with lat=group.lat lon=group.lon %}
       </a>
     </div>
     {% endif %}
