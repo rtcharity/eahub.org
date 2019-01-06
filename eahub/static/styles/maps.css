@@ -8,8 +8,16 @@
   overflow: hidden;
 }
 
+#map_profile_link:hover {
+  opacity: 0.7;
+}
+
 #map_groups_link {
   height: 300px;
   position: relative;
   overflow: hidden;
+}
+
+#map_groups_link:hover {
+  opacity: 0.7;
 }
