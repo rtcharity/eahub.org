@@ -9,7 +9,25 @@
   <div class="profile-head">
     <img src="{% firstof group.pic '/static/images/group_avatar.png' %}" class="profile-pic"/>
     <h1 class="profile-name">{{ group.name|title }}</h1>
-    <div class="profile-contact">Connect</div>
+
+    {% if group.official_email %}
+    <a href="mailto:{{ group.official_email }}">
+      <div class="profile-contact">Connect</div>
+    </a>
+    {% elif group.facebook_group %}
+    <a href="group.facebook_group }}">
+      <div class="profile-contact">Connect</div>
+    </a>
+    {% elif group.facebook_page %}
+    <a href="group.facebook_page }}">
+      <div class="profile-contact">Connect</div>
+    </a>
+    {% elif group.lean_email %}
+    <a href="mailto:{{ group.lean_email }}">
+      <div class="profile-contact">Connect</div>
+    </a>
+    {% endif %}
+
   </div>
 
   <div class="row">
@@ -20,10 +38,26 @@
     {% endif %}
       <h3>Key facts</h3>
       <ul>
-        <li><b><a href="">Social Media Link</a></b></li>
-        <li><b>Local or University Group:</b> Local</li>
-        <li><b>Meeting Frequency:</b> 2/lorem</li>
-        <li><b>Organiser:</b> Will MacLorem</li>
+        {% if group.facebook_group %}
+          <li><a href="{{ group.facebook_group }}"><i class="fa fa-facebook"></i> Community</a></li>
+        {% endif %}
+        {% if group.website %}
+          <li><b><a href="{{ group.website }}">Website</a></b></li>
+        {% endif %}
+        {% if group.country %}
+          <li><b>Country:</b> {{ group.country }}</li>
+        {% endif %}
+        {% if group.organisers %}
+          <li><b>Organiser:</b> {{ group.organisers }}</li>
+        {% endif %}
+        {% if group.meetup_details %}
+          <li><b>Meetup details:</b> {{ group.meetup_details }}
+            {% if group.meetup_url %}
+              <a href="{{ group.url }}">Meetup Link</a>
+            {% endif %}
+          </li>
+        {% endif %}
+
         <li><b>No members:</b> 80000</li>
         <li><b>Funds raised</b> 80000 Lorems-$</li>
       </ul>
@@ -38,12 +72,14 @@
     {% endif %}
   </div>
 
+  {% if group.summary %}
   <div class="profile-info">
-    <h3>Bio</h3>
+    <h3>Summary</h3>
     <p>
-      Our local EA Group always have had a big passion for lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      {{ group.summary }}
     </p>
   </div>
+  {% endif %}
 
   <div class="profile-info">
     <h3>Custom</h3>

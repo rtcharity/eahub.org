@@ -16,6 +16,10 @@
   width: 100px;
 }
 
+.profile-contact:hover {
+  opacity: 0.5;
+}
+
 .profile-head {
   align-items: center;
   display: flex;
