@@ -40,6 +40,10 @@
   padding: 20px 20px 20px 20px
 }
 
+.profile-info table {
+  background-color: #f7f6f6; /* very light grey */
+}
+
 .profile-key-facts {
   border-radius: 5px;
   color: white;
