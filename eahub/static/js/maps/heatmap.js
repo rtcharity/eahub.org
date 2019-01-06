@@ -66,7 +66,7 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
           });
           var iconSize = new google.maps.Size(20, 23);
           marker.setIcon({
-           url: '/static/imgs/marker.svg',
+           url: '/static/images/marker.svg',
            size: iconSize,
            scaledSize: iconSize  // makes SVG icons work in IE
           });
@@ -77,7 +77,7 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
 
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(
-          map, markers,{imagePath: '../static/imgs/cluster/m', maxZoom: minClusterZoom}
+          map, markers,{imagePath: '../static/images/cluster/m', maxZoom: minClusterZoom}
       );
       // prevent map from zooming in too much when clicking on cluster
       google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {

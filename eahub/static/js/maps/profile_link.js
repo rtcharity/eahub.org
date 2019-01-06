@@ -23,7 +23,7 @@ function renderMap(lat, lon) {
     });
     var iconSize = new google.maps.Size(20, 23);
     marker.setIcon({
-     url: '/static/imgs/marker.svg',
+     url: '/static/images/marker.svg',
      size: iconSize,
      scaledSize: iconSize  // makes SVG icons work in IE
     });

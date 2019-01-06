@@ -30,7 +30,7 @@ function renderGroupMap(locations) {
           });
           var iconSize = new google.maps.Size(20, 23);
           marker.setIcon({
-           url: '/static/imgs/marker.svg',
+           url: '/static/images/marker.svg',
            size: iconSize,
            scaledSize: iconSize  // makes SVG icons work in IE
           });
@@ -39,6 +39,6 @@ function renderGroupMap(locations) {
 
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(
-          map, markers,{imagePath: '../static/imgs/cluster/m'}
+          map, markers,{imagePath: '../static/images/cluster/m'}
       );
 }

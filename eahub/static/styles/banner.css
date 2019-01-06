@@ -36,7 +36,7 @@
 
 
 .header_large {
-  background-image: url("/static/imgs/LandingBanner_short.png");
+  background-image: url("/static/images/LandingBanner_short.png");
   background-position: center 0px;
   background-repeat: repeat;
   background-size: 1400px;
@@ -89,7 +89,7 @@
   }
 
   .header_large {
-    background-image: url("/static/imgs/LandingBanner.png");
+    background-image: url("/static/images/LandingBanner.png");
     background-position: center 5px;
     background-size: cover;
     height: 220px;
