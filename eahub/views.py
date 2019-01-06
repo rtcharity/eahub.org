@@ -45,6 +45,8 @@ def getGroupsData():
         + '},'
         for x in rows
     ])
+    print(rows[0])
+    print(map_data[0])
     return {
         'rows': rows,
         'map_data': map_data

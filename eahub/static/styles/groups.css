@@ -5,7 +5,6 @@
   flex-direction: column;
   height: 300px;
   justify-content: center;
-  margin: 0px 10px 10px 10px;
   padding-top: 10px;
 }
 
@@ -24,4 +23,15 @@
   margin-bottom: 20px;
   text-align: center;
   width: 200px;
+}
+
+.groups-head {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.groups-table {
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
 }
