@@ -22,12 +22,10 @@ def profiles(request):
 
 def groups(request):
     groupsData = getGroupsData()
-    profilesData = getProfilesData()
     return render(request, 'eahub/groups.html', {
         'page_name': 'Groups',
         'groups': groupsData["rows"],
-        'map_data_groups': groupsData["map_data"],
-        'map_data_profiles': profilesData["map_data"]
+        'map_data_groups': groupsData["map_data"]
     })
 
 def getGroupsData():
