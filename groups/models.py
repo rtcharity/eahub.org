@@ -4,7 +4,7 @@ from django.contrib.postgres.fields import ArrayField
 from profiles.models import Profile
 
 class Group(models.Model):
-    
+
     # fields
     name = models.CharField(max_length=100)
     summary = models.TextField(null=True, blank=True)
@@ -25,7 +25,7 @@ class Group(models.Model):
     def get_donations(self):
         if not self.donations: return []
         return json.loads(self.donations)['donations']
-    
+
     # list of links
     # example: {"links":[{"link":"a", "label":"b"}]}
     links = models.TextField(null=True, blank=True)

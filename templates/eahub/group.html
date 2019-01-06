@@ -57,8 +57,6 @@
             {% endif %}
           </li>
         {% endif %}
-
-        <li><b>No members:</b> 80000</li>
         <li><b>Funds raised</b> 80000 Lorems-$</li>
       </ul>
     </div>
@@ -81,12 +79,35 @@
   </div>
   {% endif %}
 
+  {% if group.donations  %}
+  <div class="profile-info">
+    <h3>Donations</h3>
+    <ul id="donations">
+    </ul>
+  </div>
+  {% endif %}
+
   <div class="profile-info">
     <h3>Custom</h3>
     <p>
       Here's some further info about our group: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
     </p>
   </div>
+
 </div>
+
+<script>
+  var donations = {{ group.donations | safe }}
+  donations = donations.donations
+  donations.forEach(function(donation) {
+    var donation_list = document.getElementById("donations")
+    donation_list.innerHTML += '<li><b>' + donation.to + '</b>'
+    donation_list.innerHTML += '<ul>'
+    donation_list.innerHTML += '<li>Amount: ' + donation.amount + '</li>'
+    donation_list.innerHTML += '<li>Date: ' + donation.when + '</li>'
+    donation_list.innerHTML += '<li>Details: ' + donation.details + '</li>'
+    donation_list.innerHTML += '</ul></li>'
+  })
+</script>
 
 {% endblock %}
