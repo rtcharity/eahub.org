@@ -48,9 +48,7 @@ def ProfileView(request, profile_id):
 
 @login_required(login_url=reverse_lazy('login'))
 def MyProfileView(request):
-    return render(request, 'eahub/my_profile.html', {
-        'user': request.user
-    })
+    return ProfileView(request, request.user.id)
 
 
 @login_required(login_url=reverse_lazy('login'))
