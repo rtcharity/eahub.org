@@ -72,6 +72,12 @@
   color: #A7DBAB; /* EAHub green */
 }
 
+.group-key-facts-sublist ul {
+  background-color: inherit;
+  list-style-type: disc;
+  padding-top: 0px;
+}
+
 .profile-map {
   padding: 10px 10px 10px 10px;
 }

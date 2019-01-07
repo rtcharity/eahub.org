@@ -48,14 +48,23 @@
           <li><b>Country:</b> {{ group.country }}</li>
         {% endif %}
         {% if group.organisers %}
-          <li><b>Organiser:</b> {{ group.organisers }}</li>
-        {% endif %}
-        {% if group.meetup_details %}
-          <li><b>Meetup details:</b> {{ group.meetup_details }}
-            {% if group.meetup_url %}
-              <a href="{{ group.url }}">Meetup Link</a>
-            {% endif %}
-          </li>
+            <div class="group-key-facts-sublist">
+            <li>
+              {% if group.organisers.all|length > 1 %}
+              <b>Organisers:</b>
+              <ul>
+                {% for organiser in group.organisers.all %}
+                  <li>{{ organiser }}</li>
+                {% endfor %}
+              </ul>
+              {% elif group.organisers.all|length == 1 %}
+              <b>Organiser:</b>
+                {% for organiser in group.organisers.all %}
+                  {{ organiser }}
+                {% endfor %}
+              {% endif %}
+            </li>
+            </div>
         {% endif %}
       </ul>
     </div>
@@ -96,18 +105,29 @@
   </div>
   {% endif %}
 
+  {% if group.custom  %}
   <div class="profile-info">
     <h3>Custom</h3>
     <p>
-      Here's some further info about our group: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      {{ group.custom }}
     </p>
   </div>
+  {% else %}
+  <div class="profile-info">
+    <h3>Custom</h3>
+    <p>
+      This is a dummy text to show what the custom field would look like.
+    </p>
+  </div>
+  {% endif %}
 
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
   var donations = {{ group.donations | safe }}
+  // var organisers = {{ group.organisers.all | safe }}
+  // console.log(organisers);
   donations = donations.donations
   var table_donations = $("#table_donations")
   donations.forEach(function(donation) {
