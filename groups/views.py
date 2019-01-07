@@ -20,4 +20,4 @@ def create_group(request):
             return redirect('group', group_id=group.id)
     else:
         form = GroupCreationForm()
-    return render(request, 'eahub/create_group.html', {'form': form})
+    return render(request, 'eahub/edit_group.html', {'form': form})
