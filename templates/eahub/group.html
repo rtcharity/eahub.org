@@ -48,7 +48,7 @@
           <li><b>Country:</b> {{ group.country }}</li>
         {% endif %}
         {% if group.organisers %}
-            <div  class="group-key-facts-sublist">
+            <div class="group-key-facts-sublist">
             <li>
               {% if group.organisers.all|length > 1 %}
               <b>Organisers:</b>
@@ -57,7 +57,7 @@
                   <li>{{ organiser }}</li>
                 {% endfor %}
               </ul>
-              {% else %}
+              {% elif group.organisers.all|length == 1 %}
               <b>Organiser:</b>
                 {% for organiser in group.organisers.all %}
                   {{ organiser }}
