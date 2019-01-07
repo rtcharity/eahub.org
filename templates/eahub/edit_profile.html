@@ -4,7 +4,7 @@
 
 {% block form_fields %}
 <div class="field">
-    <label for="id_first_name">First Name</label>
+    <label for="id_first_name" class="required_field">First Name</label>
     <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Peter" value="{{ form.first_name.value }}" required autofocus>
     {% if form.first_name.errors %}
         {% for error in form.first_name.errors %}
@@ -14,7 +14,7 @@
 </div>
 
 <div class="field">
-    <label for="id_last_name">Last Name</label>
+    <label for="id_last_name" class="required_field">Last Name</label>
     <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" value="{{ form.last_name.value }}" required>
     {% if form.last_name.errors %}
         {% for error in form.last_name.errors %}
@@ -24,7 +24,7 @@
 </div>
 
 <div class="field">
-    <label for="id_email">Email address</label>
+    <label for="id_email" class="required_field">Email address</label>
     <input type="email" name="email" id="id_email" class="form-control" placeholder="utilitarian_46@aol.com" value="{{ form.email.value }}" required>
     {% if form.email.errors %}
       {% for error in form.email.errors %}
