@@ -48,7 +48,7 @@ def ProfileView(request, profile_id):
 
 @login_required(login_url=reverse_lazy('login'))
 def MyProfileView(request):
-    return ProfileView(request, request.user.id)
+    return redirect('profile', profile_id=request.user.id)
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -57,7 +57,7 @@ def edit_profile(request):
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect(reverse_lazy('my_profile'))
+            return redirect('my_profile')
     else:
         form = EditProfileForm(instance=request.user)
         return render(request, 'eahub/edit_profile.html', {
