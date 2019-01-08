@@ -30,7 +30,8 @@
   flex-wrap: wrap;
   justify-content: center;
   margin: 40px auto 40px auto;
-  text-align: center
+  text-align: center;
+  width: 100%;
 }
 
 .profile-info {
@@ -90,7 +91,7 @@
   display: inline-block;
   font-size: 50px;
   margin-right: 20px;
-  max-width: 500px;
+  max-width: 400px;
   padding-left: 30px;
   padding-right: 30px;
   text-align: center;
