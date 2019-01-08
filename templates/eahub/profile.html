@@ -8,7 +8,13 @@
     <div class="profile-head">
       <img src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}" class="profile-pic"/>
       <h1 class="profile-name">{{ profile.full_name|title }}</h1>
-      <div class="profile-contact">Connect</div>
+      <div class="profile-contact">
+        {% if user.id == profile.id %}
+          <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
+        {% else %}
+          <span>Connect</span>
+        {% endif %}
+      </div>
     </div>
     <div class="row">
     {% if profile.lat and profile.lon %}
