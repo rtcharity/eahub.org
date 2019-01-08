@@ -45,3 +45,10 @@ class Group(models.Model):
             for x in [self.city_or_town, self.country]
             if x not in [None, '']
         ])
+
+    # edit history
+    # example: [{"date":"10/10/2001","user": "user_1 user@domain.com", diff":{"name":{"before":"EA Londonzzz","after":"EA London"}}}]
+    edit_history = models.TextField(default='[]')
+    def get_edit_history(self):
+        if not self.edit_history: return []
+        return json.loads(self.edit_history)
