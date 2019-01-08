@@ -38,11 +38,9 @@ class SignUp(generic.CreateView):
 
 
 def ProfileView(request, profile_id):
-    row = Profile.objects\
-        .filter(id=profile_id)\
-        .first()
+    profile = Profile.objects.get(pk=profile_id)
     return render(request, 'eahub/profile.html', {
-        'profile': row
+        'profile': profile
     })
 
 
