@@ -25,7 +25,6 @@
         {% for profile in profiles %}
         <tr>
             {% if profile.img %}
-            {{ profile.img }}
             <td><img src="{{ profile.img }}" class="profile-pic" /></td>
             {% else %}
             <td><img src="/static/images/profile_avatar10.png" class="profile-pic" /></td>
