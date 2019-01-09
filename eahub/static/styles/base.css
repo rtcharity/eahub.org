@@ -16,8 +16,7 @@
 }
 
 .content {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 50px 30px 50px 30px;
 }
 
 .content-min-height {
