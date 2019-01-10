@@ -73,7 +73,11 @@
   text-align: left;
 }
 
-.profile-key-facts a {
+.profile-key-facts a:hover {
+  color: #A7DBAB; /* EAHub green */
+}
+
+.profile-key-facts a:visited {
   color: #A7DBAB; /* EAHub green */
 }
 
