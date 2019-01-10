@@ -10,29 +10,28 @@
   <div class="profile-head">
     <img src="{% firstof group.pic '/static/images/group_avatar.png' %}" class="profile-pic"/>
     <h1 class="profile-name">{{ group.name|title }}</h1>
-
-    {% if group.official_email %}
-    <div class="profile-contact">
-      <a href="mailto:{{ group.official_email }}">Connect</a>
-    </div>
-    {% elif group.facebook_group %}
-    <div class="profile-contact">
-      <a href="{{ group.facebook_group }}" target="_blank">Connect</a>
-    </div>
-    {% elif group.facebook_page %}
-    <div class="profile-contact">
-      <a href="{{ group.facebook_page }}" target="_blank">Connect</a>
-    </div>
-    {% elif group.lean_email %}
-    <div class="profile-contact">
-      <a href="mailto:{{ group.lean_email }}">Connect</a>
-    </div>
-    {% endif %}
-    </div>
     {% if user in group.organisers.all %}
     <div class="profile-edit">
       <a href="{% url 'edit_group' group_id=group.id %}"><i class="fa fa-pencil"></i> Edit</a>
     </div>
+    {% else %}
+      {% if group.official_email %}
+      <div class="profile-contact">
+        <a href="mailto:{{ group.official_email }}">Connect</a>
+      </div>
+      {% elif group.facebook_group %}
+      <div class="profile-contact">
+        <a href="{{ group.facebook_group }}" target="_blank">Connect</a>
+      </div>
+      {% elif group.facebook_page %}
+      <div class="profile-contact">
+        <a href="{{ group.facebook_page }}" target="_blank">Connect</a>
+      </div>
+      {% elif group.lean_email %}
+      <div class="profile-contact">
+        <a href="mailto:{{ group.lean_email }}">Connect</a>
+      </div>
+      {% endif %}
     {% endif %}
   </div>
 
@@ -60,13 +59,13 @@
               <b>Organisers:</b>
               <ul>
                 {% for organiser in group.organisers.all %}
-                  <li>{{ organiser }}</li>
+                  <li>{{ organiser.full_name }}</li>
                 {% endfor %}
               </ul>
               {% elif group.organisers.all|length == 1 %}
               <b>Organiser:</b>
                 {% for organiser in group.organisers.all %}
-                  {{ organiser }}
+                  {{ organiser.full_name }}
                 {% endfor %}
               {% endif %}
             </li>
