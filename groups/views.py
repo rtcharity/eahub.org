@@ -19,12 +19,12 @@ def view_group(request, group_id):
 @login_required(login_url=reverse_lazy('login'))
 def create_group(request):
     if request.method == 'POST':
-        form = GroupCreationForm(request.POST)
+        form = CreateGroupForm(request.POST)
         if form.is_valid():
             group = form.save()
             return redirect('group', group_id=group.id)
     else:
-        form = GroupCreationForm()
+        form = CreateGroupForm()
     return render(request, 'eahub/edit_group.html', {
         'form': form
     })
