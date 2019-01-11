@@ -3,6 +3,8 @@
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-content: space-between;
+  max-width: 900px;
+  margin: auto;
 }
 
 .feature {
@@ -13,7 +15,7 @@
 
 .features_links {
   text-decoration: none;
-  color: #635274;
+  color: #635274;  
 }
 
 .features_links:hover {
