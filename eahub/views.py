@@ -29,8 +29,7 @@ def groups(request):
     })
 
 def getGroupsData():
-    rows = Group.objects\
-        .exclude(lat__isnull=True)
+    rows = Group.objects.all()
     map_data = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
@@ -44,6 +43,7 @@ def getGroupsData():
             )
         + '},'
         for x in rows
+        if x.lat
     ])
     return {
         'rows': rows,
@@ -51,8 +51,7 @@ def getGroupsData():
     }
 
 def getProfilesData():
-    rows = Profile.objects\
-        .exclude(lat__isnull=True)
+    rows = Profile.objects.all()
     map_data = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
@@ -66,6 +65,7 @@ def getProfilesData():
             )
         + '},'
         for x in rows
+        if x.lat
     ])
     return {
         'rows': rows,
