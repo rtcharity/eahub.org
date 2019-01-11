@@ -13,7 +13,8 @@ class CreateGroupForm(ModelForm):
             'facebook_group', 'facebook_page',
             'official_email', 'lean_email',
             'meetup_details', 'meetup_url',
-            'donations'
+            'lat', 'lon',
+            #'donations'
         )
 
 class EditGroupForm(ModelForm):
@@ -29,4 +30,5 @@ class EditGroupForm(ModelForm):
             'official_email', 'lean_email',
             'meetup_details', 'meetup_url',
             #'donations',
+            'lat', 'lon',
         )
