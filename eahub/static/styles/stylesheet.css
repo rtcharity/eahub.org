@@ -195,16 +195,11 @@ h1{
   opacity: 0.5;
 }
 
-/* Home */
-.map-container {
-  margin-top: 50px;
-}
-
-
 /* Map */
 #map {
-    height: 500px;
     border-radius: 5px;
+    height: 500px;
+    width: 100%;
 }
 
 #map_profile_link {
@@ -225,6 +220,11 @@ h1{
 
 #map_groups_link:hover {
   opacity: 0.7;
+}
+
+.map-container {
+  margin: 50px auto 0px auto;
+  max-width: 1000px;
 }
 
 
