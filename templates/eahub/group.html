@@ -50,8 +50,7 @@
           <li><b>Country:</b> {{ group.country }}</li>
         {% endif %}
         {% if group.organisers %}
-            <div class="group-key-facts-sublist">
-            <li>
+            <li class="profile-key-facts-sublist">
               {% if group.organisers.all|length > 1 %}
               <b>Organisers:</b>
               <ul>
@@ -66,7 +65,6 @@
                 {% endfor %}
               {% endif %}
             </li>
-            </div>
         {% endif %}
       </ul>
     </div>
