@@ -16,6 +16,7 @@
 <script>
 
   function initMap() {
+    console.log({"request.GET": "{{request.GET}}"});
     var query_string_map = "{{ request.GET.map }}";
     var map_data_profiles = [{{ map_data_profiles | safe}}];
     var map_data_groups = [{{ map_data_groups | safe}}];

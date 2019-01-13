@@ -1,4 +1,5 @@
 function map(query_string_map, map_data_profiles, map_data_groups) {
+  console.log({"query_string_map": query_string_map});
   var selectedMap, mapDataProfiles, mapDataGroups;
 
   //Toggle between individual and groups map
