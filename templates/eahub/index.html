@@ -7,10 +7,18 @@
 
 {% block content %}
 
-{% include 'eahub/home/features.html' with url=url %}
-
-<div class="map-container">
-  {% include 'eahub/maps/heatmap.html' %}
+<div class="row">
+  <div class="col-md-6">
+      <div class="map-container">
+        {% include 'eahub/maps/heatmap.html' %}
+      </div>
+  </div>
+  <div class="col-md-6">
+      {% include 'eahub/home/features.html' with url=url %}
+  </div>
 </div>
+
+
+
 
 {% endblock %}
