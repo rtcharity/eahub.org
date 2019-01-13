@@ -17,12 +17,10 @@ def index(request):
     })
 
 def profiles(request):
-    groupsData = getGroupsData()
     profilesData = getProfilesData()
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': profilesData["rows"],
-        'map_data_groups': groupsData["map_data"],
         'map_data_profiles': profilesData["map_data"]
     })
 
