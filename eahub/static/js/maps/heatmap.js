@@ -24,7 +24,7 @@ function map(selected_map, map_data_profiles, map_data_groups) {
 
     var minClusterZoom = 14;
     var mapOptions = {
-        zoom: 1.6,
+        zoom: 2,
         maxZoom: minClusterZoom+1,
         center: new google.maps.LatLng(30, 30), // roughly center of world (makes for better view than 0,0)
         mapTypeControl: false,
