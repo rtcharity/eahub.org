@@ -40,6 +40,19 @@ h1{
   margin-right: 0px;
 }
 
+.white-link a {
+  color: white
+}
+
+.white-link a:hover {
+  color: #A7DBAB !important; /* EAHub green */
+  text-decoration: none;
+}
+
+.white-link a:visited {
+  text-decoration: none;
+}
+
 
 /* Banner */
 .banner-caption {
@@ -289,19 +302,6 @@ h1{
   list-style: none;
   padding: 20px 20px 20px 20px;
   text-align: left;
-}
-
-.profile-key-facts a {
-  color: white;
-}
-
-.profile-key-facts a:hover {
-  color: #A7DBAB; /* EAHub green */
-  text-decoration: none;
-}
-
-.profile-key-facts a:visited {
-  color: white;
 }
 
 .profile-key-facts-sublist ul {
