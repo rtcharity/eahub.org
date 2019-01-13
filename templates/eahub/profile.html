@@ -2,9 +2,8 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css"  href="/static/styles/profile.css">
-
 <div class="profile">
+
     <div class="profile-head">
       <img src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}" class="profile-pic"/>
       <h1 class="profile-name">{{ profile.full_name|title }}</h1>
@@ -16,6 +15,7 @@
         {% endif %}
       </div>
     </div>
+
     <div class="row">
     {% if profile.lat and profile.lon %}
     <div class="profile-key-facts col-sm-6">
@@ -97,6 +97,7 @@
       </a>
     </div>
     {% endif %}
+
     </div>
 
     <div class="profile-info">
@@ -109,6 +110,7 @@
         {% endif %}
       </p>
     </div>
+
     <div class="profile-info">
       <h3>Information</h3>
       <p>
@@ -120,28 +122,26 @@
       </p>
     </div>
 
-
     <div class="profile-info">
       <h3>Donations</h3>
       {% if profile.donations  %}
-      <table class="table table-striped table-bordered table-donations">
-        <thead>
-          <tr>
-              <th>To</th>
-              <th>Amount</th>
-              <th>Date</th>
-              <th>Details</th>
-          </tr>
-        </thead>
-        <tbody  id="table_donations">
-        </tbody>
-      </table>
+        <table class="table table-striped table-bordered table-donations">
+          <thead>
+            <tr>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Details</th>
+            </tr>
+          </thead>
+          <tbody  id="table_donations">
+          </tbody>
+        </table>
+      {% else %}
+        <p>n/a</p>
+      {% endif %}
     </div>
-    {% else %}
-    <p>n/a</p>
-    {% endif %}
-
-</div>
+  </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>

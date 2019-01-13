@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="/static/styles/index.css">
-
 {% block content %}
 
 {% include 'eahub/home/features.html' with url=url %}
 
-<div class="map-container">
+<div class="home-map-container">
   {% include 'eahub/maps/heatmap.html' %}
 </div>
 
