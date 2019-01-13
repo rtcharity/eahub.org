@@ -1,4 +1,4 @@
-function map(selected_map, map_data_profiles, map_data_groups, page_name) {
+function map(selected_map, map_data_profiles, map_data_groups) {
   var selectedMap, mapDataProfiles, mapDataGroups;
 
   //Toggle between individual and groups map
@@ -12,16 +12,13 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
     selectedMap = 'groups';
     renderMap(selectedMap);
   }
-  if (page_name == 'Profiles') {
-      mapSelectorInd.setAttribute("checked", "checked")
-  } else {
-      mapSelectorGroups.setAttribute("checked", "checked")
-  }
 
-  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups, pageName = page_name) {
-    //checks whether to render groups or individuals
+  mapSelectorInd.setAttribute("checked", "checked")
+
+  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups) {
+
     if (selectedMap == null) {
-      selectedMap = pageName == 'Profiles' ? 'individuals' : 'groups'
+      selectedMap = 'individuals'
     }
     var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
 

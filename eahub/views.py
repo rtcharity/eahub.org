@@ -6,8 +6,14 @@ from groups.models import Group
 from profiles.models import Profile
 
 def index(request):
+    groupsData = getGroupsData()
+    profilesData = getProfilesData()
     return render(request, 'eahub/index.html', {
-        "page_name": "Home"
+        "page_name": "Home",
+        'groups': groupsData["rows"],
+        'map_data_groups': groupsData["map_data"],
+        'profiles': profilesData["rows"],
+        'map_data_profiles': profilesData["map_data"]
     })
 
 def profiles(request):
