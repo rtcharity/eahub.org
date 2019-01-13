@@ -57,6 +57,9 @@
 </div>
 <div class="field">
   <div class="g-recaptcha" data-sitekey="6Lc9-IEUAAAAAFDBa292skJISigDI3U2OHpgsxjB"></div>
+  {% if 'robot_error' in request.GET %}
+    <div class="alert alert-danger" style="max-width: 304px;">Captcha error</div>
+  {% endif %}
 </div>
 {% endblock %}
 

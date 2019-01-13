@@ -1,40 +1,37 @@
 import os
 
-from django.urls import reverse_lazy
-from django.views import generic
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
 import requests
+from django.views import generic
+from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Profile
 from .forms import ProfileCreationForm, EditProfileForm
 
 
-def recaptcha_valid(recaptcha_response):
-    request = requests.post(
-        'https://www.google.com/recaptcha/api/siteverify',
-        {
-            'secret': os.environ['RECAPTCHA_PRIVATE_KEY'],
-            'response': recaptcha_response
-        }
-    ).json()
-    return request.get('success', False)
-
-
 class SignUp(generic.CreateView):
     template_name = 'registration/signup.html'    
     form_class = ProfileCreationForm
-    success_url = reverse_lazy('my_profile')
+    success_url = reverse_lazy('my_profile')            
     def form_valid(self, form):
-        valid = super(SignUp, self).form_valid(form)
-        email, password = form.cleaned_data.get('email'), form.cleaned_data.get('password1')
-        new_user = authenticate(email=email, password=password)
-        if recaptcha_valid(self.request.POST.get('g-recaptcha-response')):
-            login(self.request, new_user)
+        recaptcha_valid = requests.post(
+            'https://www.google.com/recaptcha/api/siteverify',
+            {
+                'secret': os.environ['RECAPTCHA_PRIVATE_KEY'],
+                'response': recaptcha_response
+            }
+        ).json().get('success', False)
+        if recaptcha_valid:
+            # log user in
+            email, password = form.cleaned_data.get('email'), form.cleaned_data.get('password1')
+            user = authenticate(email=email, password=password)
+            login(self.request, user)
+            return super(SignUp, self).form_valid(form)
         else:
-            new_user.delete() # delete recaptcha failing user made by robot
-        return valid
+            # fail
+            return redirect(reverse('signup') + '?robot_error=True')       
 
 
 def ProfileView(request, profile_id):
