@@ -1,4 +1,4 @@
-function renderMap(lat, lon) {
+function renderLocalMap(lat, lon) {
   var profileLatLng = {lat: lat, lng: lon}
   var mapOptions = {
       zoom: 3,

@@ -1,6 +1,6 @@
-<head>
-  <link rel="stylesheet" type="text/css" href="/static/styles/banner.css">
-</head>
+
+<link rel="stylesheet" type="text/css" href="/static/styles/banner.css">
+
   {% if page_name == "Home" %}
   <div class="header_large clearfix">
   {% else %}
@@ -22,7 +22,7 @@
           {% else %}
             <li><a class="drop_down_link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
             <li><a class="drop_down_link" href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-          {% endif %}          
+          {% endif %}
           <li><a class="drop_down_link" href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
           <li><a class="drop_down_link" href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
           <!--
