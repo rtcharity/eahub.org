@@ -1,4 +1,4 @@
-function renderGroupMap(locations) {
+function renderGlobalMap(locations) {
 
     var mapOptions = {
         zoom: 1.6,
@@ -38,7 +38,11 @@ function renderGroupMap(locations) {
       });
 
       // Add a marker clusterer to manage the markers.
+      var markerClusterOptions = {
+        imagePath: '../static/images/cluster/m',
+        zoomOnClick: false
+      }
       var markerCluster = new MarkerClusterer(
-          map, markers,{imagePath: '../static/images/cluster/m'}
+          map, markers, markerClusterOptions
       );
 }

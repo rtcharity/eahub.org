@@ -3,7 +3,45 @@
   padding-right: 0;
 }
 
+.profiles-actions {
+  align-items: center;
+  background-color: #f7f6f6; /* very light grey */
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.profiles-actions a:hover {
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.profiles-actions-btn {
+  background-color: #512B52; /* EAHub purple */
+  color: white;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 200px;
+}
+
+.profiles-head {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
 .profile-pic {
   height: 50px;
   width: 50px;
+}
+
+.profiles-table {
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
 }

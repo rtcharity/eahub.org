@@ -2,40 +2,64 @@
 
 {% block content %}
 
-<head>
-  <link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
-</head>
+<link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
 
 <div class="centered">
+  <div class="row profiles-head">
+    <div class="col-sm-5">
+      <div class="profiles-actions">
+        <a href="{% url 'signup' %}" >
+          <div class="profiles-actions-btn">
+            Create a profile
+          </div>
+        </a>
+        <a href="https://resources.eahub.org">
+          <div class="profiles-actions-btn">
+            EA Resources
+          </div>
+        </a>
+        <a href="mailto:lean@eahub.org">
+          <div class="profiles-actions-btn">
+            Contact LEAN
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-7">
+        <a href="/?map=individuals#map">
+        {% include 'eahub/maps/global_link.html' with map_data=map_data_profiles %}
+        </a>
+    </div>
+  </div>
 
-{% include 'eahub/maps/heatmap.html' %}
-<br>
+  <div class="row profiles-table">
+    <table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
+      <thead>
+          <tr>
+              <th></th>
+              <th>Name</th>
+              <th>City/Town</th>
+              <th>Country</th>
+          </tr>
+      </thead>
+      <div>
+      <tbody>
+          {% for profile in profiles %}
+          <tr>
+              {% if profile.img %}
+              <td><img src="{{ profile.img }}" class="profile-pic" /></td>
+              {% else %}
+              <td><img src="/static/images/profile_avatar10.png" class="profile-pic" /></td>
+              {% endif %}
+              <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
+              <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
+              <td class="text-muted">{{ profile.country|default:'' }}</td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+  </div>
 
-<table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
-    <thead>
-        <tr>
-            <th></th>
-            <th>Name</th>
-            <th>City/Town</th>
-            <th>Country</th>
-        </tr>
-    </thead>
-    <div>
-    <tbody>
-        {% for profile in profiles %}
-        <tr>
-            {% if profile.img %}
-            <td><img src="{{ profile.img }}" class="profile-pic" /></td>
-            {% else %}
-            <td><img src="/static/images/profile_avatar10.png" class="profile-pic" /></td>
-            {% endif %}
-            <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
-            <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
-            <td class="text-muted">{{ profile.country|default:'' }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
 </div>
 
 {% endblock %}
