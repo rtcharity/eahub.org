@@ -1,7 +1,7 @@
-function map(selected_map, map_data_profiles, map_data_groups, page_name) {
+function map(query_string_map, map_data_profiles, map_data_groups) {
   var selectedMap, mapDataProfiles, mapDataGroups;
 
-  //Toggle between individual and groups map
+
   var mapSelectorInd = document.getElementById('map_selector_ind')
   mapSelectorInd.onclick = function() {
     selectedMap = 'individuals';
@@ -12,22 +12,23 @@ function map(selected_map, map_data_profiles, map_data_groups, page_name) {
     selectedMap = 'groups';
     renderMap(selectedMap);
   }
-  if (page_name == 'Profiles') {
-      mapSelectorInd.setAttribute("checked", "checked")
+
+  if (query_string_map == "groups") {
+    mapSelectorGroups.setAttribute("checked", "checked");
   } else {
-      mapSelectorGroups.setAttribute("checked", "checked")
+    mapSelectorInd.setAttribute("checked", "checked");
   }
 
-  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups, pageName = page_name) {
-    //checks whether to render groups or individuals
-    if (selectedMap == null) {
-      selectedMap = pageName == 'Profiles' ? 'individuals' : 'groups'
+  function renderMap(selectedMap = query_string_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups) {
+
+    if (selectedMap !== 'individuals' && selectedMap !== 'groups') {
+      selectedMap = 'individuals'
     }
     var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
 
     var minClusterZoom = 14;
     var mapOptions = {
-        zoom: 1.6,
+        zoom: 2,
         maxZoom: minClusterZoom+1,
         center: new google.maps.LatLng(30, 30), // roughly center of world (makes for better view than 0,0)
         mapTypeControl: false,
