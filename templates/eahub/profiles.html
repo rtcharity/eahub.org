@@ -4,11 +4,38 @@
 
 <head>
   <link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
+  <link rel="stylesheet" type="text/css"  href="/static/styles/groups.css">
 </head>
 
-<div class="centered">
-
-{% include 'eahub/maps/heatmap.html' %}
+<div class="centered groups">
+  <div class="row groups-head">
+    <div class="col-sm-5">
+      <div class="groups-actions">
+        <a href="{% url 'signup' %}" >
+          <div class="groups-actions-btn">
+            Create a profile
+          </div>
+        </a>
+        <a href="https://resources.eahub.org">
+          <div class="groups-actions-btn">
+            EA Resources
+          </div>
+        </a>
+        <a href="mailto:lean@eahub.org">
+          <div class="groups-actions-btn">
+            Contact LEAN
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-7">
+      <div class="groups-map-link">
+        <a href="/?map=individuals#map">
+        {% include 'eahub/maps/global_link.html' with map_data=map_data_profiles %}
+        </a>
+      </div>
+    </div>
+  </div>
 <br>
 
 <table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">

@@ -4,13 +4,13 @@
 <div id="map_groups_link" class="map"></div>
 
 <script src="/static/js/maps/markerclusterer.js"></script>
-<script src="/static/js/maps/groups_link.js"></script>
+<script src="/static/js/maps/global_link.js"></script>
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
 <script>
 
   function initMap() {
-    var map_data_groups = [{{ map_data_groups | safe}}];
-    renderGroupMap(map_data_groups);
+    var map_data = [{{ map_data | safe}}];
+    renderGlobalMap(map_data);
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
