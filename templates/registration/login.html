@@ -5,7 +5,7 @@
 {% block form_fields %}
 <div class="field">
   <label for="id_username">Email address</label>
-  <input type="username" name="username" id="id_username" class="form-control" placeholder="utilitarian_46@aol.com" required autofocus>
+  <input type="username" name="username" id="id_username" class="form-control" placeholder="email" required autofocus>
   {% if form.username.errors %}
     {% for error in form.username.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -14,7 +14,7 @@
 </div>
 <div class="field">
   <label for="id_password">Password</label>
-  <input type="password" name="password" id="id_password" class="form-control" placeholder="password123" required>
+  <input type="password" name="password" id="id_password" class="form-control" placeholder="password" required>
   {% if form.password.errors %}
     {% for error in form.password.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -32,11 +32,13 @@
 {% block submit_button_text %}Login{% endblock %}
 
 {% block content_after_form %}
-<div class="alert alert-info">
-  <h2>Login not working?</h2>
-  <p>Recently we updated the eahub.org website to a new platform. As your password was saved in a super secure way we were unable to transfer it to the new one. There's nothing to worry about. All you need to do is reset your password.</p>
-  <br>
-  <p><a href="{% url 'password_reset' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
+<div class="panel">
+  <div class="alert alert-info">
+      <h2>Login not working?</h2>
+      <p>Recently we updated the eahub.org website to a new platform. As your password was saved in a super secure way we were unable to transfer it to the new one. There's nothing to worry about. All you need to do is reset your password.</p>
+      <br>
+      <p><a href="{% url 'password_reset' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
+  </div>  
 </div>
 {% endblock %}
 
