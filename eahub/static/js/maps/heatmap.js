@@ -1,4 +1,4 @@
-function map(selected_map, map_data_profiles, map_data_groups) {
+function map(query_string_map, map_data_profiles, map_data_groups) {
   var selectedMap, mapDataProfiles, mapDataGroups;
 
   //Toggle between individual and groups map
@@ -15,9 +15,9 @@ function map(selected_map, map_data_profiles, map_data_groups) {
 
   mapSelectorInd.setAttribute("checked", "checked")
 
-  function renderMap(selectedMap = selected_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups) {
+  function renderMap(selectedMap = query_string_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups) {
 
-    if (selectedMap == null) {
+    if (selectedMap !== 'individuals' && selectedMap !== 'groups') {
       selectedMap = 'individuals'
     }
     var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups

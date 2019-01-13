@@ -2,35 +2,15 @@
 {% load static %}
 
 {% block header %}
-<style>
-h1{
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-.jumbotron{
-    padding-bottom: 30px;
-}
-.thumbnail{
-    margin-bottom: 0;
-}
-.thumbnail img{
-    margin-top: 20px;
-    height: 100px;
-    border-radius: 20px;
-}
-.thumbnail h3{
-    font-size: 1.2em;
-}
-.btn{
-    margin-right: 10px;
-}
-</style>
+<link rel="stylesheet" type="text/css" href="/static/styles/index.css">
 {% endblock %}
 
 {% block content %}
 
 {% include 'eahub/home/features.html' with url=url %}
 
-{% include 'eahub/maps/heatmap.html' %}
+<div class="map-container">
+  {% include 'eahub/maps/heatmap.html' %}
+</div>
 
 {% endblock %}
