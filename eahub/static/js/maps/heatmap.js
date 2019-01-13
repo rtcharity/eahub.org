@@ -1,8 +1,7 @@
 function map(query_string_map, map_data_profiles, map_data_groups) {
-  console.log({"query_string_map": query_string_map});
   var selectedMap, mapDataProfiles, mapDataGroups;
 
-  //Toggle between individual and groups map
+
   var mapSelectorInd = document.getElementById('map_selector_ind')
   mapSelectorInd.onclick = function() {
     selectedMap = 'individuals';
@@ -14,7 +13,11 @@ function map(query_string_map, map_data_profiles, map_data_groups) {
     renderMap(selectedMap);
   }
 
-  mapSelectorInd.setAttribute("checked", "checked")
+  if (query_string_map == "groups") {
+    mapSelectorGroups.setAttribute("checked", "checked");
+  } else {
+    mapSelectorInd.setAttribute("checked", "checked");
+  }
 
   function renderMap(selectedMap = query_string_map, mapDataProfiles = map_data_profiles, mapDataGroups = map_data_groups) {
 
