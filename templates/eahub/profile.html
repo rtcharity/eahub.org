@@ -24,25 +24,69 @@
     {% endif %}
       <h3>Key facts</h3>
       <ul>
-        {% if profile.cause_areas %}
-        <li><b>Cause areas:</b> {{ profile.cause_areas }}</li>
-        {% endif %}
-        {% if profile.direct_work_hours %}
-        <li><b>Direct work hours: {{ profile.direct_work_hours }}</li>
-        {% endif %}
-        {% if profile.expertise %}
-        <li><b>Expertise:</b> {{ profile.expertise }}</li>
-        {% endif %}
-        {% if profile.speaker %}
-        <li><b>Speaker:</b> {{profile.speaker}} </li>
-        {% endif %}
-        {% if profile.group %}
-        <li><b>Group:</b> {{profile.group}} </li>
-        {% endif %}
-        <li><b>Skills:</b> Lorem Ipsum</li>
-        <li><b>Volunteer:</b> For Rethink Lorem Ipsum</li>
-        <li><b>Job status:</b> Employed at Lorem Ipsum Inc.</li>
-        <li><b>Org affililations:</b> Lorem Ipsum Charity</li>
+        <li><b>Cause areas:</b>
+          {% if profile.cause_areas %}
+          {{ profile.cause_areas }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Direct work hours:</b>
+          {% if profile.direct_work_hours %}
+          {{ profile.direct_work_hours }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Expertise:</b>
+          {% if profile.expertise %}
+          {{ profile.expertise }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Speaker:</b>
+          {% if profile.speaker %}
+          {{ profile.speaker }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Group:</b>
+          {% if profile.group %}
+          <a href="{% url 'group' profile.group.id %}">{{profile.group.name}}</a>
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Skills:</b>
+          {% if profile.skills %}
+          {{ profile.skills }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Volunteer:</b>
+          {% if profile.volunteer %}
+          {{ profile.volunteer }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Job status:</b>
+          {% if profile.job_status %}
+          {{ profile.job_status }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
+        <li><b>Organisational affiliations:</b>
+          {% if profile.org_affiliations %}
+          {{ profile.org_affiliations }}
+          {% else %}
+          n/a
+          {% endif %}
+        </li>
       </ul>
     </div>
 
