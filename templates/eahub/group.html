@@ -58,13 +58,13 @@
               <b>Organisers:</b>
               <ul>
                 {% for organiser in group.organisers.all %}
-                  <li>{{ organiser.full_name }}</li>
+                  <li><a href="{% url 'profile' organiser.id %}">{{ organiser.full_name }}</a></li>
                 {% endfor %}
               </ul>
               {% elif group.organisers.all|length == 1 %}
               <b>Organiser:</b>
                 {% for organiser in group.organisers.all %}
-                  {{ organiser.full_name }}
+                  <a href="{% url 'profile' organiser.id %}">{{ organiser.full_name }}</a>
                 {% endfor %}
               {% endif %}
             </li>
@@ -76,7 +76,7 @@
     {% if group.lat and group.lon %}
     <div class="col-sm-6 profile-map">
       <a href="/groups">
-      {% include 'eahub/maps/profile_link.html' with lat=group.lat lon=group.lon %}
+      {% include 'eahub/maps/local_link.html' with lat=group.lat lon=group.lon %}
       </a>
     </div>
     {% endif %}

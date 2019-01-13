@@ -24,12 +24,21 @@
     {% endif %}
       <h3>Key facts</h3>
       <ul>
-        <li><b>Cause areas:</b> lorem ipsum risks</li>
-        <li><b>Donations:</b> £1000 to Lorem Ipsum Foundation</li>
-        <li><b>Direct work hours:</b> 10-15h a lorem</li>
-        <li><b>Expertise:</b> lorem ipsum</li>
-        <li><b>Speaker:</b> maybe on lorem ipsum</li>
-        <li><b>Group:</b> EA UC Lorem Ipsum</li>
+        {% if profile.cause_areas %}
+        <li><b>Cause areas:</b> {{ profile.cause_areas }}</li>
+        {% endif %}
+        {% if profile.direct_work_hours %}
+        <li><b>Direct work hours: {{ profile.direct_work_hours }}</li>
+        {% endif %}
+        {% if profile.expertise %}
+        <li><b>Expertise:</b> {{ profile.expertise }}</li>
+        {% endif %}
+        {% if profile.speaker %}
+        <li><b>Speaker:</b> {{profile.speaker}} </li>
+        {% endif %}
+        {% if profile.group %}
+        <li><b>Group:</b> {{profile.group}} </li>
+        {% endif %}
         <li><b>Skills:</b> Lorem Ipsum</li>
         <li><b>Volunteer:</b> For Rethink Lorem Ipsum</li>
         <li><b>Job status:</b> Employed at Lorem Ipsum Inc.</li>
@@ -57,7 +66,43 @@
         Some really interesting information about me is that lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
       </p>
     </div>
+
+    {% if profile.donations  %}
+    <div class="profile-info">
+      <h3>Donations</h3>
+      <table class="table table-striped table-bordered table-donations">
+        <thead>
+          <tr>
+              <th>To</th>
+              <th>Amount</th>
+              <th>Date</th>
+              <th>Details</th>
+          </tr>
+        </thead>
+        <tbody  id="table_donations">
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+  var donations = {{ profile.donations | safe }}
+  // var organisers = {{ group.organisers.all | safe }}
+  // console.log(organisers);
+  donations = donations.donations
+  var table_donations = $("#table_donations")
+  donations.forEach(function(donation) {
+    var tr = $('<tr>')
+    tr.append('<td>' + donation.to + '</td>')
+    tr.append('<td>' + donation.amount + '</td>')
+    tr.append('<td>' + donation.when + '</td>')
+    tr.append('<td>' + donation.details + '</td>')
+    table_donations.append(tr)
+  })
+</script>
 
 
 {% endblock %}
