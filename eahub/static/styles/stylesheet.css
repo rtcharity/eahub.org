@@ -197,13 +197,14 @@ h1{
 
 /* Home */
 .map-container {
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 
 /* Map */
 #map {
-    height: 400px;
+    height: 500px;
+    border-radius: 5px;
 }
 
 #map_profile_link {
