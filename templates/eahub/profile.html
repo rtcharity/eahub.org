@@ -98,22 +98,32 @@
     </div>
     {% endif %}
     </div>
+
     <div class="profile-info">
       <h3>Bio</h3>
       <p>
-        I always have had a big passion for lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        {% if profile.bio %}
+          {{ profile.bio }}
+        {% else %}
+          n/a
+        {% endif %}
       </p>
     </div>
     <div class="profile-info">
       <h3>Information</h3>
       <p>
-        Some really interesting information about me is that lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        {% if profile.bio %}
+          {{ profile.info }}
+        {% else %}
+          n/a
+        {% endif %}
       </p>
     </div>
 
-    {% if profile.donations  %}
+
     <div class="profile-info">
       <h3>Donations</h3>
+      {% if profile.donations  %}
       <table class="table table-striped table-bordered table-donations">
         <thead>
           <tr>
@@ -127,6 +137,8 @@
         </tbody>
       </table>
     </div>
+    {% else %}
+    <p>n/a</p>
     {% endif %}
 
 </div>
