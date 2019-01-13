@@ -11,7 +11,7 @@
     <img src="{% firstof group.pic '/static/images/group_avatar.png' %}" class="profile-pic"/>
     <h1 class="profile-name">{{ group.name|title }}</h1>
     {% if user in group.organisers.all %}
-    <div class="profile-edit">
+    <div class="profile-contact">
       <a href="{% url 'edit_group' group_id=group.id %}"><i class="fa fa-pencil"></i> Edit</a>
     </div>
     {% else %}

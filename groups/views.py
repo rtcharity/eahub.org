@@ -22,6 +22,7 @@ def create_group(request):
         form = CreateGroupForm(request.POST)
         if form.is_valid():
             group = form.save()
+            group.organisers.add(request.user)
             return redirect('group', group_id=group.id)
     else:
         form = CreateGroupForm()
