@@ -1,40 +1,38 @@
-<head>
-  <link rel="stylesheet" type="text/css" href="/static/styles/banner.css">
-</head>
+
   {% if page_name == "Home" %}
-  <div class="header_large clearfix">
+  <div class="banner-header-large clearfix">
   {% else %}
-  <div class="header_small clearfix">
+  <div class="banner-header-small clearfix">
   {% endif %}
-    <div class="drop_down">
+    <div class="banner-drop-down">
       <div class="row">
-        <h3 class="text-muted logo_container"><a href="\"><img id="logo" src="/static/images/logo_transparent.png" %}" /></a></h3>
-        <label class="menu_burger" id="menu_burger">
-          <div class="menu_bar"></div>
-          <div class="menu_bar"></div>
-          <div class="menu_bar"></div>
+        <h3 class="text-muted banner-logo-container"><a href="\"><img id="banner-logo" src="/static/images/logo_transparent.png" %}" /></a></h3>
+        <label class="banner-menu-burger" id="menu_burger">
+          <div class="banner-menu-bar"></div>
+          <div class="banner-menu-bar"></div>
+          <div class="banner-menu-bar"></div>
         </label>
       </div>
       <div class="row">
-        <ul class="nav pull-right drop_down_links" id="drop_down_links">
+        <ul class="nav pull-right banner-drop-down-links" id="drop_down_links">
           {% if user.is_authenticated %}
-            <li><a class="drop_down_link" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+            <li><a class="banner-drop-down-link" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
           {% else %}
-            <li><a class="drop_down_link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
-            <li><a class="drop_down_link" href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-          {% endif %}          
-          <li><a class="drop_down_link" href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
-          <li><a class="drop_down_link" href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
+            <li><a class="banner-drop-down-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
+            <li><a class="banner-drop-down-link" href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+          {% endif %}
+          <li><a class="banner-drop-down-link" href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
+          <li><a class="banner-drop-down-link" href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
           <!--
           TODO: Add these two things in a hamburger menu or something
-          <li><a class="drop_down_link" href="https://resources.eahub.org/">EA Resources</a></li>
-          <li><a class="drop_down_link" href="https://donationswap.eahub.org/">EA Donation Swap</a></li>
+          <li><a class="banner-drop-down-link" href="https://resources.eahub.org/">EA Resources</a></li>
+          <li><a class="banner-drop-down-link" href="https://donationswap.eahub.org/">EA Donation Swap</a></li>
           -->
         </ul>
       </div>
     </div>
     {% if page_name == "Home" %}
-    <h1 class="caption">Join over 1700+ EAs from around the world</h1>
+    <h1 class="banner-caption">Join over 1700+ EAs from around the world</h1>
     {% endif %}
   </div>
   <script src="/static/js/banner.js"></script>

@@ -1,0 +1,446 @@
+/* General */
+
+.btn{
+    margin-right: 10px;
+}
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container {
+  padding-left: 0px;
+  padding-right: 0px;
+  width: 100%;
+}
+
+.container-narrow {
+  /*max-width: 900px;*/
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content {
+  padding: 0 30px 50px 30px;
+}
+
+.col-sm-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+h1{
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.white-link a {
+  color: white
+}
+
+.white-link a:hover {
+  color: #A7DBAB !important; /* EAHub green */
+  text-decoration: none;
+}
+
+.white-link a:visited {
+  text-decoration: none;
+}
+
+
+/* Banner */
+.banner-caption {
+  color: white;
+  text-align: center;
+  margin-top: 160px;
+}
+
+.banner-drop-down {
+  width: 100%
+}
+
+.banner-drop-down-link {
+  color: white;
+  font-size: 16px;
+  padding: 0px 10px 0px 10px !important;
+  font-weight: 500;
+  text-decoration: none;
+  opacity: 0.9;
+  display: block;
+}
+
+.banner-header-large {
+  background-image: url("/static/images/LandingBanner_short.png");
+  background-position: center 0px;
+  background-repeat: repeat;
+  background-size: 1400px;
+  display: block;
+  height: 260px;
+  margin-bottom: 10px;
+}
+
+.banner-header-small {
+  background-color: #7BB0A8; /* EAHub Banner green */
+  background-size: cover;
+  display: block;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+#banner-logo{
+  height: 30px;
+  margin-top: -7px;
+}
+
+.banner-logo-container {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.banner-menu-bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 6px 0;
+}
+
+.banner-menu-burger {
+  display: none;
+}
+
+/* Features */
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-content: space-between;
+  max-width: 900px;
+  margin: 40px auto 40px auto;
+}
+
+.feature {
+  margin: 5px 10px 5px 10px;
+  width: 180px;
+  text-align: center;
+}
+
+.features_links {
+  text-decoration: none;
+  color: #635274;
+}
+
+.features_links:hover {
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.features_links:visited {
+  color: #635274;
+  text-decoration: none;
+}
+
+.features_links_img {
+  width: 120px;
+}
+
+.features_links_text {
+  font-size: 18px;
+  margin-top: 10px;
+  display: block;
+}
+
+
+/* Footer */
+
+.footer {
+  background-color: #512B52; /* EAHub purple */;
+  bottom: 0;
+  color: hsla(0,0%,100%,.7); /* white-70 */
+  display: block;
+  left: 0;
+  padding: 20px 0px 20px 0px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.footer-copyright {
+  font-size: 20px;
+  color: hsla(0,0%,100%,.7); /* white-70 */
+}
+
+.footer-copyright:hover {
+  color: hsla(0,0%,100%,.7); /* white-70 */
+  opacity: 0.5;
+  text-decoration: none
+}
+
+.footer-license {
+  margin-top: 15px;
+}
+
+.footer-license a {
+  color: hsla(0,0%,100%,.7); /* white-70 */
+  text-decoration: none;
+}
+
+.footer-license a:hover {
+  opacity: 0.5;
+}
+
+/* Home */
+.map-container {
+  margin-top: 50px;
+}
+
+
+/* Map */
+#map {
+    height: 500px;
+    border-radius: 5px;
+}
+
+#map_profile_link {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+#map_profile_link:hover {
+  opacity: 0.7;
+}
+
+#map_groups_link {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+#map_groups_link:hover {
+  opacity: 0.7;
+}
+
+
+/* Profile: Individual and groups */
+
+.profile .col-sm-6 {
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: center;
+}
+
+.profile-contact {
+  background-color: #7BB0A8; /* EAHub banner green */
+  border-radius: 5px;
+  color: white;
+  float: right;
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  width: 100px;
+}
+.profile-contact a{
+  color: white;
+  text-decoration: none;
+}
+
+.profile-contact:hover {
+  opacity: 0.5;
+}
+
+.profile-head {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 40px auto 40px auto;
+  text-align: center;
+  width: 100%;
+}
+
+.profile-info {
+  margin-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.profile-info p {
+  background-color: #f7f6f6; /* very light grey */
+  padding: 20px 20px 20px 20px
+}
+
+.profile-info table {
+  background-color: #f7f6f6; /* very light grey */
+}
+
+.profile-key-facts {
+  border-radius: 5px;
+  color: white;
+  margin-top: 0px;
+  padding: 10px 10px 10px 10px;
+}
+
+.profile-key-facts h3 {
+  background-color: #512B52; /* EAHub purple */
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 10px 10px 10px 10px;
+  text-align: center;
+}
+
+.profile-key-facts ul {
+  background-color: rgba(81, 43, 82, 0.7); /* Lighter EAHub purple */
+  font-size: 16px;
+  line-height: 25px;
+  list-style: none;
+  padding: 20px 20px 20px 20px;
+  text-align: left;
+}
+
+.profile-key-facts-sublist ul {
+  background-color: inherit;
+  list-style-type: disc;
+  padding-top: 0px;
+}
+
+.profile-map {
+  padding: 10px 10px 10px 10px;
+}
+
+.profile-name {
+  display: inline-block;
+  font-size: 50px;
+  margin-right: 20px;
+  max-width: 400px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+}
+
+.profile-pic {
+  border-radius: 3px;
+  display: inline-block;
+  margin-right: 10px;
+  max-width: 200px;
+  max-height: 150px;
+}
+
+/* Profiles: individuals and groups */
+
+.profiles-actions {
+  align-items: center;
+  background-color: #f7f6f6; /* very light grey */
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  justify-content: center;
+  padding-top: 10px;
+}
+
+.profiles-actions a:hover {
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.profiles-actions-btn {
+  background-color: #512B52; /* EAHub purple */
+  color: white;
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  width: 200px;
+}
+
+.profiles-head {
+  margin-bottom: 40px;
+  margin-top: 40px;
+}
+
+.profiles-profile-pic {
+  height: 50px;
+  width: 50px;
+}
+
+.profiles-table {
+  margin-bottom: 20px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+
+@media(max-width: 760px) {
+
+  .banner-caption {
+    font-size: 20px;
+    margin-top: 100px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .banner-drop-down-link {
+    color: black
+  }
+
+  .banner-drop-down-links {
+    background-color: rgba(220,220,220,0.7); /*light-grey*/
+    margin-right: 5px;
+    margin-top: 10px;
+    position: absolute;
+    right: 0px;
+    visibility: hidden;
+  }
+
+  .banner-drop-down-links li {
+    float: none !important;
+  }
+
+  .banner-header-large {
+    background-image: url("/static/images/LandingBanner.png");
+    background-position: center 5px;
+    background-size: cover;
+    height: 220px;
+  }
+
+  .banner-menu-burger {
+    display: block;
+    margin-right: 25px;
+    margin-top: 13px;
+    cursor: pointer;
+    float: right;
+  }
+
+  .content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .feature {
+    width: 120px;
+  }
+}
+
+@media(min-width: 768px) {
+  .banner-drop-down-links {
+    margin-top: -40px;
+    margin-right: 0px;
+    padding: 3px 10px 3px 3px;
+    text-align: right;
+    visibility: visible !important;
+    z-index: 1;
+  }
+
+  .banner-drop-down-links li {
+    float: left !important;
+  }
+}

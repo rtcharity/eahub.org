@@ -1,14 +1,8 @@
-<head>
-  <link rel="stylesheet" href="/static/styles/footer.css" />
-</head>
-
 <footer class="footer">
-    <a class="footer_copyright" href="/" >
+    <a class="footer-copyright" href="/" >
       &copy; 2018 EAHub
     </a>
-    
-    
-    <div class="footer_license">
+    <div class="footer-license">
         The design of this website is licensed under the <a rel="license" target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a>.
     </div>
     {% if request.user.is_superuser %}<a class="btn btn-default pull-right" href="/admin" style="margin-top: -45px; margin-right: 20px;"><i class="fa fa-pencil"></i> Staff Portal</a>{% endif %}

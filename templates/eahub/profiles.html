@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<link rel="stylesheet" type="text/css"  href="/static/styles/profiles.css">
-
 <div class="centered">
   <div class="row profiles-head">
     <div class="col-sm-5">
@@ -47,7 +45,7 @@
           {% for profile in profiles %}
           <tr>
               {% if profile.img %}
-              <td><img src="{{ profile.img }}" class="profile-pic" /></td>
+              <td><img src="{{ profile.img }}" class="profiles-profile-pic" /></td>
               {% else %}
               <td><img src="/static/images/profile_Avatar10.png" class="profile-pic" /></td>
               {% endif %}
