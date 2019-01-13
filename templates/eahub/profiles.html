@@ -47,7 +47,7 @@
               {% if profile.img %}
               <td><img src="{{ profile.img }}" class="profiles-profile-pic" /></td>
               {% else %}
-              <td><img src="/static/images/profile_Avatar10.png" class="profile-pic" /></td>
+              <td><img src="/static/images/profile_Avatar10.png" class="profiles-profile-pic" /></td>
               {% endif %}
               <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
               <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
