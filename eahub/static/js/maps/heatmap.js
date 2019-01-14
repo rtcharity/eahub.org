@@ -77,8 +77,15 @@ function map(query_string_map, map_data_profiles, map_data_groups) {
       });
 
       // Add a marker clusterer to manage the markers.
+      var markerClusterOptions = {
+        height: 50,
+        imagePath: '../static/images/cluster/m',
+        maxZoom: minClusterZoom,
+        width: 50
+      };
+      
       var markerCluster = new MarkerClusterer(
-          map, markers,{imagePath: '../static/images/cluster/m', maxZoom: minClusterZoom}
+          map, markers,markerClusterOptions
       );
       // prevent map from zooming in too much when clicking on cluster
       google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
