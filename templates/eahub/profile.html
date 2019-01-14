@@ -92,7 +92,7 @@
 
     {% if profile.lat and profile.lon %}
     <div class="col-sm-6 profile-map">
-      <a href="/profiles">
+      <a href="/?map=individuals#map">
       {% include 'eahub/maps/local_link.html' with lat=profile.lat lon=profile.lon %}
       </a>
     </div>
