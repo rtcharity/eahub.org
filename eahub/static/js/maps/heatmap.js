@@ -78,12 +78,10 @@ function map(query_string_map, map_data_profiles, map_data_groups) {
 
       // Add a marker clusterer to manage the markers.
       var markerClusterOptions = {
-        height: 50,
         imagePath: '../static/images/cluster/m',
-        maxZoom: minClusterZoom,
-        width: 50
+        maxZoom: minClusterZoom
       };
-      
+
       var markerCluster = new MarkerClusterer(
           map, markers,markerClusterOptions
       );
