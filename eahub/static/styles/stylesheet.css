@@ -77,7 +77,7 @@ h1{
 
 .banner-header-large {
   background-image: url("/static/images/LandingBanner_short.png");
-  background-position: center 0px;
+  background-position: center 20px;
   background-repeat: repeat;
   background-size: 1400px;
   display: block;
@@ -407,7 +407,7 @@ h1{
 
   .banner-header-large {
     background-image: url("/static/images/LandingBanner.png");
-    background-position: center 5px;
+    background-position: center 10px;
     background-size: cover;
     height: 260px;
   }
