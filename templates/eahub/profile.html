@@ -1,63 +1,72 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<head>
-  <link rel="stylesheet" type="text/css"  href="/static/styles/profile.css">
-</head>
-<div class="profile">
-    <div class="profile-head">
-      <img src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}" class="profile-pic"/>
-      <h1 class="profile-name">{{ profile.full_name|title }}</h1>
-      <div class="profile-contact">
+
+<br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-2 col-md-2">
+      <img class="profile_picture" src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}">        
+    </div>
+    <div class="col-md-6">
+      <h1>{{ profile.full_name|title }}</h1>
+      <div class="btn btn-default purple">
         {% if user.id == profile.id %}
           <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
         {% else %}
-          <span>Connect</span>
+          <span><i class="fa fa-envelope"></i>Connect</span>
         {% endif %}
       </div>
     </div>
-    <div class="row">
-    {% if profile.lat and profile.lon %}
-    <div class="profile-key-facts col-sm-6">
-    {% else %}
-    <div class="profile-key-facts col-sm-6 col-sm-offset-3">
-    {% endif %}
-      <h3>Key facts</h3>
-      <ul>
-        <li><b>Cause areas:</b> lorem ipsum risks</li>
-        <li><b>Donations:</b> £1000 to Lorem Ipsum Foundation</li>
-        <li><b>Direct work hours:</b> 10-15h a lorem</li>
-        <li><b>Expertise:</b> lorem ipsum</li>
-        <li><b>Speaker:</b> maybe on lorem ipsum</li>
-        <li><b>Group:</b> EA UC Lorem Ipsum</li>
-        <li><b>Skills:</b> Lorem Ipsum</li>
-        <li><b>Volunteer:</b> For Rethink Lorem Ipsum</li>
-        <li><b>Job status:</b> Employed at Lorem Ipsum Inc.</li>
-        <li><b>Org affililations:</b> Lorem Ipsum Charity</li>
-      </ul>
-    </div>
-
-    {% if profile.lat and profile.lon %}
-    <div class="col-sm-6 profile-map">
-      <a href="/profiles">
-      {% include 'eahub/maps/profile_link.html' with lat=profile.lat lon=profile.lon %}
-      </a>
-    </div>
-    {% endif %}
-    </div>
-    <div class="profile-info">
-      <h3>Bio</h3>
-      <p>
-        I always have had a big passion for lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      </p>
-    </div>
-    <div class="profile-info">
-      <h3>Information</h3>
-      <p>
-        Some really interesting information about me is that lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-      </p>
-    </div>
+  </div>
 </div>
 
+<br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">        
+      <ul class="list-group">
+        <li class="list-group-item purple"><h4>Key Facts</h4></li>
+        <li class="list-group-item"><b>Cause areas:</b> n/a</li>
+        <li class="list-group-item"><b>Donations:</b> n/a</li>
+        <li class="list-group-item"><b>Direct work hours:</b> n/a</li>
+        <li class="list-group-item"><b>Expertise:</b> n/a</li>
+        <li class="list-group-item"><b>Speaker:</b> n/a</li>
+        <li class="list-group-item"><b>Group:</b> n/a</li>
+        <li class="list-group-item"><b>Skills:</b> n/a</li>
+        <li class="list-group-item"><b>Volunteer:</b> n/a</li>
+        <li class="list-group-item"><b>Job status:</b> n/a</li>
+        <li class="list-group-item"><b>Org affililations:</b> n/a</li>
+      </ul>
+    </div>
+    <div class="col-md-6">
+        {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon %}
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Bio</h4></li>
+    <li class="list-group-item">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
+  </ul>
+  <br>
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Information</h4></li>
+    <li class="list-group-item">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
+  </ul>
+  <br>
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Donation</h4></li>
+    <li class="list-group-item">
+        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
+  </ul>
+</div>
 
 {% endblock %}
