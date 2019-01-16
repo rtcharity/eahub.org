@@ -5,7 +5,7 @@
 <div class="profile">
 
     <div class="profile-head">
-      <img src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}" class="profile-pic"/>
+      <img src="/static/images/profile_avatars/avatar1.png" id="profile-img" class="profile-pic">
       <h1 class="profile-name">{{ profile.full_name|title }}</h1>
       <div class="profile-contact">
         {% if user.id == profile.id %}
@@ -137,6 +137,19 @@
           <tbody  id="table_donations">
           </tbody>
         </table>
+        <script>
+          var donations = {{ profile.donations | safe }}
+          donations = donations.donations
+          var table_donations = $("#table_donations")
+          donations.forEach(function(donation) {
+            var tr = $('<tr>')
+            tr.append('<td>' + donation.to + '</td>')
+            tr.append('<td>' + donation.amount + '</td>')
+            tr.append('<td>' + donation.when + '</td>')
+            tr.append('<td>' + donation.details + '</td>')
+            table_donations.append(tr)
+          })
+        </script>
       {% else %}
         <p>n/a</p>
       {% endif %}
@@ -144,21 +157,11 @@
   </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/static/js/profile_pic.js"></script>
 <script>
-  var donations = {{ profile.donations | safe }}
-  // var organisers = {{ group.organisers.all | safe }}
-  // console.log(organisers);
-  donations = donations.donations
-  var table_donations = $("#table_donations")
-  donations.forEach(function(donation) {
-    var tr = $('<tr>')
-    tr.append('<td>' + donation.to + '</td>')
-    tr.append('<td>' + donation.amount + '</td>')
-    tr.append('<td>' + donation.when + '</td>')
-    tr.append('<td>' + donation.details + '</td>')
-    table_donations.append(tr)
-  })
+  addProfilePic("{{ profile.pic }}")
 </script>
+
 
 
 {% endblock %}
