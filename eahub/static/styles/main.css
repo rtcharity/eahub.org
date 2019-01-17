@@ -5,6 +5,8 @@ html {
 }
 body {
   margin-bottom: 60px;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 .footer {
   position: absolute;
@@ -19,14 +21,14 @@ body {
   color: #fff;
   text-decoration: underline;
 }
-body {
-  padding-top: 50px;
-  padding-bottom: 20px;
+
+/* container */
+.container{
+  max-width: 900px;
 }
 
 /* nav */
 .navbar-inverse,
-.jumbotron,
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:focus,
 .navbar-inverse .navbar-nav > .active > a:hover,
@@ -35,12 +37,12 @@ body {
 .navbar-inverse .navbar-nav > .open > a:hover{
   background-color: #7bb0a8;
 }
-.navbar-inverse .navbar-nav > li > a,
-.jumbotron{
+.navbar-inverse .navbar-nav > li > a{
   color: #fff;
 }
 .navbar-inverse{
   border: none;
+  
 }
 .dropdown-menu{
   border: none;
@@ -50,12 +52,15 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.container{
-  max-width: 900px;
+.navbar-nav > li:hover{
+  transform: scale(1.1);
+  font-weight: 500;
 }
 
 /* jumbotron */
 .jumbotron{
+  background-color: #7bb0a8;
+  color: #fff;
   padding-top: 0;
   padding-bottom: 0;
 }
