@@ -4,13 +4,17 @@
 
 <br><br>
 
-<div class="container animated bounceIn">
+<div class="container animated {% if profile.id == 13013 %}infinite tada{% else %}bounceIn{% endif %}">
   <div class="row">
     <div class="col-md-offset-2 col-md-2">
       <img class="profile_picture" src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}">
     </div>
     <div class="col-md-6">
-      <h1>{{ profile.full_name|title }}</h1>
+      {% if profile.id == 13013 %}
+        <h1><i class="fa fa-bolt"></i> {{ profile.full_name|title }} <i class="fa fa-bolt"></i></h1>
+      {% else %}
+        <h1>{{ profile.full_name|title }}</h1>
+      {% endif %}
       <div class="btn btn-default purple">
         {% if user.id == profile.id %}
           <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>

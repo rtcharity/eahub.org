@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="jumbotron">      
+<div class="jumbotron">
   <div class="container">
     <img class="hidden-xs" src="/static/images/LandingBanner_short.png">
     <h2 class="text-center">Join over 1700+ EAs from around the world</h1>
@@ -11,7 +11,7 @@
 
 <div class="container animated bounceIn">
   <div class="row">
-    <div class="col-xs-3">
+    <div class="col-xs-col-sm-3">
       <a class="thumbnail" href="{% url 'profiles' %}" title="Learn about EAs around the world, and connect with them">
         <img src="/static/images/home/ea_profiles.png">
         <h3>EA Profiles</h3>
@@ -61,10 +61,10 @@
         <h3>EA Projects</h3>
       </a>
     </div>
-  </div> 
+  </div>
 </div>
 
-<div class="container">      
+<div class="container">
   {% include 'eahub/maps/homepage_map.html' %}
 </div>
 
