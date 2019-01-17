@@ -2,66 +2,63 @@
 
 {% block content %}
 
-<div class="centered">
-  <div class="row profiles-head">
-    <div class="col-sm-5">
-      <div class="profiles-actions">
-        <a href="{% url 'create_group' %}" >
-          <div class="profiles-actions-btn">
-            Start a Group
-          </div>
-        </a>
-        <a href="https://resources.eahub.org">
-          <div class="profiles-actions-btn">
-            Group Resources
-          </div>
-        </a>
-        <a href="mailto:lean@eahub.org">
-          <div class="profiles-actions-btn">
-            Contact LEAN
-          </div>
-        </a>
-      </div>
-    </div>
-    <div class="col-sm-7">
-        <a href="/?map=groups#map">
-        {% include 'eahub/maps/global_link.html' with map_data=map_data_groups %}
-        </a>
-    </div>
-  </div>
+<br><br>
 
-  <div class="row profiles-table">
-    <table id="datatable-groups" class="table enable-datatable table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Location</th>
-                <th>Community</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for group in groups %}
-            <tr>
-                <td>
-                    <a href="{% url 'group' group.id %}">{{ group.name|default_if_none:'' }}</a>
-                </td>
-                <td>
-                    {% if group.country %}{{ group.country }}{% endif %}
-                    {% if group.country and group.city_or_town %}/{% endif %}
-                    {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
-                </td>
-                <td>
-                    {% if group.facebook_page %}
-                        <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
-                    {% endif %}
-                    {% if group.facebook_group %}
-                        <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4 link_box">
+        <div class="list-group">
+          <a href="{% url 'create_group' %}" class="list-group-item"><i class="fa fa-plus"></i>Start a Group</a>
+        </div>
+        <div class="list-group">
+          <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i>Group Resources</a>
+        </div>
+        <div class="list-group">
+          <a href="mailto:lean@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i>Contact LEAN</a>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <a href="/?map=groups#map">
+          {% include 'eahub/maps/list_page_map.html' with map_data=map_data_groups %}
+        </a>
+    </div>
   </div>
 </div>
+
+<br><br>
+
+<div class="container">
+  <table id="datatable-groups" class="table enable-datatable table-striped table-bordered">
+      <thead>
+          <tr>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Community</th>
+          </tr>
+      </thead>
+      <tbody>
+          {% for group in groups %}
+          <tr>
+              <td>
+                  <a href="{% url 'group' group.id %}">{{ group.name|default_if_none:'' }}</a>
+              </td>
+              <td>
+                  {% if group.country %}{{ group.country }}{% endif %}
+                  {% if group.country and group.city_or_town %}/{% endif %}
+                  {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
+              </td>
+              <td>
+                  {% if group.facebook_page %}
+                      <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
+                  {% endif %}
+                  {% if group.facebook_group %}
+                      <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
+                  {% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+
 {% endblock %}
