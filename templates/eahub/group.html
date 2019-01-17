@@ -2,142 +2,81 @@
 
 {% block content %}
 
-<div class="profile">
+<br><br>
 
-  <div class="profile-head">
-    <img src="{% firstof group.pic '/static/images/group_avatar.png' %}" class="profile-pic"/>
-    <h1 class="profile-name">{{ group.name|title }}</h1>
-    {% if user in group.organisers.all %}
-    <div class="profile-contact">
-      <a href="{% url 'edit_group' group_id=group.id %}"><i class="fa fa-pencil"></i> Edit</a>
-    </div>
-    {% else %}
-      {% if group.official_email %}
-      <div class="profile-contact">
-        <a href="mailto:{{ group.official_email }}">Connect</a>
-      </div>
-      {% elif group.facebook_group %}
-      <div class="profile-contact">
-        <a href="{{ group.facebook_group }}" target="_blank">Connect</a>
-      </div>
-      {% elif group.facebook_page %}
-      <div class="profile-contact">
-        <a href="{{ group.facebook_page }}" target="_blank">Connect</a>
-      </div>
-      {% elif group.lean_email %}
-      <div class="profile-contact">
-        <a href="mailto:{{ group.lean_email }}">Connect</a>
-      </div>
-      {% endif %}
-    {% endif %}
-  </div>
-
+<div class="container">
   <div class="row">
-    {% if group.lat and group.lon %}
-    <div class="profile-key-facts col-sm-6">
-    {% else %}
-    <div class="profile-key-facts col-sm-6 col-sm-offset-3">
-    {% endif %}
-      <h3>Key facts</h3>
-      <ul class="white-link">
-        {% if group.facebook_group %}
-          <li><a href="{{ group.facebook_group }}"><i class="fa fa-facebook"></i> Community</a></li>
-        {% endif %}
-        {% if group.website %}
-          <li><b><a href="{{ group.website }}">Website</a></b></li>
-        {% endif %}
-        {% if group.country %}
-          <li><b>Country:</b> {{ group.country }}</li>
-        {% endif %}
-        {% if group.organisers %}
-            <li class="profile-key-facts-sublist">
-              {% if group.organisers.all|length > 1 %}
-              <b>Organisers:</b>
-              <ul>
-                {% for organiser in group.organisers.all %}
-                  <li><a href="{% url 'profile' organiser.id %}">{{ organiser.full_name }}</a></li>
-                {% endfor %}
-              </ul>
-              {% elif group.organisers.all|length == 1 %}
-              <b>Organiser:</b>
-                {% for organiser in group.organisers.all %}
-                  <a href="{% url 'profile' organiser.id %}">{{ organiser.full_name }}</a>
-                {% endfor %}
-              {% endif %}
-            </li>
-        {% endif %}
-      </ul>
+    <div class="col-xs-offset-2 col-xs-2">
+      <img class="profile_picture" src="{% firstof group.pic '/static/images/group_avatar.png' %}">        
     </div>
-
-    {% if group.lat and group.lon %}
-    <div class="col-sm-6 profile-map">
-      <a href="/?map=groups#map">
-      {% include 'eahub/maps/local_link.html' with lat=group.lat lon=group.lon %}
-      </a>
+    <div class="col-xs-6">
+      <h1>{{ group.name|title }}</h1>
+      <div class="btn btn-default purple">
+        {% if user in group.organisers.all %}
+          <a href="{% url 'edit_group' group_id=group.id  %}"><i class="fa fa-pencil"></i> Edit</a>
+        {% else %}
+          {% if group.official_email %}
+            <a href="mailto:{{ group.official_email }}"><i class="fa fa-envelope"></i>Connect</a>
+          {% elif group.facebook_group %}
+            <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i>Connect</a>
+          {% elif group.facebook_page %}
+            <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i>Connect</a>
+          {% elif group.lean_email %}
+            <a href="mailto:{{ group.lean_email }}"><i class="fa fa-envelope"></i>Connect</a>
+          {% endif %}
+        {% endif %}
+      </div>
     </div>
-    {% endif %}
   </div>
-
-  {% if group.summary %}
-  <div class="profile-info">
-    <h3>Summary</h3>
-    <p>
-      {{ group.summary }}
-    </p>
-  </div>
-  {% endif %}
-
-  {% if group.donations  %}
-  <div class="profile-info">
-    <h3>Donations</h3>
-    <table class="table table-striped table-bordered table-donations">
-      <thead>
-        <tr>
-            <th>To</th>
-            <th>Amount</th>
-            <th>Date</th>
-            <th>Details</th>
-        </tr>
-      </thead>
-      <tbody  id="table_donations">
-      </tbody>
-    </table>
-  </div>
-  {% endif %}
-
-  {% if group.custom  %}
-  <div class="profile-info">
-    <h3>Custom</h3>
-    <p>
-      {{ group.custom }}
-    </p>
-  </div>
-  {% else %}
-  <div class="profile-info">
-    <h3>Custom</h3>
-    <p>
-      This is a dummy text to show what the custom field would look like.
-    </p>
-  </div>
-  {% endif %}
-
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>
-  var donations = {{ group.donations | safe }}
-  // var organisers = {{ group.organisers.all | safe }}
-  // console.log(organisers);
-  donations = donations.donations
-  var table_donations = $("#table_donations")
-  donations.forEach(function(donation) {
-    var tr = $('<tr>')
-    tr.append('<td>' + donation.to + '</td>')
-    tr.append('<td>' + donation.amount + '</td>')
-    tr.append('<td>' + donation.when + '</td>')
-    tr.append('<td>' + donation.details + '</td>')
-    table_donations.append(tr)
-  })
-</script>
+<br><br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">        
+      <ul class="list-group">
+        <li class="list-group-item purple"><h4>Key Facts</h4></li>
+        <li class="list-group-item"><b>Organisers:</b> {{ group.organisers.all|join:", " }}</li>
+        <li class="list-group-item"><b>City/Town:</b> {{ group.city_or_town|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Country:</b> {{ group.country|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Website:</b> {{ group.website|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Facebook Group:</b> {{ group.facebook_group|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Facebook Page:</b> {{ group.facebook_page|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Official Email:</b> {{ group.official_email|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Lean Email:</b> {{ group.lean_email|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Meetup Details:</b> {{ group.meetup_details|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Meetup URL:</b> {{ group.meetup_url|default_if_none:'n/a' }}</li>
+      </ul>
+    </div>
+    <div class="col-md-6">      
+      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 %}
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Summary</h4></li>
+    <li class="list-group-item">{{ group.summary|default_if_none:'n/a' }}</li>
+  </ul>
+  <br>
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Donations</h4></li>
+    <li class="list-group-item">{{ group.donations|default_if_none:'n/a' }}</li>
+  </ul>
+  <br>
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Links</h4></li>
+    <li class="list-group-item">{{ group.links|default_if_none:'n/a' }}</li>
+  </ul>
+  <br>
+  <ul class="list-group">
+    <li class="list-group-item"><h4>Images</h4></li>
+    <li class="list-group-item">{{ group.images|default_if_none:'n/a' }}</li>
+  </ul>
+</div>
 
 {% endblock %}

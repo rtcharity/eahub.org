@@ -1,0 +1,25 @@
+{% block map %}
+
+{% if lat and lon %}
+  <div id="profile_page_map" class="map"></div>
+  <script src="/static/scripts/maps/markerclusterer.js"></script>
+  <script src="/static/scripts/maps/profile_link.js"></script>
+  <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
+  <script>
+    function initMap() {
+      var lat = parseFloat("{{ lat }}");
+      var lon = parseFloat("{{ lon }}");
+      console.log({
+        lat,
+        lon
+      })
+      renderMap(lat, lon);
+    }
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+{% else %}
+  <div id="profile_page_map" class="map_placeholder">
+    <h1><i class="fa fa-map" aria-hidden="true"></i><br>No map data</h1>
+  </div>
+{% endif %}
+{% endblock %}

@@ -18,9 +18,12 @@ class Profile(AbstractUser):
     city_or_town = models.CharField(max_length=100, null=True, blank=True)
     country = models.CharField(max_length=100, null=True, blank=True)
 
+    def __str__(self):
+        return self.full_name()
+
     def full_name(self):
         return ' '.join([
-            x
+            x.title()
             for x in [self.first_name, self.last_name]
             if x not in [None, '']
         ])
