@@ -167,6 +167,7 @@ body {
   text-align: right;
 }
 
+/* other */
 .purple{
   background-color: #512B52;
   color: #fff;
@@ -181,4 +182,7 @@ body {
 }
 .purple a:hover{
   text-decoration: none;
+}
+.fa-bolt{
+  color: gold;
 }
