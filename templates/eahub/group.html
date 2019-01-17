@@ -16,13 +16,15 @@
           <a href="{% url 'edit_group' group_id=group.id  %}"><i class="fa fa-pencil"></i> Edit</a>
         {% else %}
           {% if group.official_email %}
-            <a href="mailto:{{ group.official_email }}"><i class="fa fa-envelope"></i>Connect</a>
+            <a href="mailto:{{ group.official_email }}"><i class="fa fa-envelope"></i> Message</a>
           {% elif group.facebook_group %}
-            <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i>Connect</a>
+            <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
           {% elif group.facebook_page %}
-            <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i>Connect</a>
+            <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
           {% elif group.lean_email %}
-            <a href="mailto:{{ group.lean_email }}"><i class="fa fa-envelope"></i>Connect</a>
+            <a href="mailto:{{ group.lean_email }}"><i class="fa fa-envelope"></i> Message</a>
+          {% else %}
+            <a href="#"><i class="fa fa-microphone-slash"></i> Messaging Disabled</a>
           {% endif %}
         {% endif %}
       </div>
