@@ -25,6 +25,7 @@ function map(query_string_map, map_data_profiles, map_data_groups) {
       selectedMap = 'individuals'
     }
     var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
+    var withLabels = selectedMap == 'groups' ? true : false
 
     var minClusterZoom = 14;
     var mapOptions = {
@@ -42,39 +43,12 @@ function map(query_string_map, map_data_profiles, map_data_groups) {
 
       var mapElement = document.getElementById('map');
       var map = new google.maps.Map(mapElement, mapOptions);
-      var iw = new google.maps.InfoWindow();
-
-      //oms allows for spiderfying of clusters
-      var oms = new OverlappingMarkerSpiderfier(map, {
-        markersWontMove: true,
-        markersWontHide: true,
-        basicFormatEvents: true
-      });
-
-      oms.addListener('click', function(marker) {
-        iw.setContent(marker.desc);
-        iw.open(map, marker);
-      });
-
-      var markers = locations.map(function(location, i) {
-          var label = location.label.toLowerCase()
-            .split(' ')
-            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(' ');
-          var marker = new google.maps.Marker({
-              position: location,
-              optimized: !isIE  // makes SVG icons work in IE
-          });
-          var iconSize = new google.maps.Size(20, 23);
-          marker.setIcon({
-           url: '/static/images/marker.svg',
-           size: iconSize,
-           scaledSize: iconSize  // makes SVG icons work in IE
-          });
-          marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
-          oms.addMarker(marker);
-          return marker;
-      });
+      var markers;
+      if (withLabels) {
+        markers = addMarkersWithLabels(locations, map);
+      } else {
+        markers = addMarkersWithoutLables(locations, map);
+      }
 
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(
@@ -83,12 +57,69 @@ function map(query_string_map, map_data_profiles, map_data_groups) {
       // prevent map from zooming in too much when clicking on cluster
       google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
         map.fitBounds(cluster.getBounds());
-        if( map.getZoom() > minClusterZoom+1 ) {
-          map.setZoom(minClusterZoom+1);
+        if( map.getZoom() > minClusterZoom ) {
+          map.setZoom(minClusterZoom);
         }
       });
+
   }
 
   //call renderMap when page loads
   renderMap()
+
+  function addMarkersWithLabels(locations, map) {
+    var iw = new google.maps.InfoWindow();
+
+    //oms allows for spiderfying of clusters
+    var oms = new OverlappingMarkerSpiderfier(map, {
+      markersWontMove: true,
+      markersWontHide: true,
+      basicFormatEvents: true
+    });
+
+    oms.addListener('click', function(marker) {
+      iw.setContent(marker.desc);
+      iw.open(map, marker);
+    });
+
+    var markers = locations.map(function(location, i) {
+        var marker = new google.maps.Marker({
+            position: location,
+            optimized: !isIE  // makes SVG icons work in IE
+        });
+        var iconSize = new google.maps.Size(20, 23);
+        marker.setIcon({
+         url: '/static/images/marker.svg',
+         size: iconSize,
+         scaledSize: iconSize  // makes SVG icons work in IE
+        });
+
+        var label = location.label.toLowerCase()
+          .split(' ')
+          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(' ');
+        marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+        oms.addMarker(marker);
+        return marker;
+    });
+    return markers
+  }
+
+  function addMarkersWithoutLables(locations, map) {
+    var markers = locations.map(function(location, i) {
+        var marker = new google.maps.Marker({
+            position: location,
+            map: map,
+            optimized: !isIE  // makes SVG icons work in IE
+        });
+        var iconSize = new google.maps.Size(20, 23);
+        marker.setIcon({
+         url: '/static/images/marker.svg',
+         size: iconSize,
+         scaledSize: iconSize  // makes SVG icons work in IE
+        });
+        return marker;
+    });
+    return markers
+  }
 }
