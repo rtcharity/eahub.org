@@ -42,10 +42,12 @@ body {
 }
 .navbar-inverse{
   border: none;
-  
 }
-.dropdown-menu{
+.navbar .dropdown-menu{
   border: none;
+}
+.navbar .dropdown-menu .fa{
+  margin-right: 5px;
 }
 .navbar img{
   height: 30px;
