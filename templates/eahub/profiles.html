@@ -32,7 +32,7 @@
     <thead>
       <tr>
         <th></th>
-        <th>Name</th>
+        <th>Username</th>
         <th>City/Town</th>
         <th>Country</th>
       </tr>
@@ -46,8 +46,20 @@
           <td><img src="/static/images/profile_Avatar10.png" class="profile-pic" /></td>
         {% endif %}
         <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
-        <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
-        <td class="text-muted">{{ profile.country|default:'' }}</td>
+        <td class="text-muted">
+          {% if profile.gdpr_confirmed %}
+            <span>{{ profile.city_or_town|default:'n/a' }}</span>
+          {% else %}
+          <span>Hidden</span>
+          {% endif %}
+        </td>
+        <td class="text-muted">
+          {% if profile.gdpr_confirmed %}
+            <span>{{ profile.country|default:'n/a' }}</span>
+          {% else %}
+          <span>Hidden</span>
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </tbody>

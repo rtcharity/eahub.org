@@ -36,7 +36,9 @@ class SignUp(generic.CreateView):
 
 def ProfileView(request, profile_id):
     profile = Profile.objects.get(pk=profile_id)
-    return render(request, 'eahub/profile.html', {
+    template = 'eahub/gdpr_not_confirmed.html'
+    if profile.gdpr_confirmed: template = 'eahub/profile.html'
+    return render(request, template, {
         'profile': profile
     })
 
@@ -51,7 +53,9 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
-            form.save()
+            derp = form.save(commit=False)
+            derp.gdpr_confirmed = True
+            derp.save()
             return redirect('my_profile')
     else:
         form = EditProfileForm(instance=request.user)

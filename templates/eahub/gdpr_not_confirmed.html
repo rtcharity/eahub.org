@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br><br>
+
+<div class="container animated {% if profile.id == 13013 %}infinite tada{% else %}bounceIn{% endif %}">
+  <div class="row">
+    <div class="col-md-offset-2 col-md-2">
+      <img class="profile_picture" src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}">
+    </div>
+    <div class="col-md-6">
+      <h1>{{ profile.full_name|title }}</h1>
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="container">  
+  <div class="row">
+    <div class="col-md-6">
+      <br>
+      <img class="gdpr_img" src="/static/images/gdpr.jpg">
+    </div>
+    <div class="col-md-6">
+        <h3>Profile hidden until user confirms what they want to make public</h3>
+        <p>Since launching the new hub in 2019, we wanted to make sure we are respecting your privacy by hiding all personal information until users confirm exactly what information they want to make public on their profile.</p>
+        <h3>Wait, This is my profile!</h3>
+        <p>Login <a href="{% url 'login' %}">here</a> to restore your old account and audit your data.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
