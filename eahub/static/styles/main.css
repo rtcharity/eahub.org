@@ -193,6 +193,14 @@ body {
 .fa-bolt{
   color: gold;
 }
+
 .gdpr_img{
   width: 100%;
+}
+.search {
+  font-weight: bold;
+  padding-left: 7px;
+}
+.search input {
+  font-weight: normal;
 }
