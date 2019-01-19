@@ -22,11 +22,13 @@
 
 <br>
 
-<div class="container">
-  <div class="alert alert-danger">
-      <span>Your profile will remain locked until you edit your profile.</span>
+{% if user.id == profile.id %}
+  <div class="container">
+    <div class="alert alert-danger">
+        <span>Your profile will remain locked until you edit your profile.</span>
+    </div>
   </div>
-</div>
+{% endif %}
 
 <div class="container">
   <div class="row">
