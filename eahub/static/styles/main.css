@@ -96,8 +96,13 @@ body {
 
 /* map */
 #map {
-  height: 500px;
   border-radius: 5px;
+}
+.map_homepage {
+  height: 500px;
+}
+.map_list_page {
+  height: 300px;
 }
 #map_selector{
   padding: 10px;
@@ -149,7 +154,7 @@ body {
 .link_box .list-group-item{
   background-color: #512B52 !important;
   color: #fff !important;
-  border: none;  
+  border: none;
   font-size: 1.1em;
 }
 .link_box .list-group-item:hover{

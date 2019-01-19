@@ -1,14 +1,20 @@
 {% block map %}
-<div id="map" class="map"></div>
+<div id="map" class="map_list_page"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
 <script src="/static/scripts/maps/markerclusterer.js"></script>
 <script src="/static/scripts/maps/heatmap.js"></script>
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
 <script>
-
+  var map_type = "{{ map_type }}"
   function initMap() {
     var map_data = [{{ map_data | safe}}];
-    renderGlobalMap(map_data);
+    if (map_type = "groups") {
+      renderGroupMap(map_data);
+    } else {
+      renderProfileMap(map_data);
+    }
+
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
