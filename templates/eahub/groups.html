@@ -11,16 +11,14 @@
           <a href="{% url 'create_group' %}" class="list-group-item"><i class="fa fa-plus"></i>Add a Group</a>
         </div>
         <div class="list-group">
-          <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i>Group Resources</a>
+          <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i>EA Resources</a>
         </div>
         <div class="list-group">
           <a href="mailto:lean@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i>Contact LEAN</a>
         </div>
     </div>
     <div class="col-sm-8">
-        <a href="/?map=groups#map">
-          {% include 'eahub/maps/list_page_map.html' with map_data=map_data_groups %}
-        </a>
+        {% include 'eahub/maps/list_page_map.html' with map_data=map_data_groups %}
     </div>
   </div>
 </div>
