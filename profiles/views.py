@@ -20,7 +20,7 @@ class SignUp(generic.CreateView):
             'https://www.google.com/recaptcha/api/siteverify',
             {
                 'secret': os.environ['RECAPTCHA_PRIVATE_KEY'],
-                'response': recaptcha_response
+                'response': self.request.POST.get('g-recaptcha-response')
             }
         ).json().get('success', False)
         if recaptcha_valid:
