@@ -36,8 +36,8 @@ class SignUp(generic.CreateView):
 
 def ProfileView(request, profile_id):
     profile = Profile.objects.get(pk=profile_id)
-    template = 'eahub/gdpr_not_confirmed.html'
-    if profile.gdpr_confirmed: template = 'eahub/profile.html'
+    template = 'eahub/profile.html'
+    if not profile.gdpr_confirmed: template = 'eahub/profile_locked.html'
     return render(request, template, {
         'profile': profile
     })

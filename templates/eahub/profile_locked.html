@@ -4,20 +4,31 @@
 
 <br><br>
 
-<div class="container animated {% if profile.id == 13013 %}infinite tada{% else %}bounceIn{% endif %}">
+<div class="container animated">
   <div class="row">
     <div class="col-md-offset-2 col-md-2">
       <img class="profile_picture" src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}">
     </div>
     <div class="col-md-6">
-      <h1>{{ profile.full_name|title }}</h1>
+      <h1>{{ profile.full_name|title }}</h1>      
+      {% if user.id == profile.id %}
+        <div class="btn btn-default purple animated infinite pulse">
+          <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit Profile</a>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>
 
 <br>
 
-<div class="container">  
+<div class="container">
+  <div class="alert alert-danger">
+      <span>Your profile will remain locked until you edit your profile.</span>
+  </div>
+</div>
+
+<div class="container">
   <div class="row">
     <div class="col-md-6">
       <br>
