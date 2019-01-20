@@ -16,7 +16,7 @@ class UserAdmin(UserAdmin):
     fieldsets = (
         ('Personal info', {'fields': (
             'first_name', 'last_name', 'email', 'password',
-            ('lat', 'lon'), 'country', 'city_or_town'
+            'country', 'city_or_town'
         )}),
         ('Stats', {'fields': (
             'last_login', 'date_joined',

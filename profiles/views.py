@@ -54,9 +54,10 @@ def edit_profile(request):
     if request.method == 'POST':
         form = EditProfileForm(request.POST, instance=request.user)
         if form.is_valid():
-            derp = form.save(commit=False)
-            derp.gdpr_confirmed = True
-            derp.save()
+            profile = form.save(commit=False)
+            profile.gdpr_confirmed = True
+            profile = profile.geocode()
+            profile.save()
             return redirect('my_profile')
     else:
         form = EditProfileForm(instance=request.user)

@@ -1,8 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from geopy.geocoders import Nominatim
+
+geolocator = Nominatim()
+
 
 class ProfileManager(UserManager):
     pass
+
 
 class Profile(AbstractUser):
 
@@ -35,6 +40,13 @@ class Profile(AbstractUser):
             for x in [self.city_or_town, self.country]
             if x not in [None, '']
         ])
+
+    def geocode(self):
+        location = ', '.join([str(self.city_or_town), str(self.country)])
+        location = geolocator.geocode(location)
+        self.lat = location.latitude if location else None
+        self.lon = location.longitude if location else None
+        return self
 
     class Meta:
         verbose_name = 'Profile'
