@@ -25,13 +25,14 @@ class SignUp(generic.CreateView):
         ).json().get('success', False)
         if recaptcha_valid:
             # log user in
+            valid = super(SignUp, self).form_valid(form)
             email, password = form.cleaned_data.get('email'), form.cleaned_data.get('password1')
-            user = authenticate(email=email, password=password)
-            login(self.request, user)
-            return super(SignUp, self).form_valid(form)
+            new_user = authenticate(email=email, password=password)
+            login(self.request, new_user)
+            return valid
         else:
             # fail
-            return redirect(reverse('signup') + '?robot_error=True')       
+            return redirect(reverse('signup') + '?captcha_error=True')       
 
 
 def ProfileView(request, profile_id):
