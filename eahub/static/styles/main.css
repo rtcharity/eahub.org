@@ -49,12 +49,7 @@ body {
 .navbar .dropdown-menu .fa{
   margin-right: 5px;
 }
-.navbar .dropdown-menu > li > a {
-  color: white !important;
-}
-.navbar .dropdown-menu > li > a:hover {
-  color: #E0E0E0 !important;
-}
+
 .navbar img{
   height: 30px;
   margin-top: 10px;
@@ -209,4 +204,13 @@ body {
 }
 .search input {
   font-weight: normal;
+}
+
+@media(max-width: 768px) {
+  .navbar .dropdown-menu > li > a {
+    color: white !important;
+  }
+  .navbar .dropdown-menu > li > a:hover {
+    color: #E0E0E0 !important;
+  }
 }
