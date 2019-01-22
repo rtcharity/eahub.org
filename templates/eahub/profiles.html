@@ -11,16 +11,11 @@
           <a href="{% url 'signup' %}" class="list-group-item"><i class="fa fa-plus"></i>Add a Profile</a>
         </div>
         <div class="list-group">
-          <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i>EA Resources</a>
-        </div>
-        <div class="list-group">
           <a href="mailto:lean@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i>Contact LEAN</a>
         </div>
     </div>
     <div class="col-sm-8">
-        <a href="/?map=profiles#map">
-          {% include 'eahub/maps/list_page_map.html' with map_data=map_data_profiles %}
-        </a>
+      {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_data=map_data_profiles %}
     </div>
   </div>
 </div>
@@ -28,11 +23,14 @@
 <br><br>
 
 <div class="container animated fadeIn">
+  <div class="search">
+     Search: <input type="text" id="filterbox">
+  </div>
   <table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
     <thead>
       <tr>
         <th></th>
-        <th>Username</th>
+        <th>Name</th>
         <th>City/Town</th>
         <th>Country</th>
       </tr>
@@ -46,20 +44,8 @@
           <td><img src="/static/images/profile_Avatar10.png" class="profile-pic" /></td>
         {% endif %}
         <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
-        <td class="text-muted">
-          {% if profile.gdpr_confirmed %}
-            <span>{{ profile.city_or_town|default:'n/a' }}</span>
-          {% else %}
-          <span>Hidden</span>
-          {% endif %}
-        </td>
-        <td class="text-muted">
-          {% if profile.gdpr_confirmed %}
-            <span>{{ profile.country|default:'n/a' }}</span>
-          {% else %}
-          <span>Hidden</span>
-          {% endif %}
-        </td>
+        <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
+        <td class="text-muted">{{ profile.country|default:'' }}</td>
       </tr>
     {% endfor %}
   </tbody>

@@ -47,7 +47,7 @@ def getGroupsData():
             )
         + '},'
         for x in rows
-        if x.lat
+        if x.lat and x.lon
     ])
     return {
         'rows': rows,
@@ -69,7 +69,7 @@ def getProfilesData():
             )
         + '},'
         for x in rows
-        if x.lat
+        if x.lat and x.lon
     ])
     return {
         'rows': rows,

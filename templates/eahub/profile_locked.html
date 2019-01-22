@@ -10,7 +10,7 @@
       <img class="profile_picture" src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}">
     </div>
     <div class="col-md-6">
-      <h1>{{ profile.full_name|title }}</h1>      
+      <h1>{{ profile.full_name|title }}</h1>
       {% if user.id == profile.id %}
         <div class="btn btn-default purple animated infinite pulse">
           <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit Profile</a>
@@ -39,8 +39,8 @@
     <div class="col-md-6">
         <h3>Profile hidden until user confirms what they want to make public</h3>
         <p>Since launching the new hub in 2019, we wanted to make sure we are respecting your privacy by hiding all personal information until users confirm exactly what information they want to make public on their profile.</p>
-        <h3>Wait, This is my profile!</h3>
-        <p>Login <a href="{% url 'login' %}">here</a> to restore your old account and audit your data.</p>
+        <h3>Wait, this is my profile!</h3>
+        <p>Login <a href="{% url 'login' %}">here</a> to restore your old account and set your privavy settings.</p>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 {% block map %}
 
-<div id="map" class="map"></div>
+<div id="map" class="map_homepage"></div>
 <div id="map_selector">
   <input type="radio" name="map_selector" value="individuals" id="map_selector_ind"> Individuals</input>
   <input type="radio" name="map_selector" value="groups" id="map_selector_groups"> Groups</input>
@@ -12,11 +12,11 @@
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
 <script>
   function initMap() {
-    console.log({"request.GET": "{{request.GET}}"});
     var query_string_map = "{{ request.GET.map }}";
-    var map_data_profiles = [{{ map_data_profiles | safe}}];
-    var map_data_groups = [{{ map_data_groups | safe}}];
-    map(query_string_map,map_data_profiles,map_data_groups);
+    var mapDataProfiles = [{{ map_data_profiles | safe}}];
+    var mapDataGroups = [{{ map_data_groups | safe }}];
+    console.log(mapDataGroups);
+    mapSetup(query_string_map,mapDataProfiles,mapDataGroups);
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>

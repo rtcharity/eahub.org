@@ -49,6 +49,12 @@ body {
 .navbar .dropdown-menu .fa{
   margin-right: 5px;
 }
+.navbar .dropdown-menu > li > a {
+  color: white !important;
+}
+.navbar .dropdown-menu > li > a:hover {
+  color: #E0E0E0 !important;
+}
 .navbar img{
   height: 30px;
   margin-top: 10px;
@@ -96,8 +102,13 @@ body {
 
 /* map */
 #map {
-  height: 500px;
   border-radius: 5px;
+}
+.map_homepage {
+  height: 500px;
+}
+.map_list_page {
+  height: 300px;
 }
 #map_selector{
   padding: 10px;
@@ -149,7 +160,7 @@ body {
 .link_box .list-group-item{
   background-color: #512B52 !important;
   color: #fff !important;
-  border: none;  
+  border: none;
   font-size: 1.1em;
 }
 .link_box .list-group-item:hover{
@@ -188,6 +199,14 @@ body {
 .fa-bolt{
   color: gold;
 }
+
 .gdpr_img{
   width: 100%;
+}
+.search {
+  font-weight: bold;
+  padding-left: 7px;
+}
+.search input {
+  font-weight: normal;
 }

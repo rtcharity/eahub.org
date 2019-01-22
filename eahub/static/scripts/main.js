@@ -1,5 +1,5 @@
 $(document).ready( function () {
-    $('#datatable-profiles').dataTable({
+    var dataTableProfiles = $('#datatable-profiles').DataTable({
       order: [[1, 'asc']],
       columns: [
         { "orderable": false, "targets": 0 },
@@ -8,13 +8,24 @@ $(document).ready( function () {
         null
       ],
       lengthChange: false,
-      pageLength: 100
+      pageLength: 100,
+      sDom: 'ltipr'
     } );
 
-    $('#datatable-groups').dataTable({
+    var dataTableGroups = $('#datatable-groups').DataTable({
       lengthChange: false,
-      pageLength: 100
+      pageLength: 100,
+      sDom: 'ltipr'
     } );
+
+    applySearchFunctionality(dataTableProfiles)
+    applySearchFunctionality(dataTableGroups)
 } );
 
 $('.text-block-from-database').linkify();
+
+function applySearchFunctionality (datatable) {
+  $("#filterbox").keyup(function() {
+    datatable.search(this.value).draw();
+  });
+}
