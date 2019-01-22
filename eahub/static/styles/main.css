@@ -26,7 +26,9 @@ body {
 /* container */
 .container{
   max-width: 900px;
+  padding-left: 0px;
 }
+
 
 /* nav */
 .navbar-inverse,
@@ -147,6 +149,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-clip: content-box;
 }
 .link_box .list-group{
   width: 200px;
@@ -206,6 +209,13 @@ body {
 .search input {
   font-weight: normal;
 }
+
+table {
+  width: 100% !important;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
 
 @media(max-width: 768px) {
   .navbar .dropdown-menu > li > a {
