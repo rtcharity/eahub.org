@@ -56,7 +56,7 @@
   {% endif %}
 </div>
 <div class="field">
-  <div class="g-recaptcha" data-sitekey="6Lc9-IEUAAAAAFDBa292skJISigDI3U2OHpgsxjB"></div>
+  <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
   {% if 'captcha_error' in request.GET %}
     <div class="alert alert-danger" style="max-width: 304px;">Captcha error</div>
   {% endif %}

@@ -1,12 +1,33 @@
 version: '3'
-
 services:
   web:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
+    command: gunicorn --reload --bind=0.0.0.0:8000 eahub.wsgi
+    depends_on:
+      - db
+      - mail
     ports:
-      - "8000:8000"
-    env_file:
-      - .env
+      - 8000:8000
+    volumes:
+      - .:/code/
+    environment:
+      ADMINS: Local Admin=admin@example.com
+      DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
+      DEBUG: 'True'
+      EMAIL_URL: smtp://mail:1025
+      HOSTS: localhost
+      HTTPS: 'False'
+      RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
+      RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
+      SECRET_KEY: development_secret_key
+    restart: always
+  db:
+    image: postgres:10.6
+    environment:
+      POSTGRES_PASSWORD: development_db_password
+    restart: always
+  mail:
+    image: dockage/mailcatcher:0.6.5
+    ports:
+      - 8001:1080
+    restart: always

@@ -7,3 +7,4 @@ requests==2.21.0
 ipdb==0.11
 geographiclib==1.49
 geopy==1.18.1
+django-environ==0.4.5

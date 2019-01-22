@@ -1,6 +1,7 @@
 import os
 
 import requests
+from django.conf import settings
 from django.views import generic
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
@@ -14,12 +15,13 @@ from .forms import ProfileCreationForm, EditProfileForm
 class SignUp(generic.CreateView):
     template_name = 'registration/signup.html'    
     form_class = ProfileCreationForm
-    success_url = reverse_lazy('my_profile')            
+    success_url = reverse_lazy('my_profile')
+    extra_context = {'recaptcha_site_key': settings.RECAPTCHA_SITE_KEY}
     def form_valid(self, form):
         recaptcha_valid = requests.post(
             'https://www.google.com/recaptcha/api/siteverify',
             {
-                'secret': os.environ['RECAPTCHA_PRIVATE_KEY'],
+                'secret': settings.RECAPTCHA_SECRET_KEY,
                 'response': self.request.POST.get('g-recaptcha-response')
             }
         ).json().get('success', False)
