@@ -177,8 +177,15 @@ body {
   max-height: 200px;
   text-align: right;
 }
+
+/* profile and group */
 .profile-head .col-xs-12 {
   text-align: center;
+}
+
+/* lists */
+.profiles .col-xs-12 {
+  margin-bottom: 5px;
 }
 
 /* other */
