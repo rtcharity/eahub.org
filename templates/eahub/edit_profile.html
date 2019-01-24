@@ -55,6 +55,16 @@
 </div>
 
 <div class="field">
+    <label for="id_image">Image</label>
+    <input type="file" name="image" id="id_image" class="form-control">
+    {% if form.image.errors %}
+      {% for error in form.image.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+</div>
+
+<div class="field">
     <label>Password</label>
     <p class="well">Reset using the <a href="{% url 'password_reset' %}">reset password form</a></p>
 </div>

@@ -5,6 +5,8 @@ services:
     command: gunicorn --reload --bind=0.0.0.0:8000 eahub.wsgi
     depends_on:
       - db
+      - objstore
+      - cache
       - mail
     ports:
       - 8000:8000
@@ -12,6 +14,9 @@ services:
       - .:/code/
     environment:
       ADMINS: Local Admin=admin@example.com
+      AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
+      AZURE_CONTAINER: media
+      CACHE_URL: redis://cache:6379/0
       DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
       DEBUG: 'True'
       EMAIL_URL: smtp://mail:1025
@@ -25,6 +30,15 @@ services:
     image: postgres:10.6
     environment:
       POSTGRES_PASSWORD: development_db_password
+    restart: always
+  objstore:
+    image: arafato/azurite:2.6.5
+    command: node bin/blob --location=/opt/azurite/folder/ --blobPort=8002
+    ports:
+      - 8002:8002
+    restart: always
+  cache:
+    image: redis:3.2.7
     restart: always
   mail:
     image: dockage/mailcatcher:0.6.5

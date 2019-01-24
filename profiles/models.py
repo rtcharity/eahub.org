@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
+from django_upload_path.upload_path import auto_cleaned_path_stripped_uuid4
 from geopy.geocoders import Nominatim
+from sorl.thumbnail import ImageField
+
 geolocator = Nominatim()
 
 
@@ -39,6 +42,7 @@ class Profile(AbstractUser):
     volunteer = models.CharField(max_length=100, null=True, blank=True)
     org_affiliations = models.CharField(max_length=100, null=True, blank=True)
     bio = models.CharField(max_length=100, null=True, blank=True)
+    image = ImageField(blank=True, upload_to=auto_cleaned_path_stripped_uuid4)
 
     def __str__(self):
         return self.full_name()

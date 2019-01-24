@@ -54,7 +54,8 @@ def MyProfileView(request):
 @login_required(login_url=reverse_lazy('login'))
 def edit_profile(request):
     if request.method == 'POST':
-        form = EditProfileForm(request.POST, instance=request.user)
+        form = EditProfileForm(
+            request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             profile = form.save(commit=False)
             profile.gdpr_confirmed = True
