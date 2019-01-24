@@ -25,6 +25,7 @@ class EditProfileForm(UserChangeForm):
             'cause_areas', 'job_status',
             'expertise', 'skills', 'speaker',
             'volunteer', 'org_affiliations',
+            'image',
         )
 
 class DeleteProfileForm(forms.Form):

@@ -8,3 +8,9 @@ ipdb==0.11
 geographiclib==1.49
 geopy==1.18.1
 django-environ==0.4.5
+git+git://github.com/rtcharity/django-storages@master#egg=django-storages[azure]
+django-redis==4.10.0
+Pillow==5.4.1
+sorl-thumbnail==12.5.0
+django-cleanup==3.0.1
+django-upload-path==0.1.1

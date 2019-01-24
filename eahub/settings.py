@@ -3,6 +3,11 @@ import environ
 env = environ.Env()
 base_dir = environ.Path(__file__) - 2
 
+# Core settings: cache
+CACHES = {
+    "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
+}
+
 # Core settings: database
 DATABASES = {
     "default": env.db_url("DATABASE_URL", engine="django.db.backends.postgresql")
@@ -20,6 +25,9 @@ DEFAULT_FROM_EMAIL = "EA Hub <noreply@eahub.org>"
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+# Core settings: file uploads
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 
 # Core settings: globalization
 LANGUAGE_CODE = "en-us"
@@ -53,6 +61,8 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "sorl.thumbnail",
+    "django_cleanup.apps.CleanupConfig",
     "eahub.apps.EahubConfig",
     "groups",
     "profiles",
@@ -99,11 +109,18 @@ LOGOUT_REDIRECT_URL = "index"
 
 # Sessions
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
 
 # Static files
 STATIC_ROOT = base_dir("staticfiles/")
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [base_dir("eahub/static/"), base_dir("static/")]
+
+# django-storages
+AZURE_CONNECTION_STRING = env.str('AZURE_CONNECTION_STRING')
+AZURE_CONTAINER = env.str('AZURE_CONTAINER')
+AZURE_SSL = SECURE_SSL_REDIRECT
+AZURE_URL_EXPIRATION_SECS = 3600
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"

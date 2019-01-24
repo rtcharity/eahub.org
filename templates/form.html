@@ -38,7 +38,7 @@
 {% block content %}
 <div class="panel panel-default">
     <div class="panel-body">
-        <form method="post">
+        <form method="post" {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}>
           {% csrf_token %}
           <h2>{% block title %}{% endblock %}</h2>
           {% block form_fields %}{% endblock %}
