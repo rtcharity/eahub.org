@@ -97,6 +97,11 @@ body {
   transform: scale(1.1);
 }
 
+/* features */
+.features h4 {
+  font-weight: bold;
+}
+
 /* map */
 #map {
   border-radius: 5px;
