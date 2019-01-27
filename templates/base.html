@@ -50,7 +50,9 @@
             <span class="icon-bar"></span>
           </button>
           <a href="\"><img id="logo" src="/static/images/logo_transparent.png" /></a>
-          <h4>/{{ page_name }}</h4>
+          {% if page_name == 'Profiles' or page_name == 'Groups' %}
+          <h4> /{{ page_name }}</h4>
+          {% endif %}
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
