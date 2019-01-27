@@ -7,7 +7,7 @@
 <div class="container animated bounceIn">
   <div class="row">
     <div class="col-xs-offset-2 col-xs-2">
-      <img class="profile_picture" src="{% firstof group.pic '/static/images/group_avatar.png' %}">        
+      <img class="profile_picture" src="{% firstof group.pic '/static/images/group_avatar.png' %}">
     </div>
     <div class="col-xs-6">
       <h1>{{ group.name|title }}</h1>
@@ -36,7 +36,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-6">        
+    <div class="col-md-6 key-facts">
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item"><b>Organisers:</b> {{ group.organisers.all|join:", " }}</li>
@@ -51,7 +51,7 @@
         <li class="list-group-item"><b>Meetup URL:</b> {{ group.meetup_url|default_if_none:'n/a' }}</li>
       </ul>
     </div>
-    <div class="col-md-6">      
+    <div class="col-md-6">
       {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 %}
     </div>
   </div>
@@ -59,24 +59,24 @@
 
 <br>
 
-<div class="container">
+<div class="container profile-info">
   <ul class="list-group">
-    <li class="list-group-item"><h4>Summary</h4></li>
+    <li class="list-group-item light-grey"><h4>Summary</h4></li>
     <li class="list-group-item">{{ group.summary|default_if_none:'n/a' }}</li>
   </ul>
   <br>
   <ul class="list-group">
-    <li class="list-group-item"><h4>Donations</h4></li>
+    <li class="list-group-item light-grey"><h4>Donations</h4></li>
     <li class="list-group-item">{{ group.donations|default_if_none:'n/a' }}</li>
   </ul>
   <br>
   <ul class="list-group">
-    <li class="list-group-item"><h4>Links</h4></li>
+    <li class="list-group-item light-grey"><h4>Links</h4></li>
     <li class="list-group-item">{{ group.links|default_if_none:'n/a' }}</li>
   </ul>
   <br>
   <ul class="list-group">
-    <li class="list-group-item"><h4>Images</h4></li>
+    <li class="list-group-item light-grey"><h4>Images</h4></li>
     <li class="list-group-item">{{ group.images|default_if_none:'n/a' }}</li>
   </ul>
 </div>
