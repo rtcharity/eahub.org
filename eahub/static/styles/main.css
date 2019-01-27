@@ -57,6 +57,19 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.navbar h4 {
+  color: grey;
+  margin-top: 15px;
+  display: inline-block;
+}
+
+.navbar img {
+  width: 120px;
+  height: auto;
+  margin-top: -2px;
+}
+
 .navbar-nav > li:hover{
   transform: scale(1.1);
   font-weight: 500;
