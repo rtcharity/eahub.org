@@ -10,7 +10,7 @@
       <img class="profile_picture" src="{% firstof group.pic '/static/images/group_avatar.png' %}">
     </div>
     <div class="col-xs-6">
-      <h1>{{ group.name|title }}</h1>
+      <h1>{{ group.name }}</h1>
       <div class="btn btn-default purple">
         {% if user in group.organisers.all %}
           <a href="{% url 'edit_group' group_id=group.id  %}"><i class="fa fa-pencil"></i> Edit</a>
