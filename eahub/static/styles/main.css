@@ -28,6 +28,15 @@ body {
   max-width: 900px;
 }
 
+.navbar-menu {
+  display: none;
+}
+
+.burger-btn {
+  float: right;
+  margin-top: 40px;
+}
+
 
 /* nav */
 .navbar-inverse,
@@ -44,12 +53,6 @@ body {
 }
 .navbar-inverse{
   border: none;
-}
-.navbar .dropdown-menu{
-  border: none;
-}
-.navbar .dropdown-menu .fa{
-  margin-right: 5px;
 }
 
 .navbar h4 {
@@ -73,9 +76,38 @@ body {
   margin-top: -2px;
 }
 
+.navbar-header {
+  float: none;
+}
+.navbar-menu {
+  display: none;
+  float: right;
+}
+.navbar-menu ul {
+  margin-right: 20px;
+}
+.navbar-right {
+  float: none !important;
+}
+.navbar-toggle {
+  display: block;
+}
+.navbar-nav {
+  display: inline-block;
+  float: none!important;
+  margin-top: 7.5px;
+  text-align: right;
+  width: 100%;
+}
+.navbar-nav>li {
+  float: none;
+}
 .navbar-nav > li:hover{
   transform: scale(1.1);
   font-weight: 500;
+}
+.navbar-nav>li>a {
+  padding: 5px 25px 5px 0px !important;
 }
 
 /* jumbotron */
