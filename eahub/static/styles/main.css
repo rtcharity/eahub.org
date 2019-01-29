@@ -1,4 +1,3 @@
-/* bootstrap sticky footer */
 html {
   position: relative;
   min-height: 100%;
@@ -9,6 +8,55 @@ body {
   padding-bottom: 20px;
   font-family: "Open Sans";
 }
+
+/* about */
+.about a {
+  color: #7bb0a8;
+  text-decoration: none;
+}
+.about a:hover {
+  opacity: 0.7;
+}
+
+.about h1 {
+  text-align: center;
+  color: #512B52;
+}
+
+.about .col-md-6, .col-xs-12 {
+  text-align: center;
+}
+
+.about button {
+  border: none;
+  font-size: 18px;
+  height: 70px;
+  margin-bottom: 40px;
+  margin-top: 20px;
+  padding: 4px 4px 4px 4px;
+  text-decoration: none;
+  width: 150px;
+}
+
+.about button:hover {
+  opacity: 0.7;
+}
+
+.about button a {
+  color: white;
+}
+
+.tech-btn {
+  background-color: #A7DBAB;
+  line-height: 60px;
+}
+
+.suggestions-btn {
+  background-color: #635274;
+  line-height: 30px;
+}
+
+/* bootstrap sticky footer */
 .footer {
   position: absolute;
   bottom: 0;
