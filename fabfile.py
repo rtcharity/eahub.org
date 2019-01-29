@@ -9,7 +9,10 @@ def build():
 def run():
     local('docker-compose run --service-ports web') #  with ipdb support
     # local('docker-compose up') #  without ipdb support
-    
+
+def makemigrations():
+    local('docker-compose run web django-admin makemigrations')
+
 def migrate():
     local('docker-compose run web django-admin migrate')
 
