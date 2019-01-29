@@ -20,5 +20,9 @@ class EditProfileForm(UserChangeForm):
         fields = (
             'email',
             'first_name', 'last_name',
-            'city_or_town', 'country'
+            'city_or_town', 'country',
+            'bio',
+            'cause_areas', 'job_status',
+            'expertise', 'skills', 'speaker',
+            'volunteer', 'org_affiliations',
         )
