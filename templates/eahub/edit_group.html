@@ -89,16 +89,6 @@
     {% endif %}
 </div>
 
-<div class="field">
-    <label for="id_lean_email">LEAN Email address</label>
-    <input type="email" name="lean_email" id="id_lean_email" class="form-control" placeholder="" value="{{ form.lean_email.value|default_if_none:'' }}">
-    {% if form.lean_email.errors %}
-        {% for error in form.lean_email.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
 <hr>
 
 <div class="field">

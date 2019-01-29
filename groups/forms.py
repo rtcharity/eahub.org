@@ -11,7 +11,7 @@ class CreateGroupForm(ModelForm):
             'city_or_town', 'country',
             'website',
             'facebook_group', 'facebook_page',
-            'official_email', 'lean_email',
+            'official_email',
             'meetup_details', 'meetup_url',
             'lat', 'lon',
             #'donations'
@@ -27,7 +27,7 @@ class EditGroupForm(ModelForm):
             'city_or_town', 'country',
             'website',
             'facebook_group', 'facebook_page',
-            'official_email', 'lean_email',
+            'official_email',
             'meetup_details', 'meetup_url',
             #'donations',
             'lat', 'lon',

@@ -15,7 +15,6 @@ class Group(models.Model):
     facebook_group = models.CharField(max_length=200, null=True, blank=True)
     facebook_page = models.CharField(max_length=200, null=True, blank=True)
     official_email = models.CharField(max_length=200, null=True, blank=True)
-    lean_email = models.CharField(max_length=200, null=True, blank=True)
     meetup_details = models.TextField(null=True, blank=True)
     meetup_url = models.CharField(max_length=200, null=True, blank=True)
 
