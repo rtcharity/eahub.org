@@ -48,7 +48,7 @@ body {
   font-weight: 500;
 }
 .navbar li a {
-  padding: 5px 25px 5px 0px !important;
+  padding: 5px 15px 5px 0px;
   color: white;
   text-decoration: none;
 }
@@ -76,11 +76,13 @@ body {
 }
 
 .navbar-menu {
-  background-color: rgba(81, 43, 82, 0.7);
+  background-color: rgba(81, 43, 82, 1);
   border-radius: 5px;
   display: none;
   float: right;
   margin-right: 25px;
+  padding-left: 20px;
+  padding-right: 5px;
 }
 
 .navbar-menu a {
@@ -99,6 +101,9 @@ body {
   text-align: right;
   width: 100%;
 }
+.navbar-nav li a {
+  padding-right: 25px;
+}
 .navbar-toggle {
   border: none;
   display: inline-block;
@@ -112,7 +117,7 @@ body {
 .navbar-signup-md {
   display: inline-block;
   float: right;
-  margin-right: 20px;
+  margin-right: 0px;
   margin-top: 17px;
 }
 .navbar-signup-md li {
