@@ -75,26 +75,35 @@ body {
 }
 
 .navbar-menu {
-  background-color: rgba(81, 43, 82, 0.8);
+  background-color: rgba(81, 43, 82, 0.7);
+  border-radius: 5px;
   display: none;
   float: right;
+  margin-right: 25px;
 }
+
+.navbar-menu a {
+  margin-right: -5px;
+}
+
 .navbar-menu ul {
-  margin-right: 20px;
-  margin-left: -5px;
+  margin-left: 10px;
 }
-.navbar-right {
-  float: none !important;
-}
-.navbar-toggle {
-  display: block;
-}
+
 .navbar-nav {
   display: inline-block;
   float: none!important;
+  margin-right: 0px !important;
   margin-top: 7.5px;
   text-align: right;
   width: 100%;
+}
+.navbar-toggle {
+  border: none;
+  display: inline-block;
+  float: right !important;
+  margin-top: 10px;
+
 }
 .navbar-nav>li {
   float: none;
@@ -106,6 +115,27 @@ body {
 .navbar-nav>li>a {
   padding: 5px 25px 5px 0px !important;
 }
+.navbar-right {
+  float: none !important;
+}
+.navbar-signup {
+  float: right;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+.navbar-signup a {
+  color: white;
+  text-decoration: none;
+}
+.navbar-signup li {
+  display: inline-block;
+  padding: 5px 5px 5px 10px;
+}
+.navbar-signup > li:hover{
+  transform: scale(1.1);
+  font-weight: 500;
+}
+
 
 /* jumbotron */
 .jumbotron{
