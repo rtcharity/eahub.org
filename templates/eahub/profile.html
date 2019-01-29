@@ -40,13 +40,6 @@
           n/a
           {% endif %}
         </li>
-        <li class="list-group-item"><b>Direct work hours:</b>
-          {% if profile.direct_work_hours %}
-          {{ profile.direct_work_hours }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
         <li class="list-group-item"><b>Expertise:</b>
           {% if profile.expertise %}
           {{ profile.expertise }}
@@ -112,17 +105,6 @@
     <li class="list-group-item">
       {% if profile.bio %}
         {{ profile.bio }}
-      {% else %}
-        n/a
-      {% endif %}
-    </li>
-  </ul>
-  <br>
-  <ul class="list-group">
-    <li class="list-group-item light-grey"><h4>Information</h4></li>
-    <li class="list-group-item">
-      {% if profile.bio %}
-        {{ profile.info }}
       {% else %}
         n/a
       {% endif %}

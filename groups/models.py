@@ -5,8 +5,15 @@ from profiles.models import Profile
 
 class Group(models.Model):
 
+    GROUP_TYPE_CHOICES = [
+        ('COUNTRY', 'Country'),
+        ('CITY', 'City'),
+        ('UNIVERSITY', 'University')
+    ]
+
     # fields
     name = models.CharField(max_length=100)
+    group_type = models.CharField(max_length=200, null=True, blank=True, choices=GROUP_TYPE_CHOICES)
     summary = models.TextField(null=True, blank=True)
     organisers = models.ManyToManyField(Profile, blank=True)
     city_or_town = models.CharField(max_length=100, null=True, blank=True)
@@ -15,9 +22,10 @@ class Group(models.Model):
     facebook_group = models.CharField(max_length=200, null=True, blank=True)
     facebook_page = models.CharField(max_length=200, null=True, blank=True)
     official_email = models.CharField(max_length=200, null=True, blank=True)
-    lean_email = models.CharField(max_length=200, null=True, blank=True)
     meetup_details = models.TextField(null=True, blank=True)
+    meetups_per_month = models.IntegerField(null=True, blank=True)
     meetup_url = models.CharField(max_length=200, null=True, blank=True)
+    total_group_donations = models.IntegerField(null=True, blank=True)
 
     # table of donations
     # example: {"donations":[{"amount":"a", "to":"b", "when":"c", "details":"d"}]}
