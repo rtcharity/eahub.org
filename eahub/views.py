@@ -16,6 +16,9 @@ def index(request):
         'map_data_profiles': profilesData["map_data"]
     })
 
+def about(request):
+    return render(request, 'eahub/about.html')
+
 def profiles(request):
     profilesData = getProfilesData()
     return render(request, 'eahub/profiles.html', {
