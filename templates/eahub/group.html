@@ -35,6 +35,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 key-facts">
+    <div class="background">
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item"><b>Organisers:</b> {{ group.organisers.all|join:", " }}</li>
@@ -47,6 +48,7 @@
         <li class="list-group-item"><b>Meetup Details:</b> {{ group.meetup_details|default_if_none:'n/a' }}</li>
         <li class="list-group-item"><b>Meetup URL:</b> {{ group.meetup_url|default_if_none:'n/a' }}</li>
       </ul>
+    </div>
     </div>
     <div class="col-md-6">
       {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 %}

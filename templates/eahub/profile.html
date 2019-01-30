@@ -31,6 +31,7 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 key-facts">
+      <div class="background">
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item"><b>Cause areas:</b>
@@ -90,6 +91,7 @@
           {% endif %}
         </li>
       </ul>
+      </div>
     </div>
     <div class="col-md-6">
         {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon %}

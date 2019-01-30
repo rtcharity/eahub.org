@@ -307,8 +307,14 @@ body {
   background-color: #F2F2F2 !important;
 }
 
-.profile-info .list-group-item {
-  background-color: #F8F8F8;
+.key-facts .background {
+  background-color: rgba(81, 43, 82, 0.7);
+}
+
+.key-facts .list-group-item {
+  background-color: inherit;
+  border: none;
+  color: white;
 }
 
 /* lists */
@@ -317,11 +323,6 @@ body {
 }
 
 /* other */
-.key-facts .list-group-item {
-  border: none;
-  background-color: rgba(81, 43, 82, 0.5);
-}
-
 .purple{
   background-color: #512B52 !important;
   color: #fff;
