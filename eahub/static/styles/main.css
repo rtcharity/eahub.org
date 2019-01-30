@@ -334,6 +334,10 @@ body {
 .profile-table li {
   padding: 0;
 }
+.profile-table p {
+  padding: 10px 15px;
+  margin: 0;
+}
 
 /* lists */
 .profiles .col-xs-12 {

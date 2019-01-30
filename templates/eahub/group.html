@@ -80,6 +80,22 @@
           <tbody  id="table_donations">
           </tbody>
         </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>
+          var donations = {{ group.donations | safe }}
+          console.log(donations)
+          donations = donations.donations
+
+          var table_donations = $("#table_donations")
+          donations.forEach(function(donation) {
+            var tr = $('<tr>')
+            tr.append('<td>' + donation.to + '</td>')
+            tr.append('<td>' + donation.amount + '</td>')
+            tr.append('<td>' + donation.when + '</td>')
+            tr.append('<td>' + donation.details + '</td>')
+            table_donations.append(tr)
+          })
+        </script>
       {% else %}
         <p>n/a</p>
       {% endif %}
@@ -107,22 +123,5 @@
     <li class="list-group-item">{{ group.images|default_if_none:'n/a' }}</li>
   </ul>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>
-  var donations = {{ group.donations | safe }}
-  console.log(donations)
-  donations = donations.donations
-
-  var table_donations = $("#table_donations")
-  donations.forEach(function(donation) {
-    var tr = $('<tr>')
-    tr.append('<td>' + donation.to + '</td>')
-    tr.append('<td>' + donation.amount + '</td>')
-    tr.append('<td>' + donation.when + '</td>')
-    tr.append('<td>' + donation.details + '</td>')
-    table_donations.append(tr)
-  })
-</script>
 
 {% endblock %}
