@@ -125,7 +125,7 @@ body {
 }
 
 .navbar-menu {
-  background-color: rgba(81, 43, 82, 1);
+  background-color: rgba(81, 43, 82, 0.9);
   border-radius: 5px;
   display: none;
   float: right;
