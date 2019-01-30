@@ -101,7 +101,9 @@ body {
   color: white;
   text-decoration: none;
 }
-
+.navbar .container {
+  z-index: 20;
+}
 .navbar .logo {
   margin-top: 12px;
 }
