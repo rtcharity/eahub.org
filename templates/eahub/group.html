@@ -71,7 +71,11 @@
   <br>
   <ul class="list-group">
     <li class="list-group-item light-grey"><h4>Links</h4></li>
-    <li class="list-group-item">{{ group.links|default_if_none:'n/a' }}</li>
+
+    {% for link in group.links %}
+    <li class="list-group-item"><a href="{{ link.link }}">{{ link }}</a></li>
+    {% endfor %}
+
   </ul>
   <br>
   <ul class="list-group">
