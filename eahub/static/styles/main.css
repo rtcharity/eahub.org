@@ -132,6 +132,8 @@ body {
   margin-right: 25px;
   padding-left: 20px;
   padding-right: 5px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .navbar-menu a {
