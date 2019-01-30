@@ -30,9 +30,6 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-132839837-1');
-      {% if user.is_authenticated %}
-        gtag('set', {'user_id': '{{ user.id }}'});
-      {% endif %}
     </script>
 
     {% block header %}{% endblock %}
