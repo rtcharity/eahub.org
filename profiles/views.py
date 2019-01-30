@@ -1,4 +1,4 @@
-import os
+import os, logging
 
 import requests
 from django.conf import settings
@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
 from .models import Profile
-from .forms import ProfileCreationForm, EditProfileForm
+from .forms import ProfileCreationForm, EditProfileForm, DeleteProfileForm
 
 
 class SignUp(generic.CreateView):
@@ -64,5 +64,24 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
         return render(request, 'eahub/edit_profile.html', {
+            'form': form
+        })
+
+
+@login_required(login_url=reverse_lazy('login'))
+def delete_profile(request):
+    if request.method == 'POST':
+        logging.info('user_id={} full_name={} has deleted their account'.format(
+            request.user.id,
+            request.user.full_name()
+        ))
+        profile = Profile.objects.get(
+            id=request.user.id
+        )
+        profile.delete()
+        return redirect('logout')
+    else:
+        form = DeleteProfileForm()
+        return render(request, 'eahub/delete_profile.html', {
             'form': form
         })

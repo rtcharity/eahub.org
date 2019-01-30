@@ -1,5 +1,5 @@
-
 from django import forms
+from django.db import models
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile
 
@@ -26,3 +26,6 @@ class EditProfileForm(UserChangeForm):
             'expertise', 'skills', 'speaker',
             'volunteer', 'org_affiliations',
         )
+
+class DeleteProfileForm(forms.Form):
+    confirm = forms.CharField(max_length=100)
