@@ -1,7 +1,10 @@
 import json
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
+from geopy.geocoders import Nominatim
 from profiles.models import Profile
+geolocator = Nominatim()
+
 
 class Group(models.Model):
 
@@ -26,6 +29,14 @@ class Group(models.Model):
     meetups_per_month = models.IntegerField(null=True, blank=True)
     meetup_url = models.CharField(max_length=200, null=True, blank=True)
     total_group_donations = models.IntegerField(null=True, blank=True)
+    lat = models.DecimalField(
+        # set programatically by geocode()
+        max_digits=9, decimal_places=6, null=True, blank=True
+    )
+    lon = models.DecimalField(
+        # set programatically by geocode()
+        max_digits=9, decimal_places=6, null=True, blank=True
+    )
 
     # table of donations
     # example: {"donations":[{"amount":"a", "to":"b", "when":"c", "details":"d"}]}
@@ -45,14 +56,18 @@ class Group(models.Model):
     # example: {"images": ["a", "b"]}
     images = models.TextField(null=True, blank=True)
 
-    lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
-    lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     def location(self):
         return ', '.join([
             x
             for x in [self.city_or_town, self.country]
             if x not in [None, '']
         ])
+    def geocode(self):
+        location = ', '.join([str(self.city_or_town), str(self.country)])
+        location = geolocator.geocode(location)
+        self.lat = location.latitude if location else None
+        self.lon = location.longitude if location else None
+        return self
 
     # edit history
     # example: [{"date":"10/10/2001","user": "user_1 user@domain.com", diff":{"name":{"before":"EA Londonzzz","after":"EA London"}}}]

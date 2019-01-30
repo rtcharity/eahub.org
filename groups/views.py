@@ -21,7 +21,9 @@ def create_group(request):
     if request.method == 'POST':
         form = CreateGroupForm(request.POST)
         if form.is_valid():
-            group = form.save()
+            group = form.save(commit=False)
+            group = group.geocode()
+            group.save()
             group.organisers.add(request.user)
             return redirect('group', group_id=group.id)
     else:
@@ -42,7 +44,9 @@ def edit_group(request, group_id):
         form = EditGroupForm(request.POST, instance=group)
         if form.is_valid():
             if form.changed_data:
-                form.save()
+                group = form.save(commit=False)
+                group = group.geocode()
+                group.save()
                 # update edit_history on Group as groups can be edited by lots
                 # of different people, we should keep a log of all changes
                 orginal_object = Group.objects.get(pk=group_id)

@@ -28,6 +28,5 @@ class EditGroupForm(ModelForm):
             'facebook_group', 'facebook_page',
             'official_email',
             'meetup_details', 'meetups_per_month', 'meetup_url',
-            'lat', 'lon',
             # TODO: add organisers & donations fields
         )

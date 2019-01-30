@@ -48,6 +48,19 @@
     {% endif %}
 </div>
 
+<div class="field">
+    <label for="id_total_group_donations">Total Group Donations</label>
+    <div class="input-group">
+        <span class="input-group-addon" id="basic-addon2">&#36;</span>
+        <input type="number" min="0.01" step="0.01" name="total_group_donations" id="id_total_group_donations" class="form-control" placeholder="5000" value="{{ form.total_group_donations.value|default_if_none:'' }}">
+    </div>
+    {% if form.total_group_donations.errors %}
+        {% for error in form.total_group_donations.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
 <hr>
 
 <div class="field">
@@ -92,8 +105,6 @@
     {% endif %}
 </div>
 
-<hr>
-
 <div class="field">
     <label for="id_official_email">Email Address</label>
     <input type="email" name="official_email" id="id_official_email" class="form-control" placeholder="" value="{{ form.official_email.value|default_if_none:'' }}">
@@ -131,36 +142,6 @@
     <input type="url" name="meetup_url" id="id_meetup_url" class="form-control" placeholder="https://meetup.com/ea_london" value="{{ form.meetup_url.value|default_if_none:'' }}">
     {% if form.meetup_url.errors %}
         {% for error in form.meetup_url.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_lat">Map Location Latitude</label>
-    <input type="number" name="lat" id="id_lat" class="form-control" placeholder="51.509865" value="{{ form.lat.value|default_if_none:'' }}">
-    {% if form.lat.errors %}
-        {% for error in form.lat.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_lon">Map Location Longitude</label>
-    <input type="number" name="lon" id="id_lon" class="form-control" placeholder="51.509865" value="{{ form.lon.value|default_if_none:'' }}">
-    {% if form.lon.errors %}
-        {% for error in form.lon.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_total_group_donations">Total Group Donations</label>
-    <input type="number" min="0.01" step="0.01" name="total_group_donations" id="id_total_group_donations" class="form-control" placeholder="https://meetup.com/ea_london" value="{{ form.total_group_donations.value|default_if_none:'' }}">
-    {% if form.total_group_donations.errors %}
-        {% for error in form.total_group_donations.errors %}
         <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
     {% endif %}
