@@ -7,7 +7,7 @@ requests==2.21.0
 ipdb==0.11
 geographiclib==1.49
 geopy==1.18.1
-django-environ==0.4.5
+git+git://github.com/rtcharity/django-environ@develop#egg=django-environ
 git+git://github.com/rtcharity/django-storages@master#egg=django-storages[azure]
 django-redis==4.10.0
 Pillow==5.4.1
