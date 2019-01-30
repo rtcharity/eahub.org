@@ -146,8 +146,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
   var donations = {{ profile.donations | safe }}
-  // var organisers = {{ group.organisers.all | safe }}
-  // console.log(organisers);
   donations = donations.donations
   var table_donations = $("#table_donations")
   donations.forEach(function(donation) {

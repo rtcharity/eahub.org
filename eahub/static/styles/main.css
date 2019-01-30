@@ -321,6 +321,14 @@ body {
   color: white;
 }
 
+.list-group a {
+  color: #7bb0a8;
+  text-decoration: none;
+}
+.list-group a:hover {
+  opacity: 0.7;
+}
+
 /* lists */
 .profiles .col-xs-12 {
   margin-bottom: 5px;

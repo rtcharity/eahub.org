@@ -69,13 +69,11 @@
     <li class="list-group-item">{{ group.donations|default_if_none:'n/a' }}</li>
   </ul>
   <br>
-  <ul class="list-group">
+  <ul class="list-group" id="list-links">
     <li class="list-group-item light-grey"><h4>Links</h4></li>
-
-    {% for link in group.links %}
-    <li class="list-group-item"><a href="{{ link.link }}">{{ link }}</a></li>
-    {% endfor %}
-
+    {% if group.links == None %}
+    <li class="list-group-item">n/a</li>
+    {% endif %}
   </ul>
   <br>
   <ul class="list-group">
@@ -83,5 +81,27 @@
     <li class="list-group-item">{{ group.images|default_if_none:'n/a' }}</li>
   </ul>
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+  var links = {{ group.links | safe }}
+  links = links.links
+  var list_links = document.getElementById('list-links')
+  links.forEach(function(obj) {
+    list_links.innerHTML += '<li class="list-group-item"><a href="' + obj.links + '">'+ obj.label +'</a></li>'
+  })
+
+  var donations = {{ profile.donations | safe }}
+  donations = donations.donations
+  var table_donations = $("#table_donations")
+  donations.forEach(function(donation) {
+    var tr = $('<tr>')
+    tr.append('<td>' + donation.to + '</td>')
+    tr.append('<td>' + donation.amount + '</td>')
+    tr.append('<td>' + donation.when + '</td>')
+    tr.append('<td>' + donation.details + '</td>')
+    table_donations.append(tr)
+  })
+</script>
 
 {% endblock %}
