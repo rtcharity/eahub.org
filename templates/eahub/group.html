@@ -64,15 +64,41 @@
     <li class="list-group-item">{{ group.summary|default_if_none:'n/a' }}</li>
   </ul>
   <br>
-  <ul class="list-group">
+  <ul class="list-group profile-table">
     <li class="list-group-item light-grey"><h4>Donations</h4></li>
-    <li class="list-group-item">{{ group.donations|default_if_none:'n/a' }}</li>
+    <li class="list-group-item">
+      {% if group.donations  %}
+        <table class="table table-striped table-bordered table-donations">
+          <thead>
+            <tr>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Details</th>
+            </tr>
+          </thead>
+          <tbody  id="table_donations">
+          </tbody>
+        </table>
+      {% else %}
+        <p>n/a</p>
+      {% endif %}
+    </li>
   </ul>
   <br>
   <ul class="list-group" id="list-links">
     <li class="list-group-item light-grey"><h4>Links</h4></li>
     {% if group.links == None %}
     <li class="list-group-item">n/a</li>
+    {% else %}
+    <script>
+      var links = {{ group.links | safe }}
+      links = links.links
+      var list_links = document.getElementById('list-links')
+      links.forEach(function(obj) {
+        list_links.innerHTML += '<li class="list-group-item"><a href="' + obj.links + '">'+ obj.label +'</a></li>'
+      })
+    </script>
     {% endif %}
   </ul>
   <br>
@@ -84,15 +110,10 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
-  var links = {{ group.links | safe }}
-  links = links.links
-  var list_links = document.getElementById('list-links')
-  links.forEach(function(obj) {
-    list_links.innerHTML += '<li class="list-group-item"><a href="' + obj.links + '">'+ obj.label +'</a></li>'
-  })
-
-  var donations = {{ profile.donations | safe }}
+  var donations = {{ group.donations | safe }}
+  console.log(donations)
   donations = donations.donations
+
   var table_donations = $("#table_donations")
   donations.forEach(function(donation) {
     var tr = $('<tr>')

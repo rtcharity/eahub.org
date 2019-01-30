@@ -328,6 +328,12 @@ body {
 .list-group a:hover {
   opacity: 0.7;
 }
+.profile-table h4 {
+  padding: 10px 15px;
+}
+.profile-table li {
+  padding: 0;
+}
 
 /* lists */
 .profiles .col-xs-12 {
