@@ -23,5 +23,35 @@ class EditProfileForm(UserChangeForm):
             'city_or_town', 'country',            
         )
 
+
+class EditProfileCauseAreasForm(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = (
+            # 'cause_areas' is set using custom code in view
+            'cause_areas_other',
+            'available_to_volunteer',           
+        )
+
+
+class EditProfileCareerForm(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = (
+            # 'expertise' is set using custom code in view
+            'open_to_job_offers',
+            'expertise_other',           
+        )
+
+
+class EditProfileCommunityForm(UserChangeForm):
+    class Meta:
+        model = Profile
+        fields = (
+            'available_as_speaker',
+            'topics_i_speak_about',    
+        )
+
+
 class DeleteProfileForm(forms.Form):
     confirm = forms.CharField(max_length=100)

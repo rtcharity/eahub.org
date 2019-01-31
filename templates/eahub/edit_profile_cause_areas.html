@@ -1,0 +1,36 @@
+{% extends 'form.html' %}
+
+{% block title %}Cause Areas{% endblock %}
+
+{% block form_fields %}
+
+<div class="field">
+    <label>Cause areas:</label>
+    <select class="form-control" name="custom_cause_areas" multiple>
+        {% for choice in profile.CAUSE_AREA_CHOICES %}
+            <option value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="field">
+  <label for="id_cause_areas_other">Other cause areas:</label>
+  <textarea type="text" name="cause_areas_other" id="id_cause_areas_other" class="form-control" rows="4" value="{{ form.cause_areas_other.value|default_if_none:'' }}" placeholder="Global Warming, Education"></textarea>
+  {% if form.cause_areas_other.errors %}
+    {% for error in form.cause_areas_other.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<div class="field">
+    <label for="id_available_to_volunteer">Available to volunteer:</label>
+    <select class="form-control" name="available_to_volunteer">
+      <option value="" {% if profile.available_to_volunteer == None %}selected{% endif %}>n/a</option>
+      <option value="True" {% if profile.available_to_volunteer == 1 %}selected{% endif %}>Yes</option>
+      <option value="False" {% if profile.available_to_volunteer == 0 %}selected{% endif %}>No</option>
+    </select>
+  </div>
+{% endblock %}
+
+{% block submit_button_text %}Update{% endblock %}

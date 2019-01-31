@@ -81,8 +81,8 @@ class Profile(AbstractUser):
     expertise, expertise_other = _choices_field(EXPERTISE_CHOICES), _other_field()
 
     # community
-    topics_i_speak_about = models.TextField(null=True, blank=True)
     available_as_speaker = models.BooleanField(default=None, null=True)
+    topics_i_speak_about = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return self.full_name()

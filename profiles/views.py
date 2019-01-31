@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
 from .models import Profile
-from .forms import ProfileCreationForm, EditProfileForm, DeleteProfileForm
+from .forms import *
 
 
 class SignUp(generic.CreateView):
@@ -65,6 +65,56 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
         return render(request, 'eahub/edit_profile.html', {
+            'form': form
+        })
+
+
+@login_required(login_url=reverse_lazy('login'))
+def edit_profile_cause_areas(request):
+    if request.method == 'POST':
+        form = EditProfileCauseAreasForm(request.POST, instance=request.user)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            cause_areas = request.POST.getlist('custom_cause_areas')
+            profile.cause_areas = cause_areas
+            profile.save()
+            return redirect('my_profile')
+    else:
+        form = EditProfileCauseAreasForm(instance=request.user)
+        return render(request, 'eahub/edit_profile_cause_areas.html', {
+            'form': form,
+            'profile': Profile.objects.get(pk=request.user.id)
+        })
+
+
+@login_required(login_url=reverse_lazy('login'))
+def edit_profile_career(request):
+    if request.method == 'POST':
+        form = EditProfileCareerForm(request.POST, instance=request.user)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            expertise = request.POST.getlist('custom_expertise')
+            profile.expertise = expertise
+            profile.save()
+            return redirect('my_profile')
+    else:
+        form = EditProfileCareerForm(instance=request.user)
+        return render(request, 'eahub/edit_profile_career.html', {
+            'form': form,
+            'profile': Profile.objects.get(pk=request.user.id)
+        })
+
+
+@login_required(login_url=reverse_lazy('login'))
+def edit_profile_community(request):
+    if request.method == 'POST':
+        form = EditProfileCommunityForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('my_profile')
+    else:
+        form = EditProfileCommunityForm(instance=request.user)
+        return render(request, 'eahub/edit_profile_community.html', {
             'form': form
         })
 

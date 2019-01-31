@@ -1,0 +1,36 @@
+{% extends 'form.html' %}
+
+{% block title %}Career{% endblock %}
+
+{% block form_fields %}
+
+<div class="field">
+    <label>Expertise:</label>
+    <select class="form-control" name="custom_expertise" multiple>
+        {% for choice in profile.EXPERTISE_CHOICES %}
+            <option value="{{ choice.0 }}" {% if choice.0 in profile.expertise %}selected{% endif %}>{{ choice.1 }}</option>
+        {% endfor %}
+    </select>
+</div>
+
+<div class="field">
+  <label for="id_expertise_other">Other expertise:</label>
+  <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" value="{{ form.expertise_other.value|default_if_none:'' }}" placeholder="Global Warming, Education"></textarea>
+  {% if form.expertise_other.errors %}
+    {% for error in form.expertise_other.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<div class="field">
+  <label for="id_open_to_job_offers">Open to job offers:</label>
+  <select class="form-control" name="open_to_job_offers">
+    <option value="" {% if profile.open_to_job_offers == None %}selected{% endif %}>n/a</option>
+    <option value="True" {% if profile.open_to_job_offers == 1 %}selected{% endif %}>Yes</option>
+    <option value="False" {% if profile.open_to_job_offers == 0 %}selected{% endif %}>No</option>
+  </select>
+</div>
+{% endblock %}
+
+{% block submit_button_text %}Update{% endblock %}

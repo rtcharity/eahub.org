@@ -1,0 +1,28 @@
+{% extends 'form.html' %}
+
+{% block title %}Community{% endblock %}
+
+{% block form_fields %}
+
+<div class="field">
+  <label for="id_available_as_speaker">Available as speaker:</label>
+  <select class="form-control" name="available_as_speaker">
+    <option value="" {% if profile.available_as_speaker == None %}selected{% endif %}>n/a</option>
+    <option value="True" {% if profile.available_as_speaker == 1 %}selected{% endif %}>Yes</option>
+    <option value="False" {% if profile.available_as_speaker == 0 %}selected{% endif %}>No</option>
+  </select>
+</div>
+
+<div class="field">
+  <label for="id_topics_i_speak_about">Topics i speak about:</label>
+  <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" value="{{ form.topics_i_speak_about.value|default_if_none:'' }}" placeholder="Global Warming, Education"></textarea>
+  {% if form.topics_i_speak_about.errors %}
+    {% for error in form.topics_i_speak_about.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block submit_button_text %}Update{% endblock %}
