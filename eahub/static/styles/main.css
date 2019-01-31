@@ -297,8 +297,9 @@ body {
   width: 50px;
 }
 .profile_picture{
-  max-width: 100%;
-  max-height: 200px;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
   text-align: right;
 }
 
@@ -392,7 +393,7 @@ table {
     font-size: 16px;
     margin-top: 18px;
   }
-  
+
   .navbar-signup-md {
     display: none;
   }

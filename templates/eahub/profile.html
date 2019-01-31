@@ -8,9 +8,9 @@
 
 <div class="container animated">
   <div class="row profile-head">
-    <div class="col-xs-12 col-md-2">
+    <div class="col-xs-12 col-md-3">
       {% thumbnail profile.image "200x200" crop="center" as im %}
-        <img class="profile_picture" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        <img class="profile_picture" src="{{ im.url }}">
       {% empty %}
         <img class="profile_picture" src="/static/images/profile_Avatar10.png">
       {% endthumbnail %}
@@ -44,14 +44,14 @@
             </div>
           </h4>
         </li>
-        <li class="list-group-item"><b>Cause areas: </b>{{ profile.cause_areas|join:", "|default:'n/a' }}</li>        
+        <li class="list-group-item"><b>Cause areas: </b>{{ profile.cause_areas|join:", "|default:'n/a' }}</li>
         <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'n/a' }}</li>
         <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'n/a' }}</li>
         <li class="list-group-item"><b>Expertise: </b>{{ profile.expertise|join:", "|default:'n/a' }}</li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'n/a' }}</li>
         <li class="list-group-item"><b>Topics i speak about: </b>{{ profile.topics_i_speak_about|join:", "|default:'n/a' }}</li>
       </ul>
-      </div>      
+      </div>
       <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">Summary</h3>
