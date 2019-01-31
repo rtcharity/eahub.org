@@ -71,7 +71,7 @@
 
 <div class="field">
   <label for="id_bio">Bio</label>
-  <input type="bio" name="bio" id="id_bio" class="form-control" value="{{ form.bio.value|default_if_none:'' }}" placeholder="Grew up in Germany">
+  <textarea type="bio" name="bio" id="id_bio" class="form-control" value="{{ form.bio.value|default_if_none:'' }}" placeholder="In West Philadelphia born and raised, on the playground is where I spent most of my days">
   {% if form.bio.errors %}
     {% for error in form.bio.errors %}
       <div class="alert alert-danger">{{ error }}</div>
