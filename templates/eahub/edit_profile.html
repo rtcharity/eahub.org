@@ -35,7 +35,7 @@
 
 <div class="field">
   <label for="id_city_or_town">City/town</label>
-  <input type="city_or_town" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London">
+  <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London">
   {% if form.city_or_town.errors %}
     {% for error in form.city_or_town.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -45,7 +45,7 @@
 
 <div class="field">
   <label for="id_country">Country</label>
-  <input type="country" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom">
+  <input type="text" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom">
   {% if form.country.errors %}
     {% for error in form.country.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -55,7 +55,7 @@
 
 <div class="field">
   <label for="id_summary">Summary</label>
-  <textarea type="summary" name="summary" id="id_summary" class="form-control" rows="4" value="{{ form.summary.value|default_if_none:'' }}" placeholder="In West Philadelphia born and raised, on the playground is where I spent most of my days"></textarea>
+  <textarea type="text" name="summary" id="id_summary" class="form-control" rows="4" value="{{ form.summary.value|default_if_none:'' }}" placeholder="In West Philadelphia born and raised, on the playground is where I spent most of my days"></textarea>
   {% if form.summary.errors %}
     {% for error in form.summary.errors %}
       <div class="alert alert-danger">{{ error }}</div>
