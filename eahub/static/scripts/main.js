@@ -23,6 +23,7 @@ $(document).ready( function () {
 } );
 
 $('.text-block-from-database').linkify();
+$('.profile').linkify();
 
 function applySearchFunctionality (datatable) {
   $("#filterbox").keyup(function() {
