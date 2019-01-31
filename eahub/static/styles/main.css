@@ -388,6 +388,11 @@ table {
 
 
 @media(max-width: 768px) {
+  .navbar h4 {
+    font-size: 16px;
+    margin-top: 18px;
+  }
+  
   .navbar-signup-md {
     display: none;
   }
