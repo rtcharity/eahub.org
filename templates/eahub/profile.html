@@ -17,13 +17,11 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1>{{ profile.full_name|title }}</h1>
+      {% if user.id != profile.id %}
       <div class="btn btn-default purple">
-        {% if user.id == profile.id %}
-          <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
-        {% else %}
-          <span><i class="fa fa-envelope"></i> Message</span>
-        {% endif %}
+        <span><i class="fa fa-envelope"></i> Message</span>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -34,64 +32,38 @@
     <div class="col-md-6 key-facts">
       <div class="background">
       <ul class="list-group">
-        <li class="list-group-item purple"><h4>Key Facts</h4></li>
-        <li class="list-group-item"><b>Cause areas:</b>
-          {% if profile.cause_areas %}
-          {{ profile.cause_areas }}
-          {% else %}
-          n/a
-          {% endif %}
+        <li class="list-group-item purple">
+          <h4>
+            <span>Key Facts</span>
+            <div class="btn btn-default purple pull-right">
+              {% if user.id == profile.id %}
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
+              {% else %}
+                <span><i class="fa fa-envelope"></i> Message</span>
+              {% endif %}
+            </div>
+          </h4>
         </li>
-        <li class="list-group-item"><b>Expertise:</b>
-          {% if profile.expertise %}
-          {{ profile.expertise }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
-        <li class="list-group-item"><b>Speaker:</b>
-          {% if profile.speaker %}
-          {{ profile.speaker }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
-        <li class="list-group-item"><b>Group:</b>
-          {% if profile.group %}
-          <a href="{% url 'group' profile.group.id %}">{{profile.group.name}}</a>
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
-        <li class="list-group-item"><b>Skills:</b>
-          {% if profile.skills %}
-          {{ profile.skills }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
-        <li class="list-group-item"><b>Volunteer:</b>
-          {% if profile.volunteer %}
-          {{ profile.volunteer }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
-        <li class="list-group-item"><b>Job status:</b>
-          {% if profile.job_status %}
-          {{ profile.job_status }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
-        <li class="list-group-item"><b>Organisational affiliations:</b>
-          {% if profile.org_affiliations %}
-          {{ profile.org_affiliations }}
-          {% else %}
-          n/a
-          {% endif %}
-        </li>
+        <li class="list-group-item"><b>Cause areas: </b>{{ profile.cause_areas|join:", "|default:'n/a' }}</li>        
+        <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Expertise: </b>{{ profile.expertise|join:", "|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Topics i speak about: </b>{{ profile.topics_i_speak_about|join:", "|default:'n/a' }}</li>
       </ul>
+      </div>      
+      <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Summary</h3>
+          </div>
+          <div class="panel-body">
+            {{ profile.summary|default:'n/a' }}
+            {% if user.id == profile.id %}
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
+              </span>
+            {% endif %}
+          </div>
       </div>
     </div>
     <div class="col-md-6">
@@ -103,51 +75,68 @@
 <br>
 
 <div class="container profile-info">
-  <ul class="list-group">
-    <li class="list-group-item light-grey"><h4>Bio</h4></li>
-    <li class="list-group-item">
-      {% if profile.bio %}
-        {{ profile.bio }}
-      {% else %}
-        n/a
-      {% endif %}
-    </li>
-  </ul>
-  <br>
-  <ul class="list-group">
-    <li class="list-group-item light-grey"><h4>Donations</h4></li>
-    <li class="list-group-item">
-      {% if profile.donations  %}
-        <table class="table table-striped table-bordered table-donations">
-          <thead>
-            <tr>
-                <th>To</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Details</th>
-            </tr>
-          </thead>
-          <tbody  id="table_donations">
-          </tbody>
-        </table>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>
-          var donations = {{ profile.donations | safe }}
-          donations = donations.donations
-          var table_donations = $("#table_donations")
-          donations.forEach(function(donation) {
-            var tr = $('<tr>')
-            tr.append('<td>' + donation.to + '</td>')
-            tr.append('<td>' + donation.amount + '</td>')
-            tr.append('<td>' + donation.when + '</td>')
-            tr.append('<td>' + donation.details + '</td>')
-            table_donations.append(tr)
-          })
-        </script>
-      {% else %}
-        <p>n/a</p>
-      {% endif %}
-    </li>
-  </ul>
+  <div class="row">
+
+    <!-- cause area -->
+    <div class="col-md-4 thumbnail">
+      <div class="panel panel-default">
+        <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_donation_swap.png">
+        <div class="panel-body">
+          <h3>Cause Area</h3>
+          <p>
+            {{ profile.cause_areas|join:", "|default:'n/a' }}
+            {% if profile.cause_areas_other %}
+              <br>{{ profile.cause_areas_other }}
+            {% endif %}
+            {% if profile.available_to_volunteer != None %}
+              <br>
+              <b>Available to volunteer: </b>
+              {{ profile.available_to_volunteer|yesno:"Yes,No"|default:'n/a' }}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- career -->
+    <div class="col-md-4 thumbnail">
+      <div class="panel panel-default">
+        <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_resources.png">
+        <div class="panel-body">
+          <h3>Career</h3>
+          <p>
+            {{ profile.expertise|join:", "|default:'n/a' }}
+            {% if profile.expertise_other %}
+              <br>{{ profile.expertise_other }}
+            {% endif %}
+            {% if profile.open_to_job_offers != None %}
+              <br>
+              <b>Open to job offers: </b>
+              {{ profile.open_to_job_offers|yesno:"Yes,No"|default:'n/a' }}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- community -->
+    <div class="col-md-4 thumbnail">
+      <div class="panel panel-default">
+        <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
+        <div class="panel-body">
+          <h3>Community</h3>
+          <p>
+            {{ profile.topics_i_speak_about|default:'n/a' }}
+            {% if profile.available_as_speaker != None %}
+              <br>
+              <b>Available as speaker: </b>
+              {{ profile.available_as_speaker|yesno:"Yes,No"|default:'n/a' }}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 {% endblock %}

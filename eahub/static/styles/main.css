@@ -321,6 +321,10 @@ body {
   color: white;
 }
 
+.key-facts .btn{
+  margin-top: -8px;
+}
+
 .list-group a {
   color: #7bb0a8;
   text-decoration: none;

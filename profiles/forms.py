@@ -18,14 +18,9 @@ class EditProfileForm(UserChangeForm):
     class Meta:
         model = Profile
         fields = (
-            'email',
             'first_name', 'last_name',
-            'city_or_town', 'country',
-            'bio',
-            'cause_areas', 'job_status',
-            'expertise', 'skills', 'speaker',
-            'volunteer', 'org_affiliations',
-            'image',
+            'image', 'summary',
+            'city_or_town', 'country',            
         )
 
 class DeleteProfileForm(forms.Form):

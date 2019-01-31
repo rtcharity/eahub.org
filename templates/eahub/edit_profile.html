@@ -14,8 +14,8 @@
 </div>
 
 <div class="field">
-    <label for="id_last_name" class="required_field">Last Name</label>
-    <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" value="{{ form.last_name.value }}" required>
+    <label for="id_last_name">Last Name</label>
+    <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" value="{{ form.last_name.value }}">
     {% if form.last_name.errors %}
         {% for error in form.last_name.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -24,129 +24,43 @@
 </div>
 
 <div class="field">
-    <label for="id_email" class="required_field">Email address</label>
-    <span>(Hidden from profile)</span>
-    <input type="email" name="email" id="id_email" class="form-control" placeholder="utilitarian_46@aol.com" value="{{ form.email.value }}" required>
-    {% if form.email.errors %}
-      {% for error in form.email.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_city_or_town">City/town</label>
-    <input type="city_or_town" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London">
-    {% if form.city_or_town.errors %}
-      {% for error in form.city_or_town.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_country">Country</label>
-    <input type="country" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom">
-    {% if form.country.errors %}
-      {% for error in form.country.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_image">Image</label>
-    <input type="file" name="image" id="id_image" class="form-control">
-    {% if form.image.errors %}
-      {% for error in form.image.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label>Password</label>
-    <p class="well">Reset using the <a href="{% url 'password_reset' %}">reset password form</a></p>
-</div>
-
-<div class="field">
-  <label for="id_bio">Bio</label>
-  <textarea type="bio" name="bio" id="id_bio" class="form-control" value="{{ form.bio.value|default_if_none:'' }}" placeholder="In West Philadelphia born and raised, on the playground is where I spent most of my days">
-  {% if form.bio.errors %}
-    {% for error in form.bio.errors %}
+  <label for="id_image">Image</label>
+  <input type="file" name="image" id="id_image" class="form-control">
+  {% if form.image.errors %}
+    {% for error in form.image.errors %}
       <div class="alert alert-danger">{{ error }}</div>
     {% endfor %}
   {% endif %}
 </div>
 
 <div class="field">
-    <label for="id_cause_areas">Cause Areas</label>
-    <input type="cause_areas" name="cause_areas" id="id_cause_areas" class="form-control" value="{{ form.cause_areas.value|default_if_none:'' }}" placeholder="Existential Threat, Animal Rights">
-    {% if form.cause_areas.errors %}
-      {% for error in form.cause_areas.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
+  <label for="id_city_or_town">City/town</label>
+  <input type="city_or_town" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London">
+  {% if form.city_or_town.errors %}
+    {% for error in form.city_or_town.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
 </div>
 
 <div class="field">
-    <label for="id_job_status">Job Status</label>
-    <input type="job_status" name="job_status" id="id_job_status" class="form-control" value="{{ form.job_status.value|default_if_none:'' }}" placeholder="Freelancer">
-    {% if form.job_status.errors %}
-      {% for error in form.job_status.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
+  <label for="id_country">Country</label>
+  <input type="country" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom">
+  {% if form.country.errors %}
+    {% for error in form.country.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
 </div>
 
 <div class="field">
-    <label for="id_expertise">Expertise</label>
-    <input type="expertise" name="expertise" id="id_expertise" class="form-control" value="{{ form.expertise.value|default_if_none:'' }}" placeholder="Python Programming, Data Analytics">
-    {% if form.expertise.errors %}
-      {% for error in form.expertise.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_skills">Skills</label>
-    <input type="skills" name="skills" id="id_skills" class="form-control" value="{{ form.skills.value|default_if_none:'' }}" placeholder="Events Organisation">
-    {% if form.skills.errors %}
-      {% for error in form.skills.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_speaker">Speaker</label>
-    <input type="speaker" name="speaker" id="id_speaker" class="form-control" value="{{ form.speaker.value|default_if_none:'' }}" placeholder="Yes, very often">
-    {% if form.speaker.errors %}
-      {% for error in form.speaker.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_volunteer">Volunteer</label>
-    <input type="volunteer" name="volunteer" id="id_volunteer" class="form-control" value="{{ form.volunteer.value|default_if_none:'' }}" placeholder="Looking for opportunities">
-    {% if form.volunteer.errors %}
-      {% for error in form.volunteer.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_org_affiliations">Org Affiliations</label>
-    <input type="org_affiliations" name="org_affiliations" id="id_org_affiliations" class="form-control" value="{{ form.org_affiliations.value|default_if_none:'' }}" placeholder="EA London, Less Wrong etc">
-    {% if form.org_affiliations.errors %}
-      {% for error in form.org_affiliations.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
+  <label for="id_summary">Summary</label>
+  <textarea type="summary" name="summary" id="id_summary" class="form-control" rows="4" value="{{ form.summary.value|default_if_none:'' }}" placeholder="In West Philadelphia born and raised, on the playground is where I spent most of my days"></textarea>
+  {% if form.summary.errors %}
+    {% for error in form.summary.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}
 
