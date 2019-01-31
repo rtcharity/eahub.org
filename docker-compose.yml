@@ -17,7 +17,7 @@ services:
       AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
       AZURE_CONTAINER: media
       CACHE_URL: redis://cache:6379/0
-      DATABASE_URL: postgresql://eahub@eahub-postgres-2:password_F9e0qAVCeWMlar2GoOsH8jaqejQyQaRB@eahub-postgres-2.postgres.database.azure.com/eahub
+      DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
       DEBUG: 'True'
       EMAIL_URL: smtp://mail:1025
       HOSTS: localhost
