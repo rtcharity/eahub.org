@@ -6,7 +6,7 @@
 
 <br><br>
 
-<div class="container animated {% if profile.id == 13013 %}infinite tada{% else %}bounceIn{% endif %}">
+<div class="container animated">
   <div class="row profile-head">
     <div class="col-xs-12 col-md-2">
       {% thumbnail profile.image "200x200" crop="center" as im %}
@@ -16,11 +16,7 @@
       {% endthumbnail %}
     </div>
     <div class="col-xs-12 col-md-6">
-      {% if profile.id == 13013 %}
-        <h1><i class="fa fa-bolt"></i> {{ profile.full_name|title }} <i class="fa fa-bolt"></i></h1>
-      {% else %}
-        <h1>{{ profile.full_name|title }}</h1>
-      {% endif %}
+      <h1>{{ profile.full_name|title }}</h1>
       <div class="btn btn-default purple">
         {% if user.id == profile.id %}
           <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
