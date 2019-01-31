@@ -48,8 +48,20 @@
           <td><img src="/static/images/profile_Avatar10.png" class="profile-pic" /></td>
         {% endif %}
         <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
-        <td class="text-muted">{{ profile.city_or_town|default:'' }}</td>
-        <td class="text-muted">{{ profile.country|default:'' }}</td>
+        <td class="text-muted">
+          {% if profile.gdpr_confirmed %}
+            {{ profile.city_or_town|default:'' }}
+          {% else %}
+            hidden
+          {% endif %}
+        </td>
+        <td class="text-muted">
+          {% if profile.gdpr_confirmed %}
+            {{ profile.country|default:'' }}
+          {% else %}
+            hidden
+          {% endif %}
+        </td>
       </tr>
     {% endfor %}
   </tbody>

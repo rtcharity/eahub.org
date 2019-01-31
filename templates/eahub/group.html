@@ -32,18 +32,23 @@
 
 <br><br>
 
-<div class="container">
+<div class="container profile" id="">
   <div class="row">
     <div class="col-md-6 key-facts">
     <div class="background">
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
-        <li class="list-group-item"><b>Organisers:</b> {{ group.organisers.all|join:", " }}</li>
+
+        <li class="list-group-item"><b>Organisers:</b>
+          {% if group.organiser == None %} n/a
+          {% else %} {{ group.organisers.all|join:", " }}
+          {% endif %}
+        </li>
         <li class="list-group-item"><b>City/Town:</b> {{ group.city_or_town|default_if_none:'n/a' }}</li>
         <li class="list-group-item"><b>Country:</b> {{ group.country|default_if_none:'n/a' }}</li>
-        <li class="list-group-item"><b>Website:</b> {{ group.website|default_if_none:'n/a' }}</li>
-        <li class="list-group-item"><b>Facebook Group:</b> {{ group.facebook_group|default_if_none:'n/a' }}</li>
-        <li class="list-group-item"><b>Facebook Page:</b> {{ group.facebook_page|default_if_none:'n/a' }}</li>
+        <li class="list-group-item"><b>Website:</b> {{ group.website|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Facebook Group:</b> {{ group.facebook_group|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Facebook Page:</b> {{ group.facebook_page|default:'n/a' }}</li>
         <li class="list-group-item"><b>Official Email:</b> {{ group.official_email|default_if_none:'n/a' }}</li>
         <li class="list-group-item"><b>Meetup Details:</b> {{ group.meetup_details|default_if_none:'n/a' }}</li>
         <li class="list-group-item"><b>Meetup URL:</b> {{ group.meetup_url|default_if_none:'n/a' }}</li>
@@ -64,14 +69,57 @@
     <li class="list-group-item">{{ group.summary|default_if_none:'n/a' }}</li>
   </ul>
   <br>
-  <ul class="list-group">
+  <ul class="list-group profile-table">
     <li class="list-group-item light-grey"><h4>Donations</h4></li>
-    <li class="list-group-item">{{ group.donations|default_if_none:'n/a' }}</li>
+    <li class="list-group-item">
+      {% if group.donations  %}
+        <table class="table table-striped table-bordered table-donations">
+          <thead>
+            <tr>
+                <th>To</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Details</th>
+            </tr>
+          </thead>
+          <tbody  id="table_donations">
+          </tbody>
+        </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>
+          var donations = {{ group.donations | safe }}
+          console.log(donations)
+          donations = donations.donations
+          var table_donations = $("#table_donations")
+          donations.forEach(function(donation) {
+            var tr = $('<tr>')
+            tr.append('<td>' + donation.to + '</td>')
+            tr.append('<td>' + donation.amount + '</td>')
+            tr.append('<td>' + donation.when + '</td>')
+            tr.append('<td>' + donation.details + '</td>')
+            table_donations.append(tr)
+          })
+        </script>
+      {% else %}
+        <p>n/a</p>
+      {% endif %}
+    </li>
   </ul>
   <br>
-  <ul class="list-group">
+  <ul class="list-group" id="list-links">
     <li class="list-group-item light-grey"><h4>Links</h4></li>
-    <li class="list-group-item">{{ group.links|default_if_none:'n/a' }}</li>
+    {% if group.links == None %}
+    <li class="list-group-item">n/a</li>
+    {% else %}
+    <script>
+      var links = {{ group.links | safe }}
+      links = links.links
+      var list_links = document.getElementById('list-links')
+      links.forEach(function(obj) {
+        list_links.innerHTML += '<li class="list-group-item"><a href="' + obj.links + '">'+ obj.label +'</a></li>'
+      })
+    </script>
+    {% endif %}
   </ul>
   <br>
   <ul class="list-group">
