@@ -33,7 +33,6 @@
 </div>
 
 <br><br>
-
 <div class="container">
   <div class="row">
     <div class="col-md-6 key-facts">
@@ -135,25 +134,24 @@
           <tbody  id="table_donations">
           </tbody>
         </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script>
+          var donations = {{ profile.donations | safe }}
+          donations = donations.donations
+          var table_donations = $("#table_donations")
+          donations.forEach(function(donation) {
+            var tr = $('<tr>')
+            tr.append('<td>' + donation.to + '</td>')
+            tr.append('<td>' + donation.amount + '</td>')
+            tr.append('<td>' + donation.when + '</td>')
+            tr.append('<td>' + donation.details + '</td>')
+            table_donations.append(tr)
+          })
+        </script>
       {% else %}
         <p>n/a</p>
       {% endif %}
     </li>
   </ul>
 </div>
-
 {% endblock %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>
-  var donations = {{ profile.donations | safe }}
-  donations = donations.donations
-  var table_donations = $("#table_donations")
-  donations.forEach(function(donation) {
-    var tr = $('<tr>')
-    tr.append('<td>' + donation.to + '</td>')
-    tr.append('<td>' + donation.amount + '</td>')
-    tr.append('<td>' + donation.when + '</td>')
-    tr.append('<td>' + donation.details + '</td>')
-    table_donations.append(tr)
-  })
-</script>

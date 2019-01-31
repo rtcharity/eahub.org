@@ -85,7 +85,6 @@
           var donations = {{ group.donations | safe }}
           console.log(donations)
           donations = donations.donations
-
           var table_donations = $("#table_donations")
           donations.forEach(function(donation) {
             var tr = $('<tr>')
