@@ -75,10 +75,20 @@ class Profile(AbstractUser):
     # cause_areas
     cause_areas, cause_areas_other = _choices_field(CAUSE_AREA_CHOICES), _other_field()
     available_to_volunteer = models.BooleanField(default=None, null=True)
+    def get_pretty_cause_areas(self):
+        return ', '.join([
+            [label for choice, label in self.CAUSE_AREA_CHOICES if choice==cause_area][0]
+            for cause_area in self.cause_areas
+        ])
 
     # career
     open_to_job_offers = models.BooleanField(default=None, null=True)
     expertise, expertise_other = _choices_field(EXPERTISE_CHOICES), _other_field()
+    def get_pretty_expertise(self):
+        return ', '.join([
+            [label for choice, label in self.EXPERTISE_CHOICES if choice==expertise][0]
+            for expertise in self.expertise
+        ])
 
     # community
     available_as_speaker = models.BooleanField(default=None, null=True)

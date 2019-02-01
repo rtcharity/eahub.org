@@ -44,12 +44,12 @@
             </div>
           </h4>
         </li>
-        <li class="list-group-item"><b>Cause areas: </b>{{ profile.cause_areas|join:", "|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Cause areas: </b>{{ profile.get_pretty_cause_areas|default:'n/a' }}</li>
         <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'n/a' }}</li>
         <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'n/a' }}</li>
-        <li class="list-group-item"><b>Expertise: </b>{{ profile.expertise|join:", "|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Expertise: </b>{{ profile.get_pretty_expertise|default:'n/a' }}</li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'n/a' }}</li>
-        <li class="list-group-item"><b>Topics i speak about: </b>{{ profile.topics_i_speak_about|join:", "|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Topics i speak about: </b>{{ profile.topics_i_speak_about|default:'n/a' }}</li>
       </ul>
       </div>
       <div class="panel panel-default">
@@ -84,14 +84,13 @@
         <div class="panel-body">
           <h3>Cause Area</h3>
           <p>
-            {{ profile.cause_areas|join:", "|default:'n/a' }}
+            {{ profile.get_pretty_cause_areas|default:'n/a' }}
             {% if profile.cause_areas_other %}
-              <br>{{ profile.cause_areas_other }}
+              <br>+ {{ profile.cause_areas_other }}
             {% endif %}
-            {% if profile.available_to_volunteer != None %}
-              <br>
-              <b>Available to volunteer: </b>
-              {{ profile.available_to_volunteer|yesno:"Yes,No"|default:'n/a' }}
+            {% if profile.available_to_volunteer %}
+              <br>              
+              <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>              
             {% endif %}
           </p>
         </div>
@@ -105,14 +104,13 @@
         <div class="panel-body">
           <h3>Career</h3>
           <p>
-            {{ profile.expertise|join:", "|default:'n/a' }}
+            {{ profile.get_pretty_expertise|default:'n/a' }}
             {% if profile.expertise_other %}
-              <br>{{ profile.expertise_other }}
+              <br>+ {{ profile.expertise_other }}
             {% endif %}
-            {% if profile.open_to_job_offers != None %}
-              <br>
-              <b>Open to job offers: </b>
-              {{ profile.open_to_job_offers|yesno:"Yes,No"|default:'n/a' }}
+            {% if profile.open_to_job_offers %}
+              <br>              
+              <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>              
             {% endif %}
           </p>
         </div>
@@ -126,11 +124,10 @@
         <div class="panel-body">
           <h3>Community</h3>
           <p>
-            {{ profile.topics_i_speak_about|default:'n/a' }}
-            {% if profile.available_as_speaker != None %}
-              <br>
-              <b>Available as speaker: </b>
-              {{ profile.available_as_speaker|yesno:"Yes,No"|default:'n/a' }}
+            <span>I talk about: {{ profile.topics_i_speak_about }}</span>
+            {% if profile.open_to_job_offers %}
+              <br>              
+              <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>              
             {% endif %}
           </p>
         </div>

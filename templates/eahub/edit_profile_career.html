@@ -15,7 +15,7 @@
 
 <div class="field">
   <label for="id_expertise_other">Other expertise:</label>
-  <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" value="{{ form.expertise_other.value|default_if_none:'' }}" placeholder="Global Warming, Education"></textarea>
+  <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.expertise_other.value }}</textarea>
   {% if form.expertise_other.errors %}
     {% for error in form.expertise_other.errors %}
       <div class="alert alert-danger">{{ error }}</div>

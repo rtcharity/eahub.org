@@ -55,7 +55,7 @@
 
 <div class="field">
   <label for="id_summary">Summary</label>
-  <textarea type="text" name="summary" id="id_summary" class="form-control" rows="4" value="{{ form.summary.value|default_if_none:'' }}" placeholder="In West Philadelphia born and raised, on the playground is where I spent most of my days"></textarea>
+  <textarea type="text" name="summary" id="id_summary" class="form-control" rows="4" placeholder="Grew up in Germany">{{ form.summary.value }}</textarea>
   {% if form.summary.errors %}
     {% for error in form.summary.errors %}
       <div class="alert alert-danger">{{ error }}</div>
