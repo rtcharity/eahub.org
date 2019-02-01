@@ -92,6 +92,11 @@
               <br>              
               <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>              
             {% endif %}
+            {% if user.id == profile.id %}
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
+              </span>
+            {% endif %}
           </p>
         </div>
       </div>
@@ -112,6 +117,11 @@
               <br>              
               <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>              
             {% endif %}
+            {% if user.id == profile.id %}
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
+              </span>
+            {% endif %}
           </p>
         </div>
       </div>
@@ -128,6 +138,11 @@
             {% if profile.open_to_job_offers %}
               <br>              
               <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>              
+            {% endif %}
+            {% if user.id == profile.id %}
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>
+              </span>
             {% endif %}
           </p>
         </div>

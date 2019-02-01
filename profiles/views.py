@@ -115,7 +115,8 @@ def edit_profile_community(request):
     else:
         form = EditProfileCommunityForm(instance=request.user)
         return render(request, 'eahub/edit_profile_community.html', {
-            'form': form
+            'form': form,
+            'profile': Profile.objects.get(pk=request.user.id)
         })
 
 

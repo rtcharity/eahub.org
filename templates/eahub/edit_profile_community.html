@@ -8,8 +8,8 @@
   <label for="id_available_as_speaker">Available as speaker:</label>
   <select class="form-control" name="available_as_speaker">
     <option value="" {% if profile.available_as_speaker == None %}selected{% endif %}>n/a</option>
-    <option value="True" {% if profile.available_as_speaker == 1 %}selected{% endif %}>Yes</option>
-    <option value="False" {% if profile.available_as_speaker == 0 %}selected{% endif %}>No</option>
+    <option value="True" {% if profile.available_as_speaker == True %}selected{% endif %}>Yes</option>
+    <option value="False" {% if profile.available_as_speaker == False %}selected{% endif %}>No</option>
   </select>
 </div>
 
