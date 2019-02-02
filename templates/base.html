@@ -56,6 +56,8 @@
           {% if page_name == 'Profiles' or page_name == 'Groups' %}
           <a href="\"><img class="logo_with_page_name" id="logo" src="/static/images/logo_transparent.png" /></a>
           <h4> / {{ page_name }}</h4>
+          {% elif page_name == 'Home' %}
+          <a href="\"><img class="logo_full" id="logo" src="/static/images/logo_full_transparent.png" /></a>
           {% else %}
           <a href="\"><img class="logo" id="logo" src="/static/images/logo_transparent.png" /></a>
           {% endif %}
