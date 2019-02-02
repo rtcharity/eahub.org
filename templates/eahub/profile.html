@@ -78,7 +78,7 @@
   <div class="row">
 
     <!-- cause area -->
-    <div class="col-md-4 thumbnail">
+    <div class="col-md-4">
       <div class="panel panel-default">
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_donation_swap.png">
         <div class="panel-body">
@@ -93,6 +93,7 @@
               <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
             {% endif %}
             {% if user.id == profile.id %}
+              <br>
               <span class="btn btn-default btn-xs">
                 <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
               </span>
@@ -103,7 +104,7 @@
     </div>
 
     <!-- career -->
-    <div class="col-md-4 thumbnail">
+    <div class="col-md-4">
       <div class="panel panel-default">
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_resources.png">
         <div class="panel-body">
@@ -118,6 +119,7 @@
               <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
             {% endif %}
             {% if user.id == profile.id %}
+              <br>
               <span class="btn btn-default btn-xs">
                 <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
               </span>
@@ -128,34 +130,34 @@
     </div>
 
     <!-- community -->
-    <div class="col-md-4 thumbnail">
+    <div class="col-md-4">
       <div class="panel panel-default">
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
         <div class="panel-body">
           <h3>Community</h3>
-          <p>
+          <span> Availabe as speaker:
+            {% if profile.topics_i_speak_about != None %} Yes
+            <br>
             <span>I talk about: {{ profile.topics_i_speak_about }}</span>
-            {% if profile.open_to_job_offers %}
-              <br>
-              <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
+            {% else %} No
             {% endif %}
-            {% if user.id == profile.id %}
-              <span class="btn btn-default btn-xs">
-                <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>
-              </span>
-            {% endif %}
-          </p>
+          </span>
+          <br>
+          <br>
+          {% if user.id == profile.id %}
+            <span class="btn btn-default btn-xs">
+              <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>
+            </span>
+          {% endif %}
         </div>
       </div>
     </div>
-    {% if user.id == profile.id %}
   </div>
+  {% if user.id == profile.id %}
   <div class="row">
-  <span class="btn btn-default btn-xs delete-btn">
-    <h4>
-    <a href="{% url 'delete_profile' %}"><i class="fa fa-trash"></i> Delete Profile</a>
-    </h4>
-  </span>
+    <span class="btn btn-default btn-xs delete-btn">
+      <h4><a href="{% url 'delete_profile' %}"><i class="fa fa-trash"></i> Delete My Profile</a></h4>
+    </span>
   </div>
   {% endif %}
 

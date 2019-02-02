@@ -320,12 +320,16 @@ body {
   background-color: #F2F2F2 !important;
 }
 
+.profile-info .col-md-4 {
+  text-align: center;
+}
+
 .delete-btn {
   display: block;
   height: 30px;
   margin-left: auto;
   margin-right: auto;
-  width: 150px;
+  width: 180px;
 }
 
 .delete-btn a {
@@ -337,7 +341,7 @@ body {
 }
 
 .delete-btn h4 {
-  margin-top: 2 px;
+  margin-top: 2px;
 }
 
 .key-facts .background {
