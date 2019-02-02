@@ -11,11 +11,12 @@
             <option value="{{ choice.0 }}" {% if choice.0 in profile.expertise %}selected{% endif %}>{{ choice.1 }}</option>
         {% endfor %}
     </select>
+    <p>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</p>
 </div>
 
 <div class="field">
   <label for="id_expertise_other">Other expertise:</label>
-  <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.expertise_other.value }}</textarea>
+  <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.expertise_other.value|default:'' }}</textarea>
   {% if form.expertise_other.errors %}
     {% for error in form.expertise_other.errors %}
       <div class="alert alert-danger">{{ error }}</div>
