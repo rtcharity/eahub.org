@@ -52,22 +52,23 @@
         <li class="list-group-item"><b>Topics i speak about: </b>{{ profile.topics_i_speak_about|default:'n/a' }}</li>
       </ul>
       </div>
-      <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Summary</h3>
-          </div>
-          <div class="panel-body">
-            {{ profile.summary|default:'n/a' }}
-            {% if user.id == profile.id %}
-              <span class="btn btn-default btn-xs">
-                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
-              </span>
-            {% endif %}
-          </div>
-      </div>
     </div>
     <div class="col-md-6">
         {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon %}
+    </div>
+  </div>
+  <div class="panel panel-default summary">
+    <div class="panel-heading">
+      <h3 class="panel-title">Summary</h3>
+    </div>
+    <div class="panel-body">
+      {{ profile.summary|default:'n/a' }}
+      {% if user.id == profile.id %}
+        <br>
+        <span class="btn btn-default btn-xs">
+          <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
+        </span>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -142,7 +143,6 @@
             {% else %} No
             {% endif %}
           </span>
-          <br>
           <br>
           {% if user.id == profile.id %}
             <span class="btn btn-default btn-xs">
