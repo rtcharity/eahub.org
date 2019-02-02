@@ -295,10 +295,8 @@ body {
   margin-right: 10px;
 }
 
-/* profile pictures */
-.table img{
-  width: 50px;
-}
+/* profile and group */
+
 .profile_picture{
   width: 100%;
   max-width: 200px;
@@ -306,13 +304,52 @@ body {
   text-align: right;
 }
 
-/* profile and group */
+.table img{
+  width: 50px;
+}
+
 .profile-head .col-xs-12 {
   text-align: center;
 }
 
+.profile-info .btn-xs {
+  margin-top: 5px;
+}
+
+.profile-info a:hover {
+  text-decoration: none;
+}
+
 .profile-info .light-grey {
   background-color: #F2F2F2 !important;
+}
+
+.profile-info .col-md-4 {
+  text-align: center;
+}
+
+.profile-info .summary {
+  margin-top: 10px;
+}
+
+.delete-btn {
+  display: block;
+  height: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 180px;
+}
+
+.delete-btn a {
+  color: red;
+}
+
+.delete-btn a:hover {
+  color: red;
+}
+
+.delete-btn h4 {
+  margin-top: 2px;
 }
 
 .key-facts .background {
