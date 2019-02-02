@@ -27,7 +27,7 @@
 </div>
 
 <br><br>
-<div class="container profile">
+<div class="container profile-info">
   <div class="row">
     <div class="col-md-6 key-facts">
       <div class="background">
@@ -89,8 +89,8 @@
               <br>+ {{ profile.cause_areas_other }}
             {% endif %}
             {% if profile.available_to_volunteer %}
-              <br>              
-              <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>              
+              <br>
+              <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
             {% endif %}
             {% if user.id == profile.id %}
               <span class="btn btn-default btn-xs">
@@ -114,8 +114,8 @@
               <br>+ {{ profile.expertise_other }}
             {% endif %}
             {% if profile.open_to_job_offers %}
-              <br>              
-              <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>              
+              <br>
+              <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
             {% endif %}
             {% if user.id == profile.id %}
               <span class="btn btn-default btn-xs">
@@ -136,8 +136,8 @@
           <p>
             <span>I talk about: {{ profile.topics_i_speak_about }}</span>
             {% if profile.open_to_job_offers %}
-              <br>              
-              <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>              
+              <br>
+              <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
             {% endif %}
             {% if user.id == profile.id %}
               <span class="btn btn-default btn-xs">
@@ -148,7 +148,16 @@
         </div>
       </div>
     </div>
-
+    {% if user.id == profile.id %}
   </div>
+  <div class="row">
+  <span class="btn btn-default btn-xs delete-btn">
+    <h4>
+    <a href="{% url 'delete_profile' %}"><i class="fa fa-trash"></i> Delete Profile</a>
+    </h4>
+  </span>
+  </div>
+  {% endif %}
+
 </div>
 {% endblock %}
