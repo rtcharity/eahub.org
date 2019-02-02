@@ -18,7 +18,7 @@ services:
       AZURE_CONTAINER: media
       CACHE_URL: redis://cache:6379/0
       DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
-      DEBUG: 'False'
+      DEBUG: 'True'
       EMAIL_URL: smtp://mail:1025
       HOSTS: localhost
       HTTPS: 'False'
