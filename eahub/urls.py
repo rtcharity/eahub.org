@@ -6,6 +6,10 @@ from . import views
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
+handler403 = views.forbidden
+handler404 = views.not_found
+handler500 = views.server_error
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile/', include('profiles.urls')),

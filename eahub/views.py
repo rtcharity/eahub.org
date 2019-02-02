@@ -19,6 +19,15 @@ def index(request):
 def about(request):
     return render(request, 'eahub/about.html')
 
+def not_found(request):
+    return render(request, '404.html')
+
+def server_error(request):
+    return render(request, '500.html')
+
+def forbidden(request):
+    return render(request, '403.html')
+
 def profiles(request):
     profilesData = getProfilesData()
     return render(request, 'eahub/profiles.html', {
