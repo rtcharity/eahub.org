@@ -315,6 +315,9 @@ body {
 .profile-info .btn-xs {
   margin-top: 5px;
 }
+.profile-info a {
+  color: black;
+}
 
 .profile-info a:hover {
   text-decoration: none;
@@ -382,6 +385,19 @@ body {
 .profile-table p {
   padding: 10px 15px;
   margin: 0;
+}
+
+/* password */
+.password-reset form {
+  margin-bottom: 20px;
+}
+.password-reset h1 {
+  color: #512B52;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.password-reset p {
+  margin-bottom: 20px;
 }
 
 /* lists */
