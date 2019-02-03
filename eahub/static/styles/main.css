@@ -405,6 +405,11 @@ body {
   margin-bottom: 5px;
 }
 
+/* privacy */
+.privacy input {
+  
+}
+
 /* other */
 .purple{
   background-color: #512B52 !important;
