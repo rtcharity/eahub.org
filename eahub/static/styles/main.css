@@ -184,6 +184,10 @@ body {
   display: none !important;
 }
 
+#burger-btn:hover {
+  background-color: #d6d2d2;
+}
+
 /* jumbotron */
 .jumbotron{
   background-color: #7bb0a8;
