@@ -27,7 +27,7 @@ MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Core settings: file uploads
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
 # Core settings: globalization
 LANGUAGE_CODE = "en-us"
@@ -50,23 +50,12 @@ MIDDLEWARE = [
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = env.bool('HTTPS')
+SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Core settings: models
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "sorl.thumbnail",
-    "django_cleanup.apps.CleanupConfig",
-    "eahub.apps.EahubConfig",
-    "groups",
-    "profiles",
-]
+from .build_settings import INSTALLED_APPS
 
 # Core settings: security
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
@@ -109,16 +98,19 @@ LOGOUT_REDIRECT_URL = "index"
 
 # Sessions
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
-SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 # Static files
-STATIC_ROOT = base_dir("staticfiles/")
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [base_dir("eahub/static/"), base_dir("static/")]
+from .build_settings import (
+    STATIC_ROOT,
+    STATIC_URL,
+    STATICFILES_DIRS,
+    STATICFILES_STORAGE,
+)
 
 # django-storages
-AZURE_CONNECTION_STRING = env.str('AZURE_CONNECTION_STRING')
-AZURE_CONTAINER = env.str('AZURE_CONTAINER')
+AZURE_CONNECTION_STRING = env.str("AZURE_CONNECTION_STRING")
+AZURE_CONTAINER = env.str("AZURE_CONTAINER")
 AZURE_SSL = SECURE_SSL_REDIRECT
 AZURE_URL_EXPIRATION_SECS = 3600
 
