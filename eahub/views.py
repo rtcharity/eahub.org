@@ -70,14 +70,15 @@ def getProfilesData():
     rows = Profile.objects.all()
     map_data = ''.join([
         '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
+            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}", gdpr_confirmed: "{gdpr_confirmed}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=' '.join([x.first_name, x.last_name]),
                 path='/{obj}/{id}'.format(
                     obj='profile',
                     id=x.id
-                )
+                ),
+                gdpr_confirmed=x.gdpr_confirmed
             )
         + '},'
         for x in rows

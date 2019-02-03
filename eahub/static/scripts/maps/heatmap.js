@@ -112,6 +112,7 @@ function addMarkersWithLabels(locations, map) {
 
 function addMarkersWithoutLables(locations, map) {
   var markers = locations.map(function(location, i) {
+    console.log(location)
       var marker = new google.maps.Marker({
           position: location,
           map: map,
@@ -123,6 +124,44 @@ function addMarkersWithoutLables(locations, map) {
        size: iconSize,
        scaledSize: iconSize  // makes SVG icons work in IE
       });
+      return marker;
+  });
+  return markers
+}
+
+function addMarkersWithLabelsGDPRUnlocked(locations, map) {
+  var iw = new google.maps.InfoWindow();
+
+  //oms allows for spiderfying of clusters
+  var oms = new OverlappingMarkerSpiderfier(map, {
+    markersWontMove: true,
+    markersWontHide: true,
+    basicFormatEvents: true
+  });
+
+  oms.addListener('click', function(marker) {
+    iw.setContent(marker.desc);
+    iw.open(map, marker);
+  });
+
+  var markers = locations.map(function(location, i) {
+      var marker = new google.maps.Marker({
+          position: location,
+          optimized: !isIE  // makes SVG icons work in IE
+      });
+      var iconSize = new google.maps.Size(20, 23);
+      marker.setIcon({
+       url: '/static/images/marker.svg',
+       size: iconSize,
+       scaledSize: iconSize  // makes SVG icons work in IE
+      });
+
+      var label = location.label.toLowerCase()
+        .split(' ')
+        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+        .join(' ');
+      marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+      oms.addMarker(marker);
       return marker;
   });
   return markers
