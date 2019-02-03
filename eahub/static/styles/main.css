@@ -76,6 +76,12 @@ body {
   max-width: 900px;
 }
 
+.error h1 {
+  color: #512B52;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
 /* nav */
 .navbar h4 {
   color: white;
@@ -182,6 +188,10 @@ body {
 
 .navbar-signup-xs {
   display: none !important;
+}
+
+#burger-btn:hover {
+  background-color: #d6d2d2;
 }
 
 /* jumbotron */
