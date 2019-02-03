@@ -179,8 +179,8 @@ function createMarkerClusters(map, markers) {
 
   google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
     map.fitBounds(cluster.getBounds());
-    if( map.getZoom() > minClusterZoom ) {
-      map.setZoom(minClusterZoom);
+    if( map.getZoom() > minClusterZoom+1 ) {
+      map.setZoom(minClusterZoom+1);
     }
   });
 }
