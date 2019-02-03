@@ -386,6 +386,9 @@ body {
   padding: 10px 15px;
   margin: 0;
 }
+#update-btn {
+  display: none;
+}
 
 /* password */
 .password-reset form {
@@ -403,11 +406,6 @@ body {
 /* lists */
 .profiles .col-xs-12 {
   margin-bottom: 5px;
-}
-
-/* edit profile */
-#update-btn {
-  display: none;
 }
 
 /* other */
