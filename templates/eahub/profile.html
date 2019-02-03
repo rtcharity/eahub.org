@@ -49,7 +49,7 @@
         <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'n/a' }}</li>
         <li class="list-group-item"><b>Expertise: </b>{{ profile.get_pretty_expertise|default:'n/a' }}</li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'n/a' }}</li>
-        <li class="list-group-item"><b>Topics i speak about: </b>{{ profile.topics_i_speak_about|default:'n/a' }}</li>
+        <li class="list-group-item"><b>Topics I speak about: </b>{{ profile.topics_i_speak_about|default:'n/a' }}</li>
       </ul>
       </div>
     </div>
@@ -93,7 +93,7 @@
               <br>
               <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
             {% endif %}
-            {% if user.id == profile.id %}
+            {% if user.id == profile.id and profile.gdpr_confirmed %}
               <br>
               <span class="btn btn-default btn-xs">
                 <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
@@ -119,7 +119,7 @@
               <br>
               <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
             {% endif %}
-            {% if user.id == profile.id %}
+            {% if user.id == profile.id and profile.gdpr_confirmed %}
               <br>
               <span class="btn btn-default btn-xs">
                 <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
@@ -144,7 +144,7 @@
             {% endif %}
           </span>
           <br>
-          {% if user.id == profile.id %}
+          {% if user.id == profile.id and profile.gdpr_confirmed %}
             <span class="btn btn-default btn-xs">
               <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>
             </span>

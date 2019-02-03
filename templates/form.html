@@ -27,7 +27,7 @@
     margin-bottom: 0;
     max-width: 400px;
   }
-  .required_field:after { 
+  .required_field:after {
     content:" *";
     color:red;
   }
@@ -42,10 +42,9 @@
           {% csrf_token %}
           <h2>{% block title %}{% endblock %}</h2>
           {% block form_fields %}{% endblock %}
-          <button type="submit" class="btn btn-default">{% block submit_button_text %}{% endblock %}</button>
         </form>
     </div>
-</div>    
+</div>
 {% block content_after_form %}{% endblock %}
 
 {% endblock %}

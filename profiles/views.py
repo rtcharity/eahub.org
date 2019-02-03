@@ -13,7 +13,7 @@ from .forms import *
 
 
 class SignUp(generic.CreateView):
-    template_name = 'registration/signup.html'    
+    template_name = 'registration/signup.html'
     form_class = ProfileCreationForm
     success_url = reverse_lazy('my_profile')
     extra_context = {'recaptcha_site_key': settings.RECAPTCHA_SITE_KEY}
@@ -34,7 +34,7 @@ class SignUp(generic.CreateView):
             return valid
         else:
             # fail
-            return redirect(reverse('signup') + '?captcha_error=True')       
+            return redirect(reverse('signup') + '?captcha_error=True')
 
 
 def ProfileView(request, profile_id):
@@ -53,6 +53,7 @@ def MyProfileView(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def edit_profile(request):
+    profile = Profile.objects.get(pk=request.user.id)
     if request.method == 'POST':
         form = EditProfileForm(
             request.POST, request.FILES, instance=request.user)
@@ -65,7 +66,8 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=request.user)
         return render(request, 'eahub/edit_profile.html', {
-            'form': form
+            'form': form,
+            'profile': profile
         })
 
 

@@ -386,6 +386,9 @@ body {
   padding: 10px 15px;
   margin: 0;
 }
+#update-btn {
+  display: none;
+}
 
 /* password */
 .password-reset form {
