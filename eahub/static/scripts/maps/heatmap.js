@@ -43,7 +43,7 @@ function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
 
 function renderProfileMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithoutLables(locations, map);
+  var markers = addMarkersWithLabelsGDPRUnlocked(locations, map);
   createMarkerClusters(map, markers);
 }
 
@@ -128,6 +128,50 @@ function addMarkersWithoutLables(locations, map) {
   return markers
 }
 
+function addMarkersWithLabelsGDPRUnlocked(locations, map) {
+  var iw = new google.maps.InfoWindow();
+
+  //oms allows for spiderfying of clusters
+  var oms = new OverlappingMarkerSpiderfier(map, {
+    markersWontMove: true,
+    markersWontHide: true,
+    basicFormatEvents: true
+  });
+
+  oms.addListener('click', function(marker) {
+    if (marker.gdpr_confirmed) {
+      iw.setContent(marker.desc);
+      iw.open(map, marker);
+    }
+  });
+
+  var markers = locations.map(function(location, i) {
+      var marker = new google.maps.Marker({
+          position: location,
+          optimized: !isIE  // makes SVG icons work in IE
+      });
+      var iconSize = new google.maps.Size(20, 23);
+      marker.setIcon({
+       url: '/static/images/marker.svg',
+       size: iconSize,
+       scaledSize: iconSize  // makes SVG icons work in IE
+      });
+      if (location.gdpr_confirmed == 'True') {
+        var label = location.label.toLowerCase()
+          .split(' ')
+          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(' ');
+        marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+        marker.gdpr_confirmed = true
+      } else {
+        marker.gdpr_confirmed = false
+      }
+      oms.addMarker(marker);
+      return marker;
+  });
+  return markers
+}
+
 function createMarkerClusters(map, markers) {
   var markerCluster = new MarkerClusterer(
       map, markers,{imagePath: '../static/images/cluster/m', maxZoom: minClusterZoom}
@@ -135,8 +179,8 @@ function createMarkerClusters(map, markers) {
 
   google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
     map.fitBounds(cluster.getBounds());
-    if( map.getZoom() > minClusterZoom ) {
-      map.setZoom(minClusterZoom);
+    if( map.getZoom() > minClusterZoom+1 ) {
+      map.setZoom(minClusterZoom+1);
     }
   });
 }
