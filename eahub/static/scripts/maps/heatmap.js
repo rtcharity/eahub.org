@@ -43,7 +43,7 @@ function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
 
 function renderProfileMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithoutLables(locations, map);
+  var markers = addMarkersWithLabelsGDPRUnlocked(locations, map);
   createMarkerClusters(map, markers);
 }
 
@@ -112,7 +112,6 @@ function addMarkersWithLabels(locations, map) {
 
 function addMarkersWithoutLables(locations, map) {
   var markers = locations.map(function(location, i) {
-    console.log(location)
       var marker = new google.maps.Marker({
           position: location,
           map: map,
@@ -140,8 +139,10 @@ function addMarkersWithLabelsGDPRUnlocked(locations, map) {
   });
 
   oms.addListener('click', function(marker) {
-    iw.setContent(marker.desc);
-    iw.open(map, marker);
+    if (marker.gdpr_confirmed) {
+      iw.setContent(marker.desc);
+      iw.open(map, marker);
+    }
   });
 
   var markers = locations.map(function(location, i) {
@@ -155,12 +156,16 @@ function addMarkersWithLabelsGDPRUnlocked(locations, map) {
        size: iconSize,
        scaledSize: iconSize  // makes SVG icons work in IE
       });
-
-      var label = location.label.toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
-      marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+      if (location.gdpr_confirmed == 'True') {
+        var label = location.label.toLowerCase()
+          .split(' ')
+          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(' ');
+        marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+        marker.gdpr_confirmed = true
+      } else {
+        marker.gdpr_confirmed = false
+      }
       oms.addMarker(marker);
       return marker;
   });
