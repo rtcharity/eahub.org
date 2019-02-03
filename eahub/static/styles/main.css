@@ -405,9 +405,9 @@ body {
   margin-bottom: 5px;
 }
 
-/* privacy */
-.privacy input {
-  
+/* edit profile */
+#update-btn {
+  display: none;
 }
 
 /* other */
