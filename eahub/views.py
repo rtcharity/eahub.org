@@ -28,9 +28,6 @@ def server_error(request):
 def forbidden(request):
     return render(request, '403.html')
 
-def termsAndConditions(request):
-    return render(request, 'eahub/terms_and_conditions.html')
-
 def privacyPolicy(request):
     return render(request, 'eahub/privacy_policy.html')
 

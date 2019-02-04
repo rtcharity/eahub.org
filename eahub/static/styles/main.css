@@ -18,8 +18,8 @@ body {
   opacity: 0.7;
 }
 
-.info h1, h2 {
-  text-align: center;
+.info h1, h3 {
+  text-align: left;
   color: #512B52;
 }
 
