@@ -18,5 +18,6 @@ urlpatterns = [
     path('group/', include('groups.urls')),
     path('groups/', views.groups, name='groups'),
     path('admin/', admin.site.urls, name='admin'),
-    path('about/', views.about, name='about')
+    path('about/', views.about, name='about'),
+    path('privacy-policy/', views.privacyPolicy, name='privacyPolicy')
 ]

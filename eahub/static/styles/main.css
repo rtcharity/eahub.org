@@ -9,25 +9,25 @@ body {
   font-family: "Open Sans";
 }
 
-/* about */
-.about a {
+/* info */
+.info a {
   color: #7bb0a8;
   text-decoration: none;
 }
-.about a:hover {
+.info a:hover {
   opacity: 0.7;
 }
 
-.about h1 {
-  text-align: center;
+.info h1, h3 {
+  text-align: left;
   color: #512B52;
 }
 
-.about .col-md-6, .col-xs-12 {
+.info .col-md-6, .col-xs-12 {
   text-align: center;
 }
 
-.about button {
+.info button {
   border: none;
   font-size: 18px;
   height: 70px;
@@ -38,11 +38,11 @@ body {
   width: 150px;
 }
 
-.about button:hover {
+.info button:hover {
   opacity: 0.7;
 }
 
-.about button a {
+.info button a {
   color: white;
 }
 
@@ -69,6 +69,9 @@ body {
 .footer a{
   color: #fff;
   text-decoration: underline;
+}
+.footer a:hover{
+  opacity: 0.7;
 }
 
 /* container */

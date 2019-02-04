@@ -65,8 +65,7 @@
 </div>
 {% if profile.gdpr_confirmed == False %}
 <div class="privacy">
-  <p><input id="privacy-1" type='checkbox'> I've read and accept the <a href=''>Terms & Conditions</a>.</p>
-  <p><input id="privacy-2" type='checkbox'> I've read and accept the <a href=''>Privacy Policy</a>.</p>
+  <p><input id="privacy" type='checkbox'> I've read and accept the <a href="{% url 'privacyPolicy' %}">Privacy Policy</a>.</p>
 </div>
 <button type="submit" class="btn btn-default" id="update-btn">Update</button>
 <script src="/static/scripts/edit.js"></script>
