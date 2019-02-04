@@ -24,6 +24,7 @@ $(document).ready( function () {
 
 $('.text-block-from-database').linkify();
 $('.profile').linkify();
+$('.info').linkify();
 
 function applySearchFunctionality (datatable) {
   $("#filterbox").keyup(function() {
