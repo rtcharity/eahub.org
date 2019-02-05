@@ -26,7 +26,7 @@
 <div class="field">
     <label for="id_available_to_volunteer">Available to volunteer:</label>
     <select class="form-control" name="available_to_volunteer">
-      <option value="" {% if profile.available_to_volunteer == None %}selected{% endif %}>n/a</option>
+      <option value="" {% if profile.available_to_volunteer == None %}selected{% endif %}>N/A</option>
       <option value="True" {% if profile.available_to_volunteer == 1 %}selected{% endif %}>Yes</option>
       <option value="False" {% if profile.available_to_volunteer == 0 %}selected{% endif %}>No</option>
     </select>
