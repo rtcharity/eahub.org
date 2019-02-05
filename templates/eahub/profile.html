@@ -134,13 +134,11 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
         <div class="panel-body">
           <h3>Community</h3>
-          <span> Availabe as speaker:
-            {% if profile.topics_i_speak_about != None %} Yes
+            {% if profile.topics_i_speak_about != None %}
+            <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
             <br>
             <span>I talk about: {{ profile.topics_i_speak_about }}</span>
-            {% else %} No
             {% endif %}
-          </span>
           <br>
           {% if user.id == profile.id and profile.gdpr_confirmed %}
             <span class="btn btn-default btn-xs">
