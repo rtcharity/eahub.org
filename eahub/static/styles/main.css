@@ -348,6 +348,10 @@ body {
   margin-top: 10px;
 }
 
+.profile-info h3 {
+  text-align: center;
+}
+
 .delete-btn {
   display: block;
   height: 30px;

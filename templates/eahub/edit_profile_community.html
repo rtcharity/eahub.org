@@ -15,14 +15,12 @@
 
 <div class="field">
   <label for="id_topics_i_speak_about">Topics i speak about:</label>
-  <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.topics_i_speak_about.value }}</textarea>
+  <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.topics_i_speak_about.value|default:'' }}</textarea>
   {% if form.topics_i_speak_about.errors %}
     {% for error in form.topics_i_speak_about.errors %}
       <div class="alert alert-danger">{{ error }}</div>
     {% endfor %}
   {% endif %}
 </div>
-
+<button type="submit" class="btn btn-default">Update</button>
 {% endblock %}
-
-{% block submit_button_text %}Update{% endblock %}
