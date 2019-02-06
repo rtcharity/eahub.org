@@ -30,6 +30,7 @@ class EditProfileCauseAreasForm(UserChangeForm):
         fields = (
             # 'cause_areas' is set using custom code in view
             'cause_areas_other',
+            'giving_pledge', 'giving_pledge_other',
             'available_to_volunteer',           
         )
 

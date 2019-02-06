@@ -10,13 +10,15 @@ geolocator = Nominatim(timeout=10)
 
 
 # methods to maintain consistency in model design
+def _choice_field(choices):
+    return models.CharField(
+        max_length=max([len(x[0]) for x in choices]),
+        choices=choices,
+        null=True, blank=True
+    )
 def _choices_field(choices):
     return ArrayField(
-        models.CharField(
-            max_length=max([len(x[0]) for x in choices]),
-            choices=choices,
-            null=True, blank=True,
-        ),        
+        _choice_field(choices),        
         default=list
     )
 def _other_field():
@@ -56,6 +58,13 @@ class Profile(AbstractUser):
         ('META', 'Meta'),
         ('OTHER', 'Other'),
     ]
+    GIVING_PLEDGE_CHOICES = [
+        ('', 'No'),
+        ('GIVING_WHAT_WE_CAN', 'Giving What We Can'),
+        ('THE_LIFE_YOU_CAN_CHANGE', 'The Life You Can Save'),
+        ('ONE_FOR_THE_WORLD', 'One for the World'),
+        ('OTHER', 'Other'),
+    ]
 
     # personal information
     summary = models.TextField(null=True, blank=True)
@@ -80,6 +89,7 @@ class Profile(AbstractUser):
             [label for choice, label in self.CAUSE_AREA_CHOICES if choice==cause_area][0]
             for cause_area in self.cause_areas
         ])
+    giving_pledge, giving_pledge_other = _choice_field(GIVING_PLEDGE_CHOICES), _other_field()
 
     # career
     open_to_job_offers = models.BooleanField(default=None, null=True)
