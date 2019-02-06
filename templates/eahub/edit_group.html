@@ -43,6 +43,16 @@
 </div>
 
 <div class="field">
+    <label for="id_email">Email Address</label>
+    <input type="email" name="email" id="id_email" class="form-control" placeholder="" value="{{ form.email.value|default_if_none:'' }}">
+    {% if form.email.errors %}
+        {% for error in form.email.errors %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="field">
     <label for="id_website">Website</label>
     <input type="text" name="website" id="id_website" class="form-control" placeholder="lesswrong.com" value="{{ form.website.value|default_if_none:'' }}">
     {% if form.website.errors %}
@@ -87,16 +97,6 @@
     <input type="url" name="facebook_page" id="id_facebook_page" class="form-control" placeholder="" value="{{ form.facebook_page.value|default_if_none:'' }}">
     {% if form.facebook_page.errors %}
         {% for error in form.facebook_page.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_official_email">Email Address</label>
-    <input type="email" name="official_email" id="id_official_email" class="form-control" placeholder="" value="{{ form.official_email.value|default_if_none:'' }}">
-    {% if form.official_email.errors %}
-        {% for error in form.official_email.errors %}
         <div class="alert alert-danger">{{ error }}</div>
         {% endfor %}
     {% endif %}

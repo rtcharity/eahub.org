@@ -15,8 +15,8 @@
         {% if user in group.organisers.all %}
           <a href="{% url 'edit_group' group_id=group.id  %}"><i class="fa fa-pencil"></i> Edit</a>
         {% else %}
-          {% if group.official_email %}
-            <a href="mailto:{{ group.official_email }}"><i class="fa fa-envelope"></i> Message</a>
+          {% if group.email %}
+            <a href="mailto:{{ group.email }}"><i class="fa fa-envelope"></i> Message</a>
           {% elif group.facebook_group %}
             <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
           {% elif group.facebook_page %}
@@ -54,7 +54,7 @@
         <li class="list-group-item"><b>Website: </b>{{ group.website|default:'N/A' }}</li>
         <li class="list-group-item"><b>Facebook Group: </b>{{ group.facebook_group|default:'N/A' }}</li>
         <li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Official Email: </b>{{ group.official_email|default_if_none:'N/A' }}</li>
+        <li class="list-group-item"><b>Official Email: </b>{{ group.email|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Meetup Details: </b>{{ group.meetup_details|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Meetup URL: </b>{{ group.meetup_url|default_if_none:'N/A' }}</li>
       </ul>

@@ -8,9 +8,8 @@ class CreateGroupForm(ModelForm):
             'name', 'summary',
             'group_type', 'group_type_other',
             'city_or_town', 'country',
-            'website',
+            'email' , 'website',
             'facebook_group', 'facebook_page',
-            'official_email',
             'meetup_details', 'meetups_per_month', 'meetup_url',
         )
 
@@ -21,8 +20,7 @@ class EditGroupForm(ModelForm):
             'name', 'summary',
             'group_type', 'group_type_other',
             'city_or_town', 'country',
-            'website',
+            'email' , 'website',
             'facebook_group', 'facebook_page',
-            'official_email',
             'meetup_details', 'meetups_per_month', 'meetup_url',
         )
