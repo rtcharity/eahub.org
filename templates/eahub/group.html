@@ -56,6 +56,7 @@
         <li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page|default:'N/A' }}</li>
         <li class="list-group-item"><b>Official Email: </b>{{ group.email|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Meetup Details: </b>{{ group.meetup_details|default_if_none:'N/A' }}</li>
+        <li class="list-group-item"><b>Meetups per month: </b>{{ group.meetups_per_month|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Meetup URL: </b>{{ group.meetup_url|default_if_none:'N/A' }}</li>
       </ul>
     </div>
