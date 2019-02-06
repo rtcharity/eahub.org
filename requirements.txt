@@ -10,6 +10,7 @@ geopy==1.18.1
 git+git://github.com/rtcharity/django-environ@develop#egg=django-environ
 git+git://github.com/rtcharity/django-storages@master#egg=django-storages[azure]
 django-redis==4.10.0
+hiredis==1.0.0
 Pillow==5.4.1
 sorl-thumbnail==12.5.0
 django-cleanup==3.0.1
