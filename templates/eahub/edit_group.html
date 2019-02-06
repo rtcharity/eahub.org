@@ -14,18 +14,22 @@
 </div>
 
 <div class="field">
-    <label for="id_group_type" class="required_field">Group Type</label>
-    <select id="id_group_type" class="form-control">
-        <option value="" selected>Not set</option>
-        <option value="Country">Country</option>
-        <option value="City">City</option>
-        <option value="University">University</option>
-    </select>
-    {% if form.group_type.errors %}
-        {% for error in form.group_type.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
+  <label>Group Type</label>
+  <select class="form-control" name="group_type">
+      {% for choice in group.GROUP_TYPE_CHOICES %}
+          <option value="{{ choice.0 }}" {% if choice.0 in group.group_type %}selected{% endif %}>{{ choice.1 }}</option>
+      {% endfor %}
+  </select>
+</div>
+
+<div class="field">
+  <label for="id_group_type_other">Other group type:</label>
+  <textarea type="text" name="group_type_other" id="id_group_type_other" class="form-control" rows="4" placeholder="Group type">{{ form.group_type_other.value|default:'' }}</textarea>
+  {% if form.group_type_other.errors %}
+    {% for error in form.group_type_other.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
 </div>
 
 <div class="field">
@@ -49,21 +53,6 @@
 </div>
 
 <div class="field">
-    <label for="id_total_group_donations">Total Group Donations</label>
-    <div class="input-group">
-        <span class="input-group-addon" id="basic-addon2">&#36;</span>
-        <input type="number" min="0.01" step="0.01" name="total_group_donations" id="id_total_group_donations" class="form-control" placeholder="5000" value="{{ form.total_group_donations.value|default_if_none:'' }}">
-    </div>
-    {% if form.total_group_donations.errors %}
-        {% for error in form.total_group_donations.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<hr>
-
-<div class="field">
     <label for="id_city_or_town" class="required_field">City/Town</label>
     <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" placeholder="London" required value="{{ form.city_or_town.value|default_if_none:'' }}">
     {% if form.city_or_town.errors %}
@@ -82,8 +71,6 @@
         {% endfor %}
     {% endif %}
 </div>
-
-<hr>
 
 <div class="field">
     <label for="id_facebook_group">Facebook Group</label>
@@ -114,8 +101,6 @@
         {% endfor %}
     {% endif %}
 </div>
-
-<hr>
 
 <div class="field">
     <label for="id_meetup_details">Meetup Details</label>

@@ -5,28 +5,24 @@ class CreateGroupForm(ModelForm):
     class Meta:
         model = Group
         fields = (
-            'name',
-            'summary',
-            #'organisers',
+            'name', 'summary',
+            'group_type', 'group_type_other',
             'city_or_town', 'country',
             'website',
             'facebook_group', 'facebook_page',
             'official_email',
-            'meetup_details', 'meetup_url',
-            'lat', 'lon',
-            #'donations'
+            'meetup_details', 'meetups_per_month', 'meetup_url',
         )
 
 class EditGroupForm(ModelForm):
     class Meta:
         model = Group
         fields = (
-            'name', 'group_type', 'summary',
-            'total_group_donations',
+            'name', 'summary',
+            'group_type', 'group_type_other',
             'city_or_town', 'country',
             'website',
             'facebook_group', 'facebook_page',
             'official_email',
             'meetup_details', 'meetups_per_month', 'meetup_url',
-            # TODO: add organisers & donations fields
         )

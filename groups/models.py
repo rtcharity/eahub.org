@@ -3,7 +3,23 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from geopy.geocoders import Nominatim
 from profiles.models import Profile
-geolocator = Nominatim()
+geolocator = Nominatim(timeout=10)
+
+
+# methods to maintain consistency in model design
+def _choice_field(choices):
+    return models.CharField(
+        max_length=max([len(x[0]) for x in choices]),
+        choices=choices,
+        null=True, blank=True
+    )
+def _choices_field(choices):
+    return ArrayField(
+        _choice_field(choices),        
+        default=list
+    )
+def _other_field():
+    return models.TextField(null=True, blank=True)
 
 
 class Group(models.Model):
@@ -11,12 +27,13 @@ class Group(models.Model):
     GROUP_TYPE_CHOICES = [
         ('COUNTRY', 'Country'),
         ('CITY', 'City'),
-        ('UNIVERSITY', 'University')
+        ('UNIVERSITY', 'University'),
+        ('OTHER', 'Other')
     ]
 
     # fields
     name = models.CharField(max_length=100)
-    group_type = models.CharField(max_length=200, null=True, blank=True, choices=GROUP_TYPE_CHOICES)
+    group_type, group_type_other = _choice_field(GROUP_TYPE_CHOICES), _other_field()
     summary = models.TextField(null=True, blank=True)
     organisers = models.ManyToManyField(Profile, blank=True)
     city_or_town = models.CharField(max_length=100, null=True, blank=True)
@@ -28,7 +45,6 @@ class Group(models.Model):
     meetup_details = models.TextField(null=True, blank=True)
     meetups_per_month = models.IntegerField(null=True, blank=True)
     meetup_url = models.CharField(max_length=200, null=True, blank=True)
-    total_group_donations = models.IntegerField(null=True, blank=True)
     lat = models.DecimalField(
         # set programatically by geocode()
         max_digits=9, decimal_places=6, null=True, blank=True

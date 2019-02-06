@@ -9,11 +9,11 @@ from .models import Group
 from .forms import CreateGroupForm, EditGroupForm
 
 def view_group(request, group_id):
-    row = Group.objects\
+    group = Group.objects\
         .filter(id=group_id)\
         .first()
     return render(request, 'eahub/group.html', {
-        'group': row
+        'group': group
     })
 
 @login_required(login_url=reverse_lazy('login'))
@@ -29,7 +29,8 @@ def create_group(request):
     else:
         form = CreateGroupForm()
     return render(request, 'eahub/edit_group.html', {
-        'form': form
+        'form': form,
+        'group': Group()
     })
 
 @login_required(login_url=reverse_lazy('login'))
@@ -70,5 +71,6 @@ def edit_group(request, group_id):
     else:        
         form = EditGroupForm(instance=group)
         return render(request, 'eahub/edit_group.html', {
-            'form': form
+            'form': form,
+            'group': group
         })

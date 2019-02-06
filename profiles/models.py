@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django_upload_path.upload_path import auto_cleaned_path_stripped_uuid4
 from geopy.geocoders import Nominatim
 from sorl.thumbnail import ImageField
-
 geolocator = Nominatim(timeout=10)
 
 
