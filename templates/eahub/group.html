@@ -22,7 +22,7 @@
           {% elif group.facebook_page %}
             <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
           {% else %}
-            <a href="#"><i class="fa fa-microphone-slash"></i> Messaging Disabled</a>
+            <a href="#"><i class="fa fa-microphone-slash"></i> Messaging Available Soon</a>
           {% endif %}
         {% endif %}
       </div>
@@ -37,7 +37,7 @@
     <div class="col-md-6 key-facts">
     <div class="background">
       <ul class="list-group">
-        <li class="list-group-item purple"><h4>Key Facts</h4></li>        
+        <li class="list-group-item purple"><h4>Key Facts</h4></li>
         {% if group.group_type or group.group_type_other %}
         <li class="list-group-item">
             <b>Group Type: </b>
