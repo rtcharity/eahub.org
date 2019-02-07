@@ -55,6 +55,9 @@
                   {% if group.facebook_group %}
                       <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
                   {% endif %}
+                  {% if group.website %}
+                      <a href="{{ group.website }}" target="_blank"><button class="btn btn-default btn-sm">Website</button></a>
+                  {% endif %}
               </td>
           </tr>
           {% endfor %}
