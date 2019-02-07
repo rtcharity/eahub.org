@@ -3,6 +3,7 @@ import os, logging
 import requests
 from django.conf import settings
 from django.views import generic
+from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
@@ -49,6 +50,14 @@ def ProfileView(request, profile_id):
 @login_required(login_url=reverse_lazy('login'))
 def MyProfileView(request):
     return redirect('profile', profile_id=request.user.id)
+
+
+@login_required(login_url=reverse_lazy('login'))
+def DownloadView(request):
+    profile = Profile.objects.get(pk=request.user.id)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="my_profile.csv"'
+    return profile.csv(response)
 
 
 @login_required(login_url=reverse_lazy('login'))

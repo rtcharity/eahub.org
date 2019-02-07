@@ -160,11 +160,12 @@
     </div>
   </div>
   {% if user.id == profile.id %}
-  <div class="row">
-    <span class="btn btn-default btn-xs delete-btn">
-      <h4><a href="{% url 'delete_profile' %}"><i class="fa fa-trash"></i> Delete My Profile</a></h4>
-    </span>
+<div class="text-center">
+  <div class="btn-group btn-group-sm text-center" role="group">
+      <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button></a>
+      <a href="{% url 'delete_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button></a>
   </div>
+</div>
   {% endif %}
 
 </div>

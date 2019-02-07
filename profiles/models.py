@@ -1,4 +1,4 @@
-import string
+import string, csv
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractUser, UserManager
@@ -108,6 +108,30 @@ class Profile(AbstractUser):
 
     def full_name(self):
         return string.capwords(' '.join([self.first_name, self.last_name]))
+
+    def csv(self, response):
+        writer = csv.writer(response)
+        writer.writerows([
+            ['profile_id', self.id],
+            ['first_name', self.first_name],
+            ['last_name', self.last_name],
+            ['email', self.email],
+            ['summary', self.summary],
+            ['city_or_town', self.city_or_town],
+            ['country', self.country],
+            ['gdpr_confirmed', self.gdpr_confirmed],
+            ['cause_areas', self.get_pretty_cause_areas()],
+            ['cause_areas_other', self.cause_areas_other],
+            ['available_to_volunteer', self.available_to_volunteer],
+            ['giving_pledge', self.giving_pledge],
+            ['giving_pledge_other', self.giving_pledge_other],
+            ['open_to_job_offers', self.open_to_job_offers],
+            ['expertise', self.get_pretty_expertise()],
+            ['expertise_other', self.expertise_other],
+            ['available_as_speaker', self.available_as_speaker],
+            ['topics_i_speak_about', self.topics_i_speak_about],
+        ])
+        return response
 
     def location(self):
         return ', '.join([

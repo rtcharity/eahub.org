@@ -352,26 +352,6 @@ body {
   text-align: center;
 }
 
-.delete-btn {
-  display: block;
-  height: 30px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 180px;
-}
-
-.delete-btn a {
-  color: red;
-}
-
-.delete-btn a:hover {
-  color: red;
-}
-
-.delete-btn h4 {
-  margin-top: 2px;
-}
-
 .key-facts .background {
   background-color: rgba(81, 43, 82, 0.7);
 }
