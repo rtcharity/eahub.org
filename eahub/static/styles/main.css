@@ -236,9 +236,7 @@ body {
 .features h4 {
   font-weight: bold;
 }
-.inactive {
-  opacity: 0.3;
-}
+
 .inactive img {
   width: 100px;
 }
