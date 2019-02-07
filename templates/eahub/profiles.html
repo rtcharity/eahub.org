@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load thumbnail %}
+
 {% block content %}
 
 <br><br>
@@ -33,7 +35,7 @@
   <table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
     <thead>
       <tr>
-        <th></th>
+        <th class="picture-column"></th>
         <th>Name</th>
         <th>City/Town</th>
         <th>Country</th>
@@ -42,11 +44,11 @@
   <tbody>
     {% for profile in profiles %}
       <tr>
-        {% if profile.img %}
-          <td><img src="{{ profile.img }}" class="profile-pic" /></td>
-        {% else %}
-          <td><img src="/static/images/profile_Avatar10.png" class="profile-pic" /></td>
-        {% endif %}
+        {% thumbnail profile.image "200x200" crop="center" as im %}
+          <td><img class="profile_picture" src="{{ im.url }}"></td>
+        {% empty %}
+          <td><img class="profile_picture" src="/static/images/profile_Avatar10.png"></td>
+        {% endthumbnail %}
         <td><a href="{% url 'profile' profile.id %}">{{ profile.first_name }} {{ profile.last_name|default:'' }}</a></td>
         <td class="text-muted">
           {% if profile.gdpr_confirmed %}

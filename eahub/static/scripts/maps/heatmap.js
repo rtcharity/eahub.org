@@ -99,11 +99,7 @@ function addMarkersWithLabels(locations, map) {
        scaledSize: iconSize  // makes SVG icons work in IE
       });
 
-      var label = location.label.toLowerCase()
-        .split(' ')
-        .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-        .join(' ');
-      marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+      marker.desc = "<a href='" + location.path + "'>" + location.label + "</a>";
       oms.addMarker(marker);
       return marker;
   });
@@ -157,11 +153,7 @@ function addMarkersWithLabelsGDPRUnlocked(locations, map) {
        scaledSize: iconSize  // makes SVG icons work in IE
       });
       if (location.gdpr_confirmed == 'True') {
-        var label = location.label.toLowerCase()
-          .split(' ')
-          .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-          .join(' ');
-        marker.desc = "<a href='" + location.path + "'>" + label + "</a>";
+        marker.desc = "<a href='" + location.path + "'>" + location.label + "</a>";
         marker.gdpr_confirmed = true
       } else {
         marker.gdpr_confirmed = false

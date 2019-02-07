@@ -237,6 +237,10 @@ body {
   font-weight: bold;
 }
 
+.inactive img {
+  width: 100px;
+}
+
 /* map */
 #map {
   border-radius: 5px;
@@ -441,6 +445,9 @@ table {
   width: 100% !important;
   table-layout: fixed;
   word-wrap: break-word;
+}
+table .picture-column {
+  width: 50px;
 }
 
 
