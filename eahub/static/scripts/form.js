@@ -1,4 +1,30 @@
 $('.multiselect-form').multiselect();
 
-var edit_checkbox_cause_area_other = document.getElementById('edit-checkbox-cause-area-other')
+var other_inputs = []
+var edit_cause_area_select = document.getElementsByClassName('multiselect-form')[0]
 var textarea_cause_area_other = document.getElementById('id_cause_areas_other')
+var multiselect_container = document.getElementsByClassName('multiselect-container')[0]
+for (var i=0; i<multiselect_container.children.length; i++) {
+  var input_multiselect = multiselect_container.children[i].children[0].childNodes[0].firstChild
+  if (input_multiselect.value == 'OTHER') {
+    other_inputs.push(input_multiselect);
+  }
+}
+
+multiselect_container.addEventListener('click',function() {
+  other_inputs.forEach(function(other_input) {
+    if (checkForm(other_input, 'cause_area') && other_input.checked == true) {
+      console.log('display textarea cause other')
+    } else if (checkForm(other_input, 'career')) {
+      console.log('display textarea career other')
+    }
+  })
+})
+
+function checkForm(otherInput, formName) {
+  if (otherInput.baseURI.indexOf(formName) !== -1) {
+    return true;
+  } else {
+    return false;
+  }
+}
