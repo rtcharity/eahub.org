@@ -17,7 +17,7 @@ def _choice_field(choices):
     )
 def _choices_field(choices):
     return ArrayField(
-        _choice_field(choices),        
+        _choice_field(choices),
         default=list
     )
 def _other_field():
@@ -73,7 +73,7 @@ class Profile(AbstractUser):
     # lat & lon programatically set by geocode()
     lat = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name='latitude')
     lon = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True, verbose_name='longitude')
-    
+
     # settings & privacy
     gdpr_confirmed = models.BooleanField(
         # used to activate account after hubreboot
@@ -87,6 +87,7 @@ class Profile(AbstractUser):
         return ', '.join([
             [label for choice, label in self.CAUSE_AREA_CHOICES if choice==cause_area][0]
             for cause_area in self.cause_areas
+            if cause_area != 'OTHER'
         ])
     giving_pledge, giving_pledge_other = _choice_field(GIVING_PLEDGE_CHOICES), _other_field()
 
@@ -97,6 +98,7 @@ class Profile(AbstractUser):
         return ', '.join([
             [label for choice, label in self.EXPERTISE_CHOICES if choice==expertise][0]
             for expertise in self.expertise
+            if expertise != 'OTHER'
         ])
 
     # community

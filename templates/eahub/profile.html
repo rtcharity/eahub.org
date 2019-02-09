@@ -42,12 +42,26 @@
             {% endif %}
           </h4>
         </li>
-        <li class="list-group-item"><b>Cause areas: </b>{{ profile.get_pretty_cause_areas|default:'N/A' }}</li>
+        <li class="list-group-item"><b>Cause areas: </b>
+          {% if profile.get_pretty_cause_areas and profile.cause_areas_other %} {{ profile.get_pretty_cause_areas }} + {{ profile.cause_areas_other }}
+          {% elif profile.get_cause_areas %} {{ profile.get_pretty_cause_areas }}
+          {% elif profile.cause_areas_other %} {{ profile.cause_areas_other }}
+          {% else %} N/A
+          {% endif %}
+        </li>
         <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'N/A' }}</li>
         <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Expertise: </b>{{ profile.get_pretty_expertise|default:'N/A' }}</li>
+        <li class="list-group-item"><b>Expertise: </b>
+          {% if profile.get_pretty_expertise and profile.expertise_other %} {{ profile.get_pretty_expertise }} + {{ profile.expertise_other }}
+          {% elif profile.get_pretty_expertise %} {{ profile.get_pretty_expertise }}
+          {% elif profile.expertise_other %} {{ profile.expertise_other }}
+          {% else %} N/A
+          {% endif %}
+        </li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'N/A' }}</li>
+        {% if profile.available_as_speaker %}
         <li class="list-group-item"><b>Topics I speak about: </b>{{ profile.topics_i_speak_about|default:'N/A' }}</li>
+        {% endif %}
       </ul>
       </div>
     </div>
@@ -83,9 +97,10 @@
         <div class="panel-body">
           <h3>Cause Area</h3>
           <p>
-            {{ profile.get_pretty_cause_areas|default:'N/A' }}
-            {% if profile.cause_areas_other %}
-              <br>+ {{ profile.cause_areas_other }}
+            {% if profile.get_pretty_cause_areas and profile.cause_areas_other %} {{ profile.get_pretty_cause_areas }} + {{ profile.cause_areas_other }}
+            {% elif profile.get_pretty_cause_areas %} {{ profile.get_pretty_cause_areas }}
+            {% elif profile.cause_areas_other %} {{ profile.cause_areas_other }}
+            {% else %} N/A
             {% endif %}
             {% if profile.available_to_volunteer %}
               <br>
@@ -119,9 +134,10 @@
         <div class="panel-body">
           <h3>Career</h3>
           <p>
-            {{ profile.get_pretty_expertise|default:'N/A' }}
-            {% if profile.expertise_other %}
-              <br>+ {{ profile.expertise_other }}
+            {% if profile.get_pretty_expertise and profile.expertise_other %} {{ profile.get_pretty_expertise }} + {{ profile.expertise_other }}
+            {% elif profile.get_pretty_expertise %} {{ profile.get_pretty_expertise }}
+            {% elif profile.expertise_other %} {{ profile.expertise_other }}
+            {% else %} N/A
             {% endif %}
             {% if profile.open_to_job_offers %}
               <br>
@@ -144,7 +160,7 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
         <div class="panel-body">
           <h3>Community</h3>
-            {% if profile.topics_i_speak_about != None %}
+            {% if profile.available_as_speaker %}
             <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
             <br>
             <span>I talk about: {{ profile.topics_i_speak_about }}</span>

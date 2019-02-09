@@ -6,15 +6,18 @@
 
 <div class="field">
     <label>Expertise:</label>
-    <select class="form-control" name="custom_expertise" multiple>
+    <select class="form-control multiselect-form" name="custom_expertise" multiple>
         {% for choice in profile.EXPERTISE_CHOICES %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.expertise %}selected{% endif %}>{{ choice.1 }}</option>
         {% endfor %}
     </select>
-    <p>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</p>
 </div>
 
-<div class="field">
+{% if form.expertise_other.value %}
+<div class="field" id="field_expertise_other" style="display: block">
+{% else %}
+<div class="field" id="field_expertise_other" style="display: none">
+{% endif %}
   <label for="id_expertise_other">Other expertise:</label>
   <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.expertise_other.value|default:'' }}</textarea>
   {% if form.expertise_other.errors %}
