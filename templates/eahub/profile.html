@@ -59,7 +59,9 @@
           {% endif %}
         </li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'N/A' }}</li>
+        {% if profile.available_as_speaker %}
         <li class="list-group-item"><b>Topics I speak about: </b>{{ profile.topics_i_speak_about|default:'N/A' }}</li>
+        {% endif %}
       </ul>
       </div>
     </div>
@@ -158,7 +160,7 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
         <div class="panel-body">
           <h3>Community</h3>
-            {% if profile.topics_i_speak_about != None %}
+            {% if profile.available_as_speaker %}
             <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
             <br>
             <span>I talk about: {{ profile.topics_i_speak_about }}</span>
