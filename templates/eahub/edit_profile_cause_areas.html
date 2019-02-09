@@ -29,14 +29,18 @@
 
 <div class="field">
   <label>Have you taken a giving pledge?</label>
-  <select class="form-control" name="giving_pledge">
+  <select class="form-control" name="giving_pledge" id="pledge-form">
       {% for choice in profile.GIVING_PLEDGE_CHOICES %}
           <option value="{{ choice.0 }}" {% if choice.0 in profile.giving_pledge %}selected{% endif %}>{{ choice.1 }}</option>
       {% endfor %}
   </select>
 </div>
 
-<div class="field">
+{% if form.giving_pledge_other.value %}
+<div class="field" id="field_pledge_other" style="display: block">
+{% else %}
+<div class="field" id="field_pledge_other" style="display: none">
+{% endif %}
   <label for="id_giving_pledge_other">Other pledges taken:</label>
   <textarea type="text" name="giving_pledge_other" id="id_giving_pledge_other" class="form-control" rows="4" placeholder="Pledge name">{{ form.giving_pledge_other.value|default:'' }}</textarea>
   {% if form.giving_pledge_other.errors %}
