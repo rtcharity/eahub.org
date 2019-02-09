@@ -390,8 +390,16 @@ body {
 
 /* edit */
 
+#multiselect-form {
+  display: block;
+}
+
 #update-btn {
   display: none;
+}
+
+.multiselect-native-select .btn {
+  white-space: normal;
 }
 
 /* password */
