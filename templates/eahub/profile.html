@@ -42,7 +42,12 @@
             {% endif %}
           </h4>
         </li>
-        <li class="list-group-item"><b>Cause areas: </b>{{ profile.get_pretty_cause_areas|default:'N/A' }}</li>
+        <li class="list-group-item"><b>Cause areas: </b>
+          {{ profile.get_pretty_cause_areas|default:'N/A' }}
+          {% if profile.cause_areas_other %}
+          + {{ profile.cause_areas_other }}
+          {% endif %}
+        </li>
         <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'N/A' }}</li>
         <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'N/A' }}</li>
         <li class="list-group-item"><b>Expertise: </b>{{ profile.get_pretty_expertise|default:'N/A' }}</li>
@@ -121,7 +126,7 @@
           <p>
             {{ profile.get_pretty_expertise|default:'N/A' }}
             {% if profile.expertise_other %}
-              <br>+ {{ profile.expertise_other }}
+              <br>+ {{ profile.expertise_other.value }}
             {% endif %}
             {% if profile.open_to_job_offers %}
               <br>
