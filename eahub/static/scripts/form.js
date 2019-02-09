@@ -1,9 +1,9 @@
 $('.multiselect-form').multiselect();
 
-var other_inputs = []
-var edit_cause_area_select = document.getElementsByClassName('multiselect-form')[0]
-var textarea_cause_area_other = document.getElementById('id_cause_areas_other')
+var field_cause_areas_other = document.getElementById('field_cause_areas_other')
+var textarea_cause_areas_other = document.getElementById('id_cause_areas_other')
 var multiselect_container = document.getElementsByClassName('multiselect-container')[0]
+var other_inputs = []
 for (var i=0; i<multiselect_container.children.length; i++) {
   var input_multiselect = multiselect_container.children[i].children[0].childNodes[0].firstChild
   if (input_multiselect.value == 'OTHER') {
@@ -13,9 +13,15 @@ for (var i=0; i<multiselect_container.children.length; i++) {
 
 multiselect_container.addEventListener('click',function() {
   other_inputs.forEach(function(other_input) {
-    if (checkForm(other_input, 'cause_area') && other_input.checked == true) {
-      console.log('display textarea cause other')
-    } else if (checkForm(other_input, 'career')) {
+    if (checkForm(other_input, 'cause_area')) {
+      if (other_input.checked == true) {
+        field_cause_areas_other.style.display = 'block'
+      } else {
+        field_cause_areas_other.style.display = 'none'
+        textarea_cause_areas_other.value = ''
+      }
+    }
+    else if (checkForm(other_input, 'career')) {
       console.log('display textarea career other')
     }
   })
