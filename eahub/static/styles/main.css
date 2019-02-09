@@ -387,6 +387,8 @@ body {
   padding: 10px 15px;
   margin: 0;
 }
+
+/* edit */
 #update-btn {
   display: none;
 }
