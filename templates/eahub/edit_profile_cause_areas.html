@@ -6,12 +6,11 @@
 
 <div class="field">
     <label>Cause areas:</label>
-    <select class="form-control" name="custom_cause_areas" multiple>
+    <select class="form-control multiselect-form" name="custom_cause_areas" multiple>
         {% for choice in profile.CAUSE_AREA_CHOICES %}
             <option id="edit-checkbox-cause-area-{{choice.1}}" value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1 }}</option>
         {% endfor %}
     </select>
-    <p>Hold down the Ctrl (Windows) / Command (Mac) button to select multiple options.</p>
 </div>
 
 <div class="field">
