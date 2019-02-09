@@ -7,7 +7,6 @@
 <div class="field">
     <label>Cause areas:</label>
     <select class="form-control multiselect-form" id="multiselect-form" name="custom_cause_areas" multiple>
-
         {% for choice in profile.CAUSE_AREA_CHOICES %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1 }}</option>
         {% endfor %}

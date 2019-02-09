@@ -98,6 +98,7 @@ class Profile(AbstractUser):
         return ', '.join([
             [label for choice, label in self.EXPERTISE_CHOICES if choice==expertise][0]
             for expertise in self.expertise
+            if expertise != 'OTHER'
         ])
 
     # community

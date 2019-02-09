@@ -1,7 +1,9 @@
 $('.multiselect-form').multiselect();
 
 var field_cause_areas_other = document.getElementById('field_cause_areas_other')
+var field_expertise_other = document.getElementById('field_expertise_other')
 var textarea_cause_areas_other = document.getElementById('id_cause_areas_other')
+var textarea_expertise_other = document.getElementById('id_expertise_other')
 var multiselect_container = document.getElementsByClassName('multiselect-container')[0]
 var other_inputs = []
 for (var i=0; i<multiselect_container.children.length; i++) {
@@ -22,7 +24,12 @@ multiselect_container.addEventListener('click',function() {
       }
     }
     else if (checkForm(other_input, 'career')) {
-      console.log('display textarea career other')
+      if (other_input.checked == true) {
+        field_expertise_other.style.display = 'block'
+      } else {
+        field_expertise_other.style.display = 'none'
+        textarea_expertise_other.value = ''
+      }
     }
   })
 })
