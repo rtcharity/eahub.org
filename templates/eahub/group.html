@@ -48,7 +48,17 @@
             {% endif %}
         </li>
         {% endif %}
-        <li class="list-group-item"><b>Organisers: </b>{{ group.organisers.all|join:", "|default_if_none:'N/A' }}</li>
+        <li class="list-group-item"><b>Organisers: </b>
+          {% if group.organisers.all.count == 0 %} N/A
+          {% elif group.organisers.all.count == 1 %} <a href="{% url 'profile' group.organisers.all.0.id %}">{{ group.organisers.all.0 }} </a>
+          {% else %}
+          <ul>
+          {% for organiser in group.organisers.all %}
+          <li><a href="{% url 'profile' organiser.id %}">{{ organiser }} </a></li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
         <li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Country: </b>{{ group.country|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Website: </b>{{ group.website|default:'N/A' }}</li>
