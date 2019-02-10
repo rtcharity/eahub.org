@@ -35,6 +35,5 @@ function applySearchFunctionality (datatable) {
 var menu_btn = document.getElementById('burger-btn')
 var navbar = document.getElementById('navbar')
 menu_btn.addEventListener('click', function() {
-  console.log('click burger');
   navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
 })

@@ -64,28 +64,28 @@
           {% endif %}
           </div>
         </div>
-        <div class="container">
-          <div id="navbar" class="navbar-menu">
-            <ul class="nav navbar-nav navbar-right">
-              {% if user.is_authenticated %}
-                <li class="navbar-signup-xs"><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
-              {% else %}
-                <li class="navbar-signup-xs"><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
-                <li class="navbar-signup-xs"><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-              {% endif %}
-              <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
-              <li><a href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
-              <li><a href="https://confident-minsky-f713d6.netlify.com/"><i class="fa fa-book"></i> EA Resources</a></li>
-              <li><a href="https://donationswap.eahub.org/"><i class="fa fa-exchange"></i> EA Donation Swap</a></li>
-              {% if user.is_authenticated %}
-                <li class="list-more-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Log out</a></li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
+
       </div>
     </nav>
-
+     <div class="container navbar-menu-container">
+      <div id="navbar" class="navbar-menu">
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+            <li class="navbar-signup-xs"><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+          {% else %}
+            <li class="navbar-signup-xs"><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
+            <li class="navbar-signup-xs"><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+          {% endif %}
+          <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
+          <li><a href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
+          <li><a href="https://confident-minsky-f713d6.netlify.com/"><i class="fa fa-book"></i> EA Resources</a></li>
+          <li><a href="https://donationswap.eahub.org/"><i class="fa fa-exchange"></i> EA Donation Swap</a></li>
+          {% if user.is_authenticated %}
+            <li class="list-more-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Log out</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
     {% block content %}{% endblock %}
 
     <footer class="footer">
