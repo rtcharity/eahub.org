@@ -149,6 +149,10 @@ body {
   border-top-left-radius: 0;
 }
 .navbar-menu-container {
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
   position: absolute;
   padding: 0;
   z-index: 100;
