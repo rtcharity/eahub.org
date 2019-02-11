@@ -153,7 +153,7 @@ body {
   right: 0;
   margin-left: auto;
   margin-right: auto;
-  position: absolute;
+  position: fixed;
   padding: 0;
   z-index: 100;
 }
