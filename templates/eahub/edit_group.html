@@ -5,7 +5,7 @@
 {% block form_fields %}
 <div class="field">
     <label for="id_name" class="required_field">Name</label>
-    <input type="text" name="name" id="id_name" class="form-control" placeholder="EA London" required autofocus value="{{ form.name.value|default_if_none:'' }}">
+    <input type="text" name="name" id="id_name" class="form-control" placeholder="EA London" required autofocus maxlength="100" value="{{ form.name.value|default_if_none:'' }}">
     {% if form.name.errors %}
         {% for error in form.name.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -24,7 +24,7 @@
 
 <div class="field">
   <label for="id_group_type_other">Other group type:</label>
-  <textarea type="text" name="group_type_other" id="id_group_type_other" class="form-control" rows="4" placeholder="Group type">{{ form.group_type_other.value|default:'' }}</textarea>
+  <textarea type="text" name="group_type_other" id="id_group_type_other" class="form-control" rows="4" placeholder="Group type" maxlength="100">{{ form.group_type_other.value|default:'' }}</textarea>
   {% if form.group_type_other.errors %}
     {% for error in form.group_type_other.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -34,7 +34,7 @@
 
 <div class="field">
     <label for="id_summary" class="required_field">Summary</label>
-    <textarea name="summary" id="id_summary" class="form-control" placeholder="A little intro on your group's values" required>{{ form.summary.value|default_if_none:'' }}</textarea>
+    <textarea name="summary" id="id_summary" class="form-control" placeholder="A little intro on your group's values" maxlength="5000" required>{{ form.summary.value|default_if_none:'' }}</textarea>
     {% if form.summary.errors %}
         {% for error in form.summary.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -44,7 +44,7 @@
 
 <div class="field">
     <label for="id_email">Email Address</label>
-    <input type="email" name="email" id="id_email" class="form-control" placeholder="" value="{{ form.email.value|default_if_none:'' }}">
+    <input type="email" name="email" id="id_email" class="form-control" placeholder="" maxlength="100" value="{{ form.email.value|default_if_none:'' }}">
     {% if form.email.errors %}
         {% for error in form.email.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -54,7 +54,7 @@
 
 <div class="field">
     <label for="id_website">Website</label>
-    <input type="text" name="website" id="id_website" class="form-control" placeholder="lesswrong.com" value="{{ form.website.value|default_if_none:'' }}">
+    <input type="text" name="website" id="id_website" class="form-control" placeholder="lesswrong.com" maxlength="200" value="{{ form.website.value|default_if_none:'' }}">
     {% if form.website.errors %}
         {% for error in form.website.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -64,7 +64,7 @@
 
 <div class="field">
     <label for="id_city_or_town" class="required_field">City/Town</label>
-    <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" placeholder="London" required value="{{ form.city_or_town.value|default_if_none:'' }}">
+    <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" placeholder="London" maxlength="100" required value="{{ form.city_or_town.value|default_if_none:'' }}">
     {% if form.city_or_town.errors %}
         {% for error in form.city_or_town.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -74,7 +74,7 @@
 
 <div class="field">
     <label for="id_country" class="required_field">Country</label>
-    <input type="text" name="country" id="id_country" class="form-control" placeholder="United Kingdom" required value="{{ form.country.value|default_if_none:'' }}">
+    <input type="text" name="country" id="id_country" class="form-control" placeholder="United Kingdom" maxlength="100" required value="{{ form.country.value|default_if_none:'' }}">
     {% if form.country.errors %}
         {% for error in form.country.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -84,7 +84,7 @@
 
 <div class="field">
     <label for="id_facebook_group">Facebook Group</label>
-    <input type="url" name="facebook_group" id="id_facebook_group" class="form-control" placeholder="" value="{{ form.facebook_group.value|default_if_none:'' }}">
+    <input type="url" name="facebook_group" id="id_facebook_group" class="form-control" placeholder="" maxlength="200" value="{{ form.facebook_group.value|default_if_none:'' }}">
     {% if form.facebook_group.errors %}
         {% for error in form.facebook_group.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -94,7 +94,7 @@
 
 <div class="field">
     <label for="id_facebook_page">Facebook Page</label>
-    <input type="url" name="facebook_page" id="id_facebook_page" class="form-control" placeholder="" value="{{ form.facebook_page.value|default_if_none:'' }}">
+    <input type="url" name="facebook_page" id="id_facebook_page" class="form-control" placeholder="" maxlength="200" value="{{ form.facebook_page.value|default_if_none:'' }}">
     {% if form.facebook_page.errors %}
         {% for error in form.facebook_page.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -104,7 +104,7 @@
 
 <div class="field">
     <label for="id_meetup_details">Meetup Details</label>
-    <textarea name="meetup_details" id="id_meetup_details" class="form-control" placeholder="A little intro to your values">{{ form.meetup_details.value|default_if_none:'' }}</textarea>
+    <textarea name="meetup_details" id="id_meetup_details" class="form-control" maxlength="5000" placeholder="A little intro to your values">{{ form.meetup_details.value|default_if_none:'' }}</textarea>
     {% if form.meetup_details.errors %}
         {% for error in form.meetup_details.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -124,7 +124,7 @@
 
 <div class="field">
     <label for="id_meetup_url">Meetup Link</label>
-    <input type="url" name="meetup_url" id="id_meetup_url" class="form-control" placeholder="https://meetup.com/ea_london" value="{{ form.meetup_url.value|default_if_none:'' }}">
+    <input type="url" name="meetup_url" id="id_meetup_url" class="form-control" placeholder="https://meetup.com/ea_london" maxlength="200" value="{{ form.meetup_url.value|default_if_none:'' }}">
     {% if form.meetup_url.errors %}
         {% for error in form.meetup_url.errors %}
         <div class="alert alert-danger">{{ error }}</div>

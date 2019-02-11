@@ -6,7 +6,7 @@
 
 <div class="field">
     <label for="id_first_name" class="required_field">First Name</label>
-    <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Peter" value="{{ form.first_name.value }}" required autofocus>
+    <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Peter" value="{{ form.first_name.value }}" maxlength="50" required autofocus>
     {% if form.first_name.errors %}
         {% for error in form.first_name.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -16,7 +16,7 @@
 
 <div class="field">
     <label for="id_last_name">Last Name</label>
-    <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" value="{{ form.last_name.value }}">
+    <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Singer" value="{{ form.last_name.value }}" maxlength="50">
     {% if form.last_name.errors %}
         {% for error in form.last_name.errors %}
         <div class="alert alert-danger">{{ error }}</div>
@@ -36,7 +36,7 @@
 
 <div class="field">
   <label for="id_city_or_town">City/town</label>
-  <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London">
+  <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London" maxlength="50">
   {% if form.city_or_town.errors %}
     {% for error in form.city_or_town.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -46,7 +46,7 @@
 
 <div class="field">
   <label for="id_country">Country</label>
-  <input type="text" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom">
+  <input type="text" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom" maxlength="50">
   {% if form.country.errors %}
     {% for error in form.country.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -56,7 +56,7 @@
 
 <div class="field">
   <label for="id_summary">Summary</label>
-  <textarea type="text" name="summary" id="id_summary" class="form-control" rows="4" placeholder="Grew up in Germany">{{ form.summary.value }}</textarea>
+  <textarea type="text" name="summary" id="id_summary" class="form-control" rows="4" placeholder="Grew up in Germany" maxlength="5000">{{ form.summary.value }}</textarea>
   {% if form.summary.errors %}
     {% for error in form.summary.errors %}
       <div class="alert alert-danger">{{ error }}</div>

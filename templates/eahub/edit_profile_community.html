@@ -15,7 +15,7 @@
 
 <div class="field">
   <label for="id_topics_i_speak_about">Topics i speak about:</label>
-  <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.topics_i_speak_about.value|default:'' }}</textarea>
+  <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" placeholder="Global Warming, Education" maxlength="1000">{{ form.topics_i_speak_about.value|default:'' }}</textarea>
   {% if form.topics_i_speak_about.errors %}
     {% for error in form.topics_i_speak_about.errors %}
       <div class="alert alert-danger">{{ error }}</div>

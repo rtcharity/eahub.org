@@ -19,7 +19,7 @@
 <div class="field" id="field_cause_areas_other" style="display: none">
 {% endif %}
   <label for="id_cause_areas_other">Other cause areas:</label>
-  <textarea type="text" name="cause_areas_other" id="id_cause_areas_other" class="form-control" rows="4" placeholder="Global Warming, Education">{{ form.cause_areas_other.value|default:'' }}</textarea>
+  <textarea type="text" name="cause_areas_other" id="id_cause_areas_other" class="form-control" rows="4" placeholder="Global Warming, Education" maxlength="1000">{{ form.cause_areas_other.value|default:'' }}</textarea>
   {% if form.cause_areas_other.errors %}
     {% for error in form.cause_areas_other.errors %}
       <div class="alert alert-danger">{{ error }}</div>
@@ -27,7 +27,7 @@
   {% endif %}
 </div>
 
-<div class="field">
+<div class="field" id="field_pledge">
   <label>Have you taken a giving pledge?</label>
   <select class="form-control" name="giving_pledge" id="pledge-form">
       {% for choice in profile.GIVING_PLEDGE_CHOICES %}
@@ -59,4 +59,7 @@
   </select>
 </div>
 <button type="submit" class="btn btn-default">Update</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="/static/scripts/bootstrap-multiselect.js"></script>
+<script src="/static/scripts/form_cause_areas.js"></script>
 {% endblock %}
