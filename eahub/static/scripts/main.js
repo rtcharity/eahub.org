@@ -26,6 +26,10 @@ $('.text-block-from-database').linkify();
 $('.profile').linkify();
 $('.info').linkify();
 
+$('.multiselect-form').multiselect({
+  numberDisplayed: 1
+});
+
 function applySearchFunctionality (datatable) {
   $("#filterbox").keyup(function() {
     datatable.search(this.value).draw();
