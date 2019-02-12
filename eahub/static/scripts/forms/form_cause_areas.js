@@ -22,11 +22,11 @@ $(document).ready(function() {
     }
   })
 
-  var other_checkboxes = form.getOtherCheckboxes(multiselect_container)
+  var other_checkboxes = helpers.getOtherCheckboxes(multiselect_container)
 
   multiselect_container.addEventListener('click',function() {
     other_checkboxes.forEach(function(other_checkbox) {
-      if (form.checkForm(other_checkbox, 'cause_area')) {
+      if (helpers.checkForm(other_checkbox, 'cause_area')) {
         if (other_checkbox.checked == true) {
           field_cause_areas_other.style.display = 'block'
         } else {

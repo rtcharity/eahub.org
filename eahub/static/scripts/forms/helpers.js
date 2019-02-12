@@ -1,4 +1,4 @@
-var form = (function() {
+var helpers = (function() {
   return {
     checkForm: function(otherInput, formName) {
       if (otherInput.baseURI.indexOf(formName) !== -1) {
