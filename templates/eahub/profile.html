@@ -12,7 +12,7 @@
       {% thumbnail profile.image "200x200" crop="center" as im %}
         <img class="profile_picture" src="{{ im.url }}">
       {% empty %}
-        <img class="profile_picture" src="/static/images/profile_Avatar10.png">
+        <img class="profile_picture" src="/static/images/avatars/{{ profile.image_placeholder }}">
       {% endthumbnail %}
     </div>
     <div class="col-xs-12 col-md-6">

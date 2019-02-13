@@ -7,7 +7,7 @@
 <div class="container animated">
   <div class="row">
     <div class="col-md-offset-2 col-md-2">
-      <img class="profile_picture" src="{% firstof profile.pic '/static/images/profile_Avatar10.png' %}">
+      <img class="profile_picture" src="/static/images/avatars/{{ profile.image_placeholder }}">
     </div>
     <div class="col-md-6">
       <h1>{{ profile.full_name|title }}</h1>

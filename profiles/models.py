@@ -149,6 +149,10 @@ class Profile(AbstractUser):
         self.lon = location.longitude if location else None
         return self
 
+    def image_placeholder(self):
+        # maintains the same image whenever users log in
+        return 'Avatar{}.png'.format(str(self.id)[-1])
+
     class Meta:
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'
