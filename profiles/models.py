@@ -1,6 +1,6 @@
 import string, csv
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import ArrayField, CIEmailField
 from django.contrib.auth.models import AbstractUser, UserManager
 from django_upload_path.upload_path import auto_cleaned_path_stripped_uuid4
 from geopy.geocoders import Nominatim
@@ -32,7 +32,7 @@ class Profile(AbstractUser):
 
     objects = ProfileManager()
     USERNAME_FIELD = 'email'
-    email = models.EmailField(unique=True)
+    email = CIEmailField(unique=True)
     REQUIRED_FIELDS = []
 
     EXPERTISE_CHOICES = [
