@@ -14,7 +14,7 @@
 </div>
 
 <div class="field">
-  <label for="id_topics_i_speak_about">Topics i speak about:</label>
+  <label for="id_topics_i_speak_about">Topics I speak about:</label>
   <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" placeholder="I.e. AI technical safety, global health" maxlength="1000">{{ form.topics_i_speak_about.value|default:'' }}</textarea>
   {% if form.topics_i_speak_about.errors %}
     {% for error in form.topics_i_speak_about.errors %}
