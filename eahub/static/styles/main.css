@@ -42,18 +42,24 @@ body {
   opacity: 0.7;
 }
 
-.info button a {
-  color: white;
+.info img {
+  width: 200px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
 }
 
 .tech-btn {
   background-color: #A7DBAB;
   line-height: 60px;
+  color: white;
 }
 
 .suggestions-btn {
   background-color: #635274;
   line-height: 30px;
+  color: white;
 }
 
 /* bootstrap sticky footer */
