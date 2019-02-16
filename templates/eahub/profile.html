@@ -39,6 +39,7 @@
             <span>Key Facts</span>
           </h4>
         </li>
+        <li class="list-group-item"><b>Location: </b> {{ profile.city_or_town|default_if_none:'N/A' }}
         <li class="list-group-item"><b>Cause areas: </b>
           {% if profile.get_pretty_cause_areas and profile.cause_areas_other %} {{ profile.get_pretty_cause_areas }} + {{ profile.cause_areas_other }}
           {% elif profile.get_cause_areas %} {{ profile.get_pretty_cause_areas }}
