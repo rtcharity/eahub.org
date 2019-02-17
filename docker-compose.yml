@@ -29,7 +29,7 @@ services:
       SECRET_KEY: development_secret_key
     restart: always
   db:
-    image: postgres:10.6
+    image: postgres:10.5
     environment:
       POSTGRES_PASSWORD: development_db_password
     restart: always
