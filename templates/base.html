@@ -68,10 +68,10 @@
             {% if user.is_authenticated %}
               <li><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
             {% else %}
-            {% comment %}
+            {% if 'staging.eahub.org' not in request.build_absolute_uri %}
               <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
               <li><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-            {% endcomment %}
+            {% endif %}
             {% endif %}
           </ul>
           {% if page_name == 'Profiles' or page_name == 'Groups' %}
@@ -93,10 +93,10 @@
           {% if user.is_authenticated %}
             <li class="navbar-signup-xs"><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
           {% else %}
-          {% comment %}
+          {% if 'staging.eahub.org' not in request.build_absolute_uri %}
             <li class="navbar-signup-xs"><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
             <li class="navbar-signup-xs"><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-          {% endcomment %}
+          {% endif %}
           {% endif %}
           <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
           <li><a href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
