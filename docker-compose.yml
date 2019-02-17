@@ -13,6 +13,7 @@ services:
     volumes:
       - .:/code/
     environment:
+      APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
       LOCAL_GROUPS_AIRTABLE_API_KEY:
       LOCAL_GROUPS_AIRTABLE_BASE_KEY:
       ADMINS: Local Admin=admin@example.com
