@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from groups.models import Group
-from profiles.models import Profile
+from ..localgroups.models import Group
+from ..profiles.models import Profile
 
 def index(request):
     groupsData = getGroupsData()

@@ -63,7 +63,7 @@ def delete_from_airtable(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [("groups", "0014_group_airtable_record")]
+    dependencies = [("localgroups", "0001_initial")]
 
     operations = [
         migrations.RunPython(
