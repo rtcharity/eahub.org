@@ -48,12 +48,28 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "applicationinsights.django.ApplicationInsightsMiddleware",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Core settings: logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "appinsights": {
+            "class": "applicationinsights.django.LoggingHandler",
+            "level": "WARNING",
+        }
+    },
+    "loggers": {
+        "django": {"handlers": ["appinsights"], "level": "WARNING", "propagate": True}
+    },
+}
 
 # Core settings: models
 from .build_settings import INSTALLED_APPS
@@ -108,6 +124,11 @@ from .build_settings import (
     STATICFILES_DIRS,
     STATICFILES_STORAGE,
 )
+
+# Application Insights
+APPLICATION_INSIGHTS = {
+    "ikey": env.str("APPLICATION_INSIGHTS_INSTRUMENTATION_KEY", default=None)
+}
 
 # django-storages
 AZURE_CONNECTION_STRING = env.str("AZURE_CONNECTION_STRING")
