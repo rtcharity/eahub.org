@@ -13,6 +13,8 @@ services:
     volumes:
       - .:/code/
     environment:
+      LOCAL_GROUPS_AIRTABLE_API_KEY:
+      LOCAL_GROUPS_AIRTABLE_BASE_KEY:
       ADMINS: Local Admin=admin@example.com
       AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
       AZURE_CONTAINER: media
