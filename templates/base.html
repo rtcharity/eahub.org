@@ -64,16 +64,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          {% if 'staging.eahub.org' not in request.get_full_path %}
           <ul class="navbar-signup-md">
             {% if user.is_authenticated %}
               <li><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
             {% else %}
+            {% comment %}
               <li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
               <li><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+            {% endcomment %}
             {% endif %}
           </ul>
-          {% endif %}
           {% if page_name == 'Profiles' or page_name == 'Groups' %}
           <a href="\"><img class="logo_with_page_name" id="logo" src="/static/images/logo_transparent.png" /></a>
           <h4> / {{ page_name }}</h4>
@@ -90,13 +90,13 @@
      <div class="container navbar-menu-container">
       <div id="navbar" class="navbar-menu">
         <ul class="nav navbar-nav navbar-right">
-          {% if 'staging.eahub.org' not in request.get_full_path %}
           {% if user.is_authenticated %}
             <li class="navbar-signup-xs"><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
           {% else %}
+          {% comment %}
             <li class="navbar-signup-xs"><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
             <li class="navbar-signup-xs"><a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-          {% endif %}
+          {% endcomment %}
           {% endif %}
           <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
           <li><a href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
