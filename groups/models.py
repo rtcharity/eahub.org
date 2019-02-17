@@ -1,4 +1,5 @@
 import json
+from django.core import validators
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from geopy.geocoders import Nominatim
@@ -52,6 +53,14 @@ class Group(models.Model):
     lon = models.DecimalField(
         # set programatically by geocode()
         max_digits=9, decimal_places=6, null=True, blank=True
+    )
+    airtable_record = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        default=None,
+        unique=True,
+        validators=[validators.MinLengthValidator(1)],
     )
 
     # table of donations

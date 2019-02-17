@@ -1,3 +1,4 @@
+from django.core import exceptions
 import environ
 
 env = environ.Env()
@@ -120,3 +121,21 @@ ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 # Profiles
 RECAPTCHA_SECRET_KEY = env.str("RECAPTCHA_SECRET_KEY")
 RECAPTCHA_SITE_KEY = env.str("RECAPTCHA_SITE_KEY")
+
+# Groups
+local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
+local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
+if local_groups_airtable_api_key is None and local_groups_airtable_base_key is None:
+    LOCAL_GROUPS_AIRTABLE = None
+elif (
+    local_groups_airtable_api_key is not None
+    and local_groups_airtable_base_key is not None
+):
+    LOCAL_GROUPS_AIRTABLE = {
+        "api_key": local_groups_airtable_api_key,
+        "base_key": local_groups_airtable_base_key,
+    }
+else:
+    raise exceptions.ImproperlyConfigured(
+        "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be provided together"
+    )
