@@ -80,10 +80,16 @@ class Group(models.Model):
         ])
     def geocode(self):
         location = ', '.join([str(self.city_or_town), str(self.country)])
-        location = geolocator.geocode(location)
-        self.lat = location.latitude if location else None
-        self.lon = location.longitude if location else None
-        return self
+        if len(location) > 0: 
+            location = geolocator.geocode(location)
+            self.lat = location.latitude if location else None
+            self.lon = location.longitude if location else None
+            return self
+        else:
+            self.lat = None
+            self.lon = None
+            return self
+
 
     # edit history
     # example: [{"date":"10/10/2001","user": "user_1 user@domain.com", diff":{"name":{"before":"EA Londonzzz","after":"EA London"}}}]
