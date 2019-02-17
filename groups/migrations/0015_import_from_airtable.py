@@ -8,6 +8,8 @@ from geopy import geocoders
 
 
 def import_from_airtable(apps, schema_editor):
+    if not settings.LOCAL_GROUPS_AIRTABLE:
+        return
     Group = apps.get_model("groups", "Group")
     group_type_choices = {
         display_name: db_name
@@ -43,10 +45,7 @@ def import_from_airtable(apps, schema_editor):
                 facebook_group=airtable_fields.get("Facebook Group"),
                 facebook_page=airtable_fields.get("Facebook Page"),
                 email=airtable_fields.get(
-                    "Official Group Email",
-                    airtable_fields.get(
-                        "LEAN email", airtable_fields.get("Personal Email")
-                    ),
+                    "Official Group Email", airtable_fields.get("LEAN email")
                 ),
                 meetup_url=airtable_fields.get("Meetup.com"),
                 lat=location and (location.latitude or None),
@@ -54,17 +53,20 @@ def import_from_airtable(apps, schema_editor):
                 airtable_record=local_group_airtable_record["id"],
             )
         )
-    Group.objects.all().delete()
     Group.objects.bulk_create(local_groups)
+
+
+def delete_from_airtable(apps, schema_editor):
+    Group = apps.get_model("groups", "Group")
+    Group.objects.filter(airtable_record__isnull=False).delete()
 
 
 class Migration(migrations.Migration):
 
     dependencies = [("groups", "0014_group_airtable_record")]
 
-    if settings.LOCAL_GROUPS_AIRTABLE:
-        operations = [
-            migrations.RunPython(import_from_airtable, hints={"model_name": "group"})
-        ]
-    else:
-        operations = []
+    operations = [
+        migrations.RunPython(
+            code=import_from_airtable, reverse_code=delete_from_airtable
+        )
+    ]
