@@ -3,7 +3,7 @@ from django.core import validators
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from geopy.geocoders import Nominatim
-from profiles.models import Profile
+from ..profiles.models import Profile
 geolocator = Nominatim(timeout=10)
 
 

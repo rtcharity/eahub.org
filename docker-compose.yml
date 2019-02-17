@@ -2,7 +2,7 @@ version: '3'
 services:
   web:
     build: .
-    command: gunicorn --reload --bind=0.0.0.0:8000 eahub.wsgi
+    command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
     depends_on:
       - db
       - objstore

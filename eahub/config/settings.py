@@ -2,7 +2,7 @@ from django.core import exceptions
 import environ
 
 env = environ.Env()
-base_dir = environ.Path(__file__) - 2
+base_dir = environ.Path(__file__) - 3
 
 # Core settings: cache
 CACHES = {
@@ -83,7 +83,7 @@ X_FRAME_OPTIONS = "DENY"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [base_dir("templates/")],
+        "DIRS": [base_dir("eahub/templates/")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -97,7 +97,7 @@ TEMPLATES = [
 ]
 
 # Core settings: URLs
-ROOT_URLCONF = "eahub.urls"
+ROOT_URLCONF = "eahub.config.urls"
 
 # Auth
 AUTH_USER_MODEL = "profiles.Profile"
@@ -118,12 +118,7 @@ SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
 # Static files
-from .build_settings import (
-    STATIC_ROOT,
-    STATIC_URL,
-    STATICFILES_DIRS,
-    STATICFILES_STORAGE,
-)
+from .build_settings import STATIC_ROOT, STATIC_URL, STATICFILES_STORAGE
 
 # Application Insights
 APPLICATION_INSIGHTS = {
