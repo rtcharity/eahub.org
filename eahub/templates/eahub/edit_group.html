@@ -23,16 +23,6 @@
 </div>
 
 <div class="field">
-  <label for="id_group_type_other">Other group type:</label>
-  <textarea type="text" name="group_type_other" id="id_group_type_other" class="form-control" rows="4" placeholder="Group type" maxlength="100">{{ form.group_type_other.value|default:'' }}</textarea>
-  {% if form.group_type_other.errors %}
-    {% for error in form.group_type_other.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-
-<div class="field">
     <label for="id_summary" class="required_field">Summary</label>
     <textarea name="summary" id="id_summary" class="form-control" placeholder="A little intro on your group's values" maxlength="5000" required>{{ form.summary.value|default_if_none:'' }}</textarea>
     {% if form.summary.errors %}

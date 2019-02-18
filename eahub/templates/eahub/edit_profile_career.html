@@ -13,20 +13,6 @@
     </select>
 </div>
 
-{% if form.expertise_other.value %}
-<div class="field" id="field_expertise_other" style="display: block">
-{% else %}
-<div class="field" id="field_expertise_other" style="display: none">
-{% endif %}
-  <label for="id_expertise_other">Other expertise:</label>
-  <textarea type="text" name="expertise_other" id="id_expertise_other" class="form-control" rows="4" placeholder="I.e. AI technical safety, global health" maxlength="1000">{{ form.expertise_other.value|default:'' }}</textarea>
-  {% if form.expertise_other.errors %}
-    {% for error in form.expertise_other.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-
 <div class="field">
   <label for="id_open_to_job_offers">Open to job offers:</label>
   <select class="form-control" name="open_to_job_offers">

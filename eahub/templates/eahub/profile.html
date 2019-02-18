@@ -57,9 +57,6 @@
           {% endif %}
         </li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'N/A' }}</li>
-        {% if profile.available_as_speaker %}
-        <li class="list-group-item"><b>Topics I speak about: </b>{{ profile.topics_i_speak_about|default:'N/A' }}</li>
-        {% endif %}
       </ul>
       </div>
     </div>

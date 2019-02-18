@@ -13,15 +13,6 @@
   </select>
 </div>
 
-<div class="field">
-  <label for="id_topics_i_speak_about">Topics I speak about:</label>
-  <textarea type="text" name="topics_i_speak_about" id="id_topics_i_speak_about" class="form-control" rows="4" placeholder="I.e. AI technical safety, global health" maxlength="1000">{{ form.topics_i_speak_about.value|default:'' }}</textarea>
-  {% if form.topics_i_speak_about.errors %}
-    {% for error in form.topics_i_speak_about.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
 <button type="submit" class="btn btn-default">Update</button>
 <div class="privacy-note">
   <b>Note:</b> All profile information is public.
