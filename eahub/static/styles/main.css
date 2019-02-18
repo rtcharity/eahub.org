@@ -364,11 +364,13 @@ body {
 }
 .profile-info a {
   color: black;
+  text-decoration: none;
 }
 
 .profile-info a:hover {
   text-decoration: none;
 }
+
 
 .profile-info .light-grey {
   background-color: #F2F2F2 !important;
@@ -430,6 +432,13 @@ body {
 
 .multiselect-native-select .btn {
   white-space: normal;
+}
+
+.privacy-note {
+  font-size: small;
+  font-style: italic;
+  margin-top: 10px;
+  display: block;
 }
 
 /* password */
