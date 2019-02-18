@@ -381,6 +381,16 @@ body {
   text-align: center;
 }
 
+.profile-info .panel {
+  height: 100%;
+}
+
+.profile-info .row {
+  align-items: stretch;
+  display: flex;
+  margin-bottom: 20px;
+}
+
 .profile-info .summary {
   margin-top: 10px;
 }
