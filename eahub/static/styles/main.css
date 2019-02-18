@@ -346,6 +346,7 @@ body {
   max-width: 200px;
   height: auto;
   text-align: right;
+  border-radius: 50%;
 }
 
 .table img{
