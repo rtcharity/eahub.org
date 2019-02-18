@@ -20,11 +20,11 @@ $(document).ready( function () {
 
     applySearchFunctionality(dataTableProfiles)
     applySearchFunctionality(dataTableGroups)
-} );
 
-$('.text-block-from-database').linkify();
-$('.profile').linkify();
-$('.info').linkify();
+    $('.text-block-from-database').linkify();
+    $('.profile').linkify();
+    $('.info').linkify();
+} );
 
 $('.multiselect-form').multiselect({
   numberDisplayed: 1
