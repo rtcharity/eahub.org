@@ -453,7 +453,23 @@ body {
   display: block;
 }
 
-/* password */
+/* registration */
+.login-danger {
+  background-color: #E4F5B1;
+  border: none;
+  color: black;
+}
+
+.login-info {
+  background-color: #7BB0A8;
+  border: none;
+  color: white;
+}
+
+.login-info a {
+  color: white;
+}
+
 .password-reset form {
   margin-bottom: 20px;
 }
