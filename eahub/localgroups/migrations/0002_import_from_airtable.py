@@ -10,7 +10,7 @@ from geopy import geocoders
 def import_from_airtable(apps, schema_editor):
     if not settings.LOCAL_GROUPS_AIRTABLE:
         return
-    Group = apps.get_model("groups", "Group")
+    Group = apps.get_model("localgroups", "Group")
     group_type_choices = {
         display_name: db_name
         for db_name, display_name in Group._meta.get_field("group_type").choices
@@ -57,7 +57,7 @@ def import_from_airtable(apps, schema_editor):
 
 
 def delete_from_airtable(apps, schema_editor):
-    Group = apps.get_model("groups", "Group")
+    Group = apps.get_model("localgroups", "Group")
     Group.objects.filter(airtable_record__isnull=False).delete()
 
 
