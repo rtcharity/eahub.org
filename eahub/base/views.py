@@ -70,7 +70,7 @@ def getProfilesData():
                 name=x.name,
                 path='/{obj}/{id}'.format(
                     obj='profile',
-                    id=x.id
+                    id=x.slug
                 ),
                 gdpr_confirmed=True
             )

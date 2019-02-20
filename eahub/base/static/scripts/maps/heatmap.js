@@ -8,7 +8,7 @@ function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups) {
 }
 
 function mapToggle(queryStringMap, mapDataProfiles, mapDataGroups) {
-  console.log(queryStringMap)
+  console.log(mapDataProfiles)
   var selectedMap;
 
   var mapSelectorInd = document.getElementById('map_selector_ind')
@@ -73,6 +73,7 @@ function createMap() {
 }
 
 function addMarkersWithLabels(locations, map) {
+
   var iw = new google.maps.InfoWindow();
 
   //oms allows for spiderfying of clusters
