@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import Profile
+from .models import CauseArea, ExpertiseArea, GivingPledge, Profile
 from .forms import *
 
 
@@ -38,10 +38,9 @@ class SignUp(generic.CreateView):
             return redirect(reverse('signup') + '?captcha_error=True')
 
 
-def ProfileView(request, profile_id):
-    profile = Profile.objects.get(pk=profile_id)
+def ProfileView(request, slug):
+    profile = Profile.objects.get(slug=slug)
     template = 'eahub/profile.html'
-    if not profile.gdpr_confirmed: template = 'eahub/profile_locked.html'
     return render(request, template, {
         'profile': profile
     })
@@ -49,12 +48,16 @@ def ProfileView(request, profile_id):
 
 @login_required(login_url=reverse_lazy('login'))
 def MyProfileView(request):
-    return redirect('profile', profile_id=request.user.id)
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
+    return redirect('profile', profile_id=request.user.profile.id)
 
 
 @login_required(login_url=reverse_lazy('login'))
 def DownloadView(request):
-    profile = Profile.objects.get(pk=request.user.id)
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
+    profile = Profile.objects.get(pk=request.user.profile.id)
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="my_profile.csv"'
     return profile.csv(response)
@@ -62,19 +65,20 @@ def DownloadView(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def edit_profile(request):
-    profile = Profile.objects.get(pk=request.user.id)
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
+    profile = Profile.objects.get(pk=request.user.profile.id)
     if request.method == 'POST':
         form = EditProfileForm(
-            request.POST, request.FILES, instance=request.user)
+            request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.gdpr_confirmed = True
             profile = profile.geocode()
             profile.save()
             return redirect('my_profile')
     else:
-        form = EditProfileForm(instance=request.user)
-        return render(request, 'eahub/edit_profile.html', {
+        form = EditProfileForm(instance=request.user.profile)
+    return render(request, 'eahub/edit_profile.html', {
             'form': form,
             'profile': profile
         })
@@ -82,66 +86,77 @@ def edit_profile(request):
 
 @login_required(login_url=reverse_lazy('login'))
 def edit_profile_cause_areas(request):
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
     if request.method == 'POST':
-        form = EditProfileCauseAreasForm(request.POST, instance=request.user)
+        form = EditProfileCauseAreasForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
-            cause_areas = request.POST.getlist('custom_cause_areas')
+            cause_areas = request.POST.getlist('cause_areas')
             profile.cause_areas = cause_areas
+            giving_pledges = request.POST.getlist('giving_pledges')
+            profile.giving_pledges = giving_pledges
             profile.save()
             return redirect('my_profile')
     else:
-        form = EditProfileCauseAreasForm(instance=request.user)
-        return render(request, 'eahub/edit_profile_cause_areas.html', {
+        form = EditProfileCauseAreasForm(instance=request.user.profile)
+    return render(request, 'eahub/edit_profile_cause_areas.html', {
             'form': form,
-            'profile': Profile.objects.get(pk=request.user.id)
+            'profile': Profile.objects.get(pk=request.user.profile.id),
+            'cause_area_choices': CauseArea.choices,
+            'giving_pledge_choices': GivingPledge.choices,
         })
 
 
 @login_required(login_url=reverse_lazy('login'))
 def edit_profile_career(request):
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
     if request.method == 'POST':
-        form = EditProfileCareerForm(request.POST, instance=request.user)
+        form = EditProfileCareerForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
-            expertise = request.POST.getlist('custom_expertise')
-            profile.expertise = expertise
+            expertise_areas = request.POST.getlist('expertise_areas')
+            profile.expertise_areas = expertise_areas
             profile.save()
             return redirect('my_profile')
     else:
-        form = EditProfileCareerForm(instance=request.user)
-        return render(request, 'eahub/edit_profile_career.html', {
+        form = EditProfileCareerForm(instance=request.user.profile)
+    return render(request, 'eahub/edit_profile_career.html', {
             'form': form,
-            'profile': Profile.objects.get(pk=request.user.id)
+            'profile': Profile.objects.get(pk=request.user.profile.id),
+            'expertise_area_choices': ExpertiseArea.choices,
         })
 
 
 @login_required(login_url=reverse_lazy('login'))
 def edit_profile_community(request):
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
     if request.method == 'POST':
-        form = EditProfileCommunityForm(request.POST, instance=request.user)
+        form = EditProfileCommunityForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             form.save()
             return redirect('my_profile')
     else:
-        form = EditProfileCommunityForm(instance=request.user)
-        return render(request, 'eahub/edit_profile_community.html', {
+        form = EditProfileCommunityForm(instance=request.user.profile)
+    return render(request, 'eahub/edit_profile_community.html', {
             'form': form,
-            'profile': Profile.objects.get(pk=request.user.id)
+            'profile': Profile.objects.get(pk=request.user.profile.id)
         })
 
 
 @login_required(login_url=reverse_lazy('login'))
 def delete_profile(request):
     if request.method == 'POST':
-        logging.info('user_id={} full_name={} has deleted their account'.format(
+        logging.info('user_id={} email={} has deleted their account'.format(
             request.user.id,
-            request.user.full_name()
+            request.user.email
         ))
-        profile = Profile.objects.get(
+        user = User.objects.get(
             id=request.user.id
         )
-        profile.delete()
+        user.delete()
         return redirect('logout')
     else:
         form = DeleteProfileForm()

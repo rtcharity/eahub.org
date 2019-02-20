@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 
-from ..localgroups.models import Group
+from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 
 def index(request):
@@ -76,12 +76,12 @@ def getProfilesData():
             'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}", gdpr_confirmed: "{gdpr_confirmed}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
-                name=' '.join([x.first_name, x.last_name]),
+                name=x.name,
                 path='/{obj}/{id}'.format(
                     obj='profile',
                     id=x.id
                 ),
-                gdpr_confirmed=x.gdpr_confirmed
+                gdpr_confirmed=True
             )
         + '},'
         for x in rows

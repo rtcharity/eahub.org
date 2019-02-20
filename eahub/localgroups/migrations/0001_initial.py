@@ -1,18 +1,19 @@
-from django.conf import settings
-from django.core import validators
-from django.db import migrations
-from django.db import models
+import autoslug.fields
+import django.core.validators
+from django.db import migrations, models
+import django_enumfield.db.fields
+import eahub.localgroups.models
 
 
 class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [migrations.swappable_dependency(settings.AUTH_USER_MODEL)]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name="Group",
+            name="LocalGroup",
             fields=[
                 (
                     "id",
@@ -23,53 +24,31 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
+                (
+                    "slug",
+                    autoslug.fields.AutoSlugField(
+                        editable=False, populate_from="name", unique=True
+                    ),
+                ),
                 ("name", models.CharField(max_length=100)),
                 (
-                    "group_type",
-                    models.CharField(
+                    "local_group_type",
+                    django_enumfield.db.fields.EnumField(
                         blank=True,
-                        choices=[
-                            ("COUNTRY", "Country"),
-                            ("CITY", "City"),
-                            ("UNIVERSITY", "University"),
-                            ("OTHER", "Other"),
-                        ],
-                        max_length=10,
+                        default=None,
+                        enum=eahub.localgroups.models.LocalGroupType,
                         null=True,
                     ),
                 ),
-                ("group_type_other", models.TextField(blank=True, null=True)),
-                ("summary", models.TextField(blank=True, null=True)),
-                (
-                    "city_or_town",
-                    models.CharField(blank=True, max_length=100, null=True),
-                ),
-                ("country", models.CharField(blank=True, max_length=100, null=True)),
-                ("website", models.CharField(blank=True, max_length=200, null=True)),
-                (
-                    "facebook_group",
-                    models.CharField(blank=True, max_length=200, null=True),
-                ),
-                (
-                    "facebook_page",
-                    models.CharField(blank=True, max_length=200, null=True),
-                ),
-                ("email", models.CharField(blank=True, max_length=200, null=True)),
-                ("meetup_details", models.TextField(blank=True, null=True)),
-                ("meetups_per_month", models.IntegerField(blank=True, null=True)),
-                ("meetup_url", models.CharField(blank=True, max_length=200, null=True)),
-                (
-                    "lat",
-                    models.DecimalField(
-                        blank=True, decimal_places=6, max_digits=9, null=True
-                    ),
-                ),
-                (
-                    "lon",
-                    models.DecimalField(
-                        blank=True, decimal_places=6, max_digits=9, null=True
-                    ),
-                ),
+                ("city_or_town", models.CharField(blank=True, max_length=100)),
+                ("country", models.CharField(blank=True, max_length=100)),
+                ("lat", models.FloatField(blank=True, default=None, null=True)),
+                ("lon", models.FloatField(blank=True, default=None, null=True)),
+                ("website", models.URLField(blank=True)),
+                ("facebook_group", models.URLField(blank=True)),
+                ("facebook_page", models.URLField(blank=True)),
+                ("email", models.EmailField(blank=True, max_length=254)),
+                ("meetup_url", models.URLField(blank=True)),
                 (
                     "airtable_record",
                     models.CharField(
@@ -78,16 +57,8 @@ class Migration(migrations.Migration):
                         max_length=255,
                         null=True,
                         unique=True,
-                        validators=[validators.MinLengthValidator(1)],
+                        validators=[django.core.validators.MinLengthValidator(1)],
                     ),
-                ),
-                ("donations", models.TextField(blank=True, null=True)),
-                ("links", models.TextField(blank=True, null=True)),
-                ("images", models.TextField(blank=True, null=True)),
-                ("edit_history", models.TextField(default="[]")),
-                (
-                    "organisers",
-                    models.ManyToManyField(blank=True, to=settings.AUTH_USER_MODEL),
                 ),
             ],
         )
