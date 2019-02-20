@@ -290,9 +290,7 @@ body {
   overflow: hidden;
   border-radius: 5px;
 }
-#profile_page_map:hover {
-  opacity: 0.7;
-}
+
 #profile_page_map.map_placeholder{
   opacity: 0.1;
   background-color: black;
