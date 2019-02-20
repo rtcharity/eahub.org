@@ -285,14 +285,12 @@ body {
   margin: 5px;
 }
 #profile_page_map {
-  height: 475px;
+  height: 350px;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
 }
-#profile_page_map:hover {
-  opacity: 0.7;
-}
+
 #profile_page_map.map_placeholder{
   opacity: 0.1;
   background-color: black;
@@ -381,7 +379,7 @@ body {
   text-align: center;
 }
 
-.profile-info .panel {
+.profile-cards .panel {
   height: 100%;
 }
 
@@ -389,10 +387,6 @@ body {
   align-items: stretch;
   display: flex;
   margin-bottom: 20px;
-}
-
-.profile-info .summary {
-  margin-top: 10px;
 }
 
 .profile-info h3 {
@@ -407,10 +401,6 @@ body {
   background-color: inherit;
   border: none;
   color: white;
-}
-
-.key-facts .btn{
-  margin-top: -8px;
 }
 
 .list-group a {

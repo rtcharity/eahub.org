@@ -29,49 +29,9 @@
 </div>
 
 <br><br>
-<div class="container profile-info">
-  <div class="row">
-    <div class="col-md-6 key-facts">
-      <div class="background">
-      <ul class="list-group">
-        <li class="list-group-item purple">
-          <h4>
-            <span>Key Facts</span>
-          </h4>
-        </li>
-        <li class="list-group-item"><b>Location: </b> {{ profile.city_or_town|default_if_none:'N/A' }}
-        <li class="list-group-item"><b>Cause areas: </b> {{ profile.get_pretty_cause_areas }}</li>
-        <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Expertise: </b> {{ profile.get_pretty_expertise }}</li>
-        <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'N/A' }}</li>
-      </ul>
-      </div>
-    </div>
-    <div class="col-md-6">
-        {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon %}
-    </div>
-  </div>
-  <div class="panel panel-default summary">
-    <div class="panel-heading">
-      <h3 class="panel-title">Summary</h3>
-    </div>
-    <div class="panel-body">
-      {{ profile.summary|default:'N/A' }}
-      {% if user.id == profile.user_id %}
-        <br>
-        <span class="btn btn-default btn-xs">
-          <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
-        </span>
-      {% endif %}
-    </div>
-  </div>
-</div>
 
-<br>
+<div class="container profile-info profile-cards">
 
-<div class="container profile-info">
-  <div class="row">
 
     <!-- cause area -->
     <div class="col-md-4">
@@ -145,7 +105,34 @@
         </div>
       </div>
     </div>
+
   </div>
+
+  <div class="container profile-info">
+
+      <div class="col-md-6 key-facts">
+        <div class="panel panel-default summary">
+          <div class="panel-heading">
+            <h3 class="panel-title">Summary</h3>
+          </div>
+          <div class="panel-body">
+            {{ profile.summary|default:'N/A' }}
+            {% if user.id == profile.user_id %}
+              <br>
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon %}
+      </div>
+    
+  </div>
+
+  <br>
   {% if user.id == profile.user_id %}
 <div class="text-center">
   <div class="btn-group btn-group-sm text-center" role="group">
@@ -155,5 +142,5 @@
 </div>
   {% endif %}
 
-</div>
+
 {% endblock %}
