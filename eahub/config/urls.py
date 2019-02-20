@@ -6,10 +6,6 @@ from ..base import views
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
-handler403 = views.forbidden
-handler404 = views.not_found
-handler500 = views.server_error
-
 urlpatterns = [
     path('', views.index, name='index'),
     path('profile/', include('eahub.profiles.urls')),
@@ -19,5 +15,6 @@ urlpatterns = [
     path('groups/', views.groups, name='groups'),
     path('admin/', admin.site.urls, name='admin'),
     path('about/', views.about, name='about'),
-    path('privacy-policy/', views.privacyPolicy, name='privacyPolicy')
+    path('privacy-policy/', views.privacyPolicy, name='privacyPolicy'),
+    path('trigger-500-error/', views.trigger500Error, name='trigger500Error'),
 ]
