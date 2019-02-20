@@ -285,7 +285,8 @@ body {
   margin: 5px;
 }
 #profile_page_map {
-  height: 100%;
+  min-height: 100%;
+  height: 350px;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
@@ -389,10 +390,6 @@ body {
   align-items: stretch;
   display: flex;
   margin-bottom: 20px;
-}
-
-.profile-info .summary {
-  margin-top: 10px;
 }
 
 .profile-info h3 {
