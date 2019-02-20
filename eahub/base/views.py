@@ -46,9 +46,9 @@ def getGroupsData():
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
-                path='/{obj}/{id}'.format(
+                path='/{obj}/{slug}'.format(
                     obj='group',
-                    id=x.id
+                    slug=x.slug
                 )
             )
         + '},'
@@ -68,9 +68,9 @@ def getProfilesData():
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
-                path='/{obj}/{id}'.format(
+                path='/{obj}/{slug}'.format(
                     obj='profile',
-                    id=x.slug
+                    slug=x.slug
                 ),
                 gdpr_confirmed=True
             )
