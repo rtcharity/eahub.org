@@ -285,7 +285,6 @@ body {
   margin: 5px;
 }
 #profile_page_map {
-  min-height: 100%;
   height: 350px;
   position: relative;
   overflow: hidden;
