@@ -8,7 +8,6 @@ function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups) {
 }
 
 function mapToggle(queryStringMap, mapDataProfiles, mapDataGroups) {
-  console.log(mapDataProfiles)
   var selectedMap;
 
   var mapSelectorInd = document.getElementById('map_selector_ind')
