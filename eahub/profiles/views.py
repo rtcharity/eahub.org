@@ -50,7 +50,7 @@ def ProfileView(request, slug):
 def MyProfileView(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
-    return redirect('profile', profile_id=request.user.profile.id)
+    return redirect('profile', slug=request.user.profile.slug)
 
 
 @login_required(login_url=reverse_lazy('login'))
