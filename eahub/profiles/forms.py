@@ -1,56 +1,60 @@
 from django import forms
 from django.db import models
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Profile
+from cuser.forms import UserCreationForm
+from .models import Profile, CauseArea, GivingPledge
+from ..base.models import User
 
 class ProfileCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
-        model = Profile
-        fields = ('email', 'first_name', 'last_name', 'password1', 'password2')
 
-class ProfileChangeForm(UserChangeForm):
-    class Meta:
-        model = Profile
-        fields = UserChangeForm.Meta.fields
+    name = forms.CharField(max_length=200)
+    subscribed_to_email_updates = forms.BooleanField()
+
+    def save(self, commit=True):
+        if not commit:
+            raise RuntimeError("can't create profile without database save")
+        name = self.cleaned_data['name']
+        subscribed_to_email_updates = self.cleaned_data['subscribed_to_email_updates']
+        user = super().save()
+        Profile.objects.create(user=user, name=name, subscribed_to_email_updates=subscribed_to_email_updates)
+        return user
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = ['email']
 
 
-class EditProfileForm(UserChangeForm):
+class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
-            'first_name', 'last_name',
+            'name',
             'image', 'summary',
-            'city_or_town', 'country',            
+            'city_or_town', 'country',
+            'subscribed_to_email_updates',
         )
 
 
-class EditProfileCauseAreasForm(UserChangeForm):
+class EditProfileCauseAreasForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
-            # 'cause_areas' is set using custom code in view
-            'cause_areas_other',
-            'giving_pledge', 'giving_pledge_other',
             'available_to_volunteer',           
         )
 
 
-class EditProfileCareerForm(UserChangeForm):
+class EditProfileCareerForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
-            # 'expertise' is set using custom code in view
             'open_to_job_offers',
-            'expertise_other',           
         )
 
 
-class EditProfileCommunityForm(UserChangeForm):
+class EditProfileCommunityForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
             'available_as_speaker',
-            'topics_i_speak_about',    
         )
 
 

@@ -60,14 +60,43 @@ if SECURE_SSL_REDIRECT:
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {
-        "appinsights": {
-            "class": "applicationinsights.django.LoggingHandler",
-            "level": "WARNING",
+    "formatters": {
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
         }
     },
+    "handlers": {
+        "appinsights": {
+            "level": "WARNING",
+            "class": "applicationinsights.django.LoggingHandler",
+        },
+        "console": {"level": "INFO", "class": "logging.StreamHandler"},
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
     "loggers": {
-        "django": {"handlers": ["appinsights"], "level": "WARNING", "propagate": True}
+        "django": {
+            "handlers": ["appinsights", "console", "mail_admins"],
+            "level": "INFO",
+        },
+        "django.server": {
+            "handlers": ["django.server"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "eahub": {
+            "handlers": ["appinsights", "console", "mail_admins"],
+            "level": "INFO",
+        },
     },
 }
 
@@ -100,7 +129,7 @@ TEMPLATES = [
 ROOT_URLCONF = "eahub.config.urls"
 
 # Auth
-AUTH_USER_MODEL = "profiles.Profile"
+AUTH_USER_MODEL = "base.User"
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -131,6 +160,15 @@ AZURE_CONTAINER = env.str("AZURE_CONTAINER")
 AZURE_SSL = SECURE_SSL_REDIRECT
 AZURE_URL_EXPIRATION_SECS = 3600
 
+# CUser
+CUSER = {
+    "app_verbose_name": "Authentication and Authorization",
+    "register_proxy_auth_group_model": True,
+}
+
+# sorl-thumbnail
+THUMBNAIL_PRESERVE_FORMAT = True
+
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 
@@ -138,7 +176,7 @@ ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 RECAPTCHA_SECRET_KEY = env.str("RECAPTCHA_SECRET_KEY")
 RECAPTCHA_SITE_KEY = env.str("RECAPTCHA_SITE_KEY")
 
-# Groups
+# Local groups
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
 if local_groups_airtable_api_key is None and local_groups_airtable_base_key is None:

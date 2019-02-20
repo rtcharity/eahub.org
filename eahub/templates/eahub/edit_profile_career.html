@@ -6,9 +6,9 @@
 
 <div class="field">
     <label>Expertise:</label>
-    <select class="form-control multiselect-form" name="custom_expertise" multiple>
-        {% for choice in profile.EXPERTISE_CHOICES %}
-            <option value="{{ choice.0 }}" {% if choice.0 in profile.expertise %}selected{% endif %}>{{ choice.1 }}</option>
+    <select class="form-control multiselect-form" name="expertise_areas" multiple>
+        {% for choice in expertise_area_choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 in profile.expertise_areas %}selected{% endif %}>{{ choice.1.label }}</option>
         {% endfor %}
     </select>
 </div>

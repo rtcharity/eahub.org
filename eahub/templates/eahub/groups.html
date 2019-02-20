@@ -43,7 +43,7 @@
           {% for group in groups %}
           <tr>
               <td>
-                  <a href="{% url 'group' group.id %}">{{ group.name|default_if_none:'' }}</a>
+                  <a href="{% url 'group' group.slug %}">{{ group.name|default_if_none:'' }}</a>
               </td>
               <td>
                   {% if group.country %}{{ group.country }}{% endif %}

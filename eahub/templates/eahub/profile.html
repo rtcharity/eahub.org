@@ -16,9 +16,9 @@
       {% endthumbnail %}
     </div>
     <div class="col-xs-12 col-md-6">
-      <h1>{{ profile.full_name|title }}</h1>
+      <h1>{{ profile.name|title }}</h1>
       <div class="btn btn-default purple">
-      {% if user.id == profile.id %}
+      {% if user.id == profile.user_id %}
       <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a></span>
       {% else %}
       <span><i class="fa fa-microphone-slash"></i> Messaging Available Soon</span>
@@ -40,22 +40,10 @@
           </h4>
         </li>
         <li class="list-group-item"><b>Location: </b> {{ profile.city_or_town|default_if_none:'N/A' }}
-        <li class="list-group-item"><b>Cause areas: </b>
-          {% if profile.get_pretty_cause_areas and profile.cause_areas_other %} {{ profile.get_pretty_cause_areas }} + {{ profile.cause_areas_other }}
-          {% elif profile.get_pretty_cause_areas %} {{ profile.get_pretty_cause_areas }}
-          {% elif profile.cause_areas_other %} {{ profile.cause_areas_other }}
-          {% else %} N/A
-          {% endif %}
-        </li>
+        <li class="list-group-item"><b>Cause areas: </b> {{ profile.get_pretty_cause_areas }}</li>
         <li class="list-group-item"><b>Available to volunteer: </b>{{ profile.available_to_volunteer|yesno:"Yes,No"|default:'N/A' }}</li>
         <li class="list-group-item"><b>Open to job offers: </b>{{ profile.open_to_job_offers|yesno:"Yes,No"|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Expertise: </b>
-          {% if profile.get_pretty_expertise and profile.expertise_other %} {{ profile.get_pretty_expertise }} + {{ profile.expertise_other }}
-          {% elif profile.get_pretty_expertise %} {{ profile.get_pretty_expertise }}
-          {% elif profile.expertise_other %} {{ profile.expertise_other }}
-          {% else %} N/A
-          {% endif %}
-        </li>
+        <li class="list-group-item"><b>Expertise: </b> {{ profile.get_pretty_expertise }}</li>
         <li class="list-group-item"><b>Available as speaker: </b>{{ profile.available_as_speaker|yesno:"Yes,No"|default:'N/A' }}</li>
       </ul>
       </div>
@@ -70,7 +58,7 @@
     </div>
     <div class="panel-body">
       {{ profile.summary|default:'N/A' }}
-      {% if user.id == profile.id %}
+      {% if user.id == profile.user_id %}
         <br>
         <span class="btn btn-default btn-xs">
           <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
@@ -92,30 +80,24 @@
         <div class="panel-body">
           <h3>Cause Area</h3>
           <p>
-            {% if profile.get_pretty_cause_areas and profile.cause_areas_other %} {{ profile.get_pretty_cause_areas }} + {{ profile.cause_areas_other }}
-            {% elif profile.get_pretty_cause_areas %} {{ profile.get_pretty_cause_areas }}
-            {% elif profile.cause_areas_other %} {{ profile.cause_areas_other }}
-            {% else %} N/A
-            {% endif %}
+            {{ profile.get_pretty_cause_areas }}
             {% if profile.available_to_volunteer %}
               <br>
               <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
             {% endif %}
-            {% if user.id == profile.id and profile.gdpr_confirmed %}
+            {% if user.id == profile.user_id %}
               <br>
               <span class="btn btn-default btn-xs">
                 <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
               </span>
             {% endif %}
           </p>
-          {% if profile.giving_pledge or profile.giving_pledge_other %}
+          {% if profile.giving_pledges.exists %}
             <p>
-              <strong>Giving Pledge Taken: </strong>
-              {% if profile.giving_pledge != 'OTHER' %}
-                <span>{{ profile.get_giving_pledge_display }}</span>
-              {% else %}
-                <span>{{ profile.giving_pledge_other }}</span>
-              {% endif %}
+              <strong>Giving Pledges Taken: </strong>
+              {% for giving_pledge in profile.giving_pledges.all %}
+                <span>{{ giving_pledge.name }}</span>
+              {% endfor %}
             </p>
           {% endif %}
         </div>
@@ -129,16 +111,12 @@
         <div class="panel-body">
           <h3>Career</h3>
           <p>
-            {% if profile.get_pretty_expertise and profile.expertise_other %} {{ profile.get_pretty_expertise }} + {{ profile.expertise_other }}
-            {% elif profile.get_pretty_expertise %} {{ profile.get_pretty_expertise }}
-            {% elif profile.expertise_other %} {{ profile.expertise_other }}
-            {% else %} N/A
-            {% endif %}
+            {{ profile.get_pretty_expertise }}
             {% if profile.open_to_job_offers %}
               <br>
               <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
             {% endif %}
-            {% if user.id == profile.id and profile.gdpr_confirmed %}
+            {% if user.id == profile.user_id %}
               <br>
               <span class="btn btn-default btn-xs">
                 <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
@@ -157,11 +135,9 @@
           <h3>Community</h3>
             {% if profile.available_as_speaker %}
             <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
-            <br>
-            <span>I talk about: {{ profile.topics_i_speak_about }}</span>
             {% endif %}
           <br>
-          {% if user.id == profile.id and profile.gdpr_confirmed %}
+          {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">
               <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>
             </span>
@@ -170,7 +146,7 @@
       </div>
     </div>
   </div>
-  {% if user.id == profile.id %}
+  {% if user.id == profile.user_id %}
 <div class="text-center">
   <div class="btn-group btn-group-sm text-center" role="group">
       <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button></a>

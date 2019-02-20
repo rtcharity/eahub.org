@@ -4,21 +4,23 @@
 
 {% block form_fields %}
 
+{{ form.errors }}
+
 <div class="field">
     <label>Cause areas:</label>
-    <select class="form-control multiselect-form" id="multiselect-form" name="custom_cause_areas" multiple>
-        {% for choice in profile.CAUSE_AREA_CHOICES %}
-            <option value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1 }}</option>
+    <select class="form-control multiselect-form" name="cause_areas" multiple>
+        {% for choice in cause_area_choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1.label }}</option>
         {% endfor %}
     </select>
 </div>
 
-<div class="field" id="field_pledge">
-  <label>Have you taken a giving pledge?</label>
-  <select class="form-control" name="giving_pledge" id="pledge-form">
-      {% for choice in profile.GIVING_PLEDGE_CHOICES %}
-          <option value="{{ choice.0 }}" {% if choice.0 in profile.giving_pledge %}selected{% endif %}>{{ choice.1 }}</option>
-      {% endfor %}
+<div class="field">
+  <label>Giving pledges taken:</label>
+  <select class="form-control multiselect-form" name="giving_pledges" multiple>
+        {% for choice in giving_pledge_choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 in profile.giving_pledges %}selected{% endif %}>{{ choice.1.label }}</option>
+        {% endfor %}
   </select>
 </div>
 

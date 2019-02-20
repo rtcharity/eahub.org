@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Group
+from . import models
 
-@admin.register(Group)
-class GroupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name','country', 'city_or_town')
+
+admin.site.register(models.LocalGroup)

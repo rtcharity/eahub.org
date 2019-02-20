@@ -1,4 +1,7 @@
+from cuser import admin as cuser_admin
 from django.contrib import admin
-from django.contrib.auth.models import Group
 
-admin.site.unregister(Group)
+from . import models
+
+
+admin.site.register(models.User, cuser_admin.UserAdmin)
