@@ -381,7 +381,7 @@ body {
   text-align: center;
 }
 
-.profile-info .panel {
+.profile-cards .panel {
   height: 100%;
 }
 
@@ -407,10 +407,6 @@ body {
   background-color: inherit;
   border: none;
   color: white;
-}
-
-.key-facts .btn{
-  margin-top: -8px;
 }
 
 .list-group a {
