@@ -16,5 +16,6 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('about/', views.about, name='about'),
     path('privacy-policy/', views.privacyPolicy, name='privacyPolicy'),
+    path('robots933456.txt', views.healthCheck, name='healthCheck'),
     path('trigger-500-error/', views.trigger500Error, name='trigger500Error'),
 ]

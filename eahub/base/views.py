@@ -83,5 +83,8 @@ def getProfilesData():
         'map_data': map_data
     }
 
+def healthCheck(request):
+    return HttpResponse(status=204)
+
 def trigger500Error(request):
     raise RuntimeError("Test error, safe to ignore")
