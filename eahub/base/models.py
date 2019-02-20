@@ -1,4 +1,4 @@
-from cuser import models as cuser_models
+from authtools import models as authtools_models
 
-class User(cuser_models.AbstractCUser):
+class User(authtools_models.AbstractEmailUser):
     pass

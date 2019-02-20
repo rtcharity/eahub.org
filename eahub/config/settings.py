@@ -160,12 +160,6 @@ AZURE_CONTAINER = env.str("AZURE_CONTAINER")
 AZURE_SSL = SECURE_SSL_REDIRECT
 AZURE_URL_EXPIRATION_SECS = 3600
 
-# CUser
-CUSER = {
-    "app_verbose_name": "Authentication and Authorization",
-    "register_proxy_auth_group_model": True,
-}
-
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
 

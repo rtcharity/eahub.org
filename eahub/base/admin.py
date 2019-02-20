@@ -1,7 +1,7 @@
-from cuser import admin as cuser_admin
+from authtools import admin as authtools_admin
 from django.contrib import admin
 
 from . import models
 
 
-admin.site.register(models.User, cuser_admin.UserAdmin)
+admin.site.register(models.User, authtools_admin.UserAdmin)

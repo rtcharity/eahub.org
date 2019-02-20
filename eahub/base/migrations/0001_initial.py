@@ -1,4 +1,3 @@
-import cuser.models
 from django.db import migrations, models
 import django.utils.timezone
 
@@ -40,24 +39,7 @@ class Migration(migrations.Migration):
                 (
                     "email",
                     models.EmailField(
-                        error_messages={
-                            "unique": "A user with that email address already exists."
-                        },
-                        max_length=254,
-                        unique=True,
-                        verbose_name="email address",
-                    ),
-                ),
-                (
-                    "first_name",
-                    models.CharField(
-                        blank=True, max_length=30, verbose_name="first name"
-                    ),
-                ),
-                (
-                    "last_name",
-                    models.CharField(
-                        blank=True, max_length=150, verbose_name="last name"
+                        max_length=255, unique=True, verbose_name="email address"
                     ),
                 ),
                 (
@@ -105,11 +87,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "user",
-                "verbose_name_plural": "users",
-                "abstract": False,
-            },
-            managers=[("objects", cuser.models.CUserManager())],
+            options={"ordering": ["email"], "abstract": False},
         )
     ]

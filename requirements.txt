@@ -17,6 +17,6 @@ django-cleanup==3.0.1
 django-upload-path==0.1.1
 airtable-python-wrapper==0.11.3.post1
 applicationinsights==0.11.7
-django-username-email==2.2.2
+django-authtools==1.6.0
 django-autoslug==1.9.4
 django-enumfield==1.5

@@ -1,10 +1,10 @@
+from authtools.forms import CaseInsensitiveUsernameFieldCreationForm
 from django import forms
 from django.db import models
-from cuser.forms import UserCreationForm
 from .models import Profile, CauseArea, GivingPledge
 from ..base.models import User
 
-class ProfileCreationForm(UserCreationForm):
+class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
     name = forms.CharField(max_length=200)
     subscribed_to_email_updates = forms.BooleanField()
@@ -18,7 +18,7 @@ class ProfileCreationForm(UserCreationForm):
         Profile.objects.create(user=user, name=name, subscribed_to_email_updates=subscribed_to_email_updates)
         return user
 
-    class Meta(UserCreationForm.Meta):
+    class Meta(CaseInsensitiveUsernameFieldCreationForm.Meta):
         model = User
         fields = ['email']
 
