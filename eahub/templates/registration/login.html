@@ -37,6 +37,7 @@
   <div class="alert alert-info login-info">
       <h2>Login not working?</h2>
       <p><a href="{% url 'password_reset' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
+      <p style="font-size: small"><b>Note:</b> If you had a profile on the old EAHub, you will have to <a href="{% url 'login' %}">create a new profile</a> as the old profiles don't exist anymore.</p>
   </div>
 </div>
 {% endblock %}

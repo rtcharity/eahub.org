@@ -88,6 +88,15 @@ body {
   background-color: #635274;
 }
 
+.info .table .days, .weeks, .months {
+  color: white;
+  text-align: center;
+}
+
+.info .table .time {
+  max-width: 250px;
+}
+
 
 /* bootstrap sticky footer */
 .footer {
