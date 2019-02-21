@@ -18,9 +18,14 @@ body {
   opacity: 0.7;
 }
 
-.info h1, h3 {
+.info h1, h3, h4 {
   text-align: left;
   color: #512B52;
+}
+
+.info h4 {
+  margin-top: 30px;
+  margin-bottom: 10px;
 }
 
 .info .col-md-6, .col-xs-12 {
@@ -61,6 +66,28 @@ body {
   line-height: 30px;
   color: white;
 }
+
+.info .table .head {
+  background-color: grey;
+  color: white;
+}
+
+.info .table .sub-head {
+  background-color: lightgray;
+}
+
+.info .table .days {
+  background-color: #7BB0A8;
+}
+
+.info .table .weeks {
+  background-color: #A7DBAB;
+}
+
+.info .table .months {
+  background-color: #635274;
+}
+
 
 /* bootstrap sticky footer */
 .footer {
