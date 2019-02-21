@@ -8,7 +8,6 @@ function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups) {
 }
 
 function mapToggle(queryStringMap, mapDataProfiles, mapDataGroups) {
-  console.log(mapDataProfiles)
   var selectedMap;
 
   var mapSelectorInd = document.getElementById('map_selector_ind')
@@ -22,16 +21,16 @@ function mapToggle(queryStringMap, mapDataProfiles, mapDataGroups) {
     renderMap(selectedMap, mapDataProfiles, mapDataGroups);
   }
 
-  if (queryStringMap == "groups") {
-    mapSelectorGroups.checked = true
-  } else {
+  if (queryStringMap == "individuals") {
     mapSelectorInd.checked = true
+  } else {
+    mapSelectorGroups.checked = true
   }
 }
 
 function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
-  if (selectedMap !== 'individuals' && selectedMap !== 'groups') {
-    selectedMap = 'individuals'
+  if (selectedMap !== 'individuals') {
+    selectedMap = 'groups'
   }
   var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
   if (selectedMap == 'individuals') {
