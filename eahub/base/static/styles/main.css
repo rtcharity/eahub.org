@@ -89,6 +89,11 @@ body {
 }
 
 
+.info .table .days, .weeks, .months {
+  color: white;
+  text-align: center;
+}
+
 /* bootstrap sticky footer */
 .footer {
   position: absolute;
@@ -289,6 +294,7 @@ body {
 /* features */
 .features h4 {
   font-weight: bold;
+  text-align: center;
 }
 
 .inactive img {
