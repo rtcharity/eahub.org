@@ -298,6 +298,7 @@ body {
 /* features */
 .features h4 {
   font-weight: bold;
+  text-align: center;
 }
 
 .inactive img {
