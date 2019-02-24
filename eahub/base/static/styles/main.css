@@ -488,6 +488,23 @@ form .subscription {
   margin-left: 20px;
 }
 
+form .btn-update {
+  margin-top: 15px;
+}
+
+form input, textarea {
+  width: 100%;
+}
+
+form .checkboxinput {
+  width: 20px;
+}
+
+#id_image {
+  padding-bottom: 35px;
+  height: 30px;
+}
+
 /* registration */
 .login-danger {
   background-color: #E4F5B1;
