@@ -12,6 +12,7 @@ INSTALLED_APPS = [
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
+    "crispy_forms",
 ]
 
 # Core settings: security
@@ -21,3 +22,5 @@ SECRET_KEY = b"build_secret_key"
 STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
