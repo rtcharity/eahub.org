@@ -49,6 +49,9 @@ class EditProfileCauseAreasForm(forms.ModelForm):
         fields = (
             'available_to_volunteer',
         )
+        labels = {
+            'available_to_volunteer': ('Available to volunteer:')
+        }
 
 
 class EditProfileCareerForm(forms.ModelForm):
@@ -57,6 +60,9 @@ class EditProfileCareerForm(forms.ModelForm):
         fields = (
             'open_to_job_offers',
         )
+        labels = {
+            'open_to_job_offers': ('Open to job offers:')
+        }
 
 
 class EditProfileCommunityForm(forms.ModelForm):
@@ -65,7 +71,9 @@ class EditProfileCommunityForm(forms.ModelForm):
         fields = (
             'available_as_speaker',
         )
-
+        labels = {
+            'available_as_speaker': ('Available as speaker:')
+        }
 
 class DeleteProfileForm(forms.Form):
     confirm = forms.CharField(max_length=100)
