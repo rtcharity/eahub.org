@@ -476,6 +476,18 @@ body {
   display: block;
 }
 
+.control-group {
+  margin-bottom: 10px;
+}
+
+form .image_upload {
+  margin-bottom: 10px !important;
+}
+
+form .subscription {
+  margin-left: 20px;
+}
+
 /* registration */
 .login-danger {
   background-color: #E4F5B1;
