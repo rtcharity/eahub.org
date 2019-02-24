@@ -33,7 +33,7 @@ class EditProfileForm(forms.ModelForm):
             'subscribed_to_email_updates',
         )
         widgets = {
-            'summary': forms.Textarea(attrs={'rows': 7}),
+            'summary': forms.Textarea(attrs={'rows': 7, 'placeholder': "In West Philadelphia born and raised. On the playground is where I spent most of my days."}),
         }
         labels = {
             'city_or_town': ('City/Town'),
