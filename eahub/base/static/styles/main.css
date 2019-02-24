@@ -514,6 +514,10 @@ form .alert ul {
   height: 30px;
 }
 
+#div_id_subscribed_to_email_updates {
+  margin-left: 20px;
+}
+
 /* registration */
 .login-danger {
   background-color: #E4F5B1;
