@@ -60,7 +60,12 @@
     <div class="alert alert-danger login-danger" style="max-width: 304px;">Captcha error</div>
   {% endif %}
 </div>
-<button type="submit" class="btn btn-default">Sign Up</button>
+{% endblock %}
+
+{% block submit%}Sign up{% endblock%}
+
+{% block form_privacy_note %}
+
 <div class="privacy-note">
   <b>Note:</b> Once you have signed up, your name will be public on the Hub.
   Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.
