@@ -2,58 +2,12 @@
 
 {% block title %}Sign Up{% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block form_fields %}
-<div class="field">
-  <label for="id_name">Name</label>
-  <input type="text" name="name" id="id_name" class="form-control" required autofocus>
-  {% if form.name.errors %}
-    {% for error in form.name.errors %}
-      <div class="alert alert-danger login-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-<div class="field">
-    <label for="id_email">Email address</label>
-    <input type="email" name="email" id="id_email" class="form-control" required>
-    {% if form.email.errors %}
-      {% for error in form.email.errors %}
-        <div class="alert alert-danger login-danger">{{ error }}</div>
-      {% endfor %}
-    {% endif %}
-</div>
-<div class="field">
-  <label for="id_password1">Password</label>
-  <input type="password" name="password1" id="id_password1" class="form-control" required>
-  {% if form.password1.errors %}
-    {% for error in form.password1.errors %}
-      <div class="alert alert-danger login-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-<div class="field">
-  <label for="id_password2">Confirm Password</label>
-  <input type="password" name="password2" id="id_password2" class="form-control" required>
-  {% if form.password2.errors %}
-    {% for error in form.password2.errors %}
-      <div class="alert alert-danger login-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-<div class="field">
-  <label>{{ form.subscribed_to_email_updates }} Send me email updates about the EA Hub</label>
-  {% if form.subscribed_to_email_updates.errors %}
-    {% for error in form.subscribed_to_email_updates.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-<div class="field">
-  {% if form.non_field_errors %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger login-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
+
+ {{ form|crispy}}
+
 <div class="field">
   <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
   {% if 'captcha_error' in request.GET %}
