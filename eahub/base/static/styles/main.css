@@ -496,6 +496,19 @@ form .textInput, .textarea {
   width: 100%;
 }
 
+form .alert-error {
+  margin-bottom: 20px;
+}
+
+form .alert ul {
+  list-style: none;
+  margin-left: 0px;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding: 10px 10px 10px 10px;
+}
+
 #id_image {
   padding-bottom: 35px;
   height: 30px;
