@@ -7,7 +7,7 @@ from ..base.models import User
 class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
     name = forms.CharField(max_length=200)
-    subscribed_to_email_updates = forms.BooleanField(required=False)
+    subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
 
     def save(self, commit=True):
         if not commit:
