@@ -32,13 +32,20 @@ class EditProfileForm(forms.ModelForm):
             'city_or_town', 'country',
             'subscribed_to_email_updates',
         )
+        widgets = {
+            'summary': forms.Textarea(attrs={'rows': 7}),
+        }
+        labels = {
+            'city_or_town': ('City/Town'),
+            'subscribed_to_email_updates': ('Send me email updates about the EA Hub'),
+        }
 
 
 class EditProfileCauseAreasForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
-            'available_to_volunteer',           
+            'available_to_volunteer',
         )
 
 
