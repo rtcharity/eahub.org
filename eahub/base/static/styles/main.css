@@ -522,12 +522,8 @@ form .btn-update {
   margin-top: 15px;
 }
 
-form input, textarea {
+form .textInput, .textarea {
   width: 100%;
-}
-
-form .checkboxinput {
-  width: 20px;
 }
 
 #id_image {
