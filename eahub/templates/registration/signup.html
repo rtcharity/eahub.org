@@ -6,7 +6,7 @@
 
 {% block form_fields %}
 
- {{ form|crispy}}
+{{ form|crispy }}
 
 <div class="field">
   <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
@@ -14,6 +14,7 @@
     <div class="alert alert-danger login-danger" style="max-width: 304px;">Captcha error</div>
   {% endif %}
 </div>
+
 {% endblock %}
 
 {% block submit%}Sign up{% endblock%}
