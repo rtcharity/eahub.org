@@ -20,7 +20,7 @@ class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
     class Meta(CaseInsensitiveUsernameFieldCreationForm.Meta):
         model = User
-        fields = ['email']
+        fields = ['name', 'email']
 
 
 class EditProfileForm(forms.ModelForm):
