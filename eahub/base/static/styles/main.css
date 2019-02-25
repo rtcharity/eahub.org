@@ -534,7 +534,21 @@ form .alert ul {
 .login-info a {
   color: white;
 }
-
+.help-block {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+}
+.help-block strong {
+  font-weight: 500;
+}
+#hint_id_password2 {
+  display: none;
+}
 .password-reset form {
   margin-bottom: 20px;
 }
