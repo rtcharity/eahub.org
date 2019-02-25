@@ -6,7 +6,17 @@
 
 {% block form_fields %}
 
-  {{ form|crispy }}
+{{ form.username|as_crispy_field }}
+
+{{ form.password|as_crispy_field }}
+
+<div class="field">
+  {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger login-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
 
 {% endblock %}
 
