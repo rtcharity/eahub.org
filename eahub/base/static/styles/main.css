@@ -523,6 +523,8 @@ form .alert ul {
   background-color: #E4F5B1;
   border: none;
   color: black;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .login-info {
@@ -535,13 +537,11 @@ form .alert ul {
   color: white;
 }
 .help-block {
-  color: #856404;
-  background-color: #fff3cd;
-  border-color: #ffeeba;
+  background-color: #E4F5B1;
+  border: none;
+  color: black;
   padding: .75rem 1.25rem;
   margin-bottom: 1rem;
-  border: 1px solid transparent;
-  border-radius: .25rem;
 }
 .help-block strong {
   font-weight: 500;
