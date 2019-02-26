@@ -23,4 +23,5 @@ STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
