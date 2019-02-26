@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    build: .
+    build: ./eahub/
     command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
     depends_on:
       - db
@@ -11,7 +11,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - .:/code/
+      - ./eahub/:/code/eahub/
     environment:
       APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
       LOCAL_GROUPS_AIRTABLE_API_KEY:
@@ -23,7 +23,7 @@ services:
       DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
       DEBUG: 'True'
       EMAIL_URL: smtp://mail:1025
-      HOSTS: localhost
+      HOSTS: web,localhost
       HTTPS: 'False'
       RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
       RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
@@ -48,3 +48,30 @@ services:
     ports:
       - 8001:1080
     restart: always
+  e2e:
+    build: ./eahub_e2e/
+    depends_on:
+      - web
+      - webdriver
+      - chrome
+      - firefox
+    volumes:
+      - ./eahub_e2e/:/code/eahub_e2e/
+    environment:
+      BROWSERS: chrome,firefox
+      PYTEST_BASE_URL: http://web:8000
+      SELENIUM_HOST: webdriver
+  webdriver:
+    image: selenium/hub:3.141.59-iron
+  chrome:
+    image: selenium/node-chrome:3.141.59-iron
+    depends_on:
+      - webdriver
+    environment:
+      HUB_HOST: webdriver
+  firefox:
+    image: selenium/node-firefox:3.141.59-iron
+    depends_on:
+      - webdriver
+    environment:
+      HUB_HOST: webdriver
