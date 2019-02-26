@@ -90,6 +90,7 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
+    organisational_affiliation = models.TextField(blank=True)
     summary = models.TextField(blank=True)
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
