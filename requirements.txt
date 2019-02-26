@@ -20,3 +20,4 @@ applicationinsights==0.11.7
 django-authtools==1.6.0
 django-autoslug==1.9.4
 django-enumfield==1.5
+django-crispy-forms>=1.7.2

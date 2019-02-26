@@ -7,7 +7,7 @@ from ..base.models import User
 class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
     name = forms.CharField(max_length=200)
-    subscribed_to_email_updates = forms.BooleanField(required=False)
+    subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
 
     def save(self, commit=True):
         if not commit:
@@ -20,7 +20,7 @@ class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
     class Meta(CaseInsensitiveUsernameFieldCreationForm.Meta):
         model = User
-        fields = ['email']
+        fields = ['name', 'email']
 
 
 class EditProfileForm(forms.ModelForm):
@@ -32,14 +32,26 @@ class EditProfileForm(forms.ModelForm):
             'city_or_town', 'country',
             'subscribed_to_email_updates',
         )
+        widgets = {
+            'city_or_town': forms.TextInput(attrs={'placeholder': 'London'}),
+            'country': forms.TextInput(attrs={'placeholder': 'UK'}),
+            'summary': forms.Textarea(attrs={'rows': 7, 'placeholder': "In West Philadelphia born and raised. On the playground is where I spent most of my days."}),
+        }
+        labels = {
+            'city_or_town': ('City/Town'),
+            'subscribed_to_email_updates': ('Send me email updates about the EA Hub'),
+        }
 
 
 class EditProfileCauseAreasForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
-            'available_to_volunteer',           
+            'available_to_volunteer',
         )
+        labels = {
+            'available_to_volunteer': ('Available to volunteer:')
+        }
 
 
 class EditProfileCareerForm(forms.ModelForm):
@@ -48,6 +60,9 @@ class EditProfileCareerForm(forms.ModelForm):
         fields = (
             'open_to_job_offers',
         )
+        labels = {
+            'open_to_job_offers': ('Open to job offers:')
+        }
 
 
 class EditProfileCommunityForm(forms.ModelForm):
@@ -56,7 +71,9 @@ class EditProfileCommunityForm(forms.ModelForm):
         fields = (
             'available_as_speaker',
         )
-
+        labels = {
+            'available_as_speaker': ('Available as speaker:')
+        }
 
 class DeleteProfileForm(forms.Form):
     confirm = forms.CharField(max_length=100)

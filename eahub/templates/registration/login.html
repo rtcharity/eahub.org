@@ -2,25 +2,14 @@
 
 {% block title %}Login{% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block form_fields %}
-<div class="field">
-  <label for="id_username">Email address</label>
-  <input type="username" name="username" id="id_username" class="form-control" placeholder="email" required autofocus>
-  {% if form.username.errors %}
-    {% for error in form.username.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
-<div class="field">
-  <label for="id_password">Password</label>
-  <input type="password" name="password" id="id_password" class="form-control" placeholder="password" required>
-  {% if form.password.errors %}
-    {% for error in form.password.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
+
+{{ form.username|as_crispy_field }}
+
+{{ form.password|as_crispy_field }}
+
 <div class="field">
   {% if form.non_field_errors %}
     {% for error in form.non_field_errors %}
@@ -28,9 +17,10 @@
     {% endfor %}
   {% endif %}
 </div>
-<button type="submit" class="btn btn-default">Log in</button>
+
 {% endblock %}
 
+{% block submit%}Log in{% endblock%}
 
 {% block content_after_form %}
 <div class="panel animated pulse">

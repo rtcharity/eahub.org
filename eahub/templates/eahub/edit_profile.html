@@ -2,19 +2,14 @@
 
 {% block title %}Edit Profile{% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block form_fields %}
 
-<div class="field">
-    <label for="id_name" class="required_field">Name</label>
-    <input type="text" name="name" id="id_name" class="form-control" placeholder="Peter" value="{{ form.name.value }}" maxlength="50" required autofocus>
-    {% if form.name.errors %}
-        {% for error in form.name.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
 
-<div class="field">
+{{ form.name|as_crispy_field }}
+
+<div class="field image_upload">
   <label for="id_image">Image</label>
   <input type="file" name="image" id="id_image" class="form-control">
   {% if form.image.errors %}
@@ -24,47 +19,20 @@
   {% endif %}
 </div>
 
-<div class="field">
-  <label for="id_city_or_town">City/town</label>
-  <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" value="{{ form.city_or_town.value|default_if_none:'' }}" placeholder="London" maxlength="50">
-  {% if form.city_or_town.errors %}
-    {% for error in form.city_or_town.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
+{{ form.city_or_town|as_crispy_field }}
 
-<div class="field">
-  <label for="id_country">Country</label>
-  <input type="text" name="country" id="id_country" class="form-control" value="{{ form.country.value|default_if_none:'' }}" placeholder="United Kingdom" maxlength="50">
-  {% if form.country.errors %}
-    {% for error in form.country.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
+{{ form.country|as_crispy_field }}
 
-<div class="field">
-  <label for="id_summary">Summary</label>
-  <textarea type="text" name="summary" id="id_summary" class="form-control" rows="4" placeholder='In West Philadelphia born and raised
-On the playground is where I spent most of my days' maxlength="5000">{{ form.summary.value }}</textarea>
-  {% if form.summary.errors %}
-    {% for error in form.summary.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
+{{ form.summary|as_crispy_field }}
 
-<div class="field">
-  <label>{{ form.subscribed_to_email_updates }} Send me email updates about the EA Hub</label>
-  {% if form.subscribed_to_email_updates.errors %}
-    {% for error in form.subscribed_to_email_updates.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
-</div>
+{{ form.subscribed_to_email_updates|as_crispy_field }}
 
-<button type="submit" class="btn btn-default">Update</button>
+{% endblock %}
+
+{% block submit%}Update{% endblock%}
+
+{% block form_privacy_note %}
+
 <div class="privacy-note">
   <b>Note:</b> All profile information is public.
   Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.

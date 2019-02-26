@@ -476,11 +476,55 @@ body {
   display: block;
 }
 
+.control-group {
+  margin-bottom: 10px;
+}
+
+form .image_upload {
+  margin-bottom: 10px !important;
+}
+
+form .subscription {
+  margin-left: 20px;
+}
+
+form .btn-update {
+  margin-top: 15px;
+}
+
+form .textInput, .textarea {
+  width: 100%;
+}
+
+form .alert-error {
+  margin-bottom: 20px;
+}
+
+form .alert ul {
+  list-style: none;
+  margin-left: 0px;
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+  padding: 10px 10px 10px 10px;
+}
+
+#id_image {
+  padding-bottom: 35px;
+  height: 30px;
+}
+
+#div_id_subscribed_to_email_updates {
+  margin-left: 20px;
+}
+
 /* registration */
 .login-danger {
   background-color: #E4F5B1;
   border: none;
   color: black;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .login-info {
@@ -492,7 +536,19 @@ body {
 .login-info a {
   color: white;
 }
-
+.help-block {
+  background-color: #E4F5B1;
+  border: none;
+  color: black;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+.help-block strong {
+  font-weight: 500;
+}
+#hint_id_password2 {
+  display: none;
+}
 .password-reset form {
   margin-bottom: 20px;
 }

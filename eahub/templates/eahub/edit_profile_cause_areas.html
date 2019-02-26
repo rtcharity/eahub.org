@@ -2,6 +2,8 @@
 
 {% block title %}Cause Areas{% endblock %}
 
+{% load crispy_forms_tags %}
+
 {% block form_fields %}
 
 {{ form.errors }}
@@ -24,19 +26,17 @@
   </select>
 </div>
 
-<div class="field">
-  <label for="id_available_to_volunteer">Available to volunteer:</label>
-  <select class="form-control" name="available_to_volunteer">
-    <option value="" {% if profile.available_to_volunteer == None %}selected{% endif %}>N/A</option>
-    <option value="True" {% if profile.available_to_volunteer == 1 %}selected{% endif %}>Yes</option>
-    <option value="False" {% if profile.available_to_volunteer == 0 %}selected{% endif %}>No</option>
-  </select>
-</div>
-<button type="submit" class="btn btn-default">Update</button>
+{{ form.available_to_volunteer|as_crispy_field }}
+
+{% endblock %}
+
+{% block submit%}Update{% endblock%}
+
+{% block form_privacy_note %}
+
 <div class="privacy-note">
   <b>Note:</b> All profile information is public.
   Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 {% endblock %}
