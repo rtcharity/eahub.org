@@ -80,6 +80,17 @@ class Migration(migrations.Migration):
                     "available_as_speaker",
                     models.BooleanField(blank=True, default=None, null=True),
                 ),
+                (
+                    "organisational_affiliations",
+                    django.contrib.postgres.fields.ArrayField(
+                        base_field=django_enumfield.db.fields.EnumField(
+                            default=1, enum=eahub.profiles.models.OrganisationalAffiliations
+                        ),
+                        blank=True,
+                        default=list,
+                        size=None,
+                    ),
+                ),
                 ("summary", models.TextField(blank=True)),
                 (
                     "giving_pledges",
