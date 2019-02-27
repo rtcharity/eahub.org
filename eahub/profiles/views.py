@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .models import CauseArea, ExpertiseArea, GivingPledge, Profile
+from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation
 from .forms import *
 
 
@@ -136,13 +136,17 @@ def edit_profile_community(request):
     if request.method == 'POST':
         form = EditProfileCommunityForm(request.POST, instance=request.user.profile)
         if form.is_valid():
-            form.save()
+            profile = form.save(commit=False)
+            organisational_affiliations = request.POST.getlist('organisational_affiliations')
+            profile.organisational_affiliation = organisational_affiliations
+            profile.save()
             return redirect('my_profile')
     else:
         form = EditProfileCommunityForm(instance=request.user.profile)
     return render(request, 'eahub/edit_profile_community.html', {
             'form': form,
-            'profile': Profile.objects.get(pk=request.user.profile.id)
+            'profile': Profile.objects.get(pk=request.user.profile.id),
+            'organisational_affiliation_choices': OrganisationalAffiliation.choices,
         })
 
 

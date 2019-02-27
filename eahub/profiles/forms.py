@@ -70,14 +70,9 @@ class EditProfileCommunityForm(forms.ModelForm):
         model = Profile
         fields = (
             'available_as_speaker',
-            'organisational_affiliation'
         )
         labels = {
-            'available_as_speaker': ('Available as speaker:'),
-            'organisational_affiliation': ('Organisational affiliations')
-        }
-        widgets = {
-            'organisational_affiliation': forms.Textarea(attrs={'rows': 7, 'placeholder': "EA London, University of British Columbia, "}),
+            'available_as_speaker': ('Available as speaker:')
         }
 
 class DeleteProfileForm(forms.Form):

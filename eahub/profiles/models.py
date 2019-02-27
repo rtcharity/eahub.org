@@ -70,7 +70,7 @@ class GivingPledge(enum.Enum):
 
 class OrganisationalAffiliation(enum.Enum):
 
-    80000_HOURS = 1
+    EIGHTYTHOUSAND_HOURS = 1
     ANIMAL_CHARITY_EVALUATORS = 2
     BERKELEY_EXISTENTIAL_RISK_INITIATIVE = 3
     CENTER_FOR_HUMAN_COMPATIBLE_AI = 4
@@ -82,7 +82,7 @@ class OrganisationalAffiliation(enum.Enum):
     CHARITY_ENTREPRENEURSHIP = 10
     FORETHOUGHT_FOUNDATION = 11
     FOUNDATIONAL_RESEARCH_INSTITUTE = 12
-    FOUNDER'S_PLEDGE = 13
+    FOUNDERS_PLEDGE = 13
     FUTURE_OF_LIFE_INSTITUTE = 14
     GIVEWELL = 15
     GLOBAL_CATASTROPHIC_RISK_INSTITUTE = 16
@@ -103,38 +103,38 @@ class OrganisationalAffiliation(enum.Enum):
     STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = 31
 
     labels = {
-        80000_HOURS = "80,000 Hours",
-        ANIMAL_CHARITY_EVALUATORS = "Animal Charity Evaluators",
-        BERKELEY_EXISTENTIAL_RISK_INITIATIVE = "Berkeley Existential Risk Initiative",
-        CENTER_FOR_HUMAN_COMPATIBLE_AI = "Center for Human Compatible AI",
-        CENTER_FOR_EFFECTIVE_ALTRUISM = "Center for Effective Altruism",
-        CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = "Center for the Future of Intelligence",
-        CENTER_FOR_APPLIED_RATIONALITY = "Center for Applied Rationality",
-        CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = "Center for the Study of Existential Risk",
-        CHARITY_SCIENCE_HEALTH = "Charity Science Health",
-        CHARITY_ENTREPRENEURSHIP = "Charity Entrepreneurship",
-        FORETHOUGHT_FOUNDATION = "Forethought Foundation",
-        FOUNDATIONAL_RESEARCH_INSTITUTE = "Foundational Research Institute",
-        FOUNDER'S_PLEDGE = "Founder's Pledge",
-        FUTURE_OF_LIFE_INSTITUTE = "Future of Life Institute",
-        GIVEWELL = "GiveWell",
-        GLOBAL_CATASTROPHIC_RISK_INSTITUTE = "Global Catastrophic Risk Institute",
-        GLOBAL_PRIORITIES_INSTITUTE = "Global Priorities Institute",
-        GOOD_FOOD_INSTITUTE = "Good Food Institute",
-        LOCAL_EFFECTIVE_ALTRUISM_NETWORK = "Local Effective Altruism Network",
-        MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = "Machine Intelligence Research Institute",
-        ONE_FOR_THE_WORLD = "One For The World",
-        OPEN_PHILANTHROPY_PROJECT = "Open Philanthropy Project",
-        RAISING_FOR_EFFECTIVE_GIVING = "Raising for Effective Giving",
-        RETHINK_CHARITY = "Rethink Charity",
-        RETHINK_CHARITY_FORWARD = "Rethink Charity Forward",
-        RETHINK_PRIORITIES = "Rethink Priorities",
-        SCHOOLS_FOR_HIGH_IMPACT_CHARITY = "Schools for High Impact Charity",
-        SENTIENCE_INSTITUTE = "Sentience Institute",
-        STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = "Stiftung für Effektiven Altruismus (EAF)",
-        THE_LIFE_YOU_CAN_SAVE = "The Life You Can Save",
-        WILD_ANIMAL_INITIATIVE = "Wild Animal Initiative"
-        
+        EIGHTYTHOUSAND_HOURS: "80,000 Hours",
+        ANIMAL_CHARITY_EVALUATORS: "Animal Charity Evaluators",
+        BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative",
+        CENTER_FOR_HUMAN_COMPATIBLE_AI: "Center for Human Compatible AI",
+        CENTER_FOR_EFFECTIVE_ALTRUISM: "Center for Effective Altruism",
+        CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE: "Center for the Future of Intelligence",
+        CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality",
+        CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK: "Center for the Study of Existential Risk",
+        CHARITY_SCIENCE_HEALTH: "Charity Science Health",
+        CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
+        FORETHOUGHT_FOUNDATION: "Forethought Foundation",
+        FOUNDATIONAL_RESEARCH_INSTITUTE: "Foundational Research Institute",
+        FOUNDERS_PLEDGE: "Founder's Pledge",
+        FUTURE_OF_LIFE_INSTITUTE: "Future of Life Institute",
+        GIVEWELL: "GiveWell",
+        GLOBAL_CATASTROPHIC_RISK_INSTITUTE: "Global Catastrophic Risk Institute",
+        GLOBAL_PRIORITIES_INSTITUTE: "Global Priorities Institute",
+        GOOD_FOOD_INSTITUTE: "Good Food Institute",
+        LOCAL_EFFECTIVE_ALTRUISM_NETWORK: "Local Effective Altruism Network",
+        MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE: "Machine Intelligence Research Institute",
+        ONE_FOR_THE_WORLD: "One For The World",
+        OPEN_PHILANTHROPY_PROJECT: "Open Philanthropy Project",
+        RAISING_FOR_EFFECTIVE_GIVING: "Raising for Effective Giving",
+        RETHINK_CHARITY: "Rethink Charity",
+        RETHINK_CHARITY_FORWARD: "Rethink Charity Forward",
+        RETHINK_PRIORITIES: "Rethink Priorities",
+        SCHOOLS_FOR_HIGH_IMPACT_CHARITY: "Schools for High Impact Charity",
+        SENTIENCE_INSTITUTE: "Sentience Institute",
+        STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS: "Stiftung für Effektiven Altruismus (EAF)",
+        THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
+        WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative"
+
     }
 
 
@@ -159,7 +159,9 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    organisational_affiliation = models.TextField(blank=True)
+    organisational_affiliation = postgres_fields.ArrayField(
+        enum.EnumField(OrganisationalAffiliation), blank=True, default=list
+    )
     summary = models.TextField(blank=True)
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
@@ -199,6 +201,12 @@ class Profile(models.Model):
         else:
             return "N/A"
 
+    def get_pretty_organisational_affiliation(self):
+        if self.organisational_affiliation:
+            return ", ".join(map(OrganisationalAffiliation.label, self.organisational_affiliation))
+        else:
+            return "N/A"
+
     def csv(self, response):
         writer = csv.writer(response)
         writer.writerows(
@@ -213,6 +221,7 @@ class Profile(models.Model):
                 ["open_to_job_offers", self.open_to_job_offers],
                 ["expertise_areas", self.get_pretty_expertise()],
                 ["available_as_speaker", self.available_as_speaker],
+                ["organisational_affiliation", self.get_pretty_organisational_affiliation()],
                 ["summary", self.summary],
                 ["giving_pledges", self.get_pretty_giving_pledges()],
             ]

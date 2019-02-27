@@ -403,7 +403,6 @@ body {
   text-decoration: none;
 }
 
-
 .profile-info .light-grey {
   background-color: #F2F2F2 !important;
 }
@@ -412,11 +411,12 @@ body {
   text-align: center;
 }
 
+
 .profile-cards .panel {
   height: 100%;
 }
 
-.profile-info .row {
+.profile-info {
   align-items: stretch;
   display: flex;
   margin-bottom: 20px;
@@ -459,6 +459,12 @@ body {
 
 #multiselect-form {
   display: block;
+}
+
+.multiselect-container  {
+  max-height: 50vh;
+  max-width: 90vw;
+  overflow: scroll;
 }
 
 #update-btn {
@@ -518,8 +524,13 @@ form .alert ul {
   margin-left: 20px;
 }
 
+#div_id_open_to_job_offers .controls {
+  display: inline-block;
+}
+
 form .btn-update {
   margin-top: 15px;
+  display: block;
 }
 
 form .textInput, .textarea {
@@ -546,6 +557,10 @@ form .alert ul {
 
 #div_id_subscribed_to_email_updates {
   margin-left: 20px;
+}
+
+.org_affiliation label {
+  display: block;
 }
 
 /* registration */
@@ -650,5 +665,9 @@ table .picture-column {
 
   .navbar-signup-xs {
     display: block !important;
+  }
+
+  .profile-info {
+    display: block;
   }
 }
