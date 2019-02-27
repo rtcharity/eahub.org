@@ -68,6 +68,75 @@ class GivingPledge(enum.Enum):
         ONE_FOR_THE_WORLD: "One for the World",
     }
 
+class OrganisationalAffiliation(enum.Enum):
+
+    80000_HOURS = 1
+    ANIMAL_CHARITY_EVALUATORS = 2
+    BERKELEY_EXISTENTIAL_RISK_INITIATIVE = 3
+    CENTER_FOR_HUMAN_COMPATIBLE_AI = 4
+    CENTER_FOR_EFFECTIVE_ALTRUISM = 5
+    CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = 6
+    CENTER_FOR_APPLIED_RATIONALITY = 7
+    CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = 8
+    CHARITY_SCIENCE_HEALTH = 9
+    CHARITY_ENTREPRENEURSHIP = 10
+    FORETHOUGHT_FOUNDATION = 11
+    FOUNDATIONAL_RESEARCH_INSTITUTE = 12
+    FOUNDER'S_PLEDGE = 13
+    FUTURE_OF_LIFE_INSTITUTE = 14
+    GIVEWELL = 15
+    GLOBAL_CATASTROPHIC_RISK_INSTITUTE = 16
+    GLOBAL_PRIORITIES_INSTITUTE = 17
+    GOOD_FOOD_INSTITUTE = 18
+    MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = 19
+    SENTIENCE_INSTITUTE = 20
+    OPEN_PHILANTHROPY_PROJECT = 21
+    RAISING_FOR_EFFECTIVE_GIVING = 22
+    WILD_ANIMAL_INITIATIVE = 23
+    THE_LIFE_YOU_CAN_SAVE = 24
+    ONE_FOR_THE_WORLD = 25
+    RETHINK_CHARITY = 26
+    LOCAL_EFFECTIVE_ALTRUISM_NETWORK = 27
+    RETHINK_CHARITY_FORWARD = 28
+    RETHINK_PRIORITIES = 29
+    SCHOOLS_FOR_HIGH_IMPACT_CHARITY = 30
+    STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = 31
+
+    labels = {
+        80000_HOURS = "80,000 Hours",
+        ANIMAL_CHARITY_EVALUATORS = "Animal Charity Evaluators",
+        BERKELEY_EXISTENTIAL_RISK_INITIATIVE = "Berkeley Existential Risk Initiative",
+        CENTER_FOR_HUMAN_COMPATIBLE_AI = "Center for Human Compatible AI",
+        CENTER_FOR_EFFECTIVE_ALTRUISM = "Center for Effective Altruism",
+        CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = "Center for the Future of Intelligence",
+        CENTER_FOR_APPLIED_RATIONALITY = "Center for Applied Rationality",
+        CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = "Center for the Study of Existential Risk",
+        CHARITY_SCIENCE_HEALTH = "Charity Science Health",
+        CHARITY_ENTREPRENEURSHIP = "Charity Entrepreneurship",
+        FORETHOUGHT_FOUNDATION = "Forethought Foundation",
+        FOUNDATIONAL_RESEARCH_INSTITUTE = "Foundational Research Institute",
+        FOUNDER'S_PLEDGE = "Founder's Pledge",
+        FUTURE_OF_LIFE_INSTITUTE = "Future of Life Institute",
+        GIVEWELL = "GiveWell",
+        GLOBAL_CATASTROPHIC_RISK_INSTITUTE = "Global Catastrophic Risk Institute",
+        GLOBAL_PRIORITIES_INSTITUTE = "Global Priorities Institute",
+        GOOD_FOOD_INSTITUTE = "Good Food Institute",
+        LOCAL_EFFECTIVE_ALTRUISM_NETWORK = "Local Effective Altruism Network",
+        MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = "Machine Intelligence Research Institute",
+        ONE_FOR_THE_WORLD = "One For The World",
+        OPEN_PHILANTHROPY_PROJECT = "Open Philanthropy Project",
+        RAISING_FOR_EFFECTIVE_GIVING = "Raising for Effective Giving",
+        RETHINK_CHARITY = "Rethink Charity",
+        RETHINK_CHARITY_FORWARD = "Rethink Charity Forward",
+        RETHINK_PRIORITIES = "Rethink Priorities",
+        SCHOOLS_FOR_HIGH_IMPACT_CHARITY = "Schools for High Impact Charity",
+        SENTIENCE_INSTITUTE = "Sentience Institute",
+        STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = "Stiftung für Effektiven Altruismus (EAF)",
+        THE_LIFE_YOU_CAN_SAVE = "The Life You Can Save",
+        WILD_ANIMAL_INITIATIVE = "Wild Animal Initiative"
+        
+    }
+
 
 class Profile(models.Model):
 
