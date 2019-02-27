@@ -68,7 +68,7 @@ class GivingPledge(enum.Enum):
         ONE_FOR_THE_WORLD: "One for the World",
     }
 
-class OrganisationalAffiliation(enum.Enum):
+class OrganisationalAffiliations(enum.Enum):
 
     EIGHTYTHOUSAND_HOURS = 1
     ANIMAL_CHARITY_EVALUATORS = 2
@@ -88,15 +88,15 @@ class OrganisationalAffiliation(enum.Enum):
     GLOBAL_CATASTROPHIC_RISK_INSTITUTE = 16
     GLOBAL_PRIORITIES_INSTITUTE = 17
     GOOD_FOOD_INSTITUTE = 18
-    MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = 19
-    SENTIENCE_INSTITUTE = 20
-    OPEN_PHILANTHROPY_PROJECT = 21
-    RAISING_FOR_EFFECTIVE_GIVING = 22
-    WILD_ANIMAL_INITIATIVE = 23
-    THE_LIFE_YOU_CAN_SAVE = 24
-    ONE_FOR_THE_WORLD = 25
-    RETHINK_CHARITY = 26
-    LOCAL_EFFECTIVE_ALTRUISM_NETWORK = 27
+    LOCAL_EFFECTIVE_ALTRUISM_NETWORK = 19
+    MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = 20
+    SENTIENCE_INSTITUTE = 21
+    OPEN_PHILANTHROPY_PROJECT = 22
+    RAISING_FOR_EFFECTIVE_GIVING = 23
+    WILD_ANIMAL_INITIATIVE = 24
+    THE_LIFE_YOU_CAN_SAVE = 25
+    ONE_FOR_THE_WORLD = 26
+    RETHINK_CHARITY = 27
     RETHINK_CHARITY_FORWARD = 28
     RETHINK_PRIORITIES = 29
     SCHOOLS_FOR_HIGH_IMPACT_CHARITY = 30
@@ -159,8 +159,8 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    organisational_affiliation = postgres_fields.ArrayField(
-        enum.EnumField(OrganisationalAffiliation), blank=True, default=list
+    organisational_affiliations = postgres_fields.ArrayField(
+        enum.EnumField(OrganisationalAffiliations), blank=True, default=list
     )
     summary = models.TextField(blank=True)
     giving_pledges = postgres_fields.ArrayField(
@@ -201,9 +201,9 @@ class Profile(models.Model):
         else:
             return "N/A"
 
-    def get_pretty_organisational_affiliation(self):
-        if self.organisational_affiliation:
-            return ", ".join(map(OrganisationalAffiliation.label, self.organisational_affiliation))
+    def get_pretty_organisational_affiliations(self):
+        if self.organisational_affiliations:
+            return ", ".join(map(OrganisationalAffiliations.label, self.organisational_affiliations))
         else:
             return "N/A"
 
@@ -221,7 +221,7 @@ class Profile(models.Model):
                 ["open_to_job_offers", self.open_to_job_offers],
                 ["expertise_areas", self.get_pretty_expertise()],
                 ["available_as_speaker", self.available_as_speaker],
-                ["organisational_affiliation", self.get_pretty_organisational_affiliation()],
+                ["organisational_affiliations", self.get_pretty_organisational_affiliations()],
                 ["summary", self.summary],
                 ["giving_pledges", self.get_pretty_giving_pledges()],
             ]
