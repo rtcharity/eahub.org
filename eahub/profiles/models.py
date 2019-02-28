@@ -73,9 +73,9 @@ class OrganisationalAffiliation(enum.Enum):
     EIGHTY_THOUSAND_HOURS = 1
     ANIMAL_CHARITY_EVALUATORS = 2
     BERKELEY_EXISTENTIAL_RISK_INITIATIVE = 3
-    CENTER_FOR_HUMAN_COMPATIBLE_AI = 4
-    CENTRE_FOR_EFFECTIVE_ALTRUISM = 5
-    CENTER_FOR_APPLIED_RATIONALITY = 6
+    CENTER_FOR_APPLIED_RATIONALITY = 4
+    CENTER_FOR_HUMAN_COMPATIBLE_AI = 5
+    CENTRE_FOR_EFFECTIVE_ALTRUISM = 6
     CENTRE_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = 7
     CHARITY_ENTREPRENEURSHIP = 8
     CHARITY_SCIENCE_HEALTH = 9
@@ -106,9 +106,9 @@ class OrganisationalAffiliation(enum.Enum):
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
         ANIMAL_CHARITY_EVALUATORS: "Animal Charity Evaluators",
         BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative",
+        CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality",
         CENTER_FOR_HUMAN_COMPATIBLE_AI: "Center for Human Compatible AI",
         CENTRE_FOR_EFFECTIVE_ALTRUISM: "Centre for Effective Altruism",
-        CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality",
         CENTRE_FOR_THE_STUDY_OF_EXISTENTIAL_RISK: "Centre for the Study of Existential Risk",
         CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
         CHARITY_SCIENCE_HEALTH: "Charity Science Health",
