@@ -99,7 +99,7 @@ class OrganisationalAffiliation(enum.Enum):
     RETHINK_CHARITY = 27
     RETHINK_CHARITY_FORWARD = 28
     RETHINK_PRIORITIES = 29
-    SCHOOLS_FOR_HIGH_IMPACT_CHARITY = 30
+    STUDENTS_FOR_HIGH_IMPACT_CHARITY = 30
     STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = 31
 
     labels = {
@@ -129,7 +129,7 @@ class OrganisationalAffiliation(enum.Enum):
         RETHINK_CHARITY: "Rethink Charity",
         RETHINK_CHARITY_FORWARD: "Rethink Charity Forward",
         RETHINK_PRIORITIES: "Rethink Priorities",
-        SCHOOLS_FOR_HIGH_IMPACT_CHARITY: "Schools for High Impact Charity",
+        STUDENTS_FOR_HIGH_IMPACT_CHARITY: "Students for High Impact Charity",
         SENTIENCE_INSTITUTE: "Sentience Institute",
         STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS: "Stiftung für Effektiven Altruismus (EAF)",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
