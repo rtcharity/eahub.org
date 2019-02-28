@@ -68,26 +68,26 @@ class GivingPledge(enum.Enum):
         ONE_FOR_THE_WORLD: "One for the World",
     }
 
-class OrganisationalAffiliations(enum.Enum):
+class OrganisationalAffiliation(enum.Enum):
 
     EIGHTYTHOUSAND_HOURS = 1
     ANIMAL_CHARITY_EVALUATORS = 2
     BERKELEY_EXISTENTIAL_RISK_INITIATIVE = 3
     CENTER_FOR_HUMAN_COMPATIBLE_AI = 4
     CENTER_FOR_EFFECTIVE_ALTRUISM = 5
-    CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = 6
-    CENTER_FOR_APPLIED_RATIONALITY = 7
-    CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = 8
+    CENTER_FOR_APPLIED_RATIONALITY = 6
+    CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = 7
+    CHARITY_ENTREPRENEURSHIP = 8
     CHARITY_SCIENCE_HEALTH = 9
-    CHARITY_ENTREPRENEURSHIP = 10
-    FORETHOUGHT_FOUNDATION = 11
-    FOUNDATIONAL_RESEARCH_INSTITUTE = 12
-    FOUNDERS_PLEDGE = 13
-    FUTURE_OF_LIFE_INSTITUTE = 14
-    GIVEWELL = 15
-    GLOBAL_CATASTROPHIC_RISK_INSTITUTE = 16
-    GLOBAL_PRIORITIES_INSTITUTE = 17
-    GOOD_FOOD_INSTITUTE = 18
+    FORETHOUGHT_FOUNDATION = 10
+    FOUNDATIONAL_RESEARCH_INSTITUTE = 11
+    FOUNDERS_PLEDGE = 12
+    FUTURE_OF_LIFE_INSTITUTE = 13
+    GIVEWELL = 14
+    GLOBAL_CATASTROPHIC_RISK_INSTITUTE = 15
+    GLOBAL_PRIORITIES_INSTITUTE = 16
+    GOOD_FOOD_INSTITUTE = 17
+    LEVERHULME_CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = 18
     LOCAL_EFFECTIVE_ALTRUISM_NETWORK = 19
     MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = 20
     SENTIENCE_INSTITUTE = 21
@@ -108,22 +108,22 @@ class OrganisationalAffiliations(enum.Enum):
         BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative",
         CENTER_FOR_HUMAN_COMPATIBLE_AI: "Center for Human Compatible AI",
         CENTER_FOR_EFFECTIVE_ALTRUISM: "Center for Effective Altruism",
-        CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE: "Center for the Future of Intelligence",
         CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality",
         CENTER_FOR_THE_STUDY_OF_EXISTENTIAL_RISK: "Center for the Study of Existential Risk",
-        CHARITY_SCIENCE_HEALTH: "Charity Science Health",
         CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
+        CHARITY_SCIENCE_HEALTH: "Charity Science Health",
         FORETHOUGHT_FOUNDATION: "Forethought Foundation",
         FOUNDATIONAL_RESEARCH_INSTITUTE: "Foundational Research Institute",
-        FOUNDERS_PLEDGE: "Founder's Pledge",
+        FOUNDERS_PLEDGE: "Founders Pledge",
         FUTURE_OF_LIFE_INSTITUTE: "Future of Life Institute",
         GIVEWELL: "GiveWell",
         GLOBAL_CATASTROPHIC_RISK_INSTITUTE: "Global Catastrophic Risk Institute",
         GLOBAL_PRIORITIES_INSTITUTE: "Global Priorities Institute",
         GOOD_FOOD_INSTITUTE: "Good Food Institute",
+        LEVERHULME_CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = 'Leverhulme Center for the Future of Intelligence'
         LOCAL_EFFECTIVE_ALTRUISM_NETWORK: "Local Effective Altruism Network",
         MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE: "Machine Intelligence Research Institute",
-        ONE_FOR_THE_WORLD: "One For The World",
+        ONE_FOR_THE_WORLD: "One for the World",
         OPEN_PHILANTHROPY_PROJECT: "Open Philanthropy Project",
         RAISING_FOR_EFFECTIVE_GIVING: "Raising for Effective Giving",
         RETHINK_CHARITY: "Rethink Charity",
@@ -160,7 +160,7 @@ class Profile(models.Model):
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
     organisational_affiliations = postgres_fields.ArrayField(
-        enum.EnumField(OrganisationalAffiliations), blank=True, default=list
+        enum.EnumField(OrganisationalAffiliation), blank=True, default=list
     )
     summary = models.TextField(blank=True)
     giving_pledges = postgres_fields.ArrayField(
@@ -203,7 +203,7 @@ class Profile(models.Model):
 
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
-            return ", ".join(map(OrganisationalAffiliations.label, self.organisational_affiliations))
+            return ", ".join(map(OrganisationalAffiliation.label, self.organisational_affiliations))
         else:
             return "N/A"
 
