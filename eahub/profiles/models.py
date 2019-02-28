@@ -96,8 +96,8 @@ class OrganisationalAffiliation(enum.Enum):
     RETHINK_CHARITY_FORWARD = 24
     RETHINK_PRIORITIES = 25
     SENTIENCE_INSTITUTE = 26
-    STUDENTS_FOR_HIGH_IMPACT_CHARITY = 27
-    STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = 28
+    STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS = 27
+    STUDENTS_FOR_HIGH_IMPACT_CHARITY = 28
     THE_GOOD_FOOD_INSTITUTE = 29
     THE_LIFE_YOU_CAN_SAVE = 30
     WILD_ANIMAL_INITIATIVE = 31
@@ -128,9 +128,9 @@ class OrganisationalAffiliation(enum.Enum):
         RETHINK_CHARITY: "Rethink Charity",
         RETHINK_CHARITY_FORWARD: "Rethink Charity Forward",
         RETHINK_PRIORITIES: "Rethink Priorities",
-        STUDENTS_FOR_HIGH_IMPACT_CHARITY: "Students for High Impact Charity",
         SENTIENCE_INSTITUTE: "Sentience Institute",
         STIFTUNG_FUR_EFFEKTIVEN_ALTRUISMUS: "Stiftung für Effektiven Altruismus (EAF)",
+        STUDENTS_FOR_HIGH_IMPACT_CHARITY: "Students for High Impact Charity",
         THE_GOOD_FOOD_INSTITUTE: "The Good Food Institute",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative"
