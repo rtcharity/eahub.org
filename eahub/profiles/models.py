@@ -120,7 +120,7 @@ class OrganisationalAffiliation(enum.Enum):
         GLOBAL_CATASTROPHIC_RISK_INSTITUTE: "Global Catastrophic Risk Institute",
         GLOBAL_PRIORITIES_INSTITUTE: "Global Priorities Institute",
         GOOD_FOOD_INSTITUTE: "Good Food Institute",
-        LEVERHULME_CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = 'Leverhulme Center for the Future of Intelligence'
+        LEVERHULME_CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE: "Leverhulme Center for the Future of Intelligence",
         LOCAL_EFFECTIVE_ALTRUISM_NETWORK: "Local Effective Altruism Network",
         MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE: "Machine Intelligence Research Institute",
         ONE_FOR_THE_WORLD: "One for the World",
