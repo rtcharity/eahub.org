@@ -428,6 +428,7 @@ body {
 
 .panel-body .list {
   display: block;
+  margin-bottom: 10px;
 }
 
 .key-facts .background {
