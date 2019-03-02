@@ -32,8 +32,10 @@ function applySearchFunctionality (datatable) {
   });
 }
 
-// add multiselect class to groups selection on profile/edit/community
-$('#id_groups').removeClass('selectmultiple').addClass('form-control multiselect-form')
+var selectors_with_old_style = [$('#id_groups'), $('#id_available_as_speaker')]
+selectors_with_old_style.forEach(function(selector) {
+  selector.removeClass('selectmultiple').addClass('form-control multiselect-form')
+})
 
 // add setting for all multiselect forms
 $('.multiselect-form').multiselect({

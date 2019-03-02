@@ -7,7 +7,7 @@
 {% block form_fields %}
 
 <div class="field org_affiliation">
-    <label>Organisational Affiliation:</label>
+    <label>Organisational Affiliation</label>
     <select class="form-control multiselect-form" name="organisational_affiliations" multiple>
         {% for choice in organisational_affiliation_choices %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.organisational_affiliations %}selected{% endif %}>{{ choice.1.label }}</option>

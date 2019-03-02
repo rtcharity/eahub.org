@@ -142,7 +142,7 @@ def edit_profile_community(request):
             profile.organisational_affiliations = organisational_affiliations
             group_affiliations = request.POST.getlist('groups')
             groups = LocalGroup.objects.filter(id__in=group_affiliations)
-            profile.groups.add(*groups)
+            profile.groups.set(groups)
             profile.save()
             return redirect('my_profile')
     else:

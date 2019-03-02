@@ -94,14 +94,14 @@
         <div class="panel-body">
           <h3>Community</h3>
           {% if profile.available_as_speaker %}
-          <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
+          <div class="alert alert-success" style="margin-bottom: 10px;">Available as speaker</div>
           {% endif %}
-          <div class="list">
-          {{ profile.get_pretty_organisational_affiliations }}
-          </div>
-          <div class="list"> 
-          {{ profile.get_pretty_groups }}
-          </div>
+          {% if profile.organisational_affiliations %}
+          <div class="list">{{ profile.get_pretty_organisational_affiliations }}</div>
+          {% endif %}
+          {% if profile.groups %}
+          <div class="list">{{ profile.get_pretty_groups }}</div>
+          {% endif %}
           <br>
           {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">

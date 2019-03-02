@@ -236,6 +236,7 @@ class Profile(models.Model):
                 ["expertise_areas", self.get_pretty_expertise()],
                 ["available_as_speaker", self.available_as_speaker],
                 ["organisational_affiliations", self.get_pretty_organisational_affiliations()],
+                ["groups", self.get_pretty_groups()],
                 ["summary", self.summary],
                 ["giving_pledges", self.get_pretty_giving_pledges()],
             ]

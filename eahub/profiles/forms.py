@@ -56,7 +56,7 @@ class EditProfileCauseAreasForm(forms.ModelForm):
             'available_to_volunteer',
         )
         labels = {
-            'available_to_volunteer': ('Available to volunteer:')
+            'available_to_volunteer': ('Available to volunteer')
         }
 
 
@@ -67,11 +67,11 @@ class EditProfileCareerForm(forms.ModelForm):
             'open_to_job_offers',
         )
         labels = {
-            'open_to_job_offers': ('Open to job offers:')
+            'open_to_job_offers': ('Open to job offers')
         }
 
 class EditProfileCommunityForm(forms.ModelForm):
-    groups = CustomisedMultipleModelChoiceField(queryset=LocalGroup.objects.all())
+    groups = CustomisedMultipleModelChoiceField(queryset=LocalGroup.objects.all(), required=False, label="EA Groups")
 
     class Meta:
         model = Profile
@@ -80,8 +80,7 @@ class EditProfileCommunityForm(forms.ModelForm):
             'groups'
         )
         labels = {
-            'available_as_speaker': ('Available as speaker:'),
-            'groups': ('Groups: ')
+            'available_as_speaker': ('Available as speaker')
         }
 
 class DeleteProfileForm(forms.Form):
