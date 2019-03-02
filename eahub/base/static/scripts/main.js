@@ -24,10 +24,6 @@ $(document).ready( function () {
     $('.text-block-from-database').linkify();
     $('.profile').linkify();
     $('.info').linkify();
-} );
-
-$('.multiselect-form').multiselect({
-  numberDisplayed: 1
 });
 
 function applySearchFunctionality (datatable) {
@@ -35,6 +31,14 @@ function applySearchFunctionality (datatable) {
     datatable.search(this.value).draw();
   });
 }
+
+// add multiselect class to groups selection on profile/edit/community
+$('#id_groups').removeClass('selectmultiple').addClass('form-control multiselect-form')
+
+// add setting for all multiselect forms
+$('.multiselect-form').multiselect({
+  numberDisplayed: 1
+});
 
 var menu_btn = document.getElementById('burger-btn')
 var navbar = document.getElementById('navbar')
