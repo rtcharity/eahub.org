@@ -35,6 +35,7 @@ class LocalGroup(models.Model):
     facebook_page = models.URLField(blank=True)
     email = models.EmailField(blank=True)
     meetup_url = models.URLField(blank=True)
+    active = models.BooleanField(default=True)
     airtable_record = models.CharField(
         max_length=255,
         null=True,
