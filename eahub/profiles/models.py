@@ -10,6 +10,7 @@ from django_upload_path import upload_path
 from geopy import geocoders
 from sorl import thumbnail
 
+from ..localgroups.models import LocalGroup
 
 class CauseArea(enum.Enum):
 
@@ -170,6 +171,7 @@ class Profile(models.Model):
         enum.EnumField(GivingPledge), blank=True, default=list
     )
     subscribed_to_email_updates = models.BooleanField(default=False)
+    groups = models.ManyToManyField(LocalGroup, blank=True)
 
     def __str__(self):
         return self.name
@@ -210,6 +212,12 @@ class Profile(models.Model):
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
             return ", ".join(map(OrganisationalAffiliation.label, self.organisational_affiliations))
+        else:
+            return "N/A"
+
+    def get_pretty_groups(self):
+        if self.groups:
+            return ", ".join(['{group}'.format(group=x.name) for x in self.groups.all()])
         else:
             return "N/A"
 

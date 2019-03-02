@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation
+from ..localgroups.models import LocalGroup
 from .forms import *
 
 
@@ -139,6 +140,9 @@ def edit_profile_community(request):
             profile = form.save(commit=False)
             organisational_affiliations = request.POST.getlist('organisational_affiliations')
             profile.organisational_affiliations = organisational_affiliations
+            group_affiliations = request.POST.getlist('groups')
+            groups = LocalGroup.objects.filter(id__in=group_affiliations)
+            profile.groups.add(*groups)
             profile.save()
             return redirect('my_profile')
     else:
