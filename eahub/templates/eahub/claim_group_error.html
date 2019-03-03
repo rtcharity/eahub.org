@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Group claim error{% endblock %}
+
+{% block content %}
+<div class="container password-reset">
+<h1>Group could not be claimed</h1>
+<p>You need to be logged in to claim a group.<br>
+Please <a href="{% url 'login' %}">login</a> and try again.</p>
+</div>
+{% endblock %}
