@@ -77,17 +77,12 @@
       {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 %}
     </div>
   </div>
+
   <div class="text-center">
     <div class="btn-group btn-group-sm text-center" role="group">
-        <a href="{{group.slug}}/claim"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> I'm the organiser of this group</button></a>
+      <a href="{{group.slug}}/claim"><button type="button" class="btn btn-default"><i class="fa fa-sitemap"></i> Claim this group</button></a>
     </div>
   </div>
-
-    <!-- <form method="post">
-    {% csrf_token %}
-
-    <input type="submit">I'm the organiser of this group</input>
-    </form> -->
 
 </div>
 {% endblock %}

@@ -1,4 +1,3 @@
-
 from django import urls
 from django.contrib.auth import mixins as auth_mixins
 from django.views.generic import detail as detail_views
