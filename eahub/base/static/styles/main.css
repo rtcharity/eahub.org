@@ -411,7 +411,6 @@ body {
   text-align: center;
 }
 
-
 .profile-cards .panel {
   height: 100%;
 }
@@ -453,6 +452,28 @@ body {
 .profile-table p {
   padding: 10px 15px;
   margin: 0;
+}
+
+.claim_group_container {
+  margin-top: 10px;
+}
+
+#claim_group {
+  display: none;
+  text-align: left;
+}
+
+#claim_group p {
+  margin-bottom: 10px;
+}
+
+#claim_group_toggle {
+  display: inline-block;
+}
+.hub-success {
+  background-color: ##A7DBAB;
+  border: none;
+  color: black;
 }
 
 /* edit */
@@ -572,15 +593,16 @@ form .alert ul {
   margin-bottom: 1rem;
 }
 
-.login-info {
+.hub-info {
   background-color: #7BB0A8;
   border: none;
   color: white;
 }
 
-.login-info a {
+.hub-info a {
   color: white;
 }
+
 .help-block {
   background-color: #E4F5B1;
   border: none;

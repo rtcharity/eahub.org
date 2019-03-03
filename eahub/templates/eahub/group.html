@@ -78,11 +78,43 @@
     </div>
   </div>
 
+  <div class="claim_group_container">
+  {% if user.is_authenticated %}
+  {% if messages %}
+  <div class="col-md-6 col-md-offset-3">
+      {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable"{% endif %}>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div>{{ message }}</div>
+      </div>
+      {% endfor %}
+  </div>
+  {% else %}
   <div class="text-center">
-    <div class="btn-group btn-group-sm text-center" role="group">
-      <a href="{{group.slug}}/claim"><button type="button" class="btn btn-default"><i class="fa fa-sitemap"></i> Claim this group</button></a>
+    <div class="btn-group btn-group-sm text-center" role="group" id="claim_group_toggle">
+      <button type="button" class="btn btn-default claim_group_toggler"><i class="fa fa-sitemap"></i> Claim this group</button>
+    </div>
+    <div id="claim_group" class="col-md-6 col-md-offset-3 alert alert-info hub-info" role="alert">
+      <button type="button" class="close claim_group_toggler">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <p>If you are the organiser of this group, you can claim it so that you can edit it.
+        Once you have claimed a group, our admins will look into your request and get in contact via e-mail.<br>
+        Notice that you have to be logged in to claim a group.</p>
+      <form method='POST' action="{{group.slug}}/claim" class="text-center">
+        {% csrf_token %}
+        <div class="btn-group btn-group-sm text-center" role="group">
+          <button type="submit" class="btn btn-default"/><i class='fa fa-sitemap'></i> Claim this group</button>
+        </div>
+      </form>
     </div>
   </div>
+  {% endif %}
+  {% endif %}
+  </div>
+
 
 </div>
 {% endblock %}

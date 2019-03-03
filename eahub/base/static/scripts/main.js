@@ -41,3 +41,15 @@ var navbar = document.getElementById('navbar')
 menu_btn.addEventListener('click', function() {
   navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
 })
+
+var claim_group = document.getElementById('claim_group')
+var claim_group_toggle = document.getElementById('claim_group_toggle')
+var claim_group_togglers = document.getElementsByClassName('claim_group_toggler')
+
+for (let toggler of claim_group_togglers) {
+  toggler.addEventListener('click', function() {
+    console.log(claim_group.style.display)
+    claim_group.style.display = claim_group.style.display == 'block' ? 'none' : 'block';
+    claim_group_toggle.style.display = claim_group_toggle.style.display == 'none' ? 'inline-block' : 'none';
+  })
+}
