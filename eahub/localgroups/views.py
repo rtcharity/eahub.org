@@ -11,8 +11,7 @@ from django.core.mail import mail_managers
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.template.loader import render_to_string
-from .models import LocalGroup as Group
-
+from django.views.decorators.http import require_POST
 
 from .forms import LocalGroupForm
 from .models import LocalGroup
