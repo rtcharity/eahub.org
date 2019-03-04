@@ -5,7 +5,7 @@ from .models import Profile, CauseArea, GivingPledge
 from ..localgroups.models import LocalGroup
 from ..base.models import User
 
-class CustomisedMultipleModelChoiceField(forms.ModelMultipleChoiceField):
+class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 
     def label_from_instance(self, obj):
         return "%s" % (obj.name)
@@ -71,13 +71,13 @@ class EditProfileCareerForm(forms.ModelForm):
         }
 
 class EditProfileCommunityForm(forms.ModelForm):
-    groups = CustomisedMultipleModelChoiceField(queryset=LocalGroup.objects.all(), required=False, label="EA Groups")
+    local_groups = CustomisedModelMultipleChoiceField(queryset=LocalGroup.objects.all(), required=False, label="EA Groups")
 
     class Meta:
         model = Profile
         fields = (
             'available_as_speaker',
-            'groups'
+            'local_groups'
         )
         labels = {
             'available_as_speaker': ('Available as speaker')

@@ -141,7 +141,6 @@ class OrganisationalAffiliation(enum.Enum):
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative"
     }
 
-
 class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -171,7 +170,7 @@ class Profile(models.Model):
         enum.EnumField(GivingPledge), blank=True, default=list
     )
     subscribed_to_email_updates = models.BooleanField(default=False)
-    groups = models.ManyToManyField(LocalGroup, blank=True)
+    local_groups = models.ManyToManyField(LocalGroup, through='Membership', blank=True)
 
     def __str__(self):
         return self.name
@@ -215,9 +214,9 @@ class Profile(models.Model):
         else:
             return "N/A"
 
-    def get_pretty_groups(self):
-        if self.groups:
-            return ", ".join(['{group}'.format(group=x.name) for x in self.groups.all()])
+    def get_pretty_local_groups(self):
+        if self.local_groups:
+            return ", ".join(['{local_group}'.format(local_group=x.name) for x in self.local_groups.all()])
         else:
             return "N/A"
 
@@ -236,7 +235,7 @@ class Profile(models.Model):
                 ["expertise_areas", self.get_pretty_expertise()],
                 ["available_as_speaker", self.available_as_speaker],
                 ["organisational_affiliations", self.get_pretty_organisational_affiliations()],
-                ["groups", self.get_pretty_groups()],
+                ["local_groups", self.get_pretty_groups()],
                 ["summary", self.summary],
                 ["giving_pledges", self.get_pretty_giving_pledges()],
             ]
@@ -245,3 +244,7 @@ class Profile(models.Model):
 
     def image_placeholder(self):
         return f"Avatar{self.id % 10}.png"
+
+class Membership(models.Model):
+    person = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)

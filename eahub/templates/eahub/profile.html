@@ -96,8 +96,8 @@
           {% if profile.organisational_affiliations %}
           <div class="list">{{ profile.get_pretty_organisational_affiliations }}</div>
           {% endif %}
-          {% if profile.groups %}
-          <div class="list">{{ profile.get_pretty_groups }}</div>
+          {% if profile.local_groups %}
+          <div class="list">{{ profile.get_pretty_local_groups }}</div>
           {% endif %}
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
