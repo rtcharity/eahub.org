@@ -100,9 +100,7 @@
       <button type="button" class="close claim_group_toggler">
         <span aria-hidden="true">&times;</span>
       </button>
-      <p>If you are the organiser of this group, you can claim it so that you can edit it.
-        Once you have claimed a group, our admins will look into your request and get in contact via e-mail.<br>
-        Notice that you have to be logged in to claim a group.</p>
+      <p>We don't know who organises this group. You can claim it. Our admins will look into your request and get in contact via e-mail.</p>
       <form method='POST' action="{{group.slug}}/claim" class="text-center">
         {% csrf_token %}
         <div class="btn-group btn-group-sm text-center" role="group">

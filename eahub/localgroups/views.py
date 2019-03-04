@@ -1,8 +1,18 @@
+
 from django import urls
 from django.contrib.auth import mixins as auth_mixins
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
+from django.urls import reverse_lazy
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.core.mail import mail_managers
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib import messages
+from django.template.loader import render_to_string
+from .models import LocalGroup as Group
+
 
 from .forms import LocalGroupForm
 from .models import LocalGroup
