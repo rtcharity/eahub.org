@@ -59,25 +59,21 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
     permission_required = 'localgroups.delete_local_group'
 
 
-
 @login_required
 @require_POST
 def claim_group(request, slug):
     group = get_object_or_404(LocalGroup, slug=slug)
-    if not group.organisers:
-        return HttpResponse(status=500)
-    else:
-        subject = "EA Group claimed: {0}".format(group.name)
-        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
-        message = render_to_string('emails/claim_group.html', {
-            'user_eahub_url': user_eahub_url,
-            'user_name': request.user.profile.name,
-            'group_name': group.name,
-            'user_email': request.user.email
-        })
-        mail_managers(subject, message)
-        messages.success(
-            request,
-            ''' Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. ''',
-        )
-        return redirect('/group/{}'.format(group.slug))
+    subject = "EA Group claimed: {0}".format(group.name)
+    user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+    message = render_to_string('emails/claim_group.html', {
+        'user_eahub_url': user_eahub_url,
+        'user_name': request.user.profile.name,
+        'group_name': group.name,
+        'user_email': request.user.email
+    })
+    mail_managers(subject, message)
+    messages.success(
+        request,
+        ''' Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. ''',
+    )
+    return redirect('/group/{}'.format(group.slug))
