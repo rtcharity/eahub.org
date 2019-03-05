@@ -28,26 +28,21 @@ services:
       RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
       RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
       SECRET_KEY: development_secret_key
-    restart: always
   db:
     image: postgres:10.5
     environment:
       POSTGRES_PASSWORD: development_db_password
-    restart: always
   objstore:
     image: arafato/azurite:2.6.5
     command: node bin/blob --location=/opt/azurite/folder/ --blobPort=8002
     ports:
       - 8002:8002
-    restart: always
   cache:
     image: redis:3.2.7
-    restart: always
   mail:
     image: dockage/mailcatcher:0.6.5
     ports:
       - 8001:1080
-    restart: always
   e2e:
     build: ./eahub_e2e/
     depends_on:
