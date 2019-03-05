@@ -6,6 +6,9 @@
 
 <br><br>
 
+
+
+
 <div class="container animated bounceIn">
   <div class="row">
     <div class="col-xs-offset-2 col-xs-2">
@@ -79,7 +82,7 @@
   </div>
 
   <div class="claim_group_container">
-  {% if user.is_authenticated %}
+  {% if user.is_authenticated and not group.organisers.exists %}
   {% if messages %}
   <div class="col-md-6 col-md-offset-3">
       {% for message in messages %}
