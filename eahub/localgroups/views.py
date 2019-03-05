@@ -64,7 +64,10 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
 def claim_group(request, slug):
     group = get_object_or_404(LocalGroup, slug=slug)
     subject = "EA Group claimed: {0}".format(group.name)
-    user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+    try:
+        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+    except Profile.DoesNotExist:
+        user_eahub_url = "about:blank"
     message = render_to_string('emails/claim_group.html', {
         'user_eahub_url': user_eahub_url,
         'user_name': request.user.profile.name,
