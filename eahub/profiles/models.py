@@ -61,12 +61,15 @@ class GivingPledge(enum.Enum):
     GIVING_WHAT_WE_CAN = 1
     THE_LIFE_YOU_CAN_SAVE = 2
     ONE_FOR_THE_WORLD = 3
+    FOUNDERS_PLEDGE = 4
 
     labels = {
         GIVING_WHAT_WE_CAN: "Giving What We Can",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         ONE_FOR_THE_WORLD: "One for the World",
+        FOUNDERS_PLEDGE: "Founders Pledge",
     }
+
 
 class OrganisationalAffiliation(enum.Enum):
 
