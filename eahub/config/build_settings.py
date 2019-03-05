@@ -7,12 +7,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "authtools",
-    "sorl.thumbnail",
+    "crispy_forms",
     "django_cleanup.apps.CleanupConfig",
+    "rules.apps.AutodiscoverRulesConfig",
+    "sorl.thumbnail",
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
-    "crispy_forms",
 ]
 
 # Core settings: security
@@ -24,4 +25,4 @@ STATIC_URL = "/static/"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # django-crispy-forms
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+CRISPY_TEMPLATE_PACK = "bootstrap4"

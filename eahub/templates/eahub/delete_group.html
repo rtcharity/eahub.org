@@ -1,0 +1,13 @@
+{% extends 'form.html' %}
+
+{% block title %}Delete Group{% endblock %}
+
+{% block form_fields %}
+
+<p>Are you sure you want to delete {{ localgroup.name }}? This operation cannot be undone.</p>
+
+{% endblock %}
+
+<br>
+
+{% block submit %}I am sure, permanently delete {{ localgroup.name }}{% endblock %}

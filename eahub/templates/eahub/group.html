@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load rules %}
+
 {% block content %}
 
 <br><br>
@@ -22,6 +24,12 @@
           <span><i class="fa fa-microphone-slash"></i> Messaging disabled</span>
         {% endif %}
       </div>
+      {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
+      {% if can_edit_local_group %}
+        <div class="btn btn-default purple">
+          <a href="{% url 'localgroups_update' group.slug %}">Edit</a>
+        </div>
+      {% endif %}
     </div>
   </div>
 </div>
@@ -42,6 +50,21 @@
         {% endif %}
         <li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Country: </b>{{ group.country|default_if_none:'N/A' }}</li>
+        {% if group.organisers.exists %}
+          <li class="list-group-item"><b>Organisers:</b>
+            <ul>
+              {% for organiser in group.organisers.all %}
+                {% if organiser.has_profile %}
+                  <li><a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a></li>
+                {% else %}
+                  <li>Anonymous</li>
+                {% endif %}
+              {% endfor %}
+            </ul>
+          </li>
+        {% else %}
+          <li class="list-group-item"><b>Organisers: </b>Unknown</li>
+        {% endif %}
         <li class="list-group-item"><b>Website: </b>{{ group.website|default:'N/A' }}</li>
         <li class="list-group-item"><b>Facebook Group: </b>{{ group.facebook_group|default:'N/A' }}</li>
         <li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page|default:'N/A' }}</li>

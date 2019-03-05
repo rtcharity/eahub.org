@@ -4,6 +4,7 @@ import autoslug
 from django.conf import settings
 from django.contrib.postgres import fields as postgres_fields
 from django.db import models
+from django import urls
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -169,6 +170,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return urls.reverse("profile", args=[self.slug])
 
     def geocode(self):
         self.lat = None

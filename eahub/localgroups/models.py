@@ -1,7 +1,10 @@
 import autoslug
+from django.conf import settings
 from django.core import validators
 from django.db import models
+from django import urls
 from django_enumfield import enum
+from geopy import geocoders
 
 
 class LocalGroupType(enum.Enum):
@@ -10,16 +13,16 @@ class LocalGroupType(enum.Enum):
     COUNTRY = 2
     UNIVERSITY = 3
 
-    labels = {
-        CITY: "City",
-        COUNTRY: "Country",
-        UNIVERSITY: "University",
-    }
+    labels = {CITY: "City", COUNTRY: "Country", UNIVERSITY: "University"}
 
 
 class LocalGroup(models.Model):
+
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
     name = models.CharField(max_length=100)
+    organisers = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, through="Organisership", blank=True
+    )
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
     )
@@ -40,3 +43,25 @@ class LocalGroup(models.Model):
         unique=True,
         validators=[validators.MinLengthValidator(1)],
     )
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return urls.reverse("group", args=[self.slug])
+
+    def geocode(self):
+        self.lat = None
+        self.lon = None
+        if self.city_or_town and self.country:
+            location = geocoders.Nominatim(timeout=10).geocode(
+                f"{self.city_or_town}, {self.country}"
+            )
+            if location:
+                self.lat = location.latitude
+                self.lon = location.longitude
+
+
+class Organisership(models.Model):
+    local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
