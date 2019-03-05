@@ -1,4 +1,4 @@
-Backend for [https://eahub.azurewebsites.net](https://eahub.azurewebsites.net)
+Backend for [https://eahub.org](https://eahub.org)
 
 ![eahub.org reboot](https://i.imgur.com/02FNAlY.png)
 
@@ -40,8 +40,9 @@ $ docker-compose run e2e
 # Deploying
 After uploading a new docker image, the website will automatically update
 ```
+$ cd eahub
 $ docker build -t eahub:latest .
-$ y | docker system prune
+$ docker system prune --force
 $ docker tag eahub eahub.azurecr.io/eahub:latest
 $ docker push eahub.azurecr.io/eahub:latest
 ```
