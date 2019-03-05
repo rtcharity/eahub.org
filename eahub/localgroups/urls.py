@@ -1,6 +1,19 @@
-from django.urls import path
+from django import urls
+
 from . import views
 
+
 urlpatterns = [
-    path('<slug:slug>', views.view_group, name='group'),
+    urls.path("new", views.LocalGroupCreateView.as_view(), name="localgroups_create"),
+    urls.path("<slug:slug>", views.LocalGroupDetailView.as_view(), name="group"),
+    urls.path(
+        "<slug:slug>/edit",
+        views.LocalGroupUpdateView.as_view(),
+        name="localgroups_update",
+    ),
+    urls.path(
+        "<slug:slug>/delete",
+        views.LocalGroupDeleteView.as_view(),
+        name="localgroups_delete",
+    ),
 ]

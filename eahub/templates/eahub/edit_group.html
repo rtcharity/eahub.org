@@ -1,130 +1,27 @@
 {% extends 'form.html' %}
 
-{% block title %}Create Group{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% if form.instance.pk %}Edit Group{% else %}Create Group{% endif %}{% endblock %}
 
 {% block form_fields %}
-<div class="field">
-    <label for="id_name" class="required_field">Name</label>
-    <input type="text" name="name" id="id_name" class="form-control" placeholder="EA London" required autofocus maxlength="100" value="{{ form.name.value|default_if_none:'' }}">
-    {% if form.name.errors %}
-        {% for error in form.name.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-  <label>Group Type</label>
-  <select class="form-control" name="group_type">
-      {% for choice in group.GROUP_TYPE_CHOICES %}
-          <option value="{{ choice.0 }}" {% if choice.0 in group.group_type %}selected{% endif %}>{{ choice.1 }}</option>
-      {% endfor %}
-  </select>
-</div>
-
-<div class="field">
-    <label for="id_summary" class="required_field">Summary</label>
-    <textarea name="summary" id="id_summary" class="form-control" placeholder="A little intro on your group's values" maxlength="5000" required>{{ form.summary.value|default_if_none:'' }}</textarea>
-    {% if form.summary.errors %}
-        {% for error in form.summary.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_email">Email Address</label>
-    <input type="email" name="email" id="id_email" class="form-control" placeholder="" maxlength="100" value="{{ form.email.value|default_if_none:'' }}">
-    {% if form.email.errors %}
-        {% for error in form.email.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_website">Website</label>
-    <input type="text" name="website" id="id_website" class="form-control" placeholder="lesswrong.com" maxlength="200" value="{{ form.website.value|default_if_none:'' }}">
-    {% if form.website.errors %}
-        {% for error in form.website.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_city_or_town" class="required_field">City/Town</label>
-    <input type="text" name="city_or_town" id="id_city_or_town" class="form-control" placeholder="London" maxlength="100" required value="{{ form.city_or_town.value|default_if_none:'' }}">
-    {% if form.city_or_town.errors %}
-        {% for error in form.city_or_town.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_country" class="required_field">Country</label>
-    <input type="text" name="country" id="id_country" class="form-control" placeholder="United Kingdom" maxlength="100" required value="{{ form.country.value|default_if_none:'' }}">
-    {% if form.country.errors %}
-        {% for error in form.country.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_facebook_group">Facebook Group</label>
-    <input type="url" name="facebook_group" id="id_facebook_group" class="form-control" placeholder="" maxlength="200" value="{{ form.facebook_group.value|default_if_none:'' }}">
-    {% if form.facebook_group.errors %}
-        {% for error in form.facebook_group.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_facebook_page">Facebook Page</label>
-    <input type="url" name="facebook_page" id="id_facebook_page" class="form-control" placeholder="" maxlength="200" value="{{ form.facebook_page.value|default_if_none:'' }}">
-    {% if form.facebook_page.errors %}
-        {% for error in form.facebook_page.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_meetup_details">Meetup Details</label>
-    <textarea name="meetup_details" id="id_meetup_details" class="form-control" maxlength="5000" placeholder="A little intro to your values">{{ form.meetup_details.value|default_if_none:'' }}</textarea>
-    {% if form.meetup_details.errors %}
-        {% for error in form.meetup_details.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_meetups_per_month">Meetups per month</label>
-    <input type="number" name="meetups_per_month" id="id_meetups_per_month" class="form-control" placeholder="1" value="{{ form.meetups_per_month.value|default_if_none:'' }}">
-    {% if form.meetups_per_month.errors %}
-        {% for error in form.meetups_per_month.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="field">
-    <label for="id_meetup_url">Meetup Link</label>
-    <input type="url" name="meetup_url" id="id_meetup_url" class="form-control" placeholder="https://meetup.com/ea_london" maxlength="200" value="{{ form.meetup_url.value|default_if_none:'' }}">
-    {% if form.meetup_url.errors %}
-        {% for error in form.meetup_url.errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-        {% endfor %}
-    {% endif %}
-</div>
-<button type="submit" class="btn btn-default">Save</button>
+{{ form|crispy }}
 <div class="privacy-note">
-  <b>Note:</b> All profile information is public.
+  <b>Note:</b> All group information is public.
   Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.
 </div>
+{% endblock %}
 
+{% block submit %}Save{% endblock %}
+
+{% block content_after_form %}
+{% if form.instance.pk %}
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="btn btn-default">
+        <a href="{% url 'localgroups_delete' form.instance.slug %}">Delete this group</a>
+      </div>
+    </div>
+  </div>
+{% endif %}
 {% endblock %}
