@@ -80,3 +80,27 @@ def claim_group(request, slug):
         ''' Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. ''',
     )
     return redirect('/group/{}'.format(group.slug))
+
+
+@login_required
+@require_POST
+def report_group_inactive(request, slug):
+    group = get_object_or_404(LocalGroup, slug=slug)
+    subject = "EA Group reported as inactive: {0}".format(group.name)
+    try:
+        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+    except Profile.DoesNotExist:
+        user_eahub_url = "about:blank"
+    message = render_to_string('emails/report_group_inactive.html', {
+        'user_eahub_url': user_eahub_url,
+        'user_name': request.user.profile.name,
+        'group_name': group.name,
+        'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
+        'user_email': request.user.email
+    })
+    mail_managers(subject, message)
+    messages.success(
+        request,
+        ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
+    )
+    return redirect('/group/{}'.format(group.slug))

@@ -82,8 +82,8 @@
     </div>
   </div>
 
-  <div class="claim_group_container">
   {% if messages %}
+  <div class="row">
   <div class="col-md-6 col-md-offset-3">
       {% for message in messages %}
       <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable"{% endif %}>
@@ -94,17 +94,21 @@
       </div>
       {% endfor %}
   </div>
-  {% else %}
-  <div class="text-center">
+  </div>
+  {% endif %}
+
+  {% if group.organisers %}
+  <div class="row">
+  <div class="text-center group_action">
     <div class="btn-group btn-group-sm text-center" role="group" id="claim_group_toggle">
       <button type="button" class="btn btn-default claim_group_toggler"><i class="fa fa-sitemap"></i> Claim this group</button>
     </div>
-    <div id="claim_group" class="col-md-6 col-md-offset-3 alert alert-info hub-info" role="alert">
+    <div id="claim_group" class="col-xs-6 col-xs-offset-3 alert alert-info hub-info" role="alert">
       <button type="button" class="close claim_group_toggler">
         <span aria-hidden="true">&times;</span>
       </button>
       {% if user.is_authenticated %}
-      <p>We don't know who organises this group. Our admins will look into your request to claim it and get in contact via e-mail.</p>
+      <p>Our admins will look into your request to claim it and get in contact via e-mail.</p>
       <form method='POST' action="{{group.slug}}/claim" class="text-center">
         {% csrf_token %}
         <div class="btn-group btn-group-sm text-center" role="group">
@@ -116,8 +120,19 @@
       {% endif %}
     </div>
   </div>
-  {% endif %}
   </div>
+  {% endif %}
+  {% if group.is_active %}
+  <div class="row">
+  <form method='POST' action="{{group.slug}}/report_inactive" class="text-center group_action">
+    {% csrf_token %}
+    <div class="btn-group btn-group-sm text-center" role="group">
+      <button type="submit" class="btn btn-default"/><i class='fa fa-sitemap'></i> Report this group as inactive</button>
+    </div>
+  </form>
+  </div>
+  {% endif %}
+
 
 
 </div>

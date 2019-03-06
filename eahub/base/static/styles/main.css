@@ -461,8 +461,9 @@ body {
   margin: 0;
 }
 
-.claim_group_container {
+.group_action {
   margin-top: 10px;
+  margin-bottom;
 }
 
 #claim_group {
