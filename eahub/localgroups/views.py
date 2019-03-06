@@ -68,7 +68,7 @@ def claim_group(request, slug):
         user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
-    message = render_to_string('emails/claim_group.html', {
+    message = render_to_string('emails/claim_group.txt', {
         'user_eahub_url': user_eahub_url,
         'user_name': request.user.profile.name,
         'group_name': group.name,
@@ -92,7 +92,7 @@ def report_group_inactive(request, slug):
         user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
-    message = render_to_string('emails/report_group_inactive.html', {
+    message = render_to_string('emails/report_group_inactive.txt', {
         'user_eahub_url': user_eahub_url,
         'user_name': request.user.profile.name,
         'group_name': group.name,

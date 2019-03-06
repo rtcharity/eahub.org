@@ -1,0 +1,6 @@
+Dear Admin,
+
+User {{user_name}} ({{user_eahub_url}}) wants to claim the group {{group_name}} ({{group_url}}).
+Please check whether the user is eligible to claim this group and let them know of the outcome by emailing them at {{user_email}}.
+
+This email has been automatically generated.
