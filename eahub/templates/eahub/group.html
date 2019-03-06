@@ -97,7 +97,7 @@
   </div>
   {% endif %}
 
-  {% if group.organisers %}
+  {% if not group.organisers.exists %}
   <div class="row">
   <div class="text-center group_action">
     <div class="btn-group btn-group-sm text-center" role="group" id="claim_group_toggle">
