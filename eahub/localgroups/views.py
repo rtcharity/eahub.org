@@ -72,6 +72,7 @@ def claim_group(request, slug):
         'user_eahub_url': user_eahub_url,
         'user_name': request.user.profile.name,
         'group_name': group.name,
+        'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
         'user_email': request.user.email
     })
     mail_managers(subject, message)

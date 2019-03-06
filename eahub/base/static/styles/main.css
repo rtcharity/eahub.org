@@ -466,18 +466,15 @@ body {
   margin-bottom;
 }
 
-#claim_group {
+.confirm_field {
   display: none;
   text-align: left;
 }
 
-#claim_group p {
+.confirm_field p {
   margin-bottom: 10px;
 }
 
-#claim_group_toggle {
-  display: inline-block;
-}
 .hub-success {
   background-color: ##A7DBAB;
   border: none;

@@ -48,13 +48,26 @@ menu_btn.addEventListener('click', function() {
   navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
 })
 
-var claim_group = document.getElementById('claim_group')
-var claim_group_toggle = document.getElementById('claim_group_toggle')
-var claim_group_togglers = document.getElementsByClassName('claim_group_toggler')
-
-for (let toggler of claim_group_togglers) {
-  toggler.addEventListener('click', function() {
-    claim_group.style.display = claim_group.style.display == 'block' ? 'none' : 'block';
-    claim_group_toggle.style.display = claim_group_toggle.style.display == 'none' ? 'inline-block' : 'none';
-  })
+let claim_group = {
+  toggle_btn: document.getElementById('claim_group_toggle'),
+  confirm_field: document.getElementById('claim_group_confirm_field'),
+  togglers: document.getElementsByClassName('claim_group_toggler')
 }
+
+let report_group_inactive = {
+  toggle_btn: document.getElementById('report_group_inactive_toggle'),
+  confirm_field: document.getElementById('report_group_inactive_confirm_field'),
+  togglers: document.getElementsByClassName('report_group_inactive_toggler')
+}
+
+function toggleButton(obj) {
+  for (let toggler of obj.togglers) {
+    toggler.addEventListener('click', function() {
+      obj.confirm_field.style.display = obj.confirm_field.style.display == 'block' ? 'none' : 'block';
+      obj.toggle_btn.style.display = obj.toggle_btn.style.display == 'none' ? 'inline-block' : 'none';
+    })
+  }
+}
+
+toggleButton(claim_group)
+toggleButton(report_group_inactive)
