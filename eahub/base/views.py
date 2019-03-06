@@ -42,10 +42,11 @@ def getGroupsData():
     rows = Group.objects.all()
     map_data = ''.join([
         '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
+            'lat: {lat}, lng: {lon}, label:"{name}", active:"{active}", path: "{path}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
+                active=x.is_active,
                 path='/{obj}/{slug}'.format(
                     obj='group',
                     slug=x.slug

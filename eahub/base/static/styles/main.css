@@ -369,7 +369,9 @@ body {
 .link_box .list-group-item .fa{
   margin-right: 10px;
 }
-
+.list-group h4 {
+  color: white;
+}
 /* profile and group */
 
 .profile_picture{

@@ -9,7 +9,8 @@
     function initMap() {
       var lat = parseFloat("{{ lat }}");
       var lon = parseFloat("{{ lon }}");
-      renderMap(lat, lon);
+      var inactive_group = ("{{ active }}" == "False") ? true : false
+      renderMap(lat, lon, inactive_group);
     }
   </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>

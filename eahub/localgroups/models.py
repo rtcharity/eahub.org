@@ -20,6 +20,7 @@ class LocalGroup(models.Model):
 
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
     name = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
     )
