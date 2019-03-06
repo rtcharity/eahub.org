@@ -141,6 +141,7 @@ def edit_profile_community(request):
             profile.local_groups.clear()
             organisational_affiliations = request.POST.getlist('organisational_affiliations')
             profile.organisational_affiliations = organisational_affiliations
+            profile.save()
             group_affiliations = request.POST.getlist('local_groups')
             local_groups = LocalGroup.objects.filter(id__in=group_affiliations)
             for group in local_groups:
