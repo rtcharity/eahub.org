@@ -1,0 +1,7 @@
+Dear Admin,
+
+User {{user_name}} ({{user_eahub_url}}) reported group {{group_name}} ({{group_url}}) as inactive.
+Please check whether this is correct and let them know of the outcome of your inquiry by emailing them at {{user_email}}.
+In case the group is in fact inactive, change its status on the admin panel.
+
+This email has been automatically generated.
