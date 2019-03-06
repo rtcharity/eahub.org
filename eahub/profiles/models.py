@@ -246,5 +246,5 @@ class Profile(models.Model):
         return f"Avatar{self.id % 10}.png"
 
 class Membership(models.Model):
-    person = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
