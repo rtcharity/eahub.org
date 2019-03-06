@@ -2,7 +2,13 @@ from authtools.forms import CaseInsensitiveUsernameFieldCreationForm
 from django import forms
 from django.db import models
 from .models import Profile, CauseArea, GivingPledge
+from ..localgroups.models import LocalGroup
 from ..base.models import User
+
+class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
+
+    def label_from_instance(self, obj):
+        return "%s" % (obj.name)
 
 class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
@@ -50,7 +56,7 @@ class EditProfileCauseAreasForm(forms.ModelForm):
             'available_to_volunteer',
         )
         labels = {
-            'available_to_volunteer': ('Available to volunteer:')
+            'available_to_volunteer': ('Available to volunteer')
         }
 
 
@@ -61,18 +67,20 @@ class EditProfileCareerForm(forms.ModelForm):
             'open_to_job_offers',
         )
         labels = {
-            'open_to_job_offers': ('Open to job offers:')
+            'open_to_job_offers': ('Open to job offers')
         }
 
-
 class EditProfileCommunityForm(forms.ModelForm):
+    local_groups = CustomisedModelMultipleChoiceField(queryset=LocalGroup.objects.all(), required=False, label="EA Groups")
+
     class Meta:
         model = Profile
         fields = (
             'available_as_speaker',
+            'local_groups'
         )
         labels = {
-            'available_as_speaker': ('Available as speaker:')
+            'available_as_speaker': ('Available as speaker')
         }
 
 class DeleteProfileForm(forms.Form):

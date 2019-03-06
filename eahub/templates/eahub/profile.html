@@ -93,10 +93,15 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
         <div class="panel-body">
           <h3>Community</h3>
-            {{ profile.get_pretty_organisational_affiliations }}
-            {% if profile.available_as_speaker %}
-            <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
-            {% endif %}
+          {% if profile.organisational_affiliations %}
+          <div class="list">{{ profile.get_pretty_organisational_affiliations }}</div>
+          {% endif %}
+          {% if profile.local_groups %}
+          <div class="list">{{ profile.get_pretty_local_groups }}</div>
+          {% endif %}
+          {% if profile.available_as_speaker %}
+          <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
+          {% endif %}
           <br>
           {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">

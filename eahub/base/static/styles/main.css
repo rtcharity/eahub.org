@@ -425,6 +425,11 @@ body {
   text-align: center;
 }
 
+.panel-body .list {
+  display: block;
+  margin-bottom: 10px;
+}
+
 .key-facts .background {
   background-color: rgba(81, 43, 82, 0.7);
 }

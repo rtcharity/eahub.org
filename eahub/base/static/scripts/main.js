@@ -24,10 +24,6 @@ $(document).ready( function () {
     $('.text-block-from-database').linkify();
     $('.profile').linkify();
     $('.info').linkify();
-} );
-
-$('.multiselect-form').multiselect({
-  numberDisplayed: 1
 });
 
 function applySearchFunctionality (datatable) {
@@ -35,6 +31,16 @@ function applySearchFunctionality (datatable) {
     datatable.search(this.value).draw();
   });
 }
+
+var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker')]
+selectors_with_old_style.forEach(function(selector) {
+  selector.removeClass('selectmultiple').addClass('form-control multiselect-form')
+})
+
+// add setting for all multiselect forms
+$('.multiselect-form').multiselect({
+  numberDisplayed: 1
+});
 
 var menu_btn = document.getElementById('burger-btn')
 var navbar = document.getElementById('navbar')

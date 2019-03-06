@@ -9,7 +9,8 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
-from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation
+from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation, Membership
+from ..localgroups.models import LocalGroup
 from .forms import *
 
 
@@ -137,9 +138,15 @@ def edit_profile_community(request):
         form = EditProfileCommunityForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
+            profile.local_groups.clear()
             organisational_affiliations = request.POST.getlist('organisational_affiliations')
             profile.organisational_affiliations = organisational_affiliations
-            profile.save()
+            group_affiliations = request.POST.getlist('local_groups')
+            print(group_affiliations)
+            local_groups = LocalGroup.objects.filter(id__in=group_affiliations)
+            for group in local_groups:
+                membership = Membership(person=profile, local_group=group)
+                membership.save()
             return redirect('my_profile')
     else:
         form = EditProfileCommunityForm(instance=request.user.profile)
