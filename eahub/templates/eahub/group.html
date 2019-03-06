@@ -134,7 +134,7 @@
       </button>
       {% if user.is_authenticated %}
       <p class="text-center">I confirm that this group is no longer active.</p>
-      <form method='POST' action="{{group.slug}}/report_inactive" class="text-center group_action">
+      <form method='POST' action="{{group.slug}}/report-inactive" class="text-center group_action">
         {% csrf_token %}
         <div class="btn-group btn-group-sm text-center" role="group">
           <button type="submit" class="btn btn-default"> Confirm</button>
