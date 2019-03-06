@@ -48,7 +48,7 @@
           <span>{{ group.get_group_type_display }}</span>
         </li>
         {% endif %}
-        <li class="list-group-item"><b>Status: </b>{% if group.active or group.active == None %}Active{% else %}Inactive{% endif %}</li>
+        <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
         <li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Country: </b>{{ group.country|default_if_none:'N/A' }}</li>
         {% if group.organisers.exists %}
@@ -75,7 +75,7 @@
     </div>
     </div>
     <div class="col-md-6">
-      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 active=group.active %}
+      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 active=group.is_active %}
     </div>
   </div>
 </div>

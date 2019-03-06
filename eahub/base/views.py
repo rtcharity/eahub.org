@@ -46,7 +46,7 @@ def getGroupsData():
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
-                active=x.active,
+                active=x.is_active,
                 path='/{obj}/{slug}'.format(
                     obj='group',
                     slug=x.slug

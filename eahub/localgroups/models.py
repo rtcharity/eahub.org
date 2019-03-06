@@ -20,6 +20,7 @@ class LocalGroup(models.Model):
 
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
     name = models.CharField(max_length=100)
+    is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
     )
@@ -35,7 +36,6 @@ class LocalGroup(models.Model):
     facebook_page = models.URLField(blank=True)
     email = models.EmailField(blank=True)
     meetup_url = models.URLField(blank=True)
-    active = models.BooleanField(default=True)
     airtable_record = models.CharField(
         max_length=255,
         null=True,
