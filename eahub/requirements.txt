@@ -22,3 +22,4 @@ django-autoslug==1.9.4
 django-enumfield==1.5
 django-crispy-forms>=1.7.2
 rules==2.0.1
+pytils==0.3

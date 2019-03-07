@@ -5,7 +5,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("localgroups", "0003_organisership"),
+        ("localgroups", "0001_initial"),
         ("profiles", "0002_profile_organisational_affiliations"),
     ]
 
