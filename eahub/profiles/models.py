@@ -42,6 +42,12 @@ class ExpertiseArea(enum.Enum):
     ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE = 9
     MOVEMENT_BUILDING = 10
     COMMUNICATIONS = 11
+    PHILOSOPHY = 12
+    HUMANITIES = 13
+    PSYCHOLOGY = 14
+    PHYSICS = 15
+    MEDICINE = 16
+    OTHER_SCIENCE = 17
 
     labels = {
         MANAGEMENT: "Management",
@@ -55,6 +61,12 @@ class ExpertiseArea(enum.Enum):
         ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE: "Economics, quantitative social science",
         MOVEMENT_BUILDING: "Movement building",
         COMMUNICATIONS: "Communications",
+        PHILOSOPHY: "Philosophy",
+        HUMANITIES: "Humanities",
+        PSYCHOLOGY: "Psychology",
+        PHYSICS: "Physics",
+        MEDICINE: "Medicine",
+        OTHER_SCIENCE: "Other Science",
     }
 
 
