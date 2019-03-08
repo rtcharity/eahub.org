@@ -184,6 +184,9 @@ class Profile(models.Model):
     subscribed_to_email_updates = models.BooleanField(default=False)
     local_groups = models.ManyToManyField(LocalGroup, through='Membership', blank=True)
 
+    class Meta:
+        ordering = ["name", "slug"]
+
     def __str__(self):
         return self.name
 

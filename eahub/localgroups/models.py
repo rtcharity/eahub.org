@@ -45,6 +45,9 @@ class LocalGroup(models.Model):
         validators=[validators.MinLengthValidator(1)],
     )
 
+    class Meta:
+        ordering = ["name", "slug"]
+
     def __str__(self):
         return self.name
 
