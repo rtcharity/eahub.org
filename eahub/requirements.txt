@@ -1,7 +1,7 @@
 django==2.2b1
 gunicorn==19.9.0
 psycopg2-binary==2.7.6.1
-pytz==2018.7
+pytz==2018.9
 whitenoise[brotli]==4.1.2
 requests==2.21.0
 ipdb==0.11
