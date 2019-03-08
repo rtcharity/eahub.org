@@ -42,6 +42,7 @@ class LocalGroupForm(forms.ModelForm):
         model = models.LocalGroup
         fields = [
             "name",
+            "is_active",
             "local_group_type",
             "city_or_town",
             "country",
