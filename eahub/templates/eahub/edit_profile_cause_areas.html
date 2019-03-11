@@ -17,6 +17,17 @@
     </select>
 </div>
 
+
+<div class="field" id="field_cause_areas_other">
+  <label for="id_cause_areas_other">Other cause areas:</label>
+  <textarea type="text" name="cause_areas_other" id="id_cause_areas_other" class="form-control" rows="4" placeholder="Global Warming, Education" maxlength="1000">{{ form.cause_areas_other.value|default:'' }}</textarea>
+  {% if form.cause_areas_other.errors %}
+    {% for error in form.cause_areas_other.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
 <div class="field">
   <label>Giving pledges taken:</label>
   <select class="form-control multiselect-form" name="giving_pledges" multiple>

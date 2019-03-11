@@ -19,6 +19,7 @@ class CauseArea(enum.Enum):
     LONG_TERM_FUTURE = 3
     CAUSE_PRIORITISATION = 4
     META = 5
+    OTHER = 6
 
     labels = {
         GLOBAL_POVERTY: "Global Poverty",
@@ -26,6 +27,7 @@ class CauseArea(enum.Enum):
         LONG_TERM_FUTURE: "Long-term Future",
         CAUSE_PRIORITISATION: "Cause Prioritisation",
         META: "Meta",
+        OTHER: "Other",
     }
 
 
@@ -168,6 +170,7 @@ class Profile(models.Model):
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
+    cause_areas_other = models.TextField(null=True, blank=True)
     available_to_volunteer = models.BooleanField(null=True, blank=True, default=None)
     open_to_job_offers = models.BooleanField(null=True, blank=True, default=None)
     expertise_areas = postgres_fields.ArrayField(
@@ -206,10 +209,14 @@ class Profile(models.Model):
         return self
 
     def get_pretty_cause_areas(self):
+        cause_areas = ''
         if self.cause_areas:
-            return ", ".join(map(CauseArea.label, self.cause_areas))
-        else:
-            return "N/A"
+            cause_areas + ", ".join(map(CauseArea.label, self.cause_areas))
+        if self.cause_areas_other:
+            cause_areas + ", ".join(map(CauseArea.label, self.cause_areas_other))
+        if self.cause_areas == None and self.cause_areas_other == None:
+            cause_areas = "N/A"
+        return cause_areas
 
     def get_pretty_expertise(self):
         if self.expertise_areas:

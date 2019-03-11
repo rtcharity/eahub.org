@@ -53,6 +53,7 @@ class EditProfileCauseAreasForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
+            'cause_areas_other',
             'available_to_volunteer',
         )
         labels = {
