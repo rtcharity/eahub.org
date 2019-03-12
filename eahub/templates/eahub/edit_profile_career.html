@@ -15,11 +15,24 @@
     </select>
 </div>
 
+<<<<<<< HEAD
 <div class="field_free_text">
 {{ form.expertise_areas_other|as_crispy_field }}
 </div>
 
 <div class="field_boolean">
+=======
+<div class="field" id="field_expertise_areas_other">
+  <label for="id_expertise_areas_other">Other cause areas:</label>
+  <textarea type="text" name="expertise_areas_other" id="id_expertise_areas_other" class="form-control" rows="4" placeholder="Magic" maxlength="1000">{{ form.expertise_areas_other.value|default:'' }}</textarea>
+  {% if form.expertise_areas_other.errors %}
+    {% for error in form.expertise_areas_other.errors %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+>>>>>>> Add topics I speak about free text field
 {{ form.open_to_job_offers|as_crispy_field }}
 </div>
 

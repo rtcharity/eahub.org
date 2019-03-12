@@ -98,6 +98,9 @@
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
           {% endif %}
+          {% if profile.topics_i_speak_about %}
+          <div>Topics I speak about: {{ profile.topics_i_speak_about }}</div>
+          {% endif %}
           <br>
           {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">
