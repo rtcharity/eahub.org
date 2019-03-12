@@ -9,7 +9,7 @@
 {{ form.errors }}
 
 <div class="field">
-    <label>Cause areas</label>
+    <label>Cause areas:</label>
     <select class="form-control multiselect-form" name="cause_areas" multiple>
         {% for choice in cause_area_choices %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1.label }}</option>
@@ -22,7 +22,7 @@
 </div>
 
 <div class="field">
-  <label>Giving pledges taken</label>
+  <label>Giving pledges taken:</label>
   <select class="form-control multiselect-form" name="giving_pledges" multiple>
         {% for choice in giving_pledge_choices %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.giving_pledges %}selected{% endif %}>{{ choice.1.label }}</option>
@@ -30,7 +30,9 @@
   </select>
 </div>
 
+<div class="field_boolean">
 {{ form.available_to_volunteer|as_crispy_field }}
+</div>
 
 {% endblock %}
 

@@ -57,8 +57,8 @@ class EditProfileCauseAreasForm(forms.ModelForm):
             'available_to_volunteer',
         )
         labels = {
-            'cause_areas_other': ('Other cause areas'),
-            'available_to_volunteer': ('Available to volunteer')
+            'cause_areas_other': ('Other cause areas:'),
+            'available_to_volunteer': ('Available to volunteer:')
         }
 
 
@@ -70,22 +70,23 @@ class EditProfileCareerForm(forms.ModelForm):
             'open_to_job_offers',
         )
         labels = {
-            'expertise_areas_other': ('Other expertise areas'),
-            'open_to_job_offers': ('Open to job offers')
+            'expertise_areas_other': ('Other expertise areas:'),
+            'open_to_job_offers': ('Open to job offers:')
         }
 
 class EditProfileCommunityForm(forms.ModelForm):
-    local_groups = CustomisedModelMultipleChoiceField(queryset=LocalGroup.objects.all(), required=False, label="EA Groups")
+    local_groups = CustomisedModelMultipleChoiceField(queryset=LocalGroup.objects.all(), required=False, label="Local groups:")
 
     class Meta:
         model = Profile
         fields = (
             'available_as_speaker',
             'topics_i_speak_about',
-            'local_groups'
+            'local_groups',
         )
         labels = {
-            'available_as_speaker': ('Available as speaker')
+            'available_as_speaker': ('Available as speaker:'),
+            'topics_i_speak_about': ('Topics I speak about:'),
         }
 
 class DeleteProfileForm(forms.Form):

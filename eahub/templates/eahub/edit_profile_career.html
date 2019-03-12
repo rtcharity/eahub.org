@@ -7,7 +7,7 @@
 {% block form_fields %}
 
 <div class="field">
-    <label>Expertise</label>
+    <label>Expertise areas:</label>
     <select class="form-control multiselect-form" name="expertise_areas" multiple>
         {% for choice in expertise_area_choices %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.expertise_areas %}selected{% endif %}>{{ choice.1.label }}</option>
@@ -19,7 +19,9 @@
 {{ form.expertise_areas_other|as_crispy_field }}
 </div>
 
+<div class="field_boolean">
 {{ form.open_to_job_offers|as_crispy_field }}
+</div>
 
 {% endblock %}
 

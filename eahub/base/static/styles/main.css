@@ -598,6 +598,10 @@ form .alert ul {
   height: 70px;
 }
 
+.field_boolean .controls {
+  display: inline-block;
+}
+
 /* registration */
 .login-danger {
   background-color: #E4F5B1;
