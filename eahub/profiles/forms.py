@@ -57,6 +57,7 @@ class EditProfileCauseAreasForm(forms.ModelForm):
             'available_to_volunteer',
         )
         labels = {
+            'cause_areas_other': ('Other cause areas'),
             'available_to_volunteer': ('Available to volunteer')
         }
 
@@ -69,6 +70,7 @@ class EditProfileCareerForm(forms.ModelForm):
             'open_to_job_offers',
         )
         labels = {
+            'expertise_areas_other': ('Other expertise areas'),
             'open_to_job_offers': ('Open to job offers')
         }
 

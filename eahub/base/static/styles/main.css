@@ -481,6 +481,11 @@ body {
   color: black;
 }
 
+.list .tag {
+  color: #512B52;
+  display: inline-block;
+}
+
 /* edit */
 
 #multiselect-form {
@@ -587,6 +592,10 @@ form .alert ul {
 
 .org_affiliation label {
   display: block;
+}
+
+.field_free_text textarea {
+  height: 70px;
 }
 
 /* registration */

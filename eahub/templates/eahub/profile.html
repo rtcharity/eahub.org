@@ -39,28 +39,18 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/HubHeartBox.png">
         <div class="panel-body">
           <h3>Cause Area</h3>
-          <p>
-
-            {% if profile.cause_areas == None %}True{% endif %}
-            {{ profile.get_pretty_cause_areas }}
-            {% if profile.available_to_volunteer %}
-              <br>
-              <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
-            {% endif %}
-            {% if user.id == profile.user_id %}
-              <br>
-              <span class="btn btn-default btn-xs">
-                <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
-              </span>
-            {% endif %}
-          </p>
-          {% if profile.giving_pledges.exists %}
-            <p>
-              <strong>Giving Pledges Taken: </strong>
-              {% for giving_pledge in profile.giving_pledges.all %}
-                <span>{{ giving_pledge.name }}</span>
-              {% endfor %}
-            </p>
+          <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas }}</div>
+          {% if profile.giving_pledges %}
+          <div class="list"><div class="tag">Giving Pledges Taken:</div> {{ profile.get_pretty_giving_pledges }}</div>
+          {% endif %}
+          {% if profile.available_to_volunteer %}
+          <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
+          {% endif %}
+          {% if user.id == profile.user_id %}
+            <br>
+            <span class="btn btn-default btn-xs">
+              <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
+            </span>
           {% endif %}
         </div>
       </div>
@@ -72,19 +62,19 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/BriefcaseHub.png">
         <div class="panel-body">
           <h3>Career</h3>
-          <p>
-            {{ profile.get_pretty_expertise }}
-            {% if profile.open_to_job_offers %}
-              <br>
-              <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
-            {% endif %}
-            {% if user.id == profile.user_id %}
-              <br>
-              <span class="btn btn-default btn-xs">
-                <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
-              </span>
-            {% endif %}
-          </p>
+          {% if profile.expertise_areas %}
+          <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise }}</div>
+          {% endif %}
+          {% if profile.open_to_job_offers %}
+            <br>
+            <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
+          {% endif %}
+          {% if user.id == profile.user_id %}
+            <br>
+            <span class="btn btn-default btn-xs">
+              <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
+            </span>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -97,16 +87,16 @@
           <h3>Community</h3>
 
           {% if profile.organisational_affiliations %}
-          <div class="list">{{ profile.get_pretty_organisational_affiliations }}</div>
+          <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
           {% endif %}
           {% if profile.local_groups %}
-          <div class="list">{{ profile.get_pretty_local_groups }}</div>
+          <div class="list"><div class="tag">Local groups:</div> {{ profile.get_pretty_local_groups }}</div>
+          {% endif %}
+          {% if profile.topics_i_speak_about %}
+          <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about }}</div>
           {% endif %}
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
-          {% endif %}
-          {% if profile.topics_i_speak_about %}
-          <div>Topics I speak about: {{ profile.topics_i_speak_about }}</div>
           {% endif %}
           <br>
           {% if user.id == profile.user_id %}
