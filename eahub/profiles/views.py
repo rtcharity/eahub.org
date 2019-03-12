@@ -3,6 +3,7 @@ import os, logging
 import requests
 from django.conf import settings
 from django.views import generic
+from django import http
 from django.http import HttpResponse
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
