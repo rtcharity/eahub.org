@@ -65,6 +65,7 @@ class EditProfileCareerForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = (
+            'expertise_areas_other',
             'open_to_job_offers',
         )
         labels = {
@@ -78,6 +79,7 @@ class EditProfileCommunityForm(forms.ModelForm):
         model = Profile
         fields = (
             'available_as_speaker',
+            'topics_i_speak_about',
             'local_groups'
         )
         labels = {
