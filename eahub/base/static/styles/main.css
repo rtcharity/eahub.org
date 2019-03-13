@@ -594,12 +594,17 @@ form .alert ul {
   display: block;
 }
 
+
 .field_free_text textarea {
   height: 70px;
 }
 
 .field_boolean .controls {
   display: inline-block;
+}
+
+.form-edit-group .checkbox {
+  margin-left: 20px;
 }
 
 /* registration */
