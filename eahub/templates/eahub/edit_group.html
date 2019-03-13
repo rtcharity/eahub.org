@@ -5,7 +5,9 @@
 {% block title %}{% if form.instance.pk %}Edit Group{% else %}Create Group{% endif %}{% endblock %}
 
 {% block form_fields %}
+<div class="form-edit-group">
 {{ form|crispy }}
+</div>
 <div class="privacy-note">
   <b>Note:</b> All group information is public.
   Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.
