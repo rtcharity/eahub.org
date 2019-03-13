@@ -160,7 +160,7 @@ def prettify_property_list(property_class, standard_list, other_list):
         pretty_list += ", ".join(map(property_class.label, standard_list))
     if other_list:
         pretty_list = pretty_list + ', ' + other_list if standard_list else other_list
-    if not (standard_list and other_list):
+    if (standard_list and other_list) is False:
         pretty_list = "N/A"
     return pretty_list
 

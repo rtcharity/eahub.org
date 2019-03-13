@@ -39,7 +39,7 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/HubHeartBox.png">
         <div class="panel-body">
           <h3>Cause Area</h3>
-          {% if profile.cause_areas %}
+          {% if profile.cause_areas or profile.cause_areas_other %}
           <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas }}</div>
           {% endif %}
           {% if profile.giving_pledges %}
@@ -64,7 +64,7 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/BriefcaseHub.png">
         <div class="panel-body">
           <h3>Career</h3>
-          {% if profile.expertise_areas %}
+          {% if profile.expertise_areas or profile.expertise_areas_other %}
           <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise }}</div>
           {% endif %}
           {% if profile.open_to_job_offers %}
