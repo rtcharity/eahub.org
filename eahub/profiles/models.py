@@ -188,7 +188,7 @@ class Profile(models.Model):
     )
     expertise_areas_other = models.TextField(blank=True)
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    topics_i_speak_about = models.TextField(null=True, blank=True)
+    topics_i_speak_about = models.TextField(blank=True)
     organisational_affiliations = postgres_fields.ArrayField(
         enum.EnumField(OrganisationalAffiliation), blank=True, default=list
     )
