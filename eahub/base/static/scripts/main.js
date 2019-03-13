@@ -32,7 +32,7 @@ function applySearchFunctionality (datatable) {
   });
 }
 
-var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker')]
+var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker'), $('#id_open_to_job_offers'), $('#id_available_to_volunteer')]
 selectors_with_old_style.forEach(function(selector) {
   selector.removeClass('selectmultiple').addClass('form-control multiselect-form')
 })

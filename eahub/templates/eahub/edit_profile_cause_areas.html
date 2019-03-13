@@ -17,6 +17,10 @@
     </select>
 </div>
 
+<div class="field_free_text">
+{{ form.cause_areas_other|as_crispy_field }}
+</div>
+
 <div class="field">
   <label>Giving pledges taken:</label>
   <select class="form-control multiselect-form" name="giving_pledges" multiple>
@@ -26,7 +30,9 @@
   </select>
 </div>
 
+<div class="field_boolean">
 {{ form.available_to_volunteer|as_crispy_field }}
+</div>
 
 {% endblock %}
 

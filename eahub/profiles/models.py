@@ -12,6 +12,7 @@ from sorl import thumbnail
 
 from ..localgroups.models import LocalGroup
 
+
 class CauseArea(enum.Enum):
 
     GLOBAL_POVERTY = 1
@@ -153,6 +154,17 @@ class OrganisationalAffiliation(enum.Enum):
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative"
     }
 
+def prettify_property_list(property_class, standard_list, other_list):
+    pretty_list = ''
+    if standard_list:
+        pretty_list += ", ".join(map(property_class.label, standard_list))
+    if other_list:
+        pretty_list = pretty_list + ', ' + other_list if standard_list else other_list
+    if (standard_list and other_list) is False:
+        pretty_list = "N/A"
+    return pretty_list
+
+
 class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -168,12 +180,15 @@ class Profile(models.Model):
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
+    cause_areas_other = models.TextField(blank=True)
     available_to_volunteer = models.BooleanField(null=True, blank=True, default=None)
     open_to_job_offers = models.BooleanField(null=True, blank=True, default=None)
     expertise_areas = postgres_fields.ArrayField(
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
+    expertise_areas_other = models.TextField(blank=True)
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
+    topics_i_speak_about = models.TextField(blank=True)
     organisational_affiliations = postgres_fields.ArrayField(
         enum.EnumField(OrganisationalAffiliation), blank=True, default=list
     )
@@ -206,16 +221,10 @@ class Profile(models.Model):
         return self
 
     def get_pretty_cause_areas(self):
-        if self.cause_areas:
-            return ", ".join(map(CauseArea.label, self.cause_areas))
-        else:
-            return "N/A"
+        return prettify_property_list(CauseArea,self.cause_areas,self.cause_areas_other)
 
     def get_pretty_expertise(self):
-        if self.expertise_areas:
-            return ", ".join(map(ExpertiseArea.label, self.expertise_areas))
-        else:
-            return "N/A"
+        return prettify_property_list(ExpertiseArea,self.expertise_areas,self.expertise_areas_other)
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:

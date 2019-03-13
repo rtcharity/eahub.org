@@ -7,7 +7,7 @@
 {% block form_fields %}
 
 <div class="field org_affiliation">
-    <label>Organisational Affiliation</label>
+    <label>Organisational Affiliations:</label>
     <select class="form-control multiselect-form" name="organisational_affiliations" multiple>
         {% for choice in organisational_affiliation_choices %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.organisational_affiliations %}selected{% endif %}>{{ choice.1.label }}</option>
@@ -15,10 +15,16 @@
     </select>
 </div>
 
-{{ form.available_as_speaker|as_crispy_field }}
-
 <div class="field">
 {{ form.local_groups|as_crispy_field }}
+</div>
+
+<div class="field_free_text">
+{{ form.topics_i_speak_about|as_crispy_field }}
+</div>
+
+<div class="field">
+{{ form.available_as_speaker|as_crispy_field }}
 </div>
 
 {% endblock %}
