@@ -495,6 +495,7 @@ body {
 .multiselect-container  {
   max-height: 50vh;
   max-width: 90vw;
+  width: 300px;
   overflow: scroll;
 }
 
