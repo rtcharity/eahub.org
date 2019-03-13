@@ -20,7 +20,6 @@ class CauseArea(enum.Enum):
     LONG_TERM_FUTURE = 3
     CAUSE_PRIORITISATION = 4
     META = 5
-    OTHER = 6
 
     labels = {
         GLOBAL_POVERTY: "Global Poverty",
@@ -28,7 +27,6 @@ class CauseArea(enum.Enum):
         LONG_TERM_FUTURE: "Long-term Future",
         CAUSE_PRIORITISATION: "Cause Prioritisation",
         META: "Meta",
-        OTHER: "Other",
     }
 
 
@@ -51,7 +49,6 @@ class ExpertiseArea(enum.Enum):
     PHYSICS = 15
     MEDICINE = 16
     OTHER_SCIENCE = 17
-    OTHER = 18
 
     labels = {
         MANAGEMENT: "Management",
@@ -70,8 +67,7 @@ class ExpertiseArea(enum.Enum):
         PSYCHOLOGY: "Psychology",
         PHYSICS: "Physics",
         MEDICINE: "Medicine",
-        OTHER_SCIENCE: "Other Science",
-        OTHER: "Other"
+        OTHER_SCIENCE: "Other Science"
     }
 
 

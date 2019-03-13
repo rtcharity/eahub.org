@@ -39,7 +39,9 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/HubHeartBox.png">
         <div class="panel-body">
           <h3>Cause Area</h3>
+          {% if profile.cause_areas %}
           <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas }}</div>
+          {% endif %}
           {% if profile.giving_pledges %}
           <div class="list"><div class="tag">Giving Pledges Taken:</div> {{ profile.get_pretty_giving_pledges }}</div>
           {% endif %}
@@ -89,7 +91,7 @@
           {% if profile.organisational_affiliations %}
           <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
           {% endif %}
-          {% if profile.local_groups %}
+          {% if profile.local_groups.exists %}
           <div class="list"><div class="tag">Local groups:</div> {{ profile.get_pretty_local_groups }}</div>
           {% endif %}
           {% if profile.topics_i_speak_about %}
