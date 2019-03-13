@@ -67,7 +67,7 @@ class ExpertiseArea(enum.Enum):
         PSYCHOLOGY: "Psychology",
         PHYSICS: "Physics",
         MEDICINE: "Medicine",
-        OTHER_SCIENCE: "Other Science"
+        OTHER_SCIENCE: "Other Science",
     }
 
 
@@ -154,13 +154,13 @@ class OrganisationalAffiliation(enum.Enum):
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative"
     }
 
-def create_pretty_property_list(propertyClass, standard_list, other_list):
+def prettify_property_list(property_class, standard_list, other_list):
     pretty_list = ''
     if standard_list:
-        pretty_list += ", ".join(map(propertyClass.label, standard_list))
+        pretty_list += ", ".join(map(property_class.label, standard_list))
     if other_list:
         pretty_list = pretty_list + ', ' + other_list if standard_list else other_list
-    if (standard_list and other_list) is False:
+    if not (standard_list and other_list):
         pretty_list = "N/A"
     return pretty_list
 
@@ -180,13 +180,13 @@ class Profile(models.Model):
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
-    cause_areas_other = models.TextField(null=True, blank=True)
+    cause_areas_other = models.TextField(blank=True)
     available_to_volunteer = models.BooleanField(null=True, blank=True, default=None)
     open_to_job_offers = models.BooleanField(null=True, blank=True, default=None)
     expertise_areas = postgres_fields.ArrayField(
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
-    expertise_areas_other = models.TextField(null=True, blank=True)
+    expertise_areas_other = models.TextField(blank=True)
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
     topics_i_speak_about = models.TextField(null=True, blank=True)
     organisational_affiliations = postgres_fields.ArrayField(
@@ -221,10 +221,10 @@ class Profile(models.Model):
         return self
 
     def get_pretty_cause_areas(self):
-        return create_pretty_property_list(CauseArea,self.cause_areas,self.cause_areas_other)
+        return prettify_property_list(CauseArea,self.cause_areas,self.cause_areas_other)
 
     def get_pretty_expertise(self):
-        return create_pretty_property_list(ExpertiseArea,self.expertise_areas,self.expertise_areas_other)
+        return prettify_property_list(ExpertiseArea,self.expertise_areas,self.expertise_areas_other)
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
