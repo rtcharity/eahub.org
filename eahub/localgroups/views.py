@@ -100,7 +100,7 @@ def report_group_inactive(request, slug):
         'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
         'user_email': request.user.email
     })
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=[settings.GROUP_ADMINS])
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
     messages.success(
         request,
         ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',

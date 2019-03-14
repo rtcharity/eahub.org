@@ -25,7 +25,7 @@ services:
       EMAIL_URL: smtp://mail:1025
       HOSTS: web,localhost
       HTTPS: 'False'
-      LEAN_MANAGERS: Lean Manager=groupadmin@example.com
+      LEAN_MANAGERS: Lean Manager=leanmanager@example.com
       RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
       RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
       SECRET_KEY: development_secret_key
