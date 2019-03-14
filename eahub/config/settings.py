@@ -175,6 +175,7 @@ RECAPTCHA_SECRET_KEY = env.str("RECAPTCHA_SECRET_KEY")
 RECAPTCHA_SITE_KEY = env.str("RECAPTCHA_SITE_KEY")
 
 # Local groups
+LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS").items())
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
 if local_groups_airtable_api_key is None and local_groups_airtable_base_key is None:

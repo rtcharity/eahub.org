@@ -6,12 +6,13 @@ from rules.contrib import views as rules_views
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.core.mail import mail_managers
+from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
+from django.conf import settings
 
 from .forms import LocalGroupForm
 from .models import LocalGroup
@@ -75,7 +76,7 @@ def claim_group(request, slug):
         'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
         'user_email': request.user.email
     })
-    mail_managers(subject, message)
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
     messages.success(
         request,
         ''' Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. ''',
@@ -99,7 +100,7 @@ def report_group_inactive(request, slug):
         'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
         'user_email': request.user.email
     })
-    mail_managers(subject, message)
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
     messages.success(
         request,
         ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
