@@ -405,6 +405,9 @@ body {
 .profile-info .col-md-4 {
   text-align: center;
 }
+.profile-info .list-item {
+  display: block;
+}
 
 .profile-cards .panel {
   height: 100%;

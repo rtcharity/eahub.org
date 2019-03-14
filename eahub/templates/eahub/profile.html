@@ -93,10 +93,15 @@
           {% endif %}
           {% if profile.local_groups.exists %}
           <div class="list turquoise-links">
-            <div class="tag">Local groups:</div>
-            {% for group in profile.local_groups.all %}
-              <a href="{% url 'group' group.slug %}">{{ group.name }}</a>
-            {% endfor%}
+            {% if profile.local_groups.all.count == 1 %}
+              <div class="tag">Local group:</div>
+              <a href="{% url 'group' profile.local_groups.first.slug %}">{{profile.local_groups.first.name}}</a>
+            {% else %}
+              <div class="tag">Local groups:</div>
+              {% for group in profile.local_groups.all %}
+                <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
+              {% endfor%}
+            {% endif %}
           </div>
           {% endif %}
           {% if profile.topics_i_speak_about %}
