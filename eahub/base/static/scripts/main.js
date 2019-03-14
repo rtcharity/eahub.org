@@ -39,7 +39,8 @@ selectors_with_old_style.forEach(function(selector) {
 
 // add setting for all multiselect forms
 $('.multiselect-form').multiselect({
-  numberDisplayed: 1
+  numberDisplayed: 1,
+  enableCaseInsensitiveFiltering: true
 });
 
 var menu_btn = document.getElementById('burger-btn')
