@@ -92,9 +92,12 @@
           <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
           {% endif %}
           {% if profile.local_groups.exists %}
-          {% for group in profile.local_groups. all %}
-          {{ group }}
-          {% endfor%}
+          <div class="list turquoise-links">
+            <div class="tag">Local groups:</div>
+            {% for group in profile.local_groups.all %}
+              <a href="{% url 'group' group.slug %}">{{ group.name }}</a>
+            {% endfor%}
+          </div>
           {% endif %}
           {% if profile.topics_i_speak_about %}
           <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about }}</div>
