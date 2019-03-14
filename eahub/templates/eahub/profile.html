@@ -17,13 +17,21 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1>{{ profile.name|title }}</h1>
-      <div class="btn btn-default purple">
       {% if user.id == profile.user_id %}
-      <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a></span>
-      {% else %}
-      <span><i class="fa fa-microphone-slash"></i> Messaging Available Soon</span>
-      {% endif %}
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a></span>
       </div>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'change_email' %}"><i class="fa fa-pencil"></i> Change Email Address</a></span>
+      </div>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'change_password' %}"><i class="fa fa-pencil"></i> Change Password</a></span>
+      </div>
+      {% else %}
+      <div class="btn btn-default purple">
+        <span><i class="fa fa-microphone-slash"></i> Messaging Available Soon</span>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
