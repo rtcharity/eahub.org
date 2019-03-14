@@ -25,6 +25,7 @@ ADMINS = list(env.dict("ADMINS").items())
 DEFAULT_FROM_EMAIL = "EA Hub <noreply@eahub.org>"
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
+GROUP_ADMIN = 'lean@eahub.org'
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Core settings: file uploads
