@@ -92,7 +92,9 @@
           <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
           {% endif %}
           {% if profile.local_groups.exists %}
-          <div class="list"><div class="tag">Local groups:</div> {{ profile.get_pretty_local_groups }}</div>
+          {% for group in profile.local_groups. all %}
+          {{ group }}
+          {% endfor%}
           {% endif %}
           {% if profile.topics_i_speak_about %}
           <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about }}</div>
