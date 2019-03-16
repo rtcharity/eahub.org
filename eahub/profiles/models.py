@@ -198,6 +198,9 @@ class Profile(models.Model):
     )
     subscribed_to_email_updates = models.BooleanField(default=False)
     local_groups = models.ManyToManyField(LocalGroup, through='Membership', blank=True)
+    legacy_record = models.PositiveIntegerField(
+        null=True, default=None, editable=False, unique=True
+    )
 
     class Meta:
         ordering = ["name", "slug"]
