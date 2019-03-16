@@ -10,13 +10,6 @@ body {
 }
 
 /* info */
-.info a {
-  color: #7bb0a8;
-  text-decoration: none;
-}
-.info a:hover {
-  opacity: 0.7;
-}
 
 .info h1, h3, h4 {
   text-align: left;
@@ -412,6 +405,9 @@ body {
 .profile-info .col-md-4 {
   text-align: center;
 }
+.profile-info .list-item {
+  display: block;
+}
 
 .profile-cards .panel {
   height: 100%;
@@ -696,6 +692,14 @@ table {
 }
 table .picture-column {
   width: 50px;
+}
+
+.turquoise-links a {
+  color: #7bb0a8;
+  text-decoration: none;
+}
+.turquoise-links a:hover {
+  opacity: 0.7;
 }
 
 
