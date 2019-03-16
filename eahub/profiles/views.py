@@ -3,10 +3,11 @@ import os, logging
 import requests
 from django.conf import settings
 from django.views import generic
+from django.views.generic import edit
 from django import http
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, mixins as auth_mixins, views as auth_views
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -53,6 +54,20 @@ def MyProfileView(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
     return redirect('profile', slug=request.user.profile.slug)
+
+
+class EmailChangeView(auth_mixins.LoginRequiredMixin, edit.UpdateView):
+    fields = ["email"]
+    template_name = "eahub/change_email.html"
+    success_url = reverse_lazy("my_profile")
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+
+class PasswordChangeView(auth_views.PasswordChangeView):
+    template_name = "eahub/change_password.html"
+    success_url = reverse_lazy("my_profile")
 
 
 @login_required(login_url=reverse_lazy('login'))
