@@ -14,6 +14,7 @@ services:
       - ./eahub/:/code/eahub/
     environment:
       APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
+      LEGACY_DATABASE_URL:
       LOCAL_GROUPS_AIRTABLE_API_KEY:
       LOCAL_GROUPS_AIRTABLE_BASE_KEY:
       ADMINS: Local Admin=admin@example.com

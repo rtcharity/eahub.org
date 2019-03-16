@@ -13,6 +13,10 @@ CACHES = {
 DATABASES = {
     "default": env.db_url("DATABASE_URL", engine="django.db.backends.postgresql")
 }
+if "LEGACY_DATABASE_URL" in env:
+    DATABASES["legacy"] = env.db_url(
+        "LEGACY_DATABASE_URL", engine="django.db.backends.mysql"
+    )
 
 # Core settings: debugging
 DEBUG = env.bool("DEBUG")
