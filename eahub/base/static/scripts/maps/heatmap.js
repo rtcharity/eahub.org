@@ -42,13 +42,13 @@ function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
 
 function renderProfileMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithLabelsGDPRUnlocked(locations, map);
+  var markers = addMarkersWithLabels(locations, map);
   createMarkerClusters(map, markers);
 }
 
 function renderGroupMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithLabels(locations, map);
+  var markers = addMarkersWithLabelsGDPRUnlocked(locations, map);
   createMarkerClusters(map, markers);
 }
 
@@ -67,6 +67,7 @@ function createMap() {
   };
 
   var mapElement = document.getElementById('map');
+  console.log(mapElement)
   var map = new google.maps.Map(mapElement, mapOptions);
   return map
 }
@@ -148,7 +149,7 @@ function addMarkersWithLabelsGDPRUnlocked(locations, map) {
       });
       var iconSize = new google.maps.Size(20, 23);
       marker.setIcon({
-       url: '/static/images/marker.svg',
+       url: '/static/images/marker_active.svg',
        size: iconSize,
        scaledSize: iconSize  // makes SVG icons work in IE
       });
