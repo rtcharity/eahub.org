@@ -333,6 +333,11 @@ body {
 #list_page_map:hover {
   opacity: 0.7;
 }
+.map-label {
+  max-height: 100px;
+  max-width: 100px;
+  padding-right: 20px;
+}
 
 /* link_box */
 .link_box{
