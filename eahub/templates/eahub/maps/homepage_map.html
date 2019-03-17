@@ -15,6 +15,9 @@
     var query_string_map = "{{ request.GET.map }}";
     var mapDataProfiles = [{{ map_data_profiles | safe}}];
     var mapDataGroups = [{{ map_data_groups | safe }}];
+    var privateProfiles = [{{ privateProfiles | safe }}];
+    mapDataProfiles = mapDataProfiles.concat(privateProfiles)
+    console.log(mapDataProfiles)
     mapSetup(query_string_map,mapDataProfiles,mapDataGroups);
   }
 </script>

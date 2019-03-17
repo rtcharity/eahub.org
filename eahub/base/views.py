@@ -4,16 +4,21 @@ from django.template import loader
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
+from django.db.models import Count
 
 def index(request):
     groupsData = getGroupsData()
     profilesData = getProfilesData(request.user)
+    kAnonymity = 0
+    # privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
+    privateProfiles = getPrivateProfiles()
     return render(request, 'eahub/index.html', {
         "page_name": "Home",
         'groups': groupsData["rows"],
         'map_data_groups': groupsData["map_data"],
         'profiles': profilesData["rows"],
-        'map_data_profiles': profilesData["map_data"]
+        'map_data_profiles': profilesData["map_data"],
+        'privateProfiles': privateProfiles
     })
 
 def about(request):
@@ -27,6 +32,7 @@ def profiles(request):
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': profilesData["rows"],
+        'anonProfiles': anonProfiles,
         'map_data_profiles': profilesData["map_data"]
     })
 
@@ -82,6 +88,21 @@ def getProfilesData(user):
         'rows': rows,
         'map_data': map_data
     }
+
+def getPrivateProfiles():
+    kAnonymity = 0
+    privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
+    privateProfilesString = ''.join([
+        '{' +
+            'lat: {lat}, lng: {lon}, count:{count}'.format(
+                lat=str(x['lat']),
+                lon=str(x['lon']),
+                count=str(x['count']),
+            )
+        + '},'
+        for x in privateProfiles
+    ])
+    return privateProfilesString
 
 def healthCheck(request):
     return HttpResponse(status=204)

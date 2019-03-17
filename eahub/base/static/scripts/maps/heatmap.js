@@ -1,6 +1,6 @@
 var minClusterZoom = 14;
 
-function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups) {
+function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups, privateProfiles) {
   mapToggle(queryStringMap, mapDataProfiles, mapDataGroups)
   //call renderMap when page loads
   renderMap(queryStringMap, mapDataProfiles, mapDataGroups);
@@ -27,12 +27,14 @@ function mapToggle(queryStringMap, mapDataProfiles, mapDataGroups) {
   }
 }
 
-function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
+function renderMap(selectedMap, mapDataProfiles, mapDataGroups, anonProfiles) {
   if (selectedMap !== 'individuals') {
     selectedMap = 'groups'
   }
   var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
   if (selectedMap == 'individuals') {
+    locations = locations.concat(anonProfiles)
+    console.log(locations)
     renderProfileMap(locations)
   } else {
     renderGroupMap(locations)
