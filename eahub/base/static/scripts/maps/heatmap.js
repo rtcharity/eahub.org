@@ -146,9 +146,6 @@ function addDescription(marker,profiles) {
     profiles.map(function(profile) {
       marker.desc += "<a style='display: block' href='" + profile.path + "'>" + profile.label + "</a>";
     })
-    for (var i=0; i< 20; i++) {
-      marker.desc += "<a style='display: block' href=''>Skai" + i.toString() + "</a>";
-    }
     marker.desc += '</div>'
   } else {
     marker.desc = "<a href='" + profiles[0].path + "'>" + profiles[0].label + "</a>";
@@ -166,15 +163,18 @@ function addMarkersWithLists(locationClusters, map) {
       addLabel(marker, map)
       marker.setMap(map);
       markers.push(marker);
+      // once available, the number of anonymous profiles at this location can be added to this variable
+      var profiles_at_location = profiles.length
+      addDummyMarkers(location, profiles_at_location, markers, map)
   }
   return markers
 }
 
-function createMarker(location,z=0) {
+function createMarker(location,z=1) {
   var marker = new google.maps.Marker({
       position: location,
       optimized: !isIE,  // makes SVG icons work in IE
-      zIndex: 1 - z
+      zIndex: z
   });
   var iconSize = new google.maps.Size(20, 23);
   marker.setIcon({
@@ -185,9 +185,9 @@ function createMarker(location,z=0) {
   return marker
 }
 
-function addDummyMarkers(location, markers, profiles, map) {
-  for (var i=1; i<profiles.length; i++) {
-    var dummyMarker = createMarker(location, i)
+function addDummyMarkers(location, profiles_at_location, markers, map) {
+  for (var i = 1; i < profiles_at_location; i++) {
+    var dummyMarker = createMarker(location, z=1-i)
     dummyMarker.setMap(map);
     markers.push(dummyMarker)
   }
