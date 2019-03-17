@@ -13,15 +13,17 @@ class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
 
     name = forms.CharField(max_length=200)
+    is_public = forms.BooleanField(required=False, label="Show my profile to the public", initial=True)
     subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
 
     def save(self, commit=True):
         if not commit:
             raise RuntimeError("can't create profile without database save")
+        is_public = self.cleaned_data['is_public']
         name = self.cleaned_data['name']
         subscribed_to_email_updates = self.cleaned_data['subscribed_to_email_updates']
         user = super().save()
-        Profile.objects.create(user=user, name=name, subscribed_to_email_updates=subscribed_to_email_updates)
+        Profile.objects.create(user=user, is_public=is_public, name=name, subscribed_to_email_updates=subscribed_to_email_updates)
         return user
 
     class Meta(CaseInsensitiveUsernameFieldCreationForm.Meta):
@@ -36,6 +38,7 @@ class EditProfileForm(forms.ModelForm):
             'name',
             'image', 'summary',
             'city_or_town', 'country',
+            'is_public',
             'subscribed_to_email_updates',
         )
         widgets = {
@@ -45,6 +48,7 @@ class EditProfileForm(forms.ModelForm):
         }
         labels = {
             'city_or_town': ('City/Town'),
+            'is_public': "Show my profile to the public",
             'subscribed_to_email_updates': ('Send me email updates about the EA Hub'),
         }
 

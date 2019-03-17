@@ -111,6 +111,7 @@ class Command(base.BaseCommand):
                 },
                 {
                     "slug": slug,
+                    "is_public": False,
                     "name": name,
                     "city_or_town": city_or_town,
                     "country": country,

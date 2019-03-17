@@ -25,17 +25,20 @@
 
 {{ form.summary|as_crispy_field }}
 
+{{ form.is_public|as_crispy_field }}
+
+<div class="privacy-note">
+  If you make your profile private but enter a location, that location will be shown anonymously on the map if there are enough other EAs near you.
+</div>
+
+{% if opportunities %}
+<div class="privacy-note">
+  You have indicated openness to {{ opportunities|join:' and ' }}. As such, if you make your profile public, others may be able to search for it in the future based on your location, cause areas, expertise areas, and organizational affiliations.
+</div>
+{% endif %}
+
 {{ form.subscribed_to_email_updates|as_crispy_field }}
 
 {% endblock %}
 
 {% block submit%}Update{% endblock%}
-
-{% block form_privacy_note %}
-
-<div class="privacy-note">
-  <b>Note:</b> All profile information is public.
-  Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.
-</div>
-
-{% endblock %}
