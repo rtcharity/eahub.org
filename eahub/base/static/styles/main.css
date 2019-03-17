@@ -553,10 +553,6 @@ form .alert ul {
   height: 30px;
 }
 
-#div_id_subscribed_to_email_updates {
-  margin-left: 20px;
-}
-
 #div_id_open_to_job_offers .controls {
   display: inline-block;
 }
@@ -586,10 +582,6 @@ form .alert ul {
 #id_image {
   padding-bottom: 35px;
   height: 30px;
-}
-
-#div_id_is_public, #div_id_subscribed_to_email_updates {
-  margin-left: 20px;
 }
 
 .field_categories label {
