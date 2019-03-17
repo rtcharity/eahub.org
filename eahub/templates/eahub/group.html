@@ -54,21 +54,14 @@
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
         <li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town|default_if_none:'N/A' }}</li>
         <li class="list-group-item"><b>Country: </b>{{ group.country|default_if_none:'N/A' }}</li>
-        {% if group.organisers.exists %}
-          <li class="list-group-item"><b>Organisers:</b>
-            <ul>
-              {% for organiser in group.organisers.all %}
-                {% if organiser.has_profile %}
-                  <li><a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a></li>
-                {% else %}
-                  <li>Anonymous</li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-          </li>
-        {% else %}
-          <li class="list-group-item"><b>Organisers: </b>Unknown</li>
-        {% endif %}
+        <li class="list-group-item"><b>Organisers:</b>
+        <ul>
+          {% for organiser in group.public_organisers %}
+            <li><a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a></li>
+          {% empty %}
+            <li>Unknown or Anonymous</li>
+          {% endfor %}
+        </ul>
         <li class="list-group-item"><b>Website: </b>{{ group.website|default:'N/A' }}</li>
         <li class="list-group-item"><b>Facebook Group: </b>{{ group.facebook_group|default:'N/A' }}</li>
         <li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page|default:'N/A' }}</li>

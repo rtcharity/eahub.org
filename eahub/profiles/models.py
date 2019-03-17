@@ -165,10 +165,18 @@ def prettify_property_list(property_class, standard_list, other_list):
     return pretty_list
 
 
+class ProfileManager(models.Manager):
+    def visible_to_user(self, user):
+        if user.is_superuser:
+            return self.all()
+        return self.filter(models.Q(is_public=True) | models.Q(user_id=user.pk))
+
+
 class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
+    is_public = models.BooleanField(default=True)
     name = models.CharField(max_length=200)
     image = thumbnail.ImageField(
         upload_to=upload_path.auto_cleaned_path_stripped_uuid4, blank=True
@@ -201,6 +209,8 @@ class Profile(models.Model):
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )
+
+    objects = ProfileManager()
 
     class Meta:
         ordering = ["name", "slug"]

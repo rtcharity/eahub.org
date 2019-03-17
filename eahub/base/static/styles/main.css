@@ -583,7 +583,7 @@ form .alert ul {
   height: 30px;
 }
 
-#div_id_subscribed_to_email_updates {
+#div_id_is_public, #div_id_subscribed_to_email_updates {
   margin-left: 20px;
 }
 

@@ -12,5 +12,5 @@ urlpatterns = [
     path('edit/community', views.edit_profile_community, name='edit_profile_community'),
     path('delete', views.delete_profile, name='delete_profile'),
     path('download', views.DownloadView, name='download_profile'),
-    path('<slug:slug>', views.ProfileView, name='profile'),
+    path('<slug:slug>', views.ProfileDetailView.as_view(), name='profile'),
 ]

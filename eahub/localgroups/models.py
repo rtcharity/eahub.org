@@ -54,6 +54,11 @@ class LocalGroup(models.Model):
     def get_absolute_url(self):
         return urls.reverse("group", args=[self.slug])
 
+    def public_organisers(self):
+        return self.organisers.filter(profile__is_public=True).order_by(
+            "profile__name", "profile__slug"
+        )
+
     def geocode(self):
         self.lat = None
         self.lon = None

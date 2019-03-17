@@ -3,6 +3,7 @@ import os, logging
 import requests
 from django.conf import settings
 from django.views import generic
+from django.views.generic import detail
 from django.views.generic import edit
 from django import http
 from django.http import HttpResponse
@@ -12,6 +13,7 @@ from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation, Membership
+from ..base import mixins as base_mixins
 from ..localgroups.models import LocalGroup
 from .forms import *
 
@@ -41,12 +43,13 @@ class SignUp(generic.CreateView):
             return redirect(reverse('signup') + '?captcha_error=True')
 
 
-def ProfileView(request, slug):
-    profile = get_object_or_404(Profile, slug=slug)
-    template = 'eahub/profile.html'
-    return render(request, template, {
-        'profile': profile
-    })
+class ProfileDetailView(base_mixins.AssertPermissionMixin, detail.DetailView):
+    model = Profile
+    template_name = "eahub/profile.html"
+    permission_required = "profiles.view_profile"
+
+    def get_queryset(self):
+        return Profile.objects.visible_to_user(self.request.user)
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -95,9 +98,17 @@ def edit_profile(request):
             return redirect('my_profile')
     else:
         form = EditProfileForm(instance=request.user.profile)
+    opportunities = []
+    if profile.open_to_job_offers:
+        opportunities.append("job offers")
+    if profile.available_to_volunteer:
+        opportunities.append("volunteering opportunities")
+    if profile.available_as_speaker:
+        opportunities.append("speaking opportunities")
     return render(request, 'eahub/edit_profile.html', {
             'form': form,
-            'profile': profile
+            'profile': profile,
+            'opportunities': opportunities,
         })
 
 

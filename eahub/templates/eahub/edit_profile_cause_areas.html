@@ -34,15 +34,20 @@
 {{ form.available_to_volunteer|as_crispy_field }}
 </div>
 
+{% if profile.is_public %}
+<div class="privacy-note">
+  Selecting "Yes" may allow others to search for your profile in the future based on your location, cause areas, expertise areas, and organizational affiliations.
+</div>
+{% endif %}
+
 {% endblock %}
 
 {% block submit%}Update{% endblock%}
 
 {% block form_privacy_note %}
-
+{% if profile.is_public %}
 <div class="privacy-note">
-  <b>Note:</b> All profile information is public.
-  Read more about our <a href="{% url 'privacyPolicy' %}">privacy policy</a>.
+  You are showing this information to the public. You can <a href="{% url 'edit_profile' %}">change your privacy settings</a>, or <a href="{% url 'privacyPolicy' %}">read more about our privacy policy</a>.
 </div>
-
+{% endif %}
 {% endblock %}

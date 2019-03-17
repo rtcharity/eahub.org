@@ -7,7 +7,7 @@ from ..profiles.models import Profile
 
 def index(request):
     groupsData = getGroupsData()
-    profilesData = getProfilesData()
+    profilesData = getProfilesData(request.user)
     return render(request, 'eahub/index.html', {
         "page_name": "Home",
         'groups': groupsData["rows"],
@@ -23,7 +23,7 @@ def privacyPolicy(request):
     return render(request, 'eahub/privacy_policy.html')
 
 def profiles(request):
-    profilesData = getProfilesData()
+    profilesData = getProfilesData(request.user)
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': profilesData["rows"],
@@ -61,11 +61,11 @@ def getGroupsData():
         'map_data': map_data
     }
 
-def getProfilesData():
-    rows = Profile.objects.all()
+def getProfilesData(user):
+    rows = Profile.objects.visible_to_user(user)
     map_data = ''.join([
         '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}", gdpr_confirmed: "{gdpr_confirmed}"'.format(
+            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
                 lat=str(x.lat),
                 lon=str(x.lon),
                 name=x.name,
@@ -73,7 +73,6 @@ def getProfilesData():
                     obj='profile',
                     slug=x.slug
                 ),
-                gdpr_confirmed=True
             )
         + '},'
         for x in rows
