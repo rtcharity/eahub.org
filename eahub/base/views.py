@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.templatetags import static
+from django.views.generic import base
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
@@ -102,6 +104,12 @@ def getPrivateProfiles(user):
         for x in privateProfiles
     ])
     return privateProfilesString
+
+
+class FaviconView(base.RedirectView):
+    def get_redirect_url(self):
+        return static.static("favicon.ico")
+
 
 def healthCheck(request):
     return HttpResponse(status=204)
