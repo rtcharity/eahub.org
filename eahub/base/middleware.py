@@ -28,3 +28,9 @@ class BrokenLinkEmailsMiddleware(common.BrokenLinkEmailsMiddleware):
                     fail_silently=True,
                 )
         return response
+
+    def is_ignorable_request(self, request, uri, domain, referer):
+        return (
+            super().is_ignorable_request(request, uri, domain, referer)
+            or "Googlebot" in referer
+        )
