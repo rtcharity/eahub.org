@@ -26,8 +26,8 @@
 <div class="panel animated pulse">
   <div class="alert alert-info hub-info">
       <h2>Login not working?</h2>
-      <p><a href="{% url 'account_reset_password' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
-      <p style="font-size: small"><b>Note:</b> If you had a profile on the old EAHub, you will have to <a href="{% url 'account_login' %}">create a new profile</a> as the old profiles don't exist anymore.</p>
+      <p><a href="{% url 'password_reset' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
+      <p style="font-size: small"><b>Note:</b> If you had a profile on the old Effective Altruism Hub, you can reactivate it by simply requesting a <a href="{% url 'password_reset' %}">password reset</a>.
   </div>
 </div>
 {% endblock %}
