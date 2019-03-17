@@ -42,7 +42,7 @@ function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
 
 function renderProfileMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithLabelsGDPRUnlocked(locations, map);
+  var markers = addMarkersWithLabels(locations, map);
   createMarkerClusters(map, markers);
 }
 
@@ -72,7 +72,6 @@ function createMap() {
 }
 
 function addMarkersWithLabels(locations, map) {
-
   var iw = new google.maps.InfoWindow();
 
   //oms allows for spiderfying of clusters
@@ -98,66 +97,7 @@ function addMarkersWithLabels(locations, map) {
        size: iconSize,
        scaledSize: iconSize  // makes SVG icons work in IE
       });
-
       marker.desc = "<a href='" + location.path + "'>" + location.label + "</a>";
-      oms.addMarker(marker);
-      return marker;
-  });
-  return markers
-}
-
-function addMarkersWithoutLables(locations, map) {
-  var markers = locations.map(function(location, i) {
-      var marker = new google.maps.Marker({
-          position: location,
-          map: map,
-          optimized: !isIE  // makes SVG icons work in IE
-      });
-      var iconSize = new google.maps.Size(20, 23);
-      marker.setIcon({
-       url: '/static/images/marker.svg',
-       size: iconSize,
-       scaledSize: iconSize  // makes SVG icons work in IE
-      });
-      return marker;
-  });
-  return markers
-}
-
-function addMarkersWithLabelsGDPRUnlocked(locations, map) {
-  var iw = new google.maps.InfoWindow();
-
-  //oms allows for spiderfying of clusters
-  var oms = new OverlappingMarkerSpiderfier(map, {
-    markersWontMove: true,
-    markersWontHide: true,
-    basicFormatEvents: true
-  });
-
-  oms.addListener('click', function(marker) {
-    if (marker.gdpr_confirmed) {
-      iw.setContent(marker.desc);
-      iw.open(map, marker);
-    }
-  });
-
-  var markers = locations.map(function(location, i) {
-      var marker = new google.maps.Marker({
-          position: location,
-          optimized: !isIE  // makes SVG icons work in IE
-      });
-      var iconSize = new google.maps.Size(20, 23);
-      marker.setIcon({
-       url: '/static/images/marker.svg',
-       size: iconSize,
-       scaledSize: iconSize  // makes SVG icons work in IE
-      });
-      if (location.gdpr_confirmed == 'True') {
-        marker.desc = "<a href='" + location.path + "'>" + location.label + "</a>";
-        marker.gdpr_confirmed = true
-      } else {
-        marker.gdpr_confirmed = false
-      }
       oms.addMarker(marker);
       return marker;
   });
