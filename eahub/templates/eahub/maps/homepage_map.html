@@ -13,12 +13,13 @@
 <script>
   function initMap() {
     var query_string_map = "{{ request.GET.map }}";
-    var mapDataProfiles = [{{ map_data_profiles | safe}}];
-    var mapDataGroups = [{{ map_data_groups | safe }}];
-    var privateProfiles = [{{ privateProfiles | safe }}];
-    mapDataProfiles = mapDataProfiles.concat(privateProfiles)
-    console.log(mapDataProfiles)
-    mapSetup(query_string_map,mapDataProfiles,mapDataGroups);
+    var map_locations = {
+      profiles: [{{ map_data_profiles | safe}}],
+      groups: [{{ map_data_groups | safe }}],
+      private_profiles: [{{ private_profiles | safe }}]
+    }
+    console.log(map_locations)
+    mapSetup(query_string_map, map_locations);
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>

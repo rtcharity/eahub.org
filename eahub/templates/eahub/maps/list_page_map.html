@@ -9,10 +9,11 @@
   var map_type = "{{ map_type }}"
   function initMap() {
     var map_data = [{{ map_data | safe}}];
+    var private_profiles = [{{ private_profiles | safe}}]
     if (map_type == "groups") {
       renderGroupMap(map_data);
     } else {
-      renderProfileMap(map_data);
+      renderProfileMap(map_data, private_profiles);
     }
 
   }

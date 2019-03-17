@@ -1,50 +1,38 @@
 var minClusterZoom = 14;
 
-function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups, privateProfiles) {
-  mapToggle(queryStringMap, mapDataProfiles, mapDataGroups)
-  //call renderMap when page loads
-  renderMap(queryStringMap, mapDataProfiles, mapDataGroups);
+function mapSetup(queryStringMap, map_locations) {
+  var selected_map;
+  if (queryStringMap !== 'individuals') {
+    selected_map = 'groups';
+    renderGroupMap(map_locations.groups);
+  } else {
+    selected_map = 'individuals';
+    renderProfileMap(map_locations.profiles, map_locations.private_profiles);
+  }
+  mapToggle(selected_map, map_locations);
 }
 
-function mapToggle(queryStringMap, mapDataProfiles, mapDataGroups) {
-  var selectedMap;
-
+function mapToggle(selected_map, map_locations) {
   var mapSelectorInd = document.getElementById('map_selector_ind')
   mapSelectorInd.onclick = function() {
-    selectedMap = 'individuals';
-    renderMap(selectedMap, mapDataProfiles, mapDataGroups);
+    renderProfileMap(map_locations.profiles, map_locations.private_profiles);
   };
   var mapSelectorGroups = document.getElementById('map_selector_groups')
   mapSelectorGroups.onclick = function() {
-    selectedMap = 'groups';
-    renderMap(selectedMap, mapDataProfiles, mapDataGroups);
+    renderGroupMap(map_locations.groups);
   }
 
-  if (queryStringMap == "individuals") {
+  if (selected_map == "individuals") {
     mapSelectorInd.checked = true
   } else {
     mapSelectorGroups.checked = true
   }
 }
 
-function renderMap(selectedMap, mapDataProfiles, mapDataGroups, anonProfiles) {
-  if (selectedMap !== 'individuals') {
-    selectedMap = 'groups'
-  }
-  var locations = selectedMap == 'individuals' ? mapDataProfiles : mapDataGroups
-  if (selectedMap == 'individuals') {
-    locations = locations.concat(anonProfiles)
-    console.log(locations)
-    renderProfileMap(locations)
-  } else {
-    renderGroupMap(locations)
-  }
-}
-
-function renderProfileMap(locations) {
+function renderProfileMap(profiles, private_profiles) {
   var map = createMap();
-  var locationClusters = createLocationClusters(locations)
-  var markers = addMarkersWithLists(locationClusters, map);
+  var locationClusters = createLocationClusters(profiles)
+  var markers = addMarkersWithLists(locationClusters, map, private_profiles);
   createMarkerClusters(map, markers);
 }
 
@@ -154,7 +142,7 @@ function addDescription(marker,profiles) {
   }
 }
 
-function addMarkersWithLists(locationClusters, map) {
+function addMarkersWithLists(locationClusters, map, private_profiles) {
   var markers = [];
   for (var i=0; i< locationClusters.length; i++) {
       var locationCluster = locationClusters[i]
@@ -165,8 +153,7 @@ function addMarkersWithLists(locationClusters, map) {
       addLabel(marker, map)
       marker.setMap(map);
       markers.push(marker);
-      // once available, the number of anonymous profiles at this location can be added to this variable
-      var profiles_at_location = profiles.length
+      var profiles_at_location = profiles.length + count(private_profiles, location)
       addDummyMarkers(location, profiles_at_location, markers, map)
   }
   return markers
@@ -185,6 +172,17 @@ function createMarker(location,z=1) {
    scaledSize: iconSize  // makes SVG icons work in IE
   });
   return marker
+}
+
+function count(private_profiles, location) {
+  private_profiles_at_location = private_profiles.filter(function(private_profile) {
+    return (private_profile.lat == location.lat) && (private_profile.lon == location.lon)
+  })
+  if (private_profiles_at_location.length > 0) {
+    return private_profiles_at_location[0].count
+  } else {
+    return 0
+  }
 }
 
 function addDummyMarkers(location, profiles_at_location, markers, map) {

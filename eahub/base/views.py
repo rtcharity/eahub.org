@@ -9,16 +9,14 @@ from django.db.models import Count
 def index(request):
     groupsData = getGroupsData()
     profilesData = getProfilesData(request.user)
-    kAnonymity = 0
-    # privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
-    privateProfiles = getPrivateProfiles()
+    privateProfiles = getPrivateProfiles(request.user)
     return render(request, 'eahub/index.html', {
         "page_name": "Home",
         'groups': groupsData["rows"],
         'map_data_groups': groupsData["map_data"],
         'profiles': profilesData["rows"],
         'map_data_profiles': profilesData["map_data"],
-        'privateProfiles': privateProfiles
+        'private_profiles': privateProfiles
     })
 
 def about(request):
@@ -29,11 +27,12 @@ def privacyPolicy(request):
 
 def profiles(request):
     profilesData = getProfilesData(request.user)
+    privateProfiles = getPrivateProfiles(request.user)
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': profilesData["rows"],
-        'anonProfiles': anonProfiles,
-        'map_data_profiles': profilesData["map_data"]
+        'map_data_profiles': profilesData["map_data"],
+        'private_profiles': privateProfiles
     })
 
 def groups(request):
@@ -89,9 +88,9 @@ def getProfilesData(user):
         'map_data': map_data
     }
 
-def getPrivateProfiles():
-    kAnonymity = 0
-    privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
+def getPrivateProfiles(user):
+    kAnonymity = 15
+    privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).exclude(user_id=user.id).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
     privateProfilesString = ''.join([
         '{' +
             'lat: {lat}, lng: {lon}, count:{count}'.format(
