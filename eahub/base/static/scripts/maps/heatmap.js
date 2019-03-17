@@ -2,7 +2,6 @@ var minClusterZoom = 14;
 
 function mapSetup(queryStringMap, mapDataProfiles, mapDataGroups) {
   mapToggle(queryStringMap, mapDataProfiles, mapDataGroups)
-
   //call renderMap when page loads
   renderMap(queryStringMap, mapDataProfiles, mapDataGroups);
 }
@@ -42,13 +41,14 @@ function renderMap(selectedMap, mapDataProfiles, mapDataGroups) {
 
 function renderProfileMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithLabels(locations, map);
+  var locationClusters = createLocationClusters(locations)
+  var markers = addMarkersWithLists(locationClusters, map);
   createMarkerClusters(map, markers);
 }
 
 function renderGroupMap(locations) {
   var map = createMap();
-  var markers = addMarkersWithLabels(locations, map);
+  var markers = addMarkersThatSpiderfy(locations, map);
   createMarkerClusters(map, markers);
 }
 
@@ -71,37 +71,126 @@ function createMap() {
   return map
 }
 
-function addMarkersWithLabels(locations, map) {
-  var iw = new google.maps.InfoWindow();
+function createLocationClusters(locations) {
+  var location_clusters = [];
+  for (var i=0; i<locations.length; i++) {
+    var location = locations[i];
+    var j = 0;
+    while (j < location_clusters.length) {
+      var location_cluster = location_clusters[j]
+      if (isSameLocation(location, location_cluster)) {
+        location_cluster.profiles.push({
+          label: location.label,
+          path: location.path
+        })
+        break
+      } else {
+        j++
+      }
+    }
+    if (isinSameLocationAsOneOf(location_clusters, j) == false) {
+      new_location_cluster = createLocationCluster(location)
+      location_clusters.push(new_location_cluster)
+    }
+  }
+  return location_clusters;
+}
 
+function isSameLocation(location, location_cluster) {
+  return (location.lat == location_cluster.lat && location.lng == location_cluster.lng)
+}
+
+function isinSameLocationAsOneOf(location_clusters, j) {
+  return (j < location_clusters.length)
+}
+
+function createLocationCluster(location) {
+  return ({
+    lat: location.lat,
+    lng: location.lng,
+    profiles: [{
+      label: location.label,
+      path: location.path
+    }]
+  })
+}
+
+function addMarkersThatSpiderfy(locations, map) {
   //oms allows for spiderfying of clusters
   var oms = new OverlappingMarkerSpiderfier(map, {
     markersWontMove: true,
     markersWontHide: true,
     basicFormatEvents: true
   });
-
-  oms.addListener('click', function(marker) {
-    iw.setContent(marker.desc);
-    iw.open(map, marker);
-  });
-
   var markers = locations.map(function(location, i) {
-      var marker = new google.maps.Marker({
-          position: location,
-          optimized: !isIE  // makes SVG icons work in IE
-      });
-      var iconSize = new google.maps.Size(20, 23);
-      marker.setIcon({
-       url: (location.active == "False") ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
-       size: iconSize,
-       scaledSize: iconSize  // makes SVG icons work in IE
-      });
-      marker.desc = "<a href='" + location.path + "'>" + location.label + "</a>";
+      var marker = createMarker(location);
+      addDescription(marker, [location])
+      addLabel(marker, map)
       oms.addMarker(marker);
       return marker;
   });
   return markers
+}
+
+function addLabel(marker, map) {
+  var iw = new google.maps.InfoWindow();
+  marker.addListener('click', function() {
+    iw.setContent(marker.desc);
+    iw.open(map, marker);
+  });
+}
+
+function addDescription(marker,profiles) {
+  if (profiles.length > 1) {
+    marker.desc = '<div class="map-label">'
+    profiles.map(function(profile) {
+      marker.desc += "<a style='display: block' href='" + profile.path + "'>" + profile.label + "</a>";
+    })
+    marker.desc += '</div>'
+  } else {
+    marker.desc = "<a href='" + profiles[0].path + "'>" + profiles[0].label + "</a>";
+  }
+}
+
+function addMarkersWithLists(locationClusters, map) {
+  var markers = [];
+  for (var i=0; i< locationClusters.length; i++) {
+      var locationCluster = locationClusters[i]
+      var location = {lat: locationCluster.lat, lng: locationCluster.lng}
+      var profiles = locationCluster.profiles
+      var marker = createMarker(location)
+      addDescription(marker, profiles)
+      addLabel(marker, map)
+      marker.setMap(map);
+      markers.push(marker);
+      // once available, the number of anonymous profiles at this location can be added to this variable
+      var profiles_at_location = profiles.length
+      addDummyMarkers(location, profiles_at_location, markers, map)
+  }
+  return markers
+}
+
+function createMarker(location,z=1) {
+  var marker = new google.maps.Marker({
+      position: location,
+      optimized: !isIE,  // makes SVG icons work in IE
+      zIndex: z
+  });
+  var iconSize = new google.maps.Size(20, 23);
+  marker.setIcon({
+   url: (location.active == "False") ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
+   size: iconSize,
+   scaledSize: iconSize  // makes SVG icons work in IE
+  });
+  return marker
+}
+
+function addDummyMarkers(location, profiles_at_location, markers, map) {
+  for (var i = 1; i < profiles_at_location; i++) {
+    var dummyMarker = createMarker(location, z=1-i)
+    dummyMarker.setMap(map);
+    markers.push(dummyMarker)
+  }
 }
 
 function createMarkerClusters(map, markers) {
