@@ -433,6 +433,10 @@ body {
   margin-bottom: 10px;
 }
 
+.panel-body {
+  word-wrap: break-word;
+}
+
 .key-facts .background {
   background-color: rgba(81, 43, 82, 0.7);
 }
