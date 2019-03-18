@@ -491,6 +491,22 @@ body {
   display: inline-block;
 }
 
+.privacy-banner {
+  padding: 5px 5px 5px 5px;
+  border-radius: 5px;
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.privacy-banner i {
+  margin-right: 5px;
+}
+
+td .privacy-banner {
+  margin-left: 5px;
+  margin-top: 0px;
+}
+
 /* edit */
 
 #multiselect-form {
@@ -693,6 +709,9 @@ table {
 }
 table .picture-column {
   width: 50px;
+}
+table td {
+  vertical-align: middle !important;
 }
 
 .turquoise-links a {

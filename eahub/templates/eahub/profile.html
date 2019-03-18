@@ -14,6 +14,9 @@
       {% empty %}
         <img class="profile_picture" src="/static/images/avatars/{{ profile.image_placeholder }}">
       {% endthumbnail %}
+      {% if not profile.is_public %}
+      <div class="privacy-banner hub-info" title="This profile is not public. Click on 'Edit' to change your settings."><i class="fa fa-lock"></i>Private profile</div>
+      {% endif %}
     </div>
     <div class="col-xs-12 col-md-6">
       <h1>{{ profile.name|title }}</h1>

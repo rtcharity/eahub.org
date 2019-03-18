@@ -49,7 +49,12 @@
         {% empty %}
           <td><img class="profile_picture" src="/static/images/avatars/{{ profile.image_placeholder }}"></td>
         {% endthumbnail %}
-        <td><a href="{% url 'profile' profile.slug %}">{{ profile.name }}</a></td>
+        <td>
+          <a href="{% url 'profile' profile.slug %}">{{ profile.name }}</a>
+          {% if not profile.is_public %}
+          <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Private profile</span>
+          {% endif %}
+        </td>
         <td class="text-muted">
           {{ profile.city_or_town|default:'' }}
         </td>
