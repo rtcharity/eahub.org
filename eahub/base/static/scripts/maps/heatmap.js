@@ -1,38 +1,38 @@
 var minClusterZoom = 14;
 
 function mapSetup(queryStringMap, map_locations) {
-  var selected_map;
+  var map_type;
   if (queryStringMap !== 'individuals') {
-    selected_map = 'groups';
-    renderMap(selected_map, map_locations.groups);
+    map_type = 'groups';
+    renderMap(map_type, map_locations.groups);
   } else {
-    selected_map = 'individuals';
-    renderMap(selected_map, map_locations.profiles, map_locations.private_profiles);
+    map_type = 'individuals';
+    renderMap(map_type, map_locations.profiles, map_locations.private_profiles);
   }
-  mapToggle(selected_map, map_locations);
+  mapToggle(map_type, map_locations);
 }
 
-function mapToggle(selected_map, map_locations) {
+function mapToggle(map_type, map_locations) {
   var mapSelectorInd = document.getElementById('map_selector_ind')
   mapSelectorInd.onclick = function() {
-    renderMap(selected_map, map_locations.profiles, map_locations.private_profiles);
+    renderMap(map_type, map_locations.profiles, map_locations.private_profiles);
   };
   var mapSelectorGroups = document.getElementById('map_selector_groups')
   mapSelectorGroups.onclick = function() {
     renderMap(map_locations.groups);
   }
 
-  if (selected_map == "individuals") {
+  if (map_type == "individuals") {
     mapSelectorInd.checked = true
   } else {
     mapSelectorGroups.checked = true
   }
 }
 
-function renderMap(selected_map, profiles, private_profiles) {
+function renderMap(map_type, map_locations, private_profiles) {
   var map = createMap();
-  var locationClusters = createLocationClusters(profiles, selected_map)
-  var markers = addMarkersWithLists(locationClusters, map, private_profiles);
+  var location_clusters = createLocationClusters(map_locations, map_type)
+  var markers = addMarkersWithLists(location_clusters, map, private_profiles);
   createMarkerClusters(map, markers);
 }
 
@@ -55,7 +55,7 @@ function createMap() {
   return map
 }
 
-function createLocationClusters(locations, profile_type) {
+function createLocationClusters(locations, map_type) {
   var location_clusters = [];
   for (var i=0; i<locations.length; i++) {
     var location = locations[i];
@@ -67,7 +67,7 @@ function createLocationClusters(locations, profile_type) {
           label: location.label,
           path: location.path
         }
-        if (profile_type == 'groups') {
+        if (map_type == 'groups') {
           profile.active = location.active
         }
         location_cluster.profiles.push(profile)
@@ -77,7 +77,7 @@ function createLocationClusters(locations, profile_type) {
       }
     }
     if (isinSameLocationAsOneOf(location_clusters, j) == false) {
-      new_location_cluster = createLocationCluster(location, profile_type)
+      new_location_cluster = createLocationCluster(location, map_type)
       location_clusters.push(new_location_cluster)
     }
   }
@@ -92,7 +92,7 @@ function isinSameLocationAsOneOf(location_clusters, j) {
   return (j < location_clusters.length)
 }
 
-function createLocationCluster(location,profile_type) {
+function createLocationCluster(location,map_type) {
   var cluster = {
     lat: location.lat,
     lng: location.lng,
@@ -101,18 +101,18 @@ function createLocationCluster(location,profile_type) {
       path: location.path,
     }]
   }
-  if (profile_type == 'groups') {
+  if (map_type == 'groups') {
     cluster.profiles[0].active = location.active;
   }
   return cluster;
 }
 
-function addMarkersWithLists(locationClusters, map, private_profiles) {
+function addMarkersWithLists(location_clusters, map, private_profiles) {
   var markers = [];
-  for (var i=0; i< locationClusters.length; i++) {
-      var locationCluster = locationClusters[i]
-      var location = {lat: locationCluster.lat, lng: locationCluster.lng}
-      var profiles = locationCluster.profiles
+  for (var i=0; i< location_clusters.length; i++) {
+      var location_cluster = location_clusters[i]
+      var location = {lat: location_cluster.lat, lng: location_cluster.lng}
+      var profiles = location_cluster.profiles
       var marker = createMarker(location)
       addDescription(marker, profiles)
       addLabel(marker, map)
@@ -124,7 +124,7 @@ function addMarkersWithLists(locationClusters, map, private_profiles) {
   return markers
 }
 
-function addDescription(marker,profiles) {
+function addDescription(marker, profiles) {
   if (profiles.length > 1) {
     marker.desc = '<div class="map-label">'
     profiles.map(function(profile) {
