@@ -132,11 +132,11 @@ function addLabel(marker, map) {
 
 function addDescription(marker,profiles) {
   if (profiles.length > 1) {
-    marker.desc = '<div class="map-label">'
+    marker.desc = '<ul class="map-label">'
     profiles.map(function(profile) {
-      marker.desc += "<a style='display: block' href='" + profile.path + "'>" + profile.label + "</a>";
+      marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label + "</a></li>";
     })
-    marker.desc += '</div>'
+    marker.desc += '</ul>'
   } else {
     marker.desc = "<a href='" + profiles[0].path + "'>" + profiles[0].label + "</a>";
   }
