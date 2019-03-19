@@ -4,10 +4,10 @@ function mapSetup(queryStringMap, map_locations) {
   var selected_map;
   if (queryStringMap !== 'individuals') {
     selected_map = 'groups';
-    renderGroupMap(map_locations.groups);
+    renderMap(selected_map, map_locations.groups);
   } else {
     selected_map = 'individuals';
-    renderProfileMap(map_locations.profiles, map_locations.private_profiles);
+    renderMap(selected_map, map_locations.profiles, map_locations.private_profiles);
   }
   mapToggle(selected_map, map_locations);
 }
@@ -15,11 +15,11 @@ function mapSetup(queryStringMap, map_locations) {
 function mapToggle(selected_map, map_locations) {
   var mapSelectorInd = document.getElementById('map_selector_ind')
   mapSelectorInd.onclick = function() {
-    renderProfileMap(map_locations.profiles, map_locations.private_profiles);
+    renderMap(selected_map, map_locations.profiles, map_locations.private_profiles);
   };
   var mapSelectorGroups = document.getElementById('map_selector_groups')
   mapSelectorGroups.onclick = function() {
-    renderGroupMap(map_locations.groups);
+    renderMap(map_locations.groups);
   }
 
   if (selected_map == "individuals") {
@@ -29,16 +29,10 @@ function mapToggle(selected_map, map_locations) {
   }
 }
 
-function renderProfileMap(profiles, private_profiles) {
+function renderMap(selected_map, profiles, private_profiles) {
   var map = createMap();
-  var locationClusters = createLocationClusters(profiles)
+  var locationClusters = createLocationClusters(profiles, selected_map)
   var markers = addMarkersWithLists(locationClusters, map, private_profiles);
-  createMarkerClusters(map, markers);
-}
-
-function renderGroupMap(locations) {
-  var map = createMap();
-  var markers = addMarkersThatSpiderfy(locations, map);
   createMarkerClusters(map, markers);
 }
 
@@ -61,7 +55,7 @@ function createMap() {
   return map
 }
 
-function createLocationClusters(locations) {
+function createLocationClusters(locations, profile_type) {
   var location_clusters = [];
   for (var i=0; i<locations.length; i++) {
     var location = locations[i];
@@ -69,17 +63,21 @@ function createLocationClusters(locations) {
     while (j < location_clusters.length) {
       var location_cluster = location_clusters[j]
       if (isSameLocation(location, location_cluster)) {
-        location_cluster.profiles.push({
+        var profile = {
           label: location.label,
           path: location.path
-        })
+        }
+        if (profile_type == 'groups') {
+          profile.active = location.active
+        }
+        location_cluster.profiles.push(profile)
         break
       } else {
         j++
       }
     }
     if (isinSameLocationAsOneOf(location_clusters, j) == false) {
-      new_location_cluster = createLocationCluster(location)
+      new_location_cluster = createLocationCluster(location, profile_type)
       location_clusters.push(new_location_cluster)
     }
   }
@@ -94,52 +92,19 @@ function isinSameLocationAsOneOf(location_clusters, j) {
   return (j < location_clusters.length)
 }
 
-function createLocationCluster(location) {
-  return ({
+function createLocationCluster(location,profile_type) {
+  var cluster = {
     lat: location.lat,
     lng: location.lng,
     profiles: [{
       label: location.label,
-      path: location.path
+      path: location.path,
     }]
-  })
-}
-
-function addMarkersThatSpiderfy(locations, map) {
-  //oms allows for spiderfying of clusters
-  var oms = new OverlappingMarkerSpiderfier(map, {
-    markersWontMove: true,
-    markersWontHide: true,
-    basicFormatEvents: true
-  });
-  var markers = locations.map(function(location, i) {
-      var marker = createMarker(location);
-      addDescription(marker, [location])
-      addLabel(marker, map)
-      oms.addMarker(marker);
-      return marker;
-  });
-  return markers
-}
-
-function addLabel(marker, map) {
-  var iw = new google.maps.InfoWindow();
-  marker.addListener('click', function() {
-    iw.setContent(marker.desc);
-    iw.open(map, marker);
-  });
-}
-
-function addDescription(marker,profiles) {
-  if (profiles.length > 1) {
-    marker.desc = '<div class="map-label">'
-    profiles.map(function(profile) {
-      marker.desc += "<a style='display: block' href='" + profile.path + "'>" + profile.label + "</a>";
-    })
-    marker.desc += '</div>'
-  } else {
-    marker.desc = "<a href='" + profiles[0].path + "'>" + profiles[0].label + "</a>";
   }
+  if (profile_type == 'groups') {
+    cluster.profiles[0].active = location.active;
+  }
+  return cluster;
 }
 
 function addMarkersWithLists(locationClusters, map, private_profiles) {
@@ -153,10 +118,32 @@ function addMarkersWithLists(locationClusters, map, private_profiles) {
       addLabel(marker, map)
       marker.setMap(map);
       markers.push(marker);
-      var profiles_at_location = profiles.length + count(private_profiles, location)
+      var profiles_at_location = (private_profiles) ? profiles.length + count(private_profiles, location) : profiles.length
       addDummyMarkers(location, profiles_at_location, markers, map)
   }
   return markers
+}
+
+function addDescription(marker,profiles) {
+  if (profiles.length > 1) {
+    marker.desc = '<div class="map-label">'
+    profiles.map(function(profile) {
+      console.log(profile)
+      marker.desc += "<a style='display: block' href='" + profile.path + "'>" + profile.label;
+      marker.desc += (profile.active == "False") ? " (inactive)</a>" : "</a>"
+    })
+    marker.desc += '</div>'
+  } else {
+    marker.desc = "<a href='" + profiles[0].path + "'>" + profiles[0].label + "</a>";
+  }
+}
+
+function addLabel(marker, map) {
+  var iw = new google.maps.InfoWindow();
+  marker.addListener('click', function() {
+    iw.setContent(marker.desc);
+    iw.open(map, marker);
+  });
 }
 
 function createMarker(location,z=1) {
