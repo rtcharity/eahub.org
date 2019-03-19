@@ -723,6 +723,12 @@ table td {
 }
 
 
+@media(max-width: 992px) {
+  .profile-info {
+    display: block;
+  }
+}
+
 @media(max-width: 768px) {
   .navbar h4 {
     font-size: 20px;
@@ -735,9 +741,5 @@ table td {
 
   .navbar-signup-xs {
     display: block !important;
-  }
-
-  .profile-info {
-    display: block;
   }
 }
