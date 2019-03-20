@@ -569,6 +569,20 @@ form .alert ul {
   padding: 10px 10px 10px 10px;
 }
 
+.image-clear {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.image-clear label {
+  font-weight: normal;
+}
+
+.image-change-btn {
+  display: block;
+}
+
 #id_image {
   padding-bottom: 35px;
   height: 30px;
