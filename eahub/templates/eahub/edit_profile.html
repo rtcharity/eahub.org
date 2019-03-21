@@ -9,15 +9,30 @@
 
 {{ form.name|as_crispy_field }}
 
-<div class="field image_upload">
-  <label for="id_image">Image</label>
+
+<label>Profile picture</label>
+{% if profile.image %}
+<button id="image-change-toggle" type="button" class="image-change-btn">Change current picture</button>
+
+<div class="field image_upload" id="image-change" style="display: none">
   <input type="file" name="image" id="id_image" class="form-control">
-  {% if form.image.errors %}
-    {% for error in form.image.errors %}
-      <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
-  {% endif %}
 </div>
+
+<div class="image-clear" id="image-clear">
+  <input type="checkbox" name="image-clear" id="image-clear_id">
+  <label for="image-clear_id">Clear current picture</label>
+</div>
+{% else %}
+<div class="field image_upload">
+  <input type="file" name="image" id="id_image" class="form-control">
+</div>
+{% endif %}
+
+{% if form.image.errors %}
+  {% for error in form.image.errors %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endfor %}
+{% endif %}
 
 {{ form.city_or_town|as_crispy_field }}
 
