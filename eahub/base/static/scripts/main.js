@@ -22,8 +22,7 @@ $(document).ready( function () {
     applySearchFunctionality(dataTableGroups)
 
     $('.text-block-from-database').linkify();
-    $('.profile').linkify();
-    $('.info').linkify();
+    $('.linkify').linkify();
 });
 
 function applySearchFunctionality (datatable) {

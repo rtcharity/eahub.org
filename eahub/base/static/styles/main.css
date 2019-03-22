@@ -340,8 +340,8 @@ body {
   padding-left: 15px;
 }
 
-/* link_box */
-.link_box{
+/* profile and group */
+.profile-action {
   background-color: #f7f6f6;
   border-radius: 5px;
   height: 300px;
@@ -351,27 +351,26 @@ body {
   align-items: center;
   background-clip: content-box;
 }
-.link_box .list-group{
+.profile-action .list-group {
   width: 200px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.link_box .list-group-item{
+.profile-action .list-group-item {
   background-color: #512B52 !important;
   color: #fff !important;
   border: none;
   font-size: 1.1em;
 }
-.link_box .list-group-item:hover{
+.profile-action .list-group-item:hover {
   transform: scale(1.1);
 }
-.link_box .list-group-item .fa{
+.profile-action .list-group-item .fa {
   margin-right: 10px;
 }
 .list-group h4 {
   color: white;
 }
-/* profile and group */
 
 .profile_picture{
   width: 100%;
@@ -395,12 +394,12 @@ body {
 .profile-info .btn-xs {
   margin-top: 5px;
 }
-.profile-info a {
+.profile-info .btn a {
   color: black;
   text-decoration: none;
 }
 
-.profile-info a:hover {
+.profile-info .btn a:hover {
   text-decoration: none;
 }
 
@@ -482,7 +481,7 @@ body {
 }
 
 .hub-success {
-  background-color: ##A7DBAB;
+  background-color: #A7DBAB;
   border: none;
   color: black;
 }
@@ -728,9 +727,12 @@ table .picture-column {
 table td {
   vertical-align: middle !important;
 }
+.linkified {
+  color: #7bb0a8; /* EA turquoise */
+}
 
 .turquoise-links a {
-  color: #7bb0a8;
+  color: #7bb0a8; /* EA turquoise */
   text-decoration: none;
 }
 .turquoise-links a:hover {
