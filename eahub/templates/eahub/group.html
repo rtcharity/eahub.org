@@ -54,13 +54,13 @@
           {% endif %}
         </li>
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
-        <li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town|default_if_none:'N/A' }}</li>
-        <li class="list-group-item"><b>Country: </b>{{ group.country|default_if_none:'N/A' }}</li>
+        {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
+        {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
         <li class="list-group-item"><b>Organisers:</b>
           {% if not group.public_organisers %}
           Unknown or Anonymous
           {% elif group.public_organisers.count == 1 %}
-          group.public_organisers
+          <a href="{{ group.public_organisers.0.profile.get_absolute_url }}">{{ group.public_organisers.0.profile.name }}</a>
           {% else %}
           <ul>
           {% for organiser in group.public_organisers %}
@@ -68,11 +68,11 @@
           {% endfor %}
           </ul>
           {% endif %}
-        <li class="list-group-item"><b>Website: </b>{{ group.website|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Facebook Group: </b>{{ group.facebook_group|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Email: </b>{{ group.email|default:'N/A' }}</li>
-        <li class="list-group-item"><b>Meetup URL: </b>{{ group.meetup_url|default:'N/A' }}</li>
+        {% if group.website %}<li class="list-group-item"><b>Website: </b>{{ group.website }}</li>{% endif %}
+        {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b>{{ group.facebook_group }}</li>{% endif %}
+        {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page }}</li>{% endif %}
+        {% if group.email %}<li class="list-group-item"><b>Email: </b>{{ group.email }}</li>{% endif %}
+        {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b>{{ group.meetup_url }}</li>{% endif %}
       </ul>
     </div>
     </div>
