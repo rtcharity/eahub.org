@@ -7,9 +7,9 @@
   <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
   <script>
     function initMap() {
-      var lat = parseFloat("{{ lat }}");
-      var lon = parseFloat("{{ lon }}");
-      var inactive_group = ("{{ active }}" == "False") ? true : false
+      var lat = parseFloat("{{ lat|escapejs }}");
+      var lon = parseFloat("{{ lon|escapejs }}");
+      var inactive_group = ("{{ active|escapejs }}" == "False") ? true : false
       renderMap(lat, lon, inactive_group);
     }
   </script>
