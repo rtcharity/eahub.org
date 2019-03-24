@@ -51,7 +51,7 @@
         <div class="panel-body">
           <h3>Cause Area</h3>
           {% if profile.cause_areas or profile.cause_areas_other %}
-          <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas }}</div>
+          <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas|linebreaks }}</div>
           {% endif %}
           {% if profile.giving_pledges %}
           <div class="list"><div class="tag">Giving Pledges Taken:</div> {{ profile.get_pretty_giving_pledges }}</div>
@@ -76,7 +76,7 @@
         <div class="panel-body">
           <h3>Career</h3>
           {% if profile.expertise_areas or profile.expertise_areas_other %}
-          <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise }}</div>
+          <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise|linebreaks }}</div>
           {% endif %}
           {% if profile.open_to_job_offers %}
             <br>
@@ -116,7 +116,7 @@
           </div>
           {% endif %}
           {% if profile.topics_i_speak_about %}
-          <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about }}</div>
+          <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about|linebreaks }}</div>
           {% endif %}
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
@@ -141,7 +141,7 @@
             <h3 class="panel-title">Summary</h3>
           </div>
           <div class="panel-body">
-            {{ profile.summary|default:'N/A' }}
+            {{ profile.summary|default:'N/A'|linebreaks }}
             {% if user.id == profile.user_id %}
               <br>
               <span class="btn btn-default btn-xs">
