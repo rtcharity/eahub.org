@@ -516,7 +516,7 @@ td .privacy-banner {
 .multiselect-container  {
   max-height: 50vh;
   max-width: 90vw;
-  width: 300px;
+  width: 100%;
   overflow: scroll;
 }
 
@@ -567,7 +567,9 @@ form .alert ul {
   border-color: #ebccd1;
   padding: 10px 10px 10px 10px;
 }
-
+form .btn-group {
+  width: 100%
+}
 .image-clear {
   display: block;
   margin-top: 10px;
@@ -685,6 +687,10 @@ form .alert ul {
 }
 
 /* other */
+.btn {
+  white-space: normal;
+  max-width: 100%;
+}
 .purple{
   background-color: #512B52 !important;
   color: #fff;
@@ -738,7 +744,9 @@ table td {
 .turquoise-links a:hover {
   opacity: 0.7;
 }
-
+.word-break {
+  word-wrap: break-word;
+}
 
 @media(max-width: 992px) {
   .profile-info {

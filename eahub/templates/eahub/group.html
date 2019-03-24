@@ -15,7 +15,7 @@
       <img class="profile_picture" src="/static/images/group_avatar.png">
     </div>
     <div class="col-xs-6">
-      <h1>{{ group.name }}</h1>
+      <h1 class="word-break">{{ group.name }}</h1>
       <div class="btn btn-default purple">
         {% if group.email %}
           <a href="mailto:{{ group.email }}"><i class="fa fa-envelope"></i> Message</a>
