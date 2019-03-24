@@ -1,37 +1,31 @@
 var minClusterZoom = 14;
+var mapSelectorInd = document.getElementById('map_selector_ind');
+var mapSelectorGroups = document.getElementById('map_selector_groups');
 
 function mapSetup(queryStringMap, map_locations) {
   var map_type;
   if (queryStringMap !== 'individuals') {
-    map_type = 'groups';
-    renderMap(map_type, map_locations.groups);
-  } else {
-    map_type = 'individuals';
-    renderMap(map_type, map_locations.profiles, map_locations.private_profiles);
-  }
-  mapToggle(map_type, map_locations);
-}
-
-function mapToggle(map_type, map_locations) {
-  var mapSelectorInd = document.getElementById('map_selector_ind')
-  mapSelectorInd.onclick = function() {
-    renderMap(map_type, map_locations.profiles, map_locations.private_profiles);
-  };
-  var mapSelectorGroups = document.getElementById('map_selector_groups')
-  mapSelectorGroups.onclick = function() {
-    renderMap(map_type, map_locations.groups);
-  }
-
-  if (map_type == "individuals") {
-    mapSelectorInd.checked = true
-  } else {
+    renderMap('groups', map_locations.groups);
     mapSelectorGroups.checked = true
+  } else {
+    renderMap('individuals', map_locations.profiles, map_locations.private_profiles);
+    mapSelectorInd.checked = true
+  }
+  mapToggle(map_locations);
+}
+
+function mapToggle(map_locations) {
+  mapSelectorInd.onclick = function() {
+    renderMap('individuals', map_locations.profiles, map_locations.private_profiles);
+  };
+  mapSelectorGroups.onclick = function() {
+    renderMap('groups', map_locations.groups);
   }
 }
 
-function renderMap(map_type, map_locations, private_profiles) {
+function renderMap(map_type, public_locations, private_profiles) {
   var map = createMap();
-  var location_clusters = createLocationClusters(map_locations, map_type)
+  var location_clusters = createLocationClusters(map_type, public_locations, private_profiles)
   var markers = addMarkersWithLists(location_clusters, map, private_profiles);
   createMarkerClusters(map, markers);
 }
@@ -55,21 +49,16 @@ function createMap() {
   return map
 }
 
-function createLocationClusters(locations, map_type) {
+function createLocationClusters(map_type, public_locations, private_profiles) {
+  var all_locations = (private_profiles == undefined) ? public_locations : public_locations.concat(private_profiles)
   var location_clusters = [];
-  for (var i=0; i<locations.length; i++) {
-    var location = locations[i];
+  for (var i=0; i<all_locations.length; i++) {
+    var location = all_locations[i];
     var j = 0;
     while (j < location_clusters.length) {
       var location_cluster = location_clusters[j]
       if (isSameLocation(location, location_cluster)) {
-        var profile = {
-          label: location.label,
-          path: location.path
-        }
-        if (map_type == 'groups') {
-          profile.active = location.active
-        }
+        var profile = createProfile(map_type, location)
         location_cluster.profiles.push(profile)
         break
       } else {
@@ -77,11 +66,25 @@ function createLocationClusters(locations, map_type) {
       }
     }
     if (isinSameLocationAsOneOf(location_clusters, j) == false) {
-      new_location_cluster = createLocationCluster(location, map_type)
+      new_location_cluster = createLocationCluster(map_type, location)
       location_clusters.push(new_location_cluster)
     }
   }
   return location_clusters;
+}
+
+function createProfile(map_type, location) {
+  var profile = {}
+  if (location.label != undefined) {
+    profile.label = location.label
+  } else {
+    profile.anonymous = true
+  }
+  if (location.path != undefined) profile.path = location.path
+  if (map_type == 'groups') {
+    profile.active = location.active
+  }
+  return profile;
 }
 
 function isSameLocation(location, location_cluster) {
@@ -92,18 +95,13 @@ function isinSameLocationAsOneOf(location_clusters, j) {
   return (j < location_clusters.length)
 }
 
-function createLocationCluster(location,map_type) {
+function createLocationCluster(map_type, location) {
   var cluster = {
     lat: location.lat,
     lng: location.lng,
-    profiles: [{
-      label: location.label,
-      path: location.path,
-    }]
   }
-  if (map_type == 'groups') {
-    cluster.profiles[0].active = location.active;
-  }
+  var profile = createProfile(map_type, location)
+  cluster.profiles = [profile]
   return cluster;
 }
 
@@ -118,22 +116,25 @@ function addMarkersWithLists(location_clusters, map, private_profiles) {
       addLabel(marker, map)
       marker.setMap(map);
       markers.push(marker);
-      var profiles_at_location = (private_profiles) ? profiles.length + count(private_profiles, location) : profiles.length
+      var profiles_at_location = profiles.length;
       addDummyMarkers(location, profiles_at_location, markers, map)
   }
   return markers
 }
 
 function addDescription(marker, profiles) {
-  if (profiles.length > 1) {
+  public_profiles = profiles.filter(profile => !profile.anonymous)
+  if (public_profiles.length > 1) {
     marker.desc = '<ul class="map-label">'
-    profiles.map(function(profile) {
+    public_profiles.map(function(profile) {
       marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
       marker.desc += (profile.active == "False") ? " (inactive)</a></li>" : "</a></li>"
     })
     marker.desc += '</ul>'
+  } else if (public_profiles.length == 1) {
+    marker.desc = "<a href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
   } else {
-    marker.desc = "<a href='" + profiles[0].path + "'>" + profiles[0].label + "</a>";
+    marker.desc = "All users at this location are anonymous";
   }
 }
 
