@@ -83,7 +83,7 @@ def getProfilesData(user):
     }
 
 def getPrivateProfiles(user):
-    kAnonymity = 0
+    kAnonymity = 15
     privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).exclude(user_id=user.id).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
     private_profiles_json = [
         {"lat": x["lat"], "lng": x["lon"], "count": x["count"]}
