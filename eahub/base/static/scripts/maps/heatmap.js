@@ -161,17 +161,6 @@ function createMarker(location,z=1) {
   return marker
 }
 
-function count(private_profiles, location) {
-  private_profiles_at_location = private_profiles.filter(function(private_profile) {
-    return (private_profile.lat == location.lat) && (private_profile.lon == location.lon)
-  })
-  if (private_profiles_at_location.length > 0) {
-    return private_profiles_at_location[0].count
-  } else {
-    return 0
-  }
-}
-
 function addDummyMarkers(location, profiles_at_location, markers, map) {
   for (var i = 1; i < profiles_at_location; i++) {
     var dummyMarker = createMarker(location, z=1-i)
