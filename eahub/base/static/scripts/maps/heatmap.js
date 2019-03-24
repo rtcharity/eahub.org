@@ -19,7 +19,7 @@ function mapToggle(map_type, map_locations) {
   };
   var mapSelectorGroups = document.getElementById('map_selector_groups')
   mapSelectorGroups.onclick = function() {
-    renderMap(map_locations.groups);
+    renderMap(map_type, map_locations.groups);
   }
 
   if (map_type == "individuals") {
