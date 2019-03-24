@@ -104,17 +104,34 @@
           {% endif %}
           {% if profile.local_groups.exists %}
           <div class="list turquoise-links">
+            <div class="tag" style="display: block">Local group membership:</div>
             {% if profile.local_groups.all.count == 1 %}
-              <div class="tag">Local group:</div>
-              <a href="{% url 'group' profile.local_groups.first.slug %}">{{profile.local_groups.first.name}}</a>
+              <a href="{% url 'group' profile.local_groups.first.slug %}">
+                {{profile.local_groups.first.name}}
+              </a>
             {% else %}
-              <div class="tag">Local groups:</div>
               {% for group in profile.local_groups.all %}
                 <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
               {% endfor%}
             {% endif %}
           </div>
           {% endif %}
+
+          {% if profile.user.localgroup_set.exists %}
+          <div class="list turquoise-links">
+            <div class="tag">Local organiser of:</div>
+            {% if profile.user.localgroup_set.all.count == 1 %}
+              <a href="{% url 'group' profile.local_groups.first.slug %}">
+                {{profile.user.localgroup_set.first.name}}
+              </a>
+            {% else %}
+              {% for group in profile.user.localgroup_set.all %}
+                <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
+              {% endfor%}
+            {% endif %}
+          </div>
+          {% endif %}
+
           {% if profile.topics_i_speak_about %}
           <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about }}</div>
           {% endif %}
@@ -130,8 +147,9 @@
         </div>
       </div>
     </div>
-
   </div>
+
+
 
   <div class="container profile-info linkify">
 
