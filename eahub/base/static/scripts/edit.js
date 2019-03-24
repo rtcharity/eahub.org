@@ -1,10 +1,13 @@
-var privacy_checkbox = document.getElementById('privacy')
-var update_btn = document.getElementById('update-btn')
+document.getElementById('image-change-toggle').addEventListener('click', function() {
+  var image_change = document.getElementById('image-change')
+  image_change.style.display = (image_change.style.display == "block") ? 'none' : 'block'
+})
 
-privacy_checkbox.addEventListener('click', function() {
-  if (privacy_checkbox.checked) {
-    update_btn.style.display = 'block'
-  } else {
-    update_btn.style.display = 'none'
+document.getElementById('id_image').addEventListener('change', function() {
+  if (image_form.value != '') {
+    var image_clear_div = document.getElementById('image-clear')
+    var image_clear_checkbox = document.getElementById('image-clear_id')
+    image_clear_div.style.display = 'none'
+    image_clear_checkbox.checked = false
   }
 })

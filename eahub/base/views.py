@@ -15,10 +15,12 @@ def index(request):
     return render(request, 'eahub/index.html', {
         "page_name": "Home",
         'groups': groupsData["rows"],
-        'map_data_groups': groupsData["map_data"],
         'profiles': profilesData["rows"],
-        'map_data_profiles': profilesData["map_data"],
-        'private_profiles': privateProfiles
+        "map_locations": {
+            "profiles": profilesData["map_data"],
+            "groups": groupsData["map_data"],
+            "private_profiles": privateProfiles,
+        }
     })
 
 def about(request):
@@ -47,22 +49,17 @@ def groups(request):
 
 def getGroupsData():
     rows = Group.objects.all()
-    map_data = ''.join([
-        '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", active:"{active}", path: "{path}"'.format(
-                lat=str(x.lat),
-                lon=str(x.lon),
-                name=x.name,
-                active=x.is_active,
-                path='/{obj}/{slug}'.format(
-                    obj='group',
-                    slug=x.slug
-                )
-            )
-        + '},'
+    map_data = [
+        {
+            "lat": x.lat,
+            "lng": x.lon,
+            "label": x.name,
+            "active": x.is_active,
+            "path": f"/group/{x.slug}",
+        }
         for x in rows
         if x.lat and x.lon
-    ])
+    ]
     return {
         'rows': rows,
         'map_data': map_data
@@ -70,21 +67,16 @@ def getGroupsData():
 
 def getProfilesData(user):
     rows = Profile.objects.visible_to_user(user)
-    map_data = ''.join([
-        '{' +
-            'lat: {lat}, lng: {lon}, label:"{name}", path: "{path}"'.format(
-                lat=str(x.lat),
-                lon=str(x.lon),
-                name=x.name,
-                path='/{obj}/{slug}'.format(
-                    obj='profile',
-                    slug=x.slug
-                ),
-            )
-        + '},'
+    map_data = [
+        {
+            "lat": x.lat,
+            "lng": x.lon,
+            "label": x.name,
+            "path": f"/profile/{x.slug}",
+        }
         for x in rows
         if x.lat and x.lon
-    ])
+    ]
     return {
         'rows': rows,
         'map_data': map_data
@@ -93,17 +85,11 @@ def getProfilesData(user):
 def getPrivateProfiles(user):
     kAnonymity = 15
     privateProfiles = Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False).exclude(user_id=user.id).values('lat', 'lon').annotate(count=Count('*')).filter(count__gte=kAnonymity).order_by()
-    privateProfilesString = ''.join([
-        '{' +
-            'lat: {lat}, lng: {lon}, count:{count}'.format(
-                lat=str(x['lat']),
-                lon=str(x['lon']),
-                count=str(x['count']),
-            )
-        + '},'
+    private_profiles_json = [
+        {"lat": x["lat"], "lng": x["lon"], "count": x["count"]}
         for x in privateProfiles
-    ])
-    return privateProfilesString
+    ]
+    return private_profiles_json
 
 
 class FaviconView(base.RedirectView):

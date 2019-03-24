@@ -5,11 +5,13 @@
 <script src="/static/scripts/maps/markerclusterer.js"></script>
 <script src="/static/scripts/maps/heatmap.js"></script>
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
+{{ map_data|json_script:'map-data' }}
+{{ private_profiles|json_script:'private-profiles' }}
 <script>
-  var map_type = "{{ map_type }}"
+  var map_type = "{{ map_type|escapejs }}"
   function initMap() {
-    var map_data = [{{ map_data | safe}}];
-    var private_profiles = [{{ private_profiles | safe}}]
+    var map_data = JSON.parse(document.getElementById('map-data').textContent);
+    var private_profiles = JSON.parse(document.getElementById('private-profiles').textContent);
     if (map_type == "groups") {
       renderMap(map_type, map_data);
     } else {

@@ -10,15 +10,11 @@
 <script src="/static/scripts/maps/markerclusterer.js"></script>
 <script src="/static/scripts/maps/heatmap.js"></script>
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
+{{ map_locations|json_script:'map-locations' }}
 <script>
   function initMap() {
-    var query_string_map = "{{ request.GET.map }}";
-    var map_locations = {
-      profiles: [{{ map_data_profiles | safe}}],
-      groups: [{{ map_data_groups | safe }}],
-      private_profiles: [{{ private_profiles | safe }}]
-    }
-    console.log(map_locations)
+    var query_string_map = "{{ request.GET.map|escapejs }}";
+    var map_locations = JSON.parse(document.getElementById('map-locations').textContent);
     mapSetup(query_string_map, map_locations);
   }
 </script>
