@@ -49,6 +49,14 @@ class ExpertiseArea(enum.Enum):
     PHYSICS = 15
     MEDICINE = 16
     OTHER_SCIENCE = 17
+    EVENT_PLANNING = 18
+    FINANCE = 19
+    GRAPHIC_DESIGN = 20
+    JOURNALISM = 21
+    LAW = 22
+    PHILANTHROPY_EARNING_TO_GIVE = 23
+    PUBLIC_SPEAKING = 24
+    RECRUITMENT = 25
 
     labels = {
         MANAGEMENT: "Management",
@@ -58,8 +66,8 @@ class ExpertiseArea(enum.Enum):
         ENTREPRENEURSHIP: "Entrepreneurship",
         SOFTWARE_ENGINEERING: "Software engineering",
         AI_TECHNICAL_EXPERTISE: "AI technical expertise",
-        MATH_QUANT_STATS_EXPERTISE: "Math, quant, stats expertise",
-        ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE: "Economics, quantitative social science",
+        MATH_QUANT_STATS_EXPERTISE: "Math/quant/stats expertise",
+        ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE: "Economics/quantitative social science",
         MOVEMENT_BUILDING: "Movement building",
         COMMUNICATIONS: "Communications",
         PHILOSOPHY: "Philosophy",
@@ -67,7 +75,15 @@ class ExpertiseArea(enum.Enum):
         PSYCHOLOGY: "Psychology",
         PHYSICS: "Physics",
         MEDICINE: "Medicine",
-        OTHER_SCIENCE: "Other Science",
+        OTHER_SCIENCE: "Other science",
+        EVENT_PLANNING: "Event planning",
+        FINANCE: "Finance",
+        GRAPHIC_DESIGN: "Graphic design",
+        JOURNALISM: "Journalism",
+        LAW: "Law",
+        PHILANTHROPY_EARNING_TO_GIVE: "Philanthropy/earning to give",
+        PUBLIC_SPEAKING: "Public speaking",
+        RECRUITMENT: "Recruitment",
     }
 
 

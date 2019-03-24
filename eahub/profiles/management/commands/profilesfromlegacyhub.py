@@ -12,6 +12,40 @@ from ... import models
 from ....base import models as base_models
 
 
+CODED_AREAS_BY_LEGACY_NAME = {
+    "Coding": models.ExpertiseArea.SOFTWARE_ENGINEERING,
+    "Entrepreneurship": models.ExpertiseArea.ENTREPRENEURSHIP,
+    "Event planning": models.ExpertiseArea.EVENT_PLANNING,
+    "Finance/Investment strategy": models.ExpertiseArea.FINANCE,
+    "Graphic design": models.ExpertiseArea.GRAPHIC_DESIGN,
+    "Journalism": models.ExpertiseArea.JOURNALISM,
+    "Law": models.ExpertiseArea.LAW,
+    "Management": models.ExpertiseArea.MANAGEMENT,
+    "Marketing/Sales": models.ExpertiseArea.COMMUNICATIONS,
+    "Philanthropy": models.ExpertiseArea.PHILANTHROPY_EARNING_TO_GIVE,
+    "Public policy/Politics": models.ExpertiseArea.GOVERNMENT_AND_POLICY,
+    "Public speaking": models.ExpertiseArea.PUBLIC_SPEAKING,
+    "Recruitment": models.ExpertiseArea.RECRUITMENT,
+    "Research/Analysis": models.ExpertiseArea.RESEARCH,
+    "Statistics/Data science": models.ExpertiseArea.MATH_QUANT_STATS_EXPERTISE,
+}
+
+
+def classify_skills(skills):
+    coded_areas = []
+    freeform_areas = []
+    for skill in skills.split("; "):
+        coded_area = CODED_AREAS_BY_LEGACY_NAME.get(skill)
+        if coded_area:
+            coded_areas.append(coded_area)
+        else:
+            freeform_areas.append(skill)
+        return {
+            "expertise_areas": sorted(coded_areas),
+            "expertise_areas_other": "; ".join(freeform_areas),
+        }
+
+
 class Command(base.BaseCommand):
     help = "Imports all user profiles from the legacy EA Hub"
 
@@ -43,6 +77,7 @@ class Command(base.BaseCommand):
                 "field_in_which_country_do_you_li_value, "
                 "''"
                 "), "
+                "IFNULL(field_data_field_skills.field_skills_value, ''), "
                 "IFNULL(field_data_field_more_about_me.field_more_about_me_value, ''), "
                 "users.uid "
                 "FROM users "
@@ -70,6 +105,17 @@ class Command(base.BaseCommand):
                 "AND "
                 "field_data_field_in_which_country_do_you_li.bundle = "
                 "'basic_information' "
+                "LEFT JOIN "
+                "("
+                "SELECT uid, MIN(pid) AS pid "
+                "FROM profile "
+                "WHERE type = 'your_career' "
+                "GROUP BY uid"
+                ") "
+                "AS your_career "
+                "USING (uid) "
+                "LEFT JOIN field_data_field_skills "
+                "ON your_career.pid = field_data_field_skills.entity_id "
                 "LEFT JOIN "
                 "("
                 "SELECT uid, MIN(pid) AS pid "
@@ -118,6 +164,7 @@ class Command(base.BaseCommand):
                     "summary": html.strip_tags(summary),
                     "legacy_record": legacy_record,
                     **geocode(city_or_town, country),
+                    **classify_skills(skills),
                 },
             )
             for (
@@ -128,6 +175,7 @@ class Command(base.BaseCommand):
                 name,
                 city_or_town,
                 country,
+                skills,
                 summary,
                 legacy_record,
             ) in rows
