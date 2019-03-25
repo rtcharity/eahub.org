@@ -24,3 +24,4 @@ django-crispy-forms>=1.7.2
 rules==2.0.1
 pytils==0.3
 mysqlclient==1.4.2.post1
+django-sluggable==0.6.1

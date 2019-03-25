@@ -1,6 +1,5 @@
 import csv
 
-import autoslug
 from django.conf import settings
 from django.contrib.postgres import fields as postgres_fields
 from django.db import models
@@ -8,6 +7,9 @@ from django import urls
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
+from sluggable import fields as sluggable_fields
+from sluggable import models as sluggable_models
+from sluggable import settings as sluggable_settings
 from sorl import thumbnail
 
 from ..localgroups.models import LocalGroup
@@ -183,6 +185,32 @@ def prettify_property_list(property_class, standard_list, other_list):
     return pretty_list
 
 
+class ProfileSlug(sluggable_models.Slug):
+    @classmethod
+    def forbidden_slugs(cls):
+        return [
+            "delete",
+            "download",
+            "login",
+            "logout",
+            "password",
+            "profiles",
+            "register",
+            "signup",
+        ]
+
+
+def slugify_user(name):
+    """Generate a slug based on a user's name.
+
+    In particular, don't allow entirely numeric slugs, as those are handled differently.
+    """
+    slug = sluggable_settings.slugify(name)
+    if slug.isdigit():
+        return "-" + slug
+    return slug
+
+
 class ProfileManager(models.Manager):
     def visible_to_user(self, user):
         if user.is_superuser:
@@ -193,7 +221,9 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    slug = autoslug.AutoSlugField(populate_from="name", unique=True)
+    slug = sluggable_fields.SluggableField(
+        decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
+    )
     is_public = models.BooleanField(default=True)
     name = models.CharField(max_length=200)
     image = thumbnail.ImageField(

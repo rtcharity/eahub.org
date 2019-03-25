@@ -219,9 +219,31 @@ class Command(base.BaseCommand):
                 "USING (uid) "
                 "LEFT JOIN field_data_field_more_about_me "
                 "ON free_text.pid = field_data_field_more_about_me.entity_id "
-                "WHERE users.uid AND users.status;"
+                "WHERE "
+                "users.uid "
+                "AND users.status "
+                "AND NOT EXISTS "
+                "("
+                "SELECT NULL "
+                "FROM redirect "
+                "WHERE "
+                "redirect.source = url_alias.alias "
+                "AND redirect.redirect != CONCAT('user/', users.uid)"
+                ");"
             )
-            rows = cursor.fetchall()
+            profile_rows = cursor.fetchall()
+            cursor.execute(
+                "SELECT users.uid, TRIM(LEADING 'user/' FROM redirect.source) "
+                "FROM "
+                "redirect "
+                "INNER JOIN users ON redirect.redirect = CONCAT('user/', users.uid) "
+                "WHERE "
+                "redirect.source LIKE 'user/%' "
+                "AND redirect.status "
+                "AND users.uid "
+                "AND users.status;"
+            )
+            redirect_rows = list(cursor.fetchall())
 
         @functools.lru_cache(maxsize=None)
         def geocode(city_or_town, country):
@@ -286,15 +308,17 @@ class Command(base.BaseCommand):
                 skills,
                 summary,
                 legacy_record,
-            ) in rows
+            ) in profile_rows
         ]
         with transaction.atomic():
+            profiles_by_legacy_record = {}
+            created_by_legacy_record = {}
             for email, user_fields, profile_fields in fields:
                 user, user_created = base_models.User.objects.get_or_create(
                     email=email, defaults=user_fields
                 )
                 if user_created:
-                    models.Profile.objects.create(user=user, **profile_fields)
+                    profile = models.Profile.objects.create(user=user, **profile_fields)
                 else:
                     user.date_joined = user_fields["date_joined"]
                     user.save()
@@ -304,3 +328,21 @@ class Command(base.BaseCommand):
                     if not profile_created:
                         profile.legacy_record = profile_fields["legacy_record"]
                         profile.save()
+                        slug = profile_fields["slug"]
+                        if profile.slug != slug:
+                            redirect_rows.append((profile.legacy_record, slug))
+                profiles_by_legacy_record[profile.legacy_record] = profile
+                created_by_legacy_record[profile.legacy_record] = user.date_joined
+            models.ProfileSlug.objects.bulk_create(
+                [
+                    models.ProfileSlug(
+                        content_object=profiles_by_legacy_record[legacy_record],
+                        slug=slug,
+                        redirect=True,
+                        created=created_by_legacy_record[legacy_record],
+                    )
+                    for legacy_record, slug in redirect_rows
+                    if legacy_record in profiles_by_legacy_record
+                    and profiles_by_legacy_record[legacy_record].slug != slug
+                ]
+            )
