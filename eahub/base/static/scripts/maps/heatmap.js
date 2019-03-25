@@ -25,8 +25,9 @@ function mapToggle(map_locations) {
 
 function renderMap(map_type, public_locations, private_profiles) {
   var map = createMap();
-  var location_clusters = createLocationClusters(map_type, public_locations, private_profiles)
-  var markers = addMarkersWithLists(location_clusters, map, private_profiles);
+  var all_locations = (private_profiles == undefined) ? public_locations : public_locations.concat(splitIntoIndividual(private_profiles));
+  var location_clusters = createLocationClusters(map_type, all_locations);
+  var markers = addMarkersWithLists(location_clusters, map);
   createMarkerClusters(map, markers);
 }
 
@@ -49,8 +50,17 @@ function createMap() {
   return map
 }
 
-function createLocationClusters(map_type, public_locations, private_profiles) {
-  var all_locations = (private_profiles == undefined) ? public_locations : public_locations.concat(private_profiles)
+function splitIntoIndividual(private_profiles) {
+  individual_private_profiles = []
+  private_profiles.forEach(function(private_profile) {
+    for (var i=0; i<private_profile.count; i++) {
+      individual_private_profiles.push(private_profile)
+    }
+  })
+  return individual_private_profiles;
+}
+
+function createLocationClusters(map_type, all_locations) {
   var location_clusters = [];
   for (var i=0; i<all_locations.length; i++) {
     var location = all_locations[i];
@@ -105,7 +115,7 @@ function createLocationCluster(map_type, location) {
   return cluster;
 }
 
-function addMarkersWithLists(location_clusters, map, private_profiles) {
+function addMarkersWithLists(location_clusters, map) {
   var markers = [];
   for (var i=0; i< location_clusters.length; i++) {
       var location_cluster = location_clusters[i]
