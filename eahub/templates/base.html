@@ -106,6 +106,7 @@
           <li><a href="https://resources.eahub.org/"><i class="fa fa-book"></i> EA Resources</a></li>
           <li><a href="https://donationswap.eahub.org/"><i class="fa fa-exchange"></i> EA Donation Swap</a></li>
           <li><a href="{% url 'about' %}"><i class="fa fa-info"></i> About</a></li>
+          <li><a href="https://feedback.eahub.org"><i class="fa fa-comment"></i> Feedback</a></li>
           {% if user.is_authenticated %}
             <li class="list-more-item"><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Log out</a></li>
           {% endif %}
@@ -118,7 +119,7 @@
       <div class="container">
         <strong>&copy; {% now "Y" %} Effective Altruism Hub.</strong>
         <p class="hidden-xs">Licensed under the <a rel="license" target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a>.
-        <a href="{% url 'privacyPolicy' %}">Privacy Policy</a>. <a href="https://github.com/rtcharity/hubreboot">View source</a>. <a href="{% url 'about' %}">About</a>. <a href="mailto:lean@eahub.org">Contact us</a>.
+        <a href="https://feedback.eahub.org">Post feedback</a>. <a href="{% url 'privacyPolicy' %}">Privacy Policy</a>. <a href="https://github.com/rtcharity/hubreboot">View source</a>. <a href="{% url 'about' %}">About</a>. <a href="mailto:lean@eahub.org">Contact us</a>.
         </p>
       </div>
     </footer>
