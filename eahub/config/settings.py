@@ -26,7 +26,7 @@ vars().update(
     env.email_url("EMAIL_URL", backend="django.core.mail.backends.smtp.EmailBackend")
 )
 ADMINS = list(env.dict("ADMINS").items())
-DEFAULT_FROM_EMAIL = "EA Hub <noreply@eahub.org>"
+DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
