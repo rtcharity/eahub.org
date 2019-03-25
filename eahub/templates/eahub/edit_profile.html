@@ -38,13 +38,16 @@
 
 {{ form.country|as_crispy_field }}
 
+<div class="privacy-note">
+If you make your profile private but enter a location, an anonymous pin representing you will be shown on the map if there are enough other EAs near you.
+</div>
+
 {{ form.summary|as_crispy_field }}
 
 {{ form.is_public|as_crispy_field }}
 
 <div class="privacy-note">
-  <p>If you make your profile private but enter a location, an anonymous pin representing you will be shown on the map if there are enough other EAs near you.</p>
-  <p>Everything in public profiles is public and searchable.</p>
+  Everything in public profiles is public and searchable.
 </div>
 
 {{ form.subscribed_to_email_updates|as_crispy_field }}
