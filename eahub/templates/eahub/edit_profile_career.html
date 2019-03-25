@@ -23,12 +23,6 @@
 {{ form.open_to_job_offers|as_crispy_field }}
 </div>
 
-{% if profile.is_public %}
-<div class="privacy-note">
-  Selecting "Yes" may allow others to search for your profile in the future based on your location, cause areas, expertise areas, and organizational affiliations.
-</div>
-{% endif %}
-
 {% endblock %}
 
 {% block submit%}Update{% endblock%}
