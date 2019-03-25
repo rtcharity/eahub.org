@@ -20,13 +20,15 @@ class CauseArea(enum.Enum):
     LONG_TERM_FUTURE = 3
     CAUSE_PRIORITISATION = 4
     META = 5
+    CLIMATE_CHANGE = 6
 
     labels = {
-        GLOBAL_POVERTY: "Global Poverty",
-        ANIMAL_WELFARE_AND_RIGHTS: "Animal Welfare/Rights",
-        LONG_TERM_FUTURE: "Long-term Future",
-        CAUSE_PRIORITISATION: "Cause Prioritisation",
+        GLOBAL_POVERTY: "Global poverty",
+        ANIMAL_WELFARE_AND_RIGHTS: "Animal welfare/rights",
+        LONG_TERM_FUTURE: "Long-term future",
+        CAUSE_PRIORITISATION: "Cause prioritisation",
         META: "Meta",
+        CLIMATE_CHANGE: "Climate change",
     }
 
 

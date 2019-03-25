@@ -12,6 +12,30 @@ from ... import models
 from ....base import models as base_models
 
 
+def collect_cause_areas(
+    global_poverty,
+    animal_welfare_and_rights,
+    long_term_future,
+    cause_prioritisation,
+    meta,
+    climate_change,
+):
+    cause_areas = []
+    if global_poverty:
+        cause_areas.append(models.CauseArea.GLOBAL_POVERTY)
+    if animal_welfare_and_rights:
+        cause_areas.append(models.CauseArea.ANIMAL_WELFARE_AND_RIGHTS)
+    if long_term_future:
+        cause_areas.append(models.CauseArea.LONG_TERM_FUTURE)
+    if cause_prioritisation:
+        cause_areas.append(models.CauseArea.CAUSE_PRIORITISATION)
+    if meta:
+        cause_areas.append(models.CauseArea.META)
+    if climate_change:
+        cause_areas.append(models.CauseArea.CLIMATE_CHANGE)
+    return cause_areas
+
+
 CODED_AREAS_BY_LEGACY_NAME = {
     "Coding": models.ExpertiseArea.SOFTWARE_ENGINEERING,
     "Entrepreneurship": models.ExpertiseArea.ENTREPRENEURSHIP,
@@ -77,6 +101,13 @@ class Command(base.BaseCommand):
                 "field_in_which_country_do_you_li_value, "
                 "''"
                 "), "
+                "IFNULL(cause_areas.global_poverty, FALSE), "
+                "IFNULL(cause_areas.animal_welfare_and_rights, FALSE), "
+                "IFNULL(cause_areas.long_term_future, FALSE), "
+                "IFNULL(cause_areas.cause_prioritisation, FALSE), "
+                "IFNULL(cause_areas.meta, FALSE), "
+                "IFNULL(cause_areas.climate_change, FALSE), "
+                "IFNULL(cause_areas.cause_areas_other, ''), "
                 "IFNULL(field_data_field_skills.field_skills_value, ''), "
                 "IFNULL(field_data_field_more_about_me.field_more_about_me_value, ''), "
                 "users.uid "
@@ -105,6 +136,67 @@ class Command(base.BaseCommand):
                 "AND "
                 "field_data_field_in_which_country_do_you_li.bundle = "
                 "'basic_information' "
+                "LEFT JOIN "
+                "("
+                "SELECT uid, MIN(pid) AS pid "
+                "FROM profile "
+                "WHERE type = 'your_views_and_values' "
+                "GROUP BY uid"
+                ") "
+                "AS your_views_and_values "
+                "USING (uid) "
+                "LEFT JOIN "
+                "("
+                "SELECT "
+                "entity_id, "
+                "MAX(coded_cause_area = 1) AS global_poverty, "
+                "MAX(coded_cause_area = 2) AS animal_welfare_and_rights, "
+                "MAX(coded_cause_area = 3) AS long_term_future, "
+                "MAX(coded_cause_area = 4) AS cause_prioritisation, "
+                "MAX(coded_cause_area = 5) AS meta, "
+                "MAX(coded_cause_area = 6) AS climate_change, "
+                "GROUP_CONCAT("
+                "IF("
+                "coded_cause_area IS NULL, "
+                "field_interest_in_causes_and_com_value, "
+                "NULL"
+                ") "
+                "ORDER BY delta "
+                "SEPARATOR '; '"
+                ") "
+                "AS cause_areas_other "
+                "FROM "
+                "("
+                "SELECT "
+                "entity_id, "
+                "delta, "
+                "field_interest_in_causes_and_com_value, "
+                "CASE field_interest_in_causes_and_com_value "
+                "WHEN 'Earn-to-give' THEN 0 "
+                "WHEN 'Entrepreneurship' THEN 0 "
+                "WHEN 'Global poverty' THEN 1 "
+                "WHEN 'Animal welfare' THEN 2 "
+                "WHEN 'Existential risk / far future outcomes' THEN 3 "
+                "WHEN 'Existential risk and far future causes' THEN 3 "
+                "WHEN 'Machine intelligence risk' THEN 3 "
+                "WHEN 'Molecular nanotechnology' THEN 3 "
+                "WHEN 'Nuclear technology' THEN 3 "
+                "WHEN 'Synthetic biology risk' THEN 3 "
+                "WHEN 'Effective giving' THEN 4 "
+                "WHEN 'Prioritization research' THEN 4 "
+                "WHEN 'Movement-building' THEN 5 "
+                "WHEN 'Rationality' THEN 5 "
+                "WHEN 'Climate change' THEN 6 "
+                "ELSE NULL "
+                "END "
+                "AS coded_cause_area "
+                "FROM field_data_field_interest_in_causes_and_com"
+                ") "
+                "AS coded_cause_areas "
+                "GROUP BY entity_id"
+                ") "
+                "AS cause_areas "
+                "ON your_views_and_values.pid = cause_areas.entity_id "
                 "LEFT JOIN "
                 "("
                 "SELECT uid, MIN(pid) AS pid "
@@ -161,6 +253,15 @@ class Command(base.BaseCommand):
                     "name": name,
                     "city_or_town": city_or_town,
                     "country": country,
+                    "cause_areas": collect_cause_areas(
+                        global_poverty,
+                        animal_welfare_and_rights,
+                        long_term_future,
+                        cause_prioritisation,
+                        meta,
+                        climate_change,
+                    ),
+                    "cause_areas_other": cause_areas_other,
                     "summary": html.strip_tags(summary),
                     "legacy_record": legacy_record,
                     **geocode(city_or_town, country),
@@ -175,6 +276,13 @@ class Command(base.BaseCommand):
                 name,
                 city_or_town,
                 country,
+                global_poverty,
+                animal_welfare_and_rights,
+                long_term_future,
+                cause_prioritisation,
+                meta,
+                climate_change,
+                cause_areas_other,
                 skills,
                 summary,
                 legacy_record,
