@@ -134,15 +134,20 @@ function addMarkersWithLists(location_clusters, map) {
 
 function addDescription(marker, profiles) {
   public_profiles = profiles.filter(profile => !profile.anonymous)
+  private_profiles = profiles.filter(profile => profile.anonymous)
   if (public_profiles.length > 1) {
-    marker.desc = '<ul class="map-label" title="Anonymous users are not listed">'
+    marker.desc = '<ul class="map-label">'
     public_profiles.map(function(profile) {
       marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
       marker.desc += (profile.active == "False") ? " (inactive)</a></li>" : "</a></li>"
     })
+    if (private_profiles.length > 0) {
+      user_word = (private_profiles.length == 1) ? 'user' : 'users'
+      marker.desc += '<li>' + private_profiles.length.toString() + ' anonymous ' + user_word + '</li>'
+    }
     marker.desc += '</ul>'
   } else if (public_profiles.length == 1) {
-    marker.desc = "<a title='Anonymous users are not listed' href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
+    marker.desc = "<a href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
   } else {
     marker.desc = "All users at this location are anonymous";
   }
