@@ -121,13 +121,13 @@ function addMarkersWithLists(location_clusters, map) {
       var location_cluster = location_clusters[i]
       var location = {lat: location_cluster.lat, lng: location_cluster.lng}
       var profiles = location_cluster.profiles
-      var marker = createMarker(location)
+      var marker = createMarker(location, location_clusters)
       addDescription(marker, profiles)
       addLabel(marker, map)
       marker.setMap(map);
       markers.push(marker);
       var profiles_at_location = profiles.length;
-      addDummyMarkers(location, profiles_at_location, markers, map)
+      addDummyMarkers(location, profiles_at_location, markers, map, location_clusters)
   }
   return markers
 }
@@ -135,14 +135,14 @@ function addMarkersWithLists(location_clusters, map) {
 function addDescription(marker, profiles) {
   public_profiles = profiles.filter(profile => !profile.anonymous)
   if (public_profiles.length > 1) {
-    marker.desc = '<ul class="map-label">'
+    marker.desc = '<ul class="map-label" title="Anonymous users are not listed">'
     public_profiles.map(function(profile) {
       marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
       marker.desc += (profile.active == "False") ? " (inactive)</a></li>" : "</a></li>"
     })
     marker.desc += '</ul>'
   } else if (public_profiles.length == 1) {
-    marker.desc = "<a href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
+    marker.desc = "<a title='Anonymous users are not listed' href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
   } else {
     marker.desc = "All users at this location are anonymous";
   }
@@ -156,13 +156,15 @@ function addLabel(marker, map) {
   });
 }
 
-function createMarker(location,z=1) {
+function createMarker(location, location_clusters, z=1) {
   var marker = new google.maps.Marker({
       position: location,
+      label: {text: countMarkersAt(location, location_clusters).toString(), color: 'white', fontSize: '11px'},
       optimized: !isIE,  // makes SVG icons work in IE
       zIndex: z
   });
-  var iconSize = new google.maps.Size(20, 23);
+
+  var iconSize = new google.maps.Size(40, 40);
   marker.setIcon({
    url: (location.active == "False") ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
    size: iconSize,
@@ -171,9 +173,14 @@ function createMarker(location,z=1) {
   return marker
 }
 
-function addDummyMarkers(location, profiles_at_location, markers, map) {
+function countMarkersAt(location, location_clusters) {
+  cluster_at_location = location_clusters.filter(cluster => isSameLocation(location, cluster))
+  return cluster_at_location[0].profiles.length
+}
+
+function addDummyMarkers(location, profiles_at_location, markers, map, location_clusters) {
   for (var i = 1; i < profiles_at_location; i++) {
-    var dummyMarker = createMarker(location, z=1-i)
+    var dummyMarker = createMarker(location, location_clusters, z=1-i)
     dummyMarker.setMap(map);
     markers.push(dummyMarker)
   }
