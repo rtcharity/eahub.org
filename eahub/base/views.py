@@ -1,9 +1,7 @@
-from django.contrib.auth import views as auth_views
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.templatetags import static
-from django import urls
 from django.views.generic import base
 
 from ..localgroups.models import LocalGroup as Group
@@ -92,12 +90,6 @@ def getPrivateProfiles(user):
         for x in privateProfiles
     ]
     return private_profiles_json
-
-
-class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    post_reset_login = True
-    post_reset_login_backend = "django.contrib.auth.backends.ModelBackend"
-    success_url = urls.reverse_lazy("edit_profile")
 
 
 class FaviconView(base.RedirectView):

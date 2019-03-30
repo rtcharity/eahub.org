@@ -1,34 +1,28 @@
-from authtools.forms import CaseInsensitiveUsernameFieldCreationForm
+from captcha import fields
 from django import forms
-from django.db import models
-from .models import Profile, CauseArea, GivingPledge
+
+from .models import Profile
 from ..localgroups.models import LocalGroup
-from ..base.models import User
+
 
 class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 
     def label_from_instance(self, obj):
         return "%s" % (obj.name)
 
-class ProfileCreationForm(CaseInsensitiveUsernameFieldCreationForm):
+
+class SignupForm(forms.Form):
 
     name = forms.CharField(max_length=200)
     is_public = forms.BooleanField(required=False, label="Show my profile to the public", initial=True)
     subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
+    captcha = fields.ReCaptchaField()
 
-    def save(self, commit=True):
-        if not commit:
-            raise RuntimeError("can't create profile without database save")
+    def signup(self, request, user):
         is_public = self.cleaned_data['is_public']
         name = self.cleaned_data['name']
         subscribed_to_email_updates = self.cleaned_data['subscribed_to_email_updates']
-        user = super().save()
         Profile.objects.create(user=user, is_public=is_public, name=name, subscribed_to_email_updates=subscribed_to_email_updates)
-        return user
-
-    class Meta(CaseInsensitiveUsernameFieldCreationForm.Meta):
-        model = User
-        fields = ['name', 'email']
 
 
 class EditProfileForm(forms.ModelForm):

@@ -1,46 +1,13 @@
-import os, logging
-
-import requests
-from django.conf import settings
-from django.views import generic
 from django.views.generic import detail
-from django.views.generic import edit
 from django import http
 from django.http import HttpResponse
-from django.urls import reverse_lazy
-from django.contrib.auth import authenticate, login, mixins as auth_mixins, views as auth_views
-from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation, Membership
 from ..base import mixins as base_mixins
 from ..localgroups.models import LocalGroup
 from .forms import *
-
-
-class SignUp(generic.CreateView):
-    template_name = 'registration/signup.html'
-    form_class = ProfileCreationForm
-    success_url = reverse_lazy('my_profile')
-    extra_context = {'recaptcha_site_key': settings.RECAPTCHA_SITE_KEY}
-    def form_valid(self, form):
-        recaptcha_valid = requests.post(
-            'https://www.google.com/recaptcha/api/siteverify',
-            {
-                'secret': settings.RECAPTCHA_SECRET_KEY,
-                'response': self.request.POST.get('g-recaptcha-response')
-            }
-        ).json().get('success', False)
-        if recaptcha_valid:
-            # log user in
-            valid = super(SignUp, self).form_valid(form)
-            email, password = form.cleaned_data.get('email'), form.cleaned_data.get('password1')
-            new_user = authenticate(email=email, password=password)
-            login(self.request, new_user)
-            return valid
-        else:
-            # fail
-            return redirect(reverse('signup') + '?captcha_error=True')
 
 
 class ProfileDetailView(base_mixins.AssertPermissionMixin, detail.DetailView):
@@ -52,28 +19,14 @@ class ProfileDetailView(base_mixins.AssertPermissionMixin, detail.DetailView):
         return Profile.objects.visible_to_user(self.request.user)
 
 
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def MyProfileView(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
     return redirect('profile', slug=request.user.profile.slug)
 
 
-class EmailChangeView(auth_mixins.LoginRequiredMixin, edit.UpdateView):
-    fields = ["email"]
-    template_name = "eahub/change_email.html"
-    success_url = reverse_lazy("my_profile")
-
-    def get_object(self, queryset=None):
-        return self.request.user
-
-
-class PasswordChangeView(auth_views.PasswordChangeView):
-    template_name = "eahub/change_password.html"
-    success_url = reverse_lazy("my_profile")
-
-
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def DownloadView(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
@@ -83,7 +36,7 @@ def DownloadView(request):
     return profile.csv(response)
 
 
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def edit_profile(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
@@ -112,7 +65,7 @@ def edit_profile(request):
         })
 
 
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def edit_profile_cause_areas(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
@@ -136,7 +89,7 @@ def edit_profile_cause_areas(request):
         })
 
 
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def edit_profile_career(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
@@ -157,7 +110,7 @@ def edit_profile_career(request):
         })
 
 
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def edit_profile_community(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
@@ -184,7 +137,7 @@ def edit_profile_community(request):
         })
 
 
-@login_required(login_url=reverse_lazy('login'))
+@login_required
 def delete_profile(request):
     if request.method == 'POST':
         logging.info('user_id={} email={} has deleted their account'.format(

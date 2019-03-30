@@ -1,17 +1,17 @@
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import path, include
 
 from ..base import views
 
+admin.site.login = login_required(admin.site.login)
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('accounts/', include('allauth.urls')),
     path('profile/', include('eahub.profiles.urls')),
-    path('profile/reset/<uidb64>/<token>/',
-         views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('profile/', include('django.contrib.auth.urls')),
     path('profiles', views.profiles, name='profiles'),
     path('group/', include('eahub.localgroups.urls')),
     path('groups/', views.groups, name='groups'),
