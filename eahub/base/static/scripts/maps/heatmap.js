@@ -137,7 +137,6 @@ function addDescription(marker, profiles) {
   var private_profiles = profiles.filter(profile => profile.anonymous)
   var all_profiles_count = public_profiles.length + private_profiles.length
   if (all_profiles_count > 1) {
-    console.log("in here")
     marker.desc = '<ul class="map-label">'
     public_profiles.map(function(profile) {
       marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
