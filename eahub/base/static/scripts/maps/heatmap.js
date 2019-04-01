@@ -133,9 +133,10 @@ function addMarkersWithLists(location_clusters, map) {
 }
 
 function addDescription(marker, profiles) {
-  public_profiles = profiles.filter(profile => !profile.anonymous)
-  private_profiles = profiles.filter(profile => profile.anonymous)
-  if (public_profiles.length > 1) {
+  var public_profiles = profiles.filter(profile => !profile.anonymous)
+  var private_profiles = profiles.filter(profile => profile.anonymous)
+  var all_profiles_count = public_profiles.length + private_profiles.length
+  if (all_profiles_count > 1) {
     marker.desc = '<ul class="map-label">'
     public_profiles.map(function(profile) {
       marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
@@ -146,11 +147,18 @@ function addDescription(marker, profiles) {
       marker.desc += '<li>' + private_profiles.length.toString() + ' anonymous ' + user_word + '</li>'
     }
     marker.desc += '</ul>'
-  } else if (public_profiles.length == 1) {
+  } else if (!exists(public_profiles) && exists(private_profiles)) {
+    user_word = (private_profiles.length == 1) ? 'user' : 'users'
+    marker.desc = private_profiles.length.toString() + ' anonymous ' + user_word
+  } else if (public_profiles.length == 1 && !exists(private_profiles)) {
     marker.desc = "<a href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
-  } else {
-    marker.desc = "All users at this location are anonymous";
+  } else if (!exists(public_profiles) && !exists(private_profiles)) {
+    return false;
   }
+}
+
+function exists(profiles_array) {
+  return (profiles_array.length > 0) ? true : false;
 }
 
 function addLabel(marker, map) {
