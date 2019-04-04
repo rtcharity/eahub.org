@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.urls import path, include
+from allauth.account.views import SignupView, LoginView, PasswordResetView
+
+class MySignupView(SignupView):
+    template_name = 'accounts/signup.html'
 
 from ..base import views
 
@@ -10,6 +14,7 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('accounts/signup/', MySignupView.as_view(), name='account_signup'),
     path('accounts/', include('allauth.urls')),
     path('profile/', include('eahub.profiles.urls')),
     path('profiles', views.profiles, name='profiles'),

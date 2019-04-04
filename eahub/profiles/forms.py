@@ -1,5 +1,6 @@
 from captcha import fields
 from django import forms
+from allauth.account.forms import PasswordField
 
 from .models import Profile
 from ..localgroups.models import LocalGroup
@@ -13,10 +14,12 @@ class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 
 class SignupForm(forms.Form):
 
-    name = forms.CharField(max_length=200)
+    name = forms.CharField(max_length=200, label="Name", widget=forms.TextInput(attrs={'placeholder': 'Name'}))
     is_public = forms.BooleanField(required=False, label="Show my profile to the public", initial=True)
     subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
     captcha = fields.ReCaptchaField()
+
+    field_order = ['name','email','password1','password2','is_public','subscribed_to_email_updates','captcha']
 
     def signup(self, request, user):
         is_public = self.cleaned_data['is_public']
