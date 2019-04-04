@@ -17,7 +17,7 @@ class SignupForm(forms.Form):
     name = forms.CharField(max_length=200, label="Name", widget=forms.TextInput(attrs={'placeholder': 'Name'}))
     is_public = forms.BooleanField(required=False, label="Show my profile to the public", initial=True)
     subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
-    captcha = fields.ReCaptchaField()
+    captcha = fields.ReCaptchaField(label='')
 
     field_order = ['name','email','password1','password2','is_public','subscribed_to_email_updates','captcha']
 
