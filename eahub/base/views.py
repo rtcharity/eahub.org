@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.templatetags import static
 from django.views.generic import base
-from allauth.account.views import SignupView, LoginView, PasswordResetView
+from allauth.account.views import SignupView, LoginView, PasswordResetView, PasswordResetFromKeyView, PasswordChangeView
+from django.urls import reverse_lazy
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
@@ -14,6 +15,18 @@ class CustomisedSignupView(SignupView):
 
 class CustomisedLoginView(LoginView):
     template_name = 'accounts/login.html'
+
+class CustomisedPasswordResetView(PasswordResetView):
+    template_name = 'accounts/password_reset_form.html'
+
+class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
+    template_name = 'accounts/password_reset_from_key.html'
+
+class CustomisedPasswordChangeView(PasswordChangeView):
+    template_name = 'accounts/password_change.html'
+
+    success_url = reverse_lazy("my_profile")
+
 
 def index(request):
     groupsData = getGroupsData()
