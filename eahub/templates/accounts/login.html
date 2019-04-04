@@ -1,0 +1,33 @@
+{% extends 'form.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block form_fields %}
+
+{{ form.login|as_crispy_field }}
+
+{{ form.password|as_crispy_field }}
+
+<div class="field">
+  {% if form.non_field_errors %}
+    {% for error in form.non_field_errors %}
+        <div class="alert alert-danger login-danger">{{ error }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}
+
+{% block submit%}Log in{% endblock%}
+
+{% block content_after_form %}
+<div class="panel animated pulse">
+  <div class="alert alert-info hub-info">
+      <h2>Login not working?</h2>
+      <p><a href="{% url 'account_reset_password' %}"><i class="fa fa-envelope"></i> Send me a password reset email</a></p>
+      <p style="font-size: small"><b>Note:</b> If you had a profile on the old EAHub, you will have to <a href="{% url 'account_login' %}">create a new profile</a> as the old profiles don't exist anymore.</p>
+  </div>
+</div>
+{% endblock %}

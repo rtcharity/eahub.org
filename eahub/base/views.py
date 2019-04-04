@@ -3,10 +3,17 @@ from django.http import HttpResponse
 from django.template import loader
 from django.templatetags import static
 from django.views.generic import base
+from allauth.account.views import SignupView, LoginView, PasswordResetView
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from django.db.models import Count
+
+class CustomisedSignupView(SignupView):
+    template_name = 'accounts/signup.html'
+
+class CustomisedLoginView(LoginView):
+    template_name = 'accounts/login.html'
 
 def index(request):
     groupsData = getGroupsData()
