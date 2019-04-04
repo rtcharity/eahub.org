@@ -24,9 +24,7 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
 
 class CustomisedPasswordChangeView(PasswordChangeView):
     template_name = 'accounts/password_change.html'
-
     success_url = reverse_lazy("my_profile")
-
 
 def index(request):
     groupsData = getGroupsData()
