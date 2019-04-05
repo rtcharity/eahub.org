@@ -3,8 +3,10 @@ from django.http import HttpResponse
 from django.template import loader
 from django.templatetags import static
 from django.views.generic import base
+from allauth.account import app_settings
+from allauth.account import utils
 from allauth.account.views import SignupView, LoginView, PasswordResetView, PasswordResetFromKeyView, PasswordChangeView
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
@@ -21,6 +23,16 @@ class CustomisedPasswordResetView(PasswordResetView):
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
     template_name = 'accounts/password_reset_from_key.html'
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        return utils.perform_login(
+            self.request,
+            self.reset_user,
+            email_verification=app_settings.EMAIL_VERIFICATION,
+            redirect_url=reverse("edit_profile"),
+        )
+
 
 class CustomisedPasswordChangeView(PasswordChangeView):
     template_name = 'accounts/password_change.html'
