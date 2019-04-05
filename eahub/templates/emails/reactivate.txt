@@ -1,0 +1,45 @@
+Hi, {{ profile.name }}--it's time to reactivate your account
+
+
+** The Local Effective Altruism Network
+** Announcing the EA Hub 2.0
+------------------------------------------------------------
+
+Hi, {{ profile.name }}!
+
+We’re happy to announce that the new EA Hub (https://eahub.org) has launched!
+
+Over the last year, we’ve redesigned and rebuilt the Hub from scratch with the help of dedicated and talented volunteers. In this release, we restore and improve most of the functionality from the original EA Hub. It includes:
+* The ability to search for people (in the near future also based on cause area, skillset, job status, organisational affiliation, and availability for volunteer roles or speaking engagements).
+* The capability to join or register a local group, to contact a group, to ‘claim’ a group, and to report a group inactive.
+* The map of EAs, highlighting EA groups and personal profiles.
+
+Read more about our vision and future features of the new Hub in this announcement post (https://forum.effectivealtruism.org/posts/2LpW22MpmAPuiraJt/announcing-ea-hub-2-0).
+
+
+** Reactivate your account.
+------------------------------------------------------------
+
+If you’re reading this email, it’s because you had an account on the old Hub. You can click this link to reactivate your old account in less than a minute ({{ protocol }}://{{ domain }}{% url 'account_reset_password_from_key' uidb36=uidb36 key=key %}).
+
+
+** Collaborate with us.
+------------------------------------------------------------
+
+We’d like to express our gratitude to our volunteers and staff: Taymon Beal, Sebastian Becker, Alexander Herwix, Richenda Herzig, Marcin Kowrygo, Manoj Nathwani, Michal Trzesimiech, Nadia Williams, and others we list in here (https://forum.effectivealtruism.org/posts/2LpW22MpmAPuiraJt/announcing-ea-hub-2-0).
+
+If you’re as keen as we are to see the Hub reach its potential, the project has considerable room for funding, and we also welcome volunteers with software engineering experience. The Hub is open source and our repository can be found here (https://github.com/rtcharity/eahub.org).
+
+To discuss ideas and collaboration, we suggest joining #rc-team-hub-public (https://join.slack.com/t/rtcharity/shared_invite/enQtMzAyNDgwODAzNjg1LTg5N2Q4YzM4NWZkMDEwYmI5MzY2M2Y2NTI0Yjg0NGNiNjI4MTljZjQxY2IzZjA5NmY0YjA1ZDAxMDA3NDRiYmY). You can also leave your feedback here (https://feedback.eahub.org/).
+
+
+============================================================
+This content is licensed under Creative Commons Attribution 4.0 International License (http://creativecommons.org/licenses/by/4.0/)
+
+Our mailing address is:
+Rethink Charity
+2379 Pendleton Road
+Mineral, VA
+23117
+
+You have received this mandatory service announcement to update you about important changes to your account.
