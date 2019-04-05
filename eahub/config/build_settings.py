@@ -14,6 +14,7 @@ INSTALLED_APPS = [
     "captcha",
     "crispy_forms",
     "django_cleanup.apps.CleanupConfig",
+    "django_pwned_passwords",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
     "eahub.base.apps.BaseConfig",

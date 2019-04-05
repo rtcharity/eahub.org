@@ -27,3 +27,4 @@ mysqlclient==1.4.2.post1
 django-sluggable==0.6.1
 django-allauth==0.39.1
 django-recaptcha==2.0.2
+django-pwned-passwords==3.0.0
