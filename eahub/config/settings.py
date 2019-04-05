@@ -31,6 +31,9 @@ EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+# Core settings: error reporting
+SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+
 # Core settings: file uploads
 DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
@@ -145,16 +148,19 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
-    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 LOGIN_REDIRECT_URL = "index"
-LOGIN_URL = "/profile/login/"
+LOGIN_URL = "account_login"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 30
 
 # Sessions
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
+
+# Sites
+SITE_ID = 1
 
 # Static files
 from .build_settings import STATIC_ROOT, STATIC_URL, STATICFILES_STORAGE
@@ -170,6 +176,23 @@ AZURE_CONTAINER = env.str("AZURE_CONTAINER")
 AZURE_SSL = SECURE_SSL_REDIRECT
 AZURE_URL_EXPIRATION_SECS = 3600
 
+# allauth
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https" if SECURE_SSL_REDIRECT else "http"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+ACCOUNT_LOGIN_ON_PASSWORD_RESET = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+ACCOUNT_SIGNUP_FORM_CLASS = "eahub.profiles.forms.SignupForm"
+ACCOUNT_USER_DISPLAY = "eahub.base.utils.user_display"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+
+# Django reCAPTCHA
+RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY")
+RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
+
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
@@ -178,10 +201,6 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
-
-# Profiles
-RECAPTCHA_SECRET_KEY = env.str("RECAPTCHA_SECRET_KEY")
-RECAPTCHA_SITE_KEY = env.str("RECAPTCHA_SITE_KEY")
 
 # Local groups
 LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS").items())

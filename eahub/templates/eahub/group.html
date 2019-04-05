@@ -115,7 +115,7 @@
         </div>
       </form>
       {% else %}
-      <p class="text-center">You can only claim this group if you're <a href="{% url 'login'%}">logged in</a>.</p>
+      <p class="text-center">You can only claim this group if you're <a href="{% url 'account_login'%}">logged in</a>.</p>
       {% endif %}
     </div>
   </div>
@@ -140,7 +140,7 @@
         </div>
       </form>
       {% else %}
-      <p class="text-center" style="padding-right: 20px">You can only report this group as inactive if you you're <a href="{% url 'login'%}">logged in</a>.</p>
+      <p class="text-center" style="padding-right: 20px">You can only report this group as inactive if you you're <a href="{% url 'account_login'%}">logged in</a>.</p>
       {% endif %}
     </div>
   </div>

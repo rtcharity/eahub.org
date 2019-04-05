@@ -1,14 +1,30 @@
-from django.contrib.auth import views as auth_views
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.templatetags import static
-from django import urls
 from django.views.generic import base
+from allauth.account.views import SignupView, LoginView, PasswordResetView, PasswordResetFromKeyView, PasswordChangeView
+from django.urls import reverse_lazy
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from django.db.models import Count
+
+class CustomisedSignupView(SignupView):
+    template_name = 'accounts/signup.html'
+
+class CustomisedLoginView(LoginView):
+    template_name = 'accounts/login.html'
+
+class CustomisedPasswordResetView(PasswordResetView):
+    template_name = 'accounts/password_reset_form.html'
+
+class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
+    template_name = 'accounts/password_reset_from_key.html'
+
+class CustomisedPasswordChangeView(PasswordChangeView):
+    template_name = 'accounts/password_change.html'
+    success_url = reverse_lazy("my_profile")
 
 def index(request):
     groupsData = getGroupsData()
@@ -92,12 +108,6 @@ def getPrivateProfiles(user):
         for x in privateProfiles
     ]
     return private_profiles_json
-
-
-class PasswordResetConfirmView(auth_views.PasswordResetConfirmView):
-    post_reset_login = True
-    post_reset_login_backend = "django.contrib.auth.backends.ModelBackend"
-    success_url = urls.reverse_lazy("edit_profile")
 
 
 class FaviconView(base.RedirectView):

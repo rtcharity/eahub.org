@@ -666,6 +666,17 @@ form .alert ul {
 .help-block strong {
   font-weight: 500;
 }
+
+.errorlist {
+  display: inline-block;
+  background-color: #E4F5B1;
+  border: none;
+  color: black;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  list-style-type: none;
+}
+
 #hint_id_password2 {
   display: none;
 }
