@@ -50,6 +50,7 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/HubHeartBox.png">
         <div class="panel-body">
           <h3>Cause Area</h3>
+          {% if profile.has_cause_area_details == False %}N/A{% endif %}
           {% if profile.cause_areas or profile.cause_areas_other %}
           <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas|linebreaks }}</div>
           {% endif %}
@@ -75,6 +76,9 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/BriefcaseHub.png">
         <div class="panel-body">
           <h3>Career</h3>
+
+          {% if profile.has_career_details == False %}N/A{% endif %}
+
           {% if profile.expertise_areas or profile.expertise_areas_other %}
           <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise|linebreaks }}</div>
           {% endif %}
@@ -98,6 +102,8 @@
         <img style="width: 100px; margin-top: 20px;" src="/static/images/home/ea_profiles.png">
         <div class="panel-body">
           <h3>Community</h3>
+
+          {% if profile.has_community_details == False %}N/A{% endif %}
 
           {% if profile.organisational_affiliations %}
           <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
@@ -139,6 +145,7 @@
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
           {% endif %}
           <br>
+
           {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">
               <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>

@@ -18,7 +18,6 @@ class ProfileDetailView(base_mixins.AssertPermissionMixin, detail.DetailView):
     def get_queryset(self):
         return Profile.objects.visible_to_user(self.request.user)
 
-
 @login_required
 def MyProfileView(request):
     if not hasattr(request.user, 'profile'):

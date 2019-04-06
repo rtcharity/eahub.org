@@ -330,6 +330,40 @@ class Profile(models.Model):
     def image_placeholder(self):
         return f"Avatar{self.id % 10}.png"
 
+    def some_true(self, list):
+        if all(item == False for item in list):
+            return False
+        else:
+            return True
+
+    def has_cause_area_details(self):
+        cause_area_details_exist = [
+            len(self.cause_areas) > 0,
+            len(self.cause_areas_other) > 0,
+            len(self.giving_pledges) > 0,
+            self.available_to_volunteer == True,
+        ]
+        return self.some_true(cause_area_details_exist)
+
+    def has_career_details(self):
+        career_details_exist = [
+            len(self.expertise_areas),
+            len(self.expertise_areas_other),
+            self.open_to_job_offers == True
+        ]
+        return self.some_true(career_details_exist)
+
+    def has_community_details(self):
+        community_details_exist = [
+            len(self.organisational_affiliations) > 0,
+            self.local_groups.exists(),
+            self.user.localgroup_set.exists(),
+            self.available_as_speaker == True,
+            len(self.topics_i_speak_about) > 0
+        ]
+        return self.some_true(community_details_exist)
+
+
 class Membership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
