@@ -139,12 +139,11 @@ ROOT_URLCONF = "eahub.config.urls"
 # Auth
 AUTH_USER_MODEL = "base.User"
 AUTH_PASSWORD_VALIDATORS = [
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django_pwned_passwords.password_validation.PWNEDPasswordValidator"},
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
@@ -195,6 +194,9 @@ RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
+
+# Django PWNED Passwords
+PWNED_VALIDATOR_FAIL_SAFE = False
 
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
