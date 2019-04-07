@@ -1,4 +1,4 @@
-Hi, {{ profile.name }}--it's time to reactivate your account
+Hi, {{ profile.name }}--it's time to reactivate your account. Over the last year, we’ve redesigned and rebuilt the Hub from scratch. In this release, we restore and improve most of the functionality from the original EA Hub.
 
 
 ** The Local Effective Altruism Network
