@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation, Membership
 from ..base import mixins as base_mixins
+from ..base.models import User
 from ..localgroups.models import LocalGroup
 from .forms import *
 
@@ -149,7 +150,7 @@ def delete_profile(request):
             id=request.user.id
         )
         user.delete()
-        return redirect('logout')
+        return redirect('account_logout')
     else:
         form = DeleteProfileForm()
         return render(request, 'eahub/delete_profile.html', {
