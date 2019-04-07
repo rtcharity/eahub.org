@@ -1,3 +1,5 @@
+import logging
+
 from django.views.generic import detail
 from django import http
 from django.http import HttpResponse
