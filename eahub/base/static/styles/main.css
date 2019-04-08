@@ -486,6 +486,12 @@ body {
   color: black;
 }
 
+.hub-error {
+  background-color: #E4F5B1;
+  border: none;
+  color: black;
+}
+
 .list .tag {
   color: #512B52;
   display: inline-block;
@@ -683,7 +689,7 @@ form .alert ul {
 .password-reset form {
   margin-bottom: 20px;
 }
-.password-reset h1 {
+.password-reset h1, h2 {
   color: #512B52;
   margin-bottom: 30px;
   text-align: center;

@@ -12,12 +12,7 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('accounts/signup/', views.CustomisedSignupView.as_view(), name='account_signup'),
-    path('accounts/login/', views.CustomisedLoginView.as_view(), name='account_login'),
-    path('accounts/password/reset/', views.CustomisedPasswordResetView.as_view(), name='account_reset_password'),
     path('accounts/password/change/', views.CustomisedPasswordChangeView.as_view(), name='account_reset_password'),
-    path('accounts/password/set/', TemplateView.as_view(template_name='accounts/password_reset_done.html'), name="account_set_password"),
-    path('accounts/password/reset/done/', TemplateView.as_view(template_name='accounts/password_reset_done.html'), name='account_reset_password_done'),
     url('accounts/password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$', views.CustomisedPasswordResetFromKeyView.as_view(), name='account_reset_password_from_key'),
     path('accounts/', include('allauth.urls')),
     path('profile/', include('eahub.profiles.urls')),
