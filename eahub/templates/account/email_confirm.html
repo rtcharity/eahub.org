@@ -26,18 +26,6 @@
 <p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
 
 {% endif %}
-<div class="row">
-<div class="col-md-6 col-md-offset-3">
-{% for message in messages %}
-<div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable"{% endif %}>
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <div>{{ message }}</div>
-</div>
-{% endfor %}
-</div>
-</div>
 
 </div>
 
