@@ -17,6 +17,7 @@ from django.conf import settings
 
 from .forms import LocalGroupForm
 from .models import LocalGroup
+from ..profiles.models import Profile
 
 
 class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView):
@@ -74,11 +75,13 @@ def claim_group(request, slug):
     subject = "EA Group claimed: {0}".format(group.name)
     try:
         user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+        user_name = request.user.profile.name
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
+        user_name = request.user.email
     message = render_to_string('emails/claim_group.txt', {
         'user_eahub_url': user_eahub_url,
-        'user_name': request.user.profile.name,
+        'user_name': user_name,
         'group_name': group.name,
         'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
         'user_email': request.user.email
