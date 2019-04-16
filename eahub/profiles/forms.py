@@ -2,7 +2,7 @@ from captcha import fields
 from django import forms
 from allauth.account.forms import PasswordField
 
-from .models import Profile
+from .models import Profile, validate_sluggable_name
 from ..localgroups.models import LocalGroup
 
 
@@ -14,7 +14,7 @@ class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 
 class SignupForm(forms.Form):
 
-    name = forms.CharField(max_length=200, label="Name", widget=forms.TextInput(attrs={'placeholder': 'Name'}))
+    name = forms.CharField(max_length=200, label="Name", widget=forms.TextInput(attrs={'placeholder': 'Name'}), validators=[validate_sluggable_name])
     is_public = forms.BooleanField(required=False, label="Show my profile to the public", initial=True)
     subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
     captcha = fields.ReCaptchaField(label='')

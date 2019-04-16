@@ -2,6 +2,7 @@ import csv
 
 from django.conf import settings
 from django.contrib.postgres import fields as postgres_fields
+from django.core import exceptions
 from django.db import models
 from django import urls
 from django_enumfield import enum
@@ -189,6 +190,7 @@ class ProfileSlug(sluggable_models.Slug):
     @classmethod
     def forbidden_slugs(cls):
         return [
+            "",
             "delete",
             "download",
             "login",
@@ -211,6 +213,13 @@ def slugify_user(name):
     return slug
 
 
+def validate_sluggable_name(name):
+    if slugify_user(name) in ProfileSlug.forbidden_slugs():
+        raise exceptions.ValidationError(
+            'The name "%(name)s" is not allowed', params={"name": name}
+        )
+
+
 class ProfileManager(models.Manager):
     def visible_to_user(self, user):
         if user.is_superuser:
@@ -225,7 +234,7 @@ class Profile(models.Model):
         decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
     )
     is_public = models.BooleanField(default=True)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, validators=[validate_sluggable_name])
     image = thumbnail.ImageField(
         upload_to=upload_path.auto_cleaned_path_stripped_uuid4, blank=True
     )
