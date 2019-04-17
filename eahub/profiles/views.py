@@ -20,7 +20,7 @@ def profile_detail_or_redirect(request, slug):
     except ProfileSlug.DoesNotExist:
         raise exceptions.Quiet404("No profile exists with that slug.")
     profile = slug_entry.content_object
-    if not (profile and request.user.has_perms("profiles.view_profile", profile)):
+    if not (profile and request.user.has_perm("profiles.view_profile", profile)):
         raise exceptions.Quiet404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profile", slug=profile.slug, permanent=True)
@@ -33,7 +33,7 @@ def profile_redirect_from_legacy_record(request, legacy_record):
         profile = Profile.objects.visible_to_user(user).get(legacy_record=legacy_record)
     except Profile.DoesNotExist:
         raise exceptions.Quiet404("No profile exists with that legacy record number.")
-    assert user.has_perms("profiles.view_profile", profile)
+    assert user.has_perm("profiles.view_profile", profile)
     return redirect("profile", slug=profile.slug, permanent=True)
 
 
@@ -49,9 +49,10 @@ def DownloadView(request):
     if not hasattr(request.user, 'profile'):
         raise http.Http404("user has no profile")
     profile = Profile.objects.get(pk=request.user.profile.id)
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="my_profile.csv"'
-    return profile.csv(response)
+    response = HttpResponse(content_type="application/zip")
+    response['Content-Disposition'] = f'attachment; filename="{profile.slug}.zip"'
+    profile.write_data_export_zip(request, response)
+    return response
 
 
 @login_required
