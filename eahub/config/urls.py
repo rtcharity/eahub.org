@@ -16,7 +16,7 @@ urlpatterns = [
     url('accounts/password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$', views.CustomisedPasswordResetFromKeyView.as_view(), name='account_reset_password_from_key'),
     path('accounts/', include('allauth.urls')),
     path('profile/', include('eahub.profiles.urls')),
-    path('profiles', views.profiles, name='profiles'),
+    path('profiles/', views.profiles, name='profiles'),
     path('group/', include('eahub.localgroups.urls')),
     path('groups/', views.groups, name='groups'),
     path('admin/', admin.site.urls, name='admin'),
