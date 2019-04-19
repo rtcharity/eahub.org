@@ -108,7 +108,11 @@
       </button>
       {% if user.is_authenticated %}
       <p class="text-center">I confirm that I am an organiser of this group and want to claim it.</p>
+<<<<<<< HEAD
       <form method='POST' action="{% url 'claim_group' group.slug %}" class="text-center">
+=======
+      <form method='POST' action="{% url 'claim_group' group.slug  %}" class="text-center">
+>>>>>>> fix url for reporting groups
         {% csrf_token %}
         <div class="btn-group-sm" role="group">
           <button type="submit" class="btn btn-default"> Confirm</button>
@@ -147,6 +151,7 @@
   </div>
   {% endif %}
 
+
 </div>
-<script src="/static/scripts/group.js"></script>
+<script src="/static/scripts/report_buttons.js"></script>
 {% endblock %}
