@@ -83,7 +83,7 @@ def getGroupsData():
         if x.lat and x.lon
     ]
     return {
-        'rows': rows,
+        'rows': order_blank_last(rows),
         'map_data': map_data
     }
 
@@ -100,7 +100,7 @@ def getProfilesData(user):
         if x.lat and x.lon
     ]
     return {
-        'rows': rows,
+        'rows': order_blank_last(rows),
         'map_data': map_data
     }
 
@@ -124,3 +124,6 @@ def healthCheck(request):
 
 def trigger500Error(request):
     raise RuntimeError("Test error, safe to ignore")
+
+def order_blank_last(profiles):
+    return sorted(profiles, key=lambda x: (x.name == '', x.name))
