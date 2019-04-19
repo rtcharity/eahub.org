@@ -6,6 +6,12 @@ from django import http
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
+from django.contrib.sites.shortcuts import get_current_site
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, ProfileSlug, OrganisationalAffiliation, Membership
 from ..base.models import User
@@ -173,3 +179,26 @@ def delete_profile(request):
         return render(request, 'eahub/delete_profile.html', {
             'form': form
         })
+
+@login_required
+@require_POST
+def report_abuse(request, slug):
+    profile = Profile.objects.get(slug=slug)
+    subject = "EA Profile reported as abuse: {0}".format(profile.name)
+    try:
+        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+    except Profile.DoesNotExist:
+        user_eahub_url = "about:blank"
+    message = render_to_string('emails/report_profile_abuse.txt', {
+        'user_eahub_url': user_eahub_url,
+        'user_name': request.user.profile.name,
+        'profile_name': profile.name,
+        'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,profile.slug),
+        'user_email': request.user.email
+    })
+    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+    messages.success(
+        request,
+        ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
+    )
+    return redirect('/profile/{}'.format(profile.slug))
