@@ -11,4 +11,10 @@ urlpatterns = [
     path('download/', views.DownloadView, name='download_profile'),
     path('<int:legacy_record>/', views.profile_redirect_from_legacy_record, name='profile_legacy'),
     path('<slug:slug>/', views.profile_detail_or_redirect, name='profile'),
+    path('<slug:slug>/', views.ProfileDetailView.as_view(), name='profile'),
+    path(
+        '<slug:slug>/report-abuse/',
+        views.report_abuse,
+        name='report_abuse_profile'
+    ),
 ]
