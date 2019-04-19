@@ -182,15 +182,55 @@
 
   </div>
 
-  <br>
-  {% if user.id == profile.user_id %}
-<div class="text-center">
-  <div class="btn-group btn-group-sm text-center" role="group">
-      <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button></a>
-      <a href="{% url 'delete_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button></a>
+  {% if messages %}
+  <div class="row">
+  <div class="col-md-6 col-md-offset-3">
+      {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable"{% endif %}>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div>{{ message }}</div>
+      </div>
+      {% endfor %}
   </div>
-</div>
+  </div>
   {% endif %}
 
+  <br>
+  {% if user.id == profile.user_id %}
+  <div class="text-center">
+    <div class="btn-group btn-group-sm text-center" role="group">
+        <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button></a>
+        <a href="{% url 'delete_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button></a>
+    </div>
+  </div>
+  {% else %}
+  <div class="row">
+  <div class="text-center group_action">
+    <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
+      <button type="button" class="btn btn-default report_profile_abuse_toggler"><i class="fa fa-flag"></i> Report abuse</button>
+    </div>
+    <div id="report_profile_abuse_confirm_field" class="col-xs-6 col-xs-offset-3 alert alert-info hub-info confirm_field" role="alert">
+      <button type="button" class="close report_profile_abuse_toggler">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      {% if user.is_authenticated %}
 
+      <p class="text-center">I believe that this profile is spam.</p>
+      <form method='POST' action="{% url 'report_abuse_profile' profile.slug %}" class="text-center group_action">
+        {% csrf_token %}
+        <div class="btn-group-sm" role="group">
+          <button type="submit" class="btn btn-default"> Confirm</button>
+        </div>
+      </form>
+      {% else %}
+      <p class="text-center" style="padding-right: 20px">You can only report this profile as spam if you you're <a href="{% url 'account_login'%}">logged in</a>.</p>
+      {% endif %}
+    </div>
+  </div>
+  </div>
+  {% endif %}
+
+<script src="/static/scripts/report_buttons.js"></script>
 {% endblock %}
