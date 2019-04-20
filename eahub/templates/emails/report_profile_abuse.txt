@@ -1,6 +1,6 @@
 Dear Admin,
 
-User {{user_name}} ({{user_eahub_url}}) reported profile {{profile_name}} ({{profile_url}}) as abuse.
+User {{user_name}} ({{user_eahub_url}}) reported profile {{profile_name}} ({{profile_url}}) as abuse for the following reasons: {{reasons}}.
 In case the profile is abuse, remove it and send an email to the user associated with profile {{profile_name}} to inform them of your decision.
 Also let user {{user_name}} know of the outcome of your inquiry by emailing them at {{user_email}}.
 

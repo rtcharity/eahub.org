@@ -1,0 +1,19 @@
+{% extends 'form.html' %}
+
+
+{% block title %}Report abuse{% endblock %}
+
+
+{% load crispy_forms_tags %}
+
+{% block form_fields %}
+<div id="report_abuse">
+
+<p> I want to report the account <b>{{ profile }}</b> for the following reasons:</p>
+
+{{ form|crispy }}
+
+</div>
+{% endblock %}
+
+{% block submit %}Confirm{% endblock %}

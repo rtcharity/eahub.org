@@ -2,6 +2,8 @@
 
 {% load thumbnail %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
 <br><br>
@@ -206,29 +208,10 @@
     </div>
   </div>
   {% else %}
-  <div class="row">
   <div class="text-center group_action">
     <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
-      <button type="button" class="btn btn-default report_profile_abuse_toggler"><i class="fa fa-flag"></i> Report abuse</button>
+      <a href="{% url 'report_abuse_profile' profile.slug  %}"><button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</a>
     </div>
-    <div id="report_profile_abuse_confirm_field" class="col-xs-6 col-xs-offset-3 alert alert-info hub-info confirm_field" role="alert">
-      <button type="button" class="close report_profile_abuse_toggler">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      {% if user.is_authenticated %}
-
-      <p class="text-center">I believe that this profile is spam.</p>
-      <form method='POST' action="{% url 'report_abuse_profile' profile.slug %}" class="text-center group_action">
-        {% csrf_token %}
-        <div class="btn-group-sm" role="group">
-          <button type="submit" class="btn btn-default"> Confirm</button>
-        </div>
-      </form>
-      {% else %}
-      <p class="text-center" style="padding-right: 20px">You can only report this profile as spam if you you're <a href="{% url 'account_login'%}">logged in</a>.</p>
-      {% endif %}
-    </div>
-  </div>
   </div>
   {% endif %}
 

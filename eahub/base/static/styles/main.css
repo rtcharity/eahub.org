@@ -513,6 +513,10 @@ td .privacy-banner {
   margin-top: 0px;
 }
 
+#report_abuse .control-label {
+  display: none;
+}
+
 /* edit */
 
 #multiselect-form {
@@ -686,15 +690,15 @@ form .alert ul {
 #hint_id_password2 {
   display: none;
 }
-.password-reset form {
+.user-action form {
   margin-bottom: 20px;
 }
-.password-reset h1, h2 {
+.user-action h1, h2 {
   color: #512B52;
   margin-bottom: 30px;
   text-align: center;
 }
-.password-reset p {
+.user-action p {
   margin-bottom: 20px;
 }
 
