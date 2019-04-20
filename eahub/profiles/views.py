@@ -43,6 +43,7 @@ def profile_redirect_from_legacy_record(request, legacy_record):
     return redirect("profile", slug=profile.slug, permanent=True)
 
 
+
 @login_required
 def MyProfileView(request):
     if not hasattr(request.user, 'profile'):
@@ -181,24 +182,29 @@ def delete_profile(request):
         })
 
 @login_required
-@require_POST
 def report_abuse(request, slug):
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
     profile = Profile.objects.get(slug=slug)
-    subject = "EA Profile reported as abuse: {0}".format(profile.name)
-    try:
-        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
-    except Profile.DoesNotExist:
-        user_eahub_url = "about:blank"
-    message = render_to_string('emails/report_profile_abuse.txt', {
-        'user_eahub_url': user_eahub_url,
-        'user_name': request.user.profile.name,
-        'profile_name': profile.name,
-        'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,profile.slug),
-        'user_email': request.user.email
-    })
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
-    messages.success(
-        request,
-        ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
-    )
-    return redirect('/profile/{}'.format(profile.slug))
+    if request.method == 'POST':
+        subject = "EA Profile reported as abuse: {0}".format(profile.name)
+        try:
+            user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+        except Profile.DoesNotExist:
+            user_eahub_url = "about:blank"
+        message = render_to_string('emails/report_profile_abuse.txt', {
+            'user_eahub_url': user_eahub_url,
+            'user_name': request.user.profile.name,
+            'profile_name': profile.name,
+            'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,profile.slug),
+            'user_email': request.user.email,
+            'reasons': ', '.join(request.POST.getlist('reasons'))
+        })
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+        return redirect('/profile/{}/report-abuse-done'.format(profile.slug))
+    else:
+        form = ReportAbuseForm()
+    return render(request, 'eahub/report_abuse.html', {
+            'form': form,
+            'profile': profile
+        })
