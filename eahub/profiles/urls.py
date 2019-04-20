@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.MyProfileView, name='my_profile'),
@@ -16,5 +17,10 @@ urlpatterns = [
         '<slug:slug>/report-abuse/',
         views.report_abuse,
         name='report_abuse_profile'
+    ),
+    path(
+        '<slug:slug>/report-abuse-done/',
+        TemplateView.as_view(template_name='eahub/report_abuse_done.html'),
+        name='report_abuse_profile_done'
     ),
 ]
