@@ -466,11 +466,6 @@ body {
   margin: 0;
 }
 
-.group_action {
-  margin-top: 10px;
-  margin-bottom;
-}
-
 .confirm_field {
   display: none;
   text-align: left;
@@ -711,6 +706,13 @@ form .alert ul {
 .btn {
   white-space: normal;
   max-width: 100%;
+}
+.btn a {
+  text-decoration: none;
+
+}
+.margin-top {
+  margin-top: 10px;
 }
 .purple{
   background-color: #512B52 !important;
