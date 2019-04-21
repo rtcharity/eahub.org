@@ -26,3 +26,5 @@ urlpatterns = [
     path('robots933456.txt', views.healthCheck, name='healthCheck'),
     path('trigger-500-error/', views.trigger500Error, name='trigger500Error'),
 ]
+
+handler404 = "eahub.base.views.page_not_found"

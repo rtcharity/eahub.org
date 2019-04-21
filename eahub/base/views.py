@@ -1,13 +1,16 @@
+from django.core import mail
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.templatetags import static
+from django.views import defaults
 from django.views.generic import base
 from allauth.account import app_settings
 from allauth.account import utils
 from allauth.account.views import SignupView, LoginView, PasswordResetView, PasswordResetFromKeyView, PasswordChangeView, EmailView
 from django.urls import reverse, reverse_lazy
 
+from . import exceptions
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from django.db.models import Count
@@ -124,3 +127,12 @@ def healthCheck(request):
 
 def trigger500Error(request):
     raise RuntimeError("Test error, safe to ignore")
+
+
+def page_not_found(request, exception):
+    if not isinstance(exception, exceptions.Quiet404):
+        mail.mail_managers(
+            "Broken link",
+            loader.render_to_string("emails/broken_link.txt", {"request": request}),
+        )
+    return defaults.page_not_found(request, exception)

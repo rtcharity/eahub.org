@@ -9,5 +9,6 @@ urlpatterns = [
     path('edit/community/', views.edit_profile_community, name='edit_profile_community'),
     path('delete/', views.delete_profile, name='delete_profile'),
     path('download/', views.DownloadView, name='download_profile'),
-    path('<slug:slug>/', views.ProfileDetailView.as_view(), name='profile'),
+    path('<int:legacy_record>/', views.profile_redirect_from_legacy_record, name='profile_legacy'),
+    path('<slug:slug>/', views.profile_detail_or_redirect, name='profile'),
 ]

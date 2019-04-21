@@ -1,25 +1,41 @@
 import logging
 
+from django.views.generic import base
 from django.views.generic import detail
 from django import http
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, OrganisationalAffiliation, Membership
-from ..base import mixins as base_mixins
+from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, ProfileSlug, OrganisationalAffiliation, Membership
 from ..base.models import User
+from ..base import exceptions
 from ..localgroups.models import LocalGroup
 from .forms import *
 
 
-class ProfileDetailView(base_mixins.AssertPermissionMixin, detail.DetailView):
-    model = Profile
-    template_name = "eahub/profile.html"
-    permission_required = "profiles.view_profile"
+def profile_detail_or_redirect(request, slug):
+    try:
+        slug_entry = ProfileSlug.objects.get(slug=slug)
+    except ProfileSlug.DoesNotExist:
+        raise exceptions.Quiet404("No profile exists with that slug.")
+    profile = slug_entry.content_object
+    if not (profile and request.user.has_perms("profiles.view_profile", profile)):
+        raise exceptions.Quiet404("No profile exists with that slug.")
+    if slug_entry.redirect:
+        return redirect("profile", slug=profile.slug, permanent=True)
+    return render(request, "eahub/profile.html", {"profile": profile})
 
-    def get_queryset(self):
-        return Profile.objects.visible_to_user(self.request.user)
+
+def profile_redirect_from_legacy_record(request, legacy_record):
+    user = request.user
+    try:
+        profile = Profile.objects.visible_to_user(user).get(legacy_record=legacy_record)
+    except Profile.DoesNotExist:
+        raise exceptions.Quiet404("No profile exists with that legacy record number.")
+    assert user.has_perms("profiles.view_profile", profile)
+    return redirect("profile", slug=profile.slug, permanent=True)
+
 
 @login_required
 def MyProfileView(request):
