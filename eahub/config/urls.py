@@ -25,4 +25,17 @@ urlpatterns = [
     path('favicon.ico', views.FaviconView.as_view(), name='favicon'),
     path('robots933456.txt', views.healthCheck, name='healthCheck'),
     path('trigger-500-error/', views.trigger500Error, name='trigger500Error'),
+
+    # Redirects from legacy URLs
+    path('contact/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org/contact-lean/')),
+    path('index.php/', views.LegacyRedirectView.as_view(pattern_name='index')),
+    path('map/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
+    path('map/people/all/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
+    path('profile/login/', views.LegacyRedirectView.as_view(pattern_name='account_login')),
+    path('profile/signup/', views.LegacyRedirectView.as_view(pattern_name='account_signup')),
+    path('register/', views.LegacyRedirectView.as_view(pattern_name='account_signup')),
+    path('user/', views.LegacyRedirectView.as_view(pattern_name='my_profile')),
+    path('user/profiles/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
+    path('user.php/', views.LegacyRedirectView.as_view(pattern_name='my_profile')),
+    path('wp-login.php/', views.LegacyRedirectView.as_view(pattern_name='account_login')),
 ]
