@@ -707,10 +707,6 @@ form .alert ul {
   white-space: normal;
   max-width: 100%;
 }
-.btn a {
-  text-decoration: none;
-
-}
 .margin-top {
   margin-top: 10px;
 }
@@ -728,6 +724,10 @@ form .alert ul {
 }
 .purple a:hover{
   text-decoration: none;
+}
+.report-btn a {
+  text-decoration: none;
+  color: black;
 }
 
 .fa-bolt{
