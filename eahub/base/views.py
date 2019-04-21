@@ -126,11 +126,13 @@ class LegacyRedirectView(base.RedirectView):
     permanent = True
 
 
+class RobotsTxtView(base.TemplateView):
+    template_name = "robots.txt"
+    content_type = "text/plain; charset=utf-8"
+
+
 def healthCheck(request):
     return HttpResponse(status=204)
-
-def trigger500Error(request):
-    raise RuntimeError("Test error, safe to ignore")
 
 
 def page_not_found(request, exception):
