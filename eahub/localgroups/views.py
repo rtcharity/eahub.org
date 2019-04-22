@@ -18,6 +18,8 @@ from django.conf import settings
 from .forms import LocalGroupForm
 from .models import LocalGroup
 from ..profiles.models import Profile
+from ..profiles.views import ReportAbuse
+from ..profiles.forms import ReportAbuseForm
 
 
 class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView):
@@ -116,3 +118,17 @@ def report_group_inactive(request, slug):
         ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
     )
     return redirect('/group/{}'.format(group.slug))
+
+@login_required
+def report_abuse(request, slug):
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
+    reportee = LocalGroup.objects.get(slug=slug)
+    if request.method == 'POST':
+        report_abuse = ReportAbuse(reportee, 'group')
+        return report_abuse.send(request)
+    else:
+        return render(request, 'eahub/report_abuse.html', {
+                'form': ReportAbuseForm(),
+                'profile': reportee
+            })
