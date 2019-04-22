@@ -1,0 +1,4 @@
+Requested URL: {{ request.get_full_path }}
+Referrer: {{ request.META.HTTP_REFERER|default:'<none>' }}
+User agent: {{ request.META.HTTP_USER_AGENT|default:'<none>' }}
+IP address: {{ request.META.HTTP_X_FORWARDED_FOR|default:'<none>' }}
