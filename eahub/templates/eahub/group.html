@@ -148,6 +148,13 @@
   {% endif %}
 
 
+  <div class="text-center margin-top report-btn">
+    <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
+      <a href="{% url 'report_abuse_group' group.slug  %}"><button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</a>
+    </div>
+  </div>
+  
+
 </div>
 <script src="/static/scripts/report_buttons.js"></script>
 {% endblock %}
