@@ -122,6 +122,10 @@ class FaviconView(base.RedirectView):
         return static.static("favicon.ico")
 
 
+class LegacyRedirectView(base.RedirectView):
+    permanent = True
+
+
 def healthCheck(request):
     return HttpResponse(status=204)
 
