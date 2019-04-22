@@ -526,6 +526,10 @@ td .privacy-banner {
   overflow: scroll;
 }
 
+.multiselect-container > li > a {
+  white-space: normal;
+}
+
 #update-btn {
   display: none;
 }
