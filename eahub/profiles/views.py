@@ -181,12 +181,12 @@ def delete_profile(request):
             'form': form
         })
 
-@login_required
-def report_abuse(request, slug):
-    if not hasattr(request.user, 'profile'):
-        raise http.Http404("user has no profile")
-    profile = Profile.objects.get(slug=slug)
-    if request.method == 'POST':
+class ReportAbuse:
+    def __init__(self, reportee, type):
+        self.reportee = reportee
+        self.type = type
+
+    def send(self, request):
         reasons = request.POST.getlist('reasons')
         if not reasons:
             messages.error(
@@ -194,23 +194,26 @@ def report_abuse(request, slug):
                 ''' You need to select at least one reason. ''',
             )
         else:
-            subject = "EA Profile reported as abuse: {0}".format(profile.name)
-            try:
-                user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
-            except Profile.DoesNotExist:
-                user_eahub_url = "about:blank"
-            message = render_to_string('emails/report_profile_abuse.txt', {
-                'user_eahub_url': user_eahub_url,
-                'user_name': request.user.profile.name,
-                'profile_name': profile.name,
-                'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,profile.slug),
-                'user_email': request.user.email,
+            subject = "EA {0} reported as abuse: {1}".format(self.type, self.reportee.name)
+            message = render_to_string('emails/report_{}_abuse.txt'.format(self.type), {
+                'profile_name': self.reportee.name,
+                'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,self.reportee.slug),
                 'reasons': ', '.join(reasons)
             })
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
-            return redirect('/profile/{}/report-abuse-done'.format(profile.slug))
+            return redirect('/{0}/{1}/report-abuse-done'.format(self.type,self.reportee.slug))
 
-    return render(request, 'eahub/report_abuse.html', {
-            'form': ReportAbuseForm(),
-            'profile': profile
-        })
+
+@login_required
+def report_abuse(request, slug):
+    if not hasattr(request.user, 'profile'):
+        raise http.Http404("user has no profile")
+    reportee = Profile.objects.get(slug=slug)
+    if request.method == 'POST':
+        report_abuse = ReportAbuse(reportee, 'profile')
+        return report_abuse.send(request)
+    else:
+        return render(request, 'eahub/report_abuse.html', {
+                'form': ReportAbuseForm(),
+                'profile': reportee
+            })

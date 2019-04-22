@@ -1,6 +1,7 @@
 from django import urls
 
 from . import views
+from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -17,5 +18,15 @@ urlpatterns = [
         "<slug:slug>/delete/",
         views.LocalGroupDeleteView.as_view(),
         name="localgroups_delete",
+    ),
+    urls.path(
+        '<slug:slug>/report-abuse/',
+        views.report_abuse,
+        name='report_abuse_group'
+    ),
+    urls.path(
+        '<slug:slug>/report-abuse-done/',
+        TemplateView.as_view(template_name='eahub/report_abuse_done.html'),
+        name='report_abuse_group_done'
     ),
 ]
