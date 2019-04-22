@@ -23,8 +23,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('privacy-policy/', views.privacyPolicy, name='privacyPolicy'),
     path('favicon.ico', views.FaviconView.as_view(), name='favicon'),
+    path('robots.txt', views.RobotsTxtView.as_view(), name='robots.txt'),
     path('robots933456.txt', views.healthCheck, name='healthCheck'),
-    path('trigger-500-error/', views.trigger500Error, name='trigger500Error'),
 
     # Redirects from legacy URLs
     path('contact/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org/contact-lean/')),
