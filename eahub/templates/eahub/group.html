@@ -39,7 +39,7 @@
 
 <br><br>
 
-<div class="container linkify">
+<div class="container">
   <div class="row">
     <div class="col-md-6 key-facts">
     <div class="background">
@@ -68,11 +68,11 @@
           {% endfor %}
           </ul>
           {% endif %}
-        {% if group.website %}<li class="list-group-item"><b>Website: </b>{{ group.website }}</li>{% endif %}
-        {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b>{{ group.facebook_group }}</li>{% endif %}
-        {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b>{{ group.facebook_page }}</li>{% endif %}
-        {% if group.email %}<li class="list-group-item"><b>Email: </b>{{ group.email }}</li>{% endif %}
-        {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b>{{ group.meetup_url }}</li>{% endif %}
+        {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}">{{ group.website }}</a></li>{% endif %}
+        {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}">{{ group.facebook_group }}</a></li>{% endif %}
+        {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b><a href="{{ group.facebook_page }}">{{ group.facebook_page }}</a></li>{% endif %}
+        {% if group.email %}<li class="list-group-item"><b>Email: </b><a href="mailto:{{ group.email }}">{{ group.email }}</a></li>{% endif %}
+        {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b><a href="{{ group.meetup_url }}>"{{ group.meetup_url }}</a></li>{% endif %}
       </ul>
     </div>
     </div>

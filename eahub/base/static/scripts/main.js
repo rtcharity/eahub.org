@@ -20,9 +20,6 @@ $(document).ready( function () {
 
     applySearchFunctionality(dataTableProfiles)
     applySearchFunctionality(dataTableGroups)
-
-    $('.text-block-from-database').linkify();
-    $('.linkify').linkify();
 });
 
 function applySearchFunctionality (datatable) {
