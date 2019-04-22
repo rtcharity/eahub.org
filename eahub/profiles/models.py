@@ -1,6 +1,11 @@
-import csv
+import io
+import json
+import pathlib
+import shutil
+import zipfile
 
 from django.conf import settings
+from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
 from django.db import models
@@ -267,6 +272,8 @@ class Profile(models.Model):
         null=True, default=None, editable=False, unique=True
     )
 
+    slugs = contenttypes_fields.GenericRelation(ProfileSlug)
+
     objects = ProfileManager()
 
     class Meta:
@@ -314,27 +321,74 @@ class Profile(models.Model):
         else:
             return "N/A"
 
-    def csv(self, response):
-        writer = csv.writer(response)
-        writer.writerows(
-            [
-                ["url", f"https://eahub.org/profile/{self.slug}"],
-                ["email", self.user.email],
-                ["name", self.name],
-                ["city_or_town", self.city_or_town],
-                ["country", self.country],
-                ["cause_areas", self.get_pretty_cause_areas()],
-                ["available_to_volunteer", self.available_to_volunteer],
-                ["open_to_job_offers", self.open_to_job_offers],
-                ["expertise_areas", self.get_pretty_expertise()],
-                ["available_as_speaker", self.available_as_speaker],
-                ["organisational_affiliations", self.get_pretty_organisational_affiliations()],
-                ["local_groups", self.get_pretty_local_groups()],
-                ["summary", self.summary],
-                ["giving_pledges", self.get_pretty_giving_pledges()],
-            ]
-        )
-        return response
+    def write_data_export_zip(self, request, response):
+        with zipfile.ZipFile(response, mode="w") as zip_file:
+            with zip_file.open(
+                f"{self.slug}.json", mode="w"
+            ) as json_binary_file, io.TextIOWrapper(json_binary_file) as json_file:
+                json.dump(
+                    {
+                        "email": self.user.email,
+                        "date_joined": self.user.date_joined.isoformat(),
+                        "last_login": self.user.last_login.isoformat(),
+                        "url": request.build_absolute_uri(self.get_absolute_url()),
+                        "is_public": self.is_public,
+                        "name": self.name,
+                        "city_or_town": self.city_or_town,
+                        "country": self.country,
+                        "cause_areas": list(map(CauseArea.label, self.cause_areas)),
+                        "cause_areas_other": self.cause_areas_other,
+                        "available_to_volunteer": self.available_to_volunteer,
+                        "open_to_job_offers": self.open_to_job_offers,
+                        "expertise_areas": list(
+                            map(ExpertiseArea.label, self.expertise_areas)
+                        ),
+                        "expertise_areas_other": self.expertise_areas_other,
+                        "available_as_speaker": self.available_as_speaker,
+                        "topics_i_speak_about": self.topics_i_speak_about,
+                        "organisational_affiliations": list(
+                            map(
+                                OrganisationalAffiliation.label,
+                                self.organisational_affiliations,
+                            )
+                        ),
+                        "summary": self.summary,
+                        "giving_pledges": list(
+                            map(GivingPledge.label, self.giving_pledges)
+                        ),
+                        "subscribed_to_email_updates": self.subscribed_to_email_updates,
+                        "member_of_local_groups": [
+                            request.build_absolute_uri(local_group.get_absolute_uri())
+                            for local_group in self.local_groups.all()
+                        ],
+                        "organiser_of_local_groups": [
+                            request.build_absolute_uri(local_group.get_absolute_uri())
+                            for local_group in self.user.localgroup_set.all()
+                        ],
+                        "aliases": [
+                            request.build_absolute_uri(
+                                urls.reverse("profile", kwargs={"slug": slug.slug})
+                            )
+                            for slug in self.slugs.filter(redirect=True)
+                        ],
+                        "legacy_hub_url": (
+                            self.legacy_record
+                            and request.build_absolute_uri(
+                                urls.reverse(
+                                    "profile_legacy",
+                                    kwargs={"legacy_record": self.legacy_record},
+                                )
+                            )
+                        ),
+                    },
+                    json_file,
+                    indent=2,
+                )
+            if self.image:
+                with self.image.open() as image_src_file, zip_file.open(
+                    self.slug + pathlib.PurePath(self.image.name).suffix, mode="w"
+                ) as image_dst_file:
+                    shutil.copyfileobj(image_src_file, image_dst_file)
 
     def image_placeholder(self):
         return f"Avatar{self.id % 10}.png"
