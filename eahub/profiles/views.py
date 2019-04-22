@@ -206,8 +206,6 @@ class ReportAbuse:
 
 
 def report_abuse(request, slug):
-    if not hasattr(request.user, 'profile'):
-        raise http.Http404("user has no profile")
     reportee = Profile.objects.get(slug=slug)
     if request.method == 'POST':
         report_abuse = ReportAbuse(reportee, 'profile')
