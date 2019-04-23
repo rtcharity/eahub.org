@@ -21,6 +21,7 @@ urlpatterns = [
     path('groups/', views.groups, name='groups'),
     path('admin/', admin.site.urls, name='admin'),
     path('about/', views.about, name='about'),
+    path('about/newsletter/', TemplateView.as_view(template_name='eahub/newsletter.html'), name='newsletter'),
     path('privacy-policy/', views.privacyPolicy, name='privacyPolicy'),
     path('favicon.ico', views.FaviconView.as_view(), name='favicon'),
     path('robots.txt', views.RobotsTxtView.as_view(), name='robots.txt'),
