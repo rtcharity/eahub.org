@@ -484,12 +484,14 @@ body {
   background-color: #A7DBAB;
   border: none;
   color: black;
+  font-weight: normal;
 }
 
 .hub-error {
   background-color: #E4F5B1;
   border: none;
   color: black;
+  font-weight: normal;
 }
 
 .list .tag {
