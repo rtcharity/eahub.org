@@ -10,12 +10,6 @@ let report_group_inactive = {
   togglers: document.getElementsByClassName('report_group_inactive_toggler')
 }
 
-let report_profile_abuse = {
-  toggle_btn: document.getElementById('report_profile_abuse_toggle'),
-  confirm_field: document.getElementById('report_profile_abuse_confirm_field'),
-  togglers: document.getElementsByClassName('report_profile_abuse_toggler')
-}
-
 function toggleButton(obj) {
   for (let toggler of obj.togglers) {
     toggler.addEventListener('click', function() {
@@ -27,4 +21,3 @@ function toggleButton(obj) {
 
 toggleButton(claim_group)
 toggleButton(report_group_inactive)
-toggleButton(report_profile_abuse)

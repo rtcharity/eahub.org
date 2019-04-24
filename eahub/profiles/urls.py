@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from django.views.generic import TemplateView
+from ..base.views import ReportProfileAbuseView
 
 urlpatterns = [
     path('', views.MyProfileView, name='my_profile'),
@@ -14,12 +14,7 @@ urlpatterns = [
     path('<slug:slug>/', views.profile_detail_or_redirect, name='profile'),
     path(
         '<slug:slug>/report-abuse/',
-        views.report_abuse,
+        ReportProfileAbuseView.as_view(),
         name='report_abuse_profile'
-    ),
-    path(
-        '<slug:slug>/report-abuse-done/',
-        TemplateView.as_view(template_name='eahub/report_abuse_done.html'),
-        name='report_abuse_profile_done'
     ),
 ]

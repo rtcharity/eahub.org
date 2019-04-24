@@ -7,11 +7,6 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.contrib.sites.shortcuts import get_current_site
-from django.contrib import messages
-from django.core.mail import send_mail
-from django.template.loader import render_to_string
-from django.conf import settings
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, ProfileSlug, OrganisationalAffiliation, Membership
 from ..base.models import User
@@ -180,38 +175,3 @@ def delete_profile(request):
         return render(request, 'eahub/delete_profile.html', {
             'form': form
         })
-
-class ReportAbuse:
-    def __init__(self, reportee, type):
-        self.reportee = reportee
-        self.type = type
-
-    def send(self, request):
-        reasons = request.POST.getlist('reasons')
-        if not reasons:
-            messages.error(
-                request,
-                ''' You need to select at least one reason. ''',
-            )
-        else:
-            subject = "EA {0} reported as abuse: {1}".format(self.type, self.reportee.name)
-            message = render_to_string('emails/report_{}_abuse.txt'.format(self.type), {
-                'profile_name': self.reportee.name,
-                'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,self.reportee.slug),
-                'reasons': ', '.join(reasons)
-            })
-            send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
-            return redirect('/{0}/{1}/report-abuse-done'.format(self.type,self.reportee.slug))
-
-
-
-def report_abuse(request, slug):
-    reportee = Profile.objects.get(slug=slug)
-    if request.method == 'POST':
-        report_abuse = ReportAbuse(reportee, 'profile')
-        return report_abuse.send(request)
-    else:
-        return render(request, 'eahub/report_abuse.html', {
-                'form': ReportAbuseForm(),
-                'profile': reportee
-            })

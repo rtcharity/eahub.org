@@ -1,7 +1,9 @@
 from django.core import mail
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.template.loader import render_to_string
 from django.templatetags import static
 from django.views import defaults
 from django.views.generic import base
@@ -9,10 +11,18 @@ from allauth.account import app_settings
 from allauth.account import utils
 from allauth.account.views import SignupView, LoginView, PasswordResetView, PasswordResetFromKeyView, PasswordChangeView, EmailView
 from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import FormView
+from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
+from django.shortcuts import redirect
+
 
 from . import exceptions
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
+from ..localgroups.models import LocalGroup
+from .forms import ReportAbuseForm
 from django.db.models import Count
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -129,6 +139,44 @@ class LegacyRedirectView(base.RedirectView):
 class RobotsTxtView(base.TemplateView):
     template_name = "robots.txt"
     content_type = "text/plain; charset=utf-8"
+
+class ReportAbuse:
+    def __init__(self, reportee, type):
+        self.reportee = reportee
+        self.type = type
+
+    def send(self, request, form):
+        reasons = form.cleaned_data
+        subject = "EA {0} reported as abuse: {1}".format(self.type, self.reportee.name)
+        message = render_to_string('emails/report_{}_abuse.txt'.format(self.type), {
+            'profile_name': self.reportee.name,
+            'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,self.reportee.slug),
+            'reasons': ', '.join(reasons)
+        })
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+        messages.success(
+            request,
+            ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
+        )
+        return redirect('/{0}/{1}'.format(self.type,self.reportee.slug))
+
+class ReportProfileAbuseView(FormView):
+    template_name = 'eahub/report_abuse.html'
+    form_class = ReportAbuseForm
+
+    def form_valid(self, form):
+        report_abuse = self.get_report_abuse()
+        return report_abuse.send(self.request, form)
+
+    def get_report_abuse(self):
+        profile = Profile.objects.get(slug=self.kwargs['slug'])
+        return ReportAbuse(profile, 'profile')
+
+class ReportGroupAbuseView(ReportProfileAbuseView):
+
+    def get_report_abuse(self):
+        group = LocalGroup.objects.get(slug=self.kwargs['slug'])
+        return ReportAbuse(group, 'group')
 
 
 def healthCheck(request):

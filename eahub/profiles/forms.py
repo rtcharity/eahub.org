@@ -92,9 +92,3 @@ class EditProfileCommunityForm(forms.ModelForm):
 
 class DeleteProfileForm(forms.Form):
     confirm = forms.CharField(max_length=100)
-
-class ReportAbuseForm(forms.Form):
-    CHOICES = [('Spam', 'Spam'),
-               ('Fake account', 'Fake account'),
-               ('Offensive content', 'Offensive content')]
-    reasons = forms.ChoiceField(choices=CHOICES, widget=forms.CheckboxSelectMultiple)
