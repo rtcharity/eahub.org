@@ -266,7 +266,6 @@ class Profile(models.Model):
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
     )
-    subscribed_to_email_updates = models.BooleanField(default=False)
     local_groups = models.ManyToManyField(LocalGroup, through='Membership', blank=True)
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
@@ -356,7 +355,6 @@ class Profile(models.Model):
                         "giving_pledges": list(
                             map(GivingPledge.label, self.giving_pledges)
                         ),
-                        "subscribed_to_email_updates": self.subscribed_to_email_updates,
                         "member_of_local_groups": [
                             request.build_absolute_uri(local_group.get_absolute_uri())
                             for local_group in self.local_groups.all()
