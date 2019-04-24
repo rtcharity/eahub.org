@@ -169,15 +169,19 @@ class ReportProfileAbuseView(FormView):
         return report_abuse.send(self.request, form)
 
     def get_report_abuse(self):
-        profile = Profile.objects.get(slug=self.kwargs['slug'])
-        return ReportAbuse(profile, 'profile')
+        return ReportAbuse(self.profile(), 'profile')
+
+    def profile(self):
+        return Profile.objects.get(slug=self.kwargs['slug'])
+
 
 class ReportGroupAbuseView(ReportProfileAbuseView):
 
     def get_report_abuse(self):
-        group = LocalGroup.objects.get(slug=self.kwargs['slug'])
-        return ReportAbuse(group, 'group')
+        return ReportAbuse(self.profile(), 'group')
 
+    def profile(self):
+        return LocalGroup.objects.get(slug=self.kwargs['slug'])
 
 def healthCheck(request):
     return HttpResponse(status=204)
