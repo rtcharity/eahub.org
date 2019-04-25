@@ -2,7 +2,9 @@
 
 {% block content %}
 
-<link href="/static/styles/mailchimp.css" rel="stylesheet" type="text/css">
+{% load static %}
+
+<link href='{% static "styles/mailchimp.css" %}'' rel="stylesheet" type="text/css">
 
 <div class="panel panel-default">
 <div class="panel-body">
@@ -13,18 +15,15 @@
   <div class="col-md-4 col-md-offset-4">
   <div class="mc-field-group field">
   	<label for="mce-EMAIL">Email Address  <span>*</span></label>
-  	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+  	<input type="email" value="{{ user.email }}" name="EMAIL" class="required email" id="mce-EMAIL" >
   </div>
   <div class="mc-field-group field">
-  	<label for="mce-FNAME">First Name </label>
-  	<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
-  </div>
-  <div class="mc-field-group field">
-  	<label for="mce-LNAME">Last Name </label>
-  	<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+  	<label for="mce-FNAME">Name </label>
+  	<input type="text" value="{{ user.profile.name }}" name="FNAME" class="" id="mce-FNAME">
   </div>
   <div class="mc-field-group input-group field">
     <strong>Email Format </strong>
+
     <ul>
       <li><input type="radio" value="html" name="EMAILTYPE" id="mce-EMAILTYPE-0"><label for="mce-EMAILTYPE-0"> Html</label></li>
       <li><input type="radio" value="text" name="EMAILTYPE" id="mce-EMAILTYPE-1"><label for="mce-EMAILTYPE-1"> Text</label></li>
@@ -42,8 +41,6 @@
 </div>
 </div>
 </div>
-</div>
-<script type='text/javascript' src='/static/scripts/mailchimp/mc-validate.js'></script>
-<script type='text/javascript' src='/static/scripts/mailchimp/mailchimp.js'></script>
-<!--End mc_embed_signup-->
+<script type='text/javascript' src='{% static "scripts/mailchimp/mc-validate.js" %}'></script>
+<script type='text/javascript' src='{% static "scripts/mailchimp/mailchimp.js" %}'></script>
 {% endblock %}
