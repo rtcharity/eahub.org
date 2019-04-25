@@ -28,8 +28,16 @@ urlpatterns = [
     path('robots933456.txt', views.healthCheck, name='healthCheck'),
 
     # Redirects from legacy URLs
+    path('actions/', views.LegacyRedirectView.as_view(url='https://www.effectivealtruism.org/get-involved/')),
+    path('actions/donating/', views.LegacyRedirectView.as_view(url='https://donationswap.eahub.org/charities')),
     path('contact/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org/contact-lean/')),
+    path('eahub.org/groups/resources/recruiting-managing-members/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org/guides_and_tips/tips-from-local-organisers/')),
+    path('groups/facebook-invites/', views.LegacyRedirectView.as_view(url='https://stackoverflow.com/questions/27080936/how-can-i-select-all-friends-in-new-facebook-events-invite-ui#33698935')),
+    path('groups/get-a-website/', views.LegacyRedirectView.as_view(url='https://github.com/rtcharity/lean-site-template')),
+    path('groups/local-group-support-overview-lean-cea-and-eaf/', views.LegacyRedirectView.as_view(url='https://forum.effectivealtruism.org/posts/Cvi7hnTYMk5qutkDg/local-effective-altruism-network-s-new-focus-for-2019')),
+    path('groups/resources/giving-games/', views.LegacyRedirectView.as_view(url='https://docs.google.com/document/d/1g5G0PvYFs7cAbAZ8ANI_wnsv7DjtBmq4_SQcg44-HDA/edit')),
     path('index.php/', views.LegacyRedirectView.as_view(pattern_name='index')),
+    path('links/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org (temporarily)')),
     path('map/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
     path('map/people/all/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
     path('profile/login/', views.LegacyRedirectView.as_view(pattern_name='account_login')),
