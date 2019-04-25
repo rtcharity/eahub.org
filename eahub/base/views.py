@@ -164,7 +164,7 @@ class ReportAbuseView(FormView):
         send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
         messages.success(
             self.request,
-            ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
+            "Thank you, we have received your report. Our admin team will send you an email once they have looked into it.",
         )
         return redirect('/{0}/{1}'.format(type,reportee.slug))
 
