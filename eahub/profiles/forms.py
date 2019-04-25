@@ -16,16 +16,14 @@ class SignupForm(forms.Form):
 
     name = forms.CharField(max_length=200, label="Name", widget=forms.TextInput(attrs={'placeholder': 'Name'}), validators=[validate_sluggable_name])
     is_public = forms.BooleanField(required=False, label="Show my profile to the public", initial=True)
-    subscribed_to_email_updates = forms.BooleanField(required=False, label='Send me email updates about the EA Hub')
     captcha = fields.ReCaptchaField(label='')
 
-    field_order = ['name','email','password1','password2','is_public','subscribed_to_email_updates','captcha']
+    field_order = ['name','email','password1','password2','is_public','captcha']
 
     def signup(self, request, user):
         is_public = self.cleaned_data['is_public']
         name = self.cleaned_data['name']
-        subscribed_to_email_updates = self.cleaned_data['subscribed_to_email_updates']
-        Profile.objects.create(user=user, is_public=is_public, name=name, subscribed_to_email_updates=subscribed_to_email_updates)
+        Profile.objects.create(user=user, is_public=is_public, name=name)
 
 
 class EditProfileForm(forms.ModelForm):
@@ -36,7 +34,6 @@ class EditProfileForm(forms.ModelForm):
             'image', 'summary',
             'city_or_town', 'country',
             'is_public',
-            'subscribed_to_email_updates',
         )
         widgets = {
             'city_or_town': forms.TextInput(attrs={'placeholder': 'London'}),
@@ -46,7 +43,6 @@ class EditProfileForm(forms.ModelForm):
         labels = {
             'city_or_town': ('City/Town'),
             'is_public': "Show my profile to the public",
-            'subscribed_to_email_updates': ('Send me email updates about the EA Hub'),
         }
 
 
