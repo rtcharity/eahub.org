@@ -1,7 +1,6 @@
 from django import urls
 
 from . import views
-from ..base.views import ReportGroupAbuseView
 
 
 urlpatterns = [
@@ -21,7 +20,7 @@ urlpatterns = [
     ),
     urls.path(
         '<slug:slug>/report-abuse/',
-        ReportGroupAbuseView.as_view(),
+        views.ReportGroupAbuseView.as_view(),
         name='report_abuse_group'
     ),
 ]

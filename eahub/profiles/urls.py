@@ -1,6 +1,5 @@
 from django.urls import path
 from . import views
-from ..base.views import ReportProfileAbuseView
 
 urlpatterns = [
     path('', views.MyProfileView, name='my_profile'),
@@ -14,7 +13,7 @@ urlpatterns = [
     path('<slug:slug>/', views.profile_detail_or_redirect, name='profile'),
     path(
         '<slug:slug>/report-abuse/',
-        ReportProfileAbuseView.as_view(),
+        views.ReportProfileAbuseView.as_view(),
         name='report_abuse_profile'
     ),
 ]

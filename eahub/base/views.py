@@ -21,7 +21,6 @@ from django.shortcuts import redirect
 from . import exceptions
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
-from ..localgroups.models import LocalGroup
 from .forms import ReportAbuseForm
 from django.db.models import Count
 
@@ -146,42 +145,29 @@ class ReportAbuse:
         self.type = type
 
     def send(self, request, form):
-        reasons = form.cleaned_data
-        subject = "EA {0} reported as abuse: {1}".format(self.type, self.reportee.name)
-        message = render_to_string('emails/report_{}_abuse.txt'.format(self.type), {
-            'profile_name': self.reportee.name,
-            'profile_url': "https://{0}/profile/{1}".format(get_current_site(request).domain,self.reportee.slug),
-            'reasons': ', '.join(reasons)
-        })
-        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
-        messages.success(
-            request,
-            ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
-        )
-        return redirect('/{0}/{1}'.format(self.type,self.reportee.slug))
+        r
 
-class ReportProfileAbuseView(FormView):
+class ReportAbuseView(FormView):
     template_name = 'eahub/report_abuse.html'
     form_class = ReportAbuseForm
 
     def form_valid(self, form):
-        report_abuse = self.get_report_abuse()
-        return report_abuse.send(self.request, form)
+        reasons = form.cleaned_data
+        reportee = self.profile()
+        type = self.get_type()
+        subject = "EA {0} reported as abuse: {1}".format(type, reportee.name)
+        message = render_to_string('emails/report_{}_abuse.txt'.format(type), {
+            'profile_name': reportee.name,
+            'profile_url': "https://{0}/profile/{1}".format(get_current_site(self.request).domain,reportee.slug),
+            'reasons': ', '.join(reasons)
+        })
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+        messages.success(
+            self.request,
+            ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
+        )
+        return redirect('/{0}/{1}'.format(type,reportee.slug))
 
-    def get_report_abuse(self):
-        return ReportAbuse(self.profile(), 'profile')
-
-    def profile(self):
-        return Profile.objects.get(slug=self.kwargs['slug'])
-
-
-class ReportGroupAbuseView(ReportProfileAbuseView):
-
-    def get_report_abuse(self):
-        return ReportAbuse(self.profile(), 'group')
-
-    def profile(self):
-        return LocalGroup.objects.get(slug=self.kwargs['slug'])
 
 def healthCheck(request):
     return HttpResponse(status=204)

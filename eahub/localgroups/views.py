@@ -18,6 +18,7 @@ from django.conf import settings
 from .forms import LocalGroupForm
 from .models import LocalGroup
 from ..profiles.models import Profile
+from ..base.views import ReportAbuseView
 
 
 class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView):
@@ -66,6 +67,14 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
     template_name = "eahub/delete_group.html"
     success_url = urls.reverse_lazy('groups')
     permission_required = 'localgroups.delete_local_group'
+
+class ReportGroupAbuseView(ReportAbuseView):
+
+    def profile(self):
+        return LocalGroup.objects.get(slug=self.kwargs['slug'])
+
+    def get_type(self):
+        return 'group'
 
 
 @login_required
