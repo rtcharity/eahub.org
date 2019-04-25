@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import CauseArea, ExpertiseArea, GivingPledge, Profile, ProfileSlug, OrganisationalAffiliation, Membership
 from ..base.models import User
+from ..base.views import ReportAbuseView
 from ..base import exceptions
 from ..localgroups.models import LocalGroup
 from .forms import *
@@ -37,6 +38,7 @@ def profile_redirect_from_legacy_record(request, legacy_record):
     return redirect("profile", slug=profile.slug, permanent=True)
 
 
+
 @login_required
 def MyProfileView(request):
     if not hasattr(request.user, 'profile'):
@@ -54,6 +56,13 @@ def DownloadView(request):
     profile.write_data_export_zip(request, response)
     return response
 
+class ReportProfileAbuseView(ReportAbuseView):
+
+    def profile(self):
+        return Profile.objects.get(slug=self.kwargs['slug'])
+
+    def get_type(self):
+        return 'profile'
 
 @login_required
 def edit_profile(request):

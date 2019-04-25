@@ -1,0 +1,6 @@
+Dear Admin,
+
+The user profile {{profile_name}} ({{profile_url}}) has been reported as abuse for the following reasons: {{reasons}}.
+In case the profile is abuse, remove it and send an email to the user associated with profile {{profile_name}} to inform them of your decision.
+
+This email has been automatically generated.

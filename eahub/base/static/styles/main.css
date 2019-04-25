@@ -466,11 +466,6 @@ body {
   margin: 0;
 }
 
-.group_action {
-  margin-top: 10px;
-  margin-bottom;
-}
-
 .confirm_field {
   display: none;
   text-align: left;
@@ -511,6 +506,10 @@ body {
 td .privacy-banner {
   margin-left: 5px;
   margin-top: 0px;
+}
+
+#report_abuse .control-label {
+  display: none;
 }
 
 /* edit */
@@ -690,15 +689,15 @@ form .alert ul {
 #hint_id_password2 {
   display: none;
 }
-.password-reset form {
+.user-action form {
   margin-bottom: 20px;
 }
-.password-reset h1, h2 {
+.user-action h1, h2 {
   color: #512B52;
   margin-bottom: 30px;
   text-align: center;
 }
-.password-reset p {
+.user-action p {
   margin-bottom: 20px;
 }
 
@@ -711,6 +710,9 @@ form .alert ul {
 .btn {
   white-space: normal;
   max-width: 100%;
+}
+.margin-top {
+  margin-top: 10px;
 }
 .purple{
   background-color: #512B52 !important;
@@ -726,6 +728,10 @@ form .alert ul {
 }
 .purple a:hover{
   text-decoration: none;
+}
+.report-btn a {
+  text-decoration: none;
+  color: black;
 }
 
 .fa-bolt{

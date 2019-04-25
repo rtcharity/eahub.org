@@ -18,4 +18,9 @@ urlpatterns = [
         views.LocalGroupDeleteView.as_view(),
         name="localgroups_delete",
     ),
+    urls.path(
+        '<slug:slug>/report-abuse/',
+        views.ReportGroupAbuseView.as_view(),
+        name='report_abuse_group'
+    ),
 ]

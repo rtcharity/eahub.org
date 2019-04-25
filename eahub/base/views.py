@@ -1,7 +1,9 @@
 from django.core import mail
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.template.loader import render_to_string
 from django.templatetags import static
 from django.views import defaults
 from django.views.generic import base
@@ -9,10 +11,17 @@ from allauth.account import app_settings
 from allauth.account import utils
 from allauth.account.views import SignupView, LoginView, PasswordResetView, PasswordResetFromKeyView, PasswordChangeView, EmailView
 from django.urls import reverse, reverse_lazy
+from django.views.generic.edit import FormView
+from django.contrib import messages
+from django.contrib.sites.shortcuts import get_current_site
+from django.conf import settings
+from django.shortcuts import redirect
+
 
 from . import exceptions
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
+from .forms import ReportAbuseForm
 from django.db.models import Count
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -129,6 +138,35 @@ class LegacyRedirectView(base.RedirectView):
 class RobotsTxtView(base.TemplateView):
     template_name = "robots.txt"
     content_type = "text/plain; charset=utf-8"
+
+class ReportAbuse:
+    def __init__(self, reportee, type):
+        self.reportee = reportee
+        self.type = type
+
+    def send(self, request, form):
+        r
+
+class ReportAbuseView(FormView):
+    template_name = 'eahub/report_abuse.html'
+    form_class = ReportAbuseForm
+
+    def form_valid(self, form):
+        reasons = form.cleaned_data
+        reportee = self.profile()
+        type = self.get_type()
+        subject = f"EA {type} reported as abuse: {reportee.name}"
+        message = render_to_string('emails/report_{}_abuse.txt'.format(type), {
+            'profile_name': reportee.name,
+            'profile_url': "https://{0}/profile/{1}".format(get_current_site(self.request).domain,reportee.slug),
+            'reasons': ', '.join(reasons)
+        })
+        send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+        messages.success(
+            self.request,
+            "Thank you, we have received your report. Our admin team will send you an email once they have looked into it.",
+        )
+        return redirect('/{0}/{1}'.format(type,reportee.slug))
 
 
 def healthCheck(request):
