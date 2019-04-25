@@ -155,7 +155,7 @@ class ReportAbuseView(FormView):
         reasons = form.cleaned_data
         reportee = self.profile()
         type = self.get_type()
-        subject = "EA {0} reported as abuse: {1}".format(type, reportee.name)
+        subject = f"EA {type} reported as abuse: {reportee.name}"
         message = render_to_string('emails/report_{}_abuse.txt'.format(type), {
             'profile_name': reportee.name,
             'profile_url': "https://{0}/profile/{1}".format(get_current_site(self.request).domain,reportee.slug),
