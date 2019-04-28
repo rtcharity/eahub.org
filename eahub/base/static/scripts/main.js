@@ -44,3 +44,12 @@ var navbar = document.getElementById('navbar')
 menu_btn.addEventListener('click', function() {
   navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
 })
+
+// make menu disappear when moving cursor away
+navbar.onmouseout = function(event) {
+  var element_left = event.target
+  var element_new = event.relatedTarget
+  if (element_new.className.includes('container') || element_new.id == 'body') {
+    navbar.style.display = 'none'
+  }
+}
