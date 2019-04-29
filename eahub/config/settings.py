@@ -196,6 +196,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 # Django PWNED Passwords
 PWNED_VALIDATOR_FAIL_SAFE = False
+PWNED_VALIDATOR_ERROR = "Your password is not secure enough for it was determined to have been involved in a major breach before."
 
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
