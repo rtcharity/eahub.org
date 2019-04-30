@@ -195,7 +195,7 @@ RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 # Django PWNED Passwords
-PWNED_VALIDATOR_ERROR = "Your password is not secure enough."
+PWNED_VALIDATOR_ERROR = "Your password is not secure enough"
 PWNED_VALIDATOR_FAIL_SAFE = False
 
 
