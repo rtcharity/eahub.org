@@ -80,12 +80,3 @@ urged to follow them in order to make maintainers' lives easier.
 - Maintainers should use GitHub's
   [squash merging](https://help.github.com/en/articles/about-pull-request-merges#squash-and-merge-your-pull-request-commits)
   exclusively. Merge commits and rebase merging have been disabled in GitHub.
-- Every commit in a pull request needs a `Signed-off-by:` line, which you can
-  generate with the `-s` option of `git commit`. By including this line, you
-  attest to the
-  [Developer Certificate of Origin](https://developercertificate.org/), i.e.,
-  you agree to release your contribution under the [MIT License](LICENSE) and
-  certify that you have the right to do so. Pull requests that don't have this
-  in every commit will be automatically blocked from merging. Maintainers should
-  ensure that this line is preserved in the squashed commit (but only once per
-  contributor per commit).
