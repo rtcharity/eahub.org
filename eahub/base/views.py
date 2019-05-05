@@ -82,7 +82,7 @@ def groups(request):
     })
 
 def getGroupsData():
-    rows = Group.objects.all()
+    rows = Group.objects.exclude(name__isnull=True)
     map_data = [
         {
             "lat": x.lat,
@@ -100,7 +100,7 @@ def getGroupsData():
     }
 
 def getProfilesData(user):
-    rows = Profile.objects.visible_to_user(user)
+    rows = Profile.objects.visible_to_user(user).exclude(name__isnull=True)
     map_data = [
         {
             "lat": x.lat,
