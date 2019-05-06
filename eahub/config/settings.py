@@ -195,7 +195,7 @@ RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 # Django PWNED Passwords
-PWNED_VALIDATOR_ERROR = "Your password was determined to have been involved in a major security breach in the past: https://haveibeenpwned.com/"
+PWNED_VALIDATOR_ERROR = "Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>."
 PWNED_VALIDATOR_FAIL_SAFE = False
 
 
