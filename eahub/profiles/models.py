@@ -42,31 +42,31 @@ class CauseArea(enum.Enum):
 
 class ExpertiseArea(enum.Enum):
 
-    MANAGEMENT = 1
-    OPERATIONS = 2
-    RESEARCH = 3
-    GOVERNMENT_AND_POLICY = 4
-    ENTREPRENEURSHIP = 5
-    SOFTWARE_ENGINEERING = 6
-    AI_TECHNICAL_EXPERTISE = 7
-    MATH_QUANT_STATS_EXPERTISE = 8
-    ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE = 9
-    MOVEMENT_BUILDING = 10
-    COMMUNICATIONS = 11
-    PHILOSOPHY = 12
-    HUMANITIES = 13
-    PSYCHOLOGY = 14
-    PHYSICS = 15
-    MEDICINE = 16
-    OTHER_SCIENCE = 17
-    EVENT_PLANNING = 18
-    FINANCE = 19
-    GRAPHIC_DESIGN = 20
-    JOURNALISM = 21
-    LAW = 22
-    PHILANTHROPY_EARNING_TO_GIVE = 23
-    PUBLIC_SPEAKING = 24
-    RECRUITMENT = 25
+    COMMUNICATIONS = 1
+    ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE = 2
+    ENTREPRENEURSHIP = 3
+    EVENT_PLANNING = 4
+    FINANCE = 5
+    GOVERNMENT_AND_POLICY = 6
+    GRAPHIC_DESIGN = 7
+    HUMANITIES = 8
+    JOURNALISM = 9
+    LAW = 10
+    MANAGEMENT = 11
+    MATH_QUANT_STATS_EXPERTISE = 12
+    MEDICINE = 13
+    MOVEMENT_BUILDING = 14
+    OPERATIONS = 15
+    OTHER_SCIENCE = 16
+    PHILANTHROPY_EARNING_TO_GIVE = 17
+    PHILOSOPHY = 18
+    PHYSICS = 19
+    PSYCHOLOGY = 20
+    PUBLIC_SPEAKING = 21
+    RECRUITMENT = 22
+    RESEARCH = 23
+    SOFTWARE_ENGINEERING = 24
+    SOFTWARE_ENGINEERING_AI = 25
 
     labels = {
         MANAGEMENT: "Management",
@@ -75,7 +75,7 @@ class ExpertiseArea(enum.Enum):
         GOVERNMENT_AND_POLICY: "Government and policy",
         ENTREPRENEURSHIP: "Entrepreneurship",
         SOFTWARE_ENGINEERING: "Software engineering",
-        AI_TECHNICAL_EXPERTISE: "AI technical expertise",
+        SOFTWARE_ENGINEERING_AI: "AI technical expertise",
         MATH_QUANT_STATS_EXPERTISE: "Math/quant/stats expertise",
         ECONOMICS_QUANTITATIVE_SOCIAL_SCIENCE: "Economics/quantitative social science",
         MOVEMENT_BUILDING: "Movement building",
@@ -86,7 +86,7 @@ class ExpertiseArea(enum.Enum):
         PHYSICS: "Physics",
         MEDICINE: "Medicine",
         OTHER_SCIENCE: "Other science",
-        EVENT_PLANNING: "Event planning",
+        EVENT_PLANNING: "Event planning and logistics",
         FINANCE: "Finance",
         GRAPHIC_DESIGN: "Graphic design",
         JOURNALISM: "Journalism",
