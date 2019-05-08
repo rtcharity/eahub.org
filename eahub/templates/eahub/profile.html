@@ -142,7 +142,7 @@
 
           {% if profile.user.localgroup_set.exists %}
           <div class="list turquoise-links">
-            <div class="tag">Local organiser of:</div>
+            <div class="tag">Organiser of:</div>
             {% if profile.user.localgroup_set.all.count == 1 %}
               <a href="{% url 'group' profile.user.localgroup_set.first.slug %}">
                 {{profile.user.localgroup_set.first.name}}

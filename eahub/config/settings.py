@@ -1,5 +1,6 @@
 from django.core import exceptions
 import environ
+from django.utils.safestring import mark_safe
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -195,6 +196,7 @@ RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 # Django PWNED Passwords
+PWNED_VALIDATOR_ERROR = mark_safe("Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>.")
 PWNED_VALIDATOR_FAIL_SAFE = False
 
 # sorl-thumbnail
