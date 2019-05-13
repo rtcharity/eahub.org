@@ -23,12 +23,14 @@ from ..localgroups.models import LocalGroup
 
 class CauseArea(enum.Enum):
 
-    GLOBAL_POVERTY = 1
-    ANIMAL_WELFARE_AND_RIGHTS = 2
-    LONG_TERM_FUTURE = 3
-    CAUSE_PRIORITISATION = 4
-    META = 5
-    CLIMATE_CHANGE = 6
+    ANIMAL_WELFARE_AND_RIGHTS = 1
+    CAUSE_PRIORITISATION = 2
+    CLIMATE_CHANGE = 3
+    GLOBAL_POVERTY = 4
+    LONG_TERM_FUTURE = 5
+    MENTAL_HEALTH = 6
+    META = 7
+    RATIONALITY = 8
 
     labels = {
         GLOBAL_POVERTY: "Global poverty",
@@ -37,6 +39,8 @@ class CauseArea(enum.Enum):
         CAUSE_PRIORITISATION: "Cause prioritisation",
         META: "Meta",
         CLIMATE_CHANGE: "Climate change",
+        MENTAL_HEALTH: "Mental health",
+        RATIONALITY: "Rationality",
     }
 
 

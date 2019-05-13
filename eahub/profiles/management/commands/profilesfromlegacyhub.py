@@ -19,6 +19,8 @@ def collect_cause_areas(
     cause_prioritisation,
     meta,
     climate_change,
+    mental_health,
+    rationality,
 ):
     cause_areas = []
     if global_poverty:
@@ -33,6 +35,10 @@ def collect_cause_areas(
         cause_areas.append(models.CauseArea.META)
     if climate_change:
         cause_areas.append(models.CauseArea.CLIMATE_CHANGE)
+    if mental_health:
+        cause_areas.append(models.CauseArea.MENTAL_HEALTH)
+    if rationality:
+        cause_areas.append(models.CauseArea.RATIONALITY)
     return cause_areas
 
 
