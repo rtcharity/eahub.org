@@ -71,6 +71,7 @@ class ExpertiseArea(enum.Enum):
     PHILANTHROPY_EARNING_TO_GIVE = 23
     PUBLIC_SPEAKING = 24
     RECRUITMENT = 25
+    EDUCATION = 26
 
     labels = {
         MANAGEMENT: "Management",
@@ -98,6 +99,7 @@ class ExpertiseArea(enum.Enum):
         PHILANTHROPY_EARNING_TO_GIVE: "Philanthropy/earning to give",
         PUBLIC_SPEAKING: "Public speaking",
         RECRUITMENT: "Recruitment",
+        EDUCATION: "Education",
     }
 
 
