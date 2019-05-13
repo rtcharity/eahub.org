@@ -635,6 +635,12 @@ form .alert ul {
   display: block;
 }
 
+.field_categories .label-info {
+  margin-bottom: 10px;
+  font-style: italic;
+  background-color: transparent;
+}
+
 
 .field_free_text textarea {
   height: 70px;
