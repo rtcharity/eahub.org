@@ -145,6 +145,7 @@ class OrganisationalAffiliation(enum.Enum):
     THE_GOOD_FOOD_INSTITUTE = 29
     THE_LIFE_YOU_CAN_SAVE = 30
     WILD_ANIMAL_INITIATIVE = 31
+    ALLFED = 32
 
     labels = {
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
@@ -177,7 +178,8 @@ class OrganisationalAffiliation(enum.Enum):
         STUDENTS_FOR_HIGH_IMPACT_CHARITY: "Students for High Impact Charity",
         THE_GOOD_FOOD_INSTITUTE: "The Good Food Institute",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
-        WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative"
+        WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative",
+        ALLFED: "ALLFED"
     }
 
 def prettify_property_list(property_class, standard_list, other_list):
