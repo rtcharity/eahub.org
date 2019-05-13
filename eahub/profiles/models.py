@@ -29,6 +29,8 @@ class CauseArea(enum.Enum):
     CAUSE_PRIORITISATION = 4
     META = 5
     CLIMATE_CHANGE = 6
+    MENTAL_HEALTH = 7
+    RATIONALITY = 8
 
     labels = {
         GLOBAL_POVERTY: "Global poverty",
@@ -37,6 +39,8 @@ class CauseArea(enum.Enum):
         CAUSE_PRIORITISATION: "Cause prioritisation",
         META: "Meta",
         CLIMATE_CHANGE: "Climate change",
+        MENTAL_HEALTH: "Mental health",
+        RATIONALITY: "Rationality",
     }
 
 
@@ -86,7 +90,7 @@ class ExpertiseArea(enum.Enum):
         PHYSICS: "Physics",
         MEDICINE: "Medicine",
         OTHER_SCIENCE: "Other science",
-        EVENT_PLANNING: "Event planning",
+        EVENT_PLANNING: "Event planning and logistics",
         FINANCE: "Finance",
         GRAPHIC_DESIGN: "Graphic design",
         JOURNALISM: "Journalism",
