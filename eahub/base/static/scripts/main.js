@@ -18,38 +18,68 @@ $(document).ready( function () {
       sDom: 'ltipr'
     } );
 
+    var menu_btn = document.getElementById('burger-btn')
+    var navbar = document.getElementById('navbar')
+
     applySearchFunctionality(dataTableProfiles)
     applySearchFunctionality(dataTableGroups)
+
+    addSettingForMultiselectForms()
+
+    toggleNavbar(navbar, menu_btn)
+    disappearOnMovingCursorAway(navbar)
 });
 
-function applySearchFunctionality (datatable) {
+function applySearchFunctionality(datatable) {
   $("#filterbox").keyup(function() {
     datatable.search(this.value).draw();
   });
 }
 
-var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker'), $('#id_open_to_job_offers'), $('#id_available_to_volunteer')]
-selectors_with_old_style.forEach(function(selector) {
-  selector.removeClass('selectmultiple').addClass('form-control multiselect-form')
-})
+function addSettingForMultiselectForms() {
+  var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker'), $('#id_open_to_job_offers'), $('#id_available_to_volunteer')]
 
-// add setting for all multiselect forms
-$('.multiselect-form').multiselect({
-  numberDisplayed: 1,
-  enableCaseInsensitiveFiltering: true
-});
+  addMultiSelectClassTo(selectors_with_old_style)
+  enableSearchForMultiselectFormsWithItemsMoreThan(9)
+  $('.multiselect-form').multiselect({
+    numberDisplayed: 1
+  })
+}
 
-var menu_btn = document.getElementById('burger-btn')
-var navbar = document.getElementById('navbar')
-menu_btn.addEventListener('click', function() {
-  navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
-})
+function addMultiSelectClassTo(selectors_with_old_style) {
+  selectors_with_old_style.forEach(function(selector) {
+    selector.removeClass('selectmultiple').addClass('form-control multiselect-form')
+  })
+}
 
-// make menu disappear when moving cursor away
-navbar.onmouseout = function(event) {
-  var element_left = event.target
-  var element_new = event.relatedTarget
-  if (element_new.className.includes('container') || element_new.id == 'body') {
-    navbar.style.display = 'none'
+function enableSearchForMultiselectFormsWithItemsMoreThan(num) {
+  let className = 'select-with-more-than-'+num+'-items'
+  addClassNameToMultiSelectFormsWithMoreThan(num, className)
+  $('.' + className).multiselect({
+    enableCaseInsensitiveFiltering: true
+  })
+}
+
+function addClassNameToMultiSelectFormsWithMoreThan(num, className) {
+  const multiselect_forms = document.getElementsByClassName('multiselect-form')
+  for (var i=0; i < multiselect_forms.length; i++) {
+    let multiselect_form = multiselect_forms[i]
+    if (multiselect_form.length > num) multiselect_form.classList.add(className)
+  }
+}
+
+function toggleNavbar(navbar, menu_btn) {
+  menu_btn.addEventListener('click', function() {
+    navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
+  })
+}
+
+function disappearOnMovingCursorAway(navbar) {
+  navbar.onmouseout = function(event) {
+    var element_left = event.target
+    var element_new = event.relatedTarget
+    if (element_new.className.includes('container') || element_new.id == 'body') {
+      navbar.style.display = 'none'
+    }
   }
 }
