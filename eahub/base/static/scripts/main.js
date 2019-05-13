@@ -40,7 +40,7 @@ function addSettingForMultiselectForms() {
   var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker'), $('#id_open_to_job_offers'), $('#id_available_to_volunteer')]
 
   addMultiSelectClassTo(selectors_with_old_style)
-  enableSearchForMultiselectFormsWithItemsMoreThan(10)
+  enableSearchForMultiselectFormsWithItemsMoreThan(9)
   $('.multiselect-form').multiselect({
     numberDisplayed: 1
   })
