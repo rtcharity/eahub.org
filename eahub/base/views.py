@@ -172,7 +172,6 @@ class ReportAbuseView(FormView):
 def healthCheck(request):
     return HttpResponse(status=204)
 
-
 def page_not_found(request, exception):
     if not isinstance(exception, exceptions.Quiet404):
         mail.mail_managers(
@@ -180,3 +179,6 @@ def page_not_found(request, exception):
             loader.render_to_string("emails/broken_link.txt", {"request": request}),
         )
     return defaults.page_not_found(request, exception)
+
+def gone(request):
+    return HttpResponse(status=410)

@@ -52,3 +52,4 @@ urlpatterns = [
 ]
 
 handler404 = "eahub.base.views.page_not_found"
+handler410 = "eahub.base.views.gone"
