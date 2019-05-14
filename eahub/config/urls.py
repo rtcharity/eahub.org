@@ -22,7 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('about/', views.about, name='about'),
     path('newsletter/', TemplateView.as_view(template_name='eahub/newsletter.html'), name='newsletter'),
-    path('about/newsletter/', TemplateView.as_view(template_name='eahub/newsletter.html'), name='newsletter'),
+    path('about/newsletter/', TemplateView.as_view(template_name='newsletter'), name='newsletter_legacy'),
     path('privacy-policy/', views.privacyPolicy, name='privacyPolicy'),
     path('favicon.ico', views.FaviconView.as_view(), name='favicon'),
     path('robots.txt', views.RobotsTxtView.as_view(), name='robots.txt'),
