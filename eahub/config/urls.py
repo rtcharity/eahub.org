@@ -41,6 +41,7 @@ urlpatterns = [
     path('links/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org (temporarily)')),
     path('map/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
     path('map/people/all/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
+    path('map/people/only-on-map/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
     path('profile/login/', views.LegacyRedirectView.as_view(pattern_name='account_login')),
     path('profile/signup/', views.LegacyRedirectView.as_view(pattern_name='account_signup')),
     path('register/', views.LegacyRedirectView.as_view(pattern_name='account_signup')),
