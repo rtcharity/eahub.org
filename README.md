@@ -5,7 +5,7 @@ Backend for [https://eahub.org](https://eahub.org)
 # Setup
 
 1.  Make sure to have [Docker Compose](https://docs.docker.com/compose)
-    installed.
+    installed. (Note: You may need to follow these [post-installation steps](https://docs.docker.com/install/linux/linux-postinstall/).)
 
 1.  Add the following line to your hosts file (`/etc/hosts` on Mac or Linux,
     `%SystemRoot%\System32\drivers\etc\hosts` on Windows):
