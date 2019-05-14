@@ -28,7 +28,7 @@ urlpatterns = [
     path('robots933456.txt', views.healthCheck, name='healthCheck'),
 
     # Redirects from legacy URLs
-    path('about/newsletter/', views.LegacyRedirectView.as_view(template_name='newsletter')),
+    path('about/newsletter/', views.LegacyRedirectView.as_view(pattern_name='newsletter')),
     path('actions/', views.LegacyRedirectView.as_view(url='https://www.effectivealtruism.org/get-involved/')),
     path('actions/donating/', views.LegacyRedirectView.as_view(url='https://donationswap.eahub.org/charities')),
     path('contact/', views.LegacyRedirectView.as_view(url='https://resources.eahub.org/contact-lean/')),
