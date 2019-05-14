@@ -47,7 +47,7 @@ urlpatterns = [
     path('user/<int:legacy_record>/', views.LegacyRedirectView.as_view(pattern_name='profile_legacy')),
     path('user/<slug:slug>/', views.LegacyRedirectView.as_view(pattern_name='profile')),
     path('user/profiles/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
-    path('user/profiles/offers', views.LegacyRedirectView.as_view(pattern_name='profiles')),
+    path('user/profiles/offers/', views.LegacyRedirectView.as_view(pattern_name='profiles')),
     path('user.php/', views.LegacyRedirectView.as_view(pattern_name='my_profile')),
     path('wp-login.php/', views.LegacyRedirectView.as_view(pattern_name='account_login')),
 ]
