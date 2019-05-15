@@ -139,6 +139,10 @@ class RobotsTxtView(base.TemplateView):
     template_name = "robots.txt"
     content_type = "text/plain; charset=utf-8"
 
+class AdsTxtView(base.TemplateView):
+    template_name = "ads.txt"
+    content_type = "text/plain; charset=utf-8"
+
 class ReportAbuse:
     def __init__(self, reportee, type):
         self.reportee = reportee
