@@ -26,6 +26,7 @@ urlpatterns = [
     path('favicon.ico', views.FaviconView.as_view(), name='favicon'),
     path('robots.txt', views.RobotsTxtView.as_view(), name='robots.txt'),
     path('robots933456.txt', views.healthCheck, name='healthCheck'),
+    path('ads.txt', views.AdsTxtView.as_view(), name='ads.txt'),
 
     # Redirects from legacy URLs
     path('about/newsletter/', views.LegacyRedirectView.as_view(pattern_name='newsletter')),
