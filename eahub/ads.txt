@@ -1,3 +1,0 @@
-#Ads.txt eahub.org
-
-placeholder.example.com, placeholder, DIRECT, placeholder
