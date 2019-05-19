@@ -15,7 +15,10 @@
   function initMap() {
     var query_string_map = "{{ request.GET.map|escapejs }}";
     var map_locations = JSON.parse(document.getElementById('map-locations').textContent);
-    mapSetup(query_string_map, map_locations);
+    var mapSelectorInd = document.getElementById('map_selector_ind');
+    var mapSelectorGroups = document.getElementById('map_selector_groups');
+    var map = new mapObj(query_string_map, map_locations, mapSelectorInd, mapSelectorGroups)
+    map.setup();
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
