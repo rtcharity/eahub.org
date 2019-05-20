@@ -1,34 +1,43 @@
-var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGroups) {
+var map = function(query_string_map, map_locations, map_selector_ind, map_selector_groups, google, markerClusterer, document, isIE) {
   this.minClusterZoom = 14;
-  this.queryStringMap = queryStringMap
+  this.map_type = query_string_map
   this.map_locations = map_locations
-  this.mapSelectorInd = mapSelectorInd
-  this.mapSelectorGroups = mapSelectorGroups
+  this.map_selector_ind = map_selector_ind
+  this.map_selector_groups = map_selector_groups
+  this.google = google
+  this.markerClusterer = markerClusterer
+  this.element = document.getElementById('map');
+  this.isIE = isIE
 
   this.setup = function() {
-    if (this.queryStringMap !== 'individuals') {
-      this.render('groups', map_locations.groups);
-      this.mapSelectorGroups.checked = true
+    if (this.map_type !== 'individuals') {
+      this.render(map_locations.groups);
+      this.map_selector_groups.checked = true
     } else {
-      this.render('individuals', map_locations.profiles, map_locations.private_profiles);
-      this.mapSelectorInd.checked = true
+      this.render(map_locations.profiles, map_locations.private_profiles);
+      this.map_selector_ind.checked = true
     }
     this.toggle();
   }
 
   this.toggle = function() {
-    this.mapSelectorInd.onclick = function() {
-      this.render('individuals', this.map_locations.profiles, this.map_locations.private_profiles);
+    this.map_selector_ind.onclick = function() {
+      this.map_type = 'individuals'
+      this.render(this.map_locations.profiles, this.map_locations.private_profiles);
     };
-    this.mapSelectorGroups.onclick = function() {
-      this.render('groups', this.map_locations.groups);
+    this.map_selector_groups.onclick = function() {
+      this.map_type = 'groups'
+      this.render(this.map_locations.groups);
     }
   }
 
-  this.render = function(map_type, public_locations, private_profiles) {
+  this.render = function(public_locations, private_profiles) {
     var map = this.createMap();
-    var all_locations = (private_profiles == undefined) ? public_locations : public_locations.concat(splitIntoIndividual(private_profiles));
-    var location_clusters = this.createLocationClusters(map_type, all_locations);
+    var all_locations = (this.map_type == 'groups') ? public_locations : public_locations.concat(this.splitIntoIndividual(private_profiles));
+    console.log(all_locations)
+    var location_clusters = this.createLocationClusters(all_locations);
+    console.log("go to here")
+    console.log(location_clusters)
     var markers = this.addMarkersWithLists(location_clusters, map);
     this.createMarkerClusters(map, markers);
   }
@@ -37,7 +46,7 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
     var mapOptions = {
         zoom: 2,
         maxZoom: this.minClusterZoom+1,
-        center: new google.maps.LatLng(30, 30), // roughly center of world (makes for better view than 0,0)
+        center: new this.google.maps.LatLng(30, 30), // roughly center of world (makes for better view than 0,0)
         mapTypeControl: false,
         scaleControl: false,
         streetViewControl: false,
@@ -47,8 +56,7 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
         styles: [{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#6195a0"}]},{"featureType":"administrative.province","elementType":"geometry.stroke","stylers":[{"visibility":"off"}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"lightness":"0"},{"saturation":"0"},{"color":"#f5f5f2"},{"gamma":"1"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"lightness":"-3"},{"gamma":"1.00"}]},{"featureType":"landscape.natural.terrain","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.park","elementType":"geometry.fill","stylers":[{"color":"#bae5ce"},{"visibility":"on"}]},{"featureType":"road","elementType":"all","stylers":[{"saturation":-100},{"lightness":45},{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#fac9a9"},{"visibility":"simplified"}]},{"featureType":"road.highway","elementType":"labels.text","stylers":[{"color":"#4e4e4e"}]},{"featureType":"road.arterial","elementType":"labels.text.fill","stylers":[{"color":"#787878"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"simplified"}]},{"featureType":"transit.station.airport","elementType":"labels.icon","stylers":[{"hue":"#0a00ff"},{"saturation":"-77"},{"gamma":"0.57"},{"lightness":"0"}]},{"featureType":"transit.station.rail","elementType":"labels.text.fill","stylers":[{"color":"#43321e"}]},{"featureType":"transit.station.rail","elementType":"labels.icon","stylers":[{"hue":"#ff6c00"},{"lightness":"4"},{"gamma":"0.75"},{"saturation":"-68"}]},{"featureType":"water","elementType":"all","stylers":[{"color":"#eaf6f8"},{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#c7eced"}]},{"featureType":"water","elementType":"labels.text.fill","stylers":[{"lightness":"-49"},{"saturation":"-53"},{"gamma":"0.79"}]}]
     };
 
-    var mapElement = document.getElementById('map');
-    var map = new google.maps.Map(mapElement, mapOptions);
+    var map = new this.google.maps.Map(this.element, mapOptions);
     return map
   }
 
@@ -62,7 +70,7 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
     return individual_private_profiles;
   }
 
-  this.createLocationClusters = function(map_type, all_locations) {
+  this.createLocationClusters = function(all_locations) {
     var location_clusters = [];
     for (var i=0; i<all_locations.length; i++) {
       var location = all_locations[i];
@@ -70,7 +78,7 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
       while (j < location_clusters.length) {
         var location_cluster = location_clusters[j]
         if (this.isSameLocation(location, location_cluster)) {
-          var profile = this.createProfile(map_type, location)
+          var profile = this.createProfile(location)
           location_cluster.profiles.push(profile)
           break
         } else {
@@ -78,14 +86,14 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
         }
       }
       if (this.isinSameLocationAsOneOf(location_clusters, j) == false) {
-        new_location_cluster = this.createLocationCluster(map_type, location)
+        new_location_cluster = this.createLocationCluster(location)
         location_clusters.push(new_location_cluster)
       }
     }
     return location_clusters;
   }
 
-  this.createProfile = function(map_type, location) {
+  this.createProfile = function(location) {
     var profile = {}
     if (location.label != undefined) {
       profile.label = location.label
@@ -93,7 +101,7 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
       profile.anonymous = true
     }
     if (location.path != undefined) profile.path = location.path
-    if (map_type == 'groups') {
+    if (this.map_type == 'groups') {
       profile.active = location.active
     }
     return profile;
@@ -107,12 +115,12 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
     return (j < location_clusters.length)
   }
 
-  this.createLocationCluster = function(map_type, location) {
+  this.createLocationCluster = function(location) {
     var cluster = {
       lat: location.lat,
       lng: location.lng,
     }
-    var profile = this.createProfile(map_type, location)
+    var profile = this.createProfile(location)
     cluster.profiles = [profile]
     return cluster;
   }
@@ -164,7 +172,7 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
   }
 
   this.addLabel = function(marker, map) {
-    var iw = new google.maps.InfoWindow();
+    var iw = new this.google.maps.InfoWindow();
     marker.addListener('click', function() {
       iw.setContent(marker.desc);
       iw.open(map, marker);
@@ -172,14 +180,14 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
   }
 
   this.createMarker = function(location, location_clusters, z=1) {
-    var marker = new google.maps.Marker({
+    var marker = new this.google.maps.Marker({
         position: location,
         label: {text: this.countMarkersAt(location, location_clusters).toString(), color: 'white', fontSize: '11px'},
-        optimized: !isIE,  // makes SVG icons work in IE
+        optimized: !this.isIE,  // makes SVG icons work in IE
         zIndex: z
     });
 
-    var iconSize = new google.maps.Size(40, 40);
+    var iconSize = new this.google.maps.Size(40, 40);
     marker.setIcon({
      url: (location.active == "False") ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
      size: iconSize,
@@ -202,11 +210,11 @@ var map = function(queryStringMap, map_locations, mapSelectorInd, mapSelectorGro
   }
 
   this.createMarkerClusters = function(map, markers) {
-    var markerCluster = new MarkerClusterer(
+    var markerCluster = new this.markerClusterer(
         map, markers,{imagePath: '../static/images/cluster/m', maxZoom: this.minClusterZoom}
     );
 
-    google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
+    this.google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
       map.fitBounds(cluster.getBounds());
       if( map.getZoom() > minClusterZoom+1 ) {
         map.setZoom(minClusterZoom+1);

@@ -1,20 +1,101 @@
 describe("Heatmap Module", function() {
-  var queryStringMap = 'individuals'
-  var map_locations = []
-  var mapSelectorInd = {}
-  var mapSelectorGroups = {}
-  var map = new mapObj(queryStringMap,map_locations,mapSelectorInd,mapSelectorGroups)
-  console.log(map)
-  it("has setup function", function() {
-    var setup = map.setup
-    expect(setup).not.toBe(undefined);
-  });
-  it("setup function calls render", function() {
+  var query_string_map, mockProfile, mockPrivateProfile, mockGroup, mockIsIE,
+  map_locations_mock, map_selector_ind_mock, map_selector_groups_mock,
+  mockMapElement, mockGenericFunction, documentMock, googleMock,
+  markerClustererMock, map
 
-    var spy = spyOn(map, 'render')
-
-    map.setup(queryStringMap, map_locations, mapSelectorInd, mapSelectorGroups)
-
-    expect(spy).toHaveBeenCalled()
+  beforeEach(function() {
+    query_string_map = 'individuals'
+    mockProfile = jasmine.createSpy('mockProfile')
+    mockPrivateProfile = jasmine.createSpy('mockPrivateProfile')
+    mockGroup = jasmine.createSpy('mockGroup')
+    mockIsIE = jasmine.createSpy('mockIsIE')
+    map_locations_mock = {
+      profiles: [mockProfile],
+      private_profiles: [mockPrivateProfile],
+      groups: [mockGroup]
+    }
+    map_selector_ind_mock = { checked: false }
+    map_selector_groups_mock = { checked: false }
+    mockMapElement = 'mockMapElement'
+    mockGenericFunction = function() {
+      return null
+    }
+    documentMock = {
+      getElementById: function() { return mockMapElement }
+    }
+    googleMock = {
+      maps: {
+        LatLng: function(lat, lng) {
+          return {lat, lng}
+        },
+        InfoWindow: mockGenericFunction,
+        Map: function(mapElement, mapOptions) {
+          return {mapElement, mapOptions}
+        },
+        event: {
+          addListener: mockGenericFunction
+        },
+        Marker: function() {
+          return {
+            setIcon: mockGenericFunction,
+            addListener: mockGenericFunction,
+            setMap: mockGenericFunction
+          }
+        },
+        Size: mockGenericFunction
+      }
+    }
+    markerClustererMock = function(map, markers, properties) {
+      return 0
+    }
+    map = new mapObj(query_string_map,map_locations_mock,map_selector_ind_mock,map_selector_groups_mock, googleMock, markerClustererMock, documentMock, mockIsIE)
   })
+
+  describe("setup function", function() {
+    it("renders map set in map_type", function() {
+      var spy = spyOn(map, 'render')
+
+      map.setup()
+
+      expect(spy).toHaveBeenCalledWith(map_locations_mock.profiles, map_locations_mock.private_profiles)
+    })
+
+    it("sets checked property of map toggler", function() {
+      map.setup()
+
+      expect(map.map_selector_ind.checked).toBe(true)
+    })
+
+    it("adds functionality to map togglers", function() {
+      var spy = spyOn(map, 'toggle')
+
+      map.setup()
+
+      expect(spy).toHaveBeenCalled()
+    })
+  })
+
+  describe("render function", function() {
+    it("creates location clusters", function() {
+      var spy = spyOn(map, 'createLocationClusters').and.callThrough()
+      map.render(map.map_locations.profiles, map.map_locations.private_profiles)
+      expect(spy).toHaveBeenCalled()
+    })
+    it("creates map", function() {
+      var spy = spyOn(map, 'createMap')
+      map.render(map.map_locations.profiles, map.map_locations.private_profiles)
+      expect(spy).toHaveBeenCalled()
+    })
+  })
+
+  describe("createMap function", function() {
+    it("returns map", function() {
+      var actual = map.createMap()
+
+      expect(actual.mapElement).toBe(mockMapElement)
+    })
+  })
+
+
 });
