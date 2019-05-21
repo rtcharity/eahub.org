@@ -97,5 +97,23 @@ describe("Heatmap Module", function() {
     })
   })
 
+  describe("isSameLocation", function() {
+    var profileMock
+
+    beforeEach(function() {
+      profileMock = {lat: 50, lng: 0}
+    })
+
+    it("returns true if profile is in same location as cluster", function() {
+      var clusterMock = {lat: 50, lng: 0}
+      expect(map.isSameLocation(profileMock, clusterMock)).toBe(true)
+    })
+
+    it("returns false if profile is in different location than cluster", function() {
+      var clusterMockOther = {lat: 50, lng: 20}
+      expect(map.isSameLocation(profileMock, clusterMockOther)).toBe(false)
+    })
+  })
+
 
 });

@@ -34,10 +34,7 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
   this.render = function(public_locations, private_profiles) {
     var map = this.createMap();
     var all_locations = (this.map_type == 'groups') ? public_locations : public_locations.concat(this.splitIntoIndividual(private_profiles));
-    console.log(all_locations)
     var location_clusters = this.createLocationClusters(all_locations);
-    console.log("go to here")
-    console.log(location_clusters)
     var markers = this.addMarkersWithLists(location_clusters, map);
     this.createMarkerClusters(map, markers);
   }
@@ -108,6 +105,7 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
   }
 
   this.isSameLocation = function(location, location_cluster) {
+    console.log(location.lat, location_cluster.lat)
     return (location.lat == location_cluster.lat && location.lng == location_cluster.lng)
   }
 
