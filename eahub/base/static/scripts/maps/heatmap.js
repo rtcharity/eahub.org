@@ -1,41 +1,41 @@
-var map = function(query_string_map, map_locations, map_selector_ind, map_selector_groups, google, markerClusterer, document, isIE) {
+var map = function(queryStringMap, locations, mapSelectorInd, mapSelectorGroups, google, markerClusterer, document, isIE) {
   this.minClusterZoom = 14;
-  this.map_type = query_string_map
-  this.map_locations = map_locations
-  this.map_selector_ind = map_selector_ind
-  this.map_selector_groups = map_selector_groups
+  this.mapType = queryStringMap
+  this.locations = locations
+  this.mapSelectorInd = mapSelectorInd
+  this.mapSelectorGroups = mapSelectorGroups
   this.google = google
   this.markerClusterer = markerClusterer
   this.element = document.getElementById('map');
   this.isIE = isIE
 
   this.setup = function() {
-    if (this.map_type !== 'individuals') {
-      this.render(map_locations.groups);
-      this.map_selector_groups.checked = true
+    if (this.mapType !== 'individuals') {
+      this.render(this.locations.groups);
+      this.mapSelectorGroups.checked = true
     } else {
-      this.render(map_locations.profiles, map_locations.private_profiles);
-      this.map_selector_ind.checked = true
+      this.render(this.locations.profiles, this.locations.private_profiles);
+      this.mapSelectorInd.checked = true
     }
     this.toggle();
   }
 
   this.toggle = function() {
-    this.map_selector_ind.onclick = function() {
-      this.map_type = 'individuals'
-      this.render(this.map_locations.profiles, this.map_locations.private_profiles);
+    this.mapSelectorInd.onclick = function() {
+      this.mapType = 'individuals'
+      this.render(this.locations.profiles, this.locations.private_profiles);
     };
-    this.map_selector_groups.onclick = function() {
-      this.map_type = 'groups'
-      this.render(this.map_locations.groups);
+    this.mapSelectorGroups.onclick = function() {
+      this.mapType = 'groups'
+      this.render(this.locations.groups);
     }
   }
 
-  this.render = function(public_locations, private_profiles) {
+  this.render = function(publicLocations, privateProfiles) {
     var map = this.createMap();
-    var all_locations = (this.map_type == 'groups') ? public_locations : public_locations.concat(this.splitIntoIndividual(private_profiles));
-    var location_clusters = this.createLocationClusters(all_locations);
-    var markers = this.addMarkersWithLists(location_clusters, map);
+    var allLocations = (this.mapType == 'groups') ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
+    var locationClusters = this.createLocationClusters(allLocations);
+    var markers = this.addMarkersWithLists(locationClusters, map);
     this.createMarkerClusters(map, markers);
   }
 
@@ -57,37 +57,37 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
     return map
   }
 
-  this.splitIntoIndividual = function(private_profiles) {
-    individual_private_profiles = []
-    private_profiles.forEach(function(private_profile) {
-      for (var i=0; i<private_profile.count; i++) {
-        individual_private_profiles.push(private_profile)
+  this.splitIntoIndividual = function(privateProfiles) {
+    individualPrivateProfiles = []
+    privateProfiles.forEach(function(privateProfile) {
+      for (var i=0; i<privateProfile.count; i++) {
+        individualPrivateProfiles.push(privateProfile)
       }
     })
-    return individual_private_profiles;
+    return individualPrivateProfiles;
   }
 
-  this.createLocationClusters = function(all_locations) {
-    var location_clusters = [];
-    for (var i=0; i<all_locations.length; i++) {
-      var location = all_locations[i];
+  this.createLocationClusters = function(allLocations) {
+    var locationClusters = [];
+    for (var i=0; i<allLocations.length; i++) {
+      var location = allLocations[i];
       var j = 0;
-      while (j < location_clusters.length) {
-        var location_cluster = location_clusters[j]
-        if (this.isSameLocation(location, location_cluster)) {
+      while (j < locationClusters.length) {
+        var locationCluster = locationClusters[j]
+        if (this.isSameLocation(location, locationCluster)) {
           var profile = this.createProfile(location)
-          location_cluster.profiles.push(profile)
+          locationCluster.profiles.push(profile)
           break
         } else {
           j++
         }
       }
-      if (this.isinSameLocationAsOneOf(location_clusters, j) == false) {
-        new_location_cluster = this.createLocationCluster(location)
-        location_clusters.push(new_location_cluster)
+      if (this.isinSameLocationAsOneOf(locationClusters, j) == false) {
+        newLocationCluster = this.createLocationCluster(location)
+        locationClusters.push(newLocationCluster)
       }
     }
-    return location_clusters;
+    return locationClusters;
   }
 
   this.createProfile = function(location) {
@@ -98,19 +98,19 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
       profile.anonymous = true
     }
     if (location.path != undefined) profile.path = location.path
-    if (this.map_type == 'groups') {
+    if (this.mapType == 'groups') {
       profile.active = location.active
     }
     return profile;
   }
 
-  this.isSameLocation = function(location, location_cluster) {
-    console.log(location.lat, location_cluster.lat)
-    return (location.lat == location_cluster.lat && location.lng == location_cluster.lng)
+  this.isSameLocation = function(location, locationCluster) {
+    console.log(location.lat, locationCluster.lat)
+    return (location.lat == locationCluster.lat && location.lng == locationCluster.lng)
   }
 
-  this.isinSameLocationAsOneOf = function(location_clusters, j) {
-    return (j < location_clusters.length)
+  this.isinSameLocationAsOneOf = function(locationClusters, j) {
+    return (j < locationClusters.length)
   }
 
   this.createLocationCluster = function(location) {
@@ -123,50 +123,50 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
     return cluster;
   }
 
-  this.addMarkersWithLists = function(location_clusters, map) {
+  this.addMarkersWithLists = function(locationClusters, map) {
     var markers = [];
-    for (var i=0; i< location_clusters.length; i++) {
-        var location_cluster = location_clusters[i]
-        var location = {lat: location_cluster.lat, lng: location_cluster.lng}
-        var profiles = location_cluster.profiles
-        var marker = this.createMarker(location, location_clusters)
+    for (var i=0; i< locationClusters.length; i++) {
+        var locationCluster = locationClusters[i]
+        var location = {lat: locationCluster.lat, lng: locationCluster.lng}
+        var profiles = locationCluster.profiles
+        var marker = this.createMarker(location, locationClusters)
         this.addDescription(marker, profiles)
         this.addLabel(marker, map)
         marker.setMap(map);
         markers.push(marker);
-        var profiles_at_location = profiles.length;
-        this.addDummyMarkers(location, profiles_at_location, markers, map, location_clusters)
+        var profilesAtLocation = profiles.length;
+        this.addDummyMarkers(location, profilesAtLocation, markers, map, locationClusters)
     }
     return markers
   }
 
   this.addDescription = function(marker, profiles) {
-    var public_profiles = profiles.filter(profile => !profile.anonymous)
-    var private_profiles = profiles.filter(profile => profile.anonymous)
-    var all_profiles_count = public_profiles.length + private_profiles.length
-    if (all_profiles_count > 1) {
+    var publicProfiles = profiles.filter(profile => !profile.anonymous)
+    var privateProfiles = profiles.filter(profile => profile.anonymous)
+    var allProfilesCount = publicProfiles.length + privateProfiles.length
+    if (allProfilesCount > 1) {
       marker.desc = '<ul class="map-label">'
-      public_profiles.map(function(profile) {
+      publicProfiles.map(function(profile) {
         marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
         marker.desc += (profile.active == "False") ? " (inactive)</a></li>" : "</a></li>"
       })
-      if (private_profiles.length > 0) {
-        user_word = (private_profiles.length == 1) ? 'user' : 'users'
-        marker.desc += '<li>' + private_profiles.length.toString() + ' anonymous ' + user_word + '</li>'
+      if (privateProfiles.length > 0) {
+        userWord = (privateProfiles.length == 1) ? 'user' : 'users'
+        marker.desc += '<li>' + privateProfiles.length.toString() + ' anonymous ' + userWord + '</li>'
       }
       marker.desc += '</ul>'
-    } else if (!this.exists(public_profiles) && this.exists(private_profiles)) {
-      user_word = (private_profiles.length == 1) ? 'user' : 'users'
-      marker.desc = private_profiles.length.toString() + ' anonymous ' + user_word
-    } else if (public_profiles.length == 1 && !exists(private_profiles)) {
-      marker.desc = "<a href='" + public_profiles[0].path + "'>" + public_profiles[0].label + "</a>";
-    } else if (!this.exists(public_profiles) && !this.exists(private_profiles)) {
+    } else if (!this.exists(publicProfiles) && this.exists(privateProfiles)) {
+      userWord = (privateProfiles.length == 1) ? 'user' : 'users'
+      marker.desc = privateProfiles.length.toString() + ' anonymous ' + userWord
+    } else if (publicProfiles.length == 1 && !exists(privateProfiles)) {
+      marker.desc = "<a href='" + publicProfiles[0].path + "'>" + publicProfiles[0].label + "</a>";
+    } else if (!this.exists(publicProfiles) && !this.exists(privateProfiles)) {
       return false;
     }
   }
 
-  this.exists = function(profiles_array) {
-    return (profiles_array.length > 0) ? true : false;
+  this.exists = function(profilesArray) {
+    return (profilesArray.length > 0) ? true : false;
   }
 
   this.addLabel = function(marker, map) {
@@ -177,10 +177,10 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
     });
   }
 
-  this.createMarker = function(location, location_clusters, z=1) {
+  this.createMarker = function(location, locationClusters, z=1) {
     var marker = new this.google.maps.Marker({
         position: location,
-        label: {text: this.countMarkersAt(location, location_clusters).toString(), color: 'white', fontSize: '11px'},
+        label: {text: this.countMarkersAt(location, locationClusters).toString(), color: 'white', fontSize: '11px'},
         optimized: !this.isIE,  // makes SVG icons work in IE
         zIndex: z
     });
@@ -194,14 +194,14 @@ var map = function(query_string_map, map_locations, map_selector_ind, map_select
     return marker
   }
 
-  this.countMarkersAt = function(location, location_clusters) {
-    cluster_at_location = location_clusters.filter(cluster => this.isSameLocation(location, cluster))
-    return cluster_at_location[0].profiles.length
+  this.countMarkersAt = function(location, locationClusters) {
+    clusterAtLocation = locationClusters.filter(cluster => this.isSameLocation(location, cluster))
+    return clusterAtLocation[0].profiles.length
   }
 
-  this.addDummyMarkers = function(location, profiles_at_location, markers, map, location_clusters) {
-    for (var i = 1; i < profiles_at_location; i++) {
-      var dummyMarker = this.createMarker(location, location_clusters, z=1-i)
+  this.addDummyMarkers = function(location, profilesAtLocation, markers, map, locationClusters) {
+    for (var i = 1; i < profilesAtLocation; i++) {
+      var dummyMarker = this.createMarker(location, locationClusters, z=1-i)
       dummyMarker.setMap(map);
       markers.push(dummyMarker)
     }
