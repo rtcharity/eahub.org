@@ -2,7 +2,7 @@ describe("Heatmap Module", function() {
   var query_string_map, mockProfile, mockPrivateProfile, mockGroup, mockIsIE,
   map_locations_mock, map_selector_ind_mock, map_selector_groups_mock,
   mockMapElement, mockGenericFunction, documentMock, googleMock,
-  markerClustererMock, map
+  markerClustererMock, map, clusterMock, clusterMockOther
 
   beforeEach(function() {
     query_string_map = 'individuals'
@@ -10,6 +10,8 @@ describe("Heatmap Module", function() {
     mockPrivateProfile = jasmine.createSpy('mockPrivateProfile')
     mockGroup = jasmine.createSpy('mockGroup')
     mockIsIE = jasmine.createSpy('mockIsIE')
+    clusterMock = {lat: 50, lng: 0}
+    clusterMockOther = {lat: 50, lng: 20}
     map_locations_mock = {
       profiles: [mockProfile],
       private_profiles: [mockPrivateProfile],
@@ -105,13 +107,27 @@ describe("Heatmap Module", function() {
     })
 
     it("returns true if profile is in same location as cluster", function() {
-      var clusterMock = {lat: 50, lng: 0}
       expect(map.isSameLocation(profileMock, clusterMock)).toBe(true)
     })
 
     it("returns false if profile is in different location than cluster", function() {
-      var clusterMockOther = {lat: 50, lng: 20}
       expect(map.isSameLocation(profileMock, clusterMockOther)).toBe(false)
+    })
+  })
+
+  describe("isinSameLocationAsOneOf", function() {
+    var location_clusters_mock = [clusterMock, clusterMockOther]
+    it("returns true if index is less than length of location clusters", function() {
+      expect(map.isinSameLocationAsOneOf(location_clusters_mock, 1)).toBe(true)
+    })
+    it("returns false if index is more or equal than length of location clusters", function() {
+      expect(map.isinSameLocationAsOneOf(location_clusters_mock, 2)).toBe(false)
+    })
+  })
+
+  describe("createProfile", function() {
+    it("returns anonymous profile with no path if no label and path given", function() {
+
     })
   })
 
