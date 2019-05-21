@@ -1,39 +1,39 @@
-var map = function(queryStringMap, locations, mapSelectorInd, mapSelectorGroups, google, markerClusterer, document, isIE) {
+var map = function(queryStringMap, locations, selectorInd, selectorGroups, google, markerClusterer, document, isIE) {
   this.minClusterZoom = 14;
-  this.mapType = queryStringMap
+  this.type = queryStringMap
   this.locations = locations
-  this.mapSelectorInd = mapSelectorInd
-  this.mapSelectorGroups = mapSelectorGroups
+  this.selectorInd = selectorInd
+  this.selectorGroups = selectorGroups
   this.google = google
   this.markerClusterer = markerClusterer
   this.element = document.getElementById('map');
   this.isIE = isIE
 
   this.setup = function() {
-    if (this.mapType !== 'individuals') {
+    if (this.type !== 'individuals') {
       this.render(this.locations.groups);
-      this.mapSelectorGroups.checked = true
+      this.selectorGroups.checked = true
     } else {
       this.render(this.locations.profiles, this.locations.private_profiles);
-      this.mapSelectorInd.checked = true
+      this.selectorInd.checked = true
     }
     this.toggle();
   }
 
   this.toggle = function() {
-    this.mapSelectorInd.onclick = function() {
-      this.mapType = 'individuals'
+    this.selectorInd.onclick = function() {
+      this.type = 'individuals'
       this.render(this.locations.profiles, this.locations.private_profiles);
     };
-    this.mapSelectorGroups.onclick = function() {
-      this.mapType = 'groups'
+    this.selectorGroups.onclick = function() {
+      this.type = 'groups'
       this.render(this.locations.groups);
     }
   }
 
   this.render = function(publicLocations, privateProfiles) {
     var map = this.createMap();
-    var allLocations = (this.mapType == 'groups') ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
+    var allLocations = (this.type == 'groups') ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
     var locationClusters = this.createLocationClusters(allLocations);
     var markers = this.addMarkersWithLists(locationClusters, map);
     this.createMarkerClusters(map, markers);
@@ -44,7 +44,7 @@ var map = function(queryStringMap, locations, mapSelectorInd, mapSelectorGroups,
         zoom: 2,
         maxZoom: this.minClusterZoom+1,
         center: new this.google.maps.LatLng(30, 30), // roughly center of world (makes for better view than 0,0)
-        mapTypeControl: false,
+        typeControl: false,
         scaleControl: false,
         streetViewControl: false,
         rotateControl: false,
@@ -98,7 +98,7 @@ var map = function(queryStringMap, locations, mapSelectorInd, mapSelectorGroups,
       profile.anonymous = true
     }
     if (location.path != undefined) profile.path = location.path
-    if (this.mapType == 'groups') {
+    if (this.type == 'groups') {
       profile.active = location.active
     }
     return profile;
