@@ -55,7 +55,7 @@ describe("Heatmap Module", function() {
   })
 
   describe("setup function", function() {
-    it("renders map set in map_type", function() {
+    it("renders map set in type", function() {
       var spy = spyOn(map, 'render')
 
       map.setup()
@@ -116,18 +116,34 @@ describe("Heatmap Module", function() {
   })
 
   describe("isinSameLocationAsOneOf", function() {
-    var location_clusters_mock = [clusterMock, clusterMockOther]
+    var locationClustersMock = [clusterMock, clusterMockOther]
     it("returns true if index is less than length of location clusters", function() {
-      expect(map.isinSameLocationAsOneOf(location_clusters_mock, 1)).toBe(true)
+      expect(map.isinSameLocationAsOneOf(locationClustersMock, 1)).toBe(true)
     })
     it("returns false if index is more or equal than length of location clusters", function() {
-      expect(map.isinSameLocationAsOneOf(location_clusters_mock, 2)).toBe(false)
+      expect(map.isinSameLocationAsOneOf(locationClustersMock, 2)).toBe(false)
     })
   })
 
   describe("createProfile", function() {
     it("returns anonymous profile with no path if no label and path given", function() {
+      var locationAnonymousMock = {lat: 50, lng: 0}
 
+      expect(map.createProfile(locationAnonymousMock).anonymous).toBe(true)
+      expect(map.createProfile(locationAnonymousMock).path).toBeUndefined()
+    })
+    it("returns profile with path and label if given", function() {
+      var locationMock = {lat: 50, lng: 0, path: "/path", label: "user"}
+
+      expect(map.createProfile(locationMock).path).toBe("/path")
+      expect(map.createProfile(locationMock).label).toBe("user")
+      expect(map.createProfile(locationMock).anonymous).toBeUndefined()
+    })
+    it("adds activity status to profile if map type is group", function() {
+      map.type = "groups"
+      var locationGroupMock = {lat: 50, lng: 0, active: true}
+
+      expect(map.createProfile(locationGroupMock).active).toBe(true)
     })
   })
 
