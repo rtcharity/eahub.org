@@ -2,7 +2,16 @@ describe("Heatmap Module", function() {
   var queryStringMap, profileMock, privateProfileMock, groupMock, isIEMock,
   locationsMock, selectorIndMock, selectorGroupsMock,
   mapElementMock, genericFunctionMock, documentMock, googleMock,
-  markerClustererMock, map, clusterMock, clusterMockOther
+  markerClustererMock, map, clusterMock, clusterMockOther, locationMock, locationClustersMock
+
+  var profileClass = class {
+    constructor(location, mapType) {
+      this.label = location.label != undefined ? location.label : undefined
+      this.anonymous = location.label != undefined ? false : true
+      this.path = location.path != undefined ? location.path : undefined
+      this.active = mapType == 'groups' ? true : undefined
+    }
+  }
 
   beforeEach(function() {
     queryStringMap = 'individuals'
@@ -10,8 +19,10 @@ describe("Heatmap Module", function() {
     privateProfileMock = jasmine.createSpy('privateProfileMock')
     groupMock = jasmine.createSpy('groupMock')
     isIEMock = jasmine.createSpy('isIEMock')
-    clusterMock = {lat: 50, lng: 0}
-    clusterMockOther = {lat: 50, lng: 20}
+    locationMock = {lat: 50, lng: 0, path: "/path", label: "user"}
+    clusterMock = {lat: 50, lng: 0, profiles: [profileMock, privateProfileMock]}
+    clusterMockOther = {lat: 50, lng: 20, profiles: [profileMock, privateProfileMock]}
+    locationClustersMock = [clusterMock, clusterMockOther]
     locationsMock = {
       profiles: [profileMock],
       private_profiles: [privateProfileMock],
@@ -51,7 +62,7 @@ describe("Heatmap Module", function() {
     markerClustererMock = function(map, markers, properties) {
       return 0
     }
-    map = new mapObj(queryStringMap,locationsMock,selectorIndMock,selectorGroupsMock, googleMock, markerClustererMock, documentMock, isIEMock)
+    map = new mapObj(queryStringMap,locationsMock,selectorIndMock,selectorGroupsMock, googleMock, markerClustererMock, documentMock, isIEMock, profileClass)
   })
 
   describe("setup function", function() {
@@ -116,7 +127,6 @@ describe("Heatmap Module", function() {
   })
 
   describe("isinSameLocationAsOneOf", function() {
-    var locationClustersMock = [clusterMock, clusterMockOther]
     it("returns true if index is less than length of location clusters", function() {
       expect(map.isinSameLocationAsOneOf(locationClustersMock, 1)).toBe(true)
     })
@@ -125,25 +135,9 @@ describe("Heatmap Module", function() {
     })
   })
 
-  describe("createProfile", function() {
-    it("returns anonymous profile with no path if no label and path given", function() {
-      var locationAnonymousMock = {lat: 50, lng: 0}
-
-      expect(map.createProfile(locationAnonymousMock).anonymous).toBe(true)
-      expect(map.createProfile(locationAnonymousMock).path).toBeUndefined()
-    })
-    it("returns profile with path and label if given", function() {
-      var locationMock = {lat: 50, lng: 0, path: "/path", label: "user"}
-
-      expect(map.createProfile(locationMock).path).toBe("/path")
-      expect(map.createProfile(locationMock).label).toBe("user")
-      expect(map.createProfile(locationMock).anonymous).toBeUndefined()
-    })
-    it("adds activity status to profile if map type is group", function() {
-      map.type = "groups"
-      var locationGroupMock = {lat: 50, lng: 0, active: true}
-
-      expect(map.createProfile(locationGroupMock).active).toBe(true)
+  describe("countMarkersAt", function() {
+    it("returns 2 for location with 2 profiles in its cluster", function() {
+      expect(map.countMarkersAt(locationMock, locationClustersMock)).toBe(2)
     })
   })
 
