@@ -1,4 +1,4 @@
-var map = class {
+class Map {
   constructor(queryStringMap, locations, selectorInd, selectorGroups, google, markerClusterer, document, isIE, profileClass) {
     this.minClusterZoom = 14;
     this.type = queryStringMap
@@ -13,10 +13,13 @@ var map = class {
   }
 
   setup() {
+    console.log(this.locations)
     if (this.type !== 'individuals') {
+      this.type == 'groups'
       this.render(this.locations.groups);
       this.selectorGroups.checked = true
-    } else {
+    }
+    if (this.type == 'individuals') {
       this.render(this.locations.profiles, this.locations.private_profiles);
       this.selectorInd.checked = true
     }
@@ -24,19 +27,20 @@ var map = class {
   }
 
   toggle() {
-    this.selectorInd.onclick = function() {
-      this.type = 'individuals'
-      this.render(this.locations.profiles, this.locations.private_profiles);
+    var that = this
+    that.selectorInd.onclick = function() {
+      that.type = 'individuals'
+      that.render(that.locations.profiles, that.locations.private_profiles);
     };
-    this.selectorGroups.onclick = function() {
-      this.type = 'groups'
-      this.render(this.locations.groups);
+    that.selectorGroups.onclick = function() {
+      that.type = 'groups'
+      that.render(that.locations.groups);
     }
   }
 
   render(publicLocations, privateProfiles) {
     var map = this.createMap();
-    var allLocations = (this.type == 'groups') ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
+    var allLocations = (privateProfiles === undefined) ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
     var locationClusters = this.createLocationClusters(allLocations);
     var markers = this.addMarkersWithLists(locationClusters, map);
     this.createMarkerClusters(map, markers);
@@ -133,6 +137,7 @@ var map = class {
     var publicProfiles = profiles.filter(profile => !profile.anonymous)
     var privateProfiles = profiles.filter(profile => profile.anonymous)
     var allProfilesCount = publicProfiles.length + privateProfiles.length
+    var that = this
     if (allProfilesCount > 1) {
       marker.desc = '<ul class="map-label">'
       publicProfiles.map(function(profile) {
@@ -144,12 +149,12 @@ var map = class {
         marker.desc += '<li>' + privateProfiles.length.toString() + ' anonymous ' + userWord + '</li>'
       }
       marker.desc += '</ul>'
-    } else if (!this.exists(publicProfiles) && this.exists(privateProfiles)) {
+    } else if (that.exists(publicProfiles) && that.exists(privateProfiles)) {
       var userWord = (privateProfiles.length == 1) ? 'user' : 'users'
       marker.desc = privateProfiles.length.toString() + ' anonymous ' + userWord
-    } else if (publicProfiles.length == 1 && !exists(privateProfiles)) {
+    } else if (publicProfiles.length == 1 && !that.exists(privateProfiles)) {
       marker.desc = "<a href='" + publicProfiles[0].path + "'>" + publicProfiles[0].label + "</a>";
-    } else if (!this.exists(publicProfiles) && !this.exists(privateProfiles)) {
+    } else if (!that.exists(publicProfiles) && !that.exists(privateProfiles)) {
       return false;
     }
   }
@@ -190,7 +195,8 @@ var map = class {
 
   addDummyMarkers(location, profilesAtLocation, markers, map, locationClusters) {
     for (var i = 1; i < profilesAtLocation; i++) {
-      var dummyMarker = this.createMarker(location, locationClusters, z=1-i)
+      var z = 1-i
+      var dummyMarker = this.createMarker(location, locationClusters, z)
       dummyMarker.setMap(map);
       markers.push(dummyMarker)
     }
@@ -210,6 +216,4 @@ var map = class {
   }
 }
 
-var mapObj = function() {
-  return map
-}()
+export { Map }
