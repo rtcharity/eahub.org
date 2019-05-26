@@ -45,10 +45,12 @@ class LocationClusters {
     return list
   }
 
-  getMarkers() {
+  getGoogleMarkers() {
     var markers = []
     this.list.forEach(function(cluster) {
-      markers.push(cluster.markers.obj)
+      cluster.markers.forEach(function(marker) {
+        markers.push(marker.googleMarker)
+      })
     })
     return markers
   }

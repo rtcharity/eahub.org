@@ -7,7 +7,7 @@ class Map {
     this.selectorInd = document.getElementById('map_selector_ind'),
     this.selectorGroups = document.getElementById('map_selector_groups')
     this.element = document.getElementById('map');
-    this.locationClusters = []
+    this.locationClusters = null
     this.google = externalModules.google
     this.markerClusterer = externalModules.markerClusterer
     this.isIE = isIE
@@ -88,7 +88,7 @@ class Map {
 
   createMarkerClusters() {
     let map = this.googleMap
-    let markers = this.locationClusters.getMarkers()
+    let markers = this.locationClusters.getGoogleMarkers()
     var markerCluster = new this.markerClusterer(
         map, markers, {imagePath: '../static/images/cluster/m', maxZoom: this.minClusterZoom}
     );
