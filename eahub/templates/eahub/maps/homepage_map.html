@@ -5,21 +5,26 @@
   <label><input type="radio" name="map_selector" value="individuals" id="map_selector_ind">Individuals</label>
   <label><input type="radio" name="map_selector" value="groups" id="map_selector_groups">Groups</label>
 </div>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
 <script src="/static/scripts/maps/markerclusterer.js"></script>
-<script src="/static/scripts/maps/heatmap.js"></script>
+
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
+
 {{ map_locations|json_script:'map-locations' }}
-<script>
-  function initMap() {
+<script type='module' >
+  import { Map } from '/static/scripts/maps/heatmap.js'
+  import { Profile } from '/static/scripts/maps/profile.js'
+  const initMap = function() {
     var query_string_map = "{{ request.GET.map|escapejs }}";
+    console.log(query_string_map)
     var map_locations = JSON.parse(document.getElementById('map-locations').textContent);
+    console.log(map_locations)
     var mapSelectorInd = document.getElementById('map_selector_ind');
     var mapSelectorGroups = document.getElementById('map_selector_groups');
-    var map = new mapObj(query_string_map, map_locations, mapSelectorInd, mapSelectorGroups)
-    map.setup();
+    var new_map = new Map(query_string_map, map_locations, mapSelectorInd, mapSelectorGroups, google, MarkerClusterer, document, isIE, Profile)
+    new_map.setup()
   }
+  window.initMap = initMap
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
 {% endblock %}
