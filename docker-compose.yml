@@ -23,14 +23,16 @@ services:
       ADMINS: Local Admin=admin@example.com
       AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
       AZURE_CONTAINER: media
-      BROWSERS: chrome
+      BROWSERS: chrome,firefox
       CACHE_URL: redis://cache:6379/0
       DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
       DEBUG: 'True'
+      DJANGO_LIVE_TEST_SERVER_ADDRESS: 'web'
       EMAIL_URL: smtp://mail:1025
       HOSTS: web,localhost
       HTTPS: 'False'
       LEAN_MANAGERS: Local Manager=leanmanager@example.com
+      PYTEST_ADDOPTS: --driver=Remote
       PYTHONDONTWRITEBYTECODE: 'True'
       RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
       RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
@@ -40,8 +42,6 @@ services:
     image: postgres:10.5
     environment:
       POSTGRES_PASSWORD: development_db_password
-    ports:
-      - 5432:5432
   objstore:
     image: arafato/azurite:2.6.5
     command: node bin/blob --location=/opt/azurite/folder/ --blobPort=8002
