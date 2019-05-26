@@ -1,4 +1,4 @@
-var profileClass = class {
+class Profile {
   constructor(location, mapType) {
     this.label = location.label != undefined ? location.label : undefined
     this.anonymous = location.label != undefined ? false : true
@@ -6,3 +6,5 @@ var profileClass = class {
     this.active = mapType == 'groups' ? true : undefined
   }
 }
+
+export { Profile }
