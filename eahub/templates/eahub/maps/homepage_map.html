@@ -13,15 +13,24 @@
 {{ map_locations|json_script:'map-locations' }}
 <script type='module' >
   import { Map } from '/static/scripts/maps/heatmap.js'
+  import { Marker } from '/static/scripts/maps/marker.js'
   import { Profile } from '/static/scripts/maps/profile.js'
+  import { LocationCluster } from '/static/scripts/maps/locationCluster.js'
+  import { LocationClusters } from '/static/scripts/maps/locationClusters.js'
   const initMap = function() {
     var query_string_map = "{{ request.GET.map|escapejs }}";
-    console.log(query_string_map)
     var map_locations = JSON.parse(document.getElementById('map-locations').textContent);
-    console.log(map_locations)
-    var mapSelectorInd = document.getElementById('map_selector_ind');
-    var mapSelectorGroups = document.getElementById('map_selector_groups');
-    var new_map = new Map(query_string_map, map_locations, mapSelectorInd, mapSelectorGroups, google, MarkerClusterer, document, isIE, Profile)
+    var mapModules = {
+      locationCluster: LocationCluster,
+      locationClusters: LocationClusters,
+      marker: Marker,
+      profile: Profile,
+    }
+    var externalModules = {
+      google: google,
+      markerClusterer: MarkerClusterer
+    }
+    var new_map = new Map(query_string_map, map_locations, mapModules, externalModules, document, isIE)
     new_map.setup()
   }
   window.initMap = initMap

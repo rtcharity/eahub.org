@@ -1,21 +1,21 @@
 class Map {
-  constructor(queryStringMap, locations, selectorInd, selectorGroups, google, markerClusterer, document, isIE, profileClass) {
+  constructor(queryStringMap, locations, mapModules, externalModules, document, isIE) {
     this.minClusterZoom = 14;
-    this.type = queryStringMap
+    this.type = (queryStringMap !== 'individuals') ? 'groups' : 'individuals'
     this.locations = locations
-    this.selectorInd = selectorInd
-    this.selectorGroups = selectorGroups
-    this.google = google
-    this.markerClusterer = markerClusterer
+    this.mapModules = mapModules
+    this.selectorInd = document.getElementById('map_selector_ind'),
+    this.selectorGroups = document.getElementById('map_selector_groups')
     this.element = document.getElementById('map');
+    this.locationClusters = []
+    this.google = externalModules.google
+    this.markerClusterer = externalModules.markerClusterer
     this.isIE = isIE
-    this.profileClass = profileClass
+    this.googleMap = null
   }
 
   setup() {
-    console.log(this.locations)
-    if (this.type !== 'individuals') {
-      this.type == 'groups'
+    if (this.type === 'groups') {
       this.render(this.locations.groups);
       this.selectorGroups.checked = true
     }
@@ -39,11 +39,11 @@ class Map {
   }
 
   render(publicLocations, privateProfiles) {
-    var map = this.createMap();
+    this.googleMap = this.createMap();
     var allLocations = (privateProfiles === undefined) ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
-    var locationClusters = this.createLocationClusters(allLocations);
-    var markers = this.addMarkersWithLists(locationClusters, map);
-    this.createMarkerClusters(map, markers);
+    this.locationClusters = new this.mapModules.locationClusters(allLocations, this);
+    this.addMarkersWithLists();
+    this.createMarkerClusters();
   }
 
   createMap() {
@@ -74,137 +74,23 @@ class Map {
     return individualPrivateProfiles;
   }
 
-  createLocationClusters(allLocations) {
-    var locationClusters = [];
-    for (var i=0; i<allLocations.length; i++) {
-      var location = allLocations[i];
-      var j = 0;
-      while (j < locationClusters.length) {
-        var locationCluster = locationClusters[j]
-        if (this.isSameLocation(location, locationCluster)) {
-          var profile = new this.profileClass(location, this.type)
-          locationCluster.profiles.push(profile)
-          break
-        } else {
-          j++
-        }
-      }
-      if (this.isinSameLocationAsOneOf(locationClusters, j) == false) {
-        var newLocationCluster = this.createLocationCluster(location)
-        locationClusters.push(newLocationCluster)
-      }
-    }
-    return locationClusters;
-  }
-
-  isSameLocation(location, locationCluster) {
-    console.log(location.lat, locationCluster.lat)
-    return (location.lat == locationCluster.lat && location.lng == locationCluster.lng)
-  }
-
-  isinSameLocationAsOneOf(locationClusters, j) {
-    return (j < locationClusters.length)
-  }
-
-  createLocationCluster(location) {
-    var cluster = {
-      lat: location.lat,
-      lng: location.lng,
-    }
-    var profile = new this.profileClass(location, this.type)
-    cluster.profiles = [profile]
-    return cluster;
-  }
-
-  addMarkersWithLists(locationClusters, map) {
-    var markers = [];
-    for (var i=0; i< locationClusters.length; i++) {
-        var locationCluster = locationClusters[i]
-        var location = {lat: locationCluster.lat, lng: locationCluster.lng}
-        var profiles = locationCluster.profiles
-        var marker = this.createMarker(location, locationClusters)
-        this.addDescription(marker, profiles)
-        this.addLabel(marker, map)
-        marker.setMap(map);
-        markers.push(marker);
-        var profilesAtLocation = profiles.length;
-        this.addDummyMarkers(location, profilesAtLocation, markers, map, locationClusters)
-    }
-    return markers
-  }
-
-  addDescription(marker, profiles) {
-    var publicProfiles = profiles.filter(profile => !profile.anonymous)
-    var privateProfiles = profiles.filter(profile => profile.anonymous)
-    var allProfilesCount = publicProfiles.length + privateProfiles.length
-    var that = this
-    if (allProfilesCount > 1) {
-      marker.desc = '<ul class="map-label">'
-      publicProfiles.map(function(profile) {
-        marker.desc += "<li><a style='display: block' href='" + profile.path + "'>" + profile.label;
-        marker.desc += (profile.active == "False") ? " (inactive)</a></li>" : "</a></li>"
-      })
-      if (privateProfiles.length > 0) {
-        userWord = (privateProfiles.length == 1) ? 'user' : 'users'
-        marker.desc += '<li>' + privateProfiles.length.toString() + ' anonymous ' + userWord + '</li>'
-      }
-      marker.desc += '</ul>'
-    } else if (that.exists(publicProfiles) && that.exists(privateProfiles)) {
-      var userWord = (privateProfiles.length == 1) ? 'user' : 'users'
-      marker.desc = privateProfiles.length.toString() + ' anonymous ' + userWord
-    } else if (publicProfiles.length == 1 && !that.exists(privateProfiles)) {
-      marker.desc = "<a href='" + publicProfiles[0].path + "'>" + publicProfiles[0].label + "</a>";
-    } else if (!that.exists(publicProfiles) && !that.exists(privateProfiles)) {
-      return false;
+  addMarkersWithLists() {
+    for (var i=0; i< this.locationClusters.list.length; i++) {
+        var locationCluster = this.locationClusters.list[i]
+        locationCluster.addMarker()
+        var marker = locationCluster.markers[0]
+        marker.addDescription()
+        marker.addLabel()
+        marker.googleMarker.setMap(this.googleMap);
+        locationCluster.addDummyMarkers()
     }
   }
 
-  exists(profilesArray) {
-    return (profilesArray.length > 0) ? true : false;
-  }
-
-  addLabel(marker, map) {
-    var iw = new this.google.maps.InfoWindow();
-    marker.addListener('click', function() {
-      iw.setContent(marker.desc);
-      iw.open(map, marker);
-    });
-  }
-
-  createMarker(location, locationClusters, z=1) {
-    var marker = new this.google.maps.Marker({
-        position: location,
-        label: {text: this.countMarkersAt(location, locationClusters).toString(), color: 'white', fontSize: '11px'},
-        optimized: !this.isIE,  // makes SVG icons work in IE
-        zIndex: z
-    });
-
-    var iconSize = new this.google.maps.Size(40, 40);
-    marker.setIcon({
-     url: (location.active == "False") ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
-     size: iconSize,
-     scaledSize: iconSize  // makes SVG icons work in IE
-    });
-    return marker
-  }
-
-  countMarkersAt(location, locationClusters) {
-    var clusterAtLocation = locationClusters.filter(cluster => this.isSameLocation(location, cluster))
-    return clusterAtLocation[0].profiles.length
-  }
-
-  addDummyMarkers(location, profilesAtLocation, markers, map, locationClusters) {
-    for (var i = 1; i < profilesAtLocation; i++) {
-      var z = 1-i
-      var dummyMarker = this.createMarker(location, locationClusters, z)
-      dummyMarker.setMap(map);
-      markers.push(dummyMarker)
-    }
-  }
-
-  createMarkerClusters(map, markers) {
+  createMarkerClusters() {
+    let map = this.googleMap
+    let markers = this.locationClusters.getMarkers()
     var markerCluster = new this.markerClusterer(
-        map, markers,{imagePath: '../static/images/cluster/m', maxZoom: this.minClusterZoom}
+        map, markers, {imagePath: '../static/images/cluster/m', maxZoom: this.minClusterZoom}
     );
 
     this.google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
