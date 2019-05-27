@@ -1,20 +1,41 @@
-describe("createProfile", function() {
-  
-  it("returns anonymous profile with no path if no label and path given", function() {
-    var locationAnonymousMock = {lat: 50, lng: 0}
+describe("Profile", function() {
+  describe("constructor", function() {
+    let locationMock, type
+    beforeEach(function() {
+      locationMock = {}
+      type = ''
+    })
+    afterEach(function() {
+      locationMock = {}
+      type = ''
+    })
+    it("creates an anonymous profile where label is undefined and type is not groups", function() {
+      locationMock.label = undefined
+      type = 'individuals'
 
-    expect(map.createProfile(locationAnonymousMock).anonymous).toBe(true)
-    expect(map.createProfile(locationAnonymousMock).path).toBeUndefined()
-  })
-  it("returns profile with path and label if given", function() {
-    expect(map.createProfile(locationMock).path).toBe("/path")
-    expect(map.createProfile(locationMock).label).toBe("user")
-    expect(map.createProfile(locationMock).anonymous).toBeUndefined()
-  })
-  it("adds activity status to profile if map type is group", function() {
-    map.type = "groups"
-    var locationGroupMock = {lat: 50, lng: 0, active: true}
+      let profile = new Profile(location, type)
 
-    expect(map.createProfile(locationGroupMock).active).toBe(true)
+      expect(profile.anonymous).toBe(true)
+    })
+
+    it("does not create an anonymous group where type is groups", function() {
+      locationMock.label = undefined
+      type = 'groups'
+
+      let profile = new Profile(location, type)
+
+      expect(profile.anonymous).toBe(false)
+    })
+    
+    it('sets active property only if type is groups', function() {
+      type = 'individuals'
+      locationMock.active = true
+
+      let profile = new Profile(location, type)
+
+      expect(profile.active).not.toBeDefined()
+    })
   })
+
+
 })
