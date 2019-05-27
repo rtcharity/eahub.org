@@ -18,7 +18,7 @@ let markerClassMock = class MarkerClassMock {
 }
 
 let addListenerMock = function(e, func) {
-  return null
+  return 'something'
 }
 
 let googleMarkerMock = class {
@@ -85,10 +85,10 @@ const londonLatLng = {lat: 50, lng: 0}
 const klaipedaLatLng = {lat: 55, lng: 22}
 const windenLatLng = {lat: 50, lng: 7}
 
-let london1Mock = {label: 'London1', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-1', active: true}
-let london2Mock = {label: 'London2', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-2', active: false}
-let klaipeda1Mock = {label: 'Klaipeda1', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-1', active: true}
-let klaipeda2Mock = {label: 'Klaipeda2', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-2', active: false}
+let london1Mock = {label: 'London1', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-1', active: "True"}
+let london2Mock = {label: 'London2', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-2', active: "False"}
+let klaipeda1Mock = {label: 'Klaipeda1', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-1', active: "True"}
+let klaipeda2Mock = {label: 'Klaipeda2', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-2', active: "False"}
 
 let peterMock = {label: 'Peter', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'peter'}
 let privateMock = {lat: londonLatLng.lat, lng: londonLatLng.lng}
@@ -106,11 +106,9 @@ let selectorInd = { checked: false }
 let selectorGroups = { checked: false }
 
 let htmlElementsMock = {
-  getElementById: function(id) {
-    if (id === 'map_selector_ind') return selectorInd
-    else if (id === 'map_selector_groups') return selectorGroups
-    else if (id == 'map') return 'mapElementMock'
-  }
+    selectorInd: selectorInd,
+    selectorGroups: selectorGroups,
+    map: 'mapElementMock'
 }
 
 let markerClustererMock = class {
