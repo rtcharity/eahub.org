@@ -16,6 +16,7 @@
         - maps/locationCluster.js
         - maps/locationClusters.js
         - maps/marker.js
+        - maps/heatmap.js
 
     # stylesheets
     #
@@ -41,7 +42,7 @@
     #   - helpers/**/*.js
     #
     helpers:
-      - "helpers/**/*.js"
+      - "**/helpers/mocks.js"
 
     # spec_files
     #
@@ -58,6 +59,7 @@
       - "**/locationCluster_spec.js"
       - "**/locationClusters_spec.js"
       - "**/marker_spec.js"
+      - "**/heatmap_spec.js"
 
     # src_dir
     #
