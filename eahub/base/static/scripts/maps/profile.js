@@ -4,5 +4,6 @@ class Profile {
     this.anonymous = (location.label == undefined && type == 'individuals') ? true : false
     this.path = location.path != undefined ? location.path : undefined
     this.active = type == 'groups' ? location.active : undefined
+    this.type = type
   }
 }
