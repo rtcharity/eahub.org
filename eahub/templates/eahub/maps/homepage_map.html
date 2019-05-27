@@ -21,8 +21,8 @@
     var queryStringMap = "{{ request.GET.map|escapejs }}";
     var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
     var htmlElements = {
-      selectorGroups: document.getElementById('map_selector_groups'),
       selectorInd: document.getElementById('map_selector_ind'),
+      selectorGroups: document.getElementById('map_selector_groups'),
       map: document.getElementById('map')
     }
     var mapModules = {
@@ -35,7 +35,7 @@
       google: google,
       markerClusterer: MarkerClusterer
     }
-    var new_map = new Map(htmlElements, queryStringMap, mapLocations, mapModules, externalModules, isIE)
+    var new_map = new Heatmap(queryStringMap, mapLocations, mapModules, externalModules, htmlElements, isIE)
     new_map.setup()
   }
 </script>
