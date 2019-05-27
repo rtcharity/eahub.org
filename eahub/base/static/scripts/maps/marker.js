@@ -18,7 +18,7 @@ class Marker {
     });
 
     var iconSize = new this.google.maps.Size(40, 40);
-    var inactiveSingleProfile = this.clusterType == 'groups' && this.clusterProfiles.every(function(profile) { return profile.active === false } )
+    var inactiveSingleProfile = this.clusterType == 'groups' && this.clusterProfiles.every(function(profile) { return profile.active === 'False' } )
     googleMarker.setIcon({
      url: (inactiveSingleProfile) ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
      size: iconSize,
