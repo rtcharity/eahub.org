@@ -1,12 +1,12 @@
 class Map {
-  constructor(queryStringMap, locations, mapModules, externalModules, document, isIE) {
+  constructor(queryStringMap, locations, mapModules, externalModules, htmlElements, isIE) {
     this.minClusterZoom = 14;
     this.type = (queryStringMap !== 'individuals') ? 'groups' : 'individuals'
     this.locations = locations
     this.mapModules = mapModules
-    this.selectorInd = document.getElementById('map_selector_ind'),
-    this.selectorGroups = document.getElementById('map_selector_groups')
-    this.element = document.getElementById('map');
+    this.selectorInd = htmlElements.selectorInd
+    this.selectorGroups = htmlElements.selectorGroups
+    this.element = htmlElements.map
     this.locationClusters = null
     this.google = externalModules.google
     this.markerClusterer = externalModules.markerClusterer
@@ -15,13 +15,13 @@ class Map {
   }
 
   setup() {
+    if (this.type === 'individuals') {
+      this.render(this.locations.profiles, this.locations.private_profiles);
+      this.selectorInd.checked = true
+    }
     if (this.type === 'groups') {
       this.render(this.locations.groups);
       this.selectorGroups.checked = true
-    }
-    if (this.type == 'individuals') {
-      this.render(this.locations.profiles, this.locations.private_profiles);
-      this.selectorInd.checked = true
     }
     this.toggle();
   }
@@ -40,10 +40,10 @@ class Map {
 
   render(publicLocations, privateProfiles) {
     this.googleMap = this.createMap();
-    var allLocations = (privateProfiles === undefined) ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
-    this.locationClusters = new this.mapModules.locationClusters(allLocations, this);
-    this.addMarkersWithLists();
-    this.createMarkerClusters();
+    // var allLocations = (privateProfiles === undefined) ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
+    // this.locationClusters = new this.mapModules.locationClusters(allLocations, this);
+    // this.addMarkersWithLists();
+    // this.createMarkerClusters();
   }
 
   createMap() {
@@ -101,5 +101,3 @@ class Map {
     });
   }
 }
-
-export { Map }
