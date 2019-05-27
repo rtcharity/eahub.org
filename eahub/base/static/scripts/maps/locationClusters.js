@@ -24,7 +24,6 @@ class LocationClusters {
   create(allLocations) {
     var list = []
     for (var i=0; i<allLocations.length; i++) {
-
       var location = allLocations[i];
       var j = 0;
       while (j < list.length) {
