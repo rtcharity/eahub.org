@@ -15,11 +15,16 @@
 <script type="text/javascript" src='/static/scripts/maps/locationCluster.js'></script>
 <script type="text/javascript" src='/static/scripts/maps/locationClusters.js'></script>
 <script type="text/javascript" src='/static/scripts/maps/marker.js'></script>
-<script type='module' >
-  import { Map } from '/static/scripts/maps/heatmap.js'
-  const initMap = function() {
-    var query_string_map = "{{ request.GET.map|escapejs }}";
-    var map_locations = JSON.parse(document.getElementById('map-locations').textContent);
+<script type="text/javascript" src='/static/scripts/maps/heatmap.js'></script>
+<script>
+  function initMap() {
+    var queryStringMap = "{{ request.GET.map|escapejs }}";
+    var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
+    var htmlElements = {
+      selectorGroups: document.getElementById('map_selector_groups'),
+      selectorInd: document.getElementById('map_selector_ind'),
+      map: document.getElementById('map')
+    }
     var mapModules = {
       locationCluster: LocationCluster,
       locationClusters: LocationClusters,
@@ -30,10 +35,9 @@
       google: google,
       markerClusterer: MarkerClusterer
     }
-    var new_map = new Map(query_string_map, map_locations, mapModules, externalModules, document, isIE)
+    var new_map = new Map(htmlElements, queryStringMap, mapLocations, mapModules, externalModules, isIE)
     new_map.setup()
   }
-  window.initMap = initMap
 </script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+<script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
 {% endblock %}
