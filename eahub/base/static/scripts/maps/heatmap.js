@@ -1,4 +1,4 @@
-class Map {
+class Heatmap {
   constructor(queryStringMap, locations, mapModules, externalModules, htmlElements, isIE) {
     this.minClusterZoom = 14;
     this.type = (queryStringMap !== 'individuals') ? 'groups' : 'individuals'
@@ -40,10 +40,10 @@ class Map {
 
   render(publicLocations, privateProfiles) {
     this.googleMap = this.createMap();
-    // var allLocations = (privateProfiles === undefined) ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
-    // this.locationClusters = new this.mapModules.locationClusters(allLocations, this);
-    // this.addMarkersWithLists();
-    // this.createMarkerClusters();
+    var allLocations = (privateProfiles === undefined) ? publicLocations : publicLocations.concat(this.splitIntoIndividual(privateProfiles));
+    this.locationClusters = new this.mapModules.locationClusters(allLocations, this);
+    this.addMarkersWithLists();
+    this.createMarkerClusters();
   }
 
   createMap() {
