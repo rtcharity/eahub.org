@@ -1,4 +1,4 @@
-describe('Map', function() {
+describe('Heatmap', function() {
   let mapIndividuals, mapGroups, mapModules, isIE
   beforeEach(function() {
     isIE = false
@@ -8,8 +8,8 @@ describe('Map', function() {
       marker: Marker,
       profile: Profile
     }
-    mapIndividuals = new Map('individuals', locationsMock, mapModules, externalModulesMock, documentMock, isIE)
-    mapGroups = new Map('groups', locationsMock, mapModules, externalModulesMock, documentMock, isIE)
+    mapIndividuals = new Heatmap('individuals', locationsMock, mapModules, externalModulesMock, htmlElementsMock, isIE)
+    mapGroups = new Heatmap('groups', locationsMock, mapModules, externalModulesMock, htmlElementsMock, isIE)
   })
   afterEach(function() {
     mapIndividuals = null
@@ -55,7 +55,7 @@ describe('Map', function() {
       londonMarker = mapIndividuals.locationClusters.list.filter(cluster => cluster.location.lat == londonLatLng.lat && cluster.location.lng == londonLatLng.lng)[0].markers[0]
     })
     afterEach(function() {
-      mapGroups, mapIndividuals, klaiepdaMarker, londonMarker = null
+      mapGroups, mapIndividuals, klaipedaMarker, londonMarker = null
     })
     it('renders location clusters with number of profiles in that location', function() {
       expect(klaipedaMarker.googleMarker.label.text).toEqual('2')
@@ -66,6 +66,10 @@ describe('Map', function() {
     it('adds the list of all public profiles in a location in its marker', function() {
       expect(klaipedaMarker.googleMarker.desc).toContain('klaipeda-1')
       expect(klaipedaMarker.googleMarker.desc).toContain('klaipeda-2')
+    })
+    it('does not add private profiles to list in markers', function() {
+      console.log(londonMarker.googleMarker)
+      expect(londonMarker.googleMarker.desc).not.toContain('<ul>')
     })
   })
 })
