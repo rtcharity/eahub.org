@@ -11,7 +11,6 @@ class LocationClusters {
     while (i < that.list.length) {
       let cluster = that.list[i]
       if (cluster.isSameLocation(newCluster.location)) {
-        console.log('replace')
         that.list[i] = newCluster
         break
       } else {
