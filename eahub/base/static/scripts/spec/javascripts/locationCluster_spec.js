@@ -1,25 +1,8 @@
 describe('LocationCluster', function() {
-  let locationCluster, locationMock, mapMock, profileMock, profileClassMock, markerMock, markerClassMock, spyOnGoogleMarker
+  let locationCluster, locationMock, mapMock, markerMock
   beforeEach(function() {
     locationMock = {lat: 0, lng: 50}
-    profileMock = 'profileMock'
-    profilesMock = [profileMock]
-    profileClassMock = class ProfileClassMock {
-      constructor(location, type) {
-        this.location = location
-        this.type = type
-      }
-    }
-    spyOnGoogleMarker = jasmine.createSpy('googleMarker_setMap')
-    markerClassMock = class MarkerClassMock {
-      constructor(mapMock, locationMock, profilesMock, z) {
-        this.location = locationMock
-        this.googleMarker = {
-          setMap: spyOnGoogleMarker
-        }
-        this.z = z
-      }
-    }
+    profilesMock = [activeProfileMock]
     mapMock = {
       type: 'individuals',
       mapModules: {
