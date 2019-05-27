@@ -5,6 +5,7 @@ class Marker {
     this.location = location
     this.clusterSize = profiles.length
     this.clusterProfiles = profiles
+    this.clusterType = map.type
     this.googleMarker = this.create(map.isIE, z)
   }
 
@@ -17,7 +18,7 @@ class Marker {
     });
 
     var iconSize = new this.google.maps.Size(40, 40);
-    var inactiveSingleProfile = this.clusterType == 'groups' && this.profiles.every(function(profile) { return profile.active === false } )
+    var inactiveSingleProfile = this.clusterType == 'groups' && this.clusterProfiles.every(function(profile) { return profile.active === false } )
     googleMarker.setIcon({
      url: (inactiveSingleProfile) ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
      size: iconSize,
@@ -68,5 +69,3 @@ class Marker {
     return (profilesArray.length > 0) ? true : false;
   }
 }
-
-export { Marker }

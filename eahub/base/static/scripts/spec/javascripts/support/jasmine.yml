@@ -15,6 +15,7 @@
         - maps/profile.js
         - maps/locationCluster.js
         - maps/locationClusters.js
+        - maps/marker.js
 
     # stylesheets
     #
@@ -56,6 +57,7 @@
       - "**/profile_spec.js"
       - "**/locationCluster_spec.js"
       - "**/locationClusters_spec.js"
+      - "**/marker_spec.js"
 
     # src_dir
     #

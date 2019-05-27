@@ -14,9 +14,9 @@
 <script type="text/javascript" src='/static/scripts/maps/profile.js'></script>
 <script type="text/javascript" src='/static/scripts/maps/locationCluster.js'></script>
 <script type="text/javascript" src='/static/scripts/maps/locationClusters.js'></script>
+<script type="text/javascript" src='/static/scripts/maps/marker.js'></script>
 <script type='module' >
   import { Map } from '/static/scripts/maps/heatmap.js'
-  import { Marker } from '/static/scripts/maps/marker.js'
   const initMap = function() {
     var query_string_map = "{{ request.GET.map|escapejs }}";
     var map_locations = JSON.parse(document.getElementById('map-locations').textContent);
