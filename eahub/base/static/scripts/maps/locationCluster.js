@@ -7,7 +7,7 @@ class LocationCluster {
   }
 
   addProfile(location) {
-    var newProfile = new this.map.mapModules.profile(this.location, this.map.type)
+    var newProfile = new this.map.mapModules.profile(location, this.map.type)
     this.profiles.push(newProfile)
   }
 
