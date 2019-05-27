@@ -1,145 +1,71 @@
-describe("Heatmap Module", function() {
-  var queryStringMap, profileMock, privateProfileMock, groupMock, isIEMock,
-  locationsMock, selectorIndMock, selectorGroupsMock,
-  mapElementMock, genericFunctionMock, documentMock, googleMock,
-  markerClustererMock, map, clusterMock, clusterMockOther, locationMock, locationClustersMock
-
-  var profileClass = class {
-    constructor(location, mapType) {
-      this.label = location.label != undefined ? location.label : undefined
-      this.anonymous = location.label != undefined ? false : true
-      this.path = location.path != undefined ? location.path : undefined
-      this.active = mapType == 'groups' ? true : undefined
-    }
-  }
-
+describe('Map', function() {
+  let mapIndividuals, mapGroups, mapModules, isIE
   beforeEach(function() {
-    queryStringMap = 'individuals'
-    profileMock = jasmine.createSpy('profileMock')
-    privateProfileMock = jasmine.createSpy('privateProfileMock')
-    groupMock = jasmine.createSpy('groupMock')
-    isIEMock = jasmine.createSpy('isIEMock')
-    locationMock = {lat: 50, lng: 0, path: "/path", label: "user"}
-    clusterMock = {lat: 50, lng: 0, profiles: [profileMock, privateProfileMock]}
-    clusterMockOther = {lat: 50, lng: 20, profiles: [profileMock, privateProfileMock]}
-    locationClustersMock = [clusterMock, clusterMockOther]
-    locationsMock = {
-      profiles: [profileMock],
-      private_profiles: [privateProfileMock],
-      groups: [groupMock]
+    isIE = false
+    mapModules = {
+      locationCluster: LocationCluster,
+      locationClusters: LocationClusters,
+      marker: Marker,
+      profile: Profile
     }
-    selectorIndMock = { checked: false }
-    selectorGroupsMock = { checked: false }
-    mapElementMock = 'mapElementMock'
-    genericFunctionMock = function() {
-      return null
-    }
-    documentMock = {
-      getElementById: function() { return mapElementMock }
-    }
-    googleMock = {
-      maps: {
-        LatLng: function(lat, lng) {
-          return {lat, lng}
-        },
-        InfoWindow: genericFunctionMock,
-        Map: function(mapElement, mapOptions) {
-          return {mapElement, mapOptions}
-        },
-        event: {
-          addListener: genericFunctionMock
-        },
-        Marker: function() {
-          return {
-            setIcon: genericFunctionMock,
-            addListener: genericFunctionMock,
-            setMap: genericFunctionMock
-          }
-        },
-        Size: genericFunctionMock
-      }
-    }
-    markerClustererMock = function(map, markers, properties) {
-      return 0
-    }
-    map = new mapObj(queryStringMap,locationsMock,selectorIndMock,selectorGroupsMock, googleMock, markerClustererMock, documentMock, isIEMock, profileClass)
+    mapIndividuals = new Map('individuals', locationsMock, mapModules, externalModulesMock, documentMock, isIE)
+    mapGroups = new Map('groups', locationsMock, mapModules, externalModulesMock, documentMock, isIE)
   })
+  afterEach(function() {
+    mapIndividuals = null
+    mapGroups = null
+  })
+  describe('setup', function() {
+    it('renders groups if type is groups', function() {
+      mapGroups.setup()
 
-  describe("setup function", function() {
-    it("renders map set in type", function() {
-      var spy = spyOn(map, 'render')
-
-      map.setup()
-
-      expect(spy).toHaveBeenCalledWith(locationsMock.profiles, locationsMock.private_profiles)
+      mapGroups.locationClusters.list.forEach(function(cluster) {
+        cluster.profiles.forEach(function(profile) {
+          expect(profile.type).toBe('groups')
+        })
+      })
     })
+    it('renders individuals if type is individuals', function() {
+      mapIndividuals.setup()
 
-    it("sets checked property of map toggler", function() {
-      map.setup()
-
-      expect(map.selectorInd.checked).toBe(true)
+      mapIndividuals.locationClusters.list.forEach(function(cluster) {
+        cluster.profiles.forEach(function(profile) {
+          expect(profile.type).toBe('individuals')
+        })
+      })
     })
+    it('sets the selector to individuals if queryStringMap is individuals', function() {
+      mapIndividuals.setup()
 
-    it("adds functionality to map togglers", function() {
-      var spy = spyOn(map, 'toggle')
+      expect(mapIndividuals.selectorInd.checked).toBe(true)
+    })
+    it('sets the selector to groups if queryStringMap is groups', function() {
+      mapGroups.setup()
 
-      map.setup()
-
-      expect(spy).toHaveBeenCalled()
+      expect(mapGroups.selectorGroups.checked).toBe(true)
     })
   })
-
-  describe("render function", function() {
-    it("creates location clusters", function() {
-      var spy = spyOn(map, 'createLocationClusters').and.callThrough()
-      map.render(map.locations.profiles, map.locations.private_profiles)
-      expect(spy).toHaveBeenCalled()
-    })
-    it("creates map", function() {
-      var spy = spyOn(map, 'createMap')
-      map.render(map.locations.profiles, map.locations.private_profiles)
-      expect(spy).toHaveBeenCalled()
-    })
-  })
-
-  describe("createMap function", function() {
-    it("returns map", function() {
-      var actual = map.createMap()
-
-      expect(actual.mapElement).toBe(mapElementMock)
-    })
-  })
-
-  describe("isSameLocation", function() {
-    var profileMock
+  describe('render', function() {
+    var klaipedaCluster, londonCluster
 
     beforeEach(function() {
-      profileMock = {lat: 50, lng: 0}
+      mapGroups.setup()
+      mapIndividuals.setup()
+      klaipedaMarker = mapGroups.locationClusters.list.filter(cluster => cluster.location.lat == klaipedaLatLng.lat && cluster.location.lng == klaipedaLatLng.lng)[0].markers[0]
+      londonMarker = mapIndividuals.locationClusters.list.filter(cluster => cluster.location.lat == londonLatLng.lat && cluster.location.lng == londonLatLng.lng)[0].markers[0]
     })
-
-    it("returns true if profile is in same location as cluster", function() {
-      expect(map.isSameLocation(profileMock, clusterMock)).toBe(true)
+    afterEach(function() {
+      mapGroups, mapIndividuals, klaiepdaMarker, londonMarker = null
     })
-
-    it("returns false if profile is in different location than cluster", function() {
-      expect(map.isSameLocation(profileMock, clusterMockOther)).toBe(false)
+    it('renders location clusters with number of profiles in that location', function() {
+      expect(klaipedaMarker.googleMarker.label.text).toEqual('2')
     })
-  })
-
-  describe("isinSameLocationAsOneOf", function() {
-    it("returns true if index is less than length of location clusters", function() {
-      expect(map.isinSameLocationAsOneOf(locationClustersMock, 1)).toBe(true)
+    it('does not count private profiles in markers where number of private profiles < kAnonymity', function() {
+      expect(londonMarker.googleMarker.label.text).toEqual('1')
     })
-    it("returns false if index is more or equal than length of location clusters", function() {
-      expect(map.isinSameLocationAsOneOf(locationClustersMock, 2)).toBe(false)
-    })
-  })
-
-  describe("countMarkersAt", function() {
-    it("returns 2 for location with 2 profiles in its cluster", function() {
-      expect(map.countMarkersAt(locationMock, locationClustersMock)).toBe(2)
+    it('adds the list of all public profiles in a location in its marker', function() {
+      expect(klaipedaMarker.googleMarker.desc).toContain('klaipeda-1')
+      expect(klaipedaMarker.googleMarker.desc).toContain('klaipeda-2')
     })
   })
-
-
-});
+})
