@@ -1,5 +1,5 @@
 describe('LocationClusters', function() {
-  let locationClustersMock, mapMock, locationClusterClassMock, profileClassMock, allLocationsMock, londonLatLng, klaipedaLatLng
+  let locationClustersMock, mapMock, allLocationsMock, londonLatLng, klaipedaLatLng
   beforeEach(function() {
     mapMock = {
       mapModules: {

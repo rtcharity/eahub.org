@@ -1,34 +1,10 @@
 describe('Marker', function() {
-  let marker, mapMock, googleMarkerMock, googleSizeMock, activeProfileMock,
-      inactiveProfileMock, profilesMock, locationMock
-
-
+  let marker, mapMock, profilesMock, locationMock
   beforeEach(function() {
-    googleMarkerMock = class {
-      constructor(props) {
-        this.label = props.label
-        this.setIcon = function(icon) {
-          this.icon = icon
-        }
-      }
-    }
-    googleSizeMock = class {
-      constructor(size1, size2) {
-        this.size1 = size1,
-        this.size2 = size2
-      }
-    }
     mapMock = {
-      google: {
-        maps: {
-          Marker: googleMarkerMock,
-          Size: googleSizeMock
-        }
-      },
+      google: googleMock,
       type: 'groups'
     }
-    activeProfileMock = {active: true}
-    inactiveProfileMock = {active: false}
     locationMock = {lat: 50, lng: 0}
   })
   afterEach(function() {
