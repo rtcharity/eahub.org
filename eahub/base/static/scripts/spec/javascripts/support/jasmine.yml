@@ -12,7 +12,9 @@
     #   - dist/**/*.js
     #
     src_files:
-        - maps/heatmap.js
+        - maps/profile.js
+        - maps/locationCluster.js
+        - maps/locationClusters.js
 
     # stylesheets
     #
@@ -51,7 +53,9 @@
     #   - **/*[sS]pec.js
     #
     spec_files:
-      - "**/*[Ss]pec.js"
+      - "**/profile_spec.js"
+      - "**/locationCluster_spec.js"
+      - "**/locationClusters_spec.js"
 
     # src_dir
     #

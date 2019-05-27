@@ -2,17 +2,23 @@ class LocationClusters {
   constructor(allLocations, map) {
     this.map = map
     this.list = this.create(allLocations)
-    this.markers = this.getMarkers()
+    this.markers = this.getGoogleMarkers()
   }
 
   add(newCluster) {
-    this.list.forEach(function(cluster, i) {
-      if (cluster.isSameLocation(cluster.location)) {
-        this.list[i] = newCluster
+    let that = this
+    let i = 0
+    while (i < that.list.length) {
+      let cluster = that.list[i]
+      if (cluster.isSameLocation(newCluster.location)) {
+        console.log('replace')
+        that.list[i] = newCluster
+        break
       } else {
-        this.list.push(newCluster)
+        i++
       }
-    })
+    }
+    if (i == that.list.length) that.list.push(newCluster)
   }
 
   create(allLocations) {
@@ -37,11 +43,9 @@ class LocationClusters {
         var profile = new profileClass(location, this.map.type)
         var newLocationCluster = new locationClusterClass(location, this.map)
         newLocationCluster.profiles = [profile]
-        console.log(newLocationCluster)
         list.push(newLocationCluster)
       }
     }
-    console.log(list)
     return list
   }
 
@@ -59,5 +63,3 @@ class LocationClusters {
     return (j < list.length)
   }
 }
-
-export { LocationClusters }

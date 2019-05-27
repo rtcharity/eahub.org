@@ -1,11 +1,11 @@
 class Marker {
-  constructor(isIE, google, googleMap, location, profiles, z=1) {
-    this.google = google
-    this.googleMap = googleMap
+  constructor(map, location, profiles, z=1) {
+    this.google = map.google
+    this.googleMap = map.googleMap
     this.location = location
     this.clusterSize = profiles.length
     this.clusterProfiles = profiles
-    this.googleMarker = this.create(isIE, z)
+    this.googleMarker = this.create(map.isIE, z)
   }
 
   create(isIE, z) {
