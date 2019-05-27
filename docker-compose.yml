@@ -8,6 +8,9 @@ services:
       - objstore
       - cache
       - mail
+      - webdriver
+      - chrome
+      - firefox
     ports:
       - 8000:8000
     volumes:
@@ -20,16 +23,21 @@ services:
       ADMINS: Local Admin=admin@example.com
       AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
       AZURE_CONTAINER: media
+      BROWSERS: chrome,firefox
       CACHE_URL: redis://cache:6379/0
       DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
       DEBUG: 'True'
+      DJANGO_LIVE_TEST_SERVER_ADDRESS: 'web'
       EMAIL_URL: smtp://mail:1025
       HOSTS: web,localhost
       HTTPS: 'False'
       LEAN_MANAGERS: Local Manager=leanmanager@example.com
+      PYTEST_ADDOPTS: --driver=Remote
+      PYTHONDONTWRITEBYTECODE: 'True'
       RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
       RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
       SECRET_KEY: development_secret_key
+      SELENIUM_HOST: webdriver
   db:
     image: postgres:10.5
     environment:
@@ -45,19 +53,6 @@ services:
     image: dockage/mailcatcher:0.6.5
     ports:
       - 8001:1080
-  e2e:
-    build: ./eahub_e2e/
-    depends_on:
-      - web
-      - webdriver
-      - chrome
-      - firefox
-    volumes:
-      - ./eahub_e2e/:/code/eahub_e2e/
-    environment:
-      BROWSERS: chrome,firefox
-      PYTEST_BASE_URL: http://web:8000
-      SELENIUM_HOST: webdriver
   webdriver:
     image: selenium/hub:3.141.59-iron
   chrome:

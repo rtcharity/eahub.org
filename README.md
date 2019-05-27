@@ -32,9 +32,9 @@ If the Dockerfile has changed since last time you did this, you'll need to run
 If the database schema has changed since last time, you'll need to run
 `docker-compose run web django-admin migrate`.
 
-# Running End-to-End Tests
+# Running Tests
 ```
-$ docker-compose run e2e
+$ docker-compose run --use-aliases web pytest
 ```
 
 # Deploying
