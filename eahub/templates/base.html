@@ -82,23 +82,23 @@
       <div id="navbar" class="navbar-menu">
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
-            <li class="navbar-signup-xs"><a name="navbar_link" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+            <li class="navbar-signup-xs"><a name="navbar_link" href="{% url 'my_profile' %}"><i class="fa fa-user" id="myprofile"></i> My Profile</a></li>
           {% else %}
           {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-            <li><a name="navbar_link" href="{% url 'account_login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
-            <li><a name="navbar_link" href="{% url 'account_signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+            <li><a name="navbar_link" href="{% url 'account_login' %}"><i class="fa fa-sign-in" id="login"></i> Log In</a></li>
+            <li><a name="navbar_link" href="{% url 'account_signup' %}"><i class="fa fa-user-plus" id="signup"></i> Sign Up</a></li>
           {% endif %}
           {% endif %}
           {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-          <li><a name="navbar_link" href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
+          <li><a name="navbar_link" href="{% url 'profiles' %}"><i class="fa fa-users" id="profiles"></i> Profiles</a></li>
           {% endif %}
-          <li><a name="navbar_link" href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
-          <li><a name="navbar_link" href="https://resources.eahub.org/"><i class="fa fa-book"></i> EA Resources</a></li>
-          <li><a name="navbar_link" href="https://donationswap.eahub.org/"><i class="fa fa-exchange"></i> EA Donation Swap</a></li>
-          <li><a name="navbar_link" href="{% url 'about' %}"><i class="fa fa-info"></i> About</a></li>
-          <li><a name="navbar_link" target="_blank" href="https://feedback.eahub.org"><i class="fa fa-comment"></i> Feedback</a></li>
+          <li><a name="navbar_link" href="{% url 'groups' %}"><i class="fa fa-globe" id="groups"></i> Groups</a></li>
+          <li><a name="navbar_link" href="https://resources.eahub.org/"><i class="fa fa-book" id="resources"></i> EA Resources</a></li>
+          <li><a name="navbar_link" href="https://donationswap.eahub.org/"><i class="fa fa-exchange" id="donation_swap"></i> EA Donation Swap</a></li>
+          <li><a name="navbar_link" href="{% url 'about' %}"><i class="fa fa-info" id="about"></i> About</a></li>
+          <li><a name="navbar_link" target="_blank" href="https://feedback.eahub.org" id="feedback"><i class="fa fa-comment"></i> Feedback</a></li>
           {% if user.is_authenticated %}
-            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}"><i class="fa fa-sign-out"></i> Log out</a></li>
+            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}"><i class="fa fa-sign-out" id="logout"></i> Log out</a></li>
           {% endif %}
         </ul>
       </div>

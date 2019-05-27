@@ -12,9 +12,9 @@
   <div class="row profile-head">
     <div class="col-xs-12 col-md-3">
       {% thumbnail profile.image "200x200" crop="center" as im %}
-        <img class="profile_picture" src="{{ im.url }}">
+        <img class="profile_picture" id="profile_picture" src="{{ im.url }}">
       {% empty %}
-        <img class="profile_picture" src="/static/images/avatars/{{ profile.image_placeholder }}">
+        <img class="profile_picture" id="profile_picture" src="/static/images/avatars/{{ profile.image_placeholder }}">
       {% endthumbnail %}
       {% if not profile.is_public %}
       <div class="privacy-banner hub-info" title="This profile is not public. Click on 'Edit' to change your settings."><i class="fa fa-lock"></i>Private profile</div>
@@ -24,13 +24,13 @@
       <h1 class="word-break">{{ profile.name }}</h1>
       {% if user.id == profile.user_id %}
       <div class="btn btn-default purple">
-        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a></span>
+        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil" id="account_edit_profile"></i> Edit</a></span>
       </div>
       <div class="btn btn-default purple">
-        <span><a href="{% url 'account_email' %}"><i class="fa fa-pencil"></i> Change Email Address</a></span>
+        <span><a href="{% url 'account_email' %}"><i class="fa fa-pencil" id="account_change_email"></i> Change Email Address</a></span>
       </div>
       <div class="btn btn-default purple">
-        <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil"></i> Change Password</a></span>
+        <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil" id="account_change_password"></i> Change Password</a></span>
       </div>
       {% else %}
       <div class="btn btn-default purple">
@@ -203,8 +203,8 @@
   {% if user.id == profile.user_id %}
   <div class="text-center">
     <div class="btn-group btn-group-sm text-center" role="group">
-        <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button></a>
-        <a href="{% url 'delete_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button></a>
+        <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download" id="profile_download"></i> Download My Profile Data</button></a>
+        <a href="{% url 'delete_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-trash" id="profile_delete"></i> Delete My Profile</button></a>
     </div>
   </div>
   {% else %}
