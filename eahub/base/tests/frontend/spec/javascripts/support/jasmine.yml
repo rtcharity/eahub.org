@@ -70,7 +70,7 @@
     #
     # src_dir: public
     #
-    src_dir:
+    src_dir: ../../static/scripts
 
     # spec_dir
     #
