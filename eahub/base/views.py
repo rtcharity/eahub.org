@@ -69,8 +69,10 @@ def profiles(request):
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': profilesData["rows"],
-        'map_data_profiles': profilesData["map_data"],
-        'private_profiles': privateProfiles
+        'map_locations': {
+            "profiles": profilesData["map_data"],
+            "private_profiles": privateProfiles
+        }
     })
 
 def groups(request):
@@ -78,7 +80,9 @@ def groups(request):
     return render(request, 'eahub/groups.html', {
         'page_name': 'Groups',
         'groups': groupsData["rows"],
-        'map_data_groups': groupsData["map_data"]
+        'map_locations': {
+            "profiles": groupsData["map_data"]
+        }
     })
 
 def getGroupsData():
