@@ -111,6 +111,17 @@ let htmlElementsMock = {
     map: 'mapElementMock'
 }
 
+const markerSettingsMock = {
+  image: {
+    active: '/static/images/marker_active.svg',
+    inactive: '/static/images/marker_inactive.svg'
+  },
+  size: {
+    fullmap: { width: 40, height: 40 },
+    profilemap: { width: 20, height: 23 }
+  }
+}
+
 let markerClustererMock = class {
   constructor(map, markers, options) {
     this.map = map,
