@@ -1,27 +1,39 @@
+const MARKERSETTINGS = {
+  image: {
+    active: '/static/images/marker_active.svg',
+    inactive: '/static/images/marker_inactive.svg'
+  },
+  size: {
+    fullmap: { width: 40, height: 40 },
+    profilemap: { width: 20, height: 23 }
+  }
+}
+
 class Heatmap {
   constructor(queryStringMap, locations, mapModules, externalModules, htmlElements, isIE) {
     this.minClusterZoom = 14;
-    this.type = (queryStringMap !== 'individuals') ? 'groups' : 'individuals'
-    this.locations = locations
-    this.mapModules = mapModules
-    this.selectorInd = htmlElements.selectorInd
-    this.selectorGroups = htmlElements.selectorGroups
-    this.element = htmlElements.map
-    this.locationClusters = null
-    this.google = externalModules.google
+    this.type = (queryStringMap !== 'individuals') ? 'groups' : 'individuals';
+    this.locations = locations;
+    this.mapModules = mapModules;
+    this.selectorInd = htmlElements.selectorInd;
+    this.selectorGroups = htmlElements.selectorGroups;
+    this.element = htmlElements.map;
+    this.locationClusters = null;
+    this.google = externalModules.google;
     this.markerClusterer = externalModules.markerClusterer
-    this.isIE = isIE
-    this.googleMap = null
+    this.isIE = isIE;
+    this.googleMap = null;
+    this.markerSettings = MARKERSETTINGS;
   }
 
   setup() {
     if (this.type === 'individuals') {
       this.render(this.locations.profiles, this.locations.private_profiles);
-      this.selectorInd.checked = true
+      this.selectorInd.checked = true;
     }
     if (this.type === 'groups') {
       this.render(this.locations.groups);
-      this.selectorGroups.checked = true
+      this.selectorGroups.checked = true;
     }
     this.toggle();
   }
@@ -47,9 +59,7 @@ class Heatmap {
   }
 
   renderProfilePageMap() {
-    console.log(this.locations)
     var profileLocations = this.locations.profiles[0]
-    console.log(profileLocations)
     var mapOptions = {
         zoom: 3,
         center: new this.google.maps.LatLng(profileLocations.lat, profileLocations.lng),
@@ -71,9 +81,9 @@ class Heatmap {
           map: map,
           optimized: !this.isIE  // makes SVG icons work in IE
       });
-      var iconSize = new google.maps.Size(20, 23);
+      var iconSize = new google.maps.Size(this.markerSettings.size.profilemap.width, this.markerSettings.size.profilemap.height);
       marker.setIcon({
-       url: profileLocations.active ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
+       url: profileLocations.active ? this.markerSettings.image.inactive : this.markerSettings.image.active,
        size: iconSize,
        scaledSize: iconSize  // makes SVG icons work in IE
       });
