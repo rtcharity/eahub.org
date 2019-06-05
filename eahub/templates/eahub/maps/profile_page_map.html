@@ -14,7 +14,6 @@
       var lat = parseFloat("{{ lat|escapejs }}");
       var lon = parseFloat("{{ lon|escapejs }}");
       var active = parseFloat("{{ active|escapejs }}");
-      // renderMap(lat, lon, inactive_group);
       var mapLocations = {
         profiles: [{lat: lat, lng: lon, active: active}]
       }
