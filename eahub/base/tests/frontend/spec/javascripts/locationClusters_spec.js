@@ -43,8 +43,6 @@ describe('LocationClusters', function() {
     it('update existing cluster in list if location is the same', function() {
       let clusterKlaipedaMock = { location: klaipedaLatLng, profiles: [{label: 'Klaipeda1'}, {label: 'Klaipeda2'}]}
       locationClusters.add(clusterKlaipedaMock)
-
-      console.log(locationClusters)
       expect(locationClusters.list.length).toEqual(2)
       expect(locationClusters.list[1].profiles[1].label).toBe('Klaipeda2')
     })
