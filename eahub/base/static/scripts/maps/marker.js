@@ -1,26 +1,25 @@
 class Marker {
   constructor(map, location, profiles, z=1) {
-    this.google = map.google
-    this.googleMap = map.googleMap
-    this.location = location
-    this.clusterSize = profiles.length
-    this.clusterProfiles = profiles
-    this.clusterType = map.type
-    this.googleMarker = this.create(map.isIE, z)
+    this.google = map.google;
+    this.googleMap = map.googleMap;
+    this.location = location;
+    this.clusterSize = profiles.length;
+    this.clusterProfiles = profiles;
+    this.clusterType = map.type;
+    this.googleMarker = this.create(map.isIE, map.markerSettings, z);
   }
 
-  create(isIE, z) {
+  create(isIE, markerSettings, z) {
     var googleMarker = new this.google.maps.Marker({
         position: this.location,
         label: {text: this.clusterSize.toString(), color: 'white', fontSize: '11px'},
         optimized: !isIE,  // makes SVG icons work in IE
         zIndex: z
     });
-
-    var iconSize = new this.google.maps.Size(40, 40);
+    var iconSize = new this.google.maps.Size(markerSettings.size.fullmap.width, markerSettings.size.fullmap.height);
     var inactiveSingleProfile = this.clusterType == 'groups' && this.clusterProfiles.every(function(profile) { return profile.active === 'False' } )
     googleMarker.setIcon({
-     url: (inactiveSingleProfile) ? '/static/images/marker_inactive.svg' : '/static/images/marker_active.svg',
+     url: (inactiveSingleProfile) ? markerSettings.image.inactive : markerSettings.image.active,
      size: iconSize,
      scaledSize: iconSize  // makes SVG icons work in IE
     });
