@@ -3,7 +3,8 @@ describe('Marker', function() {
   beforeEach(function() {
     mapMock = {
       google: googleMock,
-      type: 'groups'
+      type: 'groups',
+      markerSettings: markerSettingsMock
     }
 
   })
