@@ -37,6 +37,10 @@ If the database schema has changed since last time, you'll need to run
 $ docker-compose run --use-aliases web pytest
 ```
 
+## Running Frontend Tests Locally
+Go to ```eahub/base/tests/frontend``` and run ```jasmine server```.  
+The test suits open up at ```http://localhost:8888``` 
+
 # Deploying
 After uploading a new docker image, the website will automatically update
 ```

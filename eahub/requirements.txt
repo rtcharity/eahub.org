@@ -28,6 +28,7 @@ django-sluggable==0.6.1
 django-allauth==0.39.1
 django-recaptcha==2.0.2
 django-pwned-passwords==3.0.0
+jasmine==3.4.0
 pytest==4.3.0
 pytest-django==3.4.8
 pytest-selenium==1.16.0
