@@ -5,7 +5,7 @@ Backend for [https://eahub.org](https://eahub.org)
 # Setup
 
 1.  Make sure to have [Docker Compose](https://docs.docker.com/compose)
-    installed.
+    installed. (Note: You may need to follow these [post-installation steps](https://docs.docker.com/install/linux/linux-postinstall/).)
 
 1.  Add the following line to your hosts file (`/etc/hosts` on Mac or Linux,
     `%SystemRoot%\System32\drivers\etc\hosts` on Windows):
@@ -25,6 +25,9 @@ Backend for [https://eahub.org](https://eahub.org)
 ```
 $ docker-compose up
 ```
+
+If everything went well, you should have a number of containers now being served (use `docker ps` to get a list of them). 
+You should be able to get the Hub at http://localhost:8000. 
 
 If the Dockerfile has changed since last time you did this, you'll need to run
 `docker-compose up --build` or `docker-compose build`.
