@@ -54,5 +54,3 @@ urlpatterns = [
     path('user.php/', views.LegacyRedirectView.as_view(pattern_name='my_profile')),
     path('wp-login.php/', views.LegacyRedirectView.as_view(pattern_name='account_login')),
 ]
-
-handler404 = "eahub.base.views.page_not_found"
