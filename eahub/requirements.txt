@@ -32,3 +32,5 @@ jasmine==3.4.0
 pytest==4.3.0
 pytest-django==3.4.8
 pytest-selenium==1.16.0
+django-referrer-policy==1.0
+django-feature-policy==2.3.0
