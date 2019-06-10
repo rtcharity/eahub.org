@@ -18,7 +18,6 @@ from django.conf import settings
 from django.shortcuts import redirect
 
 
-from . import exceptions
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from .forms import ReportAbuseForm
@@ -179,12 +178,3 @@ class ReportAbuseView(FormView):
 
 def healthCheck(request):
     return HttpResponse(status=204)
-
-
-def page_not_found(request, exception):
-    if not isinstance(exception, exceptions.Quiet404):
-        mail.mail_managers(
-            "Broken link",
-            loader.render_to_string("emails/broken_link.txt", {"request": request}),
-        )
-    return defaults.page_not_found(request, exception)
