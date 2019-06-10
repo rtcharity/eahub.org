@@ -1,7 +1,6 @@
 from django.core import exceptions
 import environ
 from django.utils.safestring import mark_safe
-import django_feature_policy
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -199,7 +198,25 @@ RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 # django-feature-policy
-FEATURE_POLICY = {feature: "none" for feature in django_feature_policy.FEATURE_NAMES}
+FEATURE_POLICY = {
+    "accelerometer": "none",
+    "ambient-light-sensor": "none",
+    "autoplay": "none",
+    "camera": "none",
+    "encrypted-media": "none",
+    "fullscreen": "none",
+    "geolocation": "none",
+    "gyroscope": "none",
+    "magnetometer": "none",
+    "microphone": "none",
+    "midi": "none",
+    "payment": "none",
+    "picture-in-picture": "none",
+    "speaker": "none",
+    "sync-xhr": "none",
+    "usb": "none",
+    "vr": "none",
+}
 
 # Django PWNED Passwords
 PWNED_VALIDATOR_ERROR = mark_safe("Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>.")
