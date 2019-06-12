@@ -1,16 +1,38 @@
 {% block map %}
 
-{% if lat and lon %}
+{% if profile %}
   <div id="profile_page_map" class="map"></div>
   <script src="/static/scripts/maps/markerclusterer.js"></script>
-  <script src="/static/scripts/maps/profile_link.js"></script>
+  <script type="text/javascript" src='/static/scripts/maps/profile.js'></script>
+  <script type="text/javascript" src='/static/scripts/maps/locationCluster.js'></script>
+  <script type="text/javascript" src='/static/scripts/maps/locationClusters.js'></script>
+  <script type="text/javascript" src='/static/scripts/maps/marker.js'></script>
+  <script type="text/javascript" src='/static/scripts/maps/heatmap.js'></script>
   <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
   <script>
     function initMap() {
       var lat = parseFloat("{{ lat|escapejs }}");
       var lon = parseFloat("{{ lon|escapejs }}");
-      var inactive_group = ("{{ active|escapejs }}" == "False") ? true : false
-      renderMap(lat, lon, inactive_group);
+      var active = parseFloat("{{ active|escapejs }}");
+      var mapLocations = {
+        profiles: [{lat: lat, lng: lon, active: active}]
+      }
+
+      var htmlElements = {
+        map: document.getElementById('profile_page_map')
+      }
+      var mapModules = {
+        locationCluster: LocationCluster,
+        locationClusters: LocationClusters,
+        marker: Marker,
+        profile: Profile,
+      }
+      var externalModules = {
+        google: google,
+        markerClusterer: MarkerClusterer
+      }
+      var profilePageMap = new Heatmap(undefined, mapLocations, mapModules, externalModules, htmlElements, isIE)
+      profilePageMap.renderProfilePageMap()
     }
   </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>

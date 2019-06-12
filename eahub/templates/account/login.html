@@ -13,7 +13,7 @@
 <div class="field">
   {% if form.non_field_errors %}
     {% for error in form.non_field_errors %}
-        <div class="alert alert-danger login-danger">{{ error }}</div>
+        <div class="alert alert-danger login-danger" id="login-danger">{{ error }}</div>
     {% endfor %}
   {% endif %}
 </div>

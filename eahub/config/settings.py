@@ -1,6 +1,7 @@
 from django.core import exceptions
 import environ
 from django.utils.safestring import mark_safe
+import django_feature_policy
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -49,6 +50,8 @@ USE_TZ = True
 ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1"]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
+    "django_feature_policy.FeaturePolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -195,9 +198,15 @@ RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
+# django-feature-policy
+FEATURE_POLICY = {feature: "none" for feature in django_feature_policy.FEATURE_NAMES}
+
 # Django PWNED Passwords
 PWNED_VALIDATOR_ERROR = mark_safe("Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>.")
 PWNED_VALIDATOR_FAIL_SAFE = False
+
+# django-referrer-policy
+REFERRER_POLICY = "no-referrer-when-downgrade"
 
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True

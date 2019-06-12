@@ -5,7 +5,7 @@ Backend for [https://eahub.org](https://eahub.org)
 # Setup
 
 1.  Make sure to have [Docker Compose](https://docs.docker.com/compose)
-    installed.
+    installed. (Note: You may need to follow these [post-installation steps](https://docs.docker.com/install/linux/linux-postinstall/).)
 
 1.  Add the following line to your hosts file (`/etc/hosts` on Mac or Linux,
     `%SystemRoot%\System32\drivers\etc\hosts` on Windows):
@@ -26,6 +26,9 @@ Backend for [https://eahub.org](https://eahub.org)
 $ docker-compose up
 ```
 
+If everything went well, you should have a number of containers now being served (use `docker ps` to get a list of them). 
+You should be able to get the Hub at http://localhost:8000. 
+
 If the Dockerfile has changed since last time you did this, you'll need to run
 `docker-compose up --build` or `docker-compose build`.
 
@@ -36,6 +39,10 @@ If the database schema has changed since last time, you'll need to run
 ```
 $ docker-compose run --use-aliases web pytest
 ```
+
+## Running Frontend Tests Locally
+Go to ```eahub/base/tests/frontend``` and run ```jasmine server```.  
+The test suits open up at ```http://localhost:8888``` 
 
 # Deploying
 After uploading a new docker image, the website will automatically update
@@ -62,6 +69,12 @@ $ docker login eahub.azurecr.io
 >>> username: eahub
 >>> password: <see lastpass>
 ```
+
+# Browser Support Policy
+
+We support the most recent version of Google Chrome, Mozilla Firefox, Safari, and Microsoft Edge.
+
+We support browsers with JavaScript disabled, but they will receive a degraded experience without dynamic client-side functionality. Because our JavaScript works only in modern browsers, legacy browsers like Internet Explorer receive the same degraded experience.
 
 # Commit Message Practices
 

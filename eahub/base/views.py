@@ -18,7 +18,6 @@ from django.conf import settings
 from django.shortcuts import redirect
 
 
-from . import exceptions
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from .forms import ReportAbuseForm
@@ -69,8 +68,10 @@ def profiles(request):
     return render(request, 'eahub/profiles.html', {
         'page_name': 'Profiles',
         'profiles': profilesData["rows"],
-        'map_data_profiles': profilesData["map_data"],
-        'private_profiles': privateProfiles
+        'map_locations': {
+            "profiles": profilesData["map_data"],
+            "private_profiles": privateProfiles
+        }
     })
 
 def groups(request):
@@ -78,7 +79,9 @@ def groups(request):
     return render(request, 'eahub/groups.html', {
         'page_name': 'Groups',
         'groups': groupsData["rows"],
-        'map_data_groups': groupsData["map_data"]
+        'map_locations': {
+            "profiles": groupsData["map_data"]
+        }
     })
 
 def getGroupsData():
@@ -175,12 +178,3 @@ class ReportAbuseView(FormView):
 
 def healthCheck(request):
     return HttpResponse(status=204)
-
-
-def page_not_found(request, exception):
-    if not isinstance(exception, exceptions.Quiet404):
-        mail.mail_managers(
-            "Broken link",
-            loader.render_to_string("emails/broken_link.txt", {"request": request}),
-        )
-    return defaults.page_not_found(request, exception)
