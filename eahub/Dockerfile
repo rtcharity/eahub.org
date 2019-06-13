@@ -1,5 +1,5 @@
 	
-FROM	python:3.6
+FROM	python:3.7
 RUN	mkdir /code/
 COPY	.	/code/eahub/
 WORKDIR	/code/
