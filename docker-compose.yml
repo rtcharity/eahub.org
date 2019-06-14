@@ -1,7 +1,7 @@
 version: '3'
 services:
   web:
-    build: ./eahub/
+    build: .
     command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
     depends_on:
       - db
@@ -14,7 +14,7 @@ services:
     ports:
       - 8000:8000
     volumes:
-      - ./eahub/:/code/eahub/
+      - .:/code
     environment:
       APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
       LEGACY_DATABASE_URL:
