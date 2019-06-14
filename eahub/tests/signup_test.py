@@ -7,7 +7,7 @@ from selenium.webdriver.common.keys import Keys
 
 @pytest.mark.nondestructive
 def test_signup_success(driver, live_server):
-    signup_button = '#navbar_signup'
+    signup_button = "#navbar_signup"
     name_field = "#id_name"
     email_field = "#id_email"
     password_field_1 = "#id_password1"
@@ -33,7 +33,9 @@ def test_signup_success(driver, live_server):
     driver.find_element(By.CSS_SELECTOR, public).click()
 
     # Recaptcha solved
-    driver.find_element(By.CSS_SELECTOR, password_field_2).send_keys(Keys.TAB + Keys.TAB + Keys.SPACE)
+    driver.find_element(By.CSS_SELECTOR, password_field_2).send_keys(
+        Keys.TAB + Keys.TAB + Keys.SPACE
+    )
     time.sleep(5)
 
     # Then:

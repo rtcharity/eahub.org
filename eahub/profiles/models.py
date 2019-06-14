@@ -185,15 +185,16 @@ class OrganisationalAffiliation(enum.Enum):
         THE_GOOD_FOOD_INSTITUTE: "The Good Food Institute",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative",
-        ALLFED: "ALLFED"
+        ALLFED: "ALLFED",
     }
 
+
 def prettify_property_list(property_class, standard_list, other_list):
-    pretty_list = ''
+    pretty_list = ""
     if standard_list:
         pretty_list += ", ".join(map(property_class.label, standard_list))
     if other_list:
-        pretty_list = pretty_list + ', ' + other_list if standard_list else other_list
+        pretty_list = pretty_list + ", " + other_list if standard_list else other_list
     if (standard_list and other_list) is False:
         pretty_list = "N/A"
     return pretty_list
@@ -274,7 +275,7 @@ class Profile(models.Model):
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
     )
-    local_groups = models.ManyToManyField(LocalGroup, through='Membership', blank=True)
+    local_groups = models.ManyToManyField(LocalGroup, through="Membership", blank=True)
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )
@@ -305,10 +306,14 @@ class Profile(models.Model):
         return self
 
     def get_pretty_cause_areas(self):
-        return prettify_property_list(CauseArea,self.cause_areas,self.cause_areas_other)
+        return prettify_property_list(
+            CauseArea, self.cause_areas, self.cause_areas_other
+        )
 
     def get_pretty_expertise(self):
-        return prettify_property_list(ExpertiseArea,self.expertise_areas,self.expertise_areas_other)
+        return prettify_property_list(
+            ExpertiseArea, self.expertise_areas, self.expertise_areas_other
+        )
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
@@ -318,13 +323,20 @@ class Profile(models.Model):
 
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
-            return ", ".join(map(OrganisationalAffiliation.label, self.organisational_affiliations))
+            return ", ".join(
+                map(OrganisationalAffiliation.label, self.organisational_affiliations)
+            )
         else:
             return "N/A"
 
     def get_pretty_local_groups(self):
         if self.local_groups:
-            return ", ".join(['{local_group}'.format(local_group=x.name) for x in self.local_groups.all()])
+            return ", ".join(
+                [
+                    "{local_group}".format(local_group=x.name)
+                    for x in self.local_groups.all()
+                ]
+            )
         else:
             return "N/A"
 
@@ -418,7 +430,7 @@ class Profile(models.Model):
         career_details_exist = [
             len(self.expertise_areas),
             len(self.expertise_areas_other),
-            self.open_to_job_offers == True
+            self.open_to_job_offers == True,
         ]
         return self.some_true(career_details_exist)
 
@@ -428,7 +440,7 @@ class Profile(models.Model):
             self.local_groups.exists(),
             self.user.localgroup_set.exists(),
             self.available_as_speaker == True,
-            len(self.topics_i_speak_about) > 0
+            len(self.topics_i_speak_about) > 0,
         ]
         return self.some_true(community_details_exist)
 
