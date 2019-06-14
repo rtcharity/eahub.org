@@ -219,7 +219,9 @@ FEATURE_POLICY = {
 }
 
 # Django PWNED Passwords
-PWNED_VALIDATOR_ERROR = mark_safe("Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>.")
+PWNED_VALIDATOR_ERROR = mark_safe(
+    "Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>."
+)
 PWNED_VALIDATOR_FAIL_SAFE = False
 
 # django-referrer-policy

@@ -8,14 +8,19 @@ import eahub.profiles.models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('profiles', '0001_initial'),
-    ]
+    dependencies = [("profiles", "0001_initial")]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='organisational_affiliations',
-            field=django.contrib.postgres.fields.ArrayField(base_field=django_enumfield.db.fields.EnumField(default=1, enum=eahub.profiles.models.OrganisationalAffiliation), blank=True, default=list, size=None),
-        ),
+            model_name="profile",
+            name="organisational_affiliations",
+            field=django.contrib.postgres.fields.ArrayField(
+                base_field=django_enumfield.db.fields.EnumField(
+                    default=1, enum=eahub.profiles.models.OrganisationalAffiliation
+                ),
+                blank=True,
+                default=list,
+                size=None,
+            ),
+        )
     ]

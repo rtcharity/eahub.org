@@ -34,3 +34,5 @@ pytest-django==3.4.8
 pytest-selenium==1.16.0
 django-referrer-policy==1.0
 django-feature-policy==2.3.0
+black==19.3b0
+pytest-black==0.3.7

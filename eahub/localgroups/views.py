@@ -51,7 +51,7 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     model = LocalGroup
     form_class = LocalGroupForm
     template_name = "eahub/edit_group.html"
-    permission_required = 'localgroups.change_local_group'
+    permission_required = "localgroups.change_local_group"
 
     def get_form_kwargs(self):
         return {**super().get_form_kwargs(), "user": self.request.user}
@@ -65,16 +65,16 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
     model = LocalGroup
     template_name = "eahub/delete_group.html"
-    success_url = urls.reverse_lazy('groups')
-    permission_required = 'localgroups.delete_local_group'
+    success_url = urls.reverse_lazy("groups")
+    permission_required = "localgroups.delete_local_group"
+
 
 class ReportGroupAbuseView(ReportAbuseView):
-
     def profile(self):
-        return LocalGroup.objects.get(slug=self.kwargs['slug'])
+        return LocalGroup.objects.get(slug=self.kwargs["slug"])
 
     def get_type(self):
-        return 'group'
+        return "group"
 
 
 @login_required
@@ -83,24 +83,36 @@ def claim_group(request, slug):
     group = get_object_or_404(LocalGroup, slug=slug)
     subject = "EA Group claimed: {0}".format(group.name)
     try:
-        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+        user_eahub_url = "https://{0}/profile/{1}".format(
+            get_current_site(request).domain, request.user.profile.slug
+        )
         user_name = request.user.profile.name
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
         user_name = request.user.email
-    message = render_to_string('emails/claim_group.txt', {
-        'user_eahub_url': user_eahub_url,
-        'user_name': user_name,
-        'group_name': group.name,
-        'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
-        'user_email': request.user.email
-    })
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+    message = render_to_string(
+        "emails/claim_group.txt",
+        {
+            "user_eahub_url": user_eahub_url,
+            "user_name": user_name,
+            "group_name": group.name,
+            "group_url": "https://{0}/group/{1}".format(
+                get_current_site(request).domain, group.slug
+            ),
+            "user_email": request.user.email,
+        },
+    )
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        recipient_list=settings.LEAN_MANAGERS,
+    )
     messages.success(
         request,
-        ''' Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. ''',
+        """ Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. """,
     )
-    return redirect('/group/{}'.format(group.slug))
+    return redirect("/group/{}".format(group.slug))
 
 
 @login_required
@@ -109,19 +121,31 @@ def report_group_inactive(request, slug):
     group = get_object_or_404(LocalGroup, slug=slug)
     subject = "EA Group reported as inactive: {0}".format(group.name)
     try:
-        user_eahub_url = "https://{0}/profile/{1}".format(get_current_site(request).domain,request.user.profile.slug)
+        user_eahub_url = "https://{0}/profile/{1}".format(
+            get_current_site(request).domain, request.user.profile.slug
+        )
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
-    message = render_to_string('emails/report_group_inactive.txt', {
-        'user_eahub_url': user_eahub_url,
-        'user_name': request.user.profile.name,
-        'group_name': group.name,
-        'group_url': "https://{0}/group/{1}".format(get_current_site(request).domain,group.slug),
-        'user_email': request.user.email
-    })
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=settings.LEAN_MANAGERS)
+    message = render_to_string(
+        "emails/report_group_inactive.txt",
+        {
+            "user_eahub_url": user_eahub_url,
+            "user_name": request.user.profile.name,
+            "group_name": group.name,
+            "group_url": "https://{0}/group/{1}".format(
+                get_current_site(request).domain, group.slug
+            ),
+            "user_email": request.user.email,
+        },
+    )
+    send_mail(
+        subject,
+        message,
+        settings.DEFAULT_FROM_EMAIL,
+        recipient_list=settings.LEAN_MANAGERS,
+    )
     messages.success(
         request,
-        ''' Thank you, we have received your report. Our admin team will send you an email once they have looked into it. ''',
+        """ Thank you, we have received your report. Our admin team will send you an email once they have looked into it. """,
     )
-    return redirect('/group/{}'.format(group.slug))
+    return redirect("/group/{}".format(group.slug))

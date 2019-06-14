@@ -44,6 +44,12 @@ $ docker-compose run --use-aliases web pytest
 Go to ```eahub/base/tests/frontend``` and run ```jasmine server```.  
 The test suits open up at ```http://localhost:8888``` 
 
+# Formatting Code
+```
+$ docker-compose run web black .
+```
+You must run this before sending a pull request or else it will be automatically blocked from merging.
+
 # Deploying
 After uploading a new docker image, the website will automatically update
 ```
