@@ -1,6 +1,5 @@
 import csv
 
-from django.conf import settings
 from django.contrib.auth import tokens
 from django.core.management import base
 from django import urls

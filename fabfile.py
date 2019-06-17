@@ -9,7 +9,7 @@ def build():
 
 
 def run():
-    local("docker-compose run --service-ports web")  #  with ipdb support
+    local("docker-compose run --service-ports web")  # with ipdb support
     # local('docker-compose up') #  without ipdb support
 
 

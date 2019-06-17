@@ -111,7 +111,7 @@ LOGGING = {
 }
 
 # Core settings: models
-from .build_settings import INSTALLED_APPS
+from .build_settings import INSTALLED_APPS  # noqa: F401
 
 # Core settings: security
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
@@ -144,7 +144,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django_pwned_passwords.password_validation.PWNEDPasswordValidator"},
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        "NAME": (
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+        )
     },
 ]
 AUTHENTICATION_BACKENDS = [
@@ -164,7 +166,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 # Static files
-from .build_settings import STATIC_ROOT, STATIC_URL, STATICFILES_STORAGE
+from .build_settings import STATIC_ROOT, STATIC_URL, STATICFILES_STORAGE  # noqa: F401
 
 # Application Insights
 APPLICATION_INSIGHTS = {
@@ -220,7 +222,8 @@ FEATURE_POLICY = {
 
 # Django PWNED Passwords
 PWNED_VALIDATOR_ERROR = mark_safe(
-    "Your password was determined to have been involved in a major security breach in the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>."
+    "Your password was determined to have been involved in a major security breach in "
+    "the <a target='_blank' href='https://haveibeenpwned.com/passwords'>past</a>."
 )
 PWNED_VALIDATOR_FAIL_SAFE = False
 
@@ -249,5 +252,6 @@ elif (
     }
 else:
     raise exceptions.ImproperlyConfigured(
-        "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be provided together"
+        "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
+        "provided together"
     )

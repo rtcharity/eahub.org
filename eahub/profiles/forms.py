@@ -1,6 +1,5 @@
 from captcha import fields
 from django import forms
-from allauth.account.forms import PasswordField
 
 from .models import Profile, validate_sluggable_name
 from ..localgroups.models import LocalGroup
@@ -42,7 +41,8 @@ class EditProfileForm(forms.ModelForm):
             "summary": forms.Textarea(
                 attrs={
                     "rows": 7,
-                    "placeholder": "In West Philadelphia born and raised. On the playground is where I spent most of my days.",
+                    "placeholder": "In West Philadelphia born and raised. "
+                    "On the playground is where I spent most of my days.",
                 }
             ),
         }

@@ -1,18 +1,15 @@
 from django import urls
 from django.contrib.auth import mixins as auth_mixins
-from django.db import models
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
-from django.urls import reverse_lazy
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.contrib.sites.shortcuts import get_current_site
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse
 from django.conf import settings
 
 from .forms import LocalGroupForm
@@ -110,7 +107,8 @@ def claim_group(request, slug):
     )
     messages.success(
         request,
-        """ Thank you, we have received your request to claim this group. Our admin team will send you an email once they have checked your request. """,
+        "Thank you, we have received your request to claim this group. "
+        "Our admin team will send you an email once they have checked your request.",
     )
     return redirect("/group/{}".format(group.slug))
 
@@ -146,6 +144,7 @@ def report_group_inactive(request, slug):
     )
     messages.success(
         request,
-        """ Thank you, we have received your report. Our admin team will send you an email once they have looked into it. """,
+        "Thank you, we have received your report. "
+        "Our admin team will send you an email once they have looked into it.",
     )
     return redirect("/group/{}".format(group.slug))

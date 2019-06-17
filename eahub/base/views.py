@@ -1,22 +1,12 @@
-from django.core import mail
 from django.core.mail import send_mail
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.template import loader
 from django.template.loader import render_to_string
 from django.templatetags import static
-from django.views import defaults
 from django.views.generic import base
 from allauth.account import app_settings
 from allauth.account import utils
-from allauth.account.views import (
-    SignupView,
-    LoginView,
-    PasswordResetView,
-    PasswordResetFromKeyView,
-    PasswordChangeView,
-    EmailView,
-)
+from allauth.account.views import PasswordResetFromKeyView, PasswordChangeView
 from django.urls import reverse, reverse_lazy
 from django.views.generic.edit import FormView
 from django.contrib import messages
@@ -168,15 +158,6 @@ class AdsTxtView(base.TemplateView):
     content_type = "text/plain; charset=utf-8"
 
 
-class ReportAbuse:
-    def __init__(self, reportee, type):
-        self.reportee = reportee
-        self.type = type
-
-    def send(self, request, form):
-        r
-
-
 class ReportAbuseView(FormView):
     template_name = "eahub/report_abuse.html"
     form_class = ReportAbuseForm
@@ -204,7 +185,8 @@ class ReportAbuseView(FormView):
         )
         messages.success(
             self.request,
-            "Thank you, we have received your report. Our admin team will send you an email once they have looked into it.",
+            "Thank you, we have received your report. "
+            "Our admin team will send you an email once they have looked into it.",
         )
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
