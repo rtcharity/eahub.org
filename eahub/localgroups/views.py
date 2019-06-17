@@ -1,21 +1,21 @@
 from django import urls
+from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import mixins as auth_mixins
+from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+from django.shortcuts import get_object_or_404, redirect
+from django.template.loader import render_to_string
+from django.views.decorators.http import require_POST
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
-from django.shortcuts import redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.core.mail import send_mail
-from django.contrib.sites.shortcuts import get_current_site
-from django.contrib import messages
-from django.template.loader import render_to_string
-from django.views.decorators.http import require_POST
-from django.conf import settings
 
+from ..base.views import ReportAbuseView
+from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
-from ..profiles.models import Profile
-from ..base.views import ReportAbuseView
 
 
 class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView):

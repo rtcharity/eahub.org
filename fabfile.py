@@ -1,5 +1,5 @@
-from fabric.api import local
 from fabric import operations
+from fabric.api import local
 
 
 def build():

@@ -1,24 +1,21 @@
-from django.core.mail import send_mail
-from django.shortcuts import render
-from django.http import HttpResponse
-from django.template.loader import render_to_string
-from django.templatetags import static
-from django.views.generic import base
-from allauth.account import app_settings
-from allauth.account import utils
-from allauth.account.views import PasswordResetFromKeyView, PasswordChangeView
-from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import FormView
+from allauth.account import app_settings, utils
+from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
-from django.conf import settings
-from django.shortcuts import redirect
-
+from django.core.mail import send_mail
+from django.db.models import Count
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
+from django.templatetags import static
+from django.urls import reverse, reverse_lazy
+from django.views.generic import base
+from django.views.generic.edit import FormView
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from .forms import ReportAbuseForm
-from django.db.models import Count
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):

@@ -1,8 +1,8 @@
 from captcha import fields
 from django import forms
 
-from .models import Profile, validate_sluggable_name
 from ..localgroups.models import LocalGroup
+from .models import Profile, validate_sluggable_name
 
 
 class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):

@@ -1,15 +1,14 @@
 import functools
 import time
 
-from django.core.management import base
 from django import db
+from django.core.management import base
 from django.db import transaction
-from django.utils import html
-from django.utils import timezone
+from django.utils import html, timezone
 from geopy import geocoders
 
-from ... import models
 from ....base import models as base_models
+from ... import models
 
 
 def collect_cause_areas(

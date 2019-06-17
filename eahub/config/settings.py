@@ -1,5 +1,5 @@
-from django.core import exceptions
 import environ
+from django.core import exceptions
 from django.utils.safestring import mark_safe
 
 env = environ.Env()
@@ -111,7 +111,7 @@ LOGGING = {
 }
 
 # Core settings: models
-from .build_settings import INSTALLED_APPS  # noqa: F401
+from .build_settings import INSTALLED_APPS  # noqa: F401; isort:skip
 
 # Core settings: security
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
@@ -166,7 +166,11 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 # Static files
-from .build_settings import STATIC_ROOT, STATIC_URL, STATICFILES_STORAGE  # noqa: F401
+from .build_settings import (  # noqa: F401; isort:skip
+    STATIC_ROOT,
+    STATIC_URL,
+    STATICFILES_STORAGE,
+)
 
 # Application Insights
 APPLICATION_INSIGHTS = {

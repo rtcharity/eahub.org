@@ -1,7 +1,6 @@
 import environ
 import pytest
 
-
 env = environ.Env()
 
 

@@ -2,7 +2,6 @@ from django import urls
 
 from . import views
 
-
 urlpatterns = [
     urls.path("new/", views.LocalGroupCreateView.as_view(), name="localgroups_create"),
     urls.path("<slug:slug>/claim/", views.claim_group, name="claim_group"),

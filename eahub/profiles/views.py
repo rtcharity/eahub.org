@@ -1,19 +1,10 @@
 import logging
 
 from django import http
-from django.http import HttpResponse, Http404
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
 
-from .models import (
-    CauseArea,
-    ExpertiseArea,
-    GivingPledge,
-    Profile,
-    ProfileSlug,
-    OrganisationalAffiliation,
-    Membership,
-)
 from ..base.models import User
 from ..base.views import ReportAbuseView
 from ..localgroups.models import LocalGroup
@@ -23,6 +14,15 @@ from .forms import (
     EditProfileCauseAreasForm,
     EditProfileCommunityForm,
     EditProfileForm,
+)
+from .models import (
+    CauseArea,
+    ExpertiseArea,
+    GivingPledge,
+    Membership,
+    OrganisationalAffiliation,
+    Profile,
+    ProfileSlug,
 )
 
 
