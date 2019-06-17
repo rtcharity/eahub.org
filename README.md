@@ -2,6 +2,8 @@ Backend for [https://eahub.org](https://eahub.org)
 
 ![eahub.org reboot](https://i.imgur.com/02FNAlY.png)
 
+[![Build Status](https://dev.azure.com/rtcharity/eahub.org/_apis/build/status/rtcharity.eahub.org?branchName=master)](https://dev.azure.com/rtcharity/eahub.org/_build/latest?definitionId=1&branchName=master)
+
 # Setup
 
 1.  Make sure to have [Docker Compose](https://docs.docker.com/compose)
