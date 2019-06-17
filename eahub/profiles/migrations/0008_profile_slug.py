@@ -1,5 +1,4 @@
-from django.db import migrations
-from django.db import models
+from django.db import migrations, models
 from django.db.models import deletion
 from sluggable import fields as sluggable_fields
 

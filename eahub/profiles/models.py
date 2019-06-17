@@ -4,12 +4,12 @@ import pathlib
 import shutil
 import zipfile
 
+from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
 from django.db import models
-from django import urls
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders

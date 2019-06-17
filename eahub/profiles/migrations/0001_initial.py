@@ -1,12 +1,13 @@
 import autoslug.fields
-from django.conf import settings
 import django.contrib.postgres.fields
-from django.db import migrations, models
 import django.db.models.deletion
 import django_enumfield.db.fields
-from django_upload_path import upload_path
-import eahub.profiles.models
 import sorl.thumbnail.fields
+from django.conf import settings
+from django.db import migrations, models
+from django_upload_path import upload_path
+
+import eahub.profiles.models
 
 
 class Migration(migrations.Migration):

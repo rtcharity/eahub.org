@@ -52,6 +52,12 @@ $ docker-compose run web black .
 ```
 You must run this before sending a pull request or else it will be automatically blocked from merging.
 
+You can also automatically sort your imports:
+
+```
+$ docker-compose run web isort -rc --atomic .
+```
+
 # Deploying
 After uploading a new docker image, the website will automatically update
 ```
