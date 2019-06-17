@@ -40,20 +40,20 @@ class CustomisedPasswordChangeView(PasswordChangeView):
 
 
 def index(request):
-    groupsData = getGroupsData()
-    profilesData = getProfilesData(request.user)
-    privateProfiles = getPrivateProfiles(request.user)
+    groups_data = get_groups_data()
+    profiles_data = get_profiles_data(request.user)
+    private_profiles = get_private_profiles(request.user)
     return render(
         request,
         "eahub/index.html",
         {
             "page_name": "Home",
-            "groups": groupsData["rows"],
-            "profiles": profilesData["rows"],
+            "groups": groups_data["rows"],
+            "profiles": profiles_data["rows"],
             "map_locations": {
-                "profiles": profilesData["map_data"],
-                "groups": groupsData["map_data"],
-                "private_profiles": privateProfiles,
+                "profiles": profiles_data["map_data"],
+                "groups": groups_data["map_data"],
+                "private_profiles": private_profiles,
             },
         },
     )
@@ -63,41 +63,41 @@ def about(request):
     return render(request, "eahub/about.html")
 
 
-def privacyPolicy(request):
+def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
 
 
 def profiles(request):
-    profilesData = getProfilesData(request.user)
-    privateProfiles = getPrivateProfiles(request.user)
+    profiles_data = get_profiles_data(request.user)
+    private_profiles = get_private_profiles(request.user)
     return render(
         request,
         "eahub/profiles.html",
         {
             "page_name": "Profiles",
-            "profiles": profilesData["rows"],
+            "profiles": profiles_data["rows"],
             "map_locations": {
-                "profiles": profilesData["map_data"],
-                "private_profiles": privateProfiles,
+                "profiles": profiles_data["map_data"],
+                "private_profiles": private_profiles,
             },
         },
     )
 
 
 def groups(request):
-    groupsData = getGroupsData()
+    groups_data = get_groups_data()
     return render(
         request,
         "eahub/groups.html",
         {
             "page_name": "Groups",
-            "groups": groupsData["rows"],
-            "map_locations": {"profiles": groupsData["map_data"]},
+            "groups": groups_data["rows"],
+            "map_locations": {"profiles": groups_data["map_data"]},
         },
     )
 
 
-def getGroupsData():
+def get_groups_data():
     rows = Group.objects.all()
     map_data = [
         {
@@ -113,7 +113,7 @@ def getGroupsData():
     return {"rows": rows, "map_data": map_data}
 
 
-def getProfilesData(user):
+def get_profiles_data(user):
     rows = Profile.objects.visible_to_user(user)
     map_data = [
         {"lat": x.lat, "lng": x.lon, "label": x.name, "path": f"/profile/{x.slug}"}
@@ -123,18 +123,19 @@ def getProfilesData(user):
     return {"rows": rows, "map_data": map_data}
 
 
-def getPrivateProfiles(user):
-    kAnonymity = 15
-    privateProfiles = (
+def get_private_profiles(user):
+    k_anonymity = 15
+    private_profiles = (
         Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False)
         .exclude(user_id=user.id)
         .values("lat", "lon")
         .annotate(count=Count("*"))
-        .filter(count__gte=kAnonymity)
+        .filter(count__gte=k_anonymity)
         .order_by()
     )
     private_profiles_json = [
-        {"lat": x["lat"], "lng": x["lon"], "count": x["count"]} for x in privateProfiles
+        {"lat": x["lat"], "lng": x["lon"], "count": x["count"]}
+        for x in private_profiles
     ]
     return private_profiles_json
 
@@ -191,5 +192,5 @@ class ReportAbuseView(FormView):
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
 
-def healthCheck(request):
+def health_check(request):
     return HttpResponse(status=204)

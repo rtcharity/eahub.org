@@ -37,3 +37,4 @@ django-feature-policy==2.3.0
 black==19.3b0
 pytest-black==0.3.7
 pytest-flake8==1.0.4
+pep8-naming==0.8.2
