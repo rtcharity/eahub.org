@@ -7,7 +7,7 @@ def admin_emails():
 
 
 def create_superusers(apps, schema_editor):
-    User = apps.get_model("base", "User")
+    User = apps.get_model("base", "User")  # noqa: N806
     User.objects.bulk_create(
         [
             User(email=email, is_superuser=True, is_staff=True)
@@ -17,7 +17,7 @@ def create_superusers(apps, schema_editor):
 
 
 def delete_superusers(apps, schema_editor):
-    User = apps.get_model("base", "User")
+    User = apps.get_model("base", "User")  # noqa: N806
     User.objects.filter(email__in=admin_emails()).delete()
 
 

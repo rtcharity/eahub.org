@@ -2,7 +2,7 @@ import pytest
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
 
@@ -34,7 +34,7 @@ def test_login_failure(driver, live_server):
     try:
         wait = WebDriverWait(driver, 5)
         wait.until(
-            EC.visibility_of(driver.find_element(By.CSS_SELECTOR, "#login-danger"))
+            ec.visibility_of(driver.find_element(By.CSS_SELECTOR, "#login-danger"))
         )
     except TimeoutException:
         pytest.fail("Expected element not located")

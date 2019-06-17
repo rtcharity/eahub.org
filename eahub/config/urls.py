@@ -34,10 +34,10 @@ urlpatterns = [
         TemplateView.as_view(template_name="eahub/newsletter.html"),
         name="newsletter",
     ),
-    path("privacy-policy/", views.privacyPolicy, name="privacyPolicy"),
+    path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path("favicon.ico", views.FaviconView.as_view(), name="favicon"),
     path("robots.txt", views.RobotsTxtView.as_view(), name="robots.txt"),
-    path("robots933456.txt", views.healthCheck, name="healthCheck"),
+    path("robots933456.txt", views.health_check, name="health_check"),
     path("ads.txt", views.AdsTxtView.as_view(), name="ads.txt"),
     path("", include("eahub.config.legacy_urls")),
 ]

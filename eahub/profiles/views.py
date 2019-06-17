@@ -46,14 +46,14 @@ def profile_redirect_from_legacy_record(request, legacy_record):
 
 
 @login_required
-def MyProfileView(request):
+def my_profile(request):
     if not hasattr(request.user, "profile"):
         raise http.Http404("user has no profile")
     return redirect("profile", slug=request.user.profile.slug)
 
 
 @login_required
-def DownloadView(request):
+def download(request):
     if not hasattr(request.user, "profile"):
         raise http.Http404("user has no profile")
     profile = Profile.objects.get(pk=request.user.profile.id)
