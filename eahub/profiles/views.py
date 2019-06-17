@@ -1,7 +1,5 @@
 import logging
 
-from django.views.generic import base
-from django.views.generic import detail
 from django import http
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect, get_object_or_404
@@ -19,7 +17,13 @@ from .models import (
 from ..base.models import User
 from ..base.views import ReportAbuseView
 from ..localgroups.models import LocalGroup
-from .forms import *
+from .forms import (
+    DeleteProfileForm,
+    EditProfileCareerForm,
+    EditProfileCauseAreasForm,
+    EditProfileCommunityForm,
+    EditProfileForm,
+)
 
 
 def profile_detail_or_redirect(request, slug):
