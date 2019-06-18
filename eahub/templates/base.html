@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -120,7 +121,7 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/scripts/bootstrap-multiselect.js"></script>
-    <script src="/static/scripts/main.js"></script>
+    {% render_bundle "main" "js" %}
     {% block scripts %}{% endblock %}
 
   </body>

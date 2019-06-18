@@ -1,4 +1,5 @@
 import environ
+import os
 from django.core import exceptions
 from django.utils.safestring import mark_safe
 
@@ -259,3 +260,14 @@ else:
         "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
         "provided together"
     )
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "/webpack_bundles/",
+        "STATS_FILE": os.path.join(base_dir, "webpack-stats.json"),
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [".*\.hot-update.js", ".+\.map"]
+    }
+}

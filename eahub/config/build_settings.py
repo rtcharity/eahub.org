@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
+    "webpack_loader",
 ]
 
 # Core settings: security
