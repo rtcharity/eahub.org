@@ -1,0 +1,31 @@
+{
+  "name": "eahub",
+  "version": "1.0.0",
+  "description": "EA Hub",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch",
+    "build-watch": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rtcharity/eahub.org.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rtcharity/eahub.org/issues"
+  },
+  "homepage": "https://github.com/rtcharity/eahub.org#readme",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.34.0",
+    "webpack-bundle-tracker": "^0.4.2-beta"
+  },
+  "dependencies": {
+    "webpack-cli": "^3.3.4"
+  }
+}
