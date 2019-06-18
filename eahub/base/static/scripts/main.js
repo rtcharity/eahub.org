@@ -1,40 +1,16 @@
-$(document).ready( function () {
-    var dataTableProfiles = $('#datatable-profiles').DataTable({
-      order: [[1, 'asc']],
-      columns: [
-        { "orderable": false, "targets": 0 },
-        null,
-        null,
-        null
-      ],
-      lengthChange: false,
-      pageLength: 100,
-      sDom: 'ltipr'
-    } );
+import DataTable from './datatables.js';
 
-    var dataTableGroups = $('#datatable-groups').DataTable({
-      lengthChange: false,
-      pageLength: 100,
-      sDom: 'ltipr'
-    } );
+const dt = new DataTable($('#datatable-profiles'), $('datatable-groups'));
+dt.applySearchFunctionality(dt.dataTableProfiles);
+dt.applySearchFunctionality(dt.dataTableGroups);
 
-    var menu_btn = document.getElementById('burger-btn')
-    var navbar = document.getElementById('navbar')
+var menu_btn = document.getElementById('burger-btn')
+var navbar = document.getElementById('navbar')
 
-    applySearchFunctionality(dataTableProfiles)
-    applySearchFunctionality(dataTableGroups)
+toggleNavbar(navbar, menu_btn)
+disappearOnMovingCursorAway(navbar)
 
-    addSettingForMultiselectForms()
 
-    toggleNavbar(navbar, menu_btn)
-    disappearOnMovingCursorAway(navbar)
-});
-
-function applySearchFunctionality(datatable) {
-  $("#filterbox").keyup(function() {
-    datatable.search(this.value).draw();
-  });
-}
 
 function addSettingForMultiselectForms() {
   var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker'), $('#id_open_to_job_offers'), $('#id_available_to_volunteer')]
