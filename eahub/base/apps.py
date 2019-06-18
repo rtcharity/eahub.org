@@ -6,4 +6,4 @@ class BaseConfig(apps.AppConfig):
     verbose_name = "EA Hub"
 
     def ready(self):
-        from . import signals
+        from . import signals  # noqa: F401

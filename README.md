@@ -2,6 +2,8 @@ Backend for [https://eahub.org](https://eahub.org)
 
 ![eahub.org reboot](https://i.imgur.com/02FNAlY.png)
 
+[![Build Status](https://dev.azure.com/rtcharity/eahub.org/_apis/build/status/rtcharity.eahub.org?branchName=master)](https://dev.azure.com/rtcharity/eahub.org/_build/latest?definitionId=1&branchName=master)
+
 # Setup
 
 1.  Make sure to have [Docker Compose](https://docs.docker.com/compose)
@@ -43,6 +45,18 @@ $ docker-compose run --use-aliases web pytest
 ## Running Frontend Tests Locally
 Go to ```eahub/base/tests/frontend``` and run ```jasmine server```.  
 The test suits open up at ```http://localhost:8888``` 
+
+# Formatting Code
+```
+$ docker-compose run web black .
+```
+You must run this before sending a pull request or else it will be automatically blocked from merging.
+
+You can also automatically sort your imports:
+
+```
+$ docker-compose run web isort -rc --atomic .
+```
 
 # Deploying
 After uploading a new docker image, the website will automatically update

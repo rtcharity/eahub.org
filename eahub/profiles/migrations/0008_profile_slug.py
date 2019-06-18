@@ -1,13 +1,12 @@
-from django.db import migrations
-from django.db import models
+from django.db import migrations, models
 from django.db.models import deletion
 from sluggable import fields as sluggable_fields
 
 
 def create_slugs(apps, schema_editor):
-    ContentType = apps.get_model("contenttypes", "ContentType")
-    Profile = apps.get_model("profiles", "Profile")
-    ProfileSlug = apps.get_model("profiles", "ProfileSlug")
+    ContentType = apps.get_model("contenttypes", "ContentType")  # noqa: N806
+    Profile = apps.get_model("profiles", "Profile")  # noqa: N806
+    ProfileSlug = apps.get_model("profiles", "ProfileSlug")  # noqa: N806
     content_type_for_profile, _ = ContentType.objects.get_or_create(
         app_label="profiles", model="Profile"
     )

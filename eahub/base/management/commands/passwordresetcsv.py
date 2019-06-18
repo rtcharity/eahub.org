@@ -1,11 +1,9 @@
 import csv
 
-from django.conf import settings
+from django import urls
 from django.contrib.auth import tokens
 from django.core.management import base
-from django import urls
-from django.utils import encoding
-from django.utils import http
+from django.utils import encoding, http
 
 from ....profiles import models
 

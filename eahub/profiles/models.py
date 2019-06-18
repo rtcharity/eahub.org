@@ -4,12 +4,12 @@ import pathlib
 import shutil
 import zipfile
 
+from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
 from django.db import models
-from django import urls
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -126,7 +126,7 @@ class OrganisationalAffiliation(enum.Enum):
     CENTER_FOR_APPLIED_RATIONALITY = 4
     CENTER_FOR_HUMAN_COMPATIBLE_AI = 5
     CENTRE_FOR_EFFECTIVE_ALTRUISM = 6
-    CENTRE_FOR_THE_STUDY_OF_EXISTENTIAL_RISK = 7
+    CSER = 7
     CHARITY_ENTREPRENEURSHIP = 8
     CHARITY_SCIENCE_HEALTH = 9
     FORETHOUGHT_FOUNDATION = 10
@@ -136,9 +136,9 @@ class OrganisationalAffiliation(enum.Enum):
     GIVEWELL = 14
     GLOBAL_CATASTROPHIC_RISK_INSTITUTE = 15
     GLOBAL_PRIORITIES_INSTITUTE = 16
-    LEVERHULME_CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE = 17
+    LCFI = 17
     LOCAL_EFFECTIVE_ALTRUISM_NETWORK = 18
-    MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE = 19
+    MIRI = 19
     ONE_FOR_THE_WORLD = 20
     OPEN_PHILANTHROPY_PROJECT = 21
     RAISING_FOR_EFFECTIVE_GIVING = 22
@@ -160,7 +160,7 @@ class OrganisationalAffiliation(enum.Enum):
         CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality",
         CENTER_FOR_HUMAN_COMPATIBLE_AI: "Center for Human Compatible AI",
         CENTRE_FOR_EFFECTIVE_ALTRUISM: "Centre for Effective Altruism",
-        CENTRE_FOR_THE_STUDY_OF_EXISTENTIAL_RISK: "Centre for the Study of Existential Risk",
+        CSER: "Centre for the Study of Existential Risk",
         CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
         CHARITY_SCIENCE_HEALTH: "Charity Science Health",
         FORETHOUGHT_FOUNDATION: "Forethought Foundation",
@@ -170,9 +170,9 @@ class OrganisationalAffiliation(enum.Enum):
         GIVEWELL: "GiveWell",
         GLOBAL_CATASTROPHIC_RISK_INSTITUTE: "Global Catastrophic Risk Institute",
         GLOBAL_PRIORITIES_INSTITUTE: "Global Priorities Institute",
-        LEVERHULME_CENTER_FOR_THE_FUTURE_OF_INTELLIGENCE: "Leverhulme Center for the Future of Intelligence",
+        LCFI: "Leverhulme Center for the Future of Intelligence",
         LOCAL_EFFECTIVE_ALTRUISM_NETWORK: "Local Effective Altruism Network",
-        MACHINE_INTELLIGENCE_RESEARCH_INSTITUTE: "Machine Intelligence Research Institute",
+        MIRI: "Machine Intelligence Research Institute",
         ONE_FOR_THE_WORLD: "One for the World",
         OPEN_PHILANTHROPY_PROJECT: "Open Philanthropy Project",
         RAISING_FOR_EFFECTIVE_GIVING: "Raising for Effective Giving",
@@ -185,15 +185,16 @@ class OrganisationalAffiliation(enum.Enum):
         THE_GOOD_FOOD_INSTITUTE: "The Good Food Institute",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative",
-        ALLFED: "ALLFED"
+        ALLFED: "ALLFED",
     }
 
+
 def prettify_property_list(property_class, standard_list, other_list):
-    pretty_list = ''
+    pretty_list = ""
     if standard_list:
         pretty_list += ", ".join(map(property_class.label, standard_list))
     if other_list:
-        pretty_list = pretty_list + ', ' + other_list if standard_list else other_list
+        pretty_list = pretty_list + ", " + other_list if standard_list else other_list
     if (standard_list and other_list) is False:
         pretty_list = "N/A"
     return pretty_list
@@ -274,7 +275,7 @@ class Profile(models.Model):
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
     )
-    local_groups = models.ManyToManyField(LocalGroup, through='Membership', blank=True)
+    local_groups = models.ManyToManyField(LocalGroup, through="Membership", blank=True)
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )
@@ -305,10 +306,14 @@ class Profile(models.Model):
         return self
 
     def get_pretty_cause_areas(self):
-        return prettify_property_list(CauseArea,self.cause_areas,self.cause_areas_other)
+        return prettify_property_list(
+            CauseArea, self.cause_areas, self.cause_areas_other
+        )
 
     def get_pretty_expertise(self):
-        return prettify_property_list(ExpertiseArea,self.expertise_areas,self.expertise_areas_other)
+        return prettify_property_list(
+            ExpertiseArea, self.expertise_areas, self.expertise_areas_other
+        )
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
@@ -318,13 +323,20 @@ class Profile(models.Model):
 
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
-            return ", ".join(map(OrganisationalAffiliation.label, self.organisational_affiliations))
+            return ", ".join(
+                map(OrganisationalAffiliation.label, self.organisational_affiliations)
+            )
         else:
             return "N/A"
 
     def get_pretty_local_groups(self):
         if self.local_groups:
-            return ", ".join(['{local_group}'.format(local_group=x.name) for x in self.local_groups.all()])
+            return ", ".join(
+                [
+                    "{local_group}".format(local_group=x.name)
+                    for x in self.local_groups.all()
+                ]
+            )
         else:
             return "N/A"
 
@@ -399,38 +411,32 @@ class Profile(models.Model):
     def image_placeholder(self):
         return f"Avatar{self.id % 10}.png"
 
-    def some_true(self, list):
-        if all(item == False for item in list):
-            return False
-        else:
-            return True
-
     def has_cause_area_details(self):
         cause_area_details_exist = [
             len(self.cause_areas) > 0,
             len(self.cause_areas_other) > 0,
             len(self.giving_pledges) > 0,
-            self.available_to_volunteer == True,
+            self.available_to_volunteer,
         ]
-        return self.some_true(cause_area_details_exist)
+        return any(cause_area_details_exist)
 
     def has_career_details(self):
         career_details_exist = [
             len(self.expertise_areas),
             len(self.expertise_areas_other),
-            self.open_to_job_offers == True
+            self.open_to_job_offers,
         ]
-        return self.some_true(career_details_exist)
+        return any(career_details_exist)
 
     def has_community_details(self):
         community_details_exist = [
             len(self.organisational_affiliations) > 0,
             self.local_groups.exists(),
             self.user.localgroup_set.exists(),
-            self.available_as_speaker == True,
-            len(self.topics_i_speak_about) > 0
+            self.available_as_speaker,
+            len(self.topics_i_speak_about) > 0,
         ]
-        return self.some_true(community_details_exist)
+        return any(community_details_exist)
 
 
 class Membership(models.Model):

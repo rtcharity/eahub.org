@@ -1,17 +1,16 @@
-from email import utils as email_utils
 import sys
+from email import utils as email_utils
 
 from allauth.account import forms
 from allauth.account import utils as account_utils
-from django.contrib.sites import shortcuts
 from django.conf import settings
+from django.contrib.sites import shortcuts
 from django.core import mail
 from django.core.management import base
 from django.db import models
 from django.template import loader
 
 from ... import models as profiles_models
-
 
 EMEA_COUNTRIES = [
     "Albania",

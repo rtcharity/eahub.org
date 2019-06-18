@@ -1,29 +1,33 @@
-from fabric.api import local
 from fabric import operations
+from fabric.api import local
+
 
 def build():
-    local('docker-compose build')
-    local('docker build -t eahub:latest .')
-    local('y | docker system prune')
+    local("docker-compose build")
+    local("docker build -t eahub:latest .")
+    local("y | docker system prune")
+
 
 def run():
-    local('docker-compose run --service-ports web') #  with ipdb support
+    local("docker-compose run --service-ports web")  # with ipdb support
     # local('docker-compose up') #  without ipdb support
 
+
 def makemigrations():
-    local('docker-compose run web django-admin makemigrations')
+    local("docker-compose run web django-admin makemigrations")
+
 
 def migrate():
-    local('docker-compose run web django-admin migrate')
+    local("docker-compose run web django-admin migrate")
+
 
 def deploy():
     build()
-    local('docker tag eahub eahub.azurecr.io/eahub:latest')
-    local('docker push eahub.azurecr.io/eahub:latest')
+    local("docker tag eahub eahub.azurecr.io/eahub:latest")
+    local("docker push eahub.azurecr.io/eahub:latest")
+
 
 def bash():
-    local('docker ps')
-    container_id = operations.prompt('Enter container_id from above: ')
-    local('docker exec -t -i {container_id} bash'.format(
-        container_id=container_id
-    ))
+    local("docker ps")
+    container_id = operations.prompt("Enter container_id from above: ")
+    local("docker exec -t -i {container_id} bash".format(container_id=container_id))

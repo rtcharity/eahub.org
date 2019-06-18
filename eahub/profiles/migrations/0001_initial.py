@@ -1,12 +1,13 @@
 import autoslug.fields
-from django.conf import settings
 import django.contrib.postgres.fields
-from django.db import migrations, models
 import django.db.models.deletion
 import django_enumfield.db.fields
-import django_upload_path.upload_path
-import eahub.profiles.models
 import sorl.thumbnail.fields
+from django.conf import settings
+from django.db import migrations, models
+from django_upload_path import upload_path
+
+import eahub.profiles.models
 
 
 class Migration(migrations.Migration):
@@ -39,7 +40,7 @@ class Migration(migrations.Migration):
                     "image",
                     sorl.thumbnail.fields.ImageField(
                         blank=True,
-                        upload_to=django_upload_path.upload_path.auto_cleaned_path_stripped_uuid4,
+                        upload_to=upload_path.auto_cleaned_path_stripped_uuid4,
                     ),
                 ),
                 ("city_or_town", models.CharField(blank=True, max_length=100)),
