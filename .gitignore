@@ -91,3 +91,5 @@ ENV/
 # added by manoj
 .DS_Store
 secrets.env
+
+node_modules
