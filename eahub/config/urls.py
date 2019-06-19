@@ -1,13 +1,24 @@
 from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.urls import include, path
 from django.views.generic import TemplateView
+from django.http import Http404
 
 from ..base import views
 
-admin.site.login = login_required(admin.site.login)
+
+def staff_or_404(u):
+    if u.is_active:
+        if u.is_staff:
+            return True
+        raise Http404()
+    return False
+
+
+admin.site.login = user_passes_test(staff_or_404)(admin.site.login)
+
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
