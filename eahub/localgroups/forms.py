@@ -7,10 +7,16 @@ from ..profiles import models as profiles_models
 from . import models as localgroups_models
 
 
-class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
-    def __init__(self, *, user, local_group, **kwargs):
+class OrganiserMultipleChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, *, user, local_group, past_organisers, **kwargs):
         if local_group is None or local_group.pk is None:
             already_selected = models.Value(False, output_field=models.BooleanField())
+        elif past_organisers:
+            already_selected = models.Case(
+                models.When(pk__in=local_group.past_organisers.all(), then=True),
+                default=False,
+                output_field=models.BooleanField(),
+            )
         else:
             already_selected = models.Case(
                 models.When(pk__in=local_group.organisers.all(), then=True),
@@ -20,12 +26,6 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
         queryset = base_models.User.objects.select_related("profile").annotate(
             already_selected=already_selected
         )
-        if not user.is_superuser:
-            queryset = queryset.filter(
-                models.Q(profile__is_public=True)
-                | models.Q(already_selected=True)
-                | models.Q(pk=user.pk)
-            )
         queryset = queryset.order_by(
             "-already_selected", "profile__name", "profile__slug", "email"
         )
@@ -79,9 +79,19 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
 class LocalGroupForm(forms.ModelForm):
     def __init__(self, *, user, instance=None, **kwargs):
         forms.ModelForm.__init__(self, instance=instance, **kwargs)
-        self.fields["organisers"] = UserMultipleChoiceField(
+        self.fields["organisers"] = OrganiserMultipleChoiceField(
             user=user,
             local_group=instance,
+            past_organisers=False,
+            required=False,
+            widget=forms.SelectMultiple(
+                attrs={"class": "form-control multiselect-form"}
+            ),
+        )
+        self.fields["past_organisers"] = OrganiserMultipleChoiceField(
+            user=user,
+            local_group=instance,
+            past_organisers=True,
             required=False,
             widget=forms.SelectMultiple(
                 attrs={"class": "form-control multiselect-form"}
@@ -102,4 +112,5 @@ class LocalGroupForm(forms.ModelForm):
             "email",
             "meetup_url",
             "organisers",
+            "past_organisers",
         ]

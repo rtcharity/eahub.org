@@ -71,17 +71,29 @@
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
         <li class="list-group-item"><b>Organisers:</b>
-          {% if not group.public_organisers %}
+          {% if not visible_organisers %}
           Unknown or Anonymous
-          {% elif group.public_organisers.count == 1 %}
-          <a href="{{ group.public_organisers.0.profile.get_absolute_url }}">{{ group.public_organisers.0.profile.name }}</a>
+          {% elif visible_organisers.count == 1 %}
+          <a href="{{ visible_organisers.0.profile.get_absolute_url }}">{{ visible_organisers.0.profile.name }}</a>
           {% else %}
           <ul>
-          {% for organiser in group.public_organisers %}
+          {% for organiser in visible_organisers %}
             <li><a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a></li>
           {% endfor %}
           </ul>
           {% endif %}
+        {% if visible_past_organisers.count >= 1 %}
+        <li class="list-group-item"><b>Past Organisers:</b>
+          {% if visible_past_organisers.count == 1 %}
+          <a href="{{ visible_past_organisers.0.profile.get_absolute_url }}">{{ visible_past_organisers.0.profile.name }}</a>
+          {% elif visible_past_organisers.count > 1 %}
+          <ul>
+          {% for organiser in visible_past_organisers %}
+            <li><a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a></li>
+          {% endfor %}
+          </ul>
+          {% endif %}
+        {% endif %}
         {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}">{{ group.website }}</a></li>{% endif %}
         {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}">{{ group.facebook_group }}</a></li>{% endif %}
         {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b><a href="{{ group.facebook_page }}">{{ group.facebook_page }}</a></li>{% endif %}
