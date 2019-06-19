@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --watch",
-    "build-watch": "webpack-dev-server"
+    "build": "webpack",
+    "build-watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
     "webpack": "^4.34.0",
     "webpack-bundle-tracker": "^0.4.2-beta"
   },
