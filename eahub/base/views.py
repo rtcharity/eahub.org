@@ -98,14 +98,14 @@ def get_groups_data():
     rows = Group.objects.all()
     map_data = [
         {
-            "lat": x.lat,
-            "lng": x.lon,
-            "label": x.name,
-            "active": x.is_active,
-            "path": f"/group/{x.slug}",
+            "lat": group.lat,
+            "lng": group.lon,
+            "label": group.name,
+            "active": group.is_active,
+            "path": f"/group/{group.slug}",
         }
-        for x in rows
-        if x.lat and x.lon
+        for group in rows
+        if group.lat and group.lon
     ]
     return {"rows": rows, "map_data": map_data}
 
@@ -113,9 +113,14 @@ def get_groups_data():
 def get_profiles_data(user):
     rows = Profile.objects.visible_to_user(user)
     map_data = [
-        {"lat": x.lat, "lng": x.lon, "label": x.name, "path": f"/profile/{x.slug}"}
-        for x in rows
-        if x.lat and x.lon
+        {
+            "lat": profile.lat,
+            "lng": profile.lon,
+            "label": profile.name,
+            "path": f"/profile/{profile.slug}",
+        }
+        for profile in rows
+        if profile.lat and profile.lon
     ]
     return {"rows": rows, "map_data": map_data}
 
