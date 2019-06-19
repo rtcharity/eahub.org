@@ -1,4 +1,4 @@
-export default class Datatables {
+export default class Datatable {
 
   constructor(dataTableProfilesHtmlElement, dataTableGroupsHtmlElement) {
     this.dataTableProfiles = this.createProfiles(dataTableProfilesHtmlElement);
