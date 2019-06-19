@@ -22,10 +22,16 @@ class LocalGroup(models.Model):
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through="Organisership", blank=True, related_name='organiser_localgroup_set'
+        settings.AUTH_USER_MODEL,
+        through="Organisership",
+        blank=True,
+        related_name="organiser_localgroup_set",
     )
     past_organisers = models.ManyToManyField(
-        settings.AUTH_USER_MODEL, through="PastOrganisership", blank=True, related_name='past_organiser_localgroup_set'
+        settings.AUTH_USER_MODEL,
+        through="PastOrganisership",
+        blank=True,
+        related_name="past_organiser_localgroup_set",
     )
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
@@ -75,6 +81,7 @@ class LocalGroup(models.Model):
 class Organisership(models.Model):
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
 
 class PastOrganisership(models.Model):
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
