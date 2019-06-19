@@ -44,6 +44,9 @@ class LocalGroup(models.Model):
         unique=True,
         validators=[validators.MinLengthValidator(1)],
     )
+    last_edited = models.DateTimeField(
+        auto_now=True, null=True, blank=True, editable=False
+    )
 
     class Meta:
         ordering = ["name", "slug"]
