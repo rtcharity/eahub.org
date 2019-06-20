@@ -95,7 +95,7 @@ def groups(request):
 
 
 def get_groups_data(user, by_distance=False):
-    if hasattr(user.profile, 'lat') and by_distance:
+    if hasattr(user.profile, "lat") and by_distance:
         rows = get_groups_by_distance(user.profile)
     else:
         rows = Group.objects.all()
@@ -112,32 +112,45 @@ def get_groups_data(user, by_distance=False):
     ]
     return {"rows": rows, "map_data": map_data}
 
+
 def get_groups_by_distance(profile):
     # Difference in latitude (multiplied by 2 because latitude ranges only to 90)
     # plus difference in longitude (databases cannot calculate square roots so no Pythagorean theorem)
     equalized_user_lat = profile.lat + 90
     equalized_user_lon = (profile.lon + 180) / 2
-    return Group.objects.annotate(
-        equalized_lat=F('lat') + 90
-    ).annotate(
-        zero_centered_lon=F('lon') + 180
-    ).annotate(
-        equalized_lon=F('zero_centered_lon') / 2
-    ).annotate(
-        lat_difference=Case(
-            When(equalized_lat__lte=equalized_user_lat, then=equalized_user_lat - F('equalized_lat')),
-            When(equalized_lat__gt=equalized_user_lat, then=F('equalized_lat') - equalized_user_lat),
+    return (
+        Group.objects.annotate(equalized_lat=F("lat") + 90)
+        .annotate(zero_centered_lon=F("lon") + 180)
+        .annotate(equalized_lon=F("zero_centered_lon") / 2)
+        .annotate(
+            lat_difference=Case(
+                When(
+                    equalized_lat__lte=equalized_user_lat,
+                    then=equalized_user_lat - F("equalized_lat"),
+                ),
+                When(
+                    equalized_lat__gt=equalized_user_lat,
+                    then=F("equalized_lat") - equalized_user_lat,
+                ),
+            )
         )
-    ).annotate(
-        lon_difference=Case(
-            When(equalized_lon__lte=equalized_user_lon, then=equalized_user_lon - F('equalized_lon')),
-            When(equalized_lon__gt=equalized_user_lon, then=F('equalized_lon') - equalized_user_lon),
+        .annotate(
+            lon_difference=Case(
+                When(
+                    equalized_lon__lte=equalized_user_lon,
+                    then=equalized_user_lon - F("equalized_lon"),
+                ),
+                When(
+                    equalized_lon__gt=equalized_user_lon,
+                    then=F("equalized_lon") - equalized_user_lon,
+                ),
+            )
         )
-    ).annotate(
-        total_difference=F('lat_difference') + F('lon_difference')
-    ).order_by(
-        'total_difference'
-    ).all()
+        .annotate(total_difference=F("lat_difference") + F("lon_difference"))
+        .order_by("total_difference")
+        .all()
+    )
+
 
 def get_profiles_data(user):
     rows = Profile.objects.visible_to_user(user)
