@@ -44,16 +44,16 @@ class LocalGroupDetailView(detail_views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.request.user.id in self.object.organisers.values_list(
-            "id", flat=True
-        ):
+        if self.request.user.id in self.object.organisers.values_list("id", flat=True):
             _filter = {}
         else:
             _filter = {"profile__is_public": True}
-        for field in ['organisers', 'past_organisers']:
-            context["visible_" + field] = getattr(self.object, field).filter(
-                Q(**_filter)
-            ).order_by("profile__name", "profile__slug")
+        for field in ["organisers", "past_organisers"]:
+            context["visible_" + field] = (
+                getattr(self.object, field)
+                .filter(Q(**_filter))
+                .order_by("profile__name", "profile__slug")
+            )
         return context
 
     template_name = "eahub/group.html"
