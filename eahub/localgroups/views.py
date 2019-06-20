@@ -50,10 +50,8 @@ class LocalGroupDetailView(detail_views.DetailView):
             profile__is_public=True
         ).order_by("profile__name", "profile__slug")
         if self.request.user.id in self.object.organisers.values_list("id", flat=True):
-            visible_organisers = visible_organisers | self.object.organisers.all()
-            visible_past_organisers = (
-                visible_past_organisers | self.object.past_organisers.all()
-            )
+            visible_organisers = self.object.organisers.all()
+            visible_past_organisers = self.object.past_organisers.all()
         context["visible_organisers"] = visible_organisers
         context["visible_past_organisers"] = visible_past_organisers
         return context
