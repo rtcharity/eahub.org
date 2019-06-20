@@ -49,12 +49,10 @@ class LocalGroupDetailView(detail_views.DetailView):
             "id", flat=True
         ):
             _filter = {"profile__is_public": True}
-        context["visible_organisers"] = self.object.organisers.filter(
-            Q(**_filter)
-        ).order_by("profile__name", "profile__slug")
-        context["visible_past_organisers"] = self.object.past_organisers.filter(
-            Q(**_filter)
-        ).order_by("profile__name", "profile__slug")
+        for field in ['organisers', 'past_organisers']:
+            context["visible_" + field] = getattr(self.object, field).filter(
+                Q(**_filter)
+            ).order_by("profile__name", "profile__slug")
         return context
 
     template_name = "eahub/group.html"
