@@ -13,6 +13,7 @@ $(document).ready( function () {
     } );
 
     var dataTableGroups = $('#datatable-groups').DataTable({
+      order: [],
       lengthChange: false,
       pageLength: 100,
       sDom: 'ltipr'
