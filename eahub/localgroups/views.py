@@ -44,10 +44,11 @@ class LocalGroupDetailView(detail_views.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        _filter = {}
-        if self.request.user.id not in self.object.organisers.values_list(
+        if self.request.user.id in self.object.organisers.values_list(
             "id", flat=True
         ):
+            _filter = {}
+        else:
             _filter = {"profile__is_public": True}
         for field in ['organisers', 'past_organisers']:
             context["visible_" + field] = getattr(self.object, field).filter(
