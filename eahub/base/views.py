@@ -95,8 +95,9 @@ def groups(request):
 
 
 def get_groups_data(user, by_distance=False):
-    if hasattr(user.profile, "lat") and by_distance:
-        rows = get_groups_by_distance(user.profile)
+    if hasattr(user, "profile") and by_distance:
+        if hasattr(user.profile, "lat"):
+            rows = get_groups_by_distance(user.profile)
     else:
         rows = Group.objects.all()
     map_data = [
@@ -115,7 +116,8 @@ def get_groups_data(user, by_distance=False):
 
 def get_groups_by_distance(profile):
     # Difference in latitude (multiplied by 2 because latitude ranges only to 90)
-    # plus difference in longitude (databases cannot calculate square roots so no Pythagorean theorem)
+    # plus difference in longitude (databases cannot calculate square roots so no
+    # Pythagorean theorem)
     equalized_user_lat = profile.lat + 90
     equalized_user_lon = (profile.lon + 180) / 2
     return (
