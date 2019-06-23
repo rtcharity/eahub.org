@@ -13,7 +13,7 @@
 
     <!-- styles -->
 
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
@@ -59,7 +59,7 @@
               <li><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
             {% else %}
             {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-              <li><a href="{% url 'account_login' %}" id="navbar_login"><i class="fa fa-sign-in"></i> Log In</a></li>
+              <li><a href="{% url 'account_login' %}" id="navbar_login"><i class="fa fa-sign-in-alt"></i> Log In</a></li>
               <li><a href="{% url 'account_signup' %}" id="navbar_signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
             {% endif %}
             {% endif %}
@@ -82,7 +82,7 @@
             <li class="navbar-signup-xs"><a name="navbar_link" id="button_myprofile" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
           {% else %}
           {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-            <li><a name="navbar_link" id="navbar_login" href="{% url 'account_login' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
+            <li><a name="navbar_link" id="navbar_login" href="{% url 'account_login' %}"><i class="fa fa-sign-in-alt"></i> Log In</a></li>
             <li><a name="navbar_link" id="navbar_signup" href="{% url 'account_signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
           {% endif %}
           {% endif %}

@@ -3,9 +3,10 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import './bootstrap-multiselect/bootstrap-multiselect.js';
 import '../styles/bootstrap-multiselect.css';
-import '../styles/main.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free/js/all.min.js';
+import '../styles/fonts/open-sans.css';
+import '../styles/main.css';
 
 import MarkerClusterer from '@google/markerclusterer';
 import Navbar from './navbar.js';

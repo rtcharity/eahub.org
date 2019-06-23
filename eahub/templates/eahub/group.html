@@ -18,11 +18,11 @@
       <h1 class="word-break">{{ group.name }}</h1>
       <div class="btn btn-default purple">
         {% if group.email %}
-          <a href="mailto:{{ group.email }}"><i class="fa fa-envelope"></i> Message</a>
+          <a href="mailto:{{ group.email }}"><i class="fa fa-envelope-alt-alt"></i> Message</a>
         {% elif group.facebook_group %}
-          <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
+          <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope-alt"></i> Message</a>
         {% elif group.facebook_page %}
-          <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
+          <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope-alt"></i> Message</a>
         {% else %}
           <span><i class="fa fa-microphone-slash"></i> Messaging disabled</span>
         {% endif %}
@@ -30,7 +30,7 @@
       {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
       {% if can_edit_local_group %}
         <div class="btn btn-default purple">
-          <a href="{% url 'localgroups_update' group.slug %}">Edit</a>
+          <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i>Edit</a>
         </div>
       {% endif %}
     </div>
@@ -124,7 +124,7 @@
   <div class="row">
   <div class="text-center margin-top">
     <div class="btn-group btn-group-sm text-center" role="group" id="report_group_inactive_toggle">
-      <button type="button" class="btn btn-default report_group_inactive_toggler"><i class="fa fa-sitemap"></i> Report this group as inactive</button>
+      <button type="button" class="btn btn-default report_group_inactive_toggler"><i class="fa fa-bed"></i> Report this group as inactive</button>
     </div>
     <div id="report_group_inactive_confirm_field" class="col-xs-6 col-xs-offset-3 alert alert-info hub-info confirm_field" role="alert">
       <button type="button" class="close report_group_inactive_toggler">
