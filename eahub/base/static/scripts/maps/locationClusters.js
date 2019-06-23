@@ -1,4 +1,4 @@
-class LocationClusters {
+export default class LocationClusters {
   constructor(allLocations, map) {
     this.map = map
     this.list = this.create(allLocations)

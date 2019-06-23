@@ -1,4 +1,4 @@
-class Profile {
+export default class Profile {
   constructor(location, type) {
     this.label = location.label != undefined ? location.label : undefined
     this.anonymous = (location.label == undefined && type == 'individuals') ? true : false

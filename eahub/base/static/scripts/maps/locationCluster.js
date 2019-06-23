@@ -1,4 +1,4 @@
-class LocationCluster {
+export default class LocationCluster {
   constructor(location, map) {
     this.location = {lat: location.lat, lng: location.lng}
     this.map = map

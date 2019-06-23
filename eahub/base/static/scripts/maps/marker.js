@@ -1,4 +1,4 @@
-class Marker {
+export default class Marker {
   constructor(map, location, profiles, z=1) {
     this.google = map.google;
     this.googleMap = map.googleMap;

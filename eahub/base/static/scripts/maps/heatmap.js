@@ -9,7 +9,7 @@ const MARKERSETTINGS = {
   }
 }
 
-class Heatmap {
+export default class Heatmap {
   constructor(queryStringMap, locations, mapModules, externalModules, htmlElements, isIE) {
     this.minClusterZoom = 14;
     this.type = (queryStringMap !== 'individuals') ? 'groups' : 'individuals';
