@@ -1,8 +1,15 @@
-import $ from 'jquery';
+import $ from "jquery";
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 import './bootstrap-multiselect/bootstrap-multiselect.js';
+import '../styles/bootstrap-multiselect.css';
+import '../styles/main.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
+
 import MarkerClusterer from '@google/markerclusterer';
 import Navbar from './navbar.js';
-// import MultiselectForms from './multiselect-forms.js';
+import MultiselectForms from './multiselect-forms.js';
 import GroupPageActions from './group-page-actions.js'
 import ProfileEditImage from './profile-edit-image.js'
 import Tables from './tables.js';
@@ -13,7 +20,6 @@ import Marker from './maps/marker.js';
 import Profile from './maps/profile.js';
 
 $(document).ready(function () {
-  console.log('loaded')
   const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'));
   tables.applySearchFunctionalityToAllTables();
 

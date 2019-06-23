@@ -25,16 +25,51 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/,
         use: [
           {
-            loader: 'file-loader',
-            options: {},
+            // Adds CSS to the DOM by injecting a `<style>` tag
+            loader: 'style-loader'
           },
-        ],
+          {
+            // Interprets `@import` and `url()` like `import/require()` and will resolve them
+            loader: 'css-loader'
+          }
+        ]
+      },
+      {
+        test: /\.less$/,
+        loader: 'less-loader', // compiles Less to CSS
+      },
+      {
+          test: /\.(woff(2)?|ttf|eot|png|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [{
+              loader: 'file-loader',
+              options: {
+                  name: '[name].[ext]',
+                  outputPath: 'fonts/'
+              }
+          }]
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+      },
+      {
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+        use: {
+          loader: "url-loader",
+          options: {
+            // Limit at 50k. Above that it emits separate files
+            limit: 50000,
+
+            // url-loader sets mimetype if it's passed.
+            // Without this it derives it from the file extension
+            mimetype: "application/font-woff",
+
+            // Output below fonts directory
+            name: "./fonts/[name].[ext]",
+          }
+        }
       },
     ]
   },
@@ -42,5 +77,9 @@ module.exports = {
     new BundleTracker({filename: './webpack-stats.json'}),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
+    new webpack.ProvidePlugin({
+      jQuery: 'jquery',
+      $: 'jquery'
+    }),
   ],
 }
