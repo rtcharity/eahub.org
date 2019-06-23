@@ -1,5 +1,12 @@
+var appRoot = require('app-root-path');
+const scriptsFolder = appRoot + '/eahub/base/static/scripts/';
+const LocationCluster = require(`${scriptsFolder}/maps/locationCluster.js`).default;
+const LocationClusters = require(`${scriptsFolder}/maps/locationClusters.js`).default;
+const Profile = require(`${scriptsFolder}/maps/profile.js`).default;
+const Mocks = require('../helpers/mocks.js').default;
+
 describe('LocationClusters', function() {
-  let locationClustersMock, mapMock, allLocationsMock, londonLatLng, klaipedaLatLng
+  let locationClustersMock, mapMock, allLocationsMock, locationLondon1Mock, locationLondon2Mock, locationKlaipeda1Mock, londonLatLng, klaipedaLatLng, locationClusters
   beforeEach(function() {
     mapMock = {
       mapModules: {

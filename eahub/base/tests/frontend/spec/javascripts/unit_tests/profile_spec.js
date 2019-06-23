@@ -1,3 +1,7 @@
+var appRoot = require('app-root-path');
+const scriptsFolder = appRoot + '/eahub/base/static/scripts/';
+const Profile = require(`${scriptsFolder}/maps/profile.js`).default;
+
 describe("Profile", function() {
   describe("constructor", function() {
     let locationMock, type
@@ -13,7 +17,7 @@ describe("Profile", function() {
       locationMock.label = undefined
       type = 'individuals'
 
-      let profile = new Profile(location, type)
+      let profile = new Profile(locationMock, type)
 
       expect(profile.anonymous).toBe(true)
     })
@@ -22,20 +26,18 @@ describe("Profile", function() {
       locationMock.label = undefined
       type = 'groups'
 
-      let profile = new Profile(location, type)
+      let profile = new Profile(locationMock, type)
 
       expect(profile.anonymous).toBe(false)
     })
-    
+
     it('sets active property only if type is groups', function() {
       type = 'individuals'
       locationMock.active = true
 
-      let profile = new Profile(location, type)
+      let profile = new Profile(locationMock, type)
 
       expect(profile.active).not.toBeDefined()
     })
   })
-
-
 })

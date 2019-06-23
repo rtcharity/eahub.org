@@ -49,9 +49,8 @@ To see the changes, make a hard refresh in your browser.
 $ docker-compose run --use-aliases web pytest
 ```
 
-## Running Frontend Tests Locally
-Go to ```eahub/base/tests/frontend``` and run ```jasmine server```.  
-The test suits open up at ```http://localhost:8888```
+## Running Frontend Tests
+Run ```npm test```  
 
 # Formatting Code
 ```

@@ -1,27 +1,19 @@
-let profileClassMock = class ProfileClassMock {
-  constructor(location, type) {
-    this.location = location
-    this.type = type
-  }
-}
-
-let spyOnGoogleMarker = jasmine.createSpy('googleMarker_setMap')
-
-let markerClassMock = class MarkerClassMock {
-  constructor(mapMock, locationMock, profilesMock, z) {
-    this.location = locationMock
-    this.googleMarker = {
-      setMap: spyOnGoogleMarker
-    }
-    this.z = z
-  }
-}
-
-let addListenerMock = function(e, func) {
+const londonLatLng = {lat: 50, lng: 0};
+const klaipedaLatLng = {lat: 55, lng: 22};
+const windenLatLng = {lat: 50, lng: 7};
+const london1Mock = {label: 'London1', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-1', active: "True"};
+const london2Mock = {label: 'London2', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-2', active: "False"};
+const klaipeda1Mock = {label: 'Klaipeda1', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-1', active: "True"};
+const klaipeda2Mock = {label: 'Klaipeda2', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-2', active: "False"};
+const peterMock = {label: 'Peter', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'peter'};
+const privateMock = {lat: londonLatLng.lat, lng: londonLatLng.lng};
+const selectorInd = { checked: false };
+const selectorGroups = { checked: false };
+const spyOnGoogleMarker = jasmine.createSpy('googleMarker_setMap');
+const addListenerMock = function(e, func) {
   return 'something'
 }
-
-let googleMarkerMock = class {
+const googleMarkerMock = class GoogleMarkerMock {
   constructor(props) {
     this.label = props.label
     this.setIcon = function(icon) {
@@ -33,41 +25,35 @@ let googleMarkerMock = class {
     this.addListener = addListenerMock
   }
 }
-
-let googleSizeMock = class {
+const googleSizeMock = class GoogleSizeMock {
   constructor(size1, size2) {
     this.size1 = size1,
     this.size2 = size2
   }
 }
-
-let googleMapMock = class {
+const googleMapMock = class GoogleMapMock {
   constructor(map, mapOptions) {
     this.map = map
     this.mapOptions = mapOptions
   }
 }
-
-let latLngMock = class {
+const latLngMock = class LatLngMock {
   constructor(lat, lng) {
     this.lat = lat
     this.lng = lng
   }
 }
-
-let eventListenerMock = class {
+const eventListenerMock = class {
   constructor(markerCluster, event, func) {
     this.event = event
   }
 }
-
-let infoWindowMock = class {
+const infoWindowMock = class {
   constructor() {
     return 'infoWindowMock'
   }
 }
-
-let googleMock = {
+const googleMock = {
   maps: {
     Marker: googleMarkerMock,
     Size: googleSizeMock,
@@ -79,50 +65,8 @@ let googleMock = {
     },
     InfoWindow: infoWindowMock
   }
-}
-
-const londonLatLng = {lat: 50, lng: 0}
-const klaipedaLatLng = {lat: 55, lng: 22}
-const windenLatLng = {lat: 50, lng: 7}
-
-let london1Mock = {label: 'London1', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-1', active: "True"}
-let london2Mock = {label: 'London2', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'london-2', active: "False"}
-let klaipeda1Mock = {label: 'Klaipeda1', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-1', active: "True"}
-let klaipeda2Mock = {label: 'Klaipeda2', lat: klaipedaLatLng.lat, lng: klaipedaLatLng.lng, path: 'klaipeda-2', active: "False"}
-
-let peterMock = {label: 'Peter', lat: londonLatLng.lat, lng: londonLatLng.lng, path: 'peter'}
-let privateMock = {lat: londonLatLng.lat, lng: londonLatLng.lng}
-
-let locationsMock = {
-  groups: [london1Mock, london2Mock, klaipeda1Mock, klaipeda2Mock],
-  profiles: [peterMock],
-  private_profiles: [privateMock]
-}
-
-let activeProfileMock = {active: true, lat: 50, lng: 0}
-let inactiveProfileMock = {active: false, lat: 50, lng: 0}
-
-let selectorInd = { checked: false }
-let selectorGroups = { checked: false }
-
-let htmlElementsMock = {
-    selectorInd: selectorInd,
-    selectorGroups: selectorGroups,
-    map: 'mapElementMock'
-}
-
-const markerSettingsMock = {
-  image: {
-    active: '/static/images/marker_active.svg',
-    inactive: '/static/images/marker_inactive.svg'
-  },
-  size: {
-    fullmap: { width: 40, height: 40 },
-    profilemap: { width: 20, height: 23 }
-  }
-}
-
-let markerClustererMock = class {
+};
+const markerClustererMock = class {
   constructor(map, markers, options) {
     this.map = map,
     this.markers = markers
@@ -130,7 +74,57 @@ let markerClustererMock = class {
   }
 }
 
-let externalModulesMock = {
-  google: googleMock,
-  markerClusterer: markerClustererMock
+
+export default {
+  profileClassMock: class ProfileClassMock {
+    constructor(location, type) {
+      this.location = location
+      this.type = type
+    }
+  },
+  spyOnGoogleMarker: spyOnGoogleMarker,
+  markerClassMock: class MarkerClassMock {
+    constructor(mapMock, locationMock, profilesMock, z) {
+      this.location = locationMock
+      this.googleMarker = {
+        setMap: spyOnGoogleMarker
+      }
+      this.z = z
+    }
+  },
+  klaipedaLatLng: klaipedaLatLng,
+  londonLatLng: londonLatLng,
+  london1Mock: london1Mock,
+  london2Mock: london2Mock,
+  klaipeda1Mock: klaipeda1Mock,
+  klaipeda2Mock: klaipeda2Mock,
+  peterMock: peterMock,
+  privateMock: privateMock,
+  locationsMock: {
+    groups: [london1Mock, london2Mock, klaipeda1Mock, klaipeda2Mock],
+    profiles: [peterMock],
+    private_profiles: [privateMock]
+  },
+  activeProfileMock: {active: true, lat: 50, lng: 0},
+  inactiveProfileMock: {active: false, lat: 50, lng: 0},
+  htmlElementsMock: {
+      selectorInd: selectorInd,
+      selectorGroups: selectorGroups,
+      map: 'mapElementMock'
+  },
+  markerSettingsMock: {
+    image: {
+      active: '/static/images/marker_active.svg',
+      inactive: '/static/images/marker_inactive.svg'
+    },
+    size: {
+      fullmap: { width: 40, height: 40 },
+      profilemap: { width: 20, height: 23 }
+    }
+  },
+  googleMock: googleMock,
+  externalModulesMock: {
+    google: googleMock,
+    markerClusterer: markerClustererMock
+  }
 }

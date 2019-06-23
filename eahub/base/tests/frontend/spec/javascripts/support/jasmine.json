@@ -1,0 +1,12 @@
+{
+	"stylesheets": null,
+	"spec_files": [
+		"**/integration_tests/*_spec.js",
+    "**/unit_tests/*_spec.js"
+	],
+	"src_dir": "eahub/base/static/scripts",
+	"spec_dir": "eahub/base/tests/frontend/spec/javascripts",
+	"stop_spec_on_expectation_failure": null,
+	"stop_on_spec_failure": null,
+	"random": null
+}

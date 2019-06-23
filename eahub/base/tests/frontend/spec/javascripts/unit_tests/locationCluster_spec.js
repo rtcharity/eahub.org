@@ -1,13 +1,18 @@
+var appRoot = require('app-root-path');
+const scriptsFolder = appRoot + '/eahub/base/static/scripts/';
+const LocationCluster = require(`${scriptsFolder}/maps/locationCluster.js`).default;
+const Mocks = require('../helpers/mocks.js').default;
+
 describe('LocationCluster', function() {
-  let locationCluster, locationMock, mapMock, markerMock
+  let locationCluster, locationMock, mapMock, markerMock, profilesMock
   beforeEach(function() {
     locationMock = {lat: 0, lng: 50}
-    profilesMock = [activeProfileMock]
+    profilesMock = [Mocks.activeProfileMock]
     mapMock = {
       type: 'individuals',
       mapModules: {
-        profile: profileClassMock,
-        marker: markerClassMock
+        profile: Mocks.profileClassMock,
+        marker: Mocks.markerClassMock
       }
     }
     locationCluster = new LocationCluster(locationMock, mapMock)
@@ -45,7 +50,7 @@ describe('LocationCluster', function() {
       expect(locationCluster.markers.length).toBe(10)
     })
     it('calls setMap on googleMarker', function() {
-      expect(spyOnGoogleMarker).toHaveBeenCalled()
+      expect(Mocks.spyOnGoogleMarker).toHaveBeenCalled()
     })
     it('gives dummy Markers z-index of 0 or below', function() {
       expect(locationCluster.markers[1].z).toBeLessThan(1)
