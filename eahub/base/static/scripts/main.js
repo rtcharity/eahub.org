@@ -7,6 +7,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import '@fortawesome/fontawesome-free/js/all.min.js';
 import '../styles/fonts/open-sans.css';
 import '../styles/main.css';
+import './cookieconsent/init.js';
+import 'cookieconsent/build/cookieconsent.min.css';
 
 import MarkerClusterer from '@google/markerclusterer';
 import Navbar from './navbar.js';
