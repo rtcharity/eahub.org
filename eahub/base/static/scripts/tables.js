@@ -1,4 +1,8 @@
-export default class Datatable {
+import $ from 'jquery';
+import 'datatables.net';
+import 'datatables.net-dt/css/jquery.dataTables.css';
+
+export default class Tables {
 
   constructor(dataTableProfilesHtmlElement, dataTableGroupsHtmlElement) {
     this.dataTableProfiles = this.createProfiles(dataTableProfilesHtmlElement);
@@ -6,7 +10,8 @@ export default class Datatable {
   }
 
   createProfiles(htmlElement) {
-    return htmlElement.DataTable({
+    console.log('createProfiles');
+    return htmlElement.dataTable({
       order: [[1, 'asc']],
       columns: [
         { "orderable": false, "targets": 0 },
@@ -21,16 +26,18 @@ export default class Datatable {
   }
 
   createGroups(htmlElement) {
-    return htmlElement.DataTable({
+    return htmlElement.dataTable({
       lengthChange: false,
       pageLength: 100,
       sDom: 'ltipr'
     } );
   }
 
-  applySearchFunctionality(datatable) {
-    $("#filterbox").keyup(function() {
-      datatable.search(this.value).draw();
-    });
+  applySearchFunctionalityToAllTables() {
+    for (let datatable of [this.dataTableProfiles, this.dataTableGroups]) {
+      $("#filterbox").keyup(function() {
+        datatable.fnFilter(this.value);
+      });
+    }
   }
 }
