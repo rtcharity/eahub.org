@@ -37,9 +37,9 @@ $(document).ready(function () {
     $('#id_available_to_volunteer')
   ]
 
-  // const multiselectFormHtmlElements = $('.multiselect-form')
-  // const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
-  // multiselectForm.applySettings();
+  const multiselectFormHtmlElements = $('.multiselect-form')
+  const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
+  multiselectForm.applySettings();
 
   let claimGroupHtmlElements = {
     toggle_btn: $('#claim_group_toggle'),

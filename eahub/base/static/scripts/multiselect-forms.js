@@ -3,6 +3,8 @@ export default class MultiselectForms {
       this.multiselectFormHtmlElements = multiselectFormHtmlElements;
       this.selectorsWithOldStyle = selectorsWithOldStyle;
       this.minItemsInListForMultiselect = minItemsInListForMultiselect;
+      this.classNameSelectWithAtLeast = null;
+      this.minItemsRequiredForSearch = 0;
     }
 
     applySettings() {
@@ -20,17 +22,20 @@ export default class MultiselectForms {
     }
 
     enableSearchForListWithAtLeast(num) {
-      let className = 'select-with-at-least-'+num+'-items'
-      this.addClassNameToListsWithAtLeast(num, className)
-      $('.' + className).multiselect({
+      const that = this;
+      this.minItemsRequiredForSearch = num;
+      this.classNameSelectWithAtLeast = 'select-with-at-least-'+ that.minItemsRequiredForSearch +'-items'
+      this.addClassNameToListsWithAtLeast()
+      $('.' + this.classNameSelectWithAtLeast).multiselect({
         enableCaseInsensitiveFiltering: true
       })
     }
 
-    addClassNameToListsWithAtLeast(num, className) {
+    addClassNameToListsWithAtLeast() {
+      const that = this;
       const multiselectForms = this.multiselectFormHtmlElements;
       for (let multiselectForm of multiselectForms) {
-        if (multiselectForm.length > num) multiselectForm.addClass(className)
+        if (multiselectForm.length > that.minItemsRequiredForSearch) multiselectForm.classList.add(that.classNameSelectWithAtLeast)
       }
     }
 }
