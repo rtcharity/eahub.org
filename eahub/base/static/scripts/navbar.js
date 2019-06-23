@@ -6,13 +6,15 @@ export default class Navbar {
 
   toggleMenuOnClick() {
     const that = this;
-    this.burgerBtnHtmlElement.addEventListener('click', function() {
-      that.navbarHtmlElement.style.display = that.navbarHtmlElement.style.display == 'inline-block' ? 'none' : 'inline-block';
+    this.burgerBtnHtmlElement.click(function(e) {
+      e.stopImmediatePropagation();
+      that.navbarHtmlElement.toggle();
     })
   }
 
   disappearMenuOnMovingCursorAway() {
     this.navbarHtmlElement.onmouseout = function(event) {
+      console.log('mouseout')
       var element_left = event.target
       var element_new = event.relatedTarget
       if (element_new.className.includes('container') || element_new.id == 'body') {
@@ -20,5 +22,4 @@ export default class Navbar {
       }
     }
   }
-
 }
