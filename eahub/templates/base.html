@@ -42,6 +42,7 @@
     }(window,document,"Smooch","5caa256dfea08a001172c8ea");
     </script>
     <script>Smooch.init({ appId: '5caa256dfea08a001172c8ea' });</script>
+    {% render_bundle "main" "js" %}
 
     {% block header %}{% endblock %}
 
@@ -76,8 +77,6 @@
           {% endif %}
           </div>
         </div>
-
-      </div>
     </nav>
      <div class="container navbar-menu-container">
       <div id="navbar" class="navbar-menu">
@@ -105,7 +104,6 @@
       </div>
     </div>
     {% block content %}{% endblock %}
-
     <footer class="footer">
       <div class="container">
         <strong>&copy; {% now "Y" %} Effective Altruism Hub.</strong>
@@ -114,15 +112,5 @@
         </p>
       </div>
     </footer>
-
-    <!-- scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/scripts/bootstrap-multiselect.js"></script>
-    {% render_bundle "main" "js" %}
-    {% block scripts %}{% endblock %}
-
   </body>
 </html>
