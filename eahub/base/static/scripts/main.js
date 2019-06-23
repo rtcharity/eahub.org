@@ -1,15 +1,23 @@
-import DataTable from './datatable.js';
+import $ from 'jquery';
+import './bootstrap-multiselect/bootstrap-multiselect.js';
+import MarkerClusterer from '@google/markerclusterer';
 import Navbar from './navbar.js';
-import MultiselectForms from './multiselect-forms.js'
+// import MultiselectForms from './multiselect-forms.js';
 import GroupPageActions from './group-page-actions.js'
 import ProfileEditImage from './profile-edit-image.js'
+import Tables from './tables.js';
+import Heatmap from './maps/heatmap.js';
+import LocationCluster from './maps/locationCluster.js';
+import LocationClusters from './maps/locationClusters.js';
+import Marker from './maps/marker.js';
+import Profile from './maps/profile.js';
 
-$(document).ready( function () {
-  const dt = new DataTable($('#datatable-profiles'), $('datatable-groups'));
-  dt.applySearchFunctionality(dt.dataTableProfiles);
-  dt.applySearchFunctionality(dt.dataTableGroups);
+$(document).ready(function () {
+  console.log('loaded')
+  const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'));
+  tables.applySearchFunctionalityToAllTables();
 
-  const navbar = new Navbar(document.getElementById('burger-btn'), document.getElementById('navbar'));
+  const navbar = new Navbar($('#burger-btn'), $('#navbar'));
   navbar.toggleMenuOnClick();
   navbar.disappearMenuOnMovingCursorAway();
 
@@ -20,9 +28,9 @@ $(document).ready( function () {
     $('#id_available_to_volunteer')
   ]
 
-  const multiselectFormHtmlElements = $('.multiselect-form')
-  const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
-  multiselectForm.applySettings();
+  // const multiselectFormHtmlElements = $('.multiselect-form')
+  // const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
+  // multiselectForm.applySettings();
 
   let claimGroupHtmlElements = {
     toggle_btn: $('#claim_group_toggle'),
@@ -52,3 +60,46 @@ $(document).ready( function () {
   profileEditImage.toggleImageChangeOnClick();
   profileEditImage.removeImageClearOnInput();
 });
+
+window.initHeatmapFull = function initHeatmapFull(queryStringMap) {
+  var mapParams = getMapParams();
+  var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
+  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, isIE)
+  newMap.setup();
+}
+
+window.initHeatmapList = function initHeatmapList(queryStringMap) {
+  var mapParams = getMapParams();
+  var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
+  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, isIE);
+  newMap.render(mapLocations.profiles, mapLocations.private_profiles);
+}
+
+window.initHeatmapProfile = function initHeatmapProfile(mapLocations, htmlElements) {
+  var mapParams = getMapParams();
+  mapParams.htmlElements = htmlElements;
+  var newMap = new Heatmap(undefined, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, isIE);
+  newMap.renderProfilePageMap();
+}
+
+function getMapParams() {
+  var mapSelectorInd = document.getElementById('map_selector_ind');
+  var mapSelectorGroups = document.getElementById('map_selector_groups');
+  var mapElement = document.getElementById('map')
+  var htmlElements = {
+    selectorInd: mapSelectorInd === undefined ? null : mapSelectorInd,
+    selectorGroups: mapSelectorGroups === undefined ? null : mapSelectorGroups,
+    map: mapElement === undefined ? null : mapElement,
+  }
+  var mapModules = {
+    locationCluster: LocationCluster,
+    locationClusters: LocationClusters,
+    marker: Marker,
+    profile: Profile,
+  }
+  var externalModules = {
+    google: google,
+    markerClusterer: MarkerClusterer
+  }
+  return {mapModules, externalModules, htmlElements}
+}
