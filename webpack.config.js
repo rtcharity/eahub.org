@@ -38,12 +38,22 @@ module.exports = {
         loader: 'less-loader', // compiles Less to CSS
       },
       {
-          test: /\.(woff(2)?|ttf|eot|png|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/,
+          test: /\.(ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
           use: [{
               loader: 'file-loader',
               options: {
                   name: '[name].[ext]',
                   outputPath: 'fonts/'
+              }
+          }]
+      },
+      {
+          test: /\.(png|jpe?g|gif)(\?v=\d+\.\d+\.\d+)?$/,
+          use: [{
+              loader: 'file-loader',
+              options: {
+                  name: '[name].[ext]',
+                  outputPath: '../../static/images'
               }
           }]
       },

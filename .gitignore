@@ -95,3 +95,4 @@ secrets.env
 # JS dependencies
 node_modules
 webpack_bundles
+**/images/sort_*.*
