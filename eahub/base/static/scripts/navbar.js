@@ -14,7 +14,6 @@ export default class Navbar {
 
   disappearMenuOnMovingCursorAway() {
     this.navbarHtmlElement.onmouseout = function(event) {
-      console.log('mouseout')
       var element_left = event.target
       var element_new = event.relatedTarget
       if (element_new.className.includes('container') || element_new.id == 'body') {

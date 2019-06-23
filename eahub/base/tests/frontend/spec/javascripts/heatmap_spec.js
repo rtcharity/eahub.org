@@ -68,7 +68,6 @@ describe('Heatmap', function() {
       expect(klaipedaMarker.googleMarker.desc).toContain('klaipeda-2')
     })
     it('does not add private profiles to list in markers', function() {
-      console.log(londonMarker.googleMarker)
       expect(londonMarker.googleMarker.desc).not.toContain('<ul>')
     })
   })

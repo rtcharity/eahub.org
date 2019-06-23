@@ -7,7 +7,6 @@ export default class ProfileEditImage {
 
   toggleImageChangeOnClick() {
     let imageChangeContainer = this.imageChangeHtmlElements.container;
-    console.log(this.imageChangeHtmlElements.toggle);
     this.imageChangeHtmlElements.toggle.on('click', function() {
       imageChangeContainer.style.display = (imageChangeContainer.style.display == "block") ? 'none' : 'block'
     })

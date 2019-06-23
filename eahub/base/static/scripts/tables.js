@@ -10,7 +10,6 @@ export default class Tables {
   }
 
   createProfiles(htmlElement) {
-    console.log('createProfiles');
     return htmlElement.dataTable({
       order: [[1, 'asc']],
       columns: [
