@@ -28,14 +28,21 @@ Backend for [https://eahub.org](https://eahub.org)
 $ docker-compose up
 ```
 
-If everything went well, you should have a number of containers now being served (use `docker ps` to get a list of them). 
-You should be able to get the Hub at http://localhost:8000. 
+If everything went well, you should have a number of containers now being served (use `docker ps` to get a list of them).
+You should be able to get the Hub at http://localhost:8000.
 
 If the Dockerfile has changed since last time you did this, you'll need to run
 `docker-compose up --build` or `docker-compose build`.
 
 If the database schema has changed since last time, you'll need to run
 `docker-compose run web django-admin migrate`.
+
+# Rebuilding frontend in development
+
+To see live changes to the frontend while developing, open a new terminal window and run the following command from the main folder:
+`npm run build-watch`
+
+To see the changes, make a hard refresh in your browser.
 
 # Running Tests
 ```
@@ -44,7 +51,7 @@ $ docker-compose run --use-aliases web pytest
 
 ## Running Frontend Tests Locally
 Go to ```eahub/base/tests/frontend``` and run ```jasmine server```.  
-The test suits open up at ```http://localhost:8888``` 
+The test suits open up at ```http://localhost:8888```
 
 # Formatting Code
 ```
