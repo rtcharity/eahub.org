@@ -28,6 +28,11 @@ Backend for [https://eahub.org](https://eahub.org)
 $ docker-compose up
 ```
 
+In a second terminal window
+```
+npm run build
+```
+
 If everything went well, you should have a number of containers now being served (use `docker ps` to get a list of them).
 You should be able to get the Hub at http://localhost:8000.
 
