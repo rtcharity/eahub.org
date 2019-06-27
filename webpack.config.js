@@ -43,7 +43,7 @@ module.exports = {
               loader: 'file-loader',
               options: {
                   name: '[name].[ext]',
-                  outputPath: 'fonts/'
+                  outputPath: '../../static/fonts/'
               }
           }]
       },
@@ -74,7 +74,7 @@ module.exports = {
             mimetype: "application/font-woff",
 
             // Output below fonts directory
-            name: "./fonts/[name].[ext]",
+            name: "../../static/fonts/[name].[ext]",
           }
         }
       },
