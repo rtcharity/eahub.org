@@ -1,5 +1,6 @@
-import environ
 import os
+
+import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
 
@@ -264,10 +265,10 @@ else:
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "/webpack_bundles/",
+        "BUNDLE_DIR_NAME": "webpack_bundles/",
         "STATS_FILE": os.path.join(base_dir, "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
-        "IGNORE": [".*\.hot-update.js", ".+\.map"]
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"]
     }
 }
