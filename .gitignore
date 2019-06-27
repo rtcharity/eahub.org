@@ -97,3 +97,4 @@ node_modules
 webpack_bundles
 **/images/sort_*.*
 **/static/fonts
+webpack-stats.json
