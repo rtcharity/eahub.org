@@ -2,8 +2,8 @@ FROM node:10 AS frontend
 RUN		mkdir /code
 WORKDIR /code
 COPY . .
-RUN npm test
 RUN npm install
+RUN npm test
 RUN npm run build
 
 FROM	python:3.7
