@@ -269,6 +269,6 @@ WEBPACK_LOADER = {
         "STATS_FILE": os.path.join(base_dir, "webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
-        "IGNORE": [r".+\.hot-update.js", r".+\.map"]
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
     }
 }
