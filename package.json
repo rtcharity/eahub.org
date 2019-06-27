@@ -33,7 +33,6 @@
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "file-loader": "^4.0.0",
-    "font-awesome-webpack": "0.0.5-beta.2",
     "jasmine": "^3.4.0",
     "jquery": "^3.4.1",
     "knockout": "^3.5.0",
