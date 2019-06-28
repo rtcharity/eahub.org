@@ -40,3 +40,4 @@ pytest-flake8==1.0.4
 pep8-naming==0.8.2
 isort[requirements]==4.3.20
 flake8-isort==2.7.0
+pytest-azurepipelines==0.7.0
