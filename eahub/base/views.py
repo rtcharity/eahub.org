@@ -2,6 +2,7 @@ from allauth.account import app_settings, utils
 from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -14,7 +15,7 @@ from django.views.generic import base
 from django.views.generic.edit import FormView
 
 from ..localgroups.models import LocalGroup as Group
-from ..profiles.models import Profile
+from ..profiles.models import ExpertiseArea, Profile
 from .forms import ReportAbuseForm
 
 
@@ -81,6 +82,47 @@ def profiles(request):
     )
 
 
+@login_required
+def candidates(request):
+    candidates_data = get_talent_search_data(request.user, {"open_to_job_offers": True})
+    return render(
+        request,
+        "eahub/talentsearch.html",
+        {
+            "page_name": "Candidates",
+            "profiles": candidates_data["rows"],
+            "include_summary": True,
+        },
+    )
+
+
+@login_required
+def speakers(request):
+    speakers_data = get_talent_search_data(request.user, {"available_as_speaker": True})
+    return render(
+        request,
+        "eahub/talentsearch.html",
+        {
+            "page_name": "Speakers",
+            "profiles": speakers_data["rows"],
+            "include_summary": True,
+            "include_topics_i_speak_about": True,
+        },
+    )
+
+
+@login_required
+def volunteers(request):
+    volunteers_data = get_talent_search_data(
+        request.user, {"available_to_volunteer": True}
+    )
+    return render(
+        request,
+        "eahub/talentsearch.html",
+        {"page_name": "Volunteers", "profiles": volunteers_data["rows"]},
+    )
+
+
 def groups(request):
     groups_data = get_groups_data()
     return render(
@@ -118,6 +160,14 @@ def get_profiles_data(user):
         if x.lat and x.lon
     ]
     return {"rows": rows, "map_data": map_data}
+
+
+def get_talent_search_data(user, filters):
+    rows = Profile.objects.visible_to_user(user).filter(**filters)
+    for row in rows:
+        row.expertise_pretty = row.get_pretty_expertise()
+        row.cause_areas_pretty = row.get_pretty_cause_areas()
+    return {"rows": rows}
 
 
 def get_private_profiles(user):
