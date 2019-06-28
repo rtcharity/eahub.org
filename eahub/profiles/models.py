@@ -189,7 +189,7 @@ class OrganisationalAffiliation(enum.Enum):
     }
 
 
-def prettify_property_list(property_class, standard_list, other_list=''):
+def prettify_property_list(property_class, standard_list, other_list=""):
     pretty_list = ""
     if standard_list:
         pretty_list += ", ".join(map(property_class.label, standard_list))
@@ -319,9 +319,7 @@ class Profile(models.Model):
         )
 
     def get_pretty_career_interest_areas(self):
-        return prettify_property_list(
-            ExpertiseArea, self.career_interest_areas
-        )
+        return prettify_property_list(ExpertiseArea, self.career_interest_areas)
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
