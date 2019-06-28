@@ -14,6 +14,9 @@
     <div class="col-xs-offset-2 col-xs-2">
       <img class="profile_picture" src="/static/images/group_avatar.png">
     </div>
+    {% if not group.is_public %}
+    <div class="privacy-banner hub-info" title="This group is not public. Click on 'Edit' to change your settings."><i class="fa fa-lock"></i>Private group</div>
+    {% endif %}
     <div class="col-xs-6">
       <h1 class="word-break">{{ group.name }}</h1>
       <div class="btn btn-default purple">

@@ -93,6 +93,7 @@ class LocalGroupForm(forms.ModelForm):
         fields = [
             "name",
             "is_active",
+            "is_public",
             "local_group_type",
             "city_or_town",
             "country",

@@ -10,7 +10,7 @@ urlpatterns = [
         views.report_group_inactive,
         name="report_group_inactive",
     ),
-    urls.path("<slug:slug>/", views.LocalGroupDetailView.as_view(), name="group"),
+    urls.path("<slug:slug>/", views.local_group_detail, name="group"),
     urls.path(
         "<slug:slug>/edit/",
         views.LocalGroupUpdateView.as_view(),

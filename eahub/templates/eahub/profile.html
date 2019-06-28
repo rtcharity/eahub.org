@@ -125,30 +125,30 @@
           {% if profile.organisational_affiliations %}
           <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
           {% endif %}
-          {% if profile.local_groups.exists %}
+          {% if profile.public_local_groups.exists %}
           <div class="list turquoise-links">
             <div class="tag" style="display: block">Local group membership:</div>
-            {% if profile.local_groups.all.count == 1 %}
+            {% if profile.public_local_groups.count == 1 %}
               <a href="{% url 'group' profile.local_groups.first.slug %}">
-                {{profile.local_groups.first.name}}
+                {{profile.public_local_groups.first.name}}
               </a>
             {% else %}
-              {% for group in profile.local_groups.all %}
+              {% for group in profile.public_local_groups %}
                 <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
               {% endfor%}
             {% endif %}
           </div>
           {% endif %}
 
-          {% if profile.user.localgroup_set.exists %}
+          {% if visible_organised_groups.exists %}
           <div class="list turquoise-links">
             <div class="tag">Organiser of:</div>
-            {% if profile.user.localgroup_set.all.count == 1 %}
-              <a href="{% url 'group' profile.user.localgroup_set.first.slug %}">
-                {{profile.user.localgroup_set.first.name}}
+            {% if visible_organised_groups.all.count == 1 %}
+              <a href="{% url 'group' visible_organised_groups.first.slug %}">
+                {{visible_organised_groups.first.name}}
               </a>
             {% else %}
-              {% for group in profile.user.localgroup_set.all %}
+              {% for group in visible_organised_groups.all %}
                 <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
               {% endfor%}
             {% endif %}

@@ -37,7 +37,7 @@ class CustomisedPasswordChangeView(PasswordChangeView):
 
 
 def index(request):
-    groups_data = get_groups_data()
+    groups_data = get_groups_data(request.user)
     profiles_data = get_profiles_data(request.user)
     private_profiles = get_private_profiles(request.user)
     return render(
@@ -82,7 +82,7 @@ def profiles(request):
 
 
 def groups(request):
-    groups_data = get_groups_data()
+    groups_data = get_groups_data(request.user)
     return render(
         request,
         "eahub/groups.html",
@@ -94,8 +94,8 @@ def groups(request):
     )
 
 
-def get_groups_data():
-    rows = Group.objects.all()
+def get_groups_data(user):
+    rows = Group.objects.visible_to_user(user)
     map_data = [
         {
             "lat": x.lat,

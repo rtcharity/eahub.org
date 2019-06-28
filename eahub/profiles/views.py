@@ -33,7 +33,14 @@ def profile_detail_or_redirect(request, slug):
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profile", slug=profile.slug, permanent=True)
-    return render(request, "eahub/profile.html", {"profile": profile})
+    return render(
+        request,
+        "eahub/profile.html",
+        {
+            "profile": profile,
+            "visible_organised_groups": profile.visible_organised_groups(request.user),
+        },
+    )
 
 
 def profile_redirect_from_legacy_record(request, legacy_record):

@@ -5,10 +5,10 @@ from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
-from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
 
@@ -36,12 +36,6 @@ class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView
     def form_valid(self, form):
         form.instance.geocode()
         return super().form_valid(form)
-
-
-class LocalGroupDetailView(detail_views.DetailView):
-    model = LocalGroup
-    template_name = "eahub/group.html"
-    context_object_name = "group"
 
 
 class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.UpdateView):
@@ -72,6 +66,13 @@ class ReportGroupAbuseView(ReportAbuseView):
 
     def get_type(self):
         return "group"
+
+
+def local_group_detail(request, slug):
+    group = get_object_or_404(LocalGroup, slug=slug)
+    if not (group and request.user.has_perm("localgroups.view_local_group", group)):
+        raise Http404("No group exists with that slug.")
+    return render(request, "eahub/group.html", {"group": group})
 
 
 @login_required

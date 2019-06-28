@@ -329,16 +329,24 @@ class Profile(models.Model):
         else:
             return "N/A"
 
-    def get_pretty_local_groups(self):
-        if self.local_groups:
-            return ", ".join(
-                [
-                    "{local_group}".format(local_group=x.name)
-                    for x in self.local_groups.all()
-                ]
-            )
-        else:
-            return "N/A"
+    def public_local_groups(self):
+        return self.local_groups.filter(is_public=True)
+
+    def visible_local_groups(self, user):
+        return self.local_groups.filter(
+            models.Q(is_public=True) | models.Q(organisers__id=user.pk)
+        )
+
+    def all_organised_groups(self):
+        return self.user.localgroup_set
+
+    def public_organised_groups(self):
+        return self.all_organised_groups().filter(is_public=True)
+
+    def visible_organised_groups(self, user):
+        return self.all_organised_groups().filter(
+            models.Q(is_public=True) | models.Q(organisers__id=user.pk)
+        )
 
     def write_data_export_zip(self, request, response):
         with zipfile.ZipFile(response, mode="w") as zip_file:

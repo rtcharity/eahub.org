@@ -16,11 +16,19 @@ class LocalGroupType(enum.Enum):
     labels = {CITY: "City", COUNTRY: "Country", UNIVERSITY: "University"}
 
 
+class LocalGroupManager(models.Manager):
+    def visible_to_user(self, user):
+        if user.is_superuser:
+            return self.all()
+        return self.filter(models.Q(is_public=True) | models.Q(organisers__id=user.pk))
+
+
 class LocalGroup(models.Model):
 
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
+    is_public = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
     )
@@ -47,6 +55,8 @@ class LocalGroup(models.Model):
     last_edited = models.DateTimeField(
         auto_now=True, null=True, blank=True, editable=False
     )
+
+    objects = LocalGroupManager()
 
     class Meta:
         ordering = ["name", "slug"]
