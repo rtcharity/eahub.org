@@ -189,7 +189,7 @@ class OrganisationalAffiliation(enum.Enum):
     }
 
 
-def prettify_property_list(property_class, standard_list, other_list):
+def prettify_property_list(property_class, standard_list, other_list=''):
     pretty_list = ""
     if standard_list:
         pretty_list += ", ".join(map(property_class.label, standard_list))
@@ -266,7 +266,9 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     expertise_areas_other = models.TextField(blank=True)
-    career_interest_areas = models.TextField(blank=True)
+    career_interest_areas = postgres_fields.ArrayField(
+        enum.EnumField(ExpertiseArea), blank=True, default=list
+    )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
     topics_i_speak_about = models.TextField(blank=True)
     organisational_affiliations = postgres_fields.ArrayField(
@@ -314,6 +316,11 @@ class Profile(models.Model):
     def get_pretty_expertise(self):
         return prettify_property_list(
             ExpertiseArea, self.expertise_areas, self.expertise_areas_other
+        )
+
+    def get_pretty_career_interest_areas(self):
+        return prettify_property_list(
+            ExpertiseArea, self.career_interest_areas
         )
 
     def get_pretty_giving_pledges(self):
@@ -364,6 +371,9 @@ class Profile(models.Model):
                             map(ExpertiseArea.label, self.expertise_areas)
                         ),
                         "expertise_areas_other": self.expertise_areas_other,
+                        "career_interest_areas": list(
+                            map(ExpertiseArea.label, self.career_interest_areas)
+                        ),
                         "available_as_speaker": self.available_as_speaker,
                         "topics_i_speak_about": self.topics_i_speak_about,
                         "organisational_affiliations": list(

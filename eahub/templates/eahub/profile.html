@@ -100,7 +100,7 @@
           <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise|urlize|linebreaks }}</div>
           {% endif %}
           {% if profile.career_interest_areas %}
-          <div class="list"><div class="tag">Career interest areas:</div> {{ profile.career_interest_areas|urlize|linebreaks }}</div>
+          <div class="list"><div class="tag">Career interest areas:</div> {{ profile.get_pretty_career_interest_areas|urlize|linebreaks }}</div>
           {% endif %}
           {% if profile.open_to_job_offers %}
             <br>

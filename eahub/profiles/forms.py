@@ -67,13 +67,13 @@ class EditProfileCareerForm(forms.ModelForm):
         model = Profile
         fields = (
             "expertise_areas_other",
-            "career_interest_areas",
             "open_to_job_offers",
+            "career_interest_areas",
         )
         labels = {
             "expertise_areas_other": ("Other expertise areas:"),
-            "career_interest_areas": ("Career interest areas:"),
             "open_to_job_offers": ("Open to job offers:"),
+            "career_interest_areas": ("Career interest areas:"),
         }
 
 
