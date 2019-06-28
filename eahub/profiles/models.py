@@ -266,6 +266,7 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     expertise_areas_other = models.TextField(blank=True)
+    career_interest_areas = models.TextField(blank=True)
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
     topics_i_speak_about = models.TextField(blank=True)
     organisational_affiliations = postgres_fields.ArrayField(
