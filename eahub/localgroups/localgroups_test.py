@@ -8,27 +8,27 @@ from ..profiles.models import Profile
 # groups. Test that each user can see the appropriate groups.
 # TODO: Test profile views too.
 @pytest.mark.nondestructive
+@pytest.mark.django_db
 def test_group_visibility(client, django_user_model):
     publicgroup_name = "public-group"
     privategroup_name = "private-group"
 
-    profile1 = Profile.objects.create(user_id=1, name=profile1_name, is_public=True)
-    user1 = django_user_model.objects.create(
-        profile=profile1, password="testpassone", email="user1@example.com"
-    )
+    user1 = django_user_model.objects.create(email="user1@example.com")
+    profile1 = Profile.objects.create(user=user1, name="testuserone", is_public=True)
 
-    profile2 = Profile.objects.create(user_id=2, name="testusertwo", is_public=True)
-    user2 = django_user_model.objects.create(
-        profile=profile2, email="user2@example.com"
-    )
+    user2 = django_user_model.objects.create(email="user2@example.com")
+    Profile.objects.create(user=user2, name="testusertwo", is_public=True)
 
     group_public = LocalGroup.objects.create(name=publicgroup_name, is_public=True)
     group_public.organisers.set([user1])
+    group_public.save()
 
     assert group_public.slug == publicgroup_name
 
     group_private = LocalGroup.objects.create(name=privategroup_name, is_public=False)
     group_private.organisers.set([user1])
+    group_private.save()
+    user1.save()
 
     assert profile1.all_organised_groups().count() == 2
     assert profile1.public_organised_groups().count() == 1
