@@ -2,15 +2,17 @@ $(document).ready( function () {
     var dataTableProfiles = $('#datatable-profiles').DataTable({
       order: [[1, 'asc']],
       columns: [
-        { "orderable": false, "targets": 0 },
-        null,
-        null,
-        null
+        { "orderable": false, "targets": 0 }, // Image
+        null, // Name
+        null, // City/Town
+        null, // Country
       ],
       lengthChange: false,
       pageLength: 100,
       sDom: 'ltipr'
     } );
+
+    var dataTableTalentSearch = initDataTableTalentSearch();
 
     var dataTableGroups = $('#datatable-groups').DataTable({
       lengthChange: false,
@@ -22,6 +24,7 @@ $(document).ready( function () {
     var navbar = document.getElementById('navbar')
 
     applySearchFunctionality(dataTableProfiles)
+    applySearchFunctionality(dataTableTalentSearch)
     applySearchFunctionality(dataTableGroups)
 
     addSettingForMultiselectForms()
@@ -30,7 +33,49 @@ $(document).ready( function () {
     disappearOnMovingCursorAway(navbar)
 });
 
+function initDataTableTalentSearch() {
+  if ($('#datatable-talentsearch').length === 0) {
+    return;
+  }
+  const getColumnConfig = function(fieldName) {
+    if (fieldName == 'image') {
+      return {"orderable": false, "targets": 0};
+    }
+
+    const searchable = [
+        'expertise_areas',
+        'cause_areas',
+        'city_or_town',
+        'country',
+    ].includes(fieldName);
+    const orderable = [
+        'name',
+        'city_or_town',
+        'country',
+    ].includes(fieldName);
+
+    return {"searchable": searchable, "orderable": orderable};
+  };
+
+  const columns = [];
+  $('#datatable-talentsearch-headers th').each(function() {
+    const columnConfig = getColumnConfig($(this).data('name'));
+    columns.push(columnConfig);
+  });
+
+  return $('#datatable-talentsearch').DataTable({
+    order: [[1, 'asc']],
+    columns: columns,
+    lengthChange: false,
+    pageLength: 100,
+    sDom: 'ltipr'
+  } );
+}
+
 function applySearchFunctionality(datatable) {
+  if (!datatable) {
+    return;
+  }
   $("#filterbox").keyup(function() {
     datatable.search(this.value).draw();
   });
