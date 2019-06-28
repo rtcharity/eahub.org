@@ -15,7 +15,7 @@ from django.views.generic import base
 from django.views.generic.edit import FormView
 
 from ..localgroups.models import LocalGroup as Group
-from ..profiles.models import ExpertiseArea, Profile
+from ..profiles.models import Profile
 from .forms import ReportAbuseForm
 
 
