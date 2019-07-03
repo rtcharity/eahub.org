@@ -1,0 +1,8 @@
+FROM	node:10
+RUN	mkdir /code
+WORKDIR	/code
+COPY . .
+RUN npm install
+RUN npm test
+RUN npm run build
+RUN ls eahub/base/static
