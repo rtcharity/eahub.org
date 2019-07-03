@@ -73,21 +73,21 @@ $(document).ready(function () {
 window.initHeatmapFull = function initHeatmapFull(queryStringMap) {
   var mapParams = getMapParams();
   var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
-  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, isIE)
+  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE)
   newMap.setup();
 }
 
 window.initHeatmapList = function initHeatmapList(queryStringMap) {
   var mapParams = getMapParams();
   var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
-  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, isIE);
+  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE);
   newMap.render(mapLocations.profiles, mapLocations.private_profiles);
 }
 
 window.initHeatmapProfile = function initHeatmapProfile(mapLocations, htmlElements) {
   var mapParams = getMapParams();
   mapParams.htmlElements = htmlElements;
-  var newMap = new Heatmap(undefined, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, isIE);
+  var newMap = new Heatmap(undefined, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE);
   newMap.renderProfilePageMap();
 }
 
@@ -107,7 +107,7 @@ function getMapParams() {
     profile: Profile,
   }
   var externalModules = {
-    google: google,
+    google: window.google,
     markerClusterer: MarkerClusterer
   }
   return {mapModules, externalModules, htmlElements}
