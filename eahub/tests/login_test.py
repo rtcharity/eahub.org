@@ -1,11 +1,12 @@
 import pytest
+from django.test import override_settings
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 
-
+@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
 @pytest.mark.nondestructive
 def test_login_failure(driver, live_server):
     # Given
