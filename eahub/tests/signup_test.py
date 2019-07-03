@@ -5,7 +5,10 @@ from django.test import override_settings
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+
+@override_settings(
+    STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
+)
 @pytest.mark.nondestructive
 def test_signup_success(driver, live_server):
     signup_button = "#navbar_signup"
