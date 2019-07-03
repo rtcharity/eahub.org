@@ -23,7 +23,7 @@ import Marker from './maps/marker.js';
 import Profile from './maps/profile.js';
 
 $(document).ready(function () {
-  const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'));
+  const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'), $('#datatable-talentsearch'));
   tables.applySearchFunctionalityToAllTables();
 
   const navbar = new Navbar($('#burger-btn'), $('#navbar'));
@@ -40,12 +40,6 @@ $(document).ready(function () {
   const multiselectFormHtmlElements = $('.multiselect-form')
   const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
   multiselectForm.applySettings();
-
-  let claimGroupHtmlElements = {
-    toggle_btn: $('#claim_group_toggle'),
-    confirm_field: $('#claim_group_confirm_field'),
-    togglers: $('#claim_group_toggler')
-  }
 
   let reportGroupHtmlElements = {
     toggle_btn: $('#report_group_inactive_toggle'),
