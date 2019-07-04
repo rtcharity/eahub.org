@@ -98,7 +98,7 @@
           <li><a name="navbar_link" id="navbar_about" href="{% url 'about' %}"><i class="fa fa-info"></i> About</a></li>
           <li><a name="navbar_link" id="navbar_feedback" target="_blank" href="https://feedback.eahub.org"><i class="fa fa-comment"></i> Feedback</a></li>
           {% if user.is_authenticated %}
-            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}"><i class="fa fa-sign-out" id="logout"></i> Log out</a></li>
+            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-out" id="logout"></i> Log out</a></li>
           {% endif %}
         </ul>
       </div>
