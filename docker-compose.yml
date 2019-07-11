@@ -1,12 +1,5 @@
 version: '3'
 services:
-  webpack:
-    build:
-      context: '.'
-      dockerfile: "Dockerfile.webpack"
-    volumes:
-      - .:/code
-      - static_files:/code/eahub/base/static
   web:
     build: .
     command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
@@ -18,12 +11,10 @@ services:
       - webdriver
       - chrome
       - firefox
-      - webpack
     ports:
       - 8000:8000
     volumes:
       - .:/code
-      - static_files:/code/eahub/base/static
     environment:
       APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
       LEGACY_DATABASE_URL:
@@ -76,5 +67,3 @@ services:
       - webdriver
     environment:
       HUB_HOST: webdriver
-volumes:
-  static_files:
