@@ -65,10 +65,15 @@ class EditProfileCauseAreasForm(forms.ModelForm):
 class EditProfileCareerForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ("expertise_areas_other", "open_to_job_offers")
+        fields = (
+            "expertise_areas_other",
+            "open_to_job_offers",
+            "career_interest_areas",
+        )
         labels = {
             "expertise_areas_other": ("Other expertise areas:"),
             "open_to_job_offers": ("Open to job offers:"),
+            "career_interest_areas": ("Career interest areas:"),
         }
 
 

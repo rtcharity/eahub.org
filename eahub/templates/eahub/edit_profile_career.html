@@ -23,6 +23,15 @@
 {{ form.open_to_job_offers|as_crispy_field }}
 </div>
 
+<div class="field field_categories">
+    <label>Career interest areas:</label>
+    <select class="form-control multiselect-form" name="career_interest_areas" multiple>
+        {% for choice in expertise_area_choices %}
+            <option value="{{ choice.0 }}" {% if choice.0 in profile.career_interest_areas %}selected{% endif %}>{{ choice.1.label }}</option>
+        {% endfor %}
+    </select>
+</div>
+
 {% endblock %}
 
 {% block submit%}Update{% endblock%}

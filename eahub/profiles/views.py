@@ -137,8 +137,12 @@ def edit_profile_career(request):
         form = EditProfileCareerForm(request.POST, instance=request.user.profile)
         if form.is_valid():
             profile = form.save(commit=False)
+
             expertise_areas = request.POST.getlist("expertise_areas")
             profile.expertise_areas = expertise_areas
+            career_interest_areas = request.POST.getlist("career_interest_areas")
+            profile.career_interest_areas = career_interest_areas
+
             profile.save()
             return redirect("my_profile")
     else:
