@@ -41,6 +41,12 @@ $(document).ready(function () {
   const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
   multiselectForm.applySettings();
 
+  let claimGroupHtmlElements = {
+    toggle_btn: document.getElementById('claim_group_toggle'),
+    confirm_field: document.getElementById('claim_group_confirm_field'),
+    togglers: document.getElementsByClassName('claim_group_toggler')
+  }
+
   let reportGroupHtmlElements = {
     toggle_btn: $('#report_group_inactive_toggle'),
     confirm_field: $('#report_group_inactive_confirm_field'),
