@@ -7,7 +7,7 @@ module.exports = {
   context: __dirname,
   entry: './eahub/base/static/scripts/main',
   output: {
-      path: path.resolve('./eahub/base/static/webpack_bundles/'),
+      path: path.resolve('./eahub/base/dist/'),
       filename: "[name]-[hash].js",
   },
   devtool: '#eval-source-map',
@@ -81,7 +81,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new BundleTracker({filename: './webpack-stats.json'}),
+    new BundleTracker({filename: 'eahub/base/static/webpack-stats.json'}),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({

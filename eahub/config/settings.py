@@ -171,6 +171,7 @@ SITE_ID = 1
 from .build_settings import (  # noqa: F401; isort:skip
     STATIC_ROOT,
     STATIC_URL,
+    STATICFILES_DIRS,
     STATICFILES_STORAGE,
 )
 
@@ -262,11 +263,12 @@ else:
         "provided together"
     )
 
+
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "webpack_bundles/",
-        "STATS_FILE": os.path.join(base_dir, "webpack-stats.json"),
+        "BUNDLE_DIR_NAME": "",
+        "STATS_FILE": os.path.join(base_dir, "eahub/base/static/webpack-stats.json"),
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],

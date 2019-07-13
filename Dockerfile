@@ -1,6 +1,6 @@
 FROM node:10 AS frontend
-RUN        mkdir /code
-WORKDIR /code
+RUN        mkdir /static_build
+WORKDIR /static_build
 COPY . .
 RUN npm install
 RUN npm test
@@ -12,7 +12,8 @@ WORKDIR    /code
 COPY    requirements.txt    .
 RUN    pip install -r requirements.txt
 COPY    .    .
-COPY --from=frontend /code/eahub/base/static /eahub/base/static
+RUN        mkdir /static_build
+COPY --from=frontend /static_build/eahub/base/static /static_build
 ENV    PYTHONPATH    /code
 RUN    mkdir /static \
     && DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic
