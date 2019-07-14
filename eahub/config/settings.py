@@ -240,6 +240,23 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
 
+# webpack loader
+if DEBUG:
+    WEBPACK_STATS_FILE = os.path.join(base_dir, "eahub/base/static/webpack-stats.json")
+else:
+    WEBPACK_STATS_FILE = "/static_build/webpack-stats.json"
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "dist/",
+        "STATS_FILE": WEBPACK_STATS_FILE,
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    }
+}
+
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 
@@ -262,19 +279,3 @@ else:
         "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
         "provided together"
     )
-
-if DEBUG:
-    WEBPACK_STATS_FILE = os.path.join(base_dir, "eahub/base/static/webpack-stats.json")
-else:
-    WEBPACK_STATS_FILE = "/static_build/webpack-stats.json"
-
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "dist/",
-        "STATS_FILE": WEBPACK_STATS_FILE,
-        "POLL_INTERVAL": 0.1,
-        "TIMEOUT": None,
-        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
-    }
-}
