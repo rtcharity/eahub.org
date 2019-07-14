@@ -7,7 +7,7 @@ module.exports = {
   context: __dirname,
   entry: './eahub/base/static/scripts/main',
   output: {
-      path: path.resolve('./eahub/base/dist/'),
+      path: path.resolve('./eahub/base/static/dist'),
       filename: "[name]-[hash].js",
   },
   devtool: '#eval-source-map',

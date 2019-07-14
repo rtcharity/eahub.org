@@ -40,7 +40,9 @@ If the database schema has changed since last time, you'll need to run
 # Rebuilding frontend in development
 
 To see live changes to the frontend while developing, open a new terminal window and run the following command from the main folder:
-`npm run build-watch`
+```
+$ npm run build-watch
+```
 
 To see the changes, make a hard refresh in your browser.
 

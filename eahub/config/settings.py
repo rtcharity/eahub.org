@@ -263,12 +263,16 @@ else:
         "provided together"
     )
 
+if DEBUG:
+    WEBPACK_STATS_FILE = os.path.join(base_dir, "eahub/base/static/webpack-stats.json")
+else:
+    WEBPACK_STATS_FILE = "/static_build/webpack-stats.json"
 
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "",
-        "STATS_FILE": os.path.join(base_dir, "eahub/base/static/webpack-stats.json"),
+        "BUNDLE_DIR_NAME": "dist/",
+        "STATS_FILE": WEBPACK_STATS_FILE,
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
         "IGNORE": [r".+\.hot-update.js", r".+\.map"],

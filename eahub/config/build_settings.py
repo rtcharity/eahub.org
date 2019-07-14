@@ -1,9 +1,7 @@
 import os
-import environ
 
-env = environ.Env()
-base_dir = environ.Path(__file__) - 3
-
+from .settings import DEBUG
+from .settings import base_dir
 
 # Core settings: models
 INSTALLED_APPS = [
@@ -34,11 +32,13 @@ INSTALLED_APPS = [
 SECRET_KEY = b"build_secret_key"
 
 # Static files
-
-STATIC_ROOT = "/static/"
+if DEBUG:
+    STATIC_ROOT = os.path.join(base_dir, "eahub/base/static")
+else:
+    STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = (
     os.path.join(base_dir, "eahub/base/static"),
-    os.path.join(base_dir, "eahub/base/dist")
+    "/static_build/"
 )
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
