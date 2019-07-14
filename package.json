@@ -44,6 +44,6 @@
     "url-loader": "^2.0.0",
     "webpack": "^4.34.0",
     "webpack-bundle-tracker": "^0.4.2-beta",
-    "webpack-cli": "^3.3.4",
+    "webpack-cli": "^3.3.4"
   }
 }
