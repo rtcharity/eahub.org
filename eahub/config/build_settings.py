@@ -1,7 +1,7 @@
 import os
 
-from .settings import DEBUG
-from .settings import base_dir
+from .settings import DEBUG  # noqa: F401; isort:skip
+from .settings import base_dir  # noqa: F401; isort:skip
 
 # Core settings: models
 INSTALLED_APPS = [
@@ -37,8 +37,5 @@ if DEBUG:
 else:
     STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
-STATICFILES_DIRS = (
-    os.path.join(base_dir, "eahub/base/static"),
-    "/static_build/"
-)
+STATICFILES_DIRS = (os.path.join(base_dir, "eahub/base/static"), "/static_build/")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
