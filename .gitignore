@@ -91,3 +91,10 @@ ENV/
 # added by manoj
 .DS_Store
 secrets.env
+
+# JS dependencies
+node_modules
+webpack_bundles
+**/images/sort_*.*
+**/static/fonts
+webpack-stats.json

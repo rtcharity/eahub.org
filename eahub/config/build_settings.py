@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     "django_pwned_passwords",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
+    "webpack_loader",
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
@@ -28,4 +29,5 @@ SECRET_KEY = b"build_secret_key"
 # Static files
 STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
+STATICFILES_DIRS = ("/static_build/",)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

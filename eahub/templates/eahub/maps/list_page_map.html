@@ -1,35 +1,15 @@
+
 {% block map %}
 <div id="map" class="map_list_page"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
-<script src="/static/scripts/maps/markerclusterer.js"></script>
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
-
 {{ map_locations|json_script:'map-locations' }}
-<script type="text/javascript" src='/static/scripts/maps/profile.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/locationCluster.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/locationClusters.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/marker.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/heatmap.js'></script>
+
 <script>
   function initMap() {
     var mapType = "{{ map_type|escapejs }}";
-    var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
-    var htmlElements = {
-      map: document.getElementById('map')
-    }
-    var mapModules = {
-      locationCluster: LocationCluster,
-      locationClusters: LocationClusters,
-      marker: Marker,
-      profile: Profile,
-    }
-    var externalModules = {
-      google: google,
-      markerClusterer: MarkerClusterer
-    }
-    var listPageMap = new Heatmap(mapType, mapLocations, mapModules, externalModules, htmlElements, isIE)
-    listPageMap.render(mapLocations.profiles, mapLocations.private_profiles)
+    window.initHeatmapList(mapType);
   }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>

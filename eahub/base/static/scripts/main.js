@@ -1,130 +1,114 @@
-$(document).ready( function () {
-    var dataTableProfiles = $('#datatable-profiles').DataTable({
-      order: [[1, 'asc']],
-      columns: [
-        { "orderable": false, "targets": 0 }, // Image
-        null, // Name
-        null, // City/Town
-        null, // Country
-      ],
-      lengthChange: false,
-      pageLength: 100,
-      sDom: 'ltipr'
-    } );
+import $ from "jquery";
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import './bootstrap-multiselect/bootstrap-multiselect.js';
+import '../styles/bootstrap-multiselect.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import '@fortawesome/fontawesome-free/js/all.min.js';
+import '../styles/fonts/open-sans.css';
+import '../styles/main.css';
+import './cookieconsent/init.js';
+import 'cookieconsent/build/cookieconsent.min.css';
 
-    var dataTableTalentSearch = initDataTableTalentSearch();
+import MarkerClusterer from '@google/markerclusterer';
+import Navbar from './navbar.js';
+import MultiselectForms from './multiselect-forms.js';
+import GroupPageActions from './group-page-actions.js'
+import ProfileEditImage from './profile-edit-image.js'
+import Tables from './tables.js';
+import Heatmap from './maps/heatmap.js';
+import LocationCluster from './maps/locationCluster.js';
+import LocationClusters from './maps/locationClusters.js';
+import Marker from './maps/marker.js';
+import Profile from './maps/profile.js';
 
-    var dataTableGroups = $('#datatable-groups').DataTable({
-      lengthChange: false,
-      pageLength: 100,
-      sDom: 'ltipr'
-    } );
+$(document).ready(function () {
+  const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'), $('#datatable-talentsearch'));
+  tables.applySearchFunctionalityToAllTables();
 
-    var menu_btn = document.getElementById('burger-btn')
-    var navbar = document.getElementById('navbar')
+  const navbar = new Navbar($('#burger-btn'), $('#navbar'));
+  navbar.toggleMenuOnClick();
+  navbar.disappearMenuOnMovingCursorAway();
 
-    applySearchFunctionality(dataTableProfiles)
-    applySearchFunctionality(dataTableTalentSearch)
-    applySearchFunctionality(dataTableGroups)
+  const selectorsWithOldStyle = [
+    $('#id_local_groups'),
+    $('#id_available_as_speaker'),
+    $('#id_open_to_job_offers'),
+    $('#id_available_to_volunteer')
+  ]
 
-    addSettingForMultiselectForms()
+  const multiselectFormHtmlElements = $('.multiselect-form')
+  const multiselectForm = new MultiselectForms(multiselectFormHtmlElements, selectorsWithOldStyle, 10);
+  multiselectForm.applySettings();
 
-    toggleNavbar(navbar, menu_btn)
-    disappearOnMovingCursorAway(navbar)
+  let claimGroupHtmlElements = {
+    toggle_btn: document.getElementById('claim_group_toggle'),
+    confirm_field: document.getElementById('claim_group_confirm_field'),
+    togglers: document.getElementsByClassName('claim_group_toggler')
+  }
+
+  let reportGroupHtmlElements = {
+    toggle_btn: document.getElementById('report_group_inactive_toggle'),
+    confirm_field: document.getElementById('report_group_inactive_confirm_field'),
+    togglers: document.getElementsByClassName('report_group_inactive_toggler')
+  }
+
+  const groupPageActions = new GroupPageActions([claimGroupHtmlElements, reportGroupHtmlElements]);
+  groupPageActions.toggleEachElementOnClick();
+
+  const imageHtmlElement = $('#id_image');
+  const imageChangeHtmlElements = {
+    container: $('#image-change'),
+    toggle: $('#image-change-toggle')
+  }
+  const imageClearHtmlElements = {
+    container: $('#image-clear'),
+    checkbox: $('#image-clear_id')
+  }
+  const profileEditImage = new ProfileEditImage(imageHtmlElement, imageChangeHtmlElements, imageClearHtmlElements);
+  profileEditImage.toggleImageChangeOnClick();
+  profileEditImage.removeImageClearOnInput();
 });
 
-function initDataTableTalentSearch() {
-  if ($('#datatable-talentsearch').length === 0) {
-    return;
+window.initHeatmapFull = function initHeatmapFull(queryStringMap) {
+  var mapParams = getMapParams();
+  var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
+  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE)
+  newMap.setup();
+}
+
+window.initHeatmapList = function initHeatmapList(queryStringMap) {
+  var mapParams = getMapParams();
+  var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
+  var newMap = new Heatmap(queryStringMap, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE);
+  newMap.render(mapLocations.profiles, mapLocations.private_profiles);
+}
+
+window.initHeatmapProfile = function initHeatmapProfile(mapLocations, htmlElements) {
+  var mapParams = getMapParams();
+  mapParams.htmlElements = htmlElements;
+  var newMap = new Heatmap(undefined, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE);
+  newMap.renderProfilePageMap();
+}
+
+function getMapParams() {
+  var mapSelectorInd = document.getElementById('map_selector_ind');
+  var mapSelectorGroups = document.getElementById('map_selector_groups');
+  var mapElement = document.getElementById('map')
+  var htmlElements = {
+    selectorInd: mapSelectorInd === undefined ? null : mapSelectorInd,
+    selectorGroups: mapSelectorGroups === undefined ? null : mapSelectorGroups,
+    map: mapElement === undefined ? null : mapElement,
   }
-  const getColumnConfig = function(fieldName) {
-    if (fieldName == 'image') {
-      return {"orderable": false, "targets": 0};
-    }
-
-    const searchable = [
-        'expertise_areas',
-        'cause_areas',
-        'city_or_town',
-        'country',
-    ].includes(fieldName);
-    const orderable = [
-        'name',
-        'city_or_town',
-        'country',
-    ].includes(fieldName);
-
-    return {"searchable": searchable, "orderable": orderable};
-  };
-
-  const columns = [];
-  $('#datatable-talentsearch-headers th').each(function() {
-    const columnConfig = getColumnConfig($(this).data('name'));
-    columns.push(columnConfig);
-  });
-
-  return $('#datatable-talentsearch').DataTable({
-    order: [[1, 'asc']],
-    columns: columns,
-    lengthChange: false,
-    pageLength: 100,
-    sDom: 'ltipr'
-  } );
-}
-
-function applySearchFunctionality(datatable) {
-  if (!datatable) {
-    return;
+  var mapModules = {
+    locationCluster: LocationCluster,
+    locationClusters: LocationClusters,
+    marker: Marker,
+    profile: Profile,
   }
-  $("#filterbox").keyup(function() {
-    datatable.search(this.value).draw();
-  });
-}
-
-function addSettingForMultiselectForms() {
-  var selectors_with_old_style = [$('#id_local_groups'), $('#id_available_as_speaker'), $('#id_open_to_job_offers'), $('#id_available_to_volunteer')]
-
-  addMultiSelectClassTo(selectors_with_old_style)
-  enableSearchForMultiselectFormsWithItemsMoreThan(9)
-  $('.multiselect-form').multiselect({
-    numberDisplayed: 1
-  })
-}
-
-function addMultiSelectClassTo(selectors_with_old_style) {
-  selectors_with_old_style.forEach(function(selector) {
-    selector.removeClass('selectmultiple').addClass('form-control multiselect-form')
-  })
-}
-
-function enableSearchForMultiselectFormsWithItemsMoreThan(num) {
-  let className = 'select-with-more-than-'+num+'-items'
-  addClassNameToMultiSelectFormsWithMoreThan(num, className)
-  $('.' + className).multiselect({
-    enableCaseInsensitiveFiltering: true
-  })
-}
-
-function addClassNameToMultiSelectFormsWithMoreThan(num, className) {
-  const multiselect_forms = document.getElementsByClassName('multiselect-form')
-  for (var i=0; i < multiselect_forms.length; i++) {
-    let multiselect_form = multiselect_forms[i]
-    if (multiselect_form.length > num) multiselect_form.classList.add(className)
+  var externalModules = {
+    google: window.google,
+    markerClusterer: MarkerClusterer
   }
-}
-
-function toggleNavbar(navbar, menu_btn) {
-  menu_btn.addEventListener('click', function() {
-    navbar.style.display = navbar.style.display == 'inline-block' ? 'none' : 'inline-block';
-  })
-}
-
-function disappearOnMovingCursorAway(navbar) {
-  navbar.onmouseout = function(event) {
-    var element_left = event.target
-    var element_new = event.relatedTarget
-    if (element_new.className.includes('container') || element_new.id == 'body') {
-      navbar.style.display = 'none'
-    }
-  }
+  return {mapModules, externalModules, htmlElements}
 }

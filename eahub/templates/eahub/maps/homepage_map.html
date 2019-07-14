@@ -6,37 +6,13 @@
   <label><input type="radio" name="map_selector" value="groups" id="map_selector_groups">Groups</label>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
-<script src="/static/scripts/maps/markerclusterer.js"></script>
 
 <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
-
 {{ map_locations|json_script:'map-locations' }}
-<script type="text/javascript" src='/static/scripts/maps/profile.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/locationCluster.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/locationClusters.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/marker.js'></script>
-<script type="text/javascript" src='/static/scripts/maps/heatmap.js'></script>
 <script>
   function initMap() {
     var queryStringMap = "{{ request.GET.map|escapejs }}";
-    var mapLocations = JSON.parse(document.getElementById('map-locations').textContent);
-    var htmlElements = {
-      selectorInd: document.getElementById('map_selector_ind'),
-      selectorGroups: document.getElementById('map_selector_groups'),
-      map: document.getElementById('map')
-    }
-    var mapModules = {
-      locationCluster: LocationCluster,
-      locationClusters: LocationClusters,
-      marker: Marker,
-      profile: Profile,
-    }
-    var externalModules = {
-      google: google,
-      markerClusterer: MarkerClusterer
-    }
-    var new_map = new Heatmap(queryStringMap, mapLocations, mapModules, externalModules, htmlElements, isIE)
-    new_map.setup()
+    window.initHeatmapFull(queryStringMap);
   }
 </script>
 <script defer async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>

@@ -1,3 +1,13 @@
+var appRoot = require('app-root-path');
+const scriptsFolder = appRoot + '/eahub/base/static/scripts/';
+const Heatmap = require(`${scriptsFolder}/maps/heatmap.js`).default;
+const LocationCluster = require(`${scriptsFolder}/maps/locationCluster.js`).default;
+const LocationClusters = require(`${scriptsFolder}/maps/locationClusters.js`).default;
+const Marker = require(`${scriptsFolder}/maps/marker.js`).default;
+const Profile = require(`${scriptsFolder}/maps/profile.js`).default;
+
+const Mocks = require('../helpers/mocks.js').default;
+
 describe('Heatmap', function() {
   let mapIndividuals, mapGroups, mapModules, isIE
   beforeEach(function() {
@@ -8,8 +18,8 @@ describe('Heatmap', function() {
       marker: Marker,
       profile: Profile
     }
-    mapIndividuals = new Heatmap('individuals', locationsMock, mapModules, externalModulesMock, htmlElementsMock, isIE)
-    mapGroups = new Heatmap('groups', locationsMock, mapModules, externalModulesMock, htmlElementsMock, isIE)
+    mapIndividuals = new Heatmap('individuals', Mocks.locationsMock, mapModules, Mocks.externalModulesMock, Mocks.htmlElementsMock, isIE)
+    mapGroups = new Heatmap('groups', Mocks.locationsMock, mapModules, Mocks.externalModulesMock, Mocks.htmlElementsMock, isIE)
   })
   afterEach(function() {
     mapIndividuals = null
@@ -18,7 +28,6 @@ describe('Heatmap', function() {
   describe('setup', function() {
     it('renders groups if type is groups', function() {
       mapGroups.setup()
-
       mapGroups.locationClusters.list.forEach(function(cluster) {
         cluster.profiles.forEach(function(profile) {
           expect(profile.type).toBe('groups')
@@ -46,13 +55,13 @@ describe('Heatmap', function() {
     })
   })
   describe('render', function() {
-    var klaipedaCluster, londonCluster
+    var klaipedaCluster, londonCluster, klaipedaMarker, londonMarker
 
     beforeEach(function() {
       mapGroups.setup()
       mapIndividuals.setup()
-      klaipedaMarker = mapGroups.locationClusters.list.filter(cluster => cluster.location.lat == klaipedaLatLng.lat && cluster.location.lng == klaipedaLatLng.lng)[0].markers[0]
-      londonMarker = mapIndividuals.locationClusters.list.filter(cluster => cluster.location.lat == londonLatLng.lat && cluster.location.lng == londonLatLng.lng)[0].markers[0]
+      klaipedaMarker = mapGroups.locationClusters.list.filter(cluster => cluster.location.lat == Mocks.klaipedaLatLng.lat && cluster.location.lng == Mocks.klaipedaLatLng.lng)[0].markers[0]
+      londonMarker = mapIndividuals.locationClusters.list.filter(cluster => cluster.location.lat == Mocks.londonLatLng.lat && cluster.location.lng == Mocks.londonLatLng.lng)[0].markers[0]
     })
     afterEach(function() {
       mapGroups, mapIndividuals, klaipedaMarker, londonMarker = null
@@ -68,7 +77,6 @@ describe('Heatmap', function() {
       expect(klaipedaMarker.googleMarker.desc).toContain('klaipeda-2')
     })
     it('does not add private profiles to list in markers', function() {
-      console.log(londonMarker.googleMarker)
       expect(londonMarker.googleMarker.desc).not.toContain('<ul>')
     })
   })

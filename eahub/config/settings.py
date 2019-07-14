@@ -169,6 +169,7 @@ SITE_ID = 1
 from .build_settings import (  # noqa: F401; isort:skip
     STATIC_ROOT,
     STATIC_URL,
+    STATICFILES_DIRS,
     STATICFILES_STORAGE,
 )
 
@@ -236,6 +237,19 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
+
+# webpack loader
+
+WEBPACK_LOADER = {
+    "DEFAULT": {
+        "CACHE": not DEBUG,
+        "BUNDLE_DIR_NAME": "dist/",
+        "STATS_FILE": "/static_build/webpack-stats.json",
+        "POLL_INTERVAL": 0.1,
+        "TIMEOUT": None,
+        "IGNORE": [r".+\.hot-update.js", r".+\.map"],
+    }
+}
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"

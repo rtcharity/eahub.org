@@ -24,13 +24,13 @@
       <h1 class="word-break">{{ profile.name }}</h1>
       {% if user.id == profile.user_id %}
       <div class="btn btn-default purple">
-        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a></span>
+        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil-alt"></i> Edit</a></span>
       </div>
       <div class="btn btn-default purple">
-        <span><a href="{% url 'account_email' %}"><i class="fa fa-pencil"></i> Change Email Address</a></span>
+        <span><a href="{% url 'account_email' %}"><i class="fa fa-pencil-alt"></i> Change Email Address</a></span>
       </div>
       <div class="btn btn-default purple">
-        <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil"></i> Change Password</a></span>
+        <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil-alt"></i> Change Password</a></span>
       </div>
       {% else %}
       <div class="btn btn-default purple">
@@ -80,7 +80,7 @@
           {% if user.id == profile.user_id %}
             <br>
             <span class="btn btn-default btn-xs">
-              <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil"></i> Edit</a>
+              <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
             </span>
           {% endif %}
         </div>
@@ -109,7 +109,7 @@
           {% if user.id == profile.user_id %}
             <br>
             <span class="btn btn-default btn-xs">
-              <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil"></i> Edit</a>
+              <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
             </span>
           {% endif %}
         </div>
@@ -168,7 +168,7 @@
 
           {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">
-              <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil"></i> Edit</a>
+              <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
             </span>
           {% endif %}
         </div>
@@ -190,7 +190,7 @@
             {% if user.id == profile.user_id %}
               <br>
               <span class="btn btn-default btn-xs">
-                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil"></i> Edit</a>
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
               </span>
             {% endif %}
           </div>

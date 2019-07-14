@@ -1,4 +1,5 @@
 {% load static %}
+{% load render_bundle from webpack_loader %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,16 +10,6 @@
 
     <title>EA Hub {{ page_name }}</title>
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
-
-    <!-- styles -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" rel="stylesheet">
-    <link href="/static/styles/main.css" rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles/bootstrap-multiselect.css" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -33,14 +24,13 @@
       gtag('js', new Date());
       gtag('config', 'UA-130028424-1');
     </script>
-    <script src='{% static "scripts/cookieconsent/cookieconsent.min.js" %}'></script>
-    <script src='{% static "scripts/cookieconsent/init.js" %}'></script>
     <script>
     !function(e,n,t,r){
         function o(){try{var e;if((e="string"==typeof this.response?JSON.parse(this.response):this.response).url){var t=n.getElementsByTagName("script")[0],r=n.createElement("script");r.async=!0,r.src=e.url,t.parentNode.insertBefore(r,t)}}catch(e){}}var s,p,a,i=[],c=[];e[t]={init:function(){s=arguments;var e={then:function(n){return c.push({type:"t",next:n}),e},catch:function(n){return c.push({type:"c",next:n}),e}};return e},on:function(){i.push(arguments)},render:function(){p=arguments},destroy:function(){a=arguments}},e.__onWebMessengerHostReady__=function(n){if(delete e.__onWebMessengerHostReady__,e[t]=n,s)for(var r=n.init.apply(n,s),o=0;o<c.length;o++){var u=c[o];r="t"===u.type?r.then(u.next):r.catch(u.next)}p&&n.render.apply(n,p),a&&n.destroy.apply(n,a);for(o=0;o<i.length;o++)n.on.apply(n,i[o])};var u=new XMLHttpRequest;u.addEventListener("load",o),u.open("GET","https://"+r+".webloader.smooch.io/",!0),u.responseType="json",u.send()
     }(window,document,"Smooch","5caa256dfea08a001172c8ea");
     </script>
     <script>Smooch.init({ appId: '5caa256dfea08a001172c8ea' });</script>
+    {% render_bundle "main" "js" %}
 
     {% block header %}{% endblock %}
 
@@ -60,7 +50,7 @@
               <li><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
             {% else %}
             {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-              <li><a href="{% url 'account_login' %}?next={% firstof request.path '/' %}" id="navbar_login" ><i class="fa fa-sign-in"></i> Log In</a></li>
+              <li><a href="{% url 'account_login' %}?next={% firstof request.path '/' %}" id="navbar_login" ><i class="fa fa-sign-in-alt"></i> Log In</a></li>
               <li><a href="{% url 'account_signup' %}" id="navbar_signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
             {% endif %}
             {% endif %}
@@ -75,8 +65,6 @@
           {% endif %}
           </div>
         </div>
-
-      </div>
     </nav>
      <div class="container navbar-menu-container">
       <div id="navbar" class="navbar-menu">
@@ -85,7 +73,7 @@
             <li class="navbar-signup-xs"><a name="navbar_link" id="button_myprofile" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
           {% else %}
           {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-            <li><a name="navbar_link" id="navbar_login" href="{% url 'account_login' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-in"></i> Log In</a></li>
+            <li><a name="navbar_link" id="navbar_login" href="{% url 'account_login' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-in-alt"></i> Log In</a></li>
             <li><a name="navbar_link" id="navbar_signup" href="{% url 'account_signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
           {% endif %}
           {% endif %}
@@ -94,17 +82,16 @@
           {% endif %}
           <li><a name="navbar_link" id="navbar_groups" href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
           <li><a name="navbar_link" id="navbar_resources" href="https://resources.eahub.org/"><i class="fa fa-book"></i> EA Resources</a></li>
-          <li><a name="navbar_link" id="navbar_donation_swap" href="https://donationswap.eahub.org/"><i class="fa fa-exchange"></i> EA Donation Swap</a></li>
+          <li><a name="navbar_link" id="navbar_donation_swap" href="https://donationswap.eahub.org/"><i class="fa fa-exchange-alt"></i> EA Donation Swap</a></li>
           <li><a name="navbar_link" id="navbar_about" href="{% url 'about' %}"><i class="fa fa-info"></i> About</a></li>
           <li><a name="navbar_link" id="navbar_feedback" target="_blank" href="https://feedback.eahub.org"><i class="fa fa-comment"></i> Feedback</a></li>
           {% if user.is_authenticated %}
-            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-out" id="logout"></i> Log out</a></li>
+            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-out-alt" id="logout"></i> Log out</a></li>
           {% endif %}
         </ul>
       </div>
     </div>
     {% block content %}{% endblock %}
-
     <footer class="footer">
       <div class="container">
         <strong>&copy; {% now "Y" %} Effective Altruism Hub.</strong>
@@ -113,15 +100,5 @@
         </p>
       </div>
     </footer>
-
-    <!-- scripts -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script type="text/javascript" src="/static/scripts/bootstrap-multiselect.js"></script>
-    <script src="/static/scripts/main.js"></script>
-    {% block scripts %}{% endblock %}
-
   </body>
 </html>
