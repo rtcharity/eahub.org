@@ -48,9 +48,9 @@ $(document).ready(function () {
   }
 
   let reportGroupHtmlElements = {
-    toggle_btn: $('#report_group_inactive_toggle'),
-    confirm_field: $('#report_group_inactive_confirm_field'),
-    togglers: $('#report_group_inactive_toggler')
+    toggle_btn: document.getElementById('report_group_inactive_toggle'),
+    confirm_field: document.getElementById('report_group_inactive_confirm_field'),
+    togglers: document.getElementsByClassName('report_group_inactive_toggler')
   }
 
   const groupPageActions = new GroupPageActions([claimGroupHtmlElements, reportGroupHtmlElements]);
