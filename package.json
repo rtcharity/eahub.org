@@ -1,6 +1,6 @@
 {
   "name": "eahub.org",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "description": "EA Hub",
   "main": "eahub/base/static/scripts/main.js",
   "scripts": {
