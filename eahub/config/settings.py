@@ -1,5 +1,3 @@
-import os
-
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
