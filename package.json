@@ -43,7 +43,7 @@
     "svg-inline-loader": "^0.8.0",
     "url-loader": "^2.0.0",
     "webpack": "^4.34.0",
+    "webpack-bundle-tracker": "^0.4.2-beta",
     "webpack-cli": "^3.3.4",
-    "webpack-bundle-tracker": "^0.4.2-beta"
   }
 }
