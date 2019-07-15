@@ -48,7 +48,10 @@ $ docker-compose run --use-aliases web pytest
 ```
 
 ## Running Frontend Tests
-Run ```npm test```  
+If you're running these for the first time or ```package.json``` has changed, run
+```npm install```
+Then run 
+```npm test```  
 
 # Formatting Code
 ```
