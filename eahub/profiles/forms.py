@@ -79,7 +79,9 @@ class EditProfileCareerForm(forms.ModelForm):
 
 class EditProfileCommunityForm(forms.ModelForm):
     local_groups = CustomisedModelMultipleChoiceField(
-        queryset=LocalGroup.objects.all(), required=False, label="Local groups:"
+        queryset=LocalGroup.objects.filter(is_public=True),
+        required=False,
+        label="Local groups:",
     )
 
     class Meta:
