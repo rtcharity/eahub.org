@@ -6,9 +6,6 @@
 
 <br><br>
 
-
-
-
 <div class="container animated bounceIn">
   <div class="row">
     <div class="col-xs-offset-2 col-xs-2">
@@ -91,7 +88,7 @@
     </div>
     </div>
     <div class="col-md-6">
-      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat|default_if_none:0 lon=group.lon|default_if_none:0 active=group.is_active %}
+      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat lon=group.lon active=group.is_active %}
     </div>
   </div>
 
