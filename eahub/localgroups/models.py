@@ -19,6 +19,7 @@ class LocalGroupType(enum.Enum):
 class LocalGroup(models.Model):
 
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
+    is_public = models.BooleanField(default=True)
     name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(

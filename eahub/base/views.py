@@ -137,7 +137,7 @@ def groups(request):
 
 
 def get_groups_data():
-    rows = Group.objects.all()
+    rows = Group.objects.filter(is_public=True)
     map_data = [
         {
             "lat": group.lat,

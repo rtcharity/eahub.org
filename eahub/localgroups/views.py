@@ -39,13 +39,13 @@ class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView
 
 
 class LocalGroupDetailView(detail_views.DetailView):
-    model = LocalGroup
+    queryset = LocalGroup.objects.filter(is_public=True)
     template_name = "eahub/group.html"
     context_object_name = "group"
 
 
 class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.UpdateView):
-    model = LocalGroup
+    queryset = LocalGroup.objects.filter(is_public=True)
     form_class = LocalGroupForm
     template_name = "eahub/edit_group.html"
     permission_required = "localgroups.change_local_group"
@@ -60,7 +60,7 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
 
 
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
-    model = LocalGroup
+    queryset = LocalGroup.objects.filter(is_public=True)
     template_name = "eahub/delete_group.html"
     success_url = urls.reverse_lazy("groups")
     permission_required = "localgroups.delete_local_group"
@@ -68,7 +68,7 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
 
 class ReportGroupAbuseView(ReportAbuseView):
     def profile(self):
-        return LocalGroup.objects.get(slug=self.kwargs["slug"])
+        return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 
     def get_type(self):
         return "group"
@@ -77,7 +77,7 @@ class ReportGroupAbuseView(ReportAbuseView):
 @login_required
 @require_POST
 def claim_group(request, slug):
-    group = get_object_or_404(LocalGroup, slug=slug)
+    group = get_object_or_404(LocalGroup, slug=slug, is_public=True)
     subject = "EA Group claimed: {0}".format(group.name)
     try:
         user_eahub_url = "https://{0}/profile/{1}".format(
@@ -116,7 +116,7 @@ def claim_group(request, slug):
 @login_required
 @require_POST
 def report_group_inactive(request, slug):
-    group = get_object_or_404(LocalGroup, slug=slug)
+    group = get_object_or_404(LocalGroup, slug=slug, is_public=True)
     subject = "EA Group reported as inactive: {0}".format(group.name)
     try:
         user_eahub_url = "https://{0}/profile/{1}".format(
