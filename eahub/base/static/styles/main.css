@@ -303,7 +303,7 @@ body {
   height: 500px;
 }
 .map_list_page {
-  height: 300px;
+  height: 320px;
 }
 #map_selector{
   padding: 10px;
@@ -345,7 +345,7 @@ body {
 .profile-action {
   background-color: #f7f6f6;
   border-radius: 5px;
-  height: 300px;
+  height: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
