@@ -56,7 +56,7 @@ class EditProfileForm(forms.ModelForm):
                     "rows": 7,
                     "placeholder": "In West Philadelphia born and raised. "
                     "On the playground is where I spent most of my days.",
-                    "maxlength": 2000
+                    "maxlength": 2000,
                 }
             ),
         }
@@ -74,12 +74,7 @@ class EditProfileCauseAreasForm(forms.ModelForm):
         model = Profile
         fields = ("cause_areas_other", "available_to_volunteer")
         widgets = {
-            "cause_areas_other": forms.Textarea(
-                attrs={
-                    "rows": 3,
-                    "maxlength": 2000
-                }
-            ),
+            "cause_areas_other": forms.Textarea(attrs={"rows": 3, "maxlength": 2000})
         }
         labels = {
             "cause_areas_other": ("Other cause areas:"),
@@ -97,11 +92,8 @@ class EditProfileCareerForm(forms.ModelForm):
         )
         widgets = {
             "expertise_areas_other": forms.Textarea(
-                attrs={
-                    "rows": 3,
-                    "maxlength": 2000
-                }
-            ),
+                attrs={"rows": 3, "maxlength": 2000}
+            )
         }
         labels = {
             "expertise_areas_other": ("Other expertise areas:"),
@@ -121,12 +113,7 @@ class EditProfileCommunityForm(forms.ModelForm):
         model = Profile
         fields = ("available_as_speaker", "topics_i_speak_about", "local_groups")
         widgets = {
-            "topics_i_speak_about": forms.Textarea(
-                attrs={
-                    "rows": 3,
-                    "maxlength": 2000
-                }
-            ),
+            "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000})
         }
         labels = {
             "available_as_speaker": ("Available as speaker:"),

@@ -263,18 +263,24 @@ class Profile(models.Model):
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
-    cause_areas_other = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    cause_areas_other = models.TextField(
+        blank=True, validators=[MaxLengthValidator(2000)]
+    )
     available_to_volunteer = models.BooleanField(null=True, blank=True, default=None)
     open_to_job_offers = models.BooleanField(null=True, blank=True, default=None)
     expertise_areas = postgres_fields.ArrayField(
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
-    expertise_areas_other = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    expertise_areas_other = models.TextField(
+        blank=True, validators=[MaxLengthValidator(2000)]
+    )
     career_interest_areas = postgres_fields.ArrayField(
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    topics_i_speak_about = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    topics_i_speak_about = models.TextField(
+        blank=True, validators=[MaxLengthValidator(2000)]
+    )
     organisational_affiliations = postgres_fields.ArrayField(
         enum.EnumField(OrganisationalAffiliation), blank=True, default=list
     )
