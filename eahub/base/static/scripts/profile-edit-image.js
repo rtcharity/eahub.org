@@ -7,7 +7,7 @@ export default class ProfileEditImage {
 
   toggleImageChangeOnClick() {
     let imageChangeContainer = this.imageChangeHtmlElements.container;
-    this.imageChangeHtmlElements.toggle.on('click', function() {
+    this.imageChangeHtmlElements.toggle.addEventListener('click', function() {
       imageChangeContainer.style.display = (imageChangeContainer.style.display == "block") ? 'none' : 'block'
     })
   }
@@ -16,10 +16,10 @@ export default class ProfileEditImage {
     let imageClearContainer = this.imageClearHtmlElements.container;
     let imageClearCheckbox = this.imageClearHtmlElements.checkbox;
     let imageHtmlElement = this.imageHtmlElement;
-    imageHtmlElement.on('change', function() {
+    imageHtmlElement.addEventListener('change', function() {
       if (imageHtmlElement.value != '') {
-        imageClearContainer.css("display", "none");
-        imageClearCheckbox.prop('checked', false);
+        imageClearContainer.style.display = "none";
+        imageClearCheckbox.checked = false;
       }
     })
   }
