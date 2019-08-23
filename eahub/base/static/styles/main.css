@@ -54,6 +54,8 @@ body {
   color: white;
 }
 
+
+
 .suggestions-btn {
   background-color: #635274;
   line-height: 30px;
@@ -450,6 +452,11 @@ body {
 
 .summary-panel-external-links {
   margin-left: auto;
+}
+
+.summary-panel-external-links .profile-link {
+  height: 20px;
+  width: 40px;
 }
 
 .key-facts .background {
