@@ -5,24 +5,22 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('profiles', '0011_profile_career_interest_areas'),
-    ]
+    dependencies = [("profiles", "0011_profile_career_interest_areas")]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='facebook_url',
+            model_name="profile",
+            name="facebook_url",
             field=models.URLField(blank=True, max_length=400),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='linkedin_url',
+            model_name="profile",
+            name="linkedin_url",
             field=models.URLField(blank=True, max_length=400),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='personal_website_url',
+            model_name="profile",
+            name="personal_website_url",
             field=models.URLField(blank=True, max_length=400),
         ),
     ]
