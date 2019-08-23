@@ -182,8 +182,19 @@
 
       <div class="col-md-6 key-facts">
         <div class="panel panel-default summary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Summary</h3>
+          <div class="summary-panel-heading panel-heading">
+            <div class="summary-panel-title">Summary</div>
+            <div class="summary-panel-external-links turquoise-links">
+              {% if profile.linkedin_url %}
+              <a href="{{ profile.linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
+              {% endif %}
+              {% if profile.facebook_url %}
+              <a href="{{ profile.facebook_url }}"><i class="fab fa-facebook"></i></a>
+              {% endif %}
+              {% if profile.personal_website_url %}
+              <a href="{{ profile.personal_website_url }}"><i class="fas fa-link"></i></a>
+              {% endif %}
+            </div>
           </div>
           <div class="panel-body">
             {{ profile.summary|default:'N/A'|urlize|linebreaks }}

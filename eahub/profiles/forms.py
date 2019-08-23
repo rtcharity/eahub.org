@@ -34,10 +34,23 @@ class SignupForm(forms.Form):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ("name", "image", "summary", "city_or_town", "country", "is_public")
+        fields = (
+            "name",
+            "image",
+            "linkedin_url",
+            "facebook_url",
+            "personal_website_url",
+            "summary",
+            "city_or_town",
+            "country",
+            "is_public",
+        )
         widgets = {
             "city_or_town": forms.TextInput(attrs={"placeholder": "London"}),
             "country": forms.TextInput(attrs={"placeholder": "UK"}),
+            "linkedin_url": forms.TextInput(),
+            "facebook_url": forms.TextInput(),
+            "personal_website_url": forms.TextInput(),
             "summary": forms.Textarea(
                 attrs={
                     "rows": 7,
@@ -49,6 +62,9 @@ class EditProfileForm(forms.ModelForm):
         labels = {
             "city_or_town": ("City/Town"),
             "is_public": "Show my profile to the public",
+            "linkedin_url": "LinkedIn Profile",
+            "facebook_url": "Facebook Profile",
+            "personal_website_url": "Personal Website",
         }
 
 
