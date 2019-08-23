@@ -56,6 +56,7 @@ class EditProfileForm(forms.ModelForm):
                     "rows": 7,
                     "placeholder": "In West Philadelphia born and raised. "
                     "On the playground is where I spent most of my days.",
+                    "maxlength": 2000
                 }
             ),
         }
@@ -72,6 +73,14 @@ class EditProfileCauseAreasForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ("cause_areas_other", "available_to_volunteer")
+        widgets = {
+            "cause_areas_other": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "maxlength": 2000
+                }
+            ),
+        }
         labels = {
             "cause_areas_other": ("Other cause areas:"),
             "available_to_volunteer": ("Available to volunteer:"),
@@ -86,6 +95,14 @@ class EditProfileCareerForm(forms.ModelForm):
             "open_to_job_offers",
             "career_interest_areas",
         )
+        widgets = {
+            "expertise_areas_other": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "maxlength": 2000
+                }
+            ),
+        }
         labels = {
             "expertise_areas_other": ("Other expertise areas:"),
             "open_to_job_offers": ("Open to job offers:"),
@@ -103,6 +120,14 @@ class EditProfileCommunityForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ("available_as_speaker", "topics_i_speak_about", "local_groups")
+        widgets = {
+            "topics_i_speak_about": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "maxlength": 2000
+                }
+            ),
+        }
         labels = {
             "available_as_speaker": ("Available as speaker:"),
             "topics_i_speak_about": ("Topics I speak about:"),
