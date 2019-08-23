@@ -56,14 +56,14 @@ $(document).ready(function () {
   const groupPageActions = new GroupPageActions([claimGroupHtmlElements, reportGroupHtmlElements]);
   groupPageActions.toggleEachElementOnClick();
 
-  const imageHtmlElement = $('#id_image');
+  const imageHtmlElement = document.getElementById('id_image');
   const imageChangeHtmlElements = {
-    container: $('#image-change'),
-    toggle: $('#image-change-toggle')
+    container: document.getElementById('image-change'),
+    toggle: document.getElementById('image-change-toggle')
   }
   const imageClearHtmlElements = {
-    container: $('#image-clear'),
-    checkbox: $('#image-clear_id')
+    container: document.getElementById('image-clear'),
+    checkbox: document.getElementById('image-clear_id')
   }
   const profileEditImage = new ProfileEditImage(imageHtmlElement, imageChangeHtmlElements, imageClearHtmlElements);
   profileEditImage.toggleImageChangeOnClick();
