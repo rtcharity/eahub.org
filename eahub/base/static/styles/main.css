@@ -438,6 +438,20 @@ body {
   word-wrap: break-word;
 }
 
+.summary-panel-heading {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  justify-items: center;
+}
+
+.summary-panel-title {
+  grid-column-start: 2;
+}
+
+.summary-panel-external-links {
+  margin-left: auto;
+}
+
 .key-facts .background {
   background-color: rgba(81, 43, 82, 0.7);
 }
