@@ -184,20 +184,33 @@
         <div class="panel panel-default summary">
           <div class="summary-panel-heading panel-heading">
             <div class="summary-panel-title">Summary</div>
-            <div class="summary-panel-external-links turquoise-links">
-              {% if profile.linkedin_url %}
-              <a href="{{ profile.linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
-              {% endif %}
-              {% if profile.facebook_url %}
-              <a href="{{ profile.facebook_url }}"><i class="fab fa-facebook"></i></a>
-              {% endif %}
-              {% if profile.personal_website_url %}
-              <a href="{{ profile.personal_website_url }}"><i class="fas fa-link"></i></a>
-              {% endif %}
-            </div>
           </div>
           <div class="panel-body">
             {{ profile.summary|default:'N/A'|urlize|linebreaks }}
+            {% if user.id == profile.user_id %}
+              <br>
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
+              </span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="panel panel-default summary">
+          <div class="summary-panel-heading panel-heading">
+            <div class="summary-panel-title">Links</div>
+          </div>
+          <div class="panel-body">
+            <div class="summary-panel-external-links turquoise-links">
+              {% if profile.linkedin_url %}
+              <a href="{{ profile.linkedin_url }}"><i class="fab fa-linkedin-in profile-link"></i></a>
+              {% endif %}
+              {% if profile.facebook_url %}
+              <a href="{{ profile.facebook_url }}"><i class="fab fa-facebook profile-link"></i></a>
+              {% endif %}
+              {% if profile.personal_website_url %}
+              <a href="{{ profile.personal_website_url }}"><i class="fas fa-link profile-link"></i></a>
+              {% endif %}
+            </div>
             {% if user.id == profile.user_id %}
               <br>
               <span class="btn btn-default btn-xs">
