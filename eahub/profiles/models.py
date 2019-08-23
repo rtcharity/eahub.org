@@ -254,6 +254,9 @@ class Profile(models.Model):
     )
     city_or_town = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
+    linkedin_url = models.URLField(max_length=400, blank=True)
+    facebook_url = models.URLField(max_length=400, blank=True)
+    personal_website_url = models.URLField(max_length=400, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
     cause_areas = postgres_fields.ArrayField(
