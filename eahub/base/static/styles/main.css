@@ -803,6 +803,11 @@ table td {
   .profile-info {
     display: block;
   }
+
+  #datatable-talentsearch {
+    display: block;
+    overflow: scroll;
+  }
 }
 
 @media(max-width: 768px) {
