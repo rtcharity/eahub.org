@@ -19,7 +19,17 @@
         <div class="list-group">
           <a href="mailto:lean@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact LEAN</a>
         </div>
+        <div class="list-group">
+          <a href="{% url 'candidates' %}" class="list-group-item"><i class="fas fa-briefcase"></i> Candidates</a>
+        </div>
+        <div class="list-group">
+          <a href="{% url 'speakers' %}" class="list-group-item"><i class="fa fa-chalkboard-teacher"></i> Speakers</a>
+        </div>
+        <div class="list-group">
+          <a href="{% url 'volunteers' %}" class="list-group-item"><i class="fa fa-hands-helping"></i> Volunteers</a>
+        </div>
     </div>
+
     <div class="col-sm-8">
       {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_locations=map_locations %}
     </div>
