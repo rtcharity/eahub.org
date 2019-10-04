@@ -48,7 +48,7 @@ $ docker-compose run --use-aliases web pytest
 ```
 The first two tests on each file are the formatting tests 'black' and 'FLAKE8'.
 
-## Running Unit Tests
+## Running a specific suite of unit tests
 
 ```
 $ docker-compose run web bash
