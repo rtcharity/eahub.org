@@ -41,3 +41,4 @@ pep8-naming==0.8.2
 isort[requirements]==4.3.20
 flake8-isort==2.7.0
 django-webpack-loader==0.6.0
+model-mommy==1.6.0

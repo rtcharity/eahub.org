@@ -46,6 +46,17 @@ container and run ```docker-compose up --build``` again.
 ```
 $ docker-compose run --use-aliases web pytest
 ```
+The first two tests on each file are the formatting tests 'black' and 'FLAKE8'.
+
+## Running Unit Tests
+
+```
+$ docker-compose run web bash
+```
+eg:
+```
+# pytest eahub/base/tests
+```
 
 ## Running Frontend Tests
 If you're running these for the first time or ```package.json``` has changed, run
