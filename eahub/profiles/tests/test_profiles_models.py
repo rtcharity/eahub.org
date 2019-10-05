@@ -11,7 +11,7 @@ class ProfileTests(TestCase):
     def test_profile_creation(self):
         profile = mommy.make("Profile", slug="slug", name="Derek Parfit")
         self.assertTrue(isinstance(profile, Profile))
-        self.assertTrue(str(profile), "Derek Parfit")
+        self.assertEqual(str(profile), "Derek Parfit")
 
     def test_geocode(self):
         profile = mommy.make(
