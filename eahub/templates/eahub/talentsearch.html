@@ -35,6 +35,8 @@
             <a href="{% url 'profile' profile.slug %}">{{ profile.name }}</a>
             {% if not profile.is_public %}
             <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Private profile</span>
+            {% elif not profile.is_approved %}
+            <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Awaiting approval</span>
             {% endif %}
           </td>
           {% if include_summary %}

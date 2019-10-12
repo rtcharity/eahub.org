@@ -20,7 +20,9 @@ class SignupForm(forms.Form):
         validators=[validate_sluggable_name],
     )
     is_public = forms.BooleanField(
-        required=False, label="Show my profile to the public", initial=True
+        required=False,
+        label="Show my profile to the public after it is approved",
+        initial=True,
     )
     if hasattr(settings, "RECAPTCHA_PUBLIC_KEY"):
         captcha = fields.ReCaptchaField(label="", widget=widgets.ReCaptchaV3)
