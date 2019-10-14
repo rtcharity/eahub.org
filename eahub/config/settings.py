@@ -198,8 +198,16 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 
 # Django reCAPTCHA
-RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY")
-RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
+recaptcha_v3_secret_key = env.str("RECAPTCHA_V3_SECRET_KEY", default=None)
+recaptcha_v3_site_key = env.str("RECAPTCHA_V3_SITE_KEY", default=None)
+if recaptcha_v3_secret_key is not None and recaptcha_v3_site_key is not None:
+    RECAPTCHA_PRIVATE_KEY = recaptcha_v3_secret_key
+    RECAPTCHA_PUBLIC_KEY = recaptcha_v3_site_key
+    RECAPTCHA_REQUIRED_SCORE = 0.85
+elif recaptcha_v3_secret_key is not None or recaptcha_v3_site_key is not None:
+    raise exceptions.ImproperlyConfigured(
+        "RECAPTCHA_V3_SECRET_KEY and RECAPTCHA_V3_SITE_KEY must be provided together"
+    )
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"

@@ -819,3 +819,7 @@ table td {
     display: block !important;
   }
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
