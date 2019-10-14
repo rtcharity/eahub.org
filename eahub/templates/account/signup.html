@@ -10,13 +10,6 @@
 
 {% endblock %}
 
-<div class="field">
-  <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
-  {% if 'captcha_error' in request.GET %}
-    <div class="alert alert-danger login-danger" style="max-width: 304px;">Captcha error</div>
-  {% endif %}
-</div>
-
 {% block submit%}Sign up{% endblock%}
 
 {% block form_privacy_note %}
@@ -24,7 +17,10 @@
 <br>
 
 <div class="privacy-note">
-  Read more about our approach to privacy in our <a href="{% url 'privacy_policy' %}">Privacy Policy</a>.
+  <p>This site is protected by reCAPTCHA and the Google
+    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+    <a href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
+  <p>Read more about our approach to privacy in our <a href="{% url 'privacy_policy' %}">Privacy Policy</a>.</p>
 </div>
 
 {% endblock %}

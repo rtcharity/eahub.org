@@ -3,7 +3,6 @@ import time
 import pytest
 from django.test import override_settings
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 
 
 @override_settings(
@@ -35,12 +34,6 @@ def test_signup_success(driver, live_server):
 
     # "Visible to public" unchecked
     driver.find_element(By.CSS_SELECTOR, public).click()
-
-    # Recaptcha solved
-    driver.find_element(By.CSS_SELECTOR, password_field_2).send_keys(
-        Keys.TAB + Keys.TAB + Keys.SPACE
-    )
-    time.sleep(5)
 
     # Then:
     # Submit

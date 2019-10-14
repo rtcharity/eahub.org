@@ -20,6 +20,8 @@ services:
       LEGACY_DATABASE_URL:
       LOCAL_GROUPS_AIRTABLE_API_KEY:
       LOCAL_GROUPS_AIRTABLE_BASE_KEY:
+      RECAPTCHA_V3_SECRET_KEY: 
+      RECAPTCHA_V3_SITE_KEY: 
       ADMINS: Local Admin=admin@example.com
       AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
       AZURE_CONTAINER: media
@@ -34,8 +36,6 @@ services:
       LEAN_MANAGERS: Local Manager=leanmanager@example.com
       PYTEST_ADDOPTS: --driver=Remote
       PYTHONDONTWRITEBYTECODE: 'True'
-      RECAPTCHA_SECRET_KEY: 6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe
-      RECAPTCHA_SITE_KEY: 6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI
       SECRET_KEY: development_secret_key
       SELENIUM_HOST: webdriver
   db:
