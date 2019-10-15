@@ -3,4 +3,17 @@ from django.contrib import admin
 
 from . import models
 
-admin.site.register(models.User, authtools_admin.UserAdmin)
+
+@admin.register(models.User)
+class UserAdmin(authtools_admin.UserAdmin):
+    list_display = [
+        "is_active",
+        "email",
+        "profile",
+        "is_superuser",
+        "is_staff",
+        "date_joined",
+    ]
+    list_display_links = ["email", "profile"]
+    search_fields = ["email", "profile__name"]
+    ordering = ["-date_joined"]
