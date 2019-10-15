@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load rules %}
+
 {% block content %}
 
 <br><br>
@@ -8,7 +10,16 @@
   <div class="row">
     <div class="col-sm-4 profile-action">
         <div class="list-group">
-          <a href="{% url 'localgroups_create' %}" class="list-group-item"><i class="fa fa-plus"></i> Create a Group</a>
+          {% if user.is_authenticated %}
+            {% has_perm 'localgroups.create_local_group' user as can_create_local_group %}
+            {% if can_create_local_group %}
+              <a href="{% url 'localgroups_create' %}" class="list-group-item"><i class="fa fa-plus"></i> Create a Group</a>
+            {% else %}
+              <span class="list-group-item disabled" title="You can't create a group until your profile is confirmed."><i class="fa fa-plus"></i> Create a Group</span>
+            {% endif %}
+          {% else %}
+            <span class="list-group-item disabled" title="You must be logged in to create a group."><i class="fa fa-plus"></i> Create a Group</span>
+          {% endif %}
         </div>
         <div class="list-group">
           <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i> EA Resources</a>

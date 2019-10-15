@@ -363,8 +363,14 @@ body {
   border: none;
   font-size: 1.1em;
 }
+.profile-action .list-group-item.disabled {
+  background-color: #777 !important;
+}
 .profile-action .list-group-item:hover {
   transform: scale(1.1);
+}
+.profile-action .list-group-item.disabled:hover {
+  transform: none;
 }
 .profile-action .list-group-item .fa {
   margin-right: 10px;

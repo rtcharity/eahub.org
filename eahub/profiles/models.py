@@ -239,7 +239,9 @@ class ProfileManager(models.Manager):
     def visible_to_user(self, user):
         if user.is_superuser:
             return self.all()
-        return self.filter(models.Q(is_public=True) | models.Q(user_id=user.pk))
+        return self.filter(
+            models.Q(is_public=True, is_approved=True) | models.Q(user_id=user.pk)
+        )
 
 
 class Profile(models.Model):
@@ -249,6 +251,7 @@ class Profile(models.Model):
         decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
     )
     is_public = models.BooleanField(default=True)
+    is_approved = models.BooleanField(default=False)
     name = models.CharField(max_length=200, validators=[validate_sluggable_name])
     image = thumbnail.ImageField(
         upload_to=upload_path.auto_cleaned_path_stripped_uuid4, blank=True
@@ -368,6 +371,7 @@ class Profile(models.Model):
                         "last_login": self.user.last_login.isoformat(),
                         "url": request.build_absolute_uri(self.get_absolute_url()),
                         "is_public": self.is_public,
+                        "is_approved": self.is_approved,
                         "name": self.name,
                         "city_or_town": self.city_or_town,
                         "country": self.country,
