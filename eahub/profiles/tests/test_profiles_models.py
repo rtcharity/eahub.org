@@ -22,8 +22,8 @@ class ProfileTests(TestCase):
             country="UK",
         )
         profile.geocode()
-        self.assertAlmostEqual(profile.lat, 51.4893335)
-        self.assertAlmostEqual(profile.lon, -0.144055084527687)
+        self.assertTrue(51.2 <= profile.lat <= 51.8)
+        self.assertTrue(0.3 >= profile.lon >= -0.3)
 
     def test_has_cause_area_details(self):
         profile_without_cause_area = mommy.make("Profile", slug="slug", name=self.name)
