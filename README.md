@@ -53,7 +53,7 @@ The first two tests on each file are the formatting tests 'black' and 'FLAKE8'.
 ```
 $ docker-compose run web bash
 ```
-eg:
+Specify the location of the tests, for example:
 ```
 # pytest eahub/base/tests
 ```
