@@ -5,9 +5,9 @@ from django import db
 from django.core.management import base
 from django.db import transaction
 from django.utils import html, timezone
-from geopy import geocoders
 
 from ....base import models as base_models
+from ....base.geocoding import Geocoding
 from ... import models
 
 
@@ -249,9 +249,7 @@ class Command(base.BaseCommand):
             if city_or_town and country:
                 self.stdout.write(f"Geocoding: {city_or_town}, {country}")
                 time.sleep(1)
-                location = geocoders.Nominatim(timeout=10).geocode(
-                    f"{city_or_town}, {country}"
-                )
+                location = Geocoding.geocode(city_or_town, country)
                 if location:
                     return {"lat": location.latitude, "lon": location.longitude}
             return {"lat": None, "lon": None}

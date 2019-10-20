@@ -283,3 +283,6 @@ else:
         "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
         "provided together"
     )
+
+# Google Maps
+GOOGLE_MAPS_API_KEY = env.str("GOOGLE_MAPS_API_KEY", default=None)
