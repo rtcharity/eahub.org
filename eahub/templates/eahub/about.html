@@ -4,160 +4,55 @@
 <div class="container info turquoise-links">
 <img src="/static/images/about.png"></img>
 <h1>About</h1>
-<p>The Effective Altruism Hub is here to make it easier for Effective Altruists to get together and collaborate on shared goals. Our vision is to increase visibility for individuals, projects and groups, and to make ideas and opportunities easier to find.</p>
-<p>The Hub allows you to create, share or find personal, group and organisation profiles. Users can search for experts, prospective volunteers or employees and for speakers. People can also find, join or start local groups. Each of these entities are helpfully displayed on the interactive map of EAs. Improved privacy settings allow users to customise how they use the Hub.</p>
-<p>Having rebooted and enhanced the original functionality of the Hub over 2018, we are launching it in permanent beta mode. In the near future we will be working on introducing even more functionality to the Hub. We will introduce a powerful, cross-platform search which will make content and features on the Hub more intuitive and easy to find. It will also direct users to content from other sites from around the community, reducing fragmentation and increasing the impact of existing resources. We will also introduce a feature for EA projects which will allow people to find or promote their projects, and to connect with collaborators more easily. We also hope to expand functionality for local groups, and to build data visualisation for the EA Survey.</p>
+<p>The Effective Altruism Hub is here to make it easier for Effective Altruists to get together and collaborate on shared goals.
+  Our vision is to increase visibility for individuals, projects and groups, and to make ideas and opportunities easier to find.</p>
+<p>The Hub allows you to create, share or find personal and group profiles. Users can search for volunteers, speakers, and talent.
+  You can also find, join or start local groups. Each of these entities are helpfully displayed on the interactive map of EAs.
+  Improved privacy settings allow users to customise how they use the Hub.</p>
+<p>In the near future we will be working on introducing more functionality.</p>
 
-<p><a href="{% url 'newsletter' %}">Subscribe to the EA Hub newsletter</a> to receive regular updates about the Hub.</p>
-
-<h4> Features to be implemented in the future</h4>
-<table class="table">
-  <thead class="head">
-    <tr>
-      <th>Feature</th>
-      <th>Expected Completion Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="sub-head">
-      <th>General Site Improvements</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Message a user or group via the Hub</td>
-      <td class="months">Months</td>
-    </tr>
-    <tr>
-      <td>Targetted privacy levels for user data</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Stronger integration with other partner projects such as EA Donation Swap</td>
-      <td class="months">Months</td>
-    </tr>
-
-    <tr class="sub-head">
-      <th>EA Groups</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Ability for user to sign up for updates of new groups operating nearby</td>
-      <td class="months">Months</td>
-    </tr>
-
-    <tr class="sub-head">
-      <th>EA Profiles</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Ability to search for users based on cause area</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to search for users based on skill</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to search for users based on availability for hire or volunteering</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to search for users based on availability to speak</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Profile photo resizing and reframing for user uploads</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability for users to choose from a bank of stock images, rather than supplying an image</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to join a project and display participation on profile</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-
-    <tr class="sub-head">
-      <th>Platform for Independent EA Projects</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Ability to indicate project affiliation on profile (replaces org affiliation)</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to start a project</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to join a project and display participation on project page</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability to become a project leader</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability for project leaders to add and remove project members</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-    <tr>
-      <td>Ability for project leaders to indicate paid and unpaid vacancies</td>
-      <td class="weeks">Weeks</td>
-    </tr>
-
-    <tr class="sub-head">
-      <th>Cross-platform search</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Integration of search tool with sources and features around the EA webspace</td>
-      <td class="months">Months</td>
-    </tr>
-    <tr>
-      <td>Appealing and user friendly UI for search feature</td>
-      <td class="months">Months</td>
-    </tr>
-
-    <tr class="sub-head">
-      <th>EA Survey Dashboard</th>
-      <th></th>
-    </tr>
-    <tr>
-      <td>Data visualisation for longitudinal survey data</td>
-      <td class="months">Months</td>
-    </tr>
-    <tr>
-      <td>Interactive and customisable data displays</td>
-      <td class="months">Months</td>
-    </tr>
-    <tr>
-      <td>Dedicated page for reports and the survey data</td>
-      <td class="months">Months</td>
-    </tr>
-
-  </tbody>
-</table>
+<p><a href="{% url 'newsletter' %}">Subscribe here</a> to receive announcements.</p>
 
 <h4> Participation </h4>
 
-<p>The Hub is an open source project, and we are keen to work with other tech initiatives whenever it makes sense to do so.</p>
 <p>Originally founded by .impact in 2014, the Effective Altruism Hub is a project by the Local Effective Altruism Network and Rethink Charity, proudly delivered by our team of staff and volunteers:</p>
 
+Engineers:
+
 <ul>
-<li>Taymon Beal: Software Engineer and Advisor</li>
-<li>Sebastian Becker: Front-End Developer</li>
-<li>Alexander Herwix: Advisor</li>
-<li>Richenda Herzig: Product Lead and Illustrator</li>
-<li>Marcin Kowrygo: Content Strategist</li>
-<li>Manoj Nathwani: Lead Developer</li>
-<li>Michal Trzesimiech: Project Manager</li>
-<li>Nadia Williams: Illustrator</li>
-<li>Piotr Cieszynski: Tester</li>
+  <li>Taymon Beal: Back-End Developer</li>
+  <li>Sebastian Becker: Front-End Developer</li>
+  <li>Manoj Nathwani: Back-End Developer</li>
 </ul>
 
-<p>Message <a href="mailto:lean@eahub.org">LEAN</a> to join our team or donate to Local Effective Altruism Network and help us deliver more value.</p>
+Product team:
+
+<ul>
+  <li>Piotr Cieszynski: Tester</li>
+  <li>Alexander Herwix: Advisor</li>
+  <li>Richenda Herzig: Product Manager and Illustrator</li>
+  <li>Michal Trzesimiech: Project Manager</li>
+  <li>Nadia Williams: Illustrator</li>
+</ul>
+
+  Resources team:
+<ul>
+  <li>Catherine Low</li>
+  <li>Vaidehi Agarwalla</li>
+  <li>Eve McCormick</li>
+  <li>Jo Duyvestyn</li>
+  <li>Katie Gertsch</li>
+  <li>Liz Aderhold</li>
+  <li>Emma Caplan</li>
+  <li>Rebecca Baron</li>
+  <li>David Vatousios</li>
+  <li>Mac Jordan</li>
+  <li>James Faville</li>
+  <li>Pim Kang</li>
+  <li>Riley Peebles</li>
+  <li>Avi Iyer</li>
+  <li>and Marcin Kowrygo</li>
+</ul>
 
 <h4> Feedback </h4>
 
