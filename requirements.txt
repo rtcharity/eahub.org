@@ -12,7 +12,7 @@ git+git://github.com/rtcharity/django-storages@master#egg=django-storages[azure]
 git+git://github.com/rtcharity/django-authtools@master#egg=django-authtools
 django-redis==4.10.0
 hiredis==1.0.0
-Pillow==5.4.1
+Pillow==6.2.0
 sorl-thumbnail==12.5.0
 django-cleanup==3.0.1
 django-upload-path==0.1.1
@@ -41,3 +41,4 @@ pep8-naming==0.8.2
 isort[requirements]==4.3.20
 flake8-isort==2.7.0
 django-webpack-loader==0.6.0
+django-admin-relation-links==0.2.4

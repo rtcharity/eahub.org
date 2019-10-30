@@ -1,5 +1,6 @@
-from captcha import fields
+from captcha import fields, widgets
 from django import forms
+from django.conf import settings
 
 from ..localgroups.models import LocalGroup
 from .models import Profile, validate_sluggable_name
@@ -19,9 +20,12 @@ class SignupForm(forms.Form):
         validators=[validate_sluggable_name],
     )
     is_public = forms.BooleanField(
-        required=False, label="Show my profile to the public", initial=True
+        required=False,
+        label="Show my profile to the public after it is approved",
+        initial=True,
     )
-    captcha = fields.ReCaptchaField(label="")
+    if hasattr(settings, "RECAPTCHA_PUBLIC_KEY"):
+        captcha = fields.ReCaptchaField(label="", widget=widgets.ReCaptchaV3)
 
     field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
 

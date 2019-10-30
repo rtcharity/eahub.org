@@ -185,6 +185,7 @@ AZURE_SSL = SECURE_SSL_REDIRECT
 AZURE_URL_EXPIRATION_SECS = 3600
 
 # allauth
+ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https" if SECURE_SSL_REDIRECT else "http"
 ACCOUNT_EMAIL_REQUIRED = True
@@ -198,8 +199,16 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 
 # Django reCAPTCHA
-RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY")
-RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY")
+recaptcha_v3_secret_key = env.str("RECAPTCHA_V3_SECRET_KEY", default=None)
+recaptcha_v3_site_key = env.str("RECAPTCHA_V3_SITE_KEY", default=None)
+if recaptcha_v3_secret_key is not None and recaptcha_v3_site_key is not None:
+    RECAPTCHA_PRIVATE_KEY = recaptcha_v3_secret_key
+    RECAPTCHA_PUBLIC_KEY = recaptcha_v3_site_key
+    RECAPTCHA_REQUIRED_SCORE = 0.85
+elif recaptcha_v3_secret_key is not None or recaptcha_v3_site_key is not None:
+    raise exceptions.ImproperlyConfigured(
+        "RECAPTCHA_V3_SECRET_KEY and RECAPTCHA_V3_SITE_KEY must be provided together"
+    )
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
@@ -253,6 +262,7 @@ WEBPACK_LOADER = {
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
+BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])
 
 # Local groups
 LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS").items())

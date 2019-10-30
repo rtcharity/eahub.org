@@ -51,7 +51,11 @@ If you make your profile private but enter a location, an anonymous pin represen
 {{ form.is_public|as_crispy_field }}
 
 <div class="privacy-note">
+  {% if profile.is_approved %}
   Everything in public profiles is public and searchable.
+  {% else %}
+  Everything in public profiles becomes public and searchable as soon as the profile is approved.
+  {% endif %}
 </div>
 
 {% endblock %}

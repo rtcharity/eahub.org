@@ -18,10 +18,15 @@ from .forms import LocalGroupForm
 from .models import LocalGroup
 
 
-class LocalGroupCreateView(auth_mixins.LoginRequiredMixin, edit_views.CreateView):
+class LocalGroupCreateView(
+    auth_mixins.LoginRequiredMixin,
+    auth_mixins.PermissionRequiredMixin,
+    edit_views.CreateView,
+):
     model = LocalGroup
     form_class = LocalGroupForm
     template_name = "eahub/edit_group.html"
+    permission_required = "localgroups.create_local_group"
 
     def get_initial(self):
         initial = super().get_initial()
