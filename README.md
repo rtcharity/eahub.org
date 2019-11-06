@@ -42,6 +42,34 @@ If the database schema has changed since last time, you'll need to run
 To see live changes to the frontend while developing, you need to stop the docker
 container and run ```docker-compose up --build``` again.
 
+# Python debugger
+
+To use [`ipdb`](https://github.com/gotcha/ipdb), a Python debugger, follow these steps:
+
+1. Open `docker-compose.yml`. Under the `web` key, insert `stdin_open: true` and `tty: true`. It should look like this:
+
+```yaml
+services:
+  web:
+    stdin_open: true
+    tty: true
+```
+
+2. Run `docker-compose up`.
+3. Run `docker ps`. Find the value in the "CONTAINER ID" column that corresponds to the `eahuborg_web` image.
+4. Using the ID you found in the previous step, run `docker attach <container ID>`. The command should be something like `docker attach 362618269c67`.
+5. Insert `import ipdb; ipdb.set_trace()` wherever you need a debugger statement.
+6. In your Web browser, go to the page that runs the code you added the debugger statement to. In the terminal window you ran `docker attach` on, you should see something like this:
+
+```
+> /code/eahub/base/views.py(42)index()
+     41     import ipdb; ipdb.set_trace()
+---> 42     groups_data = get_groups_data()
+     43     profiles_data = get_profiles_data(request.user)
+
+ipdb>
+```
+
 # Running Tests
 ```
 $ docker-compose run --use-aliases web pytest
@@ -50,8 +78,8 @@ $ docker-compose run --use-aliases web pytest
 ## Running Frontend Tests
 If you're running these for the first time or ```package.json``` has changed, run
 ```npm install```
-Then run 
-```npm test```  
+Then run
+```npm test```
 
 # Formatting Code
 ```
