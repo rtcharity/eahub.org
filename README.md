@@ -39,8 +39,9 @@ If the database schema has changed since last time, you'll need to run
 
 # Rebuilding frontend in development
 
-To see live changes to the frontend while developing, you need to stop the docker
-container and run ```docker-compose up --build``` again.
+To see live changes to the frontend while developing,
+* open a new terminal window and run ```npm run build-watch```  
+* Hard refresh your browser
 
 # Running Tests
 ```
@@ -50,7 +51,7 @@ $ docker-compose run --use-aliases web pytest
 ## Running Frontend Tests
 If you're running these for the first time or ```package.json``` has changed, run
 ```npm install```
-Then run 
+Then run
 ```npm test```  
 
 # Formatting Code
