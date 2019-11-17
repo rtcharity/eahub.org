@@ -1,7 +1,5 @@
 
 FROM	node:10	AS	frontend
-RUN	mkdir /static_build
-WORKDIR	/static_build
 COPY	eahub/base/static	eahub/base/static
 COPY	package.json	package-lock.json	webpack.config.js	./
 RUN	npm ci
@@ -15,7 +13,7 @@ COPY	requirements.txt	.
 RUN	pip install -r requirements.txt
 COPY	.	.
 ENV	PYTHONPATH	/code
-COPY --from=frontend	/static_build/eahub/base/static	/static_build
+COPY --from=frontend	/eahub/base/static	/eahub/base/static
 RUN	mkdir /static \
 	&& DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic
 ENV	DJANGO_SETTINGS_MODULE	eahub.config.settings

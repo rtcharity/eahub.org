@@ -36,7 +36,7 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
 # Core settings: file uploads
-# DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
+DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
 # Core settings: globalization
 LANGUAGE_CODE = "en-us"
@@ -255,7 +255,7 @@ WEBPACK_LOADER = {
         "BUNDLE_DIR_NAME": "dist/",
         "STATS_FILE": "eahub/base/static/webpack-stats.json",
         "POLL_INTERVAL": 0.1,
-        "TIMEOUT": None
+        "TIMEOUT": None,
     }
 }
 
