@@ -13,21 +13,23 @@
     </div>
     <div class="col-xs-6">
       <h1 class="word-break">{{ group.name }}</h1>
+      {% if group.email %}
       <div class="btn btn-default purple">
-        {% if group.email %}
-          <a href="mailto:{{ group.email }}"><i class="fa fa-envelope-alt-alt"></i> Message</a>
-        {% elif group.facebook_group %}
-          <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope-alt"></i> Message</a>
-        {% elif group.facebook_page %}
-          <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope-alt"></i> Message</a>
-        {% else %}
-          <span><i class="fa fa-microphone-slash"></i> Messaging disabled</span>
-        {% endif %}
+        <a href="mailto:{{ group.email }}"><i class="fa fa-envelope"></i> Message</a>
       </div>
+      {% elif group.facebook_group %}
+      <div class="btn btn-default purple">
+        <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
+      </div>
+      {% elif group.facebook_page %}
+      <div class="btn btn-default purple">
+        <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
+      </div>
+      {% endif %}
       {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
       {% if can_edit_local_group %}
         <div class="btn btn-default purple">
-          <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i>Edit</a>
+          <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i> Edit</a>
         </div>
       {% endif %}
     </div>
