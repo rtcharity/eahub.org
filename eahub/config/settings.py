@@ -237,7 +237,7 @@ FEATURE_POLICY = {
 # Django PWNED Passwords
 PWNED_VALIDATOR_ERROR = mark_safe(
     "For your security, consider using a password that hasn't been <a target='_blank' href='https://haveibeenpwned.com/passwords'>"
-    "involved in a security breach before</a>."
+    "involved in a security breach before</a>. "
 )
 PWNED_VALIDATOR_FAIL_SAFE = False
 
