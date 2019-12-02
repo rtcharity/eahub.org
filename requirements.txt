@@ -8,8 +8,8 @@ ipdb==0.11
 geographiclib==1.49
 geopy==1.18.1
 git+git://github.com/rtcharity/django-environ@develop#egg=django-environ
-git+git://github.com/rtcharity/django-storages@master#egg=django-storages[azure]
 git+git://github.com/rtcharity/django-authtools@master#egg=django-authtools
+django-storages[azure]==1.8
 django-redis==4.10.0
 hiredis==1.0.0
 Pillow==6.2.0
