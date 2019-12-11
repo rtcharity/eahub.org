@@ -166,12 +166,20 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 # Static files
-from .build_settings import (  # noqa: F401; isort:skip
-    STATIC_ROOT,
-    STATIC_URL,
-    STATICFILES_DIRS,
-    STATICFILES_STORAGE,
-)
+if DEBUG:
+    from .build_settings_env import (  # noqa: F401; isort:skip
+        STATIC_ROOT,
+        STATIC_URL,
+        STATICFILES_DIRS,
+        STATICFILES_STORAGE,
+    )
+else:
+    from .build_settings import (  # noqa: F401; isort:skip
+        STATIC_ROOT,
+        STATIC_URL,
+        STATICFILES_DIRS,
+        STATICFILES_STORAGE,
+    )
 
 # Application Insights
 APPLICATION_INSIGHTS = {
@@ -248,12 +256,13 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
+WEBPACK_STATS_FILE = "eahub/base/static/webpack-stats.json" if DEBUG else "static_build/webpack-stats.json"
 
 WEBPACK_LOADER = {
     "DEFAULT": {
         "CACHE": not DEBUG,
         "BUNDLE_DIR_NAME": "dist/",
-        "STATS_FILE": "eahub/base/static/webpack-stats.json",
+        "STATS_FILE": WEBPACK_STATS_FILE,
         "POLL_INTERVAL": 0.1,
         "TIMEOUT": None,
     }

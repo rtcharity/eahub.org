@@ -29,5 +29,5 @@ SECRET_KEY = b"build_secret_key"
 # Static files
 STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
-STATICFILES_DIRS = ("/static_build/",)
+STATICFILES_DIRS = ("/eahub/base/static/",)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
