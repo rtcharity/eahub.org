@@ -1,33 +1,12 @@
 # Core settings: models
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "authtools",
-    "captcha",
-    "crispy_forms",
-    "django_cleanup.apps.CleanupConfig",
-    "django_pwned_passwords",
-    "rules.apps.AutodiscoverRulesConfig",
-    "sorl.thumbnail",
-    "webpack_loader",
-    "eahub.base.apps.BaseConfig",
-    "eahub.localgroups.apps.LocalGroupsConfig",
-    "eahub.profiles.apps.ProfilesConfig",
-]
+from .build_settings import INSTALLED_APPS  # noqa: F401; isort:skip
 
-# Core settings: security
-SECRET_KEY = b"build_secret_key"
+from .build_settings import (  # noqa: F401; isort:skip
+    SECRET_KEY,
+    STATIC_ROOT,
+    STATIC_URL,
+    STATICFILES_STORAGE,
+)
 
 # Static files
-STATIC_ROOT = "/static/"
-STATIC_URL = "/static/"
-STATICFILES_DIRS = ("/eahub/base/static/")
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = ("/eahub/base/static/",)

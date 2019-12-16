@@ -167,19 +167,15 @@ SITE_ID = 1
 
 # Static files
 if DEBUG:
-    from .build_settings_env import (  # noqa: F401; isort:skip
-        STATIC_ROOT,
-        STATIC_URL,
-        STATICFILES_DIRS,
-        STATICFILES_STORAGE,
-    )
+    from .build_settings_env import STATICFILES_DIRS
 else:
-    from .build_settings import (  # noqa: F401; isort:skip
-        STATIC_ROOT,
-        STATIC_URL,
-        STATICFILES_DIRS,
-        STATICFILES_STORAGE,
-    )
+    from .build_settings import STATICFILES_DIRS
+
+from .build_settings import (  # noqa: F401; isort:skip
+    STATICFILES_STORAGE,
+    STATIC_ROOT,
+    STATIC_URL,
+)
 
 # Application Insights
 APPLICATION_INSIGHTS = {
@@ -256,7 +252,11 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
-WEBPACK_STATS_FILE = "eahub/base/static/webpack-stats.json" if DEBUG else "static_build/webpack-stats.json"
+WEBPACK_STATS_FILE = (
+    "eahub/base/static/webpack-stats.json"
+    if DEBUG
+    else "static_build/webpack-stats.json"
+)
 
 WEBPACK_LOADER = {
     "DEFAULT": {
