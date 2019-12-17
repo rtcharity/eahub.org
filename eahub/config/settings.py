@@ -166,7 +166,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 # Static files
-PROD = env.bool("PROD")
+PROD = True if env.str("buildfolder") == "/static_build" else False
 if PROD:
     from .build_settings import STATICFILES_DIRS
 else:
@@ -253,7 +253,8 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
-STATS_FILE = (STATICFILES_DIRS[0] + "webpack-stats.json")
+STATS_FILE = STATICFILES_DIRS[0] + "webpack-stats.json"
+print(STATS_FILE)
 
 WEBPACK_LOADER = {
     "DEFAULT": {

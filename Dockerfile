@@ -4,7 +4,6 @@ COPY	eahub/base/static	eahub/base/static
 COPY	package.json	package-lock.json	webpack.config.js	./
 RUN	npm ci
 RUN	npm run build
-RUN ls eahub/base/static
 
 FROM	python:3.7
 RUN	mkdir /code \
@@ -14,13 +13,12 @@ COPY	requirements.txt	.
 RUN	pip install -r requirements.txt
 COPY	.	.
 ENV	PYTHONPATH	/code
-ENV PROD True
 ARG buildfolder=/static_build
+ENV buildfolder=${buildfolder}
 COPY --from=frontend	/eahub/base/static $buildfolder
-ARG prod=True
 RUN	mkdir /static \
-	&& if [ "${prod}" = "True" ]; then DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic; \
-	else DJANGO_SETTINGS_MODULE=eahub.config.build_settings_env django-admin collectstatic; \
+	&& if [ "${buildfolder}" = "/static_build" ]; then echo "True"; \
+	else DJANGO_SETTINGS_MODULE=eahub.config.build_settings_dev django-admin collectstatic; \
 	fi;
 ENV	DJANGO_SETTINGS_MODULE	eahub.config.settings
 EXPOSE	8000
