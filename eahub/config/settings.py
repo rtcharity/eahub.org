@@ -253,7 +253,7 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
-STATS_FILE = (STATICFILES_DIRS + "webpack-stats.json")
+STATS_FILE = (STATICFILES_DIRS[0] + "webpack-stats.json")
 
 WEBPACK_LOADER = {
     "DEFAULT": {

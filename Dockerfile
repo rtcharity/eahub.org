@@ -17,9 +17,11 @@ ENV	PYTHONPATH	/code
 ENV PROD True
 ARG buildfolder=/static_build
 COPY --from=frontend	/eahub/base/static $buildfolder
-ARG buildsettings=eahub.config.build_settings
+ARG prod=True
 RUN	mkdir /static \
-	&& DJANGO_SETTINGS_MODULE=$buildsettings django-admin collectstatic
+	&& if [ "${prod}" = "True" ]; then DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic; \
+	else DJANGO_SETTINGS_MODULE=eahub.config.build_settings_env django-admin collectstatic; \
+	fi;
 ENV	DJANGO_SETTINGS_MODULE	eahub.config.settings
 EXPOSE	8000
 CMD	["gunicorn","--bind=0.0.0.0:8000","eahub.config.wsgi"]

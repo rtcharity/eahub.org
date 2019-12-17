@@ -41,7 +41,7 @@ If the database schema has changed since last time, you'll need to run
 Requires: [Node.js](https://nodejs.org/en/)  
 
 To see live changes to the frontend while developing,
-* Run ```docker-compose build -e-arg PROD=false --build-arg buildfolder=/eahub/base/static --build-arg buildsettings=eahub.config.build_settings_dev ```
+* Run ```docker-compose build --build-arg buildfolder=/eahub/base/static --build-arg buildsettings=eahub.config.build_settings_dev```
 * Run ```docker-compose up```
 * Open a new terminal window and run ```npm install``` (if you run it for the first time)
 * Run ```npm run build-watch```  
