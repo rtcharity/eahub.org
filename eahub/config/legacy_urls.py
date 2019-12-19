@@ -27,6 +27,8 @@ LEGACY_URLS = {
     "user/profiles/": "profiles",
     "user.php/": "my_profile",
     "wp-login.php/": "account_login",
+    "sites/effectivealtruismhub.com/files/survey/2014/results-and-analysis.pdf": "https://static1.squarespace.com/static/5c64375df4e5314e7985012c/t/5de39c02d6b49b1a7a02215f/1575197724175/SurveyReport2014.pdf",
+    "sites/eahub.org/files/SurveyReport2015.pdf": "https://static1.squarespace.com/static/5c64375df4e5314e7985012c/t/5de39c44b93cc92d39b30961/1575197771679/SurveyReport2015.pdf",
 }
 
 urlpatterns = [
