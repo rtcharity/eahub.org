@@ -253,8 +253,7 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
-STATS_FILE = STATICFILES_DIRS[0] + "webpack-stats.json"
-print(STATS_FILE)
+STATS_FILE = "static_build/webpack-stats.json" if PROD else "eahub/base/static/webpack-stats.json"
 
 WEBPACK_LOADER = {
     "DEFAULT": {
