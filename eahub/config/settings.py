@@ -256,7 +256,7 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
 STATS_FILE = (
-    "static_build/webpack-stats.json"
+    "/static_build/webpack-stats.json"
     if PROD
     else "eahub/base/static/webpack-stats.json"
 )
