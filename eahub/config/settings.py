@@ -170,7 +170,9 @@ PROD = True if env.str("buildfolder") == "/static_build" else False
 if PROD:
     from .build_settings import STATICFILES_DIRS
 else:
-    from .build_settings_dev import STATICFILES_DIRS
+    from .build_settings_dev import (  # noqa: F401; isort:skip
+        STATICFILES_DIRS
+    )
 
 from .build_settings import (  # noqa: F401; isort:skip
     STATICFILES_STORAGE,
@@ -253,7 +255,11 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 THUMBNAIL_PRESERVE_FORMAT = True
 
 # webpack loader
-STATS_FILE = "static_build/webpack-stats.json" if PROD else "eahub/base/static/webpack-stats.json"
+STATS_FILE = (
+    "static_build/webpack-stats.json"
+    if PROD
+    else "eahub/base/static/webpack-stats.json"
+)
 
 WEBPACK_LOADER = {
     "DEFAULT": {
