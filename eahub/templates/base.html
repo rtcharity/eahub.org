@@ -66,11 +66,6 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
             <li class="navbar-signup-xs"><a name="navbar_link" id="button_myprofile" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
-          {% else %}
-          {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-            <li><a name="navbar_link" id="navbar_login" href="{% url 'account_login' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-in-alt"></i> Log In</a></li>
-            <li><a name="navbar_link" id="navbar_signup" href="{% url 'account_signup' %}"><i class="fa fa-user-plus"></i> Sign Up</a></li>
-          {% endif %}
           {% endif %}
           {% if 'groups.eahub.org' not in request.build_absolute_uri %}
           <li><a name="navbar_link" id="navbar_profiles" href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
