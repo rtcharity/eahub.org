@@ -38,19 +38,25 @@ If the database schema has changed since last time, you'll need to run
 `docker-compose run web django-admin migrate`.
 
 # Rebuilding frontend in development
+Requires: [Node.js](https://nodejs.org/en/)  
 
-To see live changes to the frontend while developing, you need to stop the docker
-container and run ```docker-compose up --build``` again.
+To see live changes to the frontend while developing,
+* Run ```docker-compose build --build-arg buildfolder=/eahub/base/static```
+* Run ```docker-compose up```
+* Open a new terminal window and run ```npm install``` (if you run it for the first time)
+* Run ```npm run build-watch```  
+* Hard refresh your browser
 
 # Running Tests
 ```
 $ docker-compose run --use-aliases web pytest
 ```
 
-## Running Frontend Tests
+## Running Frontend Test
+Requires: [Node.js](https://nodejs.org/en/)  
 If you're running these for the first time or ```package.json``` has changed, run
 ```npm install```
-Then run 
+Then run
 ```npm test```  
 
 # Formatting Code
