@@ -34,10 +34,6 @@
       <div class="btn btn-default purple">
         <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil-alt"></i> Change Password</a></span>
       </div>
-      {% else %}
-      <div class="btn btn-default purple">
-        <span><i class="fa fa-microphone-slash"></i> Messaging Available Soon</span>
-      </div>
       {% endif %}
     </div>
   </div>
@@ -165,8 +161,12 @@
           {% endif %}
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
-          {% endif %}
           <br>
+          {% endif %}
+          {% if profile.open_to_couchsurfers %}
+          <div class="alert alert-success" style="margin-bottom: -10px;">Open to couchsurfers</div>
+          <br>
+          {% endif %}
 
           {% if user.id == profile.user_id %}
             <span class="btn btn-default btn-xs">
