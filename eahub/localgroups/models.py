@@ -2,6 +2,7 @@ import autoslug
 from django import urls
 from django.conf import settings
 from django.core import validators
+from django.core.validators import MaxLengthValidator
 from django.db import models
 from django_enumfield import enum
 from geopy import geocoders
@@ -49,6 +50,7 @@ class LocalGroup(models.Model):
     last_edited = models.DateTimeField(
         auto_now=True, null=True, blank=True, editable=False
     )
+    other_info = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
 
     class Meta:
         ordering = ["name", "slug"]

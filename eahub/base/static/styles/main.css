@@ -535,6 +535,10 @@ td .privacy-banner {
   display: none;
 }
 
+.other_info {
+  padding: 15px;
+}
+
 /* edit */
 
 #multiselect-form {
