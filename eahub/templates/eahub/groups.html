@@ -45,7 +45,6 @@
           <tr>
               <th>Name</th>
               <th>Location</th>
-              <th>Community</th>
           </tr>
       </thead>
       <tbody>
@@ -53,11 +52,6 @@
           <tr>
               <td>
                   <a href="{% url 'group' group.slug %}">{{ group.name|default_if_none:'' }}</a>
-              </td>
-              <td>
-                  {% if group.country %}{{ group.country }}{% endif %}
-                  {% if group.country and group.city_or_town %}/{% endif %}
-                  {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
               </td>
               <td>
                   {% if group.facebook_page %}
