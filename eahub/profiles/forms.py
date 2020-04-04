@@ -32,7 +32,9 @@ class SignupForm(forms.Form):
     def signup(self, request, user):
         is_public = self.cleaned_data["is_public"]
         name = self.cleaned_data["name"]
-        Profile.objects.create(user=user, is_public=is_public, name=name)
+        Profile.objects.create(
+            user=user, is_public=is_public, name=name, open_to_couchsurfers=False
+        )
 
 
 class EditProfileForm(forms.ModelForm):
