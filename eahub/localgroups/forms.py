@@ -102,4 +102,5 @@ class LocalGroupForm(forms.ModelForm):
             "email",
             "meetup_url",
             "organisers",
+            "other_info",
         ]
