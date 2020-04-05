@@ -281,7 +281,6 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    open_to_couchsurfers = models.BooleanField(null=True, blank=True, default=None)
     topics_i_speak_about = models.TextField(
         blank=True, validators=[MaxLengthValidator(2000)]
     )
