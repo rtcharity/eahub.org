@@ -28,6 +28,9 @@ class LocalGroup(models.Model):
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
     )
+    local_group_types = postgres_fields.ArrayField(
+        enum.EnumField(LocalGroupType), blank=True, default=list
+    )
     city_or_town = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)

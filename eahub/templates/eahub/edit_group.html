@@ -6,6 +6,14 @@
 
 {% block form_fields %}
 <div class="form-edit-group">
+  <div class="field field_categories">
+      <label>Group types:</label>
+      <select class="form-control multiselect-form" name="localgroup_types" multiple>
+          {% for choice in localgroup_types %}
+              <option value="{{ choice.0 }}" {% if choice.0 in profile.cause_areas %}selected{% endif %}>{{ choice.1.label }}</option>
+          {% endfor %}
+      </select>
+  </div>
 {{ form|crispy }}
 </div>
 <div class="privacy-note">
