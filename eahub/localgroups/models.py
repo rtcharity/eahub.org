@@ -2,7 +2,6 @@ import autoslug
 from django import urls
 from django.conf import settings
 from django.core import validators
-from django.core.validators import MaxLengthValidator
 from django.db import models
 from django_enumfield import enum
 from geopy import geocoders
