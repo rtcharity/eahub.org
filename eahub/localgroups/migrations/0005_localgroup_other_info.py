@@ -6,14 +6,14 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('localgroups', '0004_localgroup_is_public'),
-    ]
+    dependencies = [("localgroups", "0004_localgroup_is_public")]
 
     operations = [
         migrations.AddField(
-            model_name='localgroup',
-            name='other_info',
-            field=models.TextField(blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]),
-        ),
+            model_name="localgroup",
+            name="other_info",
+            field=models.TextField(
+                blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]
+            ),
+        )
     ]
