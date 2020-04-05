@@ -97,11 +97,9 @@ class LocalGroupForm(forms.ModelForm):
             "city_or_town",
             "country",
             "website",
-            "other_website",
             "facebook_group",
             "facebook_page",
             "email",
             "meetup_url",
             "organisers",
-            "other_info",
         ]
