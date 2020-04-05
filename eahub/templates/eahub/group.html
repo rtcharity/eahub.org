@@ -89,14 +89,7 @@
         {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b><a href="{{ group.meetup_url }}" target="_blank">{{ group.meetup_url }}</a></li>{% endif %}
       </ul>
     </div>
-    </div>
-    <div class="col-md-6">
-      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat lon=group.lon active=group.is_active %}
-    </div>
-  </div>
-
-  {% if group.other_info %}
-  <div class="row other_info">
+    {% if group.other_info %}
     <div class="panel panel-default">
       <div class="summary-panel-heading panel-heading">
         <div class="summary-panel-title">Other information</div>
@@ -112,9 +105,12 @@
         {% endif %}
       </div>
     </div>
+    {% endif %}
+    </div>
+    <div class="col-md-6">
+      {% include 'eahub/maps/profile_page_map.html' with lat=group.lat lon=group.lon active=group.is_active %}
+    </div>
   </div>
-  {% endif %}
-
 
   <div class="row">
   <div class="text-center margin-top">
