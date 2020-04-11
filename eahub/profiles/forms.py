@@ -32,9 +32,7 @@ class SignupForm(forms.Form):
     def signup(self, request, user):
         is_public = self.cleaned_data["is_public"]
         name = self.cleaned_data["name"]
-        Profile.objects.create(
-            user=user, is_public=is_public, name=name, open_to_couchsurfers=False
-        )
+        Profile.objects.create(user=user, is_public=is_public, name=name)
 
 
 class EditProfileForm(forms.ModelForm):
@@ -117,19 +115,13 @@ class EditProfileCommunityForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = (
-            "available_as_speaker",
-            "topics_i_speak_about",
-            "local_groups",
-            "open_to_couchsurfers",
-        )
+        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups")
         widgets = {
             "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000})
         }
         labels = {
             "available_as_speaker": ("Available as speaker:"),
             "topics_i_speak_about": ("Topics I speak about:"),
-            "open_to_couchsurfers": ("Open to couchsurfers"),
         }
 
 
