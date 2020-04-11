@@ -34,6 +34,7 @@ class LocalGroup(models.Model):
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
     website = models.URLField(blank=True)
+    other_website = models.URLField(blank=True)
     facebook_group = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
     email = models.EmailField(blank=True)
