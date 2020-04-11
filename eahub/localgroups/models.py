@@ -1,6 +1,7 @@
 import autoslug
 from django import urls
 from django.conf import settings
+from django.contrib.postgres import fields as postgres_fields
 from django.core import validators
 from django.db import models
 from django_enumfield import enum
