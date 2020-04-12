@@ -59,14 +59,6 @@
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item">
-          <b>Group Type: </b>
-          {% if group.local_group_type %}
-          <span>{{ group.get_local_group_type_display }}</span>
-          {% else %}
-          <span>Other</span>
-          {% endif %}
-        </li>
-        <li class="list-group-item">
           <b>Group Types: </b>
           <span>{{ group.get_local_group_types }}</span>
         </li>
