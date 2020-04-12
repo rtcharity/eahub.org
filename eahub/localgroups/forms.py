@@ -87,13 +87,19 @@ class LocalGroupForm(forms.ModelForm):
                 attrs={"class": "form-control multiselect-form"}
             ),
         )
+        self.fields["local_group_types"] = forms.MultipleChoiceField(
+            choices=localgroups_models.LocalGroupType.choices,
+            widget=forms.SelectMultiple(
+                attrs={"class": "form-control multiselect-form"}
+            ),
+        )
 
     class Meta:
         model = localgroups_models.LocalGroup
         fields = [
             "name",
             "is_active",
-            "local_group_type",
+            "local_group_types",
             "city_or_town",
             "country",
             "website",
