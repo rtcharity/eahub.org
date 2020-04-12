@@ -68,9 +68,7 @@
         </li>
         <li class="list-group-item">
           <b>Group Types: </b>
-
-          <span>{{ group.local_group_types }}</span>
-          
+          <span>{{ group.get_local_group_types }}</span>
         </li>
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}

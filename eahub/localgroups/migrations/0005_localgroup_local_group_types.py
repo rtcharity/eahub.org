@@ -6,12 +6,6 @@ from django.db import migrations
 import django_enumfield.db.fields
 import eahub.localgroups.models
 
-def copy_group_type():
-    LocalGroup = apps.get_model("eahub.localgroups", "LocalGroup")
-    for row in LocalGroup.objects.filter(tags__len=0):
-        if row.local_group_type is not None:
-            row.local_group_types[0] = row.local_group_type
-
 class Migration(migrations.Migration):
 
     dependencies = [
@@ -23,6 +17,5 @@ class Migration(migrations.Migration):
             model_name="localgroup",
             name="local_group_types",
             field=django.contrib.postgres.fields.ArrayField(base_field=django_enumfield.db.fields.EnumField(default=1, enum=eahub.localgroups.models.LocalGroupType), blank=True, default=list, size=None),
-        ),
-        migrations.RunPython(copy_group_type)
+        )
     ]

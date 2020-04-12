@@ -78,6 +78,11 @@ class LocalGroup(models.Model):
                 self.lat = location.latitude
                 self.lon = location.longitude
 
+    def get_local_group_types(self):
+        if self.local_group_types:
+            return ", ".join(map(LocalGroupType.label, self.local_group_types))
+        else:
+            return "Other"
 
 class Organisership(models.Model):
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
