@@ -84,6 +84,7 @@ class LocalGroup(models.Model):
         else:
             return "Other"
 
+
 class Organisership(models.Model):
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

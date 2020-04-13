@@ -63,6 +63,7 @@ class LocalGroupUpdateView(edit_views.UpdateView):
             form.instance.geocode()
         return super().form_valid(form)
 
+
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
     queryset = LocalGroup.objects.filter(is_public=True)
     template_name = "eahub/delete_group.html"

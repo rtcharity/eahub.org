@@ -92,7 +92,7 @@ class LocalGroupForm(forms.ModelForm):
                 attrs={"class": "form-control multiselect-form"}
             ),
             required=False,
-            choices=localgroups_models.LocalGroupType.choices()
+            choices=localgroups_models.LocalGroupType.choices(),
         )
 
     class Meta:
