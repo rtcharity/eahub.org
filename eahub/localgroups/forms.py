@@ -91,6 +91,7 @@ class LocalGroupForm(forms.ModelForm):
             widget=forms.SelectMultiple(
                 attrs={"class": "form-control multiselect-form"}
             ),
+            required=False,
             choices=localgroups_models.LocalGroupType.choices()
         )
 
