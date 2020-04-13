@@ -49,7 +49,7 @@ class LocalGroupDetailView(detail_views.DetailView):
     context_object_name = "group"
 
 
-class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.UpdateView):
+class LocalGroupUpdateView(edit_views.UpdateView):
     queryset = LocalGroup.objects.filter(is_public=True)
     form_class = LocalGroupForm
     template_name = "eahub/edit_group.html"
@@ -62,7 +62,6 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
         if "city_or_town" in form.changed_data or "country" in form.changed_data:
             form.instance.geocode()
         return super().form_valid(form)
-
 
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
     queryset = LocalGroup.objects.filter(is_public=True)

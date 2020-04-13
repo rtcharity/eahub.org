@@ -88,10 +88,10 @@ class LocalGroupForm(forms.ModelForm):
             ),
         )
         self.fields["local_group_types"] = forms.MultipleChoiceField(
-            choices=localgroups_models.LocalGroupType.choices,
             widget=forms.SelectMultiple(
                 attrs={"class": "form-control multiselect-form"}
             ),
+            choices=localgroups_models.LocalGroupType.choices()
         )
 
     class Meta:
@@ -109,3 +109,6 @@ class LocalGroupForm(forms.ModelForm):
             "meetup_url",
             "organisers",
         ]
+
+    def clean_local_group_types(self):
+        return list(map(int, self.cleaned_data["local_group_types"]))
