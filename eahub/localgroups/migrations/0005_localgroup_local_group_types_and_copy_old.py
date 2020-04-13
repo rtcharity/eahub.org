@@ -15,23 +15,20 @@ def copy_group_type(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('localgroups', '0004_localgroup_is_public'),
-    ]
+    dependencies = [("localgroups", "0004_localgroup_is_public")]
 
     operations = [
         migrations.AddField(
-            model_name='localgroup',
-            name='local_group_types',
+            model_name="localgroup",
+            name="local_group_types",
             field=django.contrib.postgres.fields.ArrayField(
                 base_field=django_enumfield.db.fields.EnumField(
-                    default=1,
-                    enum=eahub.localgroups.models.LocalGroupType
+                    default=1, enum=eahub.localgroups.models.LocalGroupType
                 ),
                 blank=True,
                 default=list,
-                size=None
+                size=None,
             ),
         ),
-        migrations.RunPython(copy_group_type)
+        migrations.RunPython(copy_group_type),
     ]
