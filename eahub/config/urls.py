@@ -54,4 +54,5 @@ urlpatterns = [
     path("robots933456.txt", views.health_check, name="health_check"),
     path("ads.txt", views.AdsTxtView.as_view(), name="ads.txt"),
     path("", include("eahub.config.legacy_urls")),
+    path("projects/", views.projects, name="projects"),
 ]

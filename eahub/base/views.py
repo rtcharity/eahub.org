@@ -81,6 +81,8 @@ def profiles(request):
         },
     )
 
+def projects(request):
+    return render(request, "eahub/projects.html")
 
 @login_required
 def candidates(request):
