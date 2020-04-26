@@ -1,35 +1,11 @@
-version: '3.4'
-x-common-variables: &common-variables
-  APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
-  LEGACY_DATABASE_URL:
-  LOCAL_GROUPS_AIRTABLE_API_KEY:
-  LOCAL_GROUPS_AIRTABLE_BASE_KEY:
-  RECAPTCHA_V3_SECRET_KEY:
-  RECAPTCHA_V3_SITE_KEY:
-  ADMINS: Local Admin=admin@example.com
-  AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
-  AZURE_CONTAINER: media
-  BROWSERS: chrome,firefox
-  CACHE_URL: redis://cache:6379/0
-  DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
-  DEBUG: 'True'
-  DJANGO_LIVE_TEST_SERVER_ADDRESS: 'web'
-  EMAIL_URL: smtp://mail:1025
-  HOSTS: web,localhost
-  HTTPS: 'False'
-  LEAN_MANAGERS: Local Manager=leanmanager@example.com
-  PYTEST_ADDOPTS: --driver=Remote
-  PYTHONDONTWRITEBYTECODE: 'True'
-  SECRET_KEY: development_secret_key
-  SELENIUM_HOST: webdriver
+version: '3'
 
 services:
   web:
-    image: migration
-    command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
+    build: .
+    command: sh -c "django-admin migrate && gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi"
     depends_on:
       - db
-      - migration
       - objstore
       - cache
       - mail
@@ -40,16 +16,29 @@ services:
       - 8000:8000
     volumes:
       - .:/code
-    environment: *common-variables
-  migration:
-    build: .
-    image: migration
-    command: django-admin migrate
-    volumes:
-      - .:/code
-    depends_on:
-      - db
-    environment: *common-variables
+    environment:
+      APPLICATION_INSIGHTS_INSTRUMENTATION_KEY:
+      LEGACY_DATABASE_URL:
+      LOCAL_GROUPS_AIRTABLE_API_KEY:
+      LOCAL_GROUPS_AIRTABLE_BASE_KEY:
+      RECAPTCHA_V3_SECRET_KEY:
+      RECAPTCHA_V3_SITE_KEY:
+      ADMINS: Local Admin=admin@example.com
+      AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
+      AZURE_CONTAINER: media
+      BROWSERS: chrome,firefox
+      CACHE_URL: redis://cache:6379/0
+      DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
+      DEBUG: 'True'
+      DJANGO_LIVE_TEST_SERVER_ADDRESS: 'web'
+      EMAIL_URL: smtp://mail:1025
+      HOSTS: web,localhost
+      HTTPS: 'False'
+      LEAN_MANAGERS: Local Manager=leanmanager@example.com
+      PYTEST_ADDOPTS: --driver=Remote
+      PYTHONDONTWRITEBYTECODE: 'True'
+      SECRET_KEY: development_secret_key
+      SELENIUM_HOST: webdriver
   db:
     image: postgres:10.5
     environment:
