@@ -32,9 +32,7 @@ class SignupForm(forms.Form):
     def signup(self, request, user):
         is_public = self.cleaned_data["is_public"]
         name = self.cleaned_data["name"]
-        Profile.objects.create(
-            user=user, is_public=is_public, name=name, email_visible=False
-        )
+        Profile.objects.create(user=user, is_public=is_public, name=name)
 
 
 class EditProfileForm(forms.ModelForm):
@@ -50,7 +48,6 @@ class EditProfileForm(forms.ModelForm):
             "city_or_town",
             "country",
             "is_public",
-            "email_visible",
         )
         widgets = {
             "city_or_town": forms.TextInput(attrs={"placeholder": "London"}),
@@ -70,7 +67,6 @@ class EditProfileForm(forms.ModelForm):
         labels = {
             "city_or_town": ("City/Town"),
             "is_public": "Show my profile to the public",
-            "email_visible": "Show my email address to other users",
             "linkedin_url": "LinkedIn Profile",
             "facebook_url": "Facebook Profile",
             "personal_website_url": "Personal Website",
@@ -119,12 +115,7 @@ class EditProfileCommunityForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = (
-            "available_as_speaker",
-            "topics_i_speak_about",
-            "local_groups",
-            "email_visible",
-        )
+        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups")
         widgets = {
             "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000})
         }
