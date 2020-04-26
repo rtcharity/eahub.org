@@ -1,3 +1,4 @@
+
 version: '3'
 
 services:
@@ -6,6 +7,7 @@ services:
     command: sh -c "django-admin migrate && gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi"
     depends_on:
       - db
+      - migration
       - objstore
       - cache
       - mail
