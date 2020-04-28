@@ -21,5 +21,6 @@ RUN	mkdir /static \
 	else DJANGO_SETTINGS_MODULE=eahub.config.build_settings_dev django-admin collectstatic; \
 	fi;
 ENV	DJANGO_SETTINGS_MODULE	eahub.config.settings
+RUN python manage.py migrate
 EXPOSE	8000
 CMD	["gunicorn","--bind=0.0.0.0:8000","eahub.config.wsgi"]
