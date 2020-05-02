@@ -4,6 +4,7 @@ services:
     build: .
     command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
     depends_on:
+      - db
       - objstore
       - cache
       - mail
