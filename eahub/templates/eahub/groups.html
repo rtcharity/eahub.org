@@ -25,7 +25,7 @@
           <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i> Group Resources</a>
         </div>
         <div class="list-group">
-          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact LEAN</a>
+          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
         </div>
     </div>
     <div class="col-sm-8">
@@ -45,7 +45,6 @@
           <tr>
               <th>Name</th>
               <th>Location</th>
-              <th>Community</th>
           </tr>
       </thead>
       <tbody>
@@ -55,20 +54,9 @@
                   <a href="{% url 'group' group.slug %}">{{ group.name|default_if_none:'' }}</a>
               </td>
               <td>
-                  {% if group.country %}{{ group.country }}{% endif %}
-                  {% if group.country and group.city_or_town %}/{% endif %}
-                  {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
-              </td>
-              <td>
-                  {% if group.facebook_page %}
-                      <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
-                  {% endif %}
-                  {% if group.facebook_group %}
-                      <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
-                  {% endif %}
-                  {% if group.website %}
-                      <a href="{{ group.website }}" target="_blank"><button class="btn btn-default btn-sm">Website</button></a>
-                  {% endif %}
+                {% if group.country %}{{ group.country }}{% endif %}
+                {% if group.country and group.city_or_town %}/{% endif %}
+                {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
               </td>
           </tr>
           {% endfor %}
