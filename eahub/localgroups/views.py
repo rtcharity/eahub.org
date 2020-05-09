@@ -49,7 +49,7 @@ class LocalGroupDetailView(detail_views.DetailView):
     context_object_name = "group"
 
 
-class LocalGroupUpdateView(edit_views.UpdateView):
+class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.UpdateView):
     queryset = LocalGroup.objects.filter(is_public=True)
     form_class = LocalGroupForm
     template_name = "eahub/edit_group.html"
