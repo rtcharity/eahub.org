@@ -15,7 +15,7 @@ def copy_group_type(apps, schema_editor):
 
 class Migration(migrations.Migration):
 
-    dependencies = [("localgroups", "0004_localgroup_is_public")]
+    dependencies = [("localgroups", "0006_localgroup_other_website")]
 
     operations = [
         migrations.AddField(
