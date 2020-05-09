@@ -28,6 +28,7 @@ vars().update(
 )
 ADMINS = list(env.dict("ADMINS").items())
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
+GROUPS_EMAIL = env.str("GROUPS_EMAIL")
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
