@@ -50,7 +50,7 @@ class LocalGroup(models.Model):
     last_edited = models.DateTimeField(
         auto_now=True, null=True, blank=True, editable=False
     )
-    other_info = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    other_info = models.TextField(blank=True, validators=[MaxLengthValidator(5000)])
 
     class Meta:
         ordering = ["name", "slug"]
