@@ -112,7 +112,7 @@ LOGGING = {
 }
 
 # Core settings: models
-from .build_settings import INSTALLED_APPS  # noqa: F401; isort:skip
+from .build_settings import INSTALLED_APPS  # noqa: E402,F401; isort:skip
 
 # Core settings: security
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
@@ -171,9 +171,9 @@ PROD = True if env.str("buildfolder") == "/static_build" else False
 if PROD:
     from .build_settings import STATICFILES_DIRS
 else:
-    from .build_settings_dev import STATICFILES_DIRS  # noqa: F401; isort:skip
+    from .build_settings_dev import STATICFILES_DIRS  # noqa: F401,F402; isort:skip
 
-from .build_settings import (  # noqa: F401; isort:skip
+from .build_settings import (  # noqa: E402,F401; isort:skip
     STATICFILES_STORAGE,
     STATIC_ROOT,
     STATIC_URL,
