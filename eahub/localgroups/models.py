@@ -1,6 +1,7 @@
 import autoslug
 from django import urls
 from django.conf import settings
+from django.contrib.postgres import fields as postgres_fields
 from django.core import validators
 from django.core.validators import MaxLengthValidator
 from django.db import models
@@ -28,6 +29,9 @@ class LocalGroup(models.Model):
     )
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
+    )
+    local_group_types = postgres_fields.ArrayField(
+        enum.EnumField(LocalGroupType), blank=True, default=list
     )
     city_or_town = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
@@ -76,6 +80,12 @@ class LocalGroup(models.Model):
             if location:
                 self.lat = location.latitude
                 self.lon = location.longitude
+
+    def get_local_group_types(self):
+        if self.local_group_types:
+            return ", ".join(map(LocalGroupType.label, self.local_group_types))
+        else:
+            return "Other"
 
 
 class Organisership(models.Model):

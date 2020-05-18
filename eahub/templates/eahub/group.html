@@ -59,12 +59,12 @@
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item">
+          {% if group.local_group_types|length < 2 %}
           <b>Group Type: </b>
-          {% if group.local_group_type %}
-          <span>{{ group.get_local_group_type_display }}</span>
           {% else %}
-          <span>Other</span>
+          <b>Group Types: </b>
           {% endif %}
+          <span>{{ group.get_local_group_types }}</span>
         </li>
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
@@ -92,7 +92,7 @@
     {% if group.other_info %}
     <div class="panel panel-default">
       <div class="summary-panel-heading panel-heading">
-        <div class="summary-panel-title">More information about the group</div>
+        <div class="summary-panel-title">More information</div>
       </div>
       <div class="panel-body">
         {{ group.other_info|default:'N/A'|urlize|linebreaks }}
