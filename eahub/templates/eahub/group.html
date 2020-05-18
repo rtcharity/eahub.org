@@ -59,7 +59,11 @@
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item">
+          {% if group.local_group_types|length < 2 %}
+          <b>Group Type: </b>
+          {% else %}
           <b>Group Types: </b>
+          {% endif %}
           <span>{{ group.get_local_group_types }}</span>
         </li>
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
