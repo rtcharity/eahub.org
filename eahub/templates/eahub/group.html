@@ -82,12 +82,30 @@
           {% endif %}
         {% endif %}
         {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}" target="_blank">{{ group.website }}</a></li>{% endif %}
+        {% if group.other_website %}<li class="list-group-item"><b>Other Website: </b><a href="{{ group.other_website }}" target="_blank">{{ group.other_website }}</a></li>{% endif %}
         {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}" target="_blank">{{ group.facebook_group }}</a></li>{% endif %}
         {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b><a href="{{ group.facebook_page }}" target="_blank">{{ group.facebook_page }}</a></li>{% endif %}
         {% if group.email %}<li class="list-group-item"><b>Email: </b><a href="mailto:{{ group.email }}">{{ group.email }}</a></li>{% endif %}
         {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b><a href="{{ group.meetup_url }}" target="_blank">{{ group.meetup_url }}</a></li>{% endif %}
       </ul>
     </div>
+    {% if group.other_info %}
+    <div class="panel panel-default">
+      <div class="summary-panel-heading panel-heading">
+        <div class="summary-panel-title">More information about the group</div>
+      </div>
+      <div class="panel-body">
+        {{ group.other_info|default:'N/A'|urlize|linebreaks }}
+        {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
+        {% if can_edit_local_group %}
+          <br>
+          <span class="btn btn-default btn-xs">
+            <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i> Edit</a>
+          </span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
     </div>
     <div class="col-md-6">
       {% include 'eahub/maps/profile_page_map.html' with lat=group.lat lon=group.lon active=group.is_active %}
