@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
             model_name="localgroup",
             name="other_info",
             field=models.TextField(
-                blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]
+                blank=True, validators=[django.core.validators.MaxLengthValidator(5000)]
             ),
         )
     ]
