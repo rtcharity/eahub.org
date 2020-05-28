@@ -4,11 +4,14 @@
 
 {% block content %}
 
-<br><br>
-
 <div class="container animated fadeIn">
+  <br>
+  <h2>Directory of Local EA Groups</h2>
+  <p style="text-align: center">For non-local groups, head to this <a href="https://resources.eahub.org/learn/connect/">list of groups based on cause-area, career paths, or affiliations</a>.</p>
+  <br><br>
   <div class="row">
-    <div class="col-sm-4 profile-action">
+    <div class="col-sm-4">
+      <div class="profile-action">
         <div class="list-group">
           {% if user.is_authenticated %}
             {% has_perm 'localgroups.create_local_group' user as can_create_local_group %}
@@ -27,6 +30,7 @@
         <div class="list-group">
           <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
         </div>
+      </div>
     </div>
     <div class="col-sm-8">
         {% include 'eahub/maps/list_page_map.html' with map_type="groups" map_locations=map_locations %}
