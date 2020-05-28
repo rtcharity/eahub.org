@@ -66,7 +66,7 @@
           {% endif %}
           <span>{{ group.get_local_group_types }}</span>
         </li>
-        <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
+        <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive. You can still connect with EAs in the area through the links below.{% endif %}</li>
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
         {% if group.public_organisers %}
