@@ -104,11 +104,10 @@ def claim_group(request, slug):
             "user_email": request.user.email,
         },
     )
+    recipient_list = [email for email in settings.LEAN_MANAGERS]
+    recipient_list.append(settings.GROUPS_EMAIL)
     send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        recipient_list=settings.LEAN_MANAGERS,
+        subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=recipient_list
     )
     messages.success(
         request,

@@ -1,7 +1,9 @@
 import autoslug
 from django import urls
 from django.conf import settings
+from django.contrib.postgres import fields as postgres_fields
 from django.core import validators
+from django.core.validators import MaxLengthValidator
 from django.db import models
 from django_enumfield import enum
 from geopy import geocoders
@@ -28,11 +30,15 @@ class LocalGroup(models.Model):
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
     )
+    local_group_types = postgres_fields.ArrayField(
+        enum.EnumField(LocalGroupType), blank=True, default=list
+    )
     city_or_town = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
     website = models.URLField(blank=True)
+    other_website = models.URLField(blank=True)
     facebook_group = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
     email = models.EmailField(blank=True)
@@ -48,6 +54,7 @@ class LocalGroup(models.Model):
     last_edited = models.DateTimeField(
         auto_now=True, null=True, blank=True, editable=False
     )
+    other_info = models.TextField(blank=True, validators=[MaxLengthValidator(5000)])
 
     class Meta:
         ordering = ["name", "slug"]
@@ -73,6 +80,12 @@ class LocalGroup(models.Model):
             if location:
                 self.lat = location.latitude
                 self.lon = location.longitude
+
+    def get_local_group_types(self):
+        if self.local_group_types:
+            return ", ".join(map(LocalGroupType.label, self.local_group_types))
+        else:
+            return "Other"
 
 
 class Organisership(models.Model):
