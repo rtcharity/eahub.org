@@ -59,6 +59,26 @@ If you're running these for the first time or ```package.json``` has changed, ru
 Then run
 ```npm test```  
 
+# Running project without docker on Linux/MacOS
+
+To your `/etc/hosts` file add the following lines:
+
+```
+127.0.0.1	objstore
+127.0.0.1	cache
+127.0.0.1	db
+```
+
+Create a python3.7 virtualenv.
+
+Run:
+- `pip install -r requirements.txt`
+- `npm ci`
+- `npm run build-watch`
+- `docker-compose up db cache objstore`
+- `python manage.py migrate`
+- `python manage.py runserver`
+
 # Formatting Code
 ```
 $ docker-compose run web black .

@@ -15,26 +15,12 @@ services:
       - 8000:8000
     volumes:
       - .:/code
-    environment:
-      ADMINS: Local Admin=admin@example.com
-      AZURE_CONNECTION_STRING: UseDevelopmentStorage=true;BlobEndpoint=objstore:8002
-      AZURE_CONTAINER: media
-      BROWSERS: chrome,firefox
-      CACHE_URL: redis://cache:6379/0
-      DATABASE_URL: postgresql://postgres:development_db_password@db:5432/postgres
-      DEBUG: 'True'
-      DJANGO_LIVE_TEST_SERVER_ADDRESS: 'web'
-      EMAIL_URL: smtp://mail:1025
-      GROUPS_EMAIL: groups@example.com
-      HOSTS: web,localhost
-      HTTPS: 'False'
-      LEAN_MANAGERS: Local Manager=leanmanager@example.com
-      PYTEST_ADDOPTS: --driver=Remote
-      PYTHONDONTWRITEBYTECODE: 'True'
-      SECRET_KEY: development_secret_key
-      SELENIUM_HOST: webdriver
+    env_file:
+      - .env
   db:
     image: postgres:10.5
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: development_db_password
   objstore:
@@ -44,6 +30,8 @@ services:
       - 8002:8002
   cache:
     image: redis:3.2.7
+    ports:
+      - 6379:6379
   mail:
     image: dockage/mailcatcher:0.6.5
     ports:

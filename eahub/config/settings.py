@@ -1,9 +1,12 @@
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+from dotenv import load_dotenv, find_dotenv
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
+
+load_dotenv(find_dotenv('.env'))
 
 # Core settings: cache
 CACHES = {
