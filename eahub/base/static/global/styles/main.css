@@ -351,6 +351,7 @@ body {
   justify-content: center;
   align-items: center;
   background-clip: content-box;
+  margin-bottom: 20px;
 }
 .profile-action .list-group {
   width: 200px;
@@ -533,6 +534,10 @@ td .privacy-banner {
 
 #report_abuse .control-label {
   display: none;
+}
+
+.other_info {
+  padding: 15px;
 }
 
 /* edit */

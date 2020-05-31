@@ -59,20 +59,19 @@
       <ul class="list-group">
         <li class="list-group-item purple"><h4>Key Facts</h4></li>
         <li class="list-group-item">
+          {% if group.local_group_types|length < 2 %}
           <b>Group Type: </b>
-          {% if group.local_group_type %}
-          <span>{{ group.get_local_group_type_display }}</span>
           {% else %}
-          <span>Other</span>
+          <b>Group Types: </b>
           {% endif %}
+          <span>{{ group.get_local_group_types }}</span>
         </li>
-        <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive{% endif %}</li>
+        <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive. You can still connect with EAs in the area through the links below.{% endif %}</li>
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
+        {% if group.public_organisers %}
         <li class="list-group-item"><b>Organisers:</b>
-          {% if not group.public_organisers %}
-          Unknown or Anonymous
-          {% elif group.public_organisers.count == 1 %}
+          {% if group.public_organisers.count == 1 %}
           <a href="{{ group.public_organisers.0.profile.get_absolute_url }}">{{ group.public_organisers.0.profile.name }}</a>
           {% else %}
           <ul>
@@ -81,19 +80,37 @@
           {% endfor %}
           </ul>
           {% endif %}
-        {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}">{{ group.website }}</a></li>{% endif %}
-        {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}">{{ group.facebook_group }}</a></li>{% endif %}
-        {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b><a href="{{ group.facebook_page }}">{{ group.facebook_page }}</a></li>{% endif %}
+        {% endif %}
+        {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}" target="_blank">{{ group.website }}</a></li>{% endif %}
+        {% if group.other_website %}<li class="list-group-item"><b>Other Website: </b><a href="{{ group.other_website }}" target="_blank">{{ group.other_website }}</a></li>{% endif %}
+        {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}" target="_blank">{{ group.facebook_group }}</a></li>{% endif %}
+        {% if group.facebook_page %}<li class="list-group-item"><b>Facebook Page: </b><a href="{{ group.facebook_page }}" target="_blank">{{ group.facebook_page }}</a></li>{% endif %}
         {% if group.email %}<li class="list-group-item"><b>Email: </b><a href="mailto:{{ group.email }}">{{ group.email }}</a></li>{% endif %}
-        {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b><a href="{{ group.meetup_url }}">{{ group.meetup_url }}</a></li>{% endif %}
+        {% if group.meetup_url %}<li class="list-group-item"><b>Meetup URL: </b><a href="{{ group.meetup_url }}" target="_blank">{{ group.meetup_url }}</a></li>{% endif %}
       </ul>
     </div>
+    {% if group.other_info %}
+    <div class="panel panel-default">
+      <div class="summary-panel-heading panel-heading">
+        <div class="summary-panel-title">More information</div>
+      </div>
+      <div class="panel-body">
+        {{ group.other_info|default:'N/A'|urlize|linebreaks }}
+        {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
+        {% if can_edit_local_group %}
+          <br>
+          <span class="btn btn-default btn-xs">
+            <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i> Edit</a>
+          </span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
     </div>
     <div class="col-md-6">
       {% include 'eahub/maps/profile_page_map.html' with lat=group.lat lon=group.lon active=group.is_active %}
     </div>
   </div>
-
 
   <div class="row">
   <div class="text-center margin-top">
