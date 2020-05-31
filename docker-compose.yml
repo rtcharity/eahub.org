@@ -38,10 +38,13 @@ services:
       PYTHONDONTWRITEBYTECODE: 'True'
       SECRET_KEY: development_secret_key
       SELENIUM_HOST: webdriver
+      DJANGO_ENV: local
   db:
     image: postgres:10.5
     environment:
       POSTGRES_PASSWORD: development_db_password
+    ports:
+      - 5432:5432
   objstore:
     image: arafato/azurite:2.6.5
     command: node bin/blob --location=/opt/azurite/folder/ --blobPort=8002

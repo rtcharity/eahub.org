@@ -1,4 +1,10 @@
-export default class Navbar {
+export function initNavbar() {
+  const navbar = new Navbar($('#burger-btn'), $('#navbar'));
+  navbar.toggleMenuOnClick();
+  navbar.disappearMenuOnMovingCursorAway();
+}
+
+class Navbar {
   constructor(burgerBtnHtmlElement, navbarHtmlElement) {
     this.burgerBtnHtmlElement = burgerBtnHtmlElement;
     this.navbarHtmlElement = navbarHtmlElement;

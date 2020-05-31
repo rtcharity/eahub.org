@@ -2,7 +2,19 @@ import $ from 'jquery';
 import 'datatables.net';
 import 'datatables.net-dt/css/jquery.dataTables.css';
 
-export default class Tables {
+
+$(document).ready(() => {
+  initTables();
+})
+
+
+function initTables() {
+  const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'), $('#datatable-talentsearch'));
+  tables.applySearchFunctionalityToAllTables();
+}
+
+
+class Tables {
 
   constructor(dataTableProfilesHtmlElement, dataTableGroupsHtmlElement, dataTableTalentHtmlElement) {
     this.dataTableProfiles = this.createProfiles(dataTableProfilesHtmlElement);

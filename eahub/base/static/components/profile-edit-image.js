@@ -1,4 +1,25 @@
-export default class ProfileEditImage {
+$(document).ready(() => {
+  profileEditImageInit();
+});
+
+
+function profileEditImageInit() {
+  const imageHtmlElement = document.getElementById('id_image');
+  const imageChangeHtmlElements = {
+    container: document.getElementById('image-change'),
+    toggle: document.getElementById('image-change-toggle')
+  }
+  const imageClearHtmlElements = {
+    container: document.getElementById('image-clear'),
+    checkbox: document.getElementById('image-clear_id')
+  }
+  const profileEditImage = new ProfileEditImage(imageHtmlElement, imageChangeHtmlElements, imageClearHtmlElements);
+  profileEditImage.toggleImageChangeOnClick();
+  profileEditImage.removeImageClearOnInput();
+}
+
+
+class ProfileEditImage {
   constructor(imageHtmlElement, imageChangeHtmlElements, imageClearHtmlElements) {
     this.imageHtmlElement = imageHtmlElement;
     this.imageChangeHtmlElements = imageChangeHtmlElements;

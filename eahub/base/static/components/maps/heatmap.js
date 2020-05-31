@@ -1,7 +1,7 @@
 const MARKERSETTINGS = {
   image: {
-    active: '/static/images/marker_active.svg',
-    inactive: '/static/images/marker_inactive.svg'
+    active: '/static/global/images/marker_active.svg',
+    inactive: '/static/global/images/marker_inactive.svg'
   },
   size: {
     fullmap: { width: 40, height: 40 },
@@ -133,7 +133,7 @@ export default class Heatmap {
     let map = this.googleMap
     let markers = this.locationClusters.getGoogleMarkers()
     var markerCluster = new this.markerClusterer(
-        map, markers, {imagePath: '../static/images/cluster/m', maxZoom: this.minClusterZoom}
+        map, markers, {imagePath: '../static/global/images/cluster/m', maxZoom: this.minClusterZoom}
     );
 
     this.google.maps.event.addListener(markerCluster, 'clusterclick', function(cluster) {
