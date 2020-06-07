@@ -1,5 +1,5 @@
 var appRoot = require('app-root-path');
-const scriptsFolder = appRoot + '/eahub/base/static/scripts/';
+const scriptsFolder = appRoot + '/eahub/base/static/components/';
 const Marker = require(`${scriptsFolder}/maps/marker.js`).default;
 const Mocks = require('../helpers/mocks.js').default;
 
