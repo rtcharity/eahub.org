@@ -1,15 +1,14 @@
 import $ from 'jquery';
 import 'datatables.net';
-import 'datatables.net-dt/css/jquery.dataTables.css';
 
 
 $(document).ready(() => {
   initTables();
 })
 
-
 function initTables() {
   const tables = new Tables($('#datatable-profiles'), $('#datatable-groups'), $('#datatable-talentsearch'));
+  console.log(tables)
   tables.applySearchFunctionalityToAllTables();
 }
 
