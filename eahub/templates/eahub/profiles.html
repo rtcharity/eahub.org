@@ -1,8 +1,18 @@
 {% extends 'base.html' %}
 
+{% load static sekizai_tags %}
+
 {% load thumbnail %}
 
 {% block content %}
+
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_tables.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
 
 <br><br>
 
