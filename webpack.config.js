@@ -14,7 +14,7 @@ const config = {
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
     component_multiselect_forms: './eahub/base/static/components/multiselect-forms.js',
     component_profile_edit_image: './eahub/base/static/components/profile-edit-image.js',
-    component_tables: './eahub/base/static/components/tables.js',
+    component_tables: './eahub/base/static/components/tables.js'
   },
   output: {
     filename: '[name].js',

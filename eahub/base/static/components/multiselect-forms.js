@@ -1,6 +1,4 @@
-import 'bootstrap-multiselect/dist/js/bootstrap-multiselect.min';
-import 'bootstrap-multiselect/dist/css/bootstrap-multiselect.css';
-
+import './bootstrap-multiselect/bootstrap-multiselect.js';
 
 $(document).ready(() => {
   initMultiselectForms();
