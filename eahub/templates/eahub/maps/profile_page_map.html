@@ -1,4 +1,14 @@
+{% load static sekizai_tags %}
+
 {% block map %}
+
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
+  {% else %}
+    <script defer src="{% static 'dist/component_maps.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
 
 {% if lat and lon %}
   <div id="profile_page_map" class="map"></div>
