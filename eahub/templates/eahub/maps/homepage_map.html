@@ -5,9 +5,9 @@
 
 {% addtoblock 'js' %}
   {% if settings.DJANGO_ENV.value == 'local' %}
-    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
   {% else %}
-    <script defer src="{% static 'dist/component_maps.js' %}"></script>
+    <script src="{% static 'dist/component_maps.js' %}"></script>
   {% endif %}
 {% endaddtoblock %}
 
