@@ -21,7 +21,6 @@ window.initHeatmapList = function initHeatmapList(queryStringMap) {
 }
 
 window.initHeatmapProfile = function initHeatmapProfile(mapLocations, htmlElements) {
-  console.log("OY")
   var mapParams = getMapParams();
   mapParams.htmlElements = htmlElements;
   var newMap = new Heatmap(undefined, mapLocations, mapParams.mapModules, mapParams.externalModules, mapParams.htmlElements, window.isIE);
