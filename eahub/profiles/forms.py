@@ -119,11 +119,7 @@ class EditProfileCommunityForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = (
-            "available_as_speaker",
-            "topics_i_speak_about",
-            "local_groups",
-        )
+        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups")
         widgets = {
             "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000})
         }
