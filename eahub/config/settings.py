@@ -269,11 +269,7 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-SETTINGS_EXPORT = [
-    "WEBPACK_DEV_URL",
-    "DEBUG",
-    "DJANGO_ENV",
-]
+SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV"]
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
