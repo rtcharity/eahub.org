@@ -469,6 +469,11 @@ body {
   color: #333333;
 }
 
+.key-facts .list-group a {
+  color: #497767;
+  text-decoration: underline;
+  }
+
 .list-group a {
   color: #497767;
   text-decoration: underline;
