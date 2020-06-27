@@ -474,11 +474,12 @@ body {
   text-decoration: underline;
   }
 
-.list-group a {
-  color: #497767;
-  text-decoration: underline;
-  word-wrap: break-word;
-}
+  .list-group a {
+    color: #7bb0a8;
+    text-decoration: none;
+    word-wrap: break-word;
+    }
+    
 .list-group a:hover {
   opacity: 0.7;
 }
