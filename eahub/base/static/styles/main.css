@@ -460,13 +460,20 @@ body {
 }
 
 .key-facts .background {
-  background-color: rgba(81, 43, 82, 0.7);
+  /* background-color: rgba(81, 43, 82, 0.7); */
+  background-color: #F7F6F6;
 }
 
 .key-facts .list-group-item {
   background-color: inherit;
   border: none;
-  color: white;
+  /*color: white;*/
+  color: #333333;
+}
+
+.key-facts .list-group a {
+  color: #497767;
+  text-decoration: underline;
 }
 
 .list-group a {
