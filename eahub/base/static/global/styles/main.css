@@ -291,6 +291,10 @@ body {
   width: 100px;
 }
 
+.col-xs-12 {
+  text-align: center;
+}
+
 /* map */
 #map {
   border-radius: 5px;
