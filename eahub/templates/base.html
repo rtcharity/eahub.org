@@ -1,5 +1,4 @@
-{% load static %}
-{% load render_bundle from webpack_loader %}
+{% load static sekizai_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,6 +16,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130028424-1"></script>
     <script>
@@ -25,7 +25,23 @@
       gtag('js', new Date());
       gtag('config', 'UA-130028424-1');
     </script>
-    {% render_bundle "main" "js" %}
+
+    {% if settings.DJANGO_ENV.value == 'local' %}
+      <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor.bundle.js"></script>
+      <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor.css">
+      
+      <script defer src="{{ settings.WEBPACK_DEV_URL }}/global.bundle.js"></script>
+      <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global.css">
+    {% else %}
+      <script defer src="{% static 'dist/vendor.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'dist/vendor.css' %}">
+
+      <script defer src="{% static 'dist/global.js' %}"></script>
+      <link  rel="stylesheet" href="{% static 'dist/global.css' %}">
+    {% endif %}
+
+    {% render_block "css" %}
+    {% render_block "js" %}
 
     {% block header %}{% endblock %}
 
@@ -50,14 +66,16 @@
             {% endif %}
             {% endif %}
           </ul>
+
           {% if page_name in 'Profiles,Groups,Speakers,Candidates,Volunteers' %}
-          <a href="\"><img class="logo_with_page_name" id="logo" src="/static/images/logo_transparent.png" /></a>
-          <h4> / {{ page_name }}</h4>
+            <a href="/"><img class="logo_with_page_name" id="logo" src="/static/global/images/logo_transparent.png" /></a>
+            <h4> / {{ page_name }}</h4>
           {% elif page_name == 'Home' %}
-          <a href="\"><img class="logo_full" id="logo" src="/static/images/logo_full_transparent.png" /></a>
+            <a href="/"><img class="logo_full" id="logo" src="/static/global/images/logo_full_transparent.png" /></a>
           {% else %}
-          <a href="\"><img class="logo" id="logo" src="/static/images/logo_transparent.png" /></a>
+            <a href="/"><img class="logo" id="logo" src="/static/global/images/logo_transparent.png" /></a>
           {% endif %}
+
           </div>
         </div>
     </nav>

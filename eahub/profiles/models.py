@@ -433,7 +433,7 @@ class Profile(models.Model):
                     shutil.copyfileobj(image_src_file, image_dst_file)
 
     def image_placeholder(self):
-        return f"Avatar{self.id % 10}.png"
+        return f"Avatar{self.id % 10}.jpg"
 
     def has_cause_area_details(self):
         cause_area_details_exist = [
