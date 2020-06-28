@@ -21,10 +21,6 @@ body {
   margin-bottom: 10px;
 }
 
-.info .col-md-6, .col-xs-12 {
-  text-align: center;
-}
-
 .info button {
   border: none;
   font-size: 18px;
