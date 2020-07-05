@@ -94,6 +94,7 @@ class LocalGroupForm(forms.ModelForm):
             required=False,
             choices=localgroups_models.LocalGroupType.choices(),
         )
+        
 
     class Meta:
         model = localgroups_models.LocalGroup
@@ -112,6 +113,9 @@ class LocalGroupForm(forms.ModelForm):
             "organisers",
             "other_info",
         ]
+        labels = {
+            "website": ("Please enter all the ways potential group members can currently connect with your group:<br><br> Website"),
+        }
 
     def clean_local_group_types(self):
         return list(map(int, self.cleaned_data["local_group_types"]))
