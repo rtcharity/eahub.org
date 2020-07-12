@@ -2,16 +2,26 @@
 
 {% load rules %}
 
+{% load static sekizai_tags %}
+
 {% block content %}
+
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_group_page_actions.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_group_page_actions.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
 
 <br><br>
 
 <div class="container animated bounceIn">
   <div class="row">
-    <div class="col-xs-offset-2 col-xs-2">
-      <img class="profile_picture" src="/static/images/group_avatar.png">
+    <div class="col-xs-offset-2 col-xs-8 col-sm-2">
+      <img class="profile_picture" src="/static/global/images/group_avatar.jpg">
     </div>
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
       {% if group.email %}
       <div class="btn btn-default purple">
@@ -168,7 +178,6 @@
       <a href="{% url 'report_abuse_group' group.slug  %}"><button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</a>
     </div>
   </div>
-
 
 </div>
 {% endblock %}
