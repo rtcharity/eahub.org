@@ -1,5 +1,5 @@
 var appRoot = require('app-root-path');
-const scriptsFolder = appRoot + '/eahub/base/static/scripts/';
+const scriptsFolder = appRoot + '/eahub/base/static/components/';
 const Profile = require(`${scriptsFolder}/maps/profile.js`).default;
 
 describe("Profile", function() {

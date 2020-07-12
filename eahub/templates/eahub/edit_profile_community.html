@@ -1,10 +1,20 @@
 {% extends 'form.html' %}
 
+{% load static sekizai_tags %}
+
 {% block title %}Community{% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block form_fields %}
+
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_multiselect_forms.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_multiselect_forms.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
 
 <div class="field field_categories">
     <label>Organisational Affiliations:</label>

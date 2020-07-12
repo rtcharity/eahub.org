@@ -1,9 +1,21 @@
+from enum import Enum
+
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
+
+
+class DjangoEnv(Enum):
+    LOCAL = "local"
+    STAGE = "stage"
+    PROD = "prod"
+
+
+DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
+
 
 # Core settings: cache
 CACHES = {
@@ -131,6 +143,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "sekizai.context_processors.sekizai",
+                "django_settings_export.settings_export",
             ]
         },
     }
@@ -167,8 +181,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 # Static files
-PROD = True if env.str("buildfolder") == "/static_build" else False
-if PROD:
+if DJANGO_ENV == DjangoEnv.PROD:
     from .build_settings import STATICFILES_DIRS
 else:
     from .build_settings_dev import STATICFILES_DIRS  # noqa: F401,F402; isort:skip
@@ -254,22 +267,9 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
 
-# webpack loader
-STATS_FILE = (
-    "/static_build/webpack-stats.json"
-    if PROD
-    else "eahub/base/static/webpack-stats.json"
-)
+WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "dist/",
-        "STATS_FILE": STATS_FILE,
-        "POLL_INTERVAL": 0.1,
-        "TIMEOUT": None,
-    }
-}
+SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV"]
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
