@@ -5,8 +5,8 @@
   "main": "eahub/base/static/scripts/main.js",
   "scripts": {
     "test": "babel-node eahub/base/tests/frontend/spec/run.js ",
-    "build": "webpack",
-    "build-watch": "webpack --watch"
+    "build": "NODE_ENV=prod webpack --config webpack.config.js",
+    "build-watch": "node_modules/.bin/webpack-dev-server --config webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -24,26 +24,31 @@
     "@babel/node": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
     "@fortawesome/fontawesome-free": "^5.9.0",
+    "@fortawesome/free-solid-svg-icons": "^5.13.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.28",
     "@google/markerclusterer": "^1.0.3",
     "app-root-path": "^2.2.1",
     "babel-loader": "^8.0.6",
+    "bootstrap-multiselect": "^0.9.15",
     "bootstrap": "3.4.1",
     "clean-webpack-plugin": "^3.0.0",
     "cookieconsent": "^3.1.1",
-    "css-loader": "^3.0.0",
     "datatables.net": "^1.10.19",
     "datatables.net-dt": "^1.10.19",
     "file-loader": "^4.0.0",
     "jasmine": "^3.4.0",
     "jquery": "^3.4.1",
     "knockout": "^3.5.0",
-    "less": "^3.9.0",
-    "less-loader": "^5.0.0",
-    "style-loader": "^0.23.1",
-    "svg-inline-loader": "^0.8.0",
+    "svg-url-loader": "^5.0.0",
     "url-loader": "^2.0.0",
     "webpack": "^4.34.0",
-    "webpack-bundle-tracker": "^0.4.2-beta",
-    "webpack-cli": "^3.3.4"
+    "webpack-dev-server": "^3.10.3",
+    "webpack-cli": "^3.3.4",
+    "image-webpack-loader": "^6.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.12.0",
+    "precss": "^4.0.0",
+    "sass-loader": "^8.0.0",
+    "css-loader": "^3.2.0"
   }
 }

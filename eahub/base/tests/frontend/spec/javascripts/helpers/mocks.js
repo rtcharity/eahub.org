@@ -114,8 +114,8 @@ export default {
   },
   markerSettingsMock: {
     image: {
-      active: '/static/images/marker_active.svg',
-      inactive: '/static/images/marker_inactive.svg'
+      active: '/static/global/images/marker_active.svg',
+      inactive: '/static/global/images/marker_inactive.svg'
     },
     size: {
       fullmap: { width: 40, height: 40 },

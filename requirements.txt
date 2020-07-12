@@ -42,3 +42,5 @@ isort[requirements]==4.3.20
 flake8-isort==2.7.0
 django-webpack-loader==0.6.0
 django-admin-relation-links==0.2.4
+django-settings-export==1.2.1
+django-sekizai==1.1.0
