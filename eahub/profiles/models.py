@@ -462,6 +462,17 @@ class Profile(models.Model):
         ]
         return any(community_details_exist)
 
+    def convert_to_row(self, field_names):
+        values = []
+        for field in field_names:
+            if (field == 'local_groups'):
+                values.append(self.get_pretty_local_groups())
+            elif (field == 'expertise'):
+                values.append(self.get_pretty_expertise())
+            else:
+                values.append(getattr(self, field))
+        return values
+
 
 class Membership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
