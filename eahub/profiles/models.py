@@ -465,10 +465,20 @@ class Profile(models.Model):
     def convert_to_row(self, field_names):
         values = []
         for field in field_names:
-            if (field == 'local_groups'):
-                values.append(self.get_pretty_local_groups())
-            elif (field == 'expertise'):
+            if ("_other" in field):
+                continue
+            elif (field == 'cause_areas'):
+                values.append(self.get_pretty_cause_areas())
+            elif (field == 'expertise_areas'):
                 values.append(self.get_pretty_expertise())
+            elif (field == 'career_interest_areas'):
+                values.append(self.get_pretty_career_interest_areas())
+            elif (field == 'organisational_affiliations'):
+                values.append(self.get_pretty_organisational_affiliations())
+            elif (field == 'giving_pledges'):
+                values.append(self.get_pretty_giving_pledges())
+            elif (field == 'local_groups'):
+                values.append(self.get_pretty_local_groups())
             else:
                 values.append(getattr(self, field))
         return values
