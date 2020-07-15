@@ -13,8 +13,7 @@ def user_display(user):
 
 
 class ExportCsvMixin:
-    def export_csv(self, request, queryset, ignore=[]):
-        meta = models.LocalGroup._meta
+    def export_csv(self, request, queryset, meta, ignore=[]):
         field_names = [field.name for field in meta.fields if field.name not in ignore]
 
         response = HttpResponse(content_type='text/csv')
