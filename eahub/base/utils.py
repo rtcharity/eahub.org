@@ -23,7 +23,7 @@ class ExportCsvMixin:
 
         writer.writerow(field_names)
         for obj in queryset:
-            row = writer.writerow(obj.convert_to_row(field_names))
+            writer.writerow(obj.convert_to_row(field_names))
 
         return response
 
