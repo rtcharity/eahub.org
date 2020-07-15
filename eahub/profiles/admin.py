@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from . import models
 from ..base import utils
+from . import models
 
 
 class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):

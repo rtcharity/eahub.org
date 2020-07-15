@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from . import models
 from ..base import utils
+from . import models
 
 
 class LocalGroupAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
