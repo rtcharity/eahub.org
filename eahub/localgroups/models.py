@@ -90,11 +90,12 @@ class LocalGroup(models.Model):
     def convert_to_row(self, field_names):
         values = []
         for field in field_names:
-            if (field == 'local_group_types'):
+            if field == "local_group_types":
                 values.append(self.get_local_group_types())
             else:
                 values.append(getattr(self, field))
         return values
+
 
 class Organisership(models.Model):
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)

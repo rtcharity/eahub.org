@@ -16,8 +16,8 @@ class ExportCsvMixin:
     def export_csv(self, request, queryset, meta, ignore=[]):
         field_names = [field.name for field in meta.fields if field.name not in ignore]
 
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = "attachment; filename={}.csv".format(meta)
         writer = csv.writer(response)
 
         writer.writerow(field_names)
