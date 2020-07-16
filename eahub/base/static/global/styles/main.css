@@ -460,14 +460,12 @@ body {
 }
 
 .key-facts .background {
-  /* background-color: rgba(81, 43, 82, 0.7); */
   background-color: #F7F6F6;
 }
 
 .key-facts .list-group-item {
   background-color: inherit;
   border: none;
-  /*color: white;*/
   color: #333333;
 }
 
@@ -477,10 +475,11 @@ body {
 }
 
 .list-group a {
-  color: #7bb0a8;
-  text-decoration: none;
-  word-wrap: break-word;
+    color: #7bb0a8;
+    text-decoration: none;
+    word-wrap: break-word;
 }
+
 .list-group a:hover {
   opacity: 0.7;
 }
