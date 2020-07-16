@@ -114,7 +114,7 @@ class LocalGroupForm(forms.ModelForm):
             "other_info",
         ]
         labels = {
-            "website": ("Please enter all the ways potential group members can currently connect with your group:<br><br> Website"),
+            "website": ("<br><div style='font-size: 16px; font-weight: normal;'>Please enter all the ways potential group members can currently connect with your group:</div><br><br> Website"),
         }
 
     def clean_local_group_types(self):
