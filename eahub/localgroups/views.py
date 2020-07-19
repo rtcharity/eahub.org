@@ -41,7 +41,7 @@ class LocalGroupCreateView(
     def form_valid(self, form):
         form.instance.geocode()
         print(self.kwargs)
-        send_mail_on_change(self.request, form.cleaned_data["name"], "create_group.txt")
+        send_mail_on_change(self.request, "create_group.txt", form.cleaned_data["name"], )
         return super().form_valid(form)
 
 
@@ -63,7 +63,7 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     def form_valid(self, form):
         if "city_or_town" in form.changed_data or "country" in form.changed_data:
             form.instance.geocode()
-        send_mail_on_change(self.request, form.cleaned_data["name"], "update_group.txt", self.kwargs["slug"])
+        send_mail_on_change(self.request, "update_group.txt", form.cleaned_data["name"], self.kwargs["slug"])
 
         return super().form_valid(form)
 
@@ -75,7 +75,7 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
     permission_required = "localgroups.delete_local_group"
 
     def form_valid(self, form):
-        send_mail_on_change(self.request, form.cleaned_data["name"], "delete_group.txt", self.kwargs["slug"])
+        send_mail_on_change(self.request, "delete_group.txt", form.cleaned_data["name"], self.kwargs["slug"])
         return super().form_valid(form)
 
 
