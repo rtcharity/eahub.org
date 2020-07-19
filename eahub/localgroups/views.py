@@ -65,12 +65,11 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     def form_valid(self, form):
         if "city_or_town" in form.changed_data or "country" in form.changed_data:
             form.instance.geocode()
+        old_name = self.object.name
+        self.object = form.save()
+        send_mail_on_change(self.request, "update_group.txt", old_name, self.object.slug)
+        return super().form_valid(form)
 
-        res = super().form_valid(form)
-
-        send_mail_on_change(self.request, "update_group.txt", res.status_code, self.kwargs["slug"])
-
-        return res
 
 
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
