@@ -43,7 +43,9 @@ class LocalGroupCreateView(
     def form_valid(self, form):
         form.instance.geocode()
         self.object = form.save()
-        send_mail_on_change(self.request, "create_group.txt", self.object.name, self.object.slug)
+        send_mail_on_change(
+            self.request, "create_group.txt", self.object.name, self.object.slug
+        )
         return super().form_valid(form)
 
 
@@ -67,7 +69,9 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
             form.instance.geocode()
         old_name = self.object.name
         self.object = form.save()
-        send_mail_on_change(self.request, "update_group.txt", old_name, self.object.slug)
+        send_mail_on_change(
+            self.request, "update_group.txt", old_name, self.object.slug
+        )
         return super().form_valid(form)
 
 
@@ -167,6 +171,7 @@ def report_group_inactive(request, slug):
     )
     return redirect("/group/{}".format(group.slug))
 
+
 @login_required
 @require_POST
 def send_mail_on_change(request, template, name, slug):
@@ -196,8 +201,8 @@ def send_mail_on_change(request, template, name, slug):
             "group_name": name,
             "group_url": "https://{0}/group/{1}".format(
                 get_current_site(request).domain, slug
-            )
-        }
+            ),
+        },
     )
     recipient_list = [email for email in settings.LEAN_MANAGERS]
     recipient_list.append(settings.GROUPS_EMAIL)
