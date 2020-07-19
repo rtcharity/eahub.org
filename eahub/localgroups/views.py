@@ -42,8 +42,8 @@ class LocalGroupCreateView(
 
     def form_valid(self, form):
         form.instance.geocode()
-        print(self.kwargs)
-        send_mail_on_change(self.request, "create_group.txt", form.cleaned_data["name"], )
+        self.object = form.save()
+        send_mail_on_change(self.request, "create_group.txt", self.object.name, self.object.slug)
         return super().form_valid(form)
 
 
@@ -69,7 +69,6 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
         self.object = form.save()
         send_mail_on_change(self.request, "update_group.txt", old_name, self.object.slug)
         return super().form_valid(form)
-
 
 
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
@@ -170,8 +169,17 @@ def report_group_inactive(request, slug):
 
 @login_required
 @require_POST
-def send_mail_on_change(request, template, name, slug=None):
-    subject = "EA Group changed: {0}".format(name)
+def send_mail_on_change(request, template, name, slug):
+    if "update" in template:
+        action = "updated"
+    elif "create" in template:
+        action = "created"
+    elif "delete" in template:
+        action = "deleted"
+    else:
+        raise Exception("Template {0} does not exist".format(template))
+
+    subject = "EA Group {0}: {1}".format(action, name)
     try:
         user_eahub_url = "https://{0}/profile/{1}".format(
             get_current_site(request).domain, request.user.profile.slug
@@ -180,18 +188,16 @@ def send_mail_on_change(request, template, name, slug=None):
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
         user_name = request.user.email
-    info = {
-        "user_eahub_url": user_eahub_url,
-        "user_name": user_name,
-        "group_name": name
-    }
-    if slug is not None:
-        info["group_url"] = "https://{0}/group/{1}".format(
-                get_current_site(request).domain, slug
-            )
     message = render_to_string(
         "emails/{0}".format(template),
-        info,
+        {
+            "user_eahub_url": user_eahub_url,
+            "user_name": user_name,
+            "group_name": name,
+            "group_url": "https://{0}/group/{1}".format(
+                get_current_site(request).domain, slug
+            )
+        }
     )
     recipient_list = [email for email in settings.LEAN_MANAGERS]
     recipient_list.append(settings.GROUPS_EMAIL)
