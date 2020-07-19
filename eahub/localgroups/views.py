@@ -17,8 +17,6 @@ from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
 
-import logging
-
 
 class LocalGroupCreateView(
     auth_mixins.LoginRequiredMixin,
