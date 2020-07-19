@@ -40,6 +40,8 @@ class LocalGroupCreateView(
 
     def form_valid(self, form):
         form.instance.geocode()
+        print(self.kwargs)
+        send_mail_on_change(self.request, form.cleaned_data["name"], "create_group.txt")
         return super().form_valid(form)
 
 
@@ -61,6 +63,8 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     def form_valid(self, form):
         if "city_or_town" in form.changed_data or "country" in form.changed_data:
             form.instance.geocode()
+        send_mail_on_change(self.request, form.cleaned_data["name"], "update_group.txt", self.kwargs["slug"])
+
         return super().form_valid(form)
 
 
@@ -69,6 +73,10 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
     template_name = "eahub/delete_group.html"
     success_url = urls.reverse_lazy("groups")
     permission_required = "localgroups.delete_local_group"
+
+    def form_valid(self, form):
+        send_mail_on_change(self.request, form.cleaned_data["name"], "delete_group.txt", self.kwargs["slug"])
+        return super().form_valid(form)
 
 
 class ReportGroupAbuseView(ReportAbuseView):
@@ -152,3 +160,34 @@ def report_group_inactive(request, slug):
         "Our admin team will send you an email once they have looked into it.",
     )
     return redirect("/group/{}".format(group.slug))
+
+@login_required
+@require_POST
+def send_mail_on_change(request, template, name, slug=None):
+    subject = "EA Group changed: {0}".format(name)
+    try:
+        user_eahub_url = "https://{0}/profile/{1}".format(
+            get_current_site(request).domain, request.user.profile.slug
+        )
+        user_name = request.user.profile.name
+    except Profile.DoesNotExist:
+        user_eahub_url = "about:blank"
+        user_name = request.user.email
+    info = {
+        "user_eahub_url": user_eahub_url,
+        "user_name": user_name,
+        "group_name": name
+    }
+    if slug is not None:
+        info["group_url"] = "https://{0}/group/{1}".format(
+                get_current_site(request).domain, slug
+            )
+    message = render_to_string(
+        "emails/{0}".format(template),
+        info,
+    )
+    recipient_list = [email for email in settings.LEAN_MANAGERS]
+    recipient_list.append(settings.GROUPS_EMAIL)
+    send_mail(
+        subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=recipient_list
+    )

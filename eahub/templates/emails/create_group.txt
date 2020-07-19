@@ -1,0 +1,5 @@
+Dear Admin,
+
+User {{user_name}} ({{user_eahub_url}}) has created group {{group_name}}.
+
+This email has been automatically generated.
