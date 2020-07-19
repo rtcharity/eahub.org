@@ -17,6 +17,8 @@ from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
 
+import logging
+
 
 class LocalGroupCreateView(
     auth_mixins.LoginRequiredMixin,
@@ -63,20 +65,26 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     def form_valid(self, form):
         if "city_or_town" in form.changed_data or "country" in form.changed_data:
             form.instance.geocode()
-        send_mail_on_change(self.request, "update_group.txt", form.cleaned_data["name"], self.kwargs["slug"])
 
-        return super().form_valid(form)
+        res = super().form_valid(form)
+
+        send_mail_on_change(self.request, "update_group.txt", res.status_code, self.kwargs["slug"])
+
+        return res
 
 
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
     queryset = LocalGroup.objects.filter(is_public=True)
     template_name = "eahub/delete_group.html"
-    success_url = urls.reverse_lazy("groups")
     permission_required = "localgroups.delete_local_group"
 
-    def form_valid(self, form):
-        send_mail_on_change(self.request, "delete_group.txt", form.cleaned_data["name"], self.kwargs["slug"])
-        return super().form_valid(form)
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        name = self.object.name
+        slug = self.object.slug
+        self.object.delete()
+        send_mail_on_change(self.request, "delete_group.txt", name, slug)
+        return redirect(urls.reverse_lazy("groups"))
 
 
 class ReportGroupAbuseView(ReportAbuseView):
