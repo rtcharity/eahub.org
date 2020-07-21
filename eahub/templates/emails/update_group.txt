@@ -1,0 +1,5 @@
+Dear Admin,
+
+User {{user_name}} ({{user_eahub_url}}) has updated group {{group_name}}. Check the group's page ({{group_url}}) to see more details.
+
+This email has been automatically generated.
