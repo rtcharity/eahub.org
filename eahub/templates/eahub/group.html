@@ -80,7 +80,7 @@
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
         {% if group.public_organisers %}
-        <li class="list-group-item"><b>Organisers:</b>
+        <li class="list-group-item"><b>Organisers (Member):</b>
           {% if group.public_organisers.count == 1 %}
           <a href="{{ group.public_organisers.0.profile.get_absolute_url }}">{{ group.public_organisers.0.profile.name }}</a>
           {% else %}
@@ -91,6 +91,7 @@
           </ul>
           {% endif %}
         {% endif %}
+        {% if group.organisers_freetext %}<li class="list-group-item"><b>Organisers (Non-Member): </b>{{ group.organisers_freetext }}</li>{% endif %}
         {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}" target="_blank">{{ group.website }}</a></li>{% endif %}
         {% if group.other_website %}<li class="list-group-item"><b>Other Website: </b><a href="{{ group.other_website }}" target="_blank">{{ group.other_website }}</a></li>{% endif %}
         {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}" target="_blank">{{ group.facebook_group }}</a></li>{% endif %}
