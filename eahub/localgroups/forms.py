@@ -114,7 +114,9 @@ class LocalGroupForm(forms.ModelForm):
         ]
         labels = {
             "website": (
-                "<br><div style='font-size: 16px; font-weight: normal;'>Please enter all the ways potential group members can currently connect with your group:</div><br><br> Website"
+                "<br><div style='font-size: 16px; font-weight: normal;'>"
+                "Please enter all the ways potential group members can currently "
+                "connect with your group:</div><br><br> Website"
             )
         }
 

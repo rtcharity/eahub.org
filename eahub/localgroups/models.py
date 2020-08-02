@@ -25,7 +25,10 @@ class LocalGroup(models.Model):
     name = models.CharField(
         "name of group",
         max_length=100,
-        help_text="University groups: Ideally avoid acronyms in your group name unless they are likely to be unique worldwide. If the name of your university is also the name of a city, indicate in the name that this is a university group.",
+        help_text="University groups: Ideally avoid acronyms in your group name unless "
+                  "they are likely to be unique worldwide. If the name of your "
+                  "university is also the name of a city, indicate in the name that "
+                  "this is a university group.",
     )
     is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
