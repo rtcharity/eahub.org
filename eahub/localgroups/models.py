@@ -22,7 +22,14 @@ class LocalGroup(models.Model):
 
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
     is_public = models.BooleanField(default=True)
-    name = models.CharField(max_length=100)
+    name = models.CharField(
+        "name of group",
+        max_length=100,
+        help_text="University groups: Ideally avoid acronyms in your group name unless "
+        "they are likely to be unique worldwide. If the name of your "
+        "university is also the name of a city, indicate in the name that "
+        "this is a university group.",
+    )
     is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
