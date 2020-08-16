@@ -27,7 +27,9 @@ class LocalGroup(models.Model):
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
     )
-    organisers_freetext = models.CharField("Organisers (Non-Member)", max_length=100, blank=True)
+    organisers_freetext = models.CharField(
+        "Organisers (Non-Member)", max_length=100, blank=True
+    )
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
     )
