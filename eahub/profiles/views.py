@@ -27,7 +27,6 @@ from .models import (
 
 
 def profile_detail_or_redirect(request, slug, first_visit=False):
-    breakpoint()
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
     profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
@@ -48,7 +47,6 @@ def profile_redirect_from_legacy_record(request, legacy_record):
 
 @login_required
 def my_profile(request, first_visit=False):
-    breakpoint()
     if not hasattr(request.user, "profile"):
         raise http.Http404("user has no profile")
     return profile_detail_or_redirect(request, slug=request.user.profile.slug, first_visit=first_visit)
@@ -56,7 +54,6 @@ def my_profile(request, first_visit=False):
 
 @login_required
 def my_profile_first_visit(request):
-    breakpoint()
     return my_profile(request, True)
 
 

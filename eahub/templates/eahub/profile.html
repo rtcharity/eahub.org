@@ -8,6 +8,18 @@
 
 <br><br>
 
+{% if first_visit %}
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4 alert alert-info alert-dismissable profile-welcome">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <p>Welcome to the EA Hub!</p>
+    <p>Please fill out your profile as much as you can so that other users can get to know you.</p>
+  </div>
+</div>
+{% endif %}
+
 <div class="container animated">
   <div class="row profile-head">
     <div class="col-xs-12 col-md-3">
@@ -45,10 +57,6 @@
     </div>
   </div>
 </div>
-
-{% if first_visit %}
-<div>Welcome to EAHub!</div>
-{% endif %}
 
 <br><br>
 {% if messages %}
