@@ -1,6 +1,7 @@
 from enum import Enum
 
 import environ
+import ipdb
 from django.core import exceptions
 from django.utils.safestring import mark_safe
 
@@ -168,10 +169,11 @@ AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
-LOGIN_REDIRECT_URL = "/profile"
+LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "account_login"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
+PYTHONBREAKPOINT=ipdb.set_trace
 
 # Sessions
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT

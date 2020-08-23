@@ -26,14 +26,15 @@ from .models import (
 )
 
 
-def profile_detail_or_redirect(request, slug):
+def profile_detail_or_redirect(request, slug, first_visit=False):
+    breakpoint()
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
     profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profile", slug=profile.slug, permanent=True)
-    return render(request, "eahub/profile.html", {"profile": profile})
+    return render(request, "eahub/profile.html", {"profile": profile, "first_visit": first_visit})
 
 
 def profile_redirect_from_legacy_record(request, legacy_record):
@@ -46,10 +47,17 @@ def profile_redirect_from_legacy_record(request, legacy_record):
 
 
 @login_required
-def my_profile(request):
+def my_profile(request, first_visit=False):
+    breakpoint()
     if not hasattr(request.user, "profile"):
         raise http.Http404("user has no profile")
-    return redirect("profile", slug=request.user.profile.slug)
+    return profile_detail_or_redirect(request, slug=request.user.profile.slug, first_visit=first_visit)
+
+
+@login_required
+def my_profile_first_visit(request):
+    breakpoint()
+    return my_profile(request, True)
 
 
 @login_required
