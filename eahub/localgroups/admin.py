@@ -6,8 +6,9 @@ from . import models
 
 class LocalGroupAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     actions = ["export_csv"]
-    meta = models.LocalGroup._meta
+
     def export_csv(self, request, queryset):
+        meta = models.LocalGroup._meta
         fieldnames = [
             field.name
             for field in meta.fields + meta.many_to_many
