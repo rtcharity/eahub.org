@@ -78,7 +78,13 @@ class LocalGroup(models.Model):
         )
 
     def organisers_names(self):
-        return ", ".join([user.profile.name for user in self.organisers.all()])
+        profile_names = []
+        for user in self.organisers.all():
+            if user.profile:
+                profile_names.append(user.profile.name)
+            else:
+                profile_names.append("N/A")
+        return ", ".join(profile_names)
 
     def organisers_emails(self):
         return ", ".join([user.email for user in self.organisers.all()])
