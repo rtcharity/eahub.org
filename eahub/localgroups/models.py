@@ -89,6 +89,9 @@ class LocalGroup(models.Model):
     def organisers_emails(self):
         return ", ".join([user.email for user in self.organisers.all()])
 
+    def organisers_emails(self):
+        return ", ".join([user.email for user in self.organisers.all()])
+
     def geocode(self):
         self.lat = None
         self.lon = None
