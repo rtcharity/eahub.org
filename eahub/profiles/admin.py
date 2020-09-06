@@ -8,8 +8,10 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     actions = ["export_csv"]
 
     def export_csv(self, request, queryset):
+        meta = models.Profile._meta
+        fieldnames = [field.name for field in meta.fields + meta.many_to_many]
         return utils.ExportCsvMixin.export_csv(
-            self, request, queryset, models.Profile._meta
+            self, request, queryset, fieldnames, "profiles"
         )
 
 

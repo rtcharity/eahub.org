@@ -78,7 +78,16 @@ class LocalGroup(models.Model):
         )
 
     def organisers_names(self):
-        return ", ".join([user.profile.name for user in self.organisers.all()])
+        profile_names = []
+        for user in self.organisers.all():
+            if user.profile:
+                profile_names.append(user.profile.name)
+            else:
+                profile_names.append("N/A")
+        return ", ".join(profile_names)
+
+    def organisers_emails(self):
+        return ", ".join([user.email for user in self.organisers.all()])
 
     def geocode(self):
         self.lat = None
@@ -104,6 +113,8 @@ class LocalGroup(models.Model):
                 values.append(self.get_local_group_types())
             elif field == "organisers":
                 values.append(self.organisers_names())
+            elif field == "organisers_emails":
+                values.append(self.organisers_emails())
             else:
                 values.append(getattr(self, field))
         return values

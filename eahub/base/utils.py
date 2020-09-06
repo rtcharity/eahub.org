@@ -14,14 +14,9 @@ def user_display(user):
 
 
 class ExportCsvMixin:
-    def export_csv(self, request, queryset, meta, ignore=[]):
-        field_names = [
-            field.name
-            for field in meta.fields + meta.many_to_many
-            if field.name not in ignore
-        ]
+    def export_csv(self, request, queryset, field_names, filename):
         response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = "attachment; filename={}.csv".format(meta)
+        response["Content-Disposition"] = "attachment; filename={}.csv".format(filename)
         writer = csv.writer(response)
 
         writer.writerow(field_names)
