@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('localgroups', '0007_localgroup_local_group_types'),
-    ]
+    dependencies = [("localgroups", "0007_localgroup_local_group_types")]
 
     operations = [
         migrations.AddField(
-            model_name='localgroup',
-            name='organisers_freetext',
+            model_name="localgroup",
+            name="organisers_freetext",
             field=models.CharField(blank=True, max_length=100),
-        ),
+        )
     ]
