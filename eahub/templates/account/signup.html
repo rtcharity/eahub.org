@@ -18,6 +18,7 @@
 {{ form.email|as_crispy_field }}
 {{ form.password1|as_crispy_field }}
 {{ form.password2|as_crispy_field }}
+{{ form.is_public|as_crispy_field }}
 <input type="hidden" name="{{ redirect_field_name }}" value="/profile/first_visit" />
 {% endblock %}
 
