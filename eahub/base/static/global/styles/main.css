@@ -436,6 +436,11 @@ body {
   text-align: center;
 }
 
+.profile-welcome {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
 .panel-body .list {
   display: block;
   margin-bottom: 10px;
