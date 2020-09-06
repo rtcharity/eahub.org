@@ -6,9 +6,22 @@
 
 {% block form_fields %}
 
-{{ form|crispy }}
-
+<div id="div_id_name" class="form-group">
+    <label for="id_name" class="control-label  requiredField">
+        Name<span class="asteriskField">*</span>
+        <span style="font-style: italic">(First and last name)</span>
+    </label>
+    <div class="controls ">
+      <input type="text" name="name" placeholder="Name" maxlength="200" class="textinput textInput form-control" required="" id="id_name">
+    </div>
+</div>
+{{ form.email|as_crispy_field }}
+{{ form.password1|as_crispy_field }}
+{{ form.password2|as_crispy_field }}
+{{ form.is_public|as_crispy_field }}
+<input type="hidden" name="{{ redirect_field_name }}" value="/profile/first_visit" />
 {% endblock %}
+
 
 {% block submit%}Sign up{% endblock%}
 
