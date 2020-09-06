@@ -34,9 +34,7 @@ def profile_detail_or_redirect(request, slug, first_visit=False):
     if slug_entry.redirect:
         return redirect("profile", slug=profile.slug, permanent=True)
     return render(
-        request,
-        "eahub/profile.html",
-        {"profile": profile, "first_visit": first_visit}
+        request, "eahub/profile.html", {"profile": profile, "first_visit": first_visit}
     )
 
 
@@ -54,9 +52,7 @@ def my_profile(request, first_visit=False):
     if not hasattr(request.user, "profile"):
         raise http.Http404("user has no profile")
     return profile_detail_or_redirect(
-        request,
-        slug=request.user.profile.slug,
-        first_visit=first_visit
+        request, slug=request.user.profile.slug, first_visit=first_visit
     )
 
 
