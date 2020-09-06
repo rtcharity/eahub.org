@@ -6,6 +6,8 @@ from ..base import models as base_models
 from ..profiles import models as profiles_models
 from . import models as localgroups_models
 
+import us
+import ipdb
 
 class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
     def __init__(self, *, user, local_group, **kwargs):
@@ -95,6 +97,16 @@ class LocalGroupForm(forms.ModelForm):
             choices=localgroups_models.LocalGroupType.choices(),
         )
 
+    def clean(self):
+        data = self.cleaned_data
+        if (data['country'] in ["United States", "US", "USA", "United States of America"] and data['region']):
+            state = us.states.lookup(data['region'])
+            if state is None:
+                raise ValidationException('Not a valid US state')
+            #ipdd.set_trace()
+            data['region'] = state.name
+        return data
+
     class Meta:
         model = localgroups_models.LocalGroup
         fields = [
@@ -102,6 +114,7 @@ class LocalGroupForm(forms.ModelForm):
             "is_active",
             "local_group_types",
             "city_or_town",
+            "region",
             "country",
             "website",
             "other_website",
@@ -113,6 +126,7 @@ class LocalGroupForm(forms.ModelForm):
             "other_info",
         ]
         labels = {
+            "region": "Region (e.g., US state, if applicable)",
             "website": (
                 "<br><div style='font-size: 16px; font-weight: normal;'>"
                 "Please enter all the ways potential group members can currently "

@@ -41,6 +41,7 @@ class LocalGroup(models.Model):
         enum.EnumField(LocalGroupType), blank=True, default=list
     )
     city_or_town = models.CharField(max_length=100, blank=True)
+    region = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
