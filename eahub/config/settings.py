@@ -1,7 +1,6 @@
 from enum import Enum
 
 import environ
-import ipdb
 from django.core import exceptions
 from django.utils.safestring import mark_safe
 

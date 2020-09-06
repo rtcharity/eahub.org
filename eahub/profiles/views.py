@@ -33,7 +33,11 @@ def profile_detail_or_redirect(request, slug, first_visit=False):
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profile", slug=profile.slug, permanent=True)
-    return render(request, "eahub/profile.html", {"profile": profile, "first_visit": first_visit})
+    return render(
+        request,
+        "eahub/profile.html",
+        {"profile": profile, "first_visit": first_visit}
+    )
 
 
 def profile_redirect_from_legacy_record(request, legacy_record):
@@ -49,7 +53,11 @@ def profile_redirect_from_legacy_record(request, legacy_record):
 def my_profile(request, first_visit=False):
     if not hasattr(request.user, "profile"):
         raise http.Http404("user has no profile")
-    return profile_detail_or_redirect(request, slug=request.user.profile.slug, first_visit=first_visit)
+    return profile_detail_or_redirect(
+        request,
+        slug=request.user.profile.slug,
+        first_visit=first_visit
+    )
 
 
 @login_required
