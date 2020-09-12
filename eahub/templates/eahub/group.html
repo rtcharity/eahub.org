@@ -79,18 +79,13 @@
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive. You can still connect with EAs in the area through the links below.{% endif %}</li>
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
-        {% if group.public_organisers %}
-        <li class="list-group-item"><b>Organisers</b>
-          {% if group.public_organisers.count == 1 %}
-          <a href="{{ group.public_organisers.0.profile.get_absolute_url }}">{{ group.public_organisers.0.profile.name }}</a>
-          {% else %}
+        {% if group.public_organisers or group.organisers_freetext %}
+        <li class="list-group-item"><b>Organisers:</b>
           {% for organiser in group.public_organisers %}
-            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a>
+            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
-          {% if group.organisers_freetext %}{{ group.organisers_freetext }}{% endif %}
+          {{ group.organisers_freetext }}
         </li>
-        
-          {% endif %}
         {% endif %}
         
         {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}" target="_blank">{{ group.website }}</a></li>{% endif %}
