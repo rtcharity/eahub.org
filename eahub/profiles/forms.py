@@ -15,7 +15,7 @@ class SignupForm(forms.Form):
 
     name = forms.CharField(
         max_length=200,
-        label="Name",
+        label="First and last name",
         widget=forms.TextInput(attrs={"placeholder": "Name"}),
         validators=[validate_sluggable_name],
     )
