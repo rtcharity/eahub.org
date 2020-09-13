@@ -5,19 +5,21 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('localgroups', '0008_localgroup_organisers_freetext'),
-    ]
+    dependencies = [("localgroups", "0008_localgroup_organisers_freetext")]
 
     operations = [
         migrations.AddField(
-            model_name='localgroup',
-            name='region',
+            model_name="localgroup",
+            name="region",
             field=models.CharField(blank=True, max_length=100),
         ),
         migrations.AlterField(
-            model_name='localgroup',
-            name='organisers_freetext',
-            field=models.CharField(blank=True, max_length=100, verbose_name='Organisers (Non EA Hub members)'),
+            model_name="localgroup",
+            name="organisers_freetext",
+            field=models.CharField(
+                blank=True,
+                max_length=100,
+                verbose_name="Organisers (Non EA Hub members)",
+            ),
         ),
     ]

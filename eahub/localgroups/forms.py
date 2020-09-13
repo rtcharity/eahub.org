@@ -1,3 +1,4 @@
+import us
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -6,7 +7,6 @@ from ..base import models as base_models
 from ..profiles import models as profiles_models
 from . import models as localgroups_models
 
-import us
 
 class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
     def __init__(self, *, user, local_group, **kwargs):
@@ -98,13 +98,17 @@ class LocalGroupForm(forms.ModelForm):
 
     def clean(self):
         data = self.cleaned_data
-        if (data['country'] in ["United States", "US", "USA", "United States of America"] and data['region']):
-            state = us.states.lookup(data['region'])
+        if (
+            data["country"]
+            in ["United States", "US", "USA", "United States of America"]
+            and data["region"]
+        ):
+            state = us.states.lookup(data["region"])
             if state is None:
                 raise forms.ValidationError(
-                    f"'{data['region']}' is not a valid US state",
+                    f"'{data['region']}' is not a valid US state"
                 )
-            data['region'] = state.name
+            data["region"] = state.name
         return data
 
     class Meta:
@@ -133,13 +137,13 @@ class LocalGroupForm(forms.ModelForm):
                 "<br><div style='font-size: 16px; font-weight: normal;'>"
                 "Please enter all the ways potential group members can currently "
                 "connect with your group:</div><br><br> Website"
-            )
+            ),
         }
         help_texts = {
-            "name": "University groups: Ideally avoid acronyms in your group name unless "
-                "they are likely to be unique worldwide. If the name of your "
-                "university is also the name of a city, indicate in the name that "
-                "this is a university group."
+            "name": "University groups: Ideally avoid acronyms in your group name "
+            "unless they are likely to be unique worldwide. If the name of "
+            "your university is also the name of a city, indicate in the name "
+            "that this is a university group."
         }
 
     def clean_local_group_types(self):

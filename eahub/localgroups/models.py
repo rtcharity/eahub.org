@@ -16,7 +16,12 @@ class LocalGroupType(enum.Enum):
     UNIVERSITY = 3
     REGION = 4
 
-    labels = {CITY: "City", COUNTRY: "Country", UNIVERSITY: "University", REGION: "Region"}
+    labels = {
+        CITY: "City",
+        COUNTRY: "Country",
+        UNIVERSITY: "University",
+        REGION: "Region",
+    }
 
 
 class LocalGroup(models.Model):
