@@ -123,15 +123,23 @@ class LocalGroupForm(forms.ModelForm):
             "email",
             "meetup_url",
             "organisers",
+            "organisers_freetext",
             "other_info",
         ]
         labels = {
+            "organisers_freetext": "Organisers (not on EAHub)",
             "region": "Region (e.g., US state, if applicable)",
             "website": (
                 "<br><div style='font-size: 16px; font-weight: normal;'>"
                 "Please enter all the ways potential group members can currently "
                 "connect with your group:</div><br><br> Website"
             )
+        }
+        help_texts = {
+            "name": "University groups: Ideally avoid acronyms in your group name unless "
+                "they are likely to be unique worldwide. If the name of your "
+                "university is also the name of a city, indicate in the name that "
+                "this is a university group."
         }
 
     def clean_local_group_types(self):
