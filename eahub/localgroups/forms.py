@@ -7,7 +7,6 @@ from ..profiles import models as profiles_models
 from . import models as localgroups_models
 
 import us
-import ipdb
 
 class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
     def __init__(self, *, user, local_group, **kwargs):
@@ -102,8 +101,9 @@ class LocalGroupForm(forms.ModelForm):
         if (data['country'] in ["United States", "US", "USA", "United States of America"] and data['region']):
             state = us.states.lookup(data['region'])
             if state is None:
-                raise ValidationException('Not a valid US state')
-            #ipdd.set_trace()
+                raise forms.ValidationError(
+                    f"'{data['region']}' is not a valid US state",
+                )
             data['region'] = state.name
         return data
 
