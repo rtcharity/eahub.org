@@ -14,13 +14,11 @@ class LocalGroupType(enum.Enum):
     CITY = 1
     COUNTRY = 2
     UNIVERSITY = 3
-    REGION = 4
 
     labels = {
         CITY: "City",
-        COUNTRY: "Country",
-        UNIVERSITY: "University",
-        REGION: "Region",
+        COUNTRY: "National/Regional",
+        UNIVERSITY: "University"
     }
 
 
