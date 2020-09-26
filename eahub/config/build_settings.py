@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "authtools",
+    "algoliasearch_django",
     "sekizai",
     "captcha",
     "crispy_forms",

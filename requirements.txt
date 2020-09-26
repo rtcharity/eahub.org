@@ -44,3 +44,4 @@ django-admin-relation-links==0.2.4
 django-settings-export==1.2.1
 django-sekizai==1.1.0
 python-dotenv==0.14.0  # for loading envs outside of docker, no need to freeze
+algoliasearch-django==1.7.2 # for profiles search, no need to freezee

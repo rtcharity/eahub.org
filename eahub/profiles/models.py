@@ -3,6 +3,8 @@ import json
 import pathlib
 import shutil
 import zipfile
+from typing import List
+from typing import Optional
 
 from django import urls
 from django.conf import settings
@@ -307,8 +309,18 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
 
+    def is_searchable(self) -> bool:
+        return (
+            self.is_approved and
+            self.is_public and
+            self.user.is_active
+        )
+
     def get_absolute_url(self):
         return urls.reverse("profile", args=[self.slug])
+
+    def get_email_searchable(self) -> Optional[str]:
+        return self.user.email if self.email_visible else None
 
     def geocode(self):
         self.lat = None
@@ -327,19 +339,31 @@ class Profile(models.Model):
             CauseArea, self.cause_areas, self.cause_areas_other
         )
 
+    def get_cause_areas_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.cause_areas, CauseArea)
+
     def get_pretty_expertise(self):
         return prettify_property_list(
             ExpertiseArea, self.expertise_areas, self.expertise_areas_other
         )
 
+    def get_expertise_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.expertise_areas, ExpertiseArea)
+
     def get_pretty_career_interest_areas(self):
         return prettify_property_list(ExpertiseArea, self.career_interest_areas)
+
+    def get_career_interest_areas_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.career_interest_areas, ExpertiseArea)
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
             return ", ".join(map(GivingPledge.label, self.giving_pledges))
         else:
             return "N/A"
+
+    def get_giving_pledges_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.giving_pledges, GivingPledge)
 
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
@@ -482,6 +506,11 @@ class Profile(models.Model):
             else:
                 values.append(getattr(self, field))
         return values
+
+    def _format_enum_array_for_searching(
+        self, array: List[enum.Enum], enum_cls: enum.Enum,
+    ) -> List[str]:
+        return [item for item in map(enum_cls.label, array)]
 
 
 class Membership(models.Model):

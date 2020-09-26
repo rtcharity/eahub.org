@@ -224,6 +224,12 @@ ACCOUNT_USER_DISPLAY = "eahub.base.utils.user_display"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 
+# search
+ALGOLIA = {
+    "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
+    "API_KEY": env.str("ALGOLIA_API_KEY", default=""),
+}
+
 # Django reCAPTCHA
 recaptcha_v3_secret_key = env.str("RECAPTCHA_V3_SECRET_KEY", default=None)
 recaptcha_v3_site_key = env.str("RECAPTCHA_V3_SITE_KEY", default=None)
