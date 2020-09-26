@@ -49,10 +49,13 @@ services:
       - 8002:8002
   cache:
     image: redis:3.2.7
+    ports:
+      - 6379:6379
   mail:
     image: dockage/mailcatcher:0.6.5
     ports:
-      - 8001:1080
+      - 1025:1025
+      - 1080:1080
   webdriver:
     image: selenium/hub:3.141.59-iron
   chrome:
