@@ -3,6 +3,9 @@ from enum import Enum
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+from dotenv import find_dotenv
+from dotenv import load_dotenv
+
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -15,6 +18,10 @@ class DjangoEnv(Enum):
 
 
 DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
+
+
+if DJANGO_ENV == DjangoEnv.LOCAL:
+    load_dotenv(find_dotenv('.env'))
 
 
 # Core settings: cache

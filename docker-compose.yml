@@ -36,6 +36,8 @@ services:
       DJANGO_ENV: local
   db:
     image: postgres:10.5
+    ports:
+      - 5432:5432
     environment:
       POSTGRES_PASSWORD: development_db_password
     ports:

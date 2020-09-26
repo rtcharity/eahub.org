@@ -23,7 +23,6 @@ django-enumfield==1.5
 django-crispy-forms>=1.7.2
 rules==2.0.1
 pytils==0.3
-mysqlclient==1.4.2.post1
 django-sluggable==0.6.1
 django-allauth==0.39.1
 django-recaptcha==2.0.2
@@ -44,3 +43,4 @@ django-webpack-loader==0.6.0
 django-admin-relation-links==0.2.4
 django-settings-export==1.2.1
 django-sekizai==1.1.0
+python-dotenv==0.14.0  # for loading envs outside of docker, no need to freeze
