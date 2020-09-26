@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`);
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 const config = {
   mode: 'production',
@@ -10,6 +11,7 @@ const config = {
     global: './eahub/base/static/global/main.js',
     vendor: './eahub/base/static/vendor/main.js',
 
+    component_search_profiles: './eahub/base/static/components/search-profiles/main.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
     component_multiselect_forms: './eahub/base/static/components/multiselect-forms.js',
@@ -23,11 +25,9 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
       },
       {
         test: /\.svg$/i,
@@ -107,6 +107,10 @@ const config = {
           }
         }
       },
+      {
+        test: /\.vue$/,
+        use: [{loader: 'vue-loader'}]
+      },
     ]
   },
   resolve: {
@@ -115,6 +119,9 @@ const config = {
       path.resolve('eahub/base/static'),
       'node_modules'
     ],
+    alias: {
+      vue: process.env.NODE_ENV === 'prod' ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js',
+    },
   },
   devServer: {
     contentBase: path.resolve(__dirname, `eahub/base/static`),
@@ -125,6 +132,7 @@ const config = {
     inline: true,
   },
   plugins: [
+    new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',

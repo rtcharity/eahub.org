@@ -15,7 +15,7 @@
 {% endaddtoblock %}
 
 <br><br>
-
+  
 <div class="container profiles animated fadeIn">
   <div class="row">
     <div class="col-xs-12 col-sm-4">
@@ -51,43 +51,20 @@
 <br><br>
 
 <div class="container animated fadeIn">
-  <div class="search">
-     Search: <input type="text" id="filterbox">
+  <div class="d-none d-xl-flex vue-search-component-container"
+       algolia-api-key="{{ settings.ALGOLIA.API_KEY }}"
+       algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+       algolia-index="profiles"
+  >
+    <div class="vue-search-component"></div>
   </div>
-  <table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
-    <thead>
-      <tr>
-        <th class="picture-column"></th>
-        <th>Name</th>
-        <th>City/Town</th>
-        <th>Country</th>
-      </tr>
-    </thead>
-  <tbody>
-    {% for profile in profiles %}
-      <tr>
-        {% thumbnail profile.image "200x200" crop="center" as im %}
-          <td><img class="profile_picture" src="{{ im.url }}"></td>
-        {% empty %}
-          <td><img class="profile_picture" src="/static/global/images/avatars/{{ profile.image_placeholder }}"></td>
-        {% endthumbnail %}
-        <td>
-          <a href="{% url 'profile' profile.slug %}">{{ profile.name }}</a>
-          {% if not profile.is_public %}
-          <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Private profile</span>
-          {% elif not profile.is_approved %}
-          <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Awaiting approval</span>
-          {% endif %}
-        </td>
-        <td class="text-muted">
-          {{ profile.city_or_town|default:'' }}
-        </td>
-        <td class="text-muted">
-          {{ profile.country|default:'' }}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-  </table>
+  {% if settings.DJANGO_ENV.value == "local" %}
+    <script data-is-reload-on-page-edit defer
+            src="{{ settings.WEBPACK_DEV_URL }}/component_search_profiles.bundle.js"
+    ></script>
+  {% else %}
+    <script data-is-reload-on-page-edit defer src="{% static "dist/component_search_profiles.js" %}"
+    ></script>
+  {% endif %}
 </div>
 {% endblock %}

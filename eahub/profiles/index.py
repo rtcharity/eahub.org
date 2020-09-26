@@ -14,6 +14,10 @@ class ProfileIndex(AlgoliaIndex):
         ["get_email_searchable", "email"],
         "summary",
         "topics_i_speak_about",
+        "expertise_areas_other",
+        "cause_areas_other",
+
+        ["get_absolute_url", "url"],
         "image",
         "personal_website_url",
         "facebook_url",

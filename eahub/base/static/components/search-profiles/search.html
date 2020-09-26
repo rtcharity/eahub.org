@@ -1,0 +1,100 @@
+<div class="search-component">
+  <ais-instant-search
+      :search-client="searchClient"
+      :index-name="algoliaIndex"
+  >
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="refinement-item">
+          <h4>country</h4>
+          <ais-refinement-list
+              attribute="country"
+              operator="and"
+          />
+        </div>
+        <div class="refinement-item">
+          <h4>city_or_town</h4>
+          <ais-refinement-list
+              attribute="city_or_town"
+              operator="and"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="refinement-item">
+          <h4>available_as_speaker</h4>
+          <ais-refinement-list
+              attribute="available_as_speaker"
+              operator="and"
+          />
+        </div>
+        <div class="refinement-item">
+          <h4>available_to_volunteer</h4>
+          <ais-refinement-list
+              attribute="available_to_volunteer"
+              operator="and"
+          />
+        </div>
+        <div class="refinement-item">
+          <h4>open_to_job_offers</h4>
+          <ais-refinement-list
+              attribute="open_to_job_offers"
+              operator="and"
+          />
+        </div>
+        <div class="refinement-item">
+          <h4>available_as_speaker</h4>
+          <ais-refinement-list
+              attribute="available_as_speaker"
+              operator="and"
+          />
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="refinement-item">
+          <h4>expertise</h4>
+          <ais-refinement-list
+              attribute="expertise"
+              operator="and"
+          />
+        </div>
+        <div class="refinement-item">
+          <h4>cause_areas</h4>
+          <ais-refinement-list
+              attribute="cause_areas"
+              operator="and"
+          />
+        </div>
+        <div class="refinement-item">
+          <h4>giving_pledges</h4>
+          <ais-refinement-list
+              attribute="giving_pledges"
+              operator="and"
+          />
+        </div>
+      </div>
+    </div>
+
+    <ais-search-box v-model="searchQuery"/>
+
+    <ais-state-results>
+      <template slot-scope="{ state: { query }, results: { hits } }">
+        <div class="search-hits">
+          <ais-hits>
+            <template slot="item" slot-scope="{ item }">
+              <a v-bind:href="item.url" class="search-hit-link">
+                <ais-highlight :hit="item" attribute="name"/>
+              </a>
+              <div>{{item.summary}}</div>
+              <div>{{item.image}}</div>
+              <ais-snippet :hit="item" attribute="summary"/>
+              <ais-snippet :hit="item" attribute="topics_i_speak_about"/>
+            </template>
+          </ais-hits>
+        </div>
+      </template>
+    </ais-state-results>
+  </ais-instant-search>
+</div>
