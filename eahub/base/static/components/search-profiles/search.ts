@@ -4,7 +4,6 @@ import {Vue, Component, Prop} from 'vue-property-decorator';
 import algoliasearch from 'algoliasearch/lite';
 
 
-
 @Component({
     components: {},
 })
