@@ -24,20 +24,20 @@
                 <h3>status</h3>
                 <div class="refinement-item">
                     <ais-toggle-refinement
-                            attribute="available_as_speaker"
-                            :label="'Available as a speaker'"
+                        attribute="available_as_speaker"
+                        :label="'Available as a speaker'"
                     />
                 </div>
                 <div class="refinement-item">
                     <ais-toggle-refinement
-                            attribute="available_to_volunteer"
-                            :label="'Available to volunteer'"
+                        attribute="available_to_volunteer"
+                        :label="'Available to volunteer'"
                     />
                 </div>
                 <div class="refinement-item">
                     <ais-toggle-refinement
-                            attribute="open_to_job_offers"
-                            :label="'Open to job offers'"
+                        attribute="open_to_job_offers"
+                        :label="'Open to job offers'"
                     />
                 </div>
                 <div class="refinement-item">
@@ -67,7 +67,37 @@
                             searchable
                             show-more
                             :limit="5"
-                            :show-more-limit="20"
+                            :show-more-limit="26"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>career_interest_areas</h3>
+                    <ais-refinement-list
+                            attribute="career_interest_areas"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="26"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>local_groups</h3>
+                    <ais-refinement-list
+                            attribute="local_groups"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="25"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>organisational_affiliations</h3>
+                    <ais-refinement-list
+                            attribute="organisational_affiliations"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="25"
                     />
                 </div>
                 <div class="refinement-item">
@@ -83,13 +113,23 @@
             <div class="col-sm-9">
                 <ais-state-results>
                     <template slot-scope="{ state: { query }, results: { hits } }">
-                        <div class="search-hits">
-                            <ais-infinite-hits>
-                                <template slot="item" slot-scope="{ item }">
-                                    <a v-bind:href="item.url" class="search-hit-link">
-                                        <h3><ais-highlight :hit="item" attribute="name"/></h3>
-                                    </a>
-                                    <div v-if="item.summary">
+                        <ais-infinite-hits>
+                            <template slot="item" slot-scope="{ item }">
+                                <div class="search__hit row">
+                                    <div class="search__hit__details col-sm-4">
+                                        <a v-bind:href="item.url" class="search__hit__link">
+                                            <ais-highlight :hit="item" attribute="name"/>
+                                        </a>
+                                        <div>
+                                            <span>{{ item.country }}</span>
+                                            <span v-if="item.city">, {{ item.city }}</span>
+                                        </div>
+                                        <div v-if="item.local_groups.length">
+                                            <strong>Local groups:</strong>
+                                            <span>{{ item.local_groups.join(', ') }}</span>
+                                        </div>
+                                    </div>
+                                    <div v-if="item.summary" class="col-sm-5">
                                         <h4>summary:</h4>
                                         <ais-snippet :hit="item" attribute="summary"/>
                                     </div>
@@ -97,13 +137,9 @@
                                         <h4>other cause areas:</h4>
                                         <ais-highlight :hit="item" attribute="cause_area_other"/>
                                     </div>
-                                    <div v-if="item.topics_i_speak_about">
-                                        <h4>Topics I speak about:</h4>
-                                        <ais-highlight :hit="item" attribute="topics_i_speak_about"/>
-                                    </div>
-                                </template>
-                            </ais-infinite-hits>
-                        </div>
+                                </div>
+                            </template>
+                        </ais-infinite-hits>
                     </template>
                 </ais-state-results>
             </div>

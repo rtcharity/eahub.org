@@ -32,6 +32,9 @@ class ProfileIndex(AlgoliaIndex):
         "lon",
         "lat",
 
+        ["get_local_groups_searchable", "local_groups"],
+        ["get_organizer_of_local_groups_searchable", "organizer_of_local_groups"],
+        ["get_organisational_affiliations_searchable", "organisational_affiliations"],
         ["get_cause_areas_searchable", "cause_areas"],
         ["get_expertise_searchable", "expertise"],
         ["get_career_interest_areas_searchable", "career_interest_areas"],
