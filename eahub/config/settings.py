@@ -3,6 +3,9 @@ from enum import Enum
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+from dotenv import find_dotenv
+from dotenv import load_dotenv
+
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -15,6 +18,10 @@ class DjangoEnv(Enum):
 
 
 DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
+
+
+if DJANGO_ENV == DjangoEnv.LOCAL:
+    load_dotenv(find_dotenv('.env'))
 
 
 # Core settings: cache
@@ -217,6 +224,12 @@ ACCOUNT_USER_DISPLAY = "eahub.base.utils.user_display"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 
+# search
+ALGOLIA = {
+    "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
+    "API_KEY": env.str("ALGOLIA_API_KEY", default=""),
+}
+
 # Django reCAPTCHA
 recaptcha_v3_secret_key = env.str("RECAPTCHA_V3_SECRET_KEY", default=None)
 recaptcha_v3_site_key = env.str("RECAPTCHA_V3_SITE_KEY", default=None)
@@ -269,7 +282,12 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV"]
+SETTINGS_EXPORT = [
+    "WEBPACK_DEV_URL",
+    "DEBUG",
+    "DJANGO_ENV",
+    "ALGOLIA",
+]
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"

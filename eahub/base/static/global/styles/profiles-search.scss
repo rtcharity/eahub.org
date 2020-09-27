@@ -1,0 +1,15 @@
+.ais-InfiniteHits-item {
+    display: block;
+    border-bottom: 1px solid #c8c8c8;
+    margin-bottom: 30px;
+    padding-bottom: 30px;
+    .search__hit {
+        .search__hit__link {
+            margin-top: 0;
+            font-size: 2rem;
+        }
+        h4 {
+            margin-top: 0;
+        }
+    }
+}

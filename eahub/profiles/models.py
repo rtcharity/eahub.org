@@ -3,6 +3,8 @@ import json
 import pathlib
 import shutil
 import zipfile
+from typing import List
+from typing import Optional
 
 from django import urls
 from django.conf import settings
@@ -307,8 +309,18 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
 
+    def is_searchable(self) -> bool:
+        return (
+            self.is_approved and
+            self.is_public and
+            self.user.is_active
+        )
+
     def get_absolute_url(self):
         return urls.reverse("profile", args=[self.slug])
+
+    def get_email_searchable(self) -> Optional[str]:
+        return self.user.email if self.email_visible else None
 
     def geocode(self):
         self.lat = None
@@ -327,19 +339,32 @@ class Profile(models.Model):
             CauseArea, self.cause_areas, self.cause_areas_other
         )
 
+    # todo rename to get_list something
+    def get_cause_areas_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.cause_areas, CauseArea)
+
     def get_pretty_expertise(self):
         return prettify_property_list(
             ExpertiseArea, self.expertise_areas, self.expertise_areas_other
         )
 
+    def get_expertise_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.expertise_areas, ExpertiseArea)
+
     def get_pretty_career_interest_areas(self):
         return prettify_property_list(ExpertiseArea, self.career_interest_areas)
+
+    def get_career_interest_areas_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.career_interest_areas, ExpertiseArea)
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
             return ", ".join(map(GivingPledge.label, self.giving_pledges))
         else:
             return "N/A"
+
+    def get_giving_pledges_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.giving_pledges, GivingPledge)
 
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
@@ -349,16 +374,20 @@ class Profile(models.Model):
         else:
             return "N/A"
 
+    def get_organisational_affiliations_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.organisational_affiliations, OrganisationalAffiliation)
+
     def get_pretty_local_groups(self):
         if self.local_groups:
-            return ", ".join(
-                [
-                    "{local_group}".format(local_group=x.name)
-                    for x in self.local_groups.all()
-                ]
-            )
+            return ", ".join(self.get_local_groups_searchable())
         else:
             return "N/A"
+
+    def get_local_groups_searchable(self) -> List[str]:
+        return [f"{group.name}" for group in self.local_groups.all()]
+
+    def get_organizer_of_local_groups_searchable(self) -> List[str]:
+        return [f"{group.name}" for group in self.user.localgroup_set.all()]
 
     def write_data_export_zip(self, request, response):
         with zipfile.ZipFile(response, mode="w") as zip_file:
@@ -482,6 +511,11 @@ class Profile(models.Model):
             else:
                 values.append(getattr(self, field))
         return values
+
+    def _format_enum_array_for_searching(
+        self, array: List[enum.Enum], enum_cls: enum.Enum,
+    ) -> List[str]:
+        return [item for item in map(enum_cls.label, array)]
 
 
 class Membership(models.Model):

@@ -1,0 +1,150 @@
+<div class="search-component">
+    <ais-instant-search
+        :search-client="searchClient"
+        :index-name="algoliaIndex"
+    >
+        <div class="row">
+
+            <div class="col-sm-3">
+                <ais-search-box v-model="searchQuery"/>
+
+                <ais-current-refinements/>
+                <ais-clear-refinements>
+                    <template v-slot="{ canRefine, refine }">
+                        <button
+                            type="reset"
+                            @click.prevent="refine"
+                            v-show="canRefine"
+                        >
+                            <slot name="resetLabel">Clear all</slot>
+                        </button>
+                    </template>
+                </ais-clear-refinements>
+
+                <h3>status</h3>
+                <div class="refinement-item">
+                    <ais-toggle-refinement
+                        attribute="available_as_speaker"
+                        :label="'Available as a speaker'"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <ais-toggle-refinement
+                        attribute="available_to_volunteer"
+                        :label="'Available to volunteer'"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <ais-toggle-refinement
+                        attribute="open_to_job_offers"
+                        :label="'Open to job offers'"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>country</h3>
+                    <ais-refinement-list
+                            attribute="country"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="20"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>city_or_town</h3>
+                    <ais-refinement-list
+                            attribute="city_or_town"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="20"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>expertise</h3>
+                    <ais-refinement-list
+                            attribute="expertise"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="26"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>career_interest_areas</h3>
+                    <ais-refinement-list
+                            attribute="career_interest_areas"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="26"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>local_groups</h3>
+                    <ais-refinement-list
+                            attribute="local_groups"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="25"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>organisational_affiliations</h3>
+                    <ais-refinement-list
+                            attribute="organisational_affiliations"
+                            searchable
+                            show-more
+                            :limit="5"
+                            :show-more-limit="25"
+                    />
+                </div>
+                <div class="refinement-item">
+                    <h3>cause_areas</h3>
+                    <ais-refinement-list attribute="cause_areas"/>
+                </div>
+                <div class="refinement-item">
+                    <h3>giving_pledges</h3>
+                    <ais-refinement-list attribute="giving_pledges"/>
+                </div>
+            </div>
+
+            <div class="col-sm-9">
+                <ais-state-results>
+                    <template slot-scope="{ state: { query }, results: { hits } }">
+                        <ais-infinite-hits>
+                            <template slot="item" slot-scope="{ item }">
+                                <div class="search__hit row">
+                                    <div class="search__hit__details col-sm-4">
+                                        <a v-bind:href="item.url" class="search__hit__link">
+                                            <ais-highlight :hit="item" attribute="name"/>
+                                        </a>
+                                        <div>
+                                            <span>{{ item.country }}</span>
+                                            <span v-if="item.city">, {{ item.city }}</span>
+                                        </div>
+                                        <div v-if="item.local_groups.length">
+                                            <strong>Local groups:</strong>
+                                            <span>{{ item.local_groups.join(', ') }}</span>
+                                        </div>
+                                    </div>
+                                    <div v-if="item.summary" class="col-sm-5">
+                                        <h4>summary:</h4>
+                                        <ais-snippet :hit="item" attribute="summary"/>
+                                    </div>
+                                    <div v-if="item.cause_area_other">
+                                        <h4>other cause areas:</h4>
+                                        <ais-highlight :hit="item" attribute="cause_area_other"/>
+                                    </div>
+                                </div>
+                            </template>
+                        </ais-infinite-hits>
+                    </template>
+                </ais-state-results>
+            </div>
+
+        </div>
+
+    </ais-instant-search>
+</div>
