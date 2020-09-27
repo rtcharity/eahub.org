@@ -1,7 +1,7 @@
 
 FROM	node:10	AS	frontend
 COPY	eahub/base/static	eahub/base/static
-COPY	package.json	package-lock.json	webpack.config.js	./
+COPY	package.json	package-lock.json	webpack.config.js tsconfig.json	./
 RUN	npm ci
 RUN	npm run build
 
