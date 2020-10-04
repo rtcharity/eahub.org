@@ -22,6 +22,11 @@ DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
 
 if DJANGO_ENV == DjangoEnv.LOCAL:
     load_dotenv(find_dotenv('.env'))
+elif DJANGO_ENV == DjangoEnv.STAGE:
+    LOCKDOWN_ENABLED = True
+    LOCKDOWN_PASSWORD = [
+        "staging",
+    ]
 
 
 # Core settings: cache
@@ -79,6 +84,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "applicationinsights.django.ApplicationInsightsMiddleware",
+    "lockdown.middleware.LockdownMiddleware",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
