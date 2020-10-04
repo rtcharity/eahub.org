@@ -20,6 +20,7 @@ from sluggable import fields as sluggable_fields
 from sluggable import models as sluggable_models
 from sluggable import settings as sluggable_settings
 from sorl import thumbnail
+from sorl.thumbnail import get_thumbnail
 
 from ..localgroups.models import LocalGroup
 
@@ -338,6 +339,12 @@ class Profile(models.Model):
         return prettify_property_list(
             CauseArea, self.cause_areas, self.cause_areas_other
         )
+
+    def get_image_url(self) -> Optional[str]:
+        if self.image:
+            return get_thumbnail(self.image, '200x200', crop='center').url
+        else:
+            return None
 
     # todo rename to get_list something
     def get_cause_areas_searchable(self) -> List[str]:
