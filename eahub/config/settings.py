@@ -20,6 +20,7 @@ class DjangoEnv(Enum):
 DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
 
 
+LOCKDOWN_ENABLED = False
 if DJANGO_ENV == DjangoEnv.LOCAL:
     load_dotenv(find_dotenv('.env'))
 elif DJANGO_ENV == DjangoEnv.STAGE:

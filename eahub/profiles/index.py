@@ -18,7 +18,7 @@ class ProfileIndex(AlgoliaIndex):
         "cause_areas_other",
 
         ["get_absolute_url", "url"],
-        "image",
+        ["get_image_url", "image"],
         "personal_website_url",
         "facebook_url",
         "linkedin_url",
