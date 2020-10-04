@@ -1,3 +1,9 @@
+import environ
+
+
+env = environ.Env()
+
+
 # Core settings: models
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -32,3 +38,8 @@ STATIC_ROOT = "/static/"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = ("/static_build/",)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+ALGOLIA = {
+    "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
+    "API_KEY": env.str("ALGOLIA_API_KEY", default=""),
+}
