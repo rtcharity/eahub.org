@@ -14,9 +14,9 @@
   {% endif %}
 {% endaddtoblock %}
 
-<br><br>
-  
-<div class="container profiles animated fadeIn" style="max-width: 1280px">
+{% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
+
+<div class="container profiles animated fadeIn">
   <div class="row">
     <div class="col-xs-12 col-sm-4">
       <div class="profile-action">
@@ -50,7 +50,7 @@
 
 <br><br>
 
-<div class="container animated fadeIn" style="max-width: 1280px">
+<div class="container animated fadeIn">
   <div class="d-none d-xl-flex vue-search-component-container"
        algolia-api-key="{{ settings.ALGOLIA.API_KEY }}"
        algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"

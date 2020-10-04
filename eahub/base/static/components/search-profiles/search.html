@@ -1,47 +1,70 @@
-<div class="search-component">
+<div class="profiles-search-component">
     <ais-instant-search
         :search-client="searchClient"
         :index-name="algoliaIndex"
     >
         <div class="row">
 
-            <div class="col-sm-3">
-                <ais-search-box v-model="searchQuery"/>
+            <div class="col-lg-2 search__filters">
+                <h3 class="search__filter-title">Filters</h3>
+                <ais-search-box v-model="searchQuery"
+                                :class-names="{'ais-SearchBox': 'search__search-box'}"/>
 
-                <ais-current-refinements/>
-                <ais-clear-refinements>
-                    <template v-slot="{ canRefine, refine }">
-                        <button
-                            type="reset"
-                            @click.prevent="refine"
-                            v-show="canRefine"
+                <div class="search__reset-box">
+                    <ais-current-refinements>
+                        <template slot="item"
+                                  slot-scope="{ refine, item, createURL, refinement }"
                         >
-                            <slot name="resetLabel">Clear all</slot>
-                        </button>
-                    </template>
-                </ais-clear-refinements>
+                            <span class="search__reset-item-label">
+                                {{ item.label.replaceAll('_', ' ') }}<span v-show="item.refinements[0].value !== 'true'">: </span>
+                            </span>
+                            <span v-for="refinement in item.refinements">
+                                <slot name="refinement"
+                                    :refine="item.refine"
+                                    :refinement="refinement"
+                                    :createURL="createURL"
+                                >
+                                    <span v-show="refinement.value !== 'true'">{{ refinement.label }}</span>
+                                    <button class="search__reset-item-btn" @click="item.refine(refinement)">✕</button>
+                                </slot>
+                            </span>
+                        </template>
+                    </ais-current-refinements>
 
-                <h3>status</h3>
-                <div class="refinement-item">
+                    <ais-clear-refinements>
+                        <template v-slot="{ canRefine, refine }">
+                            <button
+                                type="reset"
+                                @click.prevent="refine"
+                                v-show="canRefine"
+                            >
+                                <slot name="resetLabel">Clear all</slot>
+                            </button>
+                        </template>
+                    </ais-clear-refinements>
+                </div>
+
+                <h3 class="search__filter-title">Status</h3>
+                <div class="search__filter-item">
                     <ais-toggle-refinement
                         attribute="available_as_speaker"
                         :label="'Available as a speaker'"
                     />
                 </div>
-                <div class="refinement-item">
+                <div class="search__filter-item">
                     <ais-toggle-refinement
                         attribute="available_to_volunteer"
                         :label="'Available to volunteer'"
                     />
                 </div>
-                <div class="refinement-item">
+                <div class="search__filter-item">
                     <ais-toggle-refinement
                         attribute="open_to_job_offers"
                         :label="'Open to job offers'"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>country</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Country</h3>
                     <ais-refinement-list
                             attribute="country"
                             searchable
@@ -50,8 +73,8 @@
                             :show-more-limit="20"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>city_or_town</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">City</h3>
                     <ais-refinement-list
                             attribute="city_or_town"
                             searchable
@@ -60,8 +83,8 @@
                             :show-more-limit="20"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>expertise</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Expertise</h3>
                     <ais-refinement-list
                             attribute="expertise"
                             searchable
@@ -70,8 +93,8 @@
                             :show-more-limit="26"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>career_interest_areas</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Career interest areas</h3>
                     <ais-refinement-list
                             attribute="career_interest_areas"
                             searchable
@@ -80,8 +103,8 @@
                             :show-more-limit="26"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>local_groups</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Local groups</h3>
                     <ais-refinement-list
                             attribute="local_groups"
                             searchable
@@ -90,8 +113,8 @@
                             :show-more-limit="25"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>organisational_affiliations</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Organisational affiliations</h3>
                     <ais-refinement-list
                             attribute="organisational_affiliations"
                             searchable
@@ -100,26 +123,68 @@
                             :show-more-limit="25"
                     />
                 </div>
-                <div class="refinement-item">
-                    <h3>cause_areas</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Cause areas</h3>
                     <ais-refinement-list attribute="cause_areas"/>
                 </div>
-                <div class="refinement-item">
-                    <h3>giving_pledges</h3>
+                <div class="search__filter-item search__filter-item--with-title">
+                    <h3 class="search__filter-title">Giving pledges</h3>
                     <ais-refinement-list attribute="giving_pledges"/>
                 </div>
             </div>
 
-            <div class="col-sm-9">
+            <div class="col-lg-10">
                 <ais-state-results>
                     <template slot-scope="{ state: { query }, results: { hits } }">
-                        <ais-infinite-hits>
+                        <ais-infinite-hits
+                            :class-names="{
+                                'ais-InfiniteHits-list': 'search__hits',
+                                'ais-InfiniteHits-item': 'search__hit',
+                            }">
                             <template slot="item" slot-scope="{ item }">
                                 <div class="search__hit row">
-                                    <div class="search__hit__details col-sm-4">
-                                        <a v-bind:href="item.url" class="search__hit__link">
+                                    <div class="col-lg-2">
+                                        <a v-bind:href="item.url">
+                                            <img v-bind:src="item.image" width="150" height="150">
+                                        </a>
+                                    </div>
+                                    <div class="search__hit-details col-lg-2">
+                                        <a v-bind:href="item.url" class="search__hit-link">
                                             <ais-highlight :hit="item" attribute="name"/>
                                         </a>
+                                        <div class="search__hit-status-block">
+                                            <div class="search__hit-status" v-bind:is-true="item.available_to_volunteer">
+                                                <i class="fa fa-hands-helping"></i>
+                                            </div>
+                                            <div class="search__hit-status" v-bind:is-true="item.open_to_job_offers">
+                                                <i class="fa fa-briefcase"></i>
+                                            </div>
+                                            <div class="search__hit-status" v-bind:is-true="item.available_as_speaker">
+                                                <i class="fa fa-chalkboard-teacher"></i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="search__hit-social-link" v-if="item.facebook_url">
+                                                <a v-bind:href="item.facebook_url">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                            </div>
+                                            <div class="search__hit-social-link" v-if="item.linkedin_url">
+                                                <a v-bind:href="item.linkedin_url">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                            </div>
+                                            <div class="search__hit-social-link" v-if="item.email">
+                                                <a v-bind:href="item.email">
+                                                    <i class="fa fa-envelope"></i>
+                                                </a>
+                                            </div>
+                                            <div class="search__hit-social-link" v-if="item.personal_website_url">
+                                                <a v-bind:href="item.personal_website_url">
+                                                    <i class="fa fa-home"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                         <div>
                                             <span>{{ item.country }}</span>
                                             <span v-if="item.city">, {{ item.city }}</span>
@@ -129,16 +194,35 @@
                                             <span>{{ item.local_groups.join(', ') }}</span>
                                         </div>
                                     </div>
-                                    <div v-if="item.summary" class="col-sm-5">
-                                        <h4>summary:</h4>
-                                        <ais-snippet :hit="item" attribute="summary"/>
+                                    <div class="col-lg-4">
+                                        <div v-if="item.summary" >
+                                            <h5>Summary</h5>
+                                            <ais-snippet :hit="item" attribute="summary"/>
+                                        </div>
                                     </div>
-                                    <div v-if="item.cause_area_other">
-                                        <h4>other cause areas:</h4>
-                                        <ais-highlight :hit="item" attribute="cause_area_other"/>
+                                    <div class="col-lg-2 search__hit-skills">
+                                        <div v-if="item.cause_areas.length">
+                                            <h5>Cause Areas</h5>
+                                            <ul>
+                                                <li v-for="cause in item.cause_areas">{{cause}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 search__hit-skills">
+                                        <div v-if="item.expertise.length">
+                                            <h5>Areas of Expertise</h5>
+                                            <ul>
+                                                <li v-for="expertise in item.expertise">{{expertise}}</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </template>
+
+                            <template slot="loadMore" slot-scope="{refine, page, isLastPage}">
+                                <button class="btn" :disabled="isLastPage" @click="refine()" v-observe-visibility="refine">Show more results</button>
+                            </template>
+
                         </ais-infinite-hits>
                     </template>
                 </ais-state-results>
