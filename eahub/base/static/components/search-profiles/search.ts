@@ -2,6 +2,10 @@ import {SearchClient} from 'algoliasearch/dist/algoliasearch-lite';
 import {Provide} from 'vue-property-decorator';
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import algoliasearch from 'algoliasearch/lite';
+import VueObserveVisibility from 'vue-observe-visibility';
+
+
+Vue.use(VueObserveVisibility);
 
 
 @Component({
