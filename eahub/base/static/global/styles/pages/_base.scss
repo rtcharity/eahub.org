@@ -1,4 +1,5 @@
-$toolbar-height: 58px;
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
 
 html {
     scroll-padding-top: $toolbar-height;

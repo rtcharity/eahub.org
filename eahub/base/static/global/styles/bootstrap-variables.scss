@@ -2,11 +2,10 @@
 @import 'node_modules/bootstrap/scss/mixins';
 
 
-$layout-docs-padding-top: 36px;
-$navbar-fixed-height: 56px;
-$cms-toolbar-height: 46px;
+$toolbar-height: 58px;
 
-$body-color: #1e0c1f;
+
+$body-color: #333;
 $font-size-base: 0.9rem;
 $header-color: $body-color;
 
@@ -18,6 +17,7 @@ $grid-breakpoints: (
     md: 768px,
     lg: 992px,
     xl: 1200px,
+    xxl: 1660px,
     xxxl: 1910px,
 );
 
@@ -26,6 +26,7 @@ $container-max-widths: (
     md: 720px,
     lg: 960px,
     xl: 1170px,
+    xxl: 1630px,
     xxxl: 1660px,
 );
 
