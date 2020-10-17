@@ -78,12 +78,14 @@ USE_TZ = True
 # Core settings: HTTP
 ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1"]
 MIDDLEWARE = [
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
     "django_feature_policy.FeaturePolicyMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -96,6 +98,13 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+
+if DEBUG:
+    CACHE_MIDDLEWARE_SECONDS = 0
+else:
+    CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 3
+
 
 # Core settings: logging
 LOGGING = {
