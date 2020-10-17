@@ -203,6 +203,11 @@ $color-primary-light: #efefef;
                     padding-left: 20px;
                 }
             }
+            mark, .ais-Snippet-highlighted {
+                padding-left: 0;
+                padding-right: 0;
+                background-color: #fff6c6;
+            }
         }
     }
 }
