@@ -1,0 +1,28 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+
+.navbar {
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        
+        .navbar__logo {
+            display: flex;
+        }
+        
+        .navbar__page-name {
+            display: flex;
+            margin-left: 5px;
+            color: white;
+            font-size: 1.3rem;
+        }
+    }
+    .navbar-collapse {
+        .svg-inline--fa {
+            min-width: 20px;
+        }
+    }
+    .navbar-toggler {
+        margin-left: 10px;
+    }
+}

@@ -1,0 +1,6 @@
+$toolbar-height: 58px;
+
+html {
+    scroll-padding-top: $toolbar-height;
+    padding-top: $toolbar-height;
+}

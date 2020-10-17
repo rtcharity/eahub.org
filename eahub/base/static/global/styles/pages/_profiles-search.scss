@@ -2,11 +2,6 @@ $color-primary-light: #efefef;
 
 .profiles-search-body {
     font-family: Arial, Helvetica, serif;
-    
-    .container {
-        max-width: 1440px;
-        width: 1440px;
-    }
 }
 .profiles-search-component {
     margin-bottom: 50px;
@@ -22,7 +17,6 @@ $color-primary-light: #efefef;
         .search__search-box, .ais-RefinementList-searchBox {
             input {
                 width: 100%;
-                font-size: 1.5rem;
                 padding: 5px;
                 border: 1px solid #e9e9e9;
             }
@@ -70,11 +64,8 @@ $color-primary-light: #efefef;
             }
         }
         .search__filter-title {
-            font-weight: bold;
-            font-size: 1.6rem;
         }
         .search__filter-item {
-            font-size: 1.3rem;
             .ais-RefinementList-labelText, .ais-ToggleRefinement-labelText {
                 font-weight: normal;
             }
@@ -125,7 +116,7 @@ $color-primary-light: #efefef;
                 display: block;
                 margin-top: 0;
                 font-weight: bold;
-                font-size: 1.7rem;
+                font-size: 1.3rem;
             }
             .search__hit-status-block {
                 margin-bottom: 5px;
@@ -142,7 +133,7 @@ $color-primary-light: #efefef;
                     border-radius: 100px;
         
                     &[is-true="true"] {
-                        background-color: #512B52;
+                        background-color: $color-secondary;
                     }
                     svg {
                         color: white;

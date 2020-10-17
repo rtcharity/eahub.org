@@ -8,8 +8,10 @@ const config = {
   mode: 'production',
   context: __dirname,
   entry: {
-    global: './eahub/base/static/global/main.js',
-    vendor: './eahub/base/static/vendor/main.js',
+    global_bs3: './eahub/base/static/global/main_bs3.js',
+    global_bs5: './eahub/base/static/global/main_bs5.js',
+    vendor_bs3: './eahub/base/static/vendor/main_bs3.js',
+    vendor_bs5: './eahub/base/static/vendor/main_bs5.js',
 
     component_search_profiles: './eahub/base/static/components/search-profiles/main.js',
     component_maps: './eahub/base/static/components/maps/main.js',

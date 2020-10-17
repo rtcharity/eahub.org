@@ -1,5 +1,5 @@
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap3';
+import 'bootstrap3/dist/css/bootstrap.css';
 
 import 'cookieconsent/build/cookieconsent.min.css';
 

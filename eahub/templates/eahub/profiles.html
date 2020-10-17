@@ -1,70 +1,61 @@
-{% extends 'base.html' %}
+{% extends 'base_bs5.html' %}
 
-{% load static sekizai_tags %}
+{% load static sekizai_tags thumbnail %}
 
-{% load thumbnail %}
+{% block navbar %}
+  {% include 'components/navbar.html' %}
+{% endblock navbar %}
 
 {% block content %}
-
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
+  
+  {% addtoblock 'js' %}
+    {% if settings.DJANGO_ENV.value == 'local' %}
     <script src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
-  {% else %}
+    {% else %}
     <script src="{% static 'dist/component_tables.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
-
-{% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
-
-<div class="container profiles animated fadeIn">
-  <div class="row">
-    <div class="col-xs-12 col-sm-4">
-      <div class="profile-action">
+    {% endif %}
+  {% endaddtoblock %}
+    
+  {% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-24 col-sm-4">
         <div class="list-group">
           {% if user.is_authenticated %}
           <a href="{% url 'my_profile' %}" class="list-group-item"><i class="fa fa-id-card"></i> View my profile</a>
           {% else %}
           <a href="{% url 'account_signup' %}" class="list-group-item"><i class="fa fa-plus"></i> Add a Profile</a>
           {% endif %}
-        </div>
-        <div class="list-group">
           <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
-        </div>
-        <div class="list-group">
           <a href="{% url 'candidates' %}" class="list-group-item"><i class="fas fa-briefcase"></i> Candidates</a>
-        </div>
-        <div class="list-group">
           <a href="{% url 'speakers' %}" class="list-group-item"><i class="fa fa-chalkboard-teacher"></i> Speakers</a>
-        </div>
-        <div class="list-group">
           <a href="{% url 'volunteers' %}" class="list-group-item"><i class="fa fa-hands-helping"></i> Volunteers</a>
         </div>
       </div>
-    </div>
 
-    <div class="col-sm-8">
-      {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_locations=map_locations %}
+      <div class="col-sm-16">
+{#        {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_locations=map_locations %}#}
+      </div>
     </div>
   </div>
-</div>
-
-<br><br>
-
-<div class="container animated fadeIn">
-  <div class="d-none d-xl-flex vue-search-component-container"
-       algolia-api-key="{{ settings.ALGOLIA.API_KEY }}"
-       algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-       algolia-index="profiles"
-  >
-    <div class="vue-search-component"></div>
+  
+  <div class="container animated fadeIn">
+    <div class="d-none d-xl-flex vue-search-component-container"
+         algolia-api-key="{{ settings.ALGOLIA.API_KEY }}"
+         algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+         algolia-index="profiles"
+    >
+      <div class="vue-search-component"></div>
+    </div>
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script data-is-reload-on-page-edit defer
+              src="{{ settings.WEBPACK_DEV_URL }}/component_search_profiles.bundle.js"
+      ></script>
+    {% else %}
+      <script data-is-reload-on-page-edit defer src="{% static "dist/component_search_profiles.js" %}"
+      ></script>
+    {% endif %}
   </div>
-  {% if settings.DJANGO_ENV.value == "local" %}
-    <script data-is-reload-on-page-edit defer
-            src="{{ settings.WEBPACK_DEV_URL }}/component_search_profiles.bundle.js"
-    ></script>
-  {% else %}
-    <script data-is-reload-on-page-edit defer src="{% static "dist/component_search_profiles.js" %}"
-    ></script>
-  {% endif %}
-</div>
+
 {% endblock %}
