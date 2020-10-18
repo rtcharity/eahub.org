@@ -1,5 +1,6 @@
 from enum import Enum
 
+import dj_database_url
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
@@ -34,19 +35,12 @@ elif DJANGO_ENV == DjangoEnv.STAGE:
     LOCKDOWN_ENABLED = True
 
 
-# Core settings: cache
 CACHES = {
     "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
 }
-
-# Core settings: database
 DATABASES = {
-    "default": env.db_url("DATABASE_URL", engine="django.db.backends.postgresql")
+    "default": dj_database_url.parse(env.str('DATABASE_URL'))
 }
-if "LEGACY_DATABASE_URL" in env:
-    DATABASES["legacy"] = env.db_url(
-        "LEGACY_DATABASE_URL", engine="django.db.backends.mysql"
-    )
 
 # Core settings: debugging
 DEBUG = env.bool("DEBUG")
@@ -64,9 +58,6 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 # Core settings: error reporting
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
-
-# Core settings: file uploads
-DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
 # Core settings: globalization
 LANGUAGE_CODE = "en-us"
@@ -224,11 +215,19 @@ APPLICATION_INSIGHTS = {
     "ikey": env.str("APPLICATION_INSIGHTS_INSTRUMENTATION_KEY", default=None)
 }
 
-# django-storages
-AZURE_CONNECTION_STRING = env.str("AZURE_CONNECTION_STRING")
-AZURE_CONTAINER = env.str("AZURE_CONTAINER")
-AZURE_SSL = SECURE_SSL_REDIRECT
-AZURE_URL_EXPIRATION_SECS = 3600
+
+
+from aldryn_django.storage import parse_storage_url
+media_config = parse_storage_url(env.str('DEFAULT_STORAGE_DSN'))
+DEFAULT_FILE_STORAGE = 'aldryn_django.storage.S3MediaStorage'
+MEDIA_URL = media_config['MEDIA_URL']
+AWS_MEDIA_ACCESS_KEY_ID = media_config['AWS_MEDIA_ACCESS_KEY_ID']
+AWS_MEDIA_SECRET_ACCESS_KEY = media_config['AWS_MEDIA_SECRET_ACCESS_KEY']
+AWS_MEDIA_STORAGE_BUCKET_NAME = media_config['AWS_MEDIA_STORAGE_BUCKET_NAME']
+AWS_MEDIA_STORAGE_HOST = media_config['AWS_MEDIA_STORAGE_HOST']
+AWS_MEDIA_BUCKET_PREFIX = media_config['AWS_MEDIA_BUCKET_PREFIX']
+AWS_MEDIA_DOMAIN = media_config['AWS_MEDIA_DOMAIN']
+
 
 # allauth
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"

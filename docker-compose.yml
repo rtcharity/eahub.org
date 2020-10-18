@@ -8,9 +8,6 @@ services:
       - objstore
       - cache
       - mail
-      - webdriver
-      - chrome
-      - firefox
     ports:
       - 8000:8000
     volumes:
