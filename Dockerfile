@@ -2,8 +2,8 @@
 FROM	node:10	AS	frontend
 COPY	eahub/base/static	eahub/base/static
 COPY	package.json	package-lock.json	webpack.config.js tsconfig.json	./
-#RUN	npm ci
-#RUN	npm run build
+RUN	npm ci
+RUN	npm run build
 
 FROM	python:3.7
 RUN	mkdir /code \

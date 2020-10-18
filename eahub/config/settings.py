@@ -36,7 +36,9 @@ elif DJANGO_ENV == DjangoEnv.STAGE:
 
 
 CACHES = {
-    "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+    }
 }
 DATABASES = {
     "default": dj_database_url.parse(env.str('DATABASE_URL'))
