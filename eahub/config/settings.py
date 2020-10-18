@@ -35,11 +35,6 @@ elif DJANGO_ENV == DjangoEnv.STAGE:
     LOCKDOWN_ENABLED = True
 
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-    }
-}
 DATABASES = {
     "default": dj_database_url.parse(env.str('DATABASE_URL'))
 }
