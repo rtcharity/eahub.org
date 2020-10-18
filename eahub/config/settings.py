@@ -5,6 +5,8 @@ from django.core import exceptions
 from django.utils.safestring import mark_safe
 from dotenv import find_dotenv
 from dotenv import load_dotenv
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 env = environ.Env()
@@ -62,6 +64,18 @@ EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+
+if DJANGO_ENV != DjangoEnv.LOCAL:
+    sentry_sdk.init(
+        dsn="https://4748be7234b54b69966c7a2091ddb26e@o463416.ingest.sentry.io/5468410",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
+
+
 # Core settings: error reporting
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
@@ -98,13 +112,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-
-if DEBUG:
-    CACHE_MIDDLEWARE_SECONDS = 0
-else:
-    CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 3
-
 
 # Core settings: logging
 LOGGING = {
