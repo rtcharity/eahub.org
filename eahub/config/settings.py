@@ -17,11 +17,6 @@ class DjangoEnv(Enum):
 DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
 
 
-# Core settings: cache
-CACHES = {
-    "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
-}
-
 # Core settings: database
 DATABASES = {
     "default": env.db_url("DATABASE_URL", engine="django.db.backends.postgresql")
