@@ -8,21 +8,22 @@ services:
       - objstore
       - cache
       - mail
-      - webdriver
-      - chrome
-      - firefox
     ports:
       - 8000:8000
     volumes:
-      - .:/code
+      - .:/app:rw
+      - ./data:/data:rw
     env_file:
       - .env
   db:
-    image: postgres:10.5
+    image: postgres:9.6
     ports:
       - 5432:5432
     environment:
-      POSTGRES_PASSWORD: development_db_password
+      POSTGRES_DB: 'db'
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - .:/app:rw
   objstore:
     image: arafato/azurite:2.6.5
     command: node bin/blob --location=/opt/azurite/folder/ --blobPort=8002
