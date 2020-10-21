@@ -10,6 +10,8 @@ services:
       - mail
     ports:
       - 8000:8000
+    links:
+      - 'db:postgres'
     volumes:
       - .:/app:rw
       - ./data:/data:rw
