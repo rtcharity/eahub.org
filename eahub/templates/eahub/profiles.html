@@ -18,25 +18,27 @@
     
   {% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
   
-  <div class="container profile-search__header">
-    <div class="row">
-      <div class="col-xs-24 col-sm-4">
-        <div class="list-group">
-          {% if user.is_authenticated %}
-          <a href="{% url 'my_profile' %}" class="list-group-item"><i class="fa fa-id-card"></i> View my profile</a>
-          {% else %}
-          <a href="{% url 'account_signup' %}" class="list-group-item"><i class="fa fa-plus"></i> Add a Profile</a>
-          {% endif %}
-          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
-          <a href="{% url 'candidates' %}" class="list-group-item"><i class="fas fa-briefcase"></i> Candidates</a>
-          <a href="{% url 'speakers' %}" class="list-group-item"><i class="fa fa-chalkboard-teacher"></i> Speakers</a>
-          <a href="{% url 'volunteers' %}" class="list-group-item"><i class="fa fa-hands-helping"></i> Volunteers</a>
-        </div>
-      </div>
+  <div class="profile-search__header">
+    <div class="container">
+        <div class="row">
+            <div class="col col-24">
+                <div class="list-group row">
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'my_profile' %}" class="list-group-item col col-10 col-sm-7 col-md-5 col-lg-4"><i class="fa fa-id-card"></i> View my profile</a>
+                    {% else %}
+                    <a href="{% url 'account_signup' %}" class="list-group-item col col-10 col-sm-7 col-md-5 col-lg-4"><i class="fa fa-plus"></i> Add a Profile</a>
+                    {% endif %}
+                    <a href="mailto:contact@eahub.org" class="list-group-item col col-10 col-sm-7 col-md-5 col-lg-4"><i class="fa fa-envelope"></i> Contact EA Hub</a>
+                    <a href="{% url 'candidates' %}" class="list-group-item col col-10 col-sm-7 col-md-5 col-lg-4"><i class="fas fa-briefcase"></i> Candidates</a>
+                    <a href="{% url 'speakers' %}" class="list-group-item col col-10 col-sm-7 col-md-5 col-lg-4"><i class="fa fa-chalkboard-teacher"></i> Speakers</a>
+                    <a href="{% url 'volunteers' %}" class="list-group-item col col-10 col-sm-7 col-md-5 col-lg-4"><i class="fa fa-hands-helping"></i> Volunteers</a>
+                </div>
+            </div>
 
-      <div class="col-sm-16">
-{#        {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_locations=map_locations %}#}
-      </div>
+            <div class="col-sm-16">
+                {#        {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_locations=map_locations %}#}
+            </div>
+        </div>
     </div>
   </div>
   
