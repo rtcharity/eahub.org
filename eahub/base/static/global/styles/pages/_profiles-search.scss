@@ -10,7 +10,23 @@ $spacing-xs: 10px;
 $spacing-xxs: 5px;
 
 .profile-search__header {
-    margin: $grid-gutter-width auto;
+    padding: $spacing-xs 0;
+    margin-bottom: $spacing-xl;
+    box-shadow: 0 $spacing-xxs $spacing-xxs 0 rgba(0,0,0,0.16);
+
+    .list-group {
+        flex-direction: row;
+        flex-wrap: wrap;
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            border: none;
+            min-width: fit-content;
+            svg {
+                margin-right: $spacing-xxs;
+            }
+        }
+    }
 }
 .profiles-search-body {
     font-family: Arial, Helvetica, serif;
