@@ -70,8 +70,10 @@ $spacing-xxs: 5px;
         }
 
         .dropdown-menu {
-            left: -145px;
-            top: 121%;
+            right: 0;
+            left: initial;
+            $navbar-height: 45px;
+            top: $navbar-height;
             &.show {
                 @include media-breakpoint-down(lg) {
                     margin-bottom: $spacing-lg - 8px;
