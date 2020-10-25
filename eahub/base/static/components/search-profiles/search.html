@@ -148,12 +148,12 @@
                             }">
                             <template slot="item" slot-scope="{ item }">
                                 <div class="search__hit row">
-                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-5  col-xl-5  order-xs-1  order-xl-1  col-xxl-3">
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-5  col-xl-5  order-2 order-sm-1  order-xl-1  col-xxl-3 search__hit-image">
                                         <a v-bind:href="item.url">
                                             <img v-bind:src="item.image" width="150" height="150">
                                         </a>
                                     </div>
-                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-xs-2  order-xl-2  col-xxl-4 search__hit-details">
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-1 order-sm-2 order-xl-2  col-xxl-4 search__hit-details">
                                         <a v-bind:href="item.url" class="search__hit-link">
                                             <ais-highlight :hit="item" attribute="name"/>
                                         </a>
@@ -199,13 +199,13 @@
                                             <span>{{ item.local_groups.join(', ') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-24 col-sm-24 col-md-24 col-lg-24 col-xl-24 order-xs-6  order-xxl-3  col-xxl-9">
+                                    <div class="col-xs-24 col-sm-24 col-md-16 col-lg-24 col-xl-24 order-last  order-xxl-3  col-xxl-9 search__hit-summary">
                                         <div v-if="item.summary" >
                                             <h5>Summary</h5>
                                             <ais-snippet :hit="item" attribute="summary"/>
                                         </div>
                                     </div>
-                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-5  col-xl-6  order-xs-3  order-xl-4  col-xxl-4 search__hit-skills">
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-5  col-xl-6  order-3  order-xl-4  col-xxl-4 search__hit-skills search__hit-cause">
                                         <div v-if="item.cause_areas.length">
                                             <h5>Cause Areas</h5>
                                             <ul>
@@ -213,7 +213,7 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="col-xs-24 col-sm-12 col-md-24 col-lg-5  col-xl-6  order-xs-4  order-xl-5  col-xxl-4 search__hit-skills">
+                                    <div class="col-xs-24 col-sm-12 col-md-8 col-lg-5  col-xl-6  order-4  order-xl-5  col-xxl-4 search__hit-skills search__hit-expertise">
                                         <div v-if="item.expertise.length">
                                             <h5>Areas of Expertise</h5>
                                             <ul>
