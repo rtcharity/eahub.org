@@ -225,7 +225,7 @@
                             </template>
 
                             <template slot="loadMore" slot-scope="{refine, page, isLastPage}">
-                                <button class="btn" :disabled="isLastPage" @click="refine()" v-observe-visibility="refine">Show more results</button>
+                                <button class="btn" v-show="!isLastPage" @click="refine()" v-observe-visibility="refine">Show more results</button>
                             </template>
 
                         </ais-infinite-hits>
