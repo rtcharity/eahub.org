@@ -4,7 +4,7 @@
         :index-name="algoliaIndex"
     >
         <div class="row">
-            <div class="col-md-24 col-xl-5 col-xxl-4">
+            <div class="col-24 col-xl-5 col-xxl-4">
                 <div class="search__filters sticky-top">
                     <ais-search-box
                         v-model="searchQuery"
@@ -139,7 +139,7 @@
                 </div>
             </div>
 
-            <div class="col-md-24 col-xl-19 col-xxl-20">
+            <div class="col-24 col-xl-19 col-xxl-20">
                 <ais-state-results>
                     <template slot-scope="{ state: { query }, results: { hits } }">
                         <ais-infinite-hits
