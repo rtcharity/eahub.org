@@ -53,13 +53,12 @@ $spacing-xxs: 5px;
         }
     }
     .search__filters {
-        .search__filter-title:first-of-type {
-            margin-top: 2px;
+        .search__filter-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-top: $spacing-lg;
+            margin-bottom: $spacing-sm;
         }
-        .search__filter-title:last-of-type {
-            margin-bottom: $spacing-lg;
-        }
-
         .search__filter-item--with-title {
             .search__filter-title {
                 margin-top: $spacing-xl;
@@ -123,10 +122,6 @@ $spacing-xxs: 5px;
                     }
                 }
             }
-        }
-        .search__filter-title {
-            font-size: 1rem;
-            font-weight: bold;
         }
         .search__filter-item {
             margin: $spacing-xs 0;
