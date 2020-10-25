@@ -236,9 +236,44 @@ $spacing-xxs: 5px;
                 margin-top: 0;
                 font-weight: bold;
             }
+            .search__hit-details {
+                
+            }
+            .search__hit-image {
+                display: flex;
+                margin-top: 1rem;
+                
+                @include media-breakpoint-up(sm) {
+                    margin-top: 0;
+                }
+            }
+            .search__hit-summary {
+                margin-top: 1rem;
+                @include media-breakpoint-up(xxl) {
+                    margin-top: 0;
+                }
+    
+            }
             .search__hit-skills {
+                margin-top: 1rem;
+                @include media-breakpoint-up(md) {
+                    margin-top: 0;
+                }
                 ul {
                     padding-left: $spacing-md;
+                }
+            }
+            .search__hit-cause {
+                @include media-breakpoint-up(md) {
+                    margin-top: 0;
+                }
+            }
+            .search__hit-expertise {
+                @include media-breakpoint-up(md) {
+                    margin-top: 1rem;
+                }
+                @include media-breakpoint-up(lg) {
+                    margin-top: 0;
                 }
             }
             mark, .ais-Snippet-highlighted {
