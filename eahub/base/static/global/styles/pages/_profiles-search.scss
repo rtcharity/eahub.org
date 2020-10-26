@@ -23,6 +23,7 @@ $spacing-xxs: 5px;
             border: none;
             min-width: fit-content;
             svg {
+                color: #522c54cc;
                 margin-right: $spacing-xxs;
             }
         }
@@ -50,6 +51,11 @@ $spacing-xxs: 5px;
         &::-webkit-scrollbar {
             width: $spacing-xs;
             height: $spacing-xs;
+        }
+
+        @include media-breakpoint-down(lg) {
+            padding-bottom: $spacing-sm;
+            margin-bottom: $spacing-lg;
         }
     }
     .search__filters {
@@ -187,7 +193,7 @@ $spacing-xxs: 5px;
                 width: 100%;
                 order: 10;
                 height: 1px;
-                background: $gray-400;
+                background: #eff2f5;
                 margin-top: $grid-gutter-width;
                 margin-bottom: $grid-gutter-width;
                 margin-left: $grid-gutter-width-half;
@@ -213,7 +219,7 @@ $spacing-xxs: 5px;
                     align-items: center;
                     justify-content: center;
                     background-color: #d6d6d6;
-                    border-radius: 100px;
+                    border-radius: 2px;
         
                     &[is-true="true"] {
                         background-color: $color-secondary;
@@ -223,22 +229,36 @@ $spacing-xxs: 5px;
                     }
                 }
             }
+
             .search__hit-social-link {
                 display: inline-flex;
+                margin-bottom: 0;
                 a {
-                    padding: $spacing-xxs $spacing-xxs;
+                    padding: 0 $spacing-xxs;
                 }
                 &:first-of-type {
                     margin-left: -$spacing-xxs;
                 }
             }
+
             h5 {
                 margin-top: 0;
                 font-weight: bold;
+                font-size: 1rem;
+                color: #333333e6;
             }
+
             .search__hit-details {
-                
+                @include media-breakpoint-down(lg) {
+                    margin-top: 1rem;
+                }
+
+                .search__hit-link,
+                >div {
+                    margin-bottom: $spacing-xs;
+                }
             }
+
             .search__hit-image {
                 display: flex;
                 margin-top: 1rem;
@@ -246,36 +266,48 @@ $spacing-xxs: 5px;
                 @include media-breakpoint-up(sm) {
                     margin-top: 0;
                 }
+
+                img {
+                    border-radius: 2px;
+                }
             }
+
             .search__hit-summary {
                 margin-top: 1rem;
+
                 @include media-breakpoint-up(xxl) {
                     margin-top: 0;
                 }
+
+                span {
+                    line-height: 1.75;
+                }
     
             }
+
             .search__hit-skills {
                 margin-top: 1rem;
+
                 @include media-breakpoint-up(md) {
                     margin-top: 0;
                 }
+
                 ul {
                     padding-left: $spacing-md;
+                    list-style-type: disc;
                 }
             }
+
             .search__hit-cause {
+                ul {
+                    list-style-type: disc;
+                }
+
                 @include media-breakpoint-up(md) {
                     margin-top: 0;
                 }
             }
-            .search__hit-expertise {
-                @include media-breakpoint-up(md) {
-                    margin-top: 1rem;
-                }
-                @include media-breakpoint-up(lg) {
-                    margin-top: 0;
-                }
-            }
+
             mark, .ais-Snippet-highlighted {
                 padding-left: 0;
                 padding-right: 0;
