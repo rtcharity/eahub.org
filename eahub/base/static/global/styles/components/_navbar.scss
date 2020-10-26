@@ -95,3 +95,10 @@ $spacing-xxs: 5px;
 .navbar-dark .navbar-toggler {
     color: transparent;
 }
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #FFFFFF;
+    &:hover {
+        color: #ffffffcc;
+    }
+}
