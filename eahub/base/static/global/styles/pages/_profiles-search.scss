@@ -254,12 +254,16 @@ $spacing-xxs: 5px;
                 }
 
                 .search__hit-link,
-                >div {
+                .search__hit-status-block,
+                .search__hit-location-block,
+                .search__hit-social-link-block,
+                .search__hit-local-group-block {
+                    margin-top: 0;
                     margin-bottom: $spacing-xs;
                 }
             }
 
-            .search__hit-image {
+            .search__hit-image-wrapper {
                 display: flex;
                 margin-top: 1rem;
                 
@@ -267,7 +271,7 @@ $spacing-xxs: 5px;
                     margin-top: 0;
                 }
 
-                img {
+                .search__hit-image {
                     border-radius: 2px;
                 }
             }
