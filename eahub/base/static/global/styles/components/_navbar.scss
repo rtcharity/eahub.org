@@ -82,7 +82,8 @@ $spacing-xxs: 5px;
             }
 
             .dropdown-item {
-                margin: $spacing-xs 0;
+                padding-top: $spacing-xs;
+                padding-bottom: $spacing-xs;
             }
         }
     }
