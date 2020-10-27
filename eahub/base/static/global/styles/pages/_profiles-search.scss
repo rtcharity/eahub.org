@@ -126,6 +126,10 @@ $spacing-xxs: 5px;
                     &:hover {
                         background-color: saturate($color-secondary, 20);
                     }
+                    &:active,
+                    &:focus {
+                        box-shadow: none;
+                    }
                 }
             }
         }
