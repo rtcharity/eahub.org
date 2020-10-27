@@ -76,6 +76,9 @@ $spacing-xxs: 5px;
                 padding: $spacing-xxs;
                 border: 1px solid #e9e9e9;
                 font-size: 0.875rem;
+                &:focus {
+                    box-shadow: none;
+                }
             }
             button {
                 display: none;
