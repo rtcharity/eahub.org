@@ -148,9 +148,9 @@
                             }">
                             <template slot="item" slot-scope="{ item }">
                                 <div class="search__hit row">
-                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-5  order-1 order-sm-1 order-md-1 order-lg-1 order-xl-1  col-xxl-3 search__hit-image">
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-5  order-1 order-sm-1 order-md-1 order-lg-1 order-xl-1  col-xxl-3 search__hit-image-wrapper">
                                         <a v-bind:href="item.url">
-                                            <img v-bind:src="item.image" width="150" height="150">
+                                            <img class="search__hit-image" v-bind:src="item.image" width="150" height="150">
                                         </a>
                                     </div>
                                     <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-2 order-sm-3 order-md-4 order-lg-2  order-xl-2 col-xxl-4 search__hit-details">
@@ -168,11 +168,11 @@
                                                 <i class="fa fa-chalkboard-teacher"></i>
                                             </div>
                                         </div>
-                                        <div>
+                                        <div class="search__hit-location-block">
                                             <span>{{ item.country }}</span>
                                             <span v-if="item.city">, {{ item.city }}</span>
                                         </div>
-                                        <div>
+                                        <div class="search__hit-social-link-block">
                                             <div class="search__hit-social-link" v-if="item.personal_website_url">
                                                 <a v-bind:href="item.personal_website_url">
                                                     <i class="fa fa-home"></i>
@@ -194,7 +194,7 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div v-if="item.local_groups.length">
+                                        <div class="search__hit-local-group-block" v-if="item.local_groups.length">
                                             <strong>Local groups:</strong>
                                             <span>{{ item.local_groups.join(', ') }}</span>
                                         </div>
