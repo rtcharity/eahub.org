@@ -74,6 +74,7 @@ $spacing-xxs: 5px;
             left: initial;
             $navbar-height: 45px;
             top: $navbar-height;
+            // TODO resolve the symmetry matter
             &.show {
                 @include media-breakpoint-down(lg) {
                     margin-bottom: $spacing-lg - 8px;
@@ -82,6 +83,7 @@ $spacing-xxs: 5px;
 
             .dropdown-item {
                 margin: $spacing-xs 0;
+                //padding: 0.25rem 1rem;
             }
         }
     }
