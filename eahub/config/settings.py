@@ -1,10 +1,13 @@
 from enum import Enum
 
+import dj_database_url
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
 from dotenv import find_dotenv
 from dotenv import load_dotenv
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 env = environ.Env()
@@ -34,19 +37,9 @@ elif DJANGO_ENV == DjangoEnv.STAGE:
     LOCKDOWN_ENABLED = True
 
 
-# Core settings: cache
-CACHES = {
-    "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
-}
-
-# Core settings: database
 DATABASES = {
-    "default": env.db_url("DATABASE_URL", engine="django.db.backends.postgresql")
+    "default": dj_database_url.parse(env.str('DATABASE_URL'))
 }
-if "LEGACY_DATABASE_URL" in env:
-    DATABASES["legacy"] = env.db_url(
-        "LEGACY_DATABASE_URL", engine="django.db.backends.mysql"
-    )
 
 # Core settings: debugging
 DEBUG = env.bool("DEBUG")
@@ -62,11 +55,20 @@ EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+
+if DJANGO_ENV != DjangoEnv.LOCAL:
+    sentry_sdk.init(
+        dsn="https://4748be7234b54b69966c7a2091ddb26e@o463416.ingest.sentry.io/5468410",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
+
+
 # Core settings: error reporting
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
-
-# Core settings: file uploads
-DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
 # Core settings: globalization
 LANGUAGE_CODE = "en-us"
@@ -98,13 +100,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-
-if DEBUG:
-    CACHE_MIDDLEWARE_SECONDS = 0
-else:
-    CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 3
-
 
 # Core settings: logging
 LOGGING = {
@@ -224,11 +219,19 @@ APPLICATION_INSIGHTS = {
     "ikey": env.str("APPLICATION_INSIGHTS_INSTRUMENTATION_KEY", default=None)
 }
 
-# django-storages
-AZURE_CONNECTION_STRING = env.str("AZURE_CONNECTION_STRING")
-AZURE_CONTAINER = env.str("AZURE_CONTAINER")
-AZURE_SSL = SECURE_SSL_REDIRECT
-AZURE_URL_EXPIRATION_SECS = 3600
+
+
+from aldryn_django.storage import parse_storage_url
+media_config = parse_storage_url(env.str('DEFAULT_STORAGE_DSN'))
+DEFAULT_FILE_STORAGE = 'aldryn_django.storage.S3MediaStorage'
+MEDIA_URL = media_config['MEDIA_URL']
+AWS_MEDIA_ACCESS_KEY_ID = media_config['AWS_MEDIA_ACCESS_KEY_ID']
+AWS_MEDIA_SECRET_ACCESS_KEY = media_config['AWS_MEDIA_SECRET_ACCESS_KEY']
+AWS_MEDIA_STORAGE_BUCKET_NAME = media_config['AWS_MEDIA_STORAGE_BUCKET_NAME']
+AWS_MEDIA_STORAGE_HOST = media_config['AWS_MEDIA_STORAGE_HOST']
+AWS_MEDIA_BUCKET_PREFIX = media_config['AWS_MEDIA_BUCKET_PREFIX']
+AWS_MEDIA_DOMAIN = media_config['AWS_MEDIA_DOMAIN']
+
 
 # allauth
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
