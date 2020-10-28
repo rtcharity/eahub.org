@@ -1,5 +1,10 @@
 @import 'eahub/base/static/global/styles/bootstrap-variables';
 
+$spacing-lg: 25px;
+$spacing-md: 20px;
+$spacing-sm: 15px;
+$spacing-xs: 10px;
+$spacing-xxs: 5px;
 
 .navbar {
     .navbar-brand {
@@ -12,17 +17,93 @@
         
         .navbar__page-name {
             display: flex;
-            margin-left: 5px;
+            margin-left: $spacing-xxs;
             color: white;
             font-size: 1.3rem;
         }
     }
+
     .navbar-collapse {
         .svg-inline--fa {
-            min-width: 20px;
+            min-width: $spacing-md;
+            @include media-breakpoint-down(lg) {
+                margin-left: -2px;
+            }
+        }
+
+        .fa-user-plus {
+            @include media-breakpoint-down(lg) {
+                margin-left: -1px;
+            }
+        }
+
+        .nav-link {
+            margin: 0 $spacing-xxs;
+            @include media-breakpoint-down(lg) {
+                margin: 0;
+            }
+        }
+
+        .nav-item.dropdown {
+            .navbar-toggler {
+                height: 37px;
+                align-items: center;
+                margin-left: $spacing-xs;
+                color: transparent;
+                @include media-breakpoint-down(lg) {
+                    margin-left: 0;
+                    margin-bottom: $spacing-sm - 8px;
+                }
+
+                .navbar-toggler-icon {
+                    background-image: url('~global/images/angle-down-solid.svg');
+                    width: $spacing-sm;
+                    height: $spacing-sm;
+                }
+            }
+
+            .navbar-toggler.show {
+                .navbar-toggler-icon {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .dropdown-menu {
+            right: 0;
+            left: initial;
+            $navbar-height: 45px;
+            top: $navbar-height;
+            // TODO resolve the symmetry matter
+    
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+            &.show {
+                @include media-breakpoint-down(lg) {
+                    margin-bottom: $spacing-lg - 8px;
+                }
+            }
+
+            .dropdown-item {
+                padding-top: $spacing-xs;
+                padding-bottom: $spacing-xs;
+    
+            }
         }
     }
+
     .navbar-toggler {
-        margin-left: 10px;
+        border: none;
+        outline: none;
+    }
+}
+
+.navbar-dark .navbar-toggler {
+    color: transparent;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #FFFFFF;
+    &:hover {
+        color: #ffffffcc;
     }
 }
