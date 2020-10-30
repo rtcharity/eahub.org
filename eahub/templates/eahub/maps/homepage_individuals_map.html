@@ -1,0 +1,26 @@
+{% load static sekizai_tags %}
+
+{% block map %}
+
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_maps.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
+
+<div id="map" class="map_list_page"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
+<script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
+{{ map_locations|json_script:'map-locations' }}
+
+<script>
+  function initMap() {
+    var mapType = "{{ map_type|escapejs }}";
+    window.initHeatmapList(mapType);
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+{% endblock %}

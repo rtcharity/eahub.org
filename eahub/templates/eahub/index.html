@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="container">
+<div class="container community-block">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <h4>EA Community Directory</h4>
@@ -17,7 +17,7 @@
       <a href="{% url 'account_signup' %}">Create Profile</a>
     </div>
     <div class="col-xs-12 col-sm-6">
-      {% include 'eahub/maps/homepage_map.html' %}
+      {% include 'eahub/maps/homepage_individuals_map.html' %}
     </div>
   </div>
 </div>
@@ -25,7 +25,7 @@
 <div class="container">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
-      {% include 'eahub/maps/homepage_map.html' %}
+      {% include 'eahub/maps/homepage_groups_map.html' %}
     </div>
     <div class="col-xs-12 col-sm-6">
       <h4>EA Groups Directory</h4>
