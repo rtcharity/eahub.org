@@ -1,0 +1,85 @@
+@import 'node_modules/bootstrap/scss/functions';
+@import 'node_modules/bootstrap/scss/mixins';
+
+
+$toolbar-height: 58px;
+
+
+$body-color: #333;
+$font-size-base: 0.9rem;
+$header-color: $body-color;
+
+
+$grid-columns: 24;
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1660px,
+    xxxl: 1910px,
+);
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1170px,
+    xxl: 1630px,
+    xxxl: 1660px,
+);
+
+
+$navbar-dark-color: transparentize(white, 0.2);
+$navbar-dark-toggler-border-color: transparentize(white, 0.4);
+$navbar-dark-hover-color: rgba(white, 1) !default;
+
+$color-primary: #512B52;
+$color-secondary: #7bb0a8;
+$danger: #d44539;
+$primary: $color-primary;
+$theme-colors: (
+    'primary': $color-primary,
+    'secondary': $color-secondary,
+);
+
+
+$gray-100: #f8f9fa;
+$gray-200: #f4f6f7;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+
+
+$enable-rounded: false;
+
+$component-active-color: white;
+$component-active-bg: $color-primary;
+
+// on click hold
+$color-active: lighten($color-primary, 10%);
+$custom-control-indicator-active-bg: $color-active;
+$custom-control-indicator-active-border-color: $color-active;
+
+
+$color-accent-old: #0c7cc4;
+$color-accent: lighten(adjust-hue($color-primary, 18deg), 11%);
+
+$input-focus-border-color: rgba($color-primary, .28);
+$input-btn-focus-color: rgba(desaturate($color-primary, 20%), .25);
+
+$link-color: $color-primary;
+$link-hover-color: $color-active;
+
+
+$grid-gutter-width: 30px;
+$grid-gutter-width-half: $grid-gutter-width/2; 
+
+
+// must be placed at the end
+@import 'node_modules/bootstrap/scss/variables';

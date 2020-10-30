@@ -26,19 +26,21 @@
       gtag('config', 'UA-130028424-1');
     </script>
 
-    {% if settings.DJANGO_ENV.value == 'local' %}
-      <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor.bundle.js"></script>
-      <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor.css">
+    {% block static %}
+      {% if settings.DJANGO_ENV.value == 'local' %}
+        <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor_bs3.bundle.js"></script>
+        <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor_bs3.css">
+        
+        <script defer src="{{ settings.WEBPACK_DEV_URL }}/global_bs3.bundle.js"></script>
+        <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global_bs3.css">
+      {% else %}
+        <script defer src="{% static 'dist/vendor_bs3.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'dist/vendor_bs3.css' %}">
       
-      <script defer src="{{ settings.WEBPACK_DEV_URL }}/global.bundle.js"></script>
-      <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global.css">
-    {% else %}
-      <script defer src="{% static 'dist/vendor.js' %}"></script>
-      <link rel="stylesheet" href="{% static 'dist/vendor.css' %}">
-
-      <script defer src="{% static 'dist/global.js' %}"></script>
-      <link  rel="stylesheet" href="{% static 'dist/global.css' %}">
-    {% endif %}
+        <script defer src="{% static 'dist/global_bs3.js' %}"></script>
+        <link  rel="stylesheet" href="{% static 'dist/global_bs3.css' %}">
+      {% endif %}
+    {% endblock static %}
 
     {% render_block "css" %}
     {% render_block "js" %}
@@ -46,8 +48,9 @@
     {% block header %}{% endblock %}
 
   </head>
-  <body id="body">
+  <body id="body" class="{% render_block 'body_classes' %}">
 
+    {% block navbar %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
           <div class="container">
@@ -79,7 +82,7 @@
           </div>
         </div>
     </nav>
-     <div class="container navbar-menu-container">
+    <div class="container navbar-menu-container">
       <div id="navbar" class="navbar-menu">
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
@@ -104,6 +107,8 @@
         </ul>
       </div>
     </div>
+    {% endblock navbar %}
+    
     {% block content %}{% endblock %}
     <footer class="footer">
       <div class="container">
