@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<div class="container community-block">
+<div class="container home-community-block">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <h4>EA Community Directory</h4>
@@ -12,9 +12,15 @@
         class="thumbnail"
         href="{% url 'profiles' %}"
         title="Learn about EAs around the world, and connect with them"
-        >Browse</a
+        ><button type="button" class="btn btn-default purple ">
+          Browse
+        </button></a
       >
-      <a href="{% url 'account_signup' %}">Create Profile</a>
+      <a href="{% url 'account_signup' %}"
+        ><button type="button" class="btn btn-default white">
+          Create Profile
+        </button></a
+      >
     </div>
     <div class="col-xs-12 col-sm-6">
       {% include 'eahub/maps/homepage_individuals_map.html' %}
@@ -22,7 +28,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container home-groups-block">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       {% include 'eahub/maps/homepage_groups_map.html' %}
@@ -36,14 +42,18 @@
         class="thumbnail"
         href="{% url 'groups' %}"
         title="Learn about EA groups around the world"
-        >Browse</a
+        ><button type="button" class="btn btn-default purple">Browse</button></a
       >
-      <a href="{% url 'localgroups_create' %}"> Create Group</a>
+      <a href="{% url 'localgroups_create' %}"
+        ><button class="btn btn-default white" type="button">
+          Create Group
+        </button>
+      </a>
     </div>
   </div>
 </div>
 
-<div class="container">
+<div class="container home-resources-block">
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <h4>Hub Resources</h4>
@@ -54,7 +64,7 @@
         class="thumbnail"
         href="https://resources.eahub.org"
         title="Find guides, tips, research and reflections on EA movement building"
-        >Browse</a
+        ><button type="button" class="btn btn-default purple">Browse</button></a
       >
     </div>
     <div class="col-xs-12 col-sm-6">
