@@ -785,18 +785,18 @@ h2 {
 .purple a:hover {
   text-decoration: none;
 }
-.white {
+.purple-outline {
   background-color: #e5e5e5 !important;
   color: #512b52;
   border: 1px solid #512b52;
 }
-.white.btn-default:hover {
+.purple-outline.btn-default:hover {
   background-color: #e5e5e5 !important;
   color: #512b52;
   border: 1px solid #512b52;
   transform: scale(1.1);
 }
-.white a {
+.purple-outline a {
   color: #512b52;
 }
 .purple a:hover {
@@ -884,8 +884,42 @@ table td {
 .home-resources-block {
   margin-top: 300px;
 }
+.home-resources-block {
+  margin-bottom: 300px;
+}
 .home-community-block p,
 .home-groups-block p,
 .home-resources-block p {
   text-align: left;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+.home-community-block h2,
+.home-groups-block h2,
+.home-resources-block h2 {
+  text-align: left;
+  font-size: 36px;
+  margin-top: 0px;
+}
+.home-button-container {
+  display: flex;
+  justify-content: flex-start;
+}
+.btn-homepage-primary {
+  padding: 13px 35px;
+  font-size: 18px;
+  border: 1px solid #512b52;
+  white-space: nowrap;
+}
+.btn-homepage-secondary {
+  padding: 13px 35px;
+  margin-left: 30px;
+  font-size: 18px;
+  white-space: nowrap;
+}
+.homepage-column {
+  height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

@@ -2,25 +2,32 @@
 
 <div class="container home-community-block">
   <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <h4>EA Community Directory</h4>
+    <div class="col-xs-12 col-sm-6 homepage-column">
+      <h2>EA Community Directory</h2>
       <p>
         Browse the catalog of EA members nearby you or publish your own EA Hub
         profile
       </p>
-      <a
-        class="thumbnail"
-        href="{% url 'profiles' %}"
-        title="Learn about EAs around the world, and connect with them"
-        ><button type="button" class="btn btn-default purple ">
-          Browse
-        </button></a
-      >
-      <a href="{% url 'account_signup' %}"
-        ><button type="button" class="btn btn-default white">
-          Create Profile
-        </button></a
-      >
+      <div class="home-button-container">
+        <a
+          href="{% url 'profiles' %}"
+          title="Learn about EAs around the world, and connect with them"
+          ><button
+            type="button"
+            class="btn btn-default purple btn-homepage-primary"
+          >
+            Browse
+          </button></a
+        >
+        <a href="{% url 'account_signup' %}"
+          ><button
+            type="button"
+            class="btn btn-default purple-outline btn-homepage-secondary"
+          >
+            Create Profile
+          </button></a
+        >
+      </div>
     </div>
     <div class="col-xs-12 col-sm-6">
       {% include 'eahub/maps/homepage_individuals_map.html' %}
@@ -33,39 +40,54 @@
     <div class="col-xs-12 col-sm-6">
       {% include 'eahub/maps/homepage_groups_map.html' %}
     </div>
-    <div class="col-xs-12 col-sm-6">
-      <h4>EA Groups Directory</h4>
+    <div class="col-xs-12 col-sm-6 homepage-column">
+      <h2>EA Groups Directory</h2>
       <p>
         Discover EA groups or add your group to the catalogue
       </p>
-      <a
-        class="thumbnail"
-        href="{% url 'groups' %}"
-        title="Learn about EA groups around the world"
-        ><button type="button" class="btn btn-default purple">Browse</button></a
-      >
-      <a href="{% url 'localgroups_create' %}"
-        ><button class="btn btn-default white" type="button">
-          Create Group
-        </button>
-      </a>
+      <div class="home-button-container">
+        <a
+          href="{% url 'groups' %}"
+          title="Learn about EA groups around the world"
+          ><button
+            type="button"
+            class="btn btn-default purple btn-homepage-primary"
+          >
+            Browse
+          </button></a
+        >
+        <a href="{% url 'localgroups_create' %}"
+          ><button
+            class="btn btn-default purple-outline btn-homepage-secondary"
+            type="button"
+          >
+            Create Group
+          </button>
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="container home-resources-block">
   <div class="row">
-    <div class="col-xs-12 col-sm-6">
-      <h4>Hub Resources</h4>
+    <div class="col-xs-12 col-sm-6 homepage-column">
+      <h2>Hub Resources</h2>
       <p>
         Helpful information, guides, tips and downloads about Effective Altruism
       </p>
-      <a
-        class="thumbnail"
-        href="https://resources.eahub.org"
-        title="Find guides, tips, research and reflections on EA movement building"
-        ><button type="button" class="btn btn-default purple">Browse</button></a
-      >
+      <div class="home-button-container">
+        <a
+          href="https://resources.eahub.org"
+          title="Find guides, tips, research and reflections on EA movement building"
+          ><button
+            type="button"
+            class="btn btn-default purple btn-homepage-primary"
+          >
+            Browse
+          </button></a
+        >
+      </div>
     </div>
     <div class="col-xs-12 col-sm-6">
       <img src="" />
