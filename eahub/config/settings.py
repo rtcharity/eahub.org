@@ -3,6 +3,9 @@ from enum import Enum
 import environ
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -16,11 +19,6 @@ class DjangoEnv(Enum):
 
 DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
 
-
-# Core settings: cache
-CACHES = {
-    "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
-}
 
 # Core settings: database
 DATABASES = {
@@ -44,6 +42,18 @@ GROUPS_EMAIL = env.str("GROUPS_EMAIL")
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
+
+
+if DJANGO_ENV != DjangoEnv.LOCAL:
+    sentry_sdk.init(
+        dsn="https://4748be7234b54b69966c7a2091ddb26e@o463416.ingest.sentry.io/5468410",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )
+
 
 # Core settings: error reporting
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
