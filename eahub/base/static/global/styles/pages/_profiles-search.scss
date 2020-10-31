@@ -87,6 +87,8 @@ $color-primary-light: #efefef;
             }
         }
         .search__filter-title {
+            font-size: 1rem;
+            font-weight: bold;
         }
         .search__filter-item {
             .ais-RefinementList-label {
@@ -202,6 +204,11 @@ $color-primary-light: #efefef;
                 ul {
                     padding-left: 20px;
                 }
+            }
+            mark, .ais-Snippet-highlighted {
+                padding-left: 0;
+                padding-right: 0;
+                background-color: #fff6c6;
             }
         }
     }
