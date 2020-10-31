@@ -73,6 +73,9 @@ class ExpertiseArea(enum.Enum):
     PUBLIC_SPEAKING = 24
     RECRUITMENT = 25
     EDUCATION = 26
+    QUANTITATIVE_TRADING = 27
+    INFORMATION_SECURITY = 28
+    PSYCHOLOGY_OF_DECISION_MAKING = 29
 
     labels = {
         MANAGEMENT: "Management",
@@ -101,6 +104,9 @@ class ExpertiseArea(enum.Enum):
         PUBLIC_SPEAKING: "Public speaking",
         RECRUITMENT: "Recruitment",
         EDUCATION: "Education",
+        QUANTITATIVE_TRADING: "Quantitative Trading",
+        INFORMATION_SECURITY: "Information Security",
+        PSYCHOLOGY_OF_DECISION_MAKING: "Psychology of Decision Making"
     }
 
 
