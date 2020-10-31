@@ -9,6 +9,7 @@ from django_enumfield import enum
 from geopy import geocoders
 from ..base.models import User
 
+
 class LocalGroupType(enum.Enum):
 
     CITY = 1
