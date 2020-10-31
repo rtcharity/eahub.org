@@ -106,7 +106,7 @@ class ExpertiseArea(enum.Enum):
         EDUCATION: "Education",
         QUANTITATIVE_TRADING: "Quantitative Trading",
         INFORMATION_SECURITY: "Information Security",
-        PSYCHOLOGY_OF_DECISION_MAKING: "Psychology of Decision Making"
+        PSYCHOLOGY_OF_DECISION_MAKING: "Psychology of Decision Making",
     }
 
 
