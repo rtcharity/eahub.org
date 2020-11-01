@@ -20,10 +20,17 @@ class UserAdmin(
         "date_joined",
         "is_superuser",
         "is_staff",
-        "is_profile_public"
+        "is_profile_public",
     ]
     change_links = ["profile"]
-    list_filter = ["is_superuser", "is_staff", "is_active", "profile__is_approved", "profile__is_public", ("date_joined", DateRangeFilter)]
+    list_filter = [
+        "is_superuser",
+        "is_staff",
+        "is_active",
+        "profile__is_approved",
+        "profile__is_public",
+        ("date_joined", DateRangeFilter),
+    ]
     search_fields = ["email", "profile__name"]
     actions = ["approve_profiles"]
 
