@@ -1,6 +1,7 @@
 import django_admin_relation_links
 from authtools import admin as authtools_admin
 from django.contrib import admin
+from rangefilter.filter import DateRangeFilter
 
 from ..profiles import models as profiles_models
 from . import models
@@ -22,9 +23,8 @@ class UserAdmin(
         "is_profile_public"
     ]
     change_links = ["profile"]
-    list_filter = ["is_superuser", "is_staff", "is_active", "profile__is_approved", "profile__is_public"]
+    list_filter = ["is_superuser", "is_staff", "is_active", "profile__is_approved", "profile__is_public", ("date_joined", DateRangeFilter)]
     search_fields = ["email", "profile__name"]
-    ordering = ["-date_joined"]
     actions = ["approve_profiles"]
 
     def is_profile_approved(self, user):
