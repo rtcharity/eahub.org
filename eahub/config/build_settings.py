@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
     "lockdown",
+    "import_export",
 ]
 
 # Core settings: security
