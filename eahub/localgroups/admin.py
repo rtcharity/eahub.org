@@ -113,9 +113,9 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         'is_public',
         'is_active',
         'local_group_type',
-        'local_group_types',
-        'country',
         'last_edited',
+        'country',
+        'local_group_types',
     ]
     search_fields = [
         'name',
