@@ -51,10 +51,11 @@ class LocalGroupResource(ModelResource):
             'last_edited',
             'other_info',
         ]
-        exclude = [
-            'local_group_type',
-            'local_group_types',
-        ]
+
+    def before_import_row(self, row: dict, **kwargs) -> dict:
+        row['local_group_type'] = self.hydrate_local_group_type(row['type'])
+        row['local_group_types'] = self.hydrate_local_group_types(row['types'])
+        return super().before_import_row(row, **kwargs)
 
     def dehydrate_local_group_type_dehydrated(self, group: LocalGroup) -> str:
         if group.local_group_type:
@@ -66,8 +67,7 @@ class LocalGroupResource(ModelResource):
         for key, value in LocalGroupType.labels.items():
             if value == group_type_raw.strip():
                 return key
-            else:
-                return None
+        return None
 
     def dehydrate_local_group_types_dehydrated(self, group: LocalGroup) -> str:
         if group.local_group_types:
@@ -75,21 +75,13 @@ class LocalGroupResource(ModelResource):
         else:
             return ''
 
-    def hydrate_local_group_types(self, group_types_raw: str) -> List[LocalGroupType]:
+    def hydrate_local_group_types(self, group_types_raw: str) -> Optional[List[LocalGroupType]]:
         group_types = []
-        for group_type_raw in group_types_raw.split(','):
+        for group_type_raw in group_types_raw:
             group_types.append(
                 self.hydrate_local_group_type(group_type_raw)
             )
-        return group_types
-
-    def before_save_instance(
-        self,
-        instance: LocalGroup,
-        using_transactions: bool,
-        dry_run: bool,
-    ) -> LocalGroup:
-        return instance
+        return group_types if group_types else None
 
 
 @admin.register(LocalGroup)
