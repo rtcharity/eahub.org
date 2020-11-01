@@ -19,11 +19,9 @@ class LocalGroupResource(ModelResource):
         attribute='organisers',
     )
     local_group_type_dehydrated = fields.Field(
-        attribute='dehydrate_local_group_type',
         column_name='type',
     )
     local_group_types_dehydrated = fields.Field(
-        attribute='dehydrate_local_group_types',
         column_name='types',
     )
 
@@ -58,7 +56,7 @@ class LocalGroupResource(ModelResource):
             'local_group_types',
         ]
 
-    def dehydrate_local_group_type(self, group: LocalGroup) -> str:
+    def dehydrate_local_group_type_dehydrated(self, group: LocalGroup) -> str:
         if group.local_group_type:
             return LocalGroupType.labels[group.local_group_type]
         else:
@@ -71,7 +69,7 @@ class LocalGroupResource(ModelResource):
             else:
                 return None
 
-    def dehydrate_local_group_types(self, group: LocalGroup) -> str:
+    def dehydrate_local_group_types_dehydrated(self, group: LocalGroup) -> str:
         if group.local_group_types:
             ', '.join(map(LocalGroupType.label, group.local_group_types))
         else:
