@@ -96,7 +96,36 @@ class LocalGroupResource(ModelResource):
 
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
-    actions = ["export_csv"]
+    actions = [
+        "export_csv",
+    ]
+    list_display = [
+        'name',
+        'local_group_type',
+        'city_or_town',
+        'country',
+        'email',
+        'last_edited',
+    ]
+    list_filter = [
+        'is_public',
+        'is_active',
+        'local_group_type',
+        'local_group_types',
+        'country',
+        'last_edited',
+    ]
+    search_fields = [
+        'name',
+        'slug',
+        'organisers__email',
+        'city_or_town',
+        'website',
+        'other_website',
+        'email',
+        'meetup_url',
+        'other_info',
+    ]
     resource_class = LocalGroupResource
 
     def export_csv(self, request, queryset, **kwargs):
