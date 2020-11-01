@@ -19,18 +19,18 @@ class UserAdmin(
         "date_joined",
         "is_superuser",
         "is_staff",
+        "is_profile_public"
     ]
     change_links = ["profile"]
-    list_filter = ["is_superuser", "is_staff", "is_active", "profile__is_approved"]
+    list_filter = ["is_superuser", "is_staff", "is_active", "profile__is_approved", "profile__is_public"]
     search_fields = ["email", "profile__name"]
     ordering = ["-date_joined"]
     actions = ["approve_profiles"]
 
     def is_profile_approved(self, user):
-        try:
-            profile = user.profile
-        except profiles_models.Profile.DoesNotExist:
-            return None
+        profile = get_profile(user)
+        if profile is None:
+            return profile
         return profile.is_approved
 
     is_profile_approved.short_description = "Approved?"
@@ -43,3 +43,19 @@ class UserAdmin(
 
     approve_profiles.short_description = "Approve selected users' profiles"
     approve_profiles.allowed_permissions = ["change"]
+
+    def is_profile_public(self, user):
+        profile = get_profile(user)
+        if profile is None:
+            return profile
+        return profile.is_public
+
+    is_profile_public.short_description = "Public?"
+    is_profile_public.boolean = False
+
+
+def get_profile(user):
+    try:
+        return user.profile
+    except profiles_models.Profile.DoesNotExist:
+        return None
