@@ -1,4 +1,5 @@
 from typing import List
+from typing import Optional
 
 from django.contrib import admin
 from import_export import fields
@@ -17,6 +18,14 @@ class LocalGroupResource(ModelResource):
         widget=ManyToManyWidget(User, field='email'),
         attribute='organisers',
     )
+    local_group_type_dehydrated = fields.Field(
+        attribute='dehydrate_local_group_type',
+        column_name='type',
+    )
+    local_group_types_dehydrated = fields.Field(
+        attribute='dehydrate_local_group_types',
+        column_name='types',
+    )
 
     class Meta:
         model = LocalGroup
@@ -29,8 +38,8 @@ class LocalGroupResource(ModelResource):
             'organisers',
             'organisers_freetext',
             'email',
-            'local_group_type',
-            'local_group_types',
+            'local_group_type_dehydrated',
+            'local_group_types_dehydrated',
             'city_or_town',
             'country',
             'lat',
@@ -39,11 +48,14 @@ class LocalGroupResource(ModelResource):
             'other_website',
             'facebook_group',
             'facebook_page',
-            'email',
             'meetup_url',
             'airtable_record',
             'last_edited',
             'other_info',
+        ]
+        exclude = [
+            'local_group_type',
+            'local_group_types',
         ]
 
     def dehydrate_local_group_type(self, group: LocalGroup) -> str:
@@ -52,10 +64,12 @@ class LocalGroupResource(ModelResource):
         else:
             return ''
 
-    def hydrate_local_group_type(self, group_type_raw: str) -> LocalGroupType:
-        for key, value in LocalGroupType.labels:
+    def hydrate_local_group_type(self, group_type_raw: str) -> Optional[LocalGroupType]:
+        for key, value in LocalGroupType.labels.items():
             if value == group_type_raw.strip():
                 return key
+            else:
+                return None
 
     def dehydrate_local_group_types(self, group: LocalGroup) -> str:
         if group.local_group_types:
@@ -70,6 +84,14 @@ class LocalGroupResource(ModelResource):
                 self.hydrate_local_group_type(group_type_raw)
             )
         return group_types
+
+    def before_save_instance(
+        self,
+        instance: LocalGroup,
+        using_transactions: bool,
+        dry_run: bool,
+    ) -> LocalGroup:
+        return instance
 
 
 @admin.register(LocalGroup)
