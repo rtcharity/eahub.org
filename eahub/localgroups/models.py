@@ -7,6 +7,7 @@ from django.core.validators import MaxLengthValidator
 from django.db import models
 from django_enumfield import enum
 from geopy import geocoders
+
 from ..base.models import User
 
 
