@@ -23,18 +23,8 @@ class DjangoEnv(Enum):
 DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
 
 
-LOCKDOWN_ENABLED = False
-LOCKDOWN_PASSWORDS = [
-    "staging",
-    "demo",
-    "test",
-    "password",
-]
-
 if DJANGO_ENV == DjangoEnv.LOCAL:
     load_dotenv(find_dotenv('.env'))
-elif DJANGO_ENV == DjangoEnv.STAGE:
-    LOCKDOWN_ENABLED = True
 
 
 DATABASES = {
@@ -93,7 +83,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "applicationinsights.django.ApplicationInsightsMiddleware",
-    "lockdown.middleware.LockdownMiddleware",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
