@@ -102,6 +102,8 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
     list_display = [
         'name',
         'local_group_type',
+        'is_active',
+        'is_public',
         'city_or_town',
         'country',
         'email',
