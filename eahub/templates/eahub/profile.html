@@ -54,6 +54,11 @@
         <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil-alt"></i> Change Password</a></span>
       </div>
       {% endif %}
+      {% if user.id != profile.user_id %}
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'message' %}"><i class="fa fa-pencil-alt"></i> Send Message</a></span>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>
