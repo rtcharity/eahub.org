@@ -64,6 +64,9 @@ def about(request):
 def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
 
+def message(request):
+    return render(request, "eahub/message.html")
+
 
 def profiles(request):
     profiles_data = get_profiles_data(request.user)
