@@ -8,6 +8,7 @@ body {
   padding-bottom: 20px;
   font-family: "Open Sans";
 }
+
 .container:before, .container:after  {
   content: none;
 }
