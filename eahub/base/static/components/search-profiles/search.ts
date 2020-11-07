@@ -4,7 +4,7 @@ import {Vue, Component, Prop} from 'vue-property-decorator';
 import algoliasearch from 'algoliasearch/lite';
 import VueObserveVisibility from 'vue-observe-visibility';
 
-const SearchBox = require('./components/search-box.vue').default;
+const SearchFilters = require('./components/search-filters.vue').default;
 
 
 
@@ -13,7 +13,7 @@ Vue.use(VueObserveVisibility);
 
 @Component({
     components: {
-        SearchBox
+        SearchFilters,
     },
 })
 export default class SearchComponent extends Vue {
