@@ -46,7 +46,20 @@ MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 
-if DJANGO_ENV != DjangoEnv.LOCAL:
+if DJANGO_ENV == DjangoEnv.LOCAL:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+        }
+    }
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'eahub',
+        }
+    }
+
     sentry_sdk.init(
         dsn="https://4748be7234b54b69966c7a2091ddb26e@o463416.ingest.sentry.io/5468410",
         integrations=[DjangoIntegration()],
