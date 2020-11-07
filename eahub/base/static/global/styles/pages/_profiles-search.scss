@@ -31,7 +31,7 @@ $spacing-xxs: 5px;
         padding-right: $grid-gutter-width-half;
         $sticky-top: $toolbar-height + $grid-gutter-width-half;
         height: 100vh;
-        top: $toolbar-height + $grid-gutter-width-half;
+        top: $toolbar-height + $grid-gutter-width;
         padding-bottom: $toolbar-height + $grid-gutter-width;
         overflow-y: auto;
 
