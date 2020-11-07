@@ -1,17 +1,17 @@
 {% extends 'form.html' %}
 
 
-{% block title %}Report abuse{% endblock %}
+{% block title %}Send Message{% endblock %}
 
 
 {% load crispy_forms_tags %}
 
 {% block form_fields %}
-<div id="report_abuse">
+<div id="send_message">
 
-<p> I want to report the profile <b>{{ view.profile }}</b> for the following reasons:</p>
+<p>Send a message to <b>{{ view.profile }}</b></p>
 
-{{ form.as_p }}
+{{ form| crispy }}
 
 {% if messages %}
 <div class="row">
