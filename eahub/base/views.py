@@ -248,6 +248,10 @@ class ReportAbuseView(FormView):
 class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
+    def profile(self):
+        return Profile.objects.get(slug=self.kwargs["slug"])
+    def group(self):
+        return Group.objects.get(slug=self.kwargs["slug"])
 
 def health_check(request):
     return HttpResponse(status=204)
