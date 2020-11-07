@@ -1,9 +1,11 @@
 import Vue from 'vue';
 import App from './search.vue';
 import InstantSearchPlugin from 'vue-instantsearch';
+import VTooltip from 'v-tooltip';
 
 
 Vue.use(InstantSearchPlugin);
+Vue.use(VTooltip);
 
 
 const AppChild = Vue.extend({

@@ -37,13 +37,13 @@
                                             <ais-highlight :hit="item" attribute="name"/>
                                         </a>
                                         <div class="search__hit-status-block">
-                                            <div class="search__hit-status" v-bind:is-true="item.available_to_volunteer">
+                                            <div class="search__hit-status" v-bind:is-true="item.available_to_volunteer" v-tooltip="'Available to volunteer'">
                                                 <i class="fa fa-hands-helping"></i>
                                             </div>
-                                            <div class="search__hit-status" v-bind:is-true="item.open_to_job_offers">
+                                            <div class="search__hit-status" v-bind:is-true="item.open_to_job_offers" v-tooltip="'Open to job offers'">
                                                 <i class="fa fa-briefcase"></i>
                                             </div>
-                                            <div class="search__hit-status" v-bind:is-true="item.available_as_speaker">
+                                            <div class="search__hit-status" v-bind:is-true="item.available_as_speaker" v-tooltip="'Available as a speaker'">
                                                 <i class="fa fa-chalkboard-teacher"></i>
                                             </div>
                                         </div>
