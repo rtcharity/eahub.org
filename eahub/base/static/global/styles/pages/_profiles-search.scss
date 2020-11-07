@@ -9,34 +9,13 @@ $spacing-sm: 15px;
 $spacing-xs: 10px;
 $spacing-xxs: 5px;
 
-.profile-search__header {
-    padding: $spacing-xs 0;
-    margin-bottom: $spacing-xl;
-    box-shadow: 0 $spacing-xxs $spacing-xxs 0 rgba(0,0,0,0.16);
-
-    .list-group {
-        flex-direction: row;
-        flex-wrap: wrap;
-
-        .list-group-item {
-            display: flex;
-            align-items: center;
-            border: none;
-            min-width: fit-content;
-
-            .svg-inline--fa {
-                color: #522c54cc;
-                margin-right: $spacing-xxs;
-            }
-        }
-    }
-}
 
 .profiles-search-body {
     font-family: Arial, Helvetica, serif;
 }
 
 .profiles-search-component {
+    margin-top: $grid-gutter-width;
     margin-bottom: $spacing-xxl;
 
     .sticky-top {
@@ -46,7 +25,7 @@ $spacing-xxs: 5px;
         top: $toolbar-height + $grid-gutter-width-half;
         padding-bottom: $toolbar-height + $grid-gutter-width;
         overflow-y: auto;
-    
+
         &::-webkit-scrollbar-thumb {
             background-color: #716171;
         }
@@ -254,7 +233,7 @@ $spacing-xxs: 5px;
                 display: block;
                 margin-top: 0;
                 font-weight: bold;
-                font-size: 1.125rem;
+                font-size: 1rem;
                 text-decoration: none;
             }
 
@@ -353,7 +332,9 @@ $spacing-xxs: 5px;
                     list-style-type: disc;
                 }
             }
-
+            .search__hit-expertise {
+                margin-top: 0;
+            }
             .search__hit-cause {
                 ul {
                     list-style-type: disc;
