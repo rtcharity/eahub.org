@@ -30,7 +30,9 @@ $spacing-xxs: 5px;
         width: auto;
         min-width: 200px;
         margin-left: auto;
+
         input {
+            cursor: text;
             font-size: 0.85rem;
         }
     }
