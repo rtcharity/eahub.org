@@ -21,5 +21,13 @@ class ReportAbuseForm(forms.Form):
             return cleaned_data["reasons"]
 
 class SendMessageForm(forms.Form):
-    your_message = forms.CharField(label='Your message', max_length=10000)
+    your_message = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20}))
     
+    def clean(self):
+        cleaned_data = super(SendMessageForm, self).clean()
+        if not cleaned_data["your_message"]:
+            self._errors["your_message"] = [
+                cleaned_data["your_message"]
+            ]  # Will raise a error message
+        else:
+            return cleaned_data["your_message"]
