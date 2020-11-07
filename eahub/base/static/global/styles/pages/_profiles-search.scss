@@ -20,6 +20,12 @@ $spacing-xxs: 5px;
     #search-box-modal {
         background: white;
         
+        .modal-header {
+            position: sticky;
+            z-index: 10;
+            background: white;
+            top: 0;
+        }
         .search__filters.sticky-top {
             position: relative;
             height: auto;
