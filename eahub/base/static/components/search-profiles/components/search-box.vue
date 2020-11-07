@@ -3,9 +3,9 @@
         <ais-search-box
             v-model="searchQuery"
             :class-names="{
-                            'ais-SearchBox': 'search__search-box',
-                            'ais-SearchBox-input': 'form-control form-control-lg',
-                        }"
+                'ais-SearchBox': 'search__search-box',
+                'ais-SearchBox-input': 'form-control form-control-lg',
+            }"
         />
 
         <div class="search__reset-box">
@@ -13,19 +13,19 @@
                 <template slot="item"
                           slot-scope="{ refine, item, createURL, refinement }"
                 >
-                                <span class="search__reset-item-label">
-                                    {{ item.label.replaceAll('_', ' ') }}<span v-show="item.refinements[0].value !== 'true'">: </span>
-                                </span>
+                    <span class="search__reset-item-label">
+                        {{ item.label.replaceAll('_', ' ') }}<span v-show="item.refinements[0].value !== 'true'">: </span>
+                    </span>
                     <span v-for="refinement in item.refinements">
-                                    <slot name="refinement"
-                                          :refine="item.refine"
-                                          :refinement="refinement"
-                                          :createURL="createURL"
-                                    >
-                                        <span v-show="refinement.value !== 'true'">{{ refinement.label }}</span>
-                                        <button class="btn btn-outline search__reset-item-btn" @click="item.refine(refinement)">✕</button>
-                                    </slot>
-                                </span>
+                        <slot name="refinement"
+                              :refine="item.refine"
+                              :refinement="refinement"
+                              :createURL="createURL"
+                        >
+                            <span v-show="refinement.value !== 'true'">{{ refinement.label }}</span>
+                            <button class="btn btn-outline search__reset-item-btn" @click="item.refine(refinement)">✕</button>
+                        </slot>
+                    </span>
                 </template>
             </ais-current-refinements>
 
