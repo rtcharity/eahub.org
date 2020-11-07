@@ -19,3 +19,7 @@ class ReportAbuseForm(forms.Form):
             ]  # Will raise a error message
         else:
             return cleaned_data["reasons"]
+
+class SendMessageForm(forms.Form):
+    your_message = forms.CharField(label='Your message', max_length=10000)
+    
