@@ -20,6 +20,7 @@ class ReportAbuseForm(forms.Form):
         else:
             return cleaned_data["reasons"]
 
+
 class SendMessageForm(forms.Form):
     your_message = forms.CharField(widget=forms.Textarea(attrs={"rows":5, "cols":20}))
     
