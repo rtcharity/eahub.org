@@ -17,6 +17,7 @@ from django.views.generic.edit import FormView
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
 from .forms import ReportAbuseForm
+from .forms import SendMessageForm
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -247,6 +248,10 @@ class ReportAbuseView(FormView):
         )
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
+
+class SendMessageView(FormView):
+    temlate_name = "eahub/message.html"
+    form_class = SendMessageForm
 
 def health_check(request):
     return HttpResponse(status=204)
