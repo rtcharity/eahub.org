@@ -20,17 +20,30 @@ $spacing-xxs: 5px;
     #search-box-modal {
         background: white;
         
-        .modal-header {
-            position: sticky;
-            z-index: 10;
-            background: white;
-            top: 0;
-        }
-        .search__filters.sticky-top {
-            position: relative;
-            height: auto;
-            z-index: auto;
-            top: 0;
+        .modal-content {
+            border: none;
+
+            .modal-header {
+                position: sticky;
+                z-index: 10;
+                background: $color-secondary;
+                color: white;
+                top: 0;
+
+                .btn {
+                    color: white !important;
+                    border-color: white;
+                }
+            }
+            .search__filters.sticky-top {
+                position: relative;
+                height: auto;
+                z-index: auto;
+                top: 0;
+                margin-bottom: 0;
+                padding-bottom: 0;
+                padding-right: 0;
+            }
         }
     }
     .sticky-top {
