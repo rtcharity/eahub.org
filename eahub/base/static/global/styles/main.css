@@ -8,6 +8,9 @@ body {
   padding-bottom: 20px;
   font-family: "Open Sans";
 }
+textarea {
+  resize: none;
+}
 
 /* info */
 
