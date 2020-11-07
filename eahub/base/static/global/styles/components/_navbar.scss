@@ -18,8 +18,17 @@ $spacing-xxs: 5px;
         .navbar__page-name {
             display: flex;
             margin-left: $spacing-xxs;
-            color: white;
-            font-size: 1.3rem;
+            input {
+                font-size: 1.3rem;
+            }
+        }
+    }
+    .navbar__search-input {
+        width: auto;
+        min-width: 200px;
+        margin-left: auto;
+        input {
+            font-size: 0.85rem;
         }
     }
 

@@ -13,11 +13,20 @@ $spacing-xxs: 5px;
 .profiles-search-body {
     font-family: Arial, Helvetica, serif;
 }
-
 .profiles-search-component {
     margin-top: $grid-gutter-width;
     margin-bottom: $spacing-xxl;
-
+    
+    #search-box-modal {
+        background: white;
+        
+        .search__filters.sticky-top {
+            position: relative;
+            height: auto;
+            z-index: auto;
+            top: 0;
+        }
+    }
     .sticky-top {
         padding-right: $grid-gutter-width-half;
         $sticky-top: $toolbar-height + $grid-gutter-width-half;
