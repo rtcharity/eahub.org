@@ -18,6 +18,9 @@ $spacing-xxs: 5px;
         .navbar__page-name {
             display: flex;
             margin-left: $spacing-xxs;
+            margin-top: auto;
+            line-height: initial;
+
             input {
                 font-size: 1.3rem;
             }
