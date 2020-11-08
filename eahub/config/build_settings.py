@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
+    "rangefilter",
 ]
 
 # Core settings: security
