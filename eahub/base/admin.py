@@ -18,6 +18,7 @@ class UserAdmin(
         "profile_link",
         "is_profile_approved",
         "date_joined",
+        "last_login",
         "is_superuser",
         "is_staff",
         "is_profile_public",
@@ -30,6 +31,7 @@ class UserAdmin(
         "profile__is_approved",
         "profile__is_public",
         ("date_joined", DateRangeFilter),
+        ("last_login", DateRangeFilter),
     ]
     search_fields = ["email", "profile__name"]
     actions = ["approve_profiles"]
