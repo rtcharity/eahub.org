@@ -3,6 +3,9 @@ import {Provide} from 'vue-property-decorator';
 import {Vue, Component, Prop} from 'vue-property-decorator';
 import algoliasearch from 'algoliasearch/lite';
 import VueObserveVisibility from 'vue-observe-visibility';
+import { history as historyRouter } from 'instantsearch.js/es/lib/routers';
+import { singleIndex as singleIndexMapping } from 'instantsearch.js/es/lib/stateMappings';
+
 
 const SearchFilters = require('./components/search-filters.vue').default;
 
@@ -24,4 +27,8 @@ export default class SearchComponent extends Vue {
     @Provide() isSearchPopupVisible: boolean = false;
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
     @Provide() searchQuery: string = '';
+    @Provide() routing = {
+        router: historyRouter(),
+        stateMapping: singleIndexMapping('profiles'),
+    }
 }
