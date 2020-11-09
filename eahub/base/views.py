@@ -248,10 +248,28 @@ class ReportAbuseView(FormView):
 class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
+
     def profile(self):
         return Profile.objects.get(slug=self.kwargs["slug"])
+
     def group(self):
         return Group.objects.get(slug=self.kwargs["slug"])
+
+    def form_valid(self, form):
+        recipient = self.profile()
+        # type = self.get_type()
+        send_mail(
+            "hello",
+            "world",
+            settings.DEFAULT_FROM_EMAIL,
+            ["mattgoodman95@gmail.com"]
+        )
+        messages.success(
+            self.request,
+            "Your message to " + recipient.slug + " has been sent"
+        )
+        return redirect("/profile/{1}".format(type, recipient.slug))
+
 
 def health_check(request):
     return HttpResponse(status=204)
