@@ -28,4 +28,6 @@ urlpatterns = [
         views.ReportProfileAbuseView.as_view(),
         name="report_abuse_profile",
     ),
+    path("<slug:slug>/message/", views.SendProfileMessageView.as_view(),
+         name="send_message_to_profile"),
 ]

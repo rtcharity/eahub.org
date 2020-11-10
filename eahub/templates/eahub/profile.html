@@ -56,7 +56,7 @@
       {% endif %}
       {% if user.id != profile.user_id %}
       <div class="btn btn-default purple">
-        <span><a href="{% url 'message' profile.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a></span>
+        <span><a href="{% url 'send_message_to_profile' profile.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a></span>
       </div>
       {% endif %}
     </div>

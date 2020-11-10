@@ -12,7 +12,7 @@ from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
 
-from ..base.views import ReportAbuseView
+from ..base.views import (ReportAbuseView, SendMessageView)
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
@@ -88,6 +88,13 @@ class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.Delet
 
 
 class ReportGroupAbuseView(ReportAbuseView):
+    def profile(self):
+        return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
+
+    def get_type(self):
+        return "group"
+
+class SendGroupMessageView(SendMessageView):
     def profile(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 

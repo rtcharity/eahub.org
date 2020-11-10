@@ -43,10 +43,7 @@ urlpatterns = [
     path("groups/", views.groups, name="groups"),
     path("admin/", admin.site.urls, name="admin"),
     path("about/", views.about, name="about"),
-    path("<slug:slug>/message/", views.SendMessageView.as_view(),
-        name="message",
-    ),
-    path(
+      path(
         "newsletter/",
         TemplateView.as_view(template_name="eahub/newsletter.html"),
         name="newsletter",
