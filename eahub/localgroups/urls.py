@@ -27,6 +27,6 @@ urlpatterns = [
         name="report_abuse_group",
     ),
     urls.path("<slug:slug>/message/", views.SendGroupMessageView.as_view(),
-        name="send_message_to_group"),
+        name="message_group"),
 
 ]
