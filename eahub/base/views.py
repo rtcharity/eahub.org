@@ -249,26 +249,22 @@ class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
-    def profile(self):
-        return Profile.objects.get(slug=self.kwargs["slug"])
-
-    def group(self):
-        return Group.objects.get(slug=self.kwargs["slug"])
-
     def form_valid(self, form):
         recipient = self.profile()
-        # type = self.get_type()
-        send_mail(
-            "hello",
-            "world",
-            settings.DEFAULT_FROM_EMAIL,
-            ["mattgoodman95@gmail.com"]
-        )
+        type = self.get_type()
+        subject = f"{recipient.name} sent you a message"
+
+        # send_mail(
+        #     subject,
+        #     message,
+        #     settings.DEFAULT_FROM_EMAIL,
+        #     recipient_list=settings.LEAN_MANAGERS,
+        # )
         messages.success(
             self.request,
-            "Your message to " + recipient.slug + " has been sent"
+            "Your message to " + recipient.name + " has been sent"
         )
-        return redirect("/profile/{1}".format(type, recipient.slug))
+        return redirect("/{0}/{1}".format(type, recipient.slug))
 
 
 def health_check(request):
