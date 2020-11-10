@@ -252,14 +252,17 @@ class SendMessageView(FormView):
     def form_valid(self, form):
         recipient = self.profile()
         type = self.get_type()
-        subject = f"{recipient.name} sent you a message"
+        request = self.request
+        current_user = request.user
+        # subject = f"{} sent you a message"
+        print(current_user)
 
-        # send_mail(
-        #     subject,
-        #     message,
-        #     settings.DEFAULT_FROM_EMAIL,
-        #     recipient_list=settings.LEAN_MANAGERS,
-        # )
+        send_mail(
+            "hello",
+            "hello world",
+            current_user.email,
+            [recipient.user.email],
+        )
         messages.success(
             self.request,
             "Your message to " + recipient.name + " has been sent"
