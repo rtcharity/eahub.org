@@ -250,16 +250,17 @@ class SendMessageView(FormView):
     form_class = SendMessageForm
 
     def form_valid(self, form):
+        message = form.cleaned_data
         recipient = self.profile()
         type = self.get_type()
         request = self.request
         current_user = request.user
-        # subject = f"{} sent you a message"
         print(current_user)
+        subject = f"{current_user.email} sent you a message through the Effective Altruism hub."
 
         send_mail(
-            "hello",
-            "hello world",
+            subject,
+            message,
             current_user.email,
             [recipient.user.email],
         )
