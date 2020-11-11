@@ -95,8 +95,11 @@ class ReportGroupAbuseView(ReportAbuseView):
         return "group"
 
 class SendGroupMessageView(SendMessageView):
-    def profile(self):
+    def get_recipient(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
+
+    def get_recipient_email(self):
+        return LocalGroup.objects.get(slug=self.kwargs["slug"]).email
 
     def get_type(self):
         return "group"
