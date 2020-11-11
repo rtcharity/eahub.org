@@ -8,6 +8,8 @@ from django.db import models
 from django_enumfield import enum
 from geopy import geocoders
 
+from ..base.models import User
+
 
 class LocalGroupType(enum.Enum):
 
@@ -15,27 +17,20 @@ class LocalGroupType(enum.Enum):
     COUNTRY = 2
     UNIVERSITY = 3
 
-    labels = {CITY: "City", COUNTRY: "Country", UNIVERSITY: "University"}
+    labels = {CITY: "City", COUNTRY: "National/Regional", UNIVERSITY: "University"}
 
 
 class LocalGroup(models.Model):
 
     slug = autoslug.AutoSlugField(populate_from="name", unique=True)
     is_public = models.BooleanField(default=True)
-    name = models.CharField(
-        "name of group",
-        max_length=100,
-        help_text="University groups: Ideally avoid acronyms in your group name unless "
-        "they are likely to be unique worldwide. If the name of your "
-        "university is also the name of a city, indicate in the name that "
-        "this is a university group.",
-    )
+    name = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
     )
     organisers_freetext = models.CharField(
-        "Organisers (Non-Member)", max_length=100, blank=True
+        "Organisers (Non EA Hub members)", max_length=100, blank=True
     )
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
@@ -44,6 +39,7 @@ class LocalGroup(models.Model):
         enum.EnumField(LocalGroupType), blank=True, default=list
     )
     city_or_town = models.CharField(max_length=100, blank=True)
+    region = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
@@ -83,10 +79,10 @@ class LocalGroup(models.Model):
     def organisers_names(self):
         profile_names = []
         for user in self.organisers.all():
-            if user.profile:
+            try:
                 profile_names.append(user.profile.name)
-            else:
-                profile_names.append("N/A")
+            except User.profile.RelatedObjectDoesNotExist:
+                profile_names.append("User profile missing")
         return ", ".join(profile_names)
 
     def organisers_emails(self):

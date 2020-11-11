@@ -1,3 +1,4 @@
+import us
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -95,6 +96,21 @@ class LocalGroupForm(forms.ModelForm):
             choices=localgroups_models.LocalGroupType.choices(),
         )
 
+    def clean(self):
+        data = self.cleaned_data
+        if (
+            data["country"]
+            in ["United States", "US", "USA", "United States of America"]
+            and data["region"]
+        ):
+            state = us.states.lookup(data["region"])
+            if state is None:
+                raise forms.ValidationError(
+                    f"'{data['region']}' is not a valid US state"
+                )
+            data["region"] = state.name
+        return data
+
     class Meta:
         model = localgroups_models.LocalGroup
         fields = [
@@ -102,6 +118,7 @@ class LocalGroupForm(forms.ModelForm):
             "is_active",
             "local_group_types",
             "city_or_town",
+            "region",
             "country",
             "website",
             "other_website",
@@ -110,14 +127,23 @@ class LocalGroupForm(forms.ModelForm):
             "email",
             "meetup_url",
             "organisers",
+            "organisers_freetext",
             "other_info",
         ]
         labels = {
+            "organisers_freetext": "Organisers (not on EAHub)",
+            "region": "Region (e.g., US state, if applicable)",
             "website": (
                 "<br><div style='font-size: 16px; font-weight: normal;'>"
                 "Please enter all the ways potential group members can currently "
                 "connect with your group:</div><br><br> Website"
-            )
+            ),
+        }
+        help_texts = {
+            "name": "University groups: Ideally avoid acronyms in your group name "
+            "unless they are likely to be unique worldwide. If the name of "
+            "your university is also the name of a city, indicate in the name "
+            "that this is a university group."
         }
 
     def clean_local_group_types(self):

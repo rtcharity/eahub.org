@@ -691,6 +691,10 @@ form .alert ul {
   margin-left: 20px;
 }
 
+.form-edit-group .alert {
+  margin-bottom: 20px;
+}
+
 /* registration */
 .login-danger {
   background-color: #E4F5B1;
@@ -713,6 +717,7 @@ form .alert ul {
 .help-block {
   background-color: #E4F5B1;
   border: none;
+  border-radius: 4px;
   color: black;
   padding: .75rem 1.25rem;
   margin-bottom: 1rem;
