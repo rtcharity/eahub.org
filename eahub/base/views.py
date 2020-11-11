@@ -255,8 +255,7 @@ class SendMessageView(FormView):
         type = self.get_type()
         request = self.request
         current_user = request.user
-        print(current_user)
-        subject = f"{current_user.email} sent you a message through the Effective Altruism hub."
+        subject = f"{current_user.profile.name} sent you a message through the Effective Altruism hub."
 
         send_mail(
             subject,
