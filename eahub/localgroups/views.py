@@ -99,7 +99,11 @@ class SendGroupMessageView(SendMessageView):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 
     def get_recipient_email(self):
-        return LocalGroup.objects.get(slug=self.kwargs["slug"]).email
+        local_group = LocalGroup.objects.get(slug=self.kwargs["slug"])
+        if local_group.email == "":
+            return local_group.organisers_emails().split(" ")
+        else:
+            return [local_group.email]
 
     def get_type(self):
         return "group"
