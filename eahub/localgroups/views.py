@@ -98,6 +98,7 @@ class SendGroupMessageView(SendMessageView):
     def get_recipient(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 
+    # if the group doesn't have a set email address, emails are sent to the group organiser(s)
     def get_recipient_email(self):
         local_group = LocalGroup.objects.get(slug=self.kwargs["slug"])
         if local_group.email == "":
