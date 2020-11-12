@@ -252,13 +252,12 @@ class SendMessageView(FormView):
     def recipient(self):
         return self.get_recipient()
     
-    
-    
     def form_valid(self, form):
         message = form.cleaned_data
         type = self.get_type()
         current_user = self.request.user
 
+        # adds the group name to the subject line on emails to groups for clarity
         def addressee(self):
             if type == "group":
                 return self.recipient().name
