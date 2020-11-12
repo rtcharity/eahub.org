@@ -249,9 +249,12 @@ class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
+    def recipient(self):
+        return self.get_recipient()
+    
+
     def form_valid(self, form):
         message = form.cleaned_data
-        recipient = self.get_recipient()
         recipient_email = self.get_recipient_email()
         type = self.get_type()
         current_user = self.request.user
@@ -261,13 +264,13 @@ class SendMessageView(FormView):
             subject,
             message,
             current_user.email,
-            [recipient_email],
+            self.recipient().organisers_emails().split(" "),
         )
         messages.success(
             self.request,
-            "Your message to " + recipient.name + " has been sent"
+            "Your message to " + self.recipient().name + " has been sent"
         )
-        return redirect("/{0}/{1}".format(type, recipient.slug))
+        return redirect("/{0}/{1}".format(type, self.recipient().slug))
 
 
 def health_check(request):
