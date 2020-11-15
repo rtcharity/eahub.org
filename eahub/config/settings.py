@@ -87,7 +87,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "applicationinsights.django.ApplicationInsightsMiddleware",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -207,12 +206,6 @@ from .build_settings import (  # noqa: E402,F401; isort:skip
     STATIC_ROOT,
     STATIC_URL,
 )
-
-# Application Insights
-APPLICATION_INSIGHTS = {
-    "ikey": env.str("APPLICATION_INSIGHTS_INSTRUMENTATION_KEY", default=None)
-}
-
 
 from aldryn_django.storage import parse_storage_url  # noqa: E402,F401; isort:skip
 

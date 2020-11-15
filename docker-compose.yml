@@ -5,7 +5,6 @@ services:
     command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
     depends_on:
       - db
-      - objstore
       - cache
       - mail
     ports:
@@ -26,11 +25,6 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - .:/app:rw
-  objstore:
-    image: arafato/azurite:2.6.5
-    command: node bin/blob --location=/opt/azurite/folder/ --blobPort=8002
-    ports:
-      - 8002:8002
   cache:
     image: redis:3.2.7
     ports:
