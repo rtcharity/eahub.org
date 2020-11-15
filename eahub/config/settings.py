@@ -47,8 +47,8 @@ if DJANGO_ENV == DjangoEnv.LOCAL:
 else:
     CACHES = {
         "default": {
-            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-            "LOCATION": "eahub",
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "cache",
         }
     }
 
