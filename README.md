@@ -16,11 +16,11 @@ Backend for [https://eahub.org](https://eahub.org)
     ```
 
 1.  ```
-    docker-compose run web django-admin createcontainer
+    docker-compose run --rm web django-admin createcontainer
     ```
 
 1.  ```
-    docker-compose run web django-admin migrate
+    docker-compose run --rm web django-admin migrate
     ```
 
 # Running
@@ -35,7 +35,7 @@ If the Dockerfile has changed since last time you did this, you'll need to run
 `docker-compose up --build` or `docker-compose build`.
 
 If the database schema has changed since last time, you'll need to run
-`docker-compose run web django-admin migrate`.
+`docker-compose run --rm web django-admin migrate`.
 
 # Rebuilding frontend in development
 Requires: [Node.js v10](https://nodejs.org/en/)
@@ -47,7 +47,7 @@ To see live changes to the frontend while developing,
 
 # Running Tests
 ```
-$ docker-compose run --use-aliases web pytest
+$ docker-compose run --rm --use-aliases web pytest
 ```
 
 ## Running Frontend Test
@@ -59,14 +59,14 @@ Then run
 
 # Formatting Code
 ```
-$ docker-compose run web black .
+$ docker-compose run --rm web black .
 ```
 You must run this before sending a pull request or else it will be automatically blocked from merging.
 
 You can also automatically sort your imports:
 
 ```
-$ docker-compose run web isort -rc --atomic .
+$ docker-compose run --rm web isort -rc --atomic .
 ```
 
 # Deploying
@@ -81,10 +81,10 @@ $ docker push eahub.azurecr.io/eahub:latest
 
 # Running django commands
 ```
-$ docker-compose run web bash
-$ docker-compose run web django-admin shell
-$ docker-compose run web django-admin makemigrations
-$ docker-compose run web django-admin migrate
+$ docker-compose run --rm web bash
+$ docker-compose run --rm web django-admin shell
+$ docker-compose run --rm web django-admin makemigrations
+$ docker-compose run --rm web django-admin migrate
 ```
 
 # Docker Image Registry Login
