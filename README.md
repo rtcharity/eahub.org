@@ -31,7 +31,11 @@ If the database schema has changed since last time, you'll need to run
 - divio project pull db test
 - divio project pull media test
 
-You can push data as well with `divio project push` commands, but only when you're 100% sure that you know what you're doing. 
+You can drop the local and test server db though running:
+- docker-compose stop db
+- docker-compose rm db
+- docker-compose run --rm web django-admin migrate
+- divio project push db test
 
 # Running Tests
 ```
