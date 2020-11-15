@@ -94,50 +94,6 @@ SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Core settings: logging
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "django.server": {
-            "()": "django.utils.log.ServerFormatter",
-            "format": "[{server_time}] {message}",
-            "style": "{",
-        }
-    },
-    "handlers": {
-        "appinsights": {
-            "level": "WARNING",
-            "class": "applicationinsights.django.LoggingHandler",
-        },
-        "console": {"level": "INFO", "class": "logging.StreamHandler"},
-        "django.server": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "django.server",
-        },
-        "mail_admins": {
-            "level": "ERROR",
-            "class": "django.utils.log.AdminEmailHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["appinsights", "console", "mail_admins"],
-            "level": "INFO",
-        },
-        "django.server": {
-            "handlers": ["django.server"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "eahub": {
-            "handlers": ["appinsights", "console", "mail_admins"],
-            "level": "INFO",
-        },
-    },
-}
-
 # Core settings: models
 from .build_settings import INSTALLED_APPS  # noqa: E402,F401; isort:skip
 
