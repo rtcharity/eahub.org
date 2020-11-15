@@ -37,6 +37,10 @@ You can drop the local and test server db though running:
 - docker-compose run --rm web django-admin migrate
 - divio project push db test
 
+### Links
+- stage server - https://eahub-stage.us.aldryn.io/
+- deployment control panel - https://control.divio.com/control/71735/edit/88402/
+
 # Running Tests
 ```
 docker-compose run --rm web pytest
