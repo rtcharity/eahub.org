@@ -14,15 +14,8 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "country",
         "available_to_volunteer",
     ]
-    list_filter = [
-        "is_approved",
-        "is_public",
-        "available_to_volunteer",
-    ]
-    search_fields = [
-        "user__email",
-        "name",
-    ]
+    list_filter = ["is_approved", "is_public", "available_to_volunteer"]
+    search_fields = ["user__email", "name"]
     ordering = ["-user__date_joined"]
 
     def export_csv(self, request, queryset):

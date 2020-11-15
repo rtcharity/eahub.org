@@ -15,53 +15,48 @@ from eahub.localgroups.models import LocalGroupType
 
 class LocalGroupResource(ModelResource):
     organisers = fields.Field(
-        widget=ManyToManyWidget(User, field='email'),
-        attribute='organisers',
+        widget=ManyToManyWidget(User, field="email"), attribute="organisers"
     )
-    local_group_type_dehydrated = fields.Field(
-        column_name='type',
-    )
-    local_group_types_dehydrated = fields.Field(
-        column_name='types',
-    )
+    local_group_type_dehydrated = fields.Field(column_name="type")
+    local_group_types_dehydrated = fields.Field(column_name="types")
 
     class Meta:
         model = LocalGroup
         export_order = [
-            'id',
-            'name',
-            'slug',
-            'is_active',
-            'is_public',
-            'organisers',
-            'organisers_freetext',
-            'email',
-            'local_group_type_dehydrated',
-            'local_group_types_dehydrated',
-            'city_or_town',
-            'country',
-            'lat',
-            'lon',
-            'website',
-            'other_website',
-            'facebook_group',
-            'facebook_page',
-            'meetup_url',
-            'airtable_record',
-            'last_edited',
-            'other_info',
+            "id",
+            "name",
+            "slug",
+            "is_active",
+            "is_public",
+            "organisers",
+            "organisers_freetext",
+            "email",
+            "local_group_type_dehydrated",
+            "local_group_types_dehydrated",
+            "city_or_town",
+            "country",
+            "lat",
+            "lon",
+            "website",
+            "other_website",
+            "facebook_group",
+            "facebook_page",
+            "meetup_url",
+            "airtable_record",
+            "last_edited",
+            "other_info",
         ]
 
     def before_import_row(self, row: dict, **kwargs) -> dict:
-        row['local_group_type'] = self.hydrate_local_group_type(row['type'])
-        row['local_group_types'] = self.hydrate_local_group_types(row['types'])
+        row["local_group_type"] = self.hydrate_local_group_type(row["type"])
+        row["local_group_types"] = self.hydrate_local_group_types(row["types"])
         return super().before_import_row(row, **kwargs)
 
     def dehydrate_local_group_type_dehydrated(self, group: LocalGroup) -> str:
         if group.local_group_type:
             return LocalGroupType.labels[group.local_group_type]
         else:
-            return ''
+            return ""
 
     def hydrate_local_group_type(self, group_type_raw: str) -> Optional[LocalGroupType]:
         for key, value in LocalGroupType.labels.items():
@@ -71,52 +66,50 @@ class LocalGroupResource(ModelResource):
 
     def dehydrate_local_group_types_dehydrated(self, group: LocalGroup) -> str:
         if group.local_group_types:
-            ', '.join(map(LocalGroupType.label, group.local_group_types))
+            ", ".join(map(LocalGroupType.label, group.local_group_types))
         else:
-            return ''
+            return ""
 
-    def hydrate_local_group_types(self, group_types_raw: str) -> Optional[List[LocalGroupType]]:
+    def hydrate_local_group_types(
+        self, group_types_raw: str
+    ) -> Optional[List[LocalGroupType]]:
         group_types = []
         for group_type_raw in group_types_raw:
-            group_types.append(
-                self.hydrate_local_group_type(group_type_raw)
-            )
+            group_types.append(self.hydrate_local_group_type(group_type_raw))
         return group_types if group_types else None
 
 
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
-    actions = [
-        "export_csv",
-    ]
+    actions = ["export_csv"]
     list_display = [
-        'name',
-        'local_group_type',
-        'is_active',
-        'is_public',
-        'city_or_town',
-        'country',
-        'email',
-        'last_edited',
+        "name",
+        "local_group_type",
+        "is_active",
+        "is_public",
+        "city_or_town",
+        "country",
+        "email",
+        "last_edited",
     ]
     list_filter = [
-        'is_public',
-        'is_active',
-        'local_group_type',
-        'last_edited',
-        'country',
-        'local_group_types',
+        "is_public",
+        "is_active",
+        "local_group_type",
+        "last_edited",
+        "country",
+        "local_group_types",
     ]
     search_fields = [
-        'name',
-        'slug',
-        'organisers__email',
-        'city_or_town',
-        'website',
-        'other_website',
-        'email',
-        'meetup_url',
-        'other_info',
+        "name",
+        "slug",
+        "organisers__email",
+        "city_or_town",
+        "website",
+        "other_website",
+        "email",
+        "meetup_url",
+        "other_info",
     ]
     resource_class = LocalGroupResource
 

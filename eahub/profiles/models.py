@@ -317,11 +317,7 @@ class Profile(models.Model):
         return self.name
 
     def is_searchable(self) -> bool:
-        return (
-            self.is_approved and
-            self.is_public and
-            self.user.is_active
-        )
+        return self.is_approved and self.is_public and self.user.is_active
 
     def get_absolute_url(self):
         return urls.reverse("profile", args=[self.slug])
@@ -348,7 +344,7 @@ class Profile(models.Model):
 
     def get_image_url(self) -> Optional[str]:
         if self.image:
-            return get_thumbnail(self.image, '200x200', crop='center').url
+            return get_thumbnail(self.image, "200x200", crop="center").url
         else:
             return None
 
@@ -362,13 +358,17 @@ class Profile(models.Model):
         )
 
     def get_expertise_searchable(self) -> List[str]:
-        return self._format_enum_array_for_searching(self.expertise_areas, ExpertiseArea)
+        return self._format_enum_array_for_searching(
+            self.expertise_areas, ExpertiseArea
+        )
 
     def get_pretty_career_interest_areas(self):
         return prettify_property_list(ExpertiseArea, self.career_interest_areas)
 
     def get_career_interest_areas_searchable(self) -> List[str]:
-        return self._format_enum_array_for_searching(self.career_interest_areas, ExpertiseArea)
+        return self._format_enum_array_for_searching(
+            self.career_interest_areas, ExpertiseArea
+        )
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
@@ -388,7 +388,9 @@ class Profile(models.Model):
             return "N/A"
 
     def get_organisational_affiliations_searchable(self) -> List[str]:
-        return self._format_enum_array_for_searching(self.organisational_affiliations, OrganisationalAffiliation)
+        return self._format_enum_array_for_searching(
+            self.organisational_affiliations, OrganisationalAffiliation
+        )
 
     def get_pretty_local_groups(self):
         if self.local_groups:
@@ -526,7 +528,7 @@ class Profile(models.Model):
         return values
 
     def _format_enum_array_for_searching(
-        self, array: List[enum.Enum], enum_cls: enum.Enum,
+        self, array: List[enum.Enum], enum_cls: enum.Enum
     ) -> List[str]:
         return [item for item in map(enum_cls.label, array)]
 

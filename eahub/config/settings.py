@@ -24,12 +24,10 @@ DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
 
 
 if DJANGO_ENV == DjangoEnv.LOCAL:
-    load_dotenv(find_dotenv('.env'))
+    load_dotenv(find_dotenv(".env"))
 
 
-DATABASES = {
-    "default": dj_database_url.parse(env.str('DATABASE_URL'))
-}
+DATABASES = {"default": dj_database_url.parse(env.str("DATABASE_URL"))}
 
 # Core settings: debugging
 DEBUG = env.bool("DEBUG")
@@ -47,16 +45,12 @@ SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 
 if DJANGO_ENV == DjangoEnv.LOCAL:
-    CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-        }
-    }
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
 else:
     CACHES = {
-        'default': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'eahub',
+        "default": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "eahub",
         }
     }
 
@@ -66,7 +60,7 @@ else:
         traces_sample_rate=1.0,
         # If you wish to associate users to errors (assuming you are using
         # django.contrib.auth) you may enable sending PII data.
-        send_default_pii=True
+        send_default_pii=True,
     )
 
 
@@ -222,17 +216,17 @@ APPLICATION_INSIGHTS = {
 }
 
 
-
 from aldryn_django.storage import parse_storage_url
-media_config = parse_storage_url(env.str('DEFAULT_STORAGE_DSN'))
-DEFAULT_FILE_STORAGE = 'aldryn_django.storage.S3MediaStorage'
-MEDIA_URL = media_config['MEDIA_URL']
-AWS_MEDIA_ACCESS_KEY_ID = media_config['AWS_MEDIA_ACCESS_KEY_ID']
-AWS_MEDIA_SECRET_ACCESS_KEY = media_config['AWS_MEDIA_SECRET_ACCESS_KEY']
-AWS_MEDIA_STORAGE_BUCKET_NAME = media_config['AWS_MEDIA_STORAGE_BUCKET_NAME']
-AWS_MEDIA_STORAGE_HOST = media_config['AWS_MEDIA_STORAGE_HOST']
-AWS_MEDIA_BUCKET_PREFIX = media_config['AWS_MEDIA_BUCKET_PREFIX']
-AWS_MEDIA_DOMAIN = media_config['AWS_MEDIA_DOMAIN']
+
+media_config = parse_storage_url(env.str("DEFAULT_STORAGE_DSN"))
+DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
+MEDIA_URL = media_config["MEDIA_URL"]
+AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
+AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
+AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
+AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
+AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
+AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
 
 
 # allauth
@@ -307,12 +301,7 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-SETTINGS_EXPORT = [
-    "WEBPACK_DEV_URL",
-    "DEBUG",
-    "DJANGO_ENV",
-    "ALGOLIA",
-]
+SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV", "ALGOLIA"]
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
