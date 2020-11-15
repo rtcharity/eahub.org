@@ -2,13 +2,11 @@ from enum import Enum
 
 import dj_database_url
 import environ
+import sentry_sdk
 from django.core import exceptions
 from django.utils.safestring import mark_safe
-from dotenv import find_dotenv
-from dotenv import load_dotenv
-import sentry_sdk
+from dotenv import find_dotenv, load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
-
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -216,7 +214,7 @@ APPLICATION_INSIGHTS = {
 }
 
 
-from aldryn_django.storage import parse_storage_url
+from aldryn_django.storage import parse_storage_url  # noqa: E402,F401; isort:skip
 
 media_config = parse_storage_url(env.str("DEFAULT_STORAGE_DSN"))
 DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"

@@ -3,8 +3,7 @@ import json
 import pathlib
 import shutil
 import zipfile
-from typing import List
-from typing import Optional
+from typing import List, Optional
 
 from django import urls
 from django.conf import settings

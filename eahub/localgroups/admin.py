@@ -1,5 +1,4 @@
-from typing import List
-from typing import Optional
+from typing import List, Optional
 
 from django.contrib import admin
 from import_export import fields
@@ -9,8 +8,7 @@ from import_export.widgets import ManyToManyWidget
 
 from eahub.base.models import User
 from eahub.base.utils import ExportCsvMixin
-from eahub.localgroups.models import LocalGroup
-from eahub.localgroups.models import LocalGroupType
+from eahub.localgroups.models import LocalGroup, LocalGroupType
 
 
 class LocalGroupResource(ModelResource):
