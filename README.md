@@ -66,7 +66,7 @@ You must run this before sending a pull request or else it will be automatically
 You can also automatically sort your imports:
 
 ```
-$ docker-compose run --rm web isort -rc --atomic .
+$ docker-compose run --rm web isort -rc --atomic eahub
 ```
 
 # Deploying
