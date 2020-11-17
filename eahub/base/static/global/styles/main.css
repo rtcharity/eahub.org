@@ -166,14 +166,20 @@ body {
 }
 
 .navbar-menu {
-  background-color: rgba(81, 43, 82, 0.9);
-  border-radius: 5px;
-  display: none;
-  float: right;
-  padding-left: 20px;
-  padding-right: 5px;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+  background-color: white;
+  position: absolute;
+  right: 30px;
+  left: initial;
+    z-index: 1000;
+    display: none;
+    min-width: 178px;
+    padding: .5rem 0;
+    margin: .125rem 0 0;
+    color: #333;
+    text-align: left;
+    list-style: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,0.15);
 }
 .navbar-menu-container {
   left: 0;
@@ -197,7 +203,7 @@ body {
 }
 .navbar-nav li a {
   padding: 5px 15px 5px 0px;
-  color: white;
+  color: black;
   text-decoration: none;
 }
 .navbar-nav li:hover {
@@ -211,9 +217,7 @@ body {
 .navbar-nav {
   display: inline-block;
   float: none!important;
-  margin-right: 0px !important;
-  margin-top: 7.5px;
-  text-align: right;
+  padding: 10px 16px;
   width: 100%;
 }
 
