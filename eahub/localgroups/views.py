@@ -94,6 +94,7 @@ class ReportGroupAbuseView(ReportAbuseView):
     def get_type(self):
         return "group"
 
+
 class SendGroupMessageView(SendMessageView):
     def get_recipient(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
@@ -102,7 +103,7 @@ class SendGroupMessageView(SendMessageView):
     def get_recipient_email(self):
         local_group = LocalGroup.objects.get(slug=self.kwargs["slug"])
         if local_group.email == "":
-            return local_group.organisers_emails().split(" ")
+            return [user.email for user in local_group.organisers.all()]
         else:
             return [local_group.email]
 
