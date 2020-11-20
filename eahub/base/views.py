@@ -251,31 +251,19 @@ class SendMessageView(FormView):
 
     def recipient(self):
         return self.get_recipient()
-    
-    def form_valid(self, form):
-        message = form.cleaned_data
-        type = self.get_type()
-        current_user = self.request.user
 
-        # adds the group name to the subject line on emails to groups for clarity
-        def addressee(self):
-            if type == "group":
-                return self.recipient().name
-            else:
-                return "you"
-      
-        subject = f"{current_user.profile.name} sent {addressee(self)} a message through the Effective Altruism hub."
+    def form_valid(self, form):
         send_mail(
-            subject,
-            message,
-            current_user.email,
+            f"{self.request.user.profile.name} sent {self.recipient().name if self.get_type() is 'GROUP' else 'you'} a message through the EA hub.",
+            form.cleaned_data,
+            self.request.user.email,
             self. get_recipient_email()
         )
         messages.success(
             self.request,
             "Your message to " + self.recipient().name + " has been sent"
         )
-        return redirect("/{0}/{1}".format(type, self.recipient().slug))
+        return redirect(reverse(self.get_type(), args=([self.recipient().slug])))
 
 
 def health_check(request):

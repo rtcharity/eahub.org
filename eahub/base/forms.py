@@ -23,7 +23,7 @@ class ReportAbuseForm(forms.Form):
 
 class SendMessageForm(forms.Form):
     your_message = forms.CharField(
-        label='Your message', max_length=10000, widget=forms.Textarea(attrs={"rows": 5, "cols": 20}))
+        label='Your message', max_length=10000, widget=forms.Textarea)
 
     def clean(self):
         cleaned_data = super(SendMessageForm, self).clean()
