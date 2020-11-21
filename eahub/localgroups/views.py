@@ -96,6 +96,9 @@ class ReportGroupAbuseView(ReportAbuseView):
 
 
 class SendGroupMessageView(SendMessageView):
+
+    receiver_type = "group"
+
     def get_recipient(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 
@@ -106,9 +109,6 @@ class SendGroupMessageView(SendMessageView):
             return [user.email for user in local_group.organisers.all()]
         else:
             return [local_group.email]
-
-    def get_type(self):
-        return "group"
 
 
 @login_required

@@ -19,6 +19,8 @@ from ..profiles.models import Profile
 from .forms import ReportAbuseForm
 from .forms import SendMessageForm
 
+from enum import Enum
+
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
     template_name = "account/password_reset_from_key.html"
@@ -245,7 +247,13 @@ class ReportAbuseView(FormView):
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
 
+class MessageReceiverType(Enum):
+    GROUP = "group"
+    PROFILE = "profile"
+
+
 class SendMessageView(FormView):
+    receiver_type: MessageReceiverType
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
@@ -254,7 +262,7 @@ class SendMessageView(FormView):
 
     def form_valid(self, form):
         send_mail(
-            f"{self.request.user.profile.name} sent {self.recipient().name if self.get_type() is 'GROUP' else 'you'} a message through the EA hub.",
+            f"{self.request.user.profile.name} sent {self.recipient().name if self.receiver_type is MessageReceiverType.GROUP.value else 'you'} a message through the EA hub.",
             form.cleaned_data,
             self.request.user.email,
             self. get_recipient_email()
@@ -263,7 +271,7 @@ class SendMessageView(FormView):
             self.request,
             "Your message to " + self.recipient().name + " has been sent"
         )
-        return redirect(reverse(self.get_type(), args=([self.recipient().slug])))
+        return redirect(reverse(self.receiver_type, args=([self.recipient().slug])))
 
 
 def health_check(request):

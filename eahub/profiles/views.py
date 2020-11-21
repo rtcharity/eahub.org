@@ -79,15 +79,16 @@ class ReportProfileAbuseView(ReportAbuseView):
     def get_type(self):
         return "profile"
 
+
 class SendProfileMessageView(SendMessageView):
+
+    receiver_type = "profile"
+
     def get_recipient(self):
         return Profile.objects.get(slug=self.kwargs["slug"])
-    
+
     def get_recipient_email(self):
         return [Profile.objects.get(slug=self.kwargs["slug"]).user.email]
-
-    def get_type(self):
-        return "profile"
 
 
 @login_required
