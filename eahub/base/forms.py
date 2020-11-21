@@ -29,9 +29,4 @@ class SendMessageForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(SendMessageForm, self).clean()
-        if not cleaned_data["your_message"]:
-            self._errors["your_message"] = [
-                cleaned_data["your_message"]
-            ]  # Will raise a error message
-        else:
-            return cleaned_data
+        return cleaned_data
