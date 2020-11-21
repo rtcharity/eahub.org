@@ -51,48 +51,56 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-header">
           <div class="container">
-          <button type="button" id="navbar-toggle-icon" class="navbar-toggle navbar-toggle-down">
-            <span class="navbar-toggle-icon-bootstrap3"></span>
-          </button>
-          <ul class="navbar-signup-md">
-            {% if user.is_authenticated %}
-              <li><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+            <div class="brand">
+            {% if page_name in 'Profiles,Groups,Speakers,Candidates,Volunteers' %}
+              <a href="/"><img class="logo_with_page_name" id="logo" src="/static/global/images/logo_transparent.png" /></a>
+              <h4> /{{ page_name }}</h4>
+            {% elif page_name == 'Home' %}
+              <a href="/"><img class="logo_full" id="logo" src="/static/global/images/logo_full_transparent.png" /></a>
             {% else %}
-            {% if 'groups.eahub.org' not in request.build_absolute_uri %}
-              <li><a href="{% url 'account_login' %}?next={% firstof request.path '/' %}" id="navbar_login" ><i class="fa fa-sign-in-alt"></i> Log In</a></li>
-              <li><a href="{% url 'account_signup' %}" id="navbar_signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+              <a href="/"><img class="logo" id="logo" src="/static/global/images/logo_transparent.png" /></a>
             {% endif %}
-            {% endif %}
-            {% if page_name == 'Groups' %}
-              <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
-            {% endif %}
-          </ul>
+            </div>
+          <button type="button" id="burger-btn" class="menu-toggle">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div id="navbar-collapsable">
+            <ul class="navbar-signup-md">
+              {% if user.is_authenticated %}
+                <li><a href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+              {% else %}
+              {% if 'groups.eahub.org' not in request.build_absolute_uri %}
+                <li><a href="{% url 'account_login' %}?next={% firstof request.path '/' %}" id="navbar_login" ><i class="fa fa-sign-in-alt"></i> Log In</a></li>
+                <li><a href="{% url 'account_signup' %}" id="navbar_signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>
+              {% endif %}
+              {% endif %}
+              {% if page_name == 'Groups' %}
+                <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
+              {% endif %}
+              <li>
+                <button type="button" id="menu-toggle-icon" class="menu-toggle menu-toggle-down">
+                  <span class="menu-toggle-icon-bootstrap3"></span>
+                </button>
+                  <div id="dropdown" class="navbar-menu">
+                    <ul class="nav navbar-nav navbar-right">
+                      <li><a name="navbar_link" id="navbar_resources" href="https://resources.eahub.org/"><i class="fa fa-book"></i> EA Resources</a></li>
+                      <li><a name="navbar_link" id="navbar_donation_swap" href="https://donationswap.eahub.org/"><i class="fa fa-exchange-alt"></i> EA Donation Swap</a></li>
+                      <li><a name="navbar_link" id="navbar_about" href="{% url 'about' %}"><i class="fa fa-info"></i> About</a></li>
+                      <li><a name="navbar_link" id="navbar_feedback" target="_blank" href="https://feedback.eahub.org"><i class="fa fa-comment"></i> Feedback</a></li>
+                      {% if user.is_authenticated %}
+                        <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-out-alt" id="logout"></i> Log out</a></li>
+                      {% endif %}
+                    </ul>
+                  </div>
+              </li>
+            </ul>
 
-          {% if page_name in 'Profiles,Groups,Speakers,Candidates,Volunteers' %}
-            <a href="/"><img class="logo_with_page_name" id="logo" src="/static/global/images/logo_transparent.png" /></a>
-            <h4> / {{ page_name }}</h4>
-          {% elif page_name == 'Home' %}
-            <a href="/"><img class="logo_full" id="logo" src="/static/global/images/logo_full_transparent.png" /></a>
-          {% else %}
-            <a href="/"><img class="logo" id="logo" src="/static/global/images/logo_transparent.png" /></a>
-          {% endif %}
-
+          </div>
           </div>
         </div>
     </nav>
-     <div class="container navbar-menu-container">
-      <div id="navbar" class="navbar-menu">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a name="navbar_link" id="navbar_resources" href="https://resources.eahub.org/"><i class="fa fa-book"></i> EA Resources</a></li>
-          <li><a name="navbar_link" id="navbar_donation_swap" href="https://donationswap.eahub.org/"><i class="fa fa-exchange-alt"></i> EA Donation Swap</a></li>
-          <li><a name="navbar_link" id="navbar_about" href="{% url 'about' %}"><i class="fa fa-info"></i> About</a></li>
-          <li><a name="navbar_link" id="navbar_feedback" target="_blank" href="https://feedback.eahub.org"><i class="fa fa-comment"></i> Feedback</a></li>
-          {% if user.is_authenticated %}
-            <li class="list-more-item"><a name="navbar_link" href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"><i class="fa fa-sign-out-alt" id="logout"></i> Log out</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
     {% block content %}{% endblock %}
     <footer class="footer">
       <div class="container">
