@@ -257,21 +257,20 @@ class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
-    def recipient(self):
-        return self.get_recipient()
-
     def form_valid(self, form):
+        message: dict = form.cleaned_data["your_message"]
+        sender_email: dict = form.cleaned_data["your_email_address"]
         send_mail(
-            f"{self.request.user.profile.name} sent {self.recipient().name if self.receiver_type is MessageReceiverType.GROUP.value else 'you'} a message through the EA hub.",
-            form.cleaned_data,
-            self.request.user.email,
+            f"{self.request.user.profile.name} sent {self.get_recipient().name if self.receiver_type is MessageReceiverType.GROUP.value else 'you'} a message through the EA hub.",
+            message,
+            sender_email,
             self. get_recipient_email()
         )
         messages.success(
             self.request,
-            "Your message to " + self.recipient().name + " has been sent"
+            "Your message to " + self.get_recipient().name + " has been sent"
         )
-        return redirect(reverse(self.receiver_type, args=([self.recipient().slug])))
+        return redirect(reverse(self.receiver_type, args=([self.get_recipient().slug])))
 
 
 def health_check(request):
