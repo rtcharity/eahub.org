@@ -9,7 +9,7 @@
 {% block form_fields %}
 <div id="send_message">
 
-<p>Send a message to <b>{{ view.recipient.name }}</b></p>
+<p>Send a message to <b>{{ view.get_recipient.name }}</b></p>
 
 {{ form| crispy }}
 
