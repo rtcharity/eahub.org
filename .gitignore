@@ -88,6 +88,7 @@ ENV/
 # dev files
 .DS_Store
 .idea
+media/
 
 # JS dependencies
 node_modules
