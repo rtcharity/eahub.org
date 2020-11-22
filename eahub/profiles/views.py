@@ -6,7 +6,7 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from ..base.models import User
-from ..base.views import (ReportAbuseView, SendMessageView)
+from ..base.views import ReportAbuseView, SendMessageView
 from ..localgroups.models import LocalGroup
 from .forms import (
     DeleteProfileForm,

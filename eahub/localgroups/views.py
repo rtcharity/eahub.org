@@ -12,7 +12,7 @@ from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
 
-from ..base.views import (ReportAbuseView, SendMessageView)
+from ..base.views import ReportAbuseView, SendMessageView
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
