@@ -9,22 +9,18 @@ Backend for [https://eahub.org](https://eahub.org)
 - Make sure to have Docker Compose 3 and Nodejs 10.X installed.
 - npm ci
 - npm run build-watch
-- docker-compose run --rm web django-admin migrate
+- docker-compose run --rm web django-admin migrate (only necessary when you're setting it up for the first time or pulled python migration changes)
 - docker-compose up
 
 If everything went well, you should be able to get the Hub at http://localhost:8000
 
-If the Dockerfile has changed since last time you did this, you'll need to run
-`docker-compose up --build` or `docker-compose build`.
+If requirements.txt or Dockerfile have changed since last time you built the project, you'll need to run `docker-compose build`.
 
 If `package.json` changes - run `npm install` to generate a new `package-json.lock`.
 
-If the database schema has changed since last time, you'll need to run
-`docker-compose run --rm web django-admin migrate`.
-
 You can access the email server at localhost:1080.
 
-### Pulling the db & media to your local instance
+### Pulling the db & media to your local instance [optional]
 - receive access to https://control.divio.com/control/71735/edit/88402/
 - add an ssh key to your profile https://control.divio.com/account/ssh-keys/
 - cp .divio/config-example.json .divio/config.json
