@@ -1,3 +1,5 @@
+from enum import Enum
+
 from allauth.account import app_settings, utils
 from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
@@ -16,10 +18,7 @@ from django.views.generic.edit import FormView
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
-from .forms import ReportAbuseForm
-from .forms import SendMessageForm
-
-from enum import Enum
+from .forms import ReportAbuseForm, SendMessageForm
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -264,11 +263,11 @@ class SendMessageView(FormView):
             f"{self.request.user.profile.name} sent {self.get_recipient().name if self.receiver_type is MessageReceiverType.GROUP.value else 'you'} a message through the EA hub.",
             message,
             sender_email,
-            self. get_recipient_email()
+            self.get_recipient_email(),
         )
         messages.success(
             self.request,
-            "Your message to " + self.get_recipient().name + " has been sent"
+            "Your message to " + self.get_recipient().name + " has been sent",
         )
         return redirect(reverse(self.receiver_type, args=([self.get_recipient().slug])))
 
