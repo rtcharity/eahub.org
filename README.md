@@ -31,6 +31,8 @@ If the database schema has changed since last time, you'll need to run
 - divio project pull db test
 - divio project pull media test
 
+You can also push the db & media, but don't do it without getting the approval from Sebastian or Victor.
+
 You can drop the local and test server db though running:
 - docker-compose stop db
 - docker-compose rm db
