@@ -22,6 +22,8 @@ If `package.json` changes - run `npm install` to generate a new `package-json.lo
 If the database schema has changed since last time, you'll need to run
 `docker-compose run --rm web django-admin migrate`.
 
+You can access the email server at localhost:1080.
+
 ### Pulling the db & media to your local instance
 - receive access to https://control.divio.com/control/71735/edit/88402/
 - add an ssh key to your profile https://control.divio.com/account/ssh-keys/
