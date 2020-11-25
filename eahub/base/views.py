@@ -263,8 +263,13 @@ class SendMessageView(FormView):
             "emails/message_group.txt",
             {"message": message, "group_name": self.get_recipient().name},
         )
+        recipient = (
+            self.get_recipient().name
+            if self.receiver_type is MessageReceiverType.GROUP.value
+            else "you"
+        )
         send_mail(
-            f"{sender_email} sent {self.get_recipient().name if self.receiver_type is MessageReceiverType.GROUP.value else 'you'} a message through the EA hub.",
+            f"{sender_email} sent {recipient} a message through the EA hub.",
             group_email_template
             if self.receiver_type is MessageReceiverType.GROUP.value
             else message,
