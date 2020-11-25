@@ -59,8 +59,12 @@ Then run
 
 # Formatting Code
 ```
-$ docker-compose run web black .
+$ docker-compose run web black eahub
 ```
+```
+docker-compose run web black eahub
+```
+
 You must run this before sending a pull request or else it will be automatically blocked from merging.
 
 You can also automatically sort your imports:
