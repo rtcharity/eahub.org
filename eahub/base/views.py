@@ -1,5 +1,3 @@
-from enum import Enum
-
 from allauth.account import app_settings, utils
 from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
@@ -246,41 +244,9 @@ class ReportAbuseView(FormView):
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
 
-class MessageReceiverType(Enum):
-    GROUP = "group"
-    PROFILE = "profile"
-
-
 class SendMessageView(FormView):
-    receiver_type: MessageReceiverType
     template_name = "eahub/message.html"
     form_class = SendMessageForm
-
-    def form_valid(self, form):
-        message: dict = form.cleaned_data["your_message"]
-        sender_email: dict = form.cleaned_data["your_email_address"]
-        group_email_template = render_to_string(
-            "emails/message_group.txt",
-            {"message": message, "group_name": self.get_recipient().name},
-        )
-        recipient = (
-            self.get_recipient().name
-            if self.receiver_type is MessageReceiverType.GROUP.value
-            else "you"
-        )
-        send_mail(
-            f"{sender_email} sent {recipient} a message through the EA hub.",
-            group_email_template
-            if self.receiver_type is MessageReceiverType.GROUP.value
-            else message,
-            sender_email,
-            self.get_recipient_email(),
-        )
-        messages.success(
-            self.request,
-            "Your message to " + self.get_recipient().name + " has been sent",
-        )
-        return redirect(reverse(self.receiver_type, args=([self.get_recipient().slug])))
 
 
 def health_check(request):
