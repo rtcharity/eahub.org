@@ -28,7 +28,3 @@ class SendMessageForm(forms.Form):
     your_email_address = forms.CharField(
         label="Your email address", max_length=10000, widget=forms.EmailInput
     )
-
-    def clean(self):
-        cleaned_data = super(SendMessageForm, self).clean()
-        return cleaned_data
