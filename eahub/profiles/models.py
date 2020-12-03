@@ -24,24 +24,44 @@ from ..localgroups.models import LocalGroup
 
 class CauseArea(enum.Enum):
 
-    GLOBAL_POVERTY = 1
-    ANIMAL_WELFARE_AND_RIGHTS = 2
+    GLOBAL_HEALTH_AND_DEVELOPMENT = 1
+    FARMED_ANIMAL_WELFARE = 2
     LONG_TERM_FUTURE = 3
-    CAUSE_PRIORITISATION = 4
-    META = 5
+    GLOBAL_PRIORITIES_RESEARCH = 4
+    BUILDING_EA_COMMUNITIES = 5
     CLIMATE_CHANGE = 6
-    MENTAL_HEALTH = 7
+    MENTAL_HEALTH_AND_HAPPINESS = 7
     RATIONALITY = 8
+    AI_SAFETY_AND_TECHNICAL_RESEARCH = 9
+    AI_STRATEGY_AND_POLICY = 10
+    BIORISK_STRATEGY_AND_POLICY = 11
+    GLOBAL_COORDINATION_AND_PEACE_BUILDING = 12
+    IMPROVING_INSTITUTIONAL_DECISION_MAKING = 13
+    CLIMATE_CHANGE = 14
+    WILD_ANIMAL_WELFARE = 15
+    OTHER_POLICY_REFORMS = 16
+    OTHER_EXISTENTIAL_RISKS = 17
 
     labels = {
-        GLOBAL_POVERTY: "Global poverty",
-        ANIMAL_WELFARE_AND_RIGHTS: "Animal welfare/rights",
         LONG_TERM_FUTURE: "Long-term future",
-        CAUSE_PRIORITISATION: "Cause prioritisation",
-        META: "Meta",
+        GLOBAL_HEALTH_AND_DEVELOPMENT: "Global health and development",
+        GLOBAL_PRIORITIES_RESEARCH: "Global priorities research",
+        BUILDING_EA_COMMUNITIES: "Building EA communities",
         CLIMATE_CHANGE: "Climate change",
-        MENTAL_HEALTH: "Mental health",
+        MENTAL_HEALTH_AND_HAPPINESS: "Mental health/happiness",
         RATIONALITY: "Rationality",
+        AI_SAFETY_AND_TECHNICAL_RESEARCH: "AI stratgey",
+        AI_STRATEGY_AND_POLICY: "AI strategy and policy",
+        BIORISK_STRATEGY_AND_POLICY: "Biorisk strategy and policy",
+        GLOBAL_COORDINATION_AND_PEACE_BUILDING:
+        "Global coordination and peace-building",
+        IMPROVING_INSTITUTIONAL_DECISION_MAKING:
+        "Improving institutional decision-making",
+        CLIMATE_CHANGE: "Climate change",
+        FARMED_ANIMAL_WELFARE: "Farmed animal welfare",
+        WILD_ANIMAL_WELFARE: "Wild animal welfare",
+        OTHER_POLICY_REFORMS: "Other policy reforms",
+        OTHER_EXISTENTIAL_RISKS: "Other existential risks",
     }
 
 
