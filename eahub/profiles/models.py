@@ -53,10 +53,8 @@ class CauseArea(enum.Enum):
         AI_SAFETY_AND_TECHNICAL_RESEARCH: "AI stratgey",
         AI_STRATEGY_AND_POLICY: "AI strategy and policy",
         BIORISK_STRATEGY_AND_POLICY: "Biorisk strategy and policy",
-        GLOBAL_COORDINATION_AND_PEACE_BUILDING:
-        "Global coordination and peace-building",
-        IMPROVING_INSTITUTIONAL_DECISION_MAKING:
-        "Improving institutional decision-making",
+        GLOBAL_COORDINATION_AND_PEACE_BUILDING: "Global coordination and peace-building",
+        IMPROVING_INSTITUTIONAL_DECISION_MAKING: "Improving institutional decision-making",
         CLIMATE_CHANGE: "Climate change",
         FARMED_ANIMAL_WELFARE: "Farmed animal welfare",
         WILD_ANIMAL_WELFARE: "Wild animal welfare",
