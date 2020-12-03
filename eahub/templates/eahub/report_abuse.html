@@ -3,6 +3,11 @@
 
 {% block title %}Report abuse{% endblock %}
 
+{% block header %}
+  {{ block.super }}
+  <meta name="robots" content="noindex">
+{% endblock %}
+
 
 {% load crispy_forms_tags %}
 
