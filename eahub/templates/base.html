@@ -77,6 +77,9 @@
               {% if page_name == 'Groups' %}
                 <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
               {% endif %}
+              {% if page_name == 'Profiles' %}
+                <li><a href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
+              {% endif %}
               <li>
                 <button type="button" id="menu-toggle-icon" class="menu-toggle menu-toggle-down">
                   <span class="menu-toggle-icon-bootstrap3"></span>
