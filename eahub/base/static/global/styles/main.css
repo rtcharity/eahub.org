@@ -120,6 +120,12 @@ body {
   display: flex;
   align-items: center;
 }
+.navbar {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  height: 36px;
+  background-color: #7bb0a8 !important;
+}
 .navbar h4 {
   color: white;
   display: inline-block;
@@ -148,13 +154,10 @@ body {
   align-items: center;
 }
 .navbar .logo {
-  margin-top: 12px;
+  margin-top: 0px;
 }
 .navbar .logo_full {
   width: 220px
-}
-.navbar .logo_with_page_name {
-  margin-top: 0px;
 }
 .navbar-header {
   background-color: #7bb0a8;
@@ -176,7 +179,7 @@ body {
 .navbar-menu {
   background-color: white;
   position: absolute;
-  top: 38px;
+  top: 34px;
   right: 0;
   left: initial;
   z-index: 1000;
@@ -258,7 +261,7 @@ body {
   list-style: none;
 }
 .navbar-signup-md li {
-  padding: 8px 0px;
+  padding: 4px 0px 8px;
   position: relative;
 }
 .navbar-signup-xs {
@@ -269,7 +272,7 @@ body {
   background: transparent;
   position: absolute;
   right: 10px;
-  top: 8px;
+  top: 14px;
 }
 #burger-icon {
   float: right;
@@ -921,6 +924,7 @@ table td {
   }
   .navbar-signup-md li {
     display: block;
+    padding-top: 8px 0px;
   }
   #menu-toggle-icon {
     padding-left: 0;
