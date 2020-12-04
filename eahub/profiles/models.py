@@ -406,11 +406,11 @@ class Profile(models.Model):
                             map(GivingPledge.label, self.giving_pledges)
                         ),
                         "member_of_local_groups": [
-                            request.build_absolute_uri(local_group.get_absolute_uri())
+                            request.build_absolute_uri(local_group.get_absolute_url())
                             for local_group in self.local_groups.all()
                         ],
                         "organiser_of_local_groups": [
-                            request.build_absolute_uri(local_group.get_absolute_uri())
+                            request.build_absolute_uri(local_group.get_absolute_url())
                             for local_group in self.user.localgroup_set.all()
                         ],
                         "aliases": [
