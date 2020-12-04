@@ -35,12 +35,11 @@ class CauseArea(enum.Enum):
     AI_SAFETY_AND_TECHNICAL_RESEARCH = 9
     AI_STRATEGY_AND_POLICY = 10
     BIORISK_STRATEGY_AND_POLICY = 11
-    GLOBAL_COORDINATION_AND_PEACE_BUILDING = 12
-    IMPROVING_INSTITUTIONAL_DECISION_MAKING = 13
-    CLIMATE_CHANGE = 14
-    WILD_ANIMAL_WELFARE = 15
-    OTHER_POLICY_REFORMS = 16
-    OTHER_EXISTENTIAL_RISKS = 17
+    GLOBAL_COORDINATION_AND_PEACE = 12
+    IMPROVING_INSTITUTIONAL_DECISIONS = 13
+    WILD_ANIMAL_WELFARE = 14
+    OTHER_POLICY_REFORMS = 15
+    OTHER_EXISTENTIAL_RISKS = 16
 
     labels = {
         LONG_TERM_FUTURE: "Long-term future",
@@ -50,12 +49,11 @@ class CauseArea(enum.Enum):
         CLIMATE_CHANGE: "Climate change",
         MENTAL_HEALTH_AND_HAPPINESS: "Mental health/happiness",
         RATIONALITY: "Rationality",
-        AI_SAFETY_AND_TECHNICAL_RESEARCH: "AI stratgey",
+        AI_SAFETY_AND_TECHNICAL_RESEARCH: "AI safety and technical research",
         AI_STRATEGY_AND_POLICY: "AI strategy and policy",
         BIORISK_STRATEGY_AND_POLICY: "Biorisk strategy and policy",
-        GLOBAL_COORDINATION_AND_PEACE_BUILDING: "Global coordination and peace-building",
-        IMPROVING_INSTITUTIONAL_DECISION_MAKING: "Improving institutional decision-making",
-        CLIMATE_CHANGE: "Climate change",
+        GLOBAL_COORDINATION_AND_PEACE: "Global coordination and peace-building",
+        IMPROVING_INSTITUTIONAL_DECISIONS: "Improving institutional decision-making",
         FARMED_ANIMAL_WELFARE: "Farmed animal welfare",
         WILD_ANIMAL_WELFARE: "Wild animal welfare",
         OTHER_POLICY_REFORMS: "Other policy reforms",

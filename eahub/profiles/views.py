@@ -110,6 +110,11 @@ def edit_profile(request):
     )
 
 
+def reorder_cause_areas(causes):
+    order = [8, 9, 10, 11, 12, 5, 6, 0, 1, 13, 4, 3, 2, 7, 14, 15]
+    return [causes[i] for i in order]
+
+
 @login_required
 def edit_profile_cause_areas(request):
     if not hasattr(request.user, "profile"):
@@ -132,7 +137,7 @@ def edit_profile_cause_areas(request):
         {
             "form": form,
             "profile": Profile.objects.get(pk=request.user.profile.id),
-            "cause_area_choices": CauseArea.choices,
+            "cause_area_choices": reorder_cause_areas(CauseArea.choices()),
             "giving_pledge_choices": GivingPledge.choices,
         },
     )
