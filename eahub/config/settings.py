@@ -75,11 +75,11 @@ USE_TZ = True
 # Core settings: HTTP
 ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1"]
 MIDDLEWARE = [
-    "django.middleware.cache.UpdateCacheMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
     "django_feature_policy.FeaturePolicyMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
