@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`);
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
+
 
 const config = {
   mode: 'production',
@@ -147,10 +149,20 @@ const config = {
 
 const isDevelopmentMode = process.env.NODE_ENV !== 'prod';
 if (isDevelopmentMode) {
-    config.mode = 'development';
-    config.devtool = 'eval-source-map';
-    config.output.filename = '[name].bundle.js';
-    config.output.publicPath = 'http://localhost:8090/assets/';
+  config.mode = 'development';
+  config.devtool = 'eval-source-map';
+  config.output.filename = '[name].bundle.js';
+  config.output.publicPath = 'http://localhost:8090/assets/';
+} else {
+  config.plugins.push(
+    new SentryWebpackPlugin({
+      authToken: 'ad1dea680dac46859cd380b7e18ed48769af9779fcc648d1844d3035e002e6e6',
+      org: 'eahub',
+      project: 'eahub-front',
+      include: '.',
+      ignore: ['node_modules', 'webpack.config.js'],
+    }),
+  )
 }
 
 const isDockerMode = process.env.NODE_ENV === 'docker';

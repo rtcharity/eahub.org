@@ -63,6 +63,9 @@
     "instantsearch.js": "^4.7.0",
     "vue-instantsearch": "^3.1.0",
     "vue-server-renderer": "^2.6.11",
+    "@sentry/browser": "^5.28.0",
+    "@sentry/tracing": "^5.28.0",
+    "@sentry/webpack-plugin": "^1.14.0",
     "v-tooltip": "^2.0.3",
     "bootstrap": "^5.0.0-alpha2",
     "popper.js": "^1.0.0"

@@ -19,3 +19,13 @@ faDownload, faTrash, faEnvelopeSquare);
 
 // Replace any existing <i> tags with <svg>
 dom.i2svg();
+
+
+import * as Sentry from "@sentry/browser";
+import { Integrations } from "@sentry/tracing";
+
+Sentry.init({
+    dsn: "https://f439be67331248918a9e6f35965bb6a6@o487305.ingest.sentry.io/5545929",
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
+});
