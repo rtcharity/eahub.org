@@ -24,12 +24,18 @@ $spacing-xxs: 5px;
             input {
                 font-size: 1.3rem;
             }
+            @include media-breakpoint-down(sm) {
+                display: none;
+            }
         }
     }
     .navbar__search-input {
         width: auto;
         min-width: 200px;
         margin-left: auto;
+        @include media-breakpoint-down(sm) {
+            min-width: 100px;
+        }
 
         input {
             cursor: text;
