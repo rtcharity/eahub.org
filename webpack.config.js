@@ -161,6 +161,7 @@ if (isDevelopmentMode) {
       project: 'eahub-front',
       include: '.',
       ignore: ['node_modules', 'webpack.config.js'],
+      release: '1.0.0',
     }),
   )
 }
