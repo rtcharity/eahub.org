@@ -53,7 +53,7 @@ else:
     }
 
     sentry_sdk.init(
-        dsn="https://4748be7234b54b69966c7a2091ddb26e@o463416.ingest.sentry.io/5468410",
+        dsn="https://181e4af66382426fb05bd3133031468a@o487305.ingest.sentry.io/5545943",
         integrations=[DjangoIntegration()],
         traces_sample_rate=1.0,
         # If you wish to associate users to errors (assuming you are using
