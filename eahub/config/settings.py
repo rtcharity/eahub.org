@@ -72,6 +72,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "applicationinsights.django.ApplicationInsightsMiddleware",
+    "maintenance_mode.middleware.MaintenanceModeMiddleware",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -145,6 +146,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "sekizai.context_processors.sekizai",
                 "django_settings_export.settings_export",
+                "maintenance_mode.context_processors.maintenance_mode",
             ]
         },
     }
@@ -294,3 +296,5 @@ else:
         "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
         "provided together"
     )
+
+MAINTENANCE_MODE = True
