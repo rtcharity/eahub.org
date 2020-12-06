@@ -62,7 +62,7 @@ urlpatterns = [
         {
             "sitemaps": {
                 "profiles": ProfilesSitemap({"queryset": Profile.objects.all()})
-            },
+            }
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
