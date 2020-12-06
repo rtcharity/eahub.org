@@ -73,7 +73,7 @@ USE_L10N = True
 USE_TZ = True
 
 # Core settings: HTTP
-ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1"]
+ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1", "*"]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
