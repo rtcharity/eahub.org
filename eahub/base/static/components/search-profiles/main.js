@@ -15,6 +15,7 @@ const AppChild = Vue.extend({
                 algoliaApiKey: this.$el.parentElement.getAttribute('algolia-api-key'),
                 algoliaApplicationId: this.$el.parentElement.getAttribute('algolia-application-id'),
                 algoliaIndex: this.$el.parentElement.getAttribute('algolia-index'),
+                profileEmptyImagesRaw: this.$el.parentElement.getAttribute('profile-empty-images-raw'),
             }
         })
     },

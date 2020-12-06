@@ -51,6 +51,8 @@ else:
             "LOCATION": "cache",
         }
     }
+    CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24
+    WHITENOISE_MAX_AGE = 60 * 60 * 24 * 30
 
     sentry_sdk.init(
         dsn="https://181e4af66382426fb05bd3133031468a@o487305.ingest.sentry.io/5545943",

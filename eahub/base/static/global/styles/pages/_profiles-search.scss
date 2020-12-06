@@ -373,7 +373,16 @@ $spacing-xxs: 5px;
                 }
 
                 .search__hit-image {
+                    
                     border-radius: 2px;
+                    &[data-is-empty=true] {
+                        filter: grayscale(1);
+                    }
+                }
+            }
+            &:hover {
+                .search__hit-image[data-is-empty=true] {
+                    filter: grayscale(0);
                 }
             }
 
