@@ -31,4 +31,8 @@ export default class SearchComponent extends Vue {
         router: historyRouter(),
         stateMapping: singleIndexMapping('profiles'),
     }
+    
+    testErrorLogging() {
+        throw Error('test');
+    }
 }
