@@ -8,6 +8,8 @@ from django.db import models
 from django_enumfield import enum
 from geopy import geocoders
 
+from ..base.models import User
+
 
 class LocalGroupType(enum.Enum):
 
@@ -77,10 +79,10 @@ class LocalGroup(models.Model):
     def organisers_names(self):
         profile_names = []
         for user in self.organisers.all():
-            if user.profile:
+            try:
                 profile_names.append(user.profile.name)
-            else:
-                profile_names.append("N/A")
+            except User.profile.RelatedObjectDoesNotExist:
+                profile_names.append("User profile missing")
         return ", ".join(profile_names)
 
     def organisers_emails(self):
