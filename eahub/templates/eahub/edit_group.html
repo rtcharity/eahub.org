@@ -33,9 +33,11 @@
 {% if form.instance.pk %}
   <div class="panel panel-default">
     <div class="panel-body">
-      <div class="btn btn-default">
-        <a href="{% url 'localgroups_delete' form.instance.slug %}">Delete this group</a>
-      </div>
+      <a href="{% url 'localgroups_delete' form.instance.slug %}">
+        <div class="btn btn-default">
+          Delete this group
+        </div>
+      </a>
     </div>
   </div>
 {% endif %}
