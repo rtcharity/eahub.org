@@ -10,7 +10,7 @@ git+git://github.com/rtcharity/django-environ@develop#egg=django-environ
 git+git://github.com/rtcharity/django-authtools@master#egg=django-authtools
 django-redis==4.10.0
 hiredis==1.0.0
-Pillow==6.2.0
+Pillow==7.1.0
 sorl-thumbnail==12.5.0
 django-cleanup==3.0.1
 django-upload-path==0.1.1
