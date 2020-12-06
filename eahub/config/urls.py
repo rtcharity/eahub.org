@@ -67,5 +67,4 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
     path("", include("eahub.config.legacy_urls")),
-    url(r'^maintenance-mode/', include('maintenance_mode.urls')),
 ]
