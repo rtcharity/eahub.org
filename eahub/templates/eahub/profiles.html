@@ -23,6 +23,18 @@
          algolia-api-key="{{ settings.ALGOLIA.API_KEY }}"
          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
          algolia-index="profiles"
+         profile-empty-images-raw="
+             {% static 'global/images/avatars/Avatar0.jpg' %},
+             {% static 'global/images/avatars/Avatar1.jpg' %},
+             {% static 'global/images/avatars/Avatar2.jpg' %},
+             {% static 'global/images/avatars/Avatar3.jpg' %},
+             {% static 'global/images/avatars/Avatar4.jpg' %},
+             {% static 'global/images/avatars/Avatar5.jpg' %},
+             {% static 'global/images/avatars/Avatar6.jpg' %},
+             {% static 'global/images/avatars/Avatar7.jpg' %},
+             {% static 'global/images/avatars/Avatar8.jpg' %},
+             {% static 'global/images/avatars/Avatar9.jpg' %},
+         "
     >
       <div class="vue-search-component"></div>
     </div>
