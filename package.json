@@ -37,7 +37,7 @@
     "datatables.net-dt": "^1.10.19",
     "file-loader": "^4.0.0",
     "jasmine": "^3.4.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "knockout": "^3.5.0",
     "svg-url-loader": "^5.0.0",
     "url-loader": "^2.0.0",
