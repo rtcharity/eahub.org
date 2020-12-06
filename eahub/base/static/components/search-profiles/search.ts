@@ -23,6 +23,7 @@ export default class SearchComponent extends Vue {
     @Prop(String) algoliaApiKey: string;
     @Prop(String) algoliaApplicationId: string;
     @Prop(String) algoliaIndex: string;
+    @Prop(String) profileEmptyImagesRaw: string;
 
     @Provide() isSearchPopupVisible: boolean = false;
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
@@ -30,5 +31,12 @@ export default class SearchComponent extends Vue {
     @Provide() routing = {
         router: historyRouter(),
         stateMapping: singleIndexMapping('profiles'),
+    }
+    @Provide() profileEmptyImages: URL[] = [];
+    
+    mounted() {
+        for (const imageUrl of this.profileEmptyImagesRaw.split(',')) {
+            this.profileEmptyImages.push(imageUrl as any as URL);
+        }
     }
 }

@@ -34,7 +34,16 @@
                                 <div class="search__hit row">
                                     <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-5  order-1 order-sm-1 order-md-1 order-lg-1 order-xl-1  col-xxl-3 search__hit-image-wrapper">
                                         <a v-bind:href="item.url">
-                                            <img class="search__hit-image" v-bind:src="item.image" width="150" height="150">
+                                            <img v-if="item.image"
+                                                 class="search__hit-image"
+                                                 height="150"
+                                                 v-bind:src="item.image" width="150">
+                                            <img v-else
+                                                 data-is-empty="true"
+                                                 class="search__hit-image"
+                                                 height="150"
+                                                 v-bind:src="profileEmptyImages[item.objectID % 10]" width="150"
+                                            >
                                         </a>
                                     </div>
                                     <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-2 order-sm-3 order-md-4 order-lg-2  order-xl-2 col-xxl-4 search__hit-details">
