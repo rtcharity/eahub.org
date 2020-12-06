@@ -49,3 +49,4 @@ https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.16.1/b460938a-f357
 django-import-export
 us==2.0.2
 django-admin-rangefilter==0.6.3
+django-maintenance-mode
