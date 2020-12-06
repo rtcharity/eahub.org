@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     "lockdown",
     "import_export",
     "rangefilter",
-    "maintenance_mode",
 ]
 
 # Core settings: security
