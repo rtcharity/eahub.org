@@ -46,3 +46,4 @@ django-settings-export==1.2.1
 django-sekizai==1.1.0
 us==2.0.2
 django-admin-rangefilter==0.6.3
+django-maintenance-mode
