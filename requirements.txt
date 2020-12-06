@@ -1,4 +1,3 @@
-django==2.2.10
 gunicorn==19.9.0
 psycopg2-binary==2.7.6.1
 pytz==2018.9
@@ -9,7 +8,6 @@ geographiclib==1.49
 geopy==1.18.1
 git+git://github.com/rtcharity/django-environ@develop#egg=django-environ
 git+git://github.com/rtcharity/django-authtools@master#egg=django-authtools
-django-storages[azure]==1.8
 django-redis==4.10.0
 hiredis==1.0.0
 Pillow==6.2.0
@@ -23,7 +21,6 @@ django-enumfield==1.5
 django-crispy-forms>=1.7.2
 rules==2.0.1
 pytils==0.3
-mysqlclient==1.4.2.post1
 django-sluggable==0.6.1
 django-allauth==0.39.1
 django-recaptcha==2.0.2
@@ -44,6 +41,11 @@ django-webpack-loader==0.6.0
 django-admin-relation-links==0.2.4
 django-settings-export==1.2.1
 django-sekizai==1.1.0
+sentry-sdk==0.19.0  # no need to freeze
+python-dotenv==0.14.0  # for loading envs outside of docker, no need to freeze
+algoliasearch-django==1.7.2 # for profiles search, no need to freezee
+django-lockdown==3.0.0 # for profiles search, no need to freezee
+https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.16.1/b460938a-f357-49a3-9aef-9dfb40946551/aldryn-django-2.2.16.1.tar.gz#egg=aldryn-django==2.2.16.1
+django-import-export
 us==2.0.2
 django-admin-rangefilter==0.6.3
-django-maintenance-mode

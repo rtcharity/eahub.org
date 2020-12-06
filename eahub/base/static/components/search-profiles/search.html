@@ -1,0 +1,123 @@
+<div class="profiles-search-component">
+    <ais-instant-search
+        :search-client="searchClient"
+        :index-name="algoliaIndex"
+        :routing="routing"
+    >
+        <div class="modal fade" id="search-box-modal" aria-hidden="true" tabindex="-1">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Filters</h5>
+                        <button type="button" class="btn btn-outline-light" data-dismiss="modal">Apply</button>
+                    </div>
+                    <div class="modal-body">
+                        <search-filters/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="d-none d-lg-flex col-lg-6 col-xl-5 col-xxl-4">
+                <search-filters/>
+            </div>
+
+            <div class="col-24 col-lg-18 col-xl-19 col-xxl-20">
+                <ais-state-results>
+                    <template slot-scope="{ state: { query }, results: { hits } }">
+                        <ais-infinite-hits
+                            :class-names="{
+                                'ais-InfiniteHits-list': 'search__hits',
+                            }">
+                            <template slot="item" slot-scope="{ item }">
+                                <div class="search__hit row">
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-5  order-1 order-sm-1 order-md-1 order-lg-1 order-xl-1  col-xxl-3 search__hit-image-wrapper">
+                                        <a v-bind:href="item.url">
+                                            <img class="search__hit-image" v-bind:src="item.image" width="150" height="150">
+                                        </a>
+                                    </div>
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-2 order-sm-3 order-md-4 order-lg-2  order-xl-2 col-xxl-4 search__hit-details">
+                                        <a v-bind:href="item.url" class="search__hit-link">
+                                            <ais-highlight :hit="item" attribute="name"/>
+                                        </a>
+                                        <div class="search__hit-status-block">
+                                            <div class="search__hit-status" v-bind:is-true="item.available_to_volunteer" v-tooltip="'Available to volunteer'">
+                                                <i class="fa fa-hands-helping"></i>
+                                            </div>
+                                            <div class="search__hit-status" v-bind:is-true="item.open_to_job_offers" v-tooltip="'Open to job offers'">
+                                                <i class="fa fa-briefcase"></i>
+                                            </div>
+                                            <div class="search__hit-status" v-bind:is-true="item.available_as_speaker" v-tooltip="'Available as a speaker'">
+                                                <i class="fa fa-chalkboard-teacher"></i>
+                                            </div>
+                                        </div>
+                                        <div class="search__hit-location-block">
+                                            <span>{{ item.country }}</span>
+                                            <span v-if="item.city">, {{ item.city }}</span>
+                                        </div>
+                                        <div class="search__hit-social-link-block">
+                                            <div class="search__hit-social-link" v-if="item.personal_website_url">
+                                                <a v-bind:href="item.personal_website_url">
+                                                    <i class="fa fa-home"></i>
+                                                </a>
+                                            </div>
+                                            <div class="search__hit-social-link" v-if="item.linkedin_url">
+                                                <a v-bind:href="item.linkedin_url">
+                                                    <i class="fab fa-linkedin-in"></i>
+                                                </a>
+                                            </div>
+                                            <div class="search__hit-social-link" v-if="item.email">
+                                                <a v-bind:href="item.email">
+                                                    <i class="fa fa-envelope"></i>
+                                                </a>
+                                            </div>
+                                            <div class="search__hit-social-link" v-if="item.facebook_url">
+                                                <a v-bind:href="item.facebook_url">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="search__hit-local-group-block" v-if="item.local_groups.length">
+                                            <strong>Local groups:</strong>
+                                            <span>{{ item.local_groups.join(', ') }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-24 col-sm-24 col-md-16 col-lg-24 col-xl-24 order-last order-sm-5 order-md-5 order-lg-5 rder-xl-5 order-xxl-3  col-xxl-9 search__hit-summary">
+                                        <div v-if="item.summary" >
+                                            <h5>Summary</h5>
+                                            <ais-snippet :hit="item" attribute="summary"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-4  order-sm-4 order-md-3 order-lg-4 order-xl-4  col-xxl-4 search__hit-skills search__hit-cause">
+                                        <div v-if="item.cause_areas.length">
+                                            <h5>Cause Areas</h5>
+                                            <ul>
+                                                <li v-for="cause in item.cause_areas">{{cause}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-24 col-sm-12 col-md-8 col-lg-6  col-xl-6  order-3  order-sm-2 order-md-2 order-lg-3  order-xl-3 col-xxl-4 search__hit-skills search__hit-expertise">
+                                        <div v-if="item.expertise.length">
+                                            <h5>Areas of Expertise</h5>
+                                            <ul>
+                                                <li v-for="expertise in item.expertise">{{expertise}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template slot="loadMore" slot-scope="{refine, page, isLastPage}">
+                                <button class="btn" v-show="!isLastPage" @click="refine()" v-observe-visibility="refine">Show more results</button>
+                            </template>
+
+                        </ais-infinite-hits>
+                    </template>
+                </ais-state-results>
+            </div>
+
+        </div>
+
+    </ais-instant-search>
+</div>

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block static %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor_bs3.bundle.js"></script>
+    <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor_bs3.css">
+    
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/global_bs3.bundle.js"></script>
+    <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global_bs3.css">
+  {% else %}
+    <script defer src="{% static 'dist/vendor_bs3.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'dist/vendor_bs3.css' %}">
+  
+    <script defer src="{% static 'dist/global_bs3.js' %}"></script>
+    <link  rel="stylesheet" href="{% static 'dist/global_bs3.css' %}">
+  {% endif %}
+{% endblock static %}
