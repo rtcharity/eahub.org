@@ -71,7 +71,10 @@ $spacing-xxs: 5px;
     }
 
     .search__filters {
-
+        
+        .ais-SearchBox-reset {
+            display: none;
+        }
         .search__power-by {
             display: flex;
             width: 100%;
@@ -146,7 +149,7 @@ $spacing-xxs: 5px;
         }
 
         .search__reset-box {
-            margin-top: $spacing-md - 2px;
+            margin-top: $spacing-xl;
 
             .ais-CurrentRefinements {
                 margin: $spacing-sm 0;
