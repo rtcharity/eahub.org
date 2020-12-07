@@ -179,6 +179,19 @@ class OrganisationalAffiliation(enum.Enum):
     THE_LIFE_YOU_CAN_SAVE = 30
     WILD_ANIMAL_INITIATIVE = 31
     ALLFED = 32
+    FUTURE_OF_HUMANITY_INSTITUTE = 33
+    CENTRE_ON_LONG_TERM_RISK = 34
+    ANIMAL_ETHICS = 35
+    GIVING_WHAT_WE_CAN = 36
+    LESS_WRONG = 37
+    HAPPIER_LIVES_INSTITUTE = 38
+    INNOVATIONS_FOR_POVERTY_ACTION = 39
+    JPAL = 40
+    ALL_PARTY_PARLIAMENTARY_GROUP_FOR_FUTURE_GENERATIONS = 41
+    CENTRE_FOR_ENABLING_EA_RESEARCH_AND_LEARNING = 42
+    LEGAL_PRIORITIES_PROJECT = 43
+    SENTIENCE_POLITICS = 44
+    WANBAM = 45
 
     labels = {
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
@@ -213,6 +226,19 @@ class OrganisationalAffiliation(enum.Enum):
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative",
         ALLFED: "ALLFED",
+        FUTURE_OF_HUMANITY_INSTITUTE: "Future of Humanity Institute",
+        CENTRE_ON_LONG_TERM_RISK: "Centre on Long-Term Risk",
+        ANIMAL_ETHICS: "Animal Ethics",
+        GIVING_WHAT_WE_CAN: "Giving What We Can",
+        LESS_WRONG: "Less Wrong",
+        HAPPIER_LIVES_INSTITUTE: "Happier Lives Institute",
+        INNOVATIONS_FOR_POVERTY_ACTION: "Innovations for Poverty Action",
+        JPAL: "J-PAL",
+        ALL_PARTY_PARLIAMENTARY_GROUP_FOR_FUTURE_GENERATIONS: "All-Party Parliamentary Group for Future Generations",
+        CENTRE_FOR_ENABLING_EA_RESEARCH_AND_LEARNING: "Centre for Enabling EA Research and Learning",
+        LEGAL_PRIORITIES_PROJECT: "Legal Priorities Project",
+        SENTIENCE_POLITICS: "Sentience Politics",
+        WANBAM: "WANBAM"
     }
 
 
