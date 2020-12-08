@@ -9,15 +9,15 @@
 <br><br>
 
 {% if first_visit %}
-  <div class="row">
-    <div class="col-sm-4 col-sm-offset-4 alert alert-info alert-dismissable profile-welcome">
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-      <p>Welcome to the EA Hub!</p>
-      <p>Please fill out your profile as much as you can so that other users can get to know you.</p>
-    </div>
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4 alert alert-info alert-dismissable profile-welcome">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <p>Welcome to the EA Hub!</p>
+    <p>Please fill out your profile as much as you can so that other users can get to know you.</p>
   </div>
+</div>
 {% endif %}
 
 <div class="container animated">
@@ -44,21 +44,15 @@
       {% endif %}
 
       {% if user.id == profile.user_id %}
-        <a href="{% url 'edit_profile' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Edit</span>
-          </div>
-        </a>
-        <a href="{% url 'account_email' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
-          </div>
-        </a>
-        <a href="{% url 'account_change_password' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Change Password</span>
-          </div>
-        </a>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil-alt"></i> Edit</a></span>
+      </div>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'account_email' %}"><i class="fa fa-pencil-alt"></i> Change Email Address</a></span>
+      </div>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil-alt"></i> Change Password</a></span>
+      </div>
       {% endif %}
     </div>
   </div>
@@ -102,11 +96,9 @@
           {% endif %}
           {% if user.id == profile.user_id %}
             <br>
-            <a href="{% url 'edit_profile_cause_areas' %}">
-              <span class="btn btn-default btn-xs">
-                <i class="fa fa-pencil-alt"></i> Edit
-              </span>
-            </a>
+            <span class="btn btn-default btn-xs">
+              <a href="{% url 'edit_profile_cause_areas' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
+            </span>
           {% endif %}
         </div>
       </div>
@@ -193,11 +185,9 @@
 
           {% if user.id == profile.user_id %}
             <br>
-            <a href="{% url 'edit_profile_community' %}">
-              <span class="btn btn-default btn-xs">
-                <i class="fa fa-pencil-alt"></i> Edit
-              </span>
-            </a>
+            <span class="btn btn-default btn-xs">
+              <a href="{% url 'edit_profile_community' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
+            </span>
           {% endif %}
         </div>
       </div>
@@ -228,11 +218,9 @@
             {{ profile.summary|default:'N/A'|urlize|linebreaks }}
             {% if user.id == profile.user_id %}
               <br>
-              <a href="{% url 'edit_profile' %}">
-                <span class="btn btn-default btn-xs">
-                  <i class="fa fa-pencil-alt"></i> Edit
-                </span>
-              </a>
+              <span class="btn btn-default btn-xs">
+                <a href="{% url 'edit_profile' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
+              </span>
             {% endif %}
           </div>
         </div>
@@ -247,20 +235,14 @@
   {% if user.id == profile.user_id %}
   <div class="text-center">
     <div class="btn-group btn-group-sm text-center" role="group">
-        <a href="{% url 'download_profile' %}">
-          <button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button>
-        </a>
-        <a href="{% url 'delete_profile' %}">
-          <button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button>
-        </a>
+        <a href="{% url 'download_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button></a>
+        <a href="{% url 'delete_profile' %}"><button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button></a>
     </div>
   </div>
   {% else %}
   <div class="text-center margin-top report-btn">
     <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
-      <a href="{% url 'report_abuse_profile' profile.slug  %}">
-        <button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</button>
-      </a>
+      <a href="{% url 'report_abuse_profile' profile.slug  %}"><button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</a>
     </div>
   </div>
   {% endif %}
