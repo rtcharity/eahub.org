@@ -14,6 +14,7 @@ from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
