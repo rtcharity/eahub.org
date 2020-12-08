@@ -8,4 +8,4 @@ from .build_settings import (  # noqa: F401; isort:skip
     STATICFILES_STORAGE,
 )
 
-STATICFILES_DIRS = ("/eahub/base/static/",)
+STATICFILES_DIRS = ("eahub/base/static/",)
