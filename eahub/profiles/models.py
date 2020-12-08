@@ -10,8 +10,10 @@ from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
+from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
+from django.db.models.signals import post_save
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -22,6 +24,11 @@ from sorl import thumbnail
 from sorl.thumbnail import get_thumbnail
 
 from ..localgroups.models import LocalGroup
+
+
+@receiver(post_save)
+def clear_the_cache(**kwargs):
+    cache.clear()
 
 
 class CauseArea(enum.Enum):
