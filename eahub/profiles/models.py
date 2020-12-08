@@ -27,11 +27,6 @@ from sorl.thumbnail import get_thumbnail
 from ..localgroups.models import LocalGroup
 
 
-@receiver(post_save)
-def clear_the_cache(**kwargs):
-    cache.clear()
-
-
 class CauseArea(enum.Enum):
 
     GLOBAL_POVERTY = 1
@@ -538,6 +533,11 @@ class Profile(models.Model):
         self, array: List[enum.Enum], enum_cls: enum.Enum
     ) -> List[str]:
         return [item for item in map(enum_cls.label, array)]
+
+
+@receiver(post_save, sender=Profile)
+def clear_the_cache(**kwargs):
+    cache.clear()
 
 
 class Membership(models.Model):
