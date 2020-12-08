@@ -187,8 +187,8 @@ class OrganisationalAffiliation(enum.Enum):
     HAPPIER_LIVES_INSTITUTE = 38
     INNOVATIONS_FOR_POVERTY_ACTION = 39
     JPAL = 40
-    ALL_PARTY_PARLIAMENTARY_GROUP_FOR_FUTURE_GENERATIONS = 41
-    CENTRE_FOR_ENABLING_EA_RESEARCH_AND_LEARNING = 42
+    APPG_FUTURE_GENERATIONS = 41
+    CEEALAR = 42
     LEGAL_PRIORITIES_PROJECT = 43
     SENTIENCE_POLITICS = 44
     WANBAM = 45
@@ -234,11 +234,11 @@ class OrganisationalAffiliation(enum.Enum):
         HAPPIER_LIVES_INSTITUTE: "Happier Lives Institute",
         INNOVATIONS_FOR_POVERTY_ACTION: "Innovations for Poverty Action",
         JPAL: "J-PAL",
-        ALL_PARTY_PARLIAMENTARY_GROUP_FOR_FUTURE_GENERATIONS: "All-Party Parliamentary Group for Future Generations",
-        CENTRE_FOR_ENABLING_EA_RESEARCH_AND_LEARNING: "Centre for Enabling EA Research and Learning",
+        APPG_FUTURE_GENERATIONS: "All-Party Parliamentary Group for Future Generations",
+        CEEALAR: "Centre for Enabling EA Research and Learning",
         LEGAL_PRIORITIES_PROJECT: "Legal Priorities Project",
         SENTIENCE_POLITICS: "Sentience Politics",
-        WANBAM: "WANBAM"
+        WANBAM: "WANBAM",
     }
 
 
