@@ -70,7 +70,7 @@ class LocalGroupResource(ModelResource):
             return super().widget_from_django_field(f)
 
     def before_import_row(self, row: dict, **kwargs) -> dict:
-        row["local_group_types"] = self.hydrate_local_group_types(row["types"])
+        row["local_group_types"] = [type for type in self.hydrate_local_group_types(row["types"]) if type is not None]
         organisers_users, organisers_non_users = self.hydrate_organisers((row["organisers_names"]))
         row["organisers"] = ",".join(map(lambda x: str(x.id), organisers_users))
         row["organisers_freetext"] = ",".join(organisers_non_users)
