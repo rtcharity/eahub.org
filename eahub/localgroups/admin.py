@@ -31,6 +31,26 @@ class EnumArrayWidget(widgets.Widget):
     def render(self, value, obj=None):
         return self.separator.join(str(v) for v in value)
 
+import ipdb;
+
+class EnumArrayWidget(widgets.Widget):
+    """
+    Widget for an Array field. Can be used for Postgres' Array field.
+    :param separator: Defaults to ``','``
+    """
+
+    def __init__(self, separator=None):
+        if separator is None:
+            separator = ','
+        self.separator = separator
+        super().__init__()
+
+    def clean(self, value, row=None, *args, **kwargs):
+        return value
+
+    def render(self, value, obj=None):
+        return self.separator.join(str(v) for v in value)
+
 
 class LocalGroupResource(ModelResource):
     organisers_dehydrated = fields.Field(column_name="organisers")
