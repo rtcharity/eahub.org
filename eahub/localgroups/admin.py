@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from django.contrib import admin
 from django.contrib.postgres.fields import ArrayField
+from django.db import models
 from import_export import fields
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
@@ -11,8 +12,7 @@ from import_export import widgets
 from eahub.base.models import User
 from eahub.base.utils import ExportCsvMixin
 from eahub.localgroups.models import LocalGroup, LocalGroupType
-
-import ipdb;
+from eahub.profiles.models import Profile
 
 class EnumArrayWidget(widgets.Widget):
     """
@@ -34,10 +34,7 @@ class EnumArrayWidget(widgets.Widget):
 
 
 class LocalGroupResource(ModelResource):
-    organisers = fields.Field(
-        widget=ManyToManyWidget(User, field="email"), attribute="organisers"
-    )
-    local_group_type_dehydrated = fields.Field(column_name="type")
+    organisers_dehydrated = fields.Field(column_name="organisers")
     local_group_types_dehydrated = fields.Field(column_name="types")
 
     class Meta:
@@ -48,7 +45,6 @@ class LocalGroupResource(ModelResource):
             "slug",
             "is_active",
             "is_public",
-            "organisers",
             "organisers_freetext",
             "email",
             "local_group_types_dehydrated",
@@ -75,6 +71,10 @@ class LocalGroupResource(ModelResource):
 
     def before_import_row(self, row: dict, **kwargs) -> dict:
         row["local_group_types"] = self.hydrate_local_group_types(row["types"])
+        organisers_users, organisers_non_users = self.hydrate_organisers((row["organisers_names"]))
+        row["organisers"] = ",".join(map(lambda x: str(x.id), organisers_users))
+        row["organisers_freetext"] = ",".join(organisers_non_users)
+
         return super().before_import_row(row, **kwargs)
 
     def dehydrate_local_group_type_dehydrated(self, group: LocalGroup) -> str:
@@ -95,6 +95,13 @@ class LocalGroupResource(ModelResource):
         else:
             return ""
 
+    def hydrate_organiser(self, organiser_raw: str) -> Optional[User]:
+        profiles = Profile.objects.filter(name=organiser_raw)
+        if len(profiles) == 1:
+            return profiles[0].user
+        else:
+            return None
+
     def hydrate_local_group_types(
         self, group_types_raw: str
     ) -> Optional[List[LocalGroupType]]:
@@ -104,6 +111,17 @@ class LocalGroupResource(ModelResource):
 
         return group_types if group_types else None
 
+    def hydrate_organisers(self, organisers_raw: str) -> (Optional[List[User]], Optional[List[str]]):
+        users = []
+        non_users = []
+        for organiser_raw in organisers_raw.split(","):
+            user = self.hydrate_organiser(organiser_raw)
+            if user:
+                users.append(user)
+            else:
+                non_users.append(organiser_raw)
+
+        return (users, non_users)
 
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
