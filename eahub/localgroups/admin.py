@@ -143,7 +143,7 @@ class LocalGroupResource(ModelResource):
 
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
-    actions = ["export_csv", "make_not_public"]
+    actions = ["export_csv", "make_public", "make_not_public"]
     list_display = [
         "name",
         "local_group_type",
@@ -186,6 +186,11 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         fieldnames.append("organisers_emails")
         return ExportCsvMixin.export_csv(
             self, request, queryset, fieldnames, "localgroups"
+        )
+
+    def make_public(self, request, queryset, **kwargs):
+        queryset.update(
+            is_public=True
         )
 
     def make_not_public(self, request, queryset, **kwargs):
