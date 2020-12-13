@@ -76,9 +76,10 @@ class LocalGroupResource(ModelResource):
 
     def before_import_row(self, row: dict, **kwargs) -> dict:
         row["local_group_types"] = [type for type in self.hydrate_local_group_types(row["types"]) if type is not None]
-        organisers_users, organisers_non_users = self.hydrate_organisers((row))
+        organisers_users, organisers_non_users = self.hydrate_organisers(row)
         row["organisers"] = ",".join(map(lambda x: str(x.id), organisers_users))
         row["organisers_freetext"] = ",".join(organisers_non_users)
+
         return super().before_import_row(row, **kwargs)
 
     def hydrate_local_group_type(self, group_type_raw: str) -> Optional[LocalGroupType]:
@@ -140,7 +141,7 @@ class LocalGroupResource(ModelResource):
 
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
-    actions = ["export_csv"]
+    actions = ["export_csv", "make_not_public"]
     list_display = [
         "name",
         "local_group_type",
@@ -182,6 +183,11 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         fieldnames.append("organisers_emails")
         return ExportCsvMixin.export_csv(
             self, request, queryset, fieldnames, "localgroups"
+        )
+
+    def make_not_public(self, request, queryset, **kwargs):
+        queryset.update(
+            is_public=False
         )
 
 
