@@ -1,9 +1,9 @@
 import autoslug
 from django import urls
-from django.core.cache import cache
 from django.conf import settings
 from django.contrib.postgres import fields as postgres_fields
 from django.core import validators
+from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
 from django.db.models.signals import post_save
@@ -120,6 +120,7 @@ class LocalGroup(models.Model):
             else:
                 values.append(getattr(self, field))
         return values
+
 
 @receiver(post_save, sender=LocalGroup)
 def clear_the_cache(**kwargs):

@@ -2,19 +2,16 @@ from typing import List, Optional
 
 from django.contrib import admin
 from django.contrib.postgres.fields import ArrayField
-from django.db import models
-from import_export import fields
+from import_export import fields, widgets
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
-from import_export.widgets import ManyToManyWidget
-from import_export import widgets
+from rangefilter.filter import DateRangeFilter
 
 from eahub.base.models import User
 from eahub.base.utils import ExportCsvMixin
 from eahub.localgroups.models import LocalGroup, LocalGroupType, Organisership
 from eahub.profiles.models import Profile
 
-from rangefilter.filter import DateRangeFilter
 
 class EnumArrayWidget(widgets.Widget):
     """
@@ -24,7 +21,7 @@ class EnumArrayWidget(widgets.Widget):
 
     def __init__(self, separator=None):
         if separator is None:
-            separator = ','
+            separator = ","
         self.separator = separator
         super().__init__()
 
@@ -41,7 +38,7 @@ class LocalGroupResource(ModelResource):
 
     class Meta:
         model = LocalGroup
-        import_id_fields = ('id',)
+        import_id_fields = ("id",)
         export_order = [
             "id",
             "name",
@@ -72,12 +69,26 @@ class LocalGroupResource(ModelResource):
         else:
             return super().widget_from_django_field(f)
 
-    def import_row(self, row, instance_loader, using_transactions=True, dry_run=False, raise_errors=False, **kwargs):
+    def import_row(
+        self,
+        row,
+        instance_loader,
+        using_transactions=True,
+        dry_run=False,
+        raise_errors=False,
+        **kwargs,
+    ):
         row = self.remove_chars_from_row_keys(row, "\ufeff")
-        return super().import_row(row, instance_loader, using_transactions, dry_run, raise_errors, **kwargs)
+        return super().import_row(
+            row, instance_loader, using_transactions, dry_run, raise_errors, **kwargs
+        )
 
     def before_import_row(self, row: dict, **kwargs) -> dict:
-        row["local_group_types"] = [type for type in self.hydrate_local_group_types(row["types"]) if type is not None]
+        row["local_group_types"] = [
+            type
+            for type in self.hydrate_local_group_types(row["types"])
+            if type is not None
+        ]
         organisers_users, organisers_non_users = self.hydrate_organisers(row)
         row["organisers"] = ",".join(map(lambda x: str(x.id), organisers_users))
         row["organisers_freetext"] = ",".join(organisers_non_users)
@@ -98,7 +109,9 @@ class LocalGroupResource(ModelResource):
             group_id = row["id"]
             organisers = []
             for profile in profiles:
-                organisership = Organisership.objects.filter(local_group_id=group_id, user=profile.user)
+                organisership = Organisership.objects.filter(
+                    local_group_id=group_id, user=profile.user
+                )
                 if organisership:
                     organisers.append(profile)
             if len(organisers) > 0:
@@ -118,10 +131,12 @@ class LocalGroupResource(ModelResource):
 
         return group_types if group_types else None
 
-    def hydrate_organisers(self, row: dict) -> (Optional[List[User]], Optional[List[str]]):
+    def hydrate_organisers(
+        self, row: dict
+    ) -> (Optional[List[User]], Optional[List[str]]):
         users = []
         non_users = []
-        organisers_raw = row['organisers_names']
+        organisers_raw = row["organisers_names"]
         for organiser_raw in organisers_raw.split(","):
             user = self.hydrate_organiser(organiser_raw, row)
             if user:
@@ -141,6 +156,7 @@ class LocalGroupResource(ModelResource):
                 new_row[key] = row[key]
         return new_row
 
+
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
     actions = ["export_csv", "make_public", "make_not_public"]
@@ -152,7 +168,7 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         "city_or_town",
         "country",
         "email",
-        "last_edited"
+        "last_edited",
     ]
     list_filter = [
         "is_public",
@@ -161,7 +177,7 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         "last_edited",
         "country",
         "local_group_types",
-        ("last_edited", DateRangeFilter)
+        ("last_edited", DateRangeFilter),
     ]
     search_fields = [
         "name",
@@ -189,13 +205,7 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         )
 
     def make_public(self, request, queryset, **kwargs):
-        queryset.update(
-            is_public=True
-        )
+        queryset.update(is_public=True)
 
     def make_not_public(self, request, queryset, **kwargs):
-        queryset.update(
-            is_public=False
-        )
-
-
+        queryset.update(is_public=False)
