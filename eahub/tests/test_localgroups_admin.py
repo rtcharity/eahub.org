@@ -72,3 +72,4 @@ class LocalGroupAdminTestCase(TestCase):
         user = local_group_resource.hydrate_organiser("Peter", row)
 
         self.assertEqual(self.user_peter_2, user)
+        
