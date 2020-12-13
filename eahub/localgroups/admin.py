@@ -39,6 +39,7 @@ class LocalGroupResource(ModelResource):
 
     class Meta:
         model = LocalGroup
+        import_id_fields = ('id',)
         export_order = [
             "id",
             "name",
@@ -69,31 +70,22 @@ class LocalGroupResource(ModelResource):
         else:
             return super().widget_from_django_field(f)
 
+    def import_row(self, row, instance_loader, using_transactions=True, dry_run=False, raise_errors=False, **kwargs):
+        row = self.remove_chars_from_row_keys(row, "\ufeff")
+        return super().import_row(row, instance_loader, using_transactions, dry_run, raise_errors, **kwargs)
+
     def before_import_row(self, row: dict, **kwargs) -> dict:
         row["local_group_types"] = [type for type in self.hydrate_local_group_types(row["types"]) if type is not None]
         organisers_users, organisers_non_users = self.hydrate_organisers((row["organisers_names"]))
         row["organisers"] = ",".join(map(lambda x: str(x.id), organisers_users))
         row["organisers_freetext"] = ",".join(organisers_non_users)
-
         return super().before_import_row(row, **kwargs)
-
-    def dehydrate_local_group_type_dehydrated(self, group: LocalGroup) -> str:
-        if group.local_group_type:
-            return LocalGroupType.labels[group.local_group_type]
-        else:
-            return ""
 
     def hydrate_local_group_type(self, group_type_raw: str) -> Optional[LocalGroupType]:
         for key, value in LocalGroupType.labels.items():
             if value == group_type_raw.strip():
                 return key
         return None
-
-    def dehydrate_local_group_types_dehydrated(self, group: LocalGroup) -> str:
-        if group.local_group_types:
-            ", ".join(map(LocalGroupType.label, group.local_group_types))
-        else:
-            return ""
 
     def hydrate_organiser(self, organiser_raw: str) -> Optional[User]:
         profiles = Profile.objects.filter(name=organiser_raw)
@@ -122,6 +114,16 @@ class LocalGroupResource(ModelResource):
                 non_users.append(organiser_raw)
 
         return (users, non_users)
+
+    def remove_chars_from_row_keys(self, row, chars):
+        new_row = {}
+        for key in row:
+            if chars in key:
+                new_key = key.replace(chars, "")
+                new_row[new_key] = row[key]
+            else:
+                new_row[key] = row[key]
+        return new_row
 
 @admin.register(LocalGroup)
 class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
