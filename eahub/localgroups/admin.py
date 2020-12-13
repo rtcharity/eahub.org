@@ -14,6 +14,8 @@ from eahub.base.utils import ExportCsvMixin
 from eahub.localgroups.models import LocalGroup, LocalGroupType, Organisership
 from eahub.profiles.models import Profile
 
+from rangefilter.filter import DateRangeFilter
+
 class EnumArrayWidget(widgets.Widget):
     """
     Widget for an Array field. Can be used for Postgres' Array field.
@@ -150,7 +152,7 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         "city_or_town",
         "country",
         "email",
-        "last_edited",
+        "last_edited"
     ]
     list_filter = [
         "is_public",
@@ -159,6 +161,7 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
         "last_edited",
         "country",
         "local_group_types",
+        ("last_edited", DateRangeFilter)
     ]
     search_fields = [
         "name",
