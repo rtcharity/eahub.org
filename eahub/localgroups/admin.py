@@ -11,7 +11,7 @@ from import_export import widgets
 
 from eahub.base.models import User
 from eahub.base.utils import ExportCsvMixin
-from eahub.localgroups.models import LocalGroup, LocalGroupType
+from eahub.localgroups.models import LocalGroup, LocalGroupType, Organisership
 from eahub.profiles.models import Profile
 
 class EnumArrayWidget(widgets.Widget):
@@ -76,7 +76,7 @@ class LocalGroupResource(ModelResource):
 
     def before_import_row(self, row: dict, **kwargs) -> dict:
         row["local_group_types"] = [type for type in self.hydrate_local_group_types(row["types"]) if type is not None]
-        organisers_users, organisers_non_users = self.hydrate_organisers((row["organisers_names"]))
+        organisers_users, organisers_non_users = self.hydrate_organisers((row))
         row["organisers"] = ",".join(map(lambda x: str(x.id), organisers_users))
         row["organisers_freetext"] = ",".join(organisers_non_users)
         return super().before_import_row(row, **kwargs)
@@ -87,10 +87,22 @@ class LocalGroupResource(ModelResource):
                 return key
         return None
 
-    def hydrate_organiser(self, organiser_raw: str) -> Optional[User]:
+    def hydrate_organiser(self, organiser_raw: str, row: dict) -> Optional[User]:
         profiles = Profile.objects.filter(name=organiser_raw)
         if len(profiles) == 1:
             return profiles[0].user
+        elif len(profiles) > 1:
+            group_id = row["id"]
+            organisers = []
+            for profile in profiles:
+                organisership = Organisership.objects.filter(local_group_id=group_id, user=profile.user)
+                if organisership:
+                    organisers.append(profile)
+            if len(organisers) > 0:
+                organisers.sort(key=lambda x: x.user.date_joined, reverse=True)
+                return organisers[0].user
+            else:
+                return None
         else:
             return None
 
@@ -103,11 +115,12 @@ class LocalGroupResource(ModelResource):
 
         return group_types if group_types else None
 
-    def hydrate_organisers(self, organisers_raw: str) -> (Optional[List[User]], Optional[List[str]]):
+    def hydrate_organisers(self, row: dict) -> (Optional[List[User]], Optional[List[str]]):
         users = []
         non_users = []
+        organisers_raw = row['organisers_names']
         for organiser_raw in organisers_raw.split(","):
-            user = self.hydrate_organiser(organiser_raw)
+            user = self.hydrate_organiser(organiser_raw, row)
             if user:
                 users.append(user)
             else:
