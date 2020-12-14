@@ -150,7 +150,7 @@ class LocalGroupResource(ModelResource):
         new_row = {}
         bom = "\ufeff"
         for key in row:
-            if chars in key:
+            if bom in key:
                 new_key = key.replace(bom, "")
                 new_row[new_key] = row[key]
             else:
