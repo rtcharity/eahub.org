@@ -78,7 +78,7 @@ class LocalGroupResource(ModelResource):
         raise_errors=False,
         **kwargs,
     ):
-        row = self.remove_chars_from_row_keys(row, "\ufeff")
+        row = self.remove_bom_from_row_keys(row)
         return super().import_row(
             row, instance_loader, using_transactions, dry_run, raise_errors, **kwargs
         )
@@ -146,11 +146,12 @@ class LocalGroupResource(ModelResource):
 
         return (users, non_users)
 
-    def remove_chars_from_row_keys(self, row, chars):
+    def remove_bom_from_row_keys(self, row):
         new_row = {}
+        bom = "\ufeff"
         for key in row:
             if chars in key:
-                new_key = key.replace(chars, "")
+                new_key = key.replace(bom, "")
                 new_row[new_key] = row[key]
             else:
                 new_row[key] = row[key]
