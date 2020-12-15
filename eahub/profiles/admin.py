@@ -25,11 +25,18 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "name",
         "is_public",
         "is_approved",
+        "email_visible",
         "country",
         "available_to_volunteer",
         "giving_pledges_readable"
     )
-    list_filter = [GivingPledgesFilter, "is_approved", "is_public", "available_to_volunteer"]
+    list_filter = [
+        "is_approved",
+        "is_public",
+        "email_visible",
+        "available_to_volunteer",
+        GivingPledgesFilter
+    ]
     search_fields = ["user__email", "name"]
     ordering = ["-user__date_joined"]
 
