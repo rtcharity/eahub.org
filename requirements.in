@@ -29,6 +29,8 @@ django-environ
 algoliasearch-django  # for profiles & groups search
 https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.16.1/b460938a-f357-49a3-9aef-9dfb40946551/aldryn-django-2.2.16.1.tar.gz#egg=aldryn-django==2.2.16.1
 django-import-export
+django-referrer-policy
+django-feature-policy
 rules
 
 # tests
@@ -42,5 +44,3 @@ black
 pep8-naming
 flake8-isort
 isort[requirements]
-django-referrer-policy
-django-feature-policy
