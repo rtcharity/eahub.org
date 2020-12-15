@@ -53,7 +53,7 @@ class LocalGroupAdminTestCase(TestCase):
         o2.save()
 
     def test_hydrate_organiser_where_users_with_same_name_and_one_already_organiser(
-        self
+        self,
     ):
         local_group_resource = LocalGroupResource()
         row = {"id": "1"}
@@ -61,9 +61,7 @@ class LocalGroupAdminTestCase(TestCase):
 
         self.assertEqual(self.user_peter_1, user)
 
-    def test_hydrate_organiser_where_users_with_same_name_and_already_organisers(
-        self
-    ):
+    def test_hydrate_organiser_where_users_with_same_name_and_already_organisers(self):
         o = Organisership(user=self.user_peter_2, local_group=self.local_group)
         o.save()
 
