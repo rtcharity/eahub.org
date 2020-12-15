@@ -3,6 +3,7 @@ from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -244,7 +245,7 @@ class ReportAbuseView(FormView):
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
 
-class SendMessageView(FormView):
+class SendMessageView(LoginRequiredMixin, FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
