@@ -194,15 +194,8 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
     resource_class = LocalGroupResource
 
     def export_csv(self, request, queryset, **kwargs):
-        meta = LocalGroup._meta
-        fieldnames = [
-            field.name
-            for field in meta.fields + meta.many_to_many
-            if field.name != "local_group_type"
-        ]
-        fieldnames.append("organisers_emails")
         return ExportCsvMixin.export_csv(
-            self, request, queryset, fieldnames, "localgroups"
+            self, request, queryset, LocalGroup, "localgroups"
         )
 
     def make_public(self, request, queryset, **kwargs):
