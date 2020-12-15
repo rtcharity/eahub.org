@@ -1,0 +1,13 @@
+on: [pull_request]
+
+
+jobs:
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: build docker containers
+              shell: bash
+              run: docker-compose up web
+            - name: test
+              shell: bash
+              run: docker-compose run --use-aliases web pytest
