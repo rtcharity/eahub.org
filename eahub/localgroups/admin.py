@@ -210,3 +210,4 @@ class LocalGroupAdmin(ImportExportMixin, admin.ModelAdmin, ExportCsvMixin):
 
     def make_not_public(self, request, queryset, **kwargs):
         queryset.update(is_public=False)
+        
