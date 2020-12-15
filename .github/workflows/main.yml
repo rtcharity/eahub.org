@@ -5,6 +5,8 @@ jobs:
     test:
         runs-on: ubuntu-latest
         steps:
+            - name: checkout code
+              run: actions/checkout@v1
             - name: build docker containers
               shell: bash
               run: docker-compose up web
