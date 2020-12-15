@@ -34,15 +34,15 @@ services:
       - 1025:1025
       - 1080:1080
   webdriver:
-    image: selenium/hub:3.141.59-iron
+    image: selenium/hub:latest
   chrome:
-    image: selenium/node-chrome:3.141.59-iron
+    image: selenium/node-chrome:latest
     depends_on:
       - webdriver
     environment:
       HUB_HOST: webdriver
   firefox:
-    image: selenium/node-firefox:3.141.59-iron
+    image: selenium/node-firefox:latest
     depends_on:
       - webdriver
     environment:
