@@ -5,8 +5,8 @@ from . import models
 
 
 class GivingPledgesFilter(admin.SimpleListFilter):
-    title = 'giving_pledges_readable'
-    parameter_name = 'giving_pledge'
+    title = "giving_pledges_readable"
+    parameter_name = "giving_pledge"
 
     def lookups(self, request, model_admin):
         return models.GivingPledge.choices()
@@ -28,14 +28,14 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "email_visible",
         "country",
         "available_to_volunteer",
-        "giving_pledges_readable"
+        "giving_pledges_readable",
     )
     list_filter = [
         "is_approved",
         "is_public",
         "email_visible",
         "available_to_volunteer",
-        GivingPledgesFilter
+        GivingPledgesFilter,
     ]
     search_fields = ["user__email", "name"]
     ordering = ["-user__date_joined"]
@@ -49,7 +49,8 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         return obj.get_pretty_giving_pledges()
 
     giving_pledges_readable.short_description = "Giving Pledges"
-    giving_pledges_readable.admin_order_field = 'profile.giving_pledges'
+    giving_pledges_readable.admin_order_field = "profile.giving_pledges"
+
 
 admin.site.register(models.Profile, ProfileAdmin)
 admin.site.register(models.ProfileSlug)

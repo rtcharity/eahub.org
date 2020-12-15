@@ -536,9 +536,11 @@ class Profile(models.Model):
 
     @staticmethod
     def get_exportable_field_names():
-        return [field.name for field in Profile._meta.fields + Profile._meta.many_to_many if "_other" not in field.name]
-
-
+        return [
+            field.name
+            for field in Profile._meta.fields + Profile._meta.many_to_many
+            if "_other" not in field.name
+        ]
 
 
 @receiver(post_save, sender=Profile)
