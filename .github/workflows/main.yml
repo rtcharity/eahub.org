@@ -7,9 +7,6 @@ jobs:
         steps:
             - name: checkout code
               uses: actions/checkout@v2
-            - name: build docker containers
-              shell: bash
-              run: docker-compose up web
             - name: test
               shell: bash
               run: docker-compose run --use-aliases web pytest
