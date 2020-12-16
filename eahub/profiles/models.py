@@ -532,7 +532,7 @@ class Profile(models.Model):
     def _format_enum_array_for_searching(
         self, array: List[enum.Enum], enum_cls: enum.Enum
     ) -> List[str]:
-        return [item for item in map(enum_cls.choices, array)]
+        return [item for item in map(enum_cls.label, array)]
 
 
 @receiver(post_save, sender=Profile)
