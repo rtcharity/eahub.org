@@ -21,12 +21,6 @@ def migrate():
     local("docker-compose run web django-admin migrate")
 
 
-def deploy():
-    build()
-    local("docker tag eahub eahub.azurecr.io/eahub:latest")
-    local("docker push eahub.azurecr.io/eahub:latest")
-
-
 def bash():
     local("docker ps")
     container_id = operations.prompt("Enter container_id from above: ")
