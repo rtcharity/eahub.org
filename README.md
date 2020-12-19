@@ -47,6 +47,12 @@ docker-compose run --rm web pytest
 npm test
 ```
 
+Running a particular python test, e.g., test_localgroups_model.py:  
+```
+docker-compose run --rm web pytest eahub/tests/test_localgroups_model.py
+```
+
+
 ## Formatting Code
 ```
 docker-compose run --rm web black eahub
