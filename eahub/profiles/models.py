@@ -534,6 +534,14 @@ class Profile(models.Model):
     ) -> List[str]:
         return [item[1] for item in enum_cls.choices() if item[0] in array]
 
+    @staticmethod
+    def get_exportable_field_names():
+        return [
+            field.name
+            for field in Profile._meta.fields + Profile._meta.many_to_many
+            if "_other" not in field.name
+        ]
+
 
 @receiver(post_save, sender=Profile)
 def clear_the_cache(**kwargs):
