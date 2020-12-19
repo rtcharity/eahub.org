@@ -52,6 +52,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
+.divio/config.json
 
 # Flask stuff:
 instance/
@@ -69,18 +70,14 @@ target/
 # IPython Notebook
 .ipynb_checkpoints
 
-# pyenv
-.python-version
-
 # celery beat schedule file
 celerybeat-schedule
 
-# dotenv
-.env
-
 # virtualenv
+.python-version
 venv/
 ENV/
+.venv
 
 # Spyder project settings
 .spyderproject
@@ -88,9 +85,10 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# added by manoj
+# dev files
 .DS_Store
-secrets.env
+.idea
+media/
 
 # JS dependencies
 node_modules

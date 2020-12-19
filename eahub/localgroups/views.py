@@ -40,6 +40,10 @@ class LocalGroupCreateView(
 
     def form_valid(self, form):
         form.instance.geocode()
+        self.object = form.save()
+        send_mail_on_change(
+            self.request, "create_group.txt", self.object.name, self.object.slug
+        )
         return super().form_valid(form)
 
 
@@ -61,14 +65,26 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     def form_valid(self, form):
         if "city_or_town" in form.changed_data or "country" in form.changed_data:
             form.instance.geocode()
+        old_name = self.object.name
+        self.object = form.save()
+        send_mail_on_change(
+            self.request, "update_group.txt", old_name, self.object.slug
+        )
         return super().form_valid(form)
 
 
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
     queryset = LocalGroup.objects.filter(is_public=True)
     template_name = "eahub/delete_group.html"
-    success_url = urls.reverse_lazy("groups")
     permission_required = "localgroups.delete_local_group"
+
+    def delete(self, *args, **kwargs):
+        self.object = self.get_object()
+        name = self.object.name
+        slug = self.object.slug
+        self.object.delete()
+        send_mail_on_change(self.request, "delete_group.txt", name, slug)
+        return redirect(urls.reverse_lazy("groups"))
 
 
 class ReportGroupAbuseView(ReportAbuseView):
@@ -104,11 +120,10 @@ def claim_group(request, slug):
             "user_email": request.user.email,
         },
     )
+    recipient_list = [email for email in settings.LEAN_MANAGERS]
+    recipient_list.append(settings.GROUPS_EMAIL)
     send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        recipient_list=settings.LEAN_MANAGERS,
+        subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=recipient_list
     )
     messages.success(
         request,
@@ -153,3 +168,42 @@ def report_group_inactive(request, slug):
         "Our admin team will send you an email once they have looked into it.",
     )
     return redirect("/group/{}".format(group.slug))
+
+
+@login_required
+@require_POST
+def send_mail_on_change(request, template, name, slug):
+    if "update" in template:
+        action = "updated"
+    elif "create" in template:
+        action = "created"
+    elif "delete" in template:
+        action = "deleted"
+    else:
+        raise Exception("Template {0} does not exist".format(template))
+
+    subject = "EA Group {0}: {1}".format(action, name)
+    try:
+        user_eahub_url = "https://{0}/profile/{1}".format(
+            get_current_site(request).domain, request.user.profile.slug
+        )
+        user_name = request.user.profile.name
+    except Profile.DoesNotExist:
+        user_eahub_url = "about:blank"
+        user_name = request.user.email
+    message = render_to_string(
+        "emails/{0}".format(template),
+        {
+            "user_eahub_url": user_eahub_url,
+            "user_name": user_name,
+            "group_name": name,
+            "group_url": "https://{0}/group/{1}".format(
+                get_current_site(request).domain, slug
+            ),
+        },
+    )
+    recipient_list = [email for email in settings.LEAN_MANAGERS]
+    recipient_list.append(settings.GROUPS_EMAIL)
+    send_mail(
+        subject, message, settings.DEFAULT_FROM_EMAIL, recipient_list=recipient_list
+    )

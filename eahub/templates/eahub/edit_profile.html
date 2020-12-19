@@ -1,11 +1,20 @@
 {% extends 'form.html' %}
 
+{% load static sekizai_tags %}
+
 {% block title %}Edit Profile{% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block form_fields %}
 
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit_image.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_profile_edit_image.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
 
 {{ form.name|as_crispy_field }}
 
@@ -49,6 +58,7 @@ If you make your profile private but enter a location, an anonymous pin represen
 {{ form.personal_website_url|as_crispy_field }}
 
 {{ form.is_public|as_crispy_field }}
+{{ form.email_visible|as_crispy_field }}
 
 <div class="privacy-note">
   {% if profile.is_approved %}

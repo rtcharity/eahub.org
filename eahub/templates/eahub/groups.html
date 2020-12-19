@@ -1,14 +1,27 @@
 {% extends 'base.html' %}
 
+{% load static sekizai_tags %}
+
 {% load rules %}
 
 {% block content %}
 
-<br><br>
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_tables.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
 
 <div class="container animated fadeIn">
+  <br>
+  <h2>Directory of Local EA Groups</h2>
+  <p style="text-align: center">For non-local groups, head to this <a href="https://resources.eahub.org/learn/connect/">list of groups based on cause-area, career paths, or affiliations</a>.</p>
+  <br><br>
   <div class="row">
-    <div class="col-sm-4 profile-action">
+    <div class="col-sm-4">
+      <div class="profile-action">
         <div class="list-group">
           {% if user.is_authenticated %}
             {% has_perm 'localgroups.create_local_group' user as can_create_local_group %}
@@ -25,8 +38,9 @@
           <a href="https://resources.eahub.org" class="list-group-item"><i class="fa fa-book"></i> Group Resources</a>
         </div>
         <div class="list-group">
-          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact LEAN</a>
+          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
         </div>
+      </div>
     </div>
     <div class="col-sm-8">
         {% include 'eahub/maps/list_page_map.html' with map_type="groups" map_locations=map_locations %}
@@ -40,12 +54,11 @@
   <div class="search">
      Search: <input type="text" id="filterbox">
   </div>
-  <table id="datatable-groups" class="table enable-datatable table-striped table-bordered">
+  <table id="datatable-groups" class="table enable-datatable table-striped table-bordered dataTable">
       <thead>
           <tr>
               <th>Name</th>
               <th>Location</th>
-              <th>Community</th>
           </tr>
       </thead>
       <tbody>
@@ -55,20 +68,9 @@
                   <a href="{% url 'group' group.slug %}">{{ group.name|default_if_none:'' }}</a>
               </td>
               <td>
-                  {% if group.country %}{{ group.country }}{% endif %}
-                  {% if group.country and group.city_or_town %}/{% endif %}
-                  {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
-              </td>
-              <td>
-                  {% if group.facebook_page %}
-                      <a href="{{ group.facebook_page }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Page</button></a>
-                  {% endif %}
-                  {% if group.facebook_group %}
-                      <a href="{{ group.facebook_group }}" target="_blank"><button class="btn btn-default btn-sm"><i class="fa fa-facebook"></i> Community</button></a>
-                  {% endif %}
-                  {% if group.website %}
-                      <a href="{{ group.website }}" target="_blank"><button class="btn btn-default btn-sm">Website</button></a>
-                  {% endif %}
+                {% if group.country %}{{ group.country }}{% endif %}
+                {% if group.country and group.city_or_town %}/{% endif %}
+                {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
               </td>
           </tr>
           {% endfor %}

@@ -1,11 +1,18 @@
 import autoslug
 from django import urls
 from django.conf import settings
+from django.contrib.postgres import fields as postgres_fields
 from django.core import validators
+from django.core.cache import cache
+from django.core.validators import MaxLengthValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_enumfield import enum
 
 from ..base.geocoding import Geocoding
+
+from ..base.models import User
 
 
 class LocalGroupType(enum.Enum):
@@ -14,7 +21,7 @@ class LocalGroupType(enum.Enum):
     COUNTRY = 2
     UNIVERSITY = 3
 
-    labels = {CITY: "City", COUNTRY: "Country", UNIVERSITY: "University"}
+    labels = {CITY: "City", COUNTRY: "National/Regional", UNIVERSITY: "University"}
 
 
 class LocalGroup(models.Model):
@@ -26,14 +33,22 @@ class LocalGroup(models.Model):
     organisers = models.ManyToManyField(
         settings.AUTH_USER_MODEL, through="Organisership", blank=True
     )
+    organisers_freetext = models.CharField(
+        "Organisers (Non EA Hub members)", max_length=100, blank=True
+    )
     local_group_type = enum.EnumField(
         LocalGroupType, null=True, blank=True, default=None
     )
+    local_group_types = postgres_fields.ArrayField(
+        enum.EnumField(LocalGroupType), blank=True, default=list
+    )
     city_or_town = models.CharField(max_length=100, blank=True)
+    region = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
     website = models.URLField(blank=True)
+    other_website = models.URLField(blank=True)
     facebook_group = models.URLField(blank=True)
     facebook_page = models.URLField(blank=True)
     email = models.EmailField(blank=True)
@@ -49,6 +64,7 @@ class LocalGroup(models.Model):
     last_edited = models.DateTimeField(
         auto_now=True, null=True, blank=True, editable=False
     )
+    other_info = models.TextField(blank=True, validators=[MaxLengthValidator(5000)])
 
     class Meta:
         ordering = ["name", "slug"]
@@ -64,6 +80,18 @@ class LocalGroup(models.Model):
             "profile__name", "profile__slug"
         )
 
+    def organisers_names(self):
+        profile_names = []
+        for user in self.organisers.all():
+            try:
+                profile_names.append(user.profile.name)
+            except User.profile.RelatedObjectDoesNotExist:
+                profile_names.append("User profile missing")
+        return ", ".join(profile_names)
+
+    def organisers_emails(self):
+        return ", ".join([user.email for user in self.organisers.all()])
+
     def geocode(self):
         self.lat = None
         self.lon = None
@@ -72,6 +100,40 @@ class LocalGroup(models.Model):
             if location:
                 self.lat = location.latitude
                 self.lon = location.longitude
+
+    def get_local_group_types(self):
+        if self.local_group_types:
+            return ", ".join(map(LocalGroupType.label, self.local_group_types))
+        else:
+            return "Other"
+
+    def convert_to_row(self, field_names):
+        values = []
+        for field in field_names:
+            if field == "local_group_types":
+                values.append(self.get_local_group_types())
+            elif field == "organisers":
+                values.append(self.organisers_names())
+            elif field == "organisers_emails":
+                values.append(self.organisers_emails())
+            else:
+                values.append(getattr(self, field))
+        return values
+
+    @staticmethod
+    def get_exportable_field_names():
+        fieldnames = [
+            field.name
+            for field in LocalGroup._meta.fields + LocalGroup._meta.many_to_many
+            if field.name != "local_group_type"
+        ]
+        fieldnames.append("organisers_emails")
+        return fieldnames
+
+
+@receiver(post_save, sender=LocalGroup)
+def clear_the_cache(**kwargs):
+    cache.clear()
 
 
 class Organisership(models.Model):

@@ -6,95 +6,70 @@ Backend for [https://eahub.org](https://eahub.org)
 
 # Setup
 
-1.  Make sure to have [Docker Compose](https://docs.docker.com/compose)
-    installed. (Note: You may need to follow these [post-installation steps](https://docs.docker.com/install/linux/linux-postinstall/).)
+- Make sure to have Docker Compose 3 and Nodejs 10.X installed.
+- npm ci
+- npm run build-watch
+- docker-compose run --rm web django-admin migrate (only necessary when you're setting it up for the first time or pulled python migration changes)
+- docker-compose up
 
-1.  Add the following line to your hosts file (`/etc/hosts` on Mac or Linux,
-    `%SystemRoot%\System32\drivers\etc\hosts` on Windows):
-    ```
-    127.0.0.1 objstore
-    ```
+If everything went well, you should be able to get the Hub at http://localhost:8000
 
-1.  ```
-    docker-compose run web django-admin createcontainer
-    ```
+If requirements.txt or Dockerfile have changed since last time you built the project, you'll need to run `docker-compose build`.
 
-1.  ```
-    docker-compose run web django-admin migrate
-    ```
+If `package.json` changes - run `npm install` to generate a new `package-json.lock`.
 
-# Running
-```
-$ docker-compose up
-```
+You can access the email server at localhost:1080.
 
-If everything went well, you should have a number of containers now being served (use `docker ps` to get a list of them).
-You should be able to get the Hub at http://localhost:8000.
+### Pulling the db & media to your local instance [optional]
+- receive access to https://control.divio.com/control/71735/edit/88402/
+- add an ssh key to your profile https://control.divio.com/account/ssh-keys/
+- cp .divio/config-example.json .divio/config.json
+- pip install divio-cli
+- divio login
+- divio project pull db test
+- divio project pull media test
 
-If the Dockerfile has changed since last time you did this, you'll need to run
-`docker-compose up --build` or `docker-compose build`.
+You can also push the db & media, but don't do it without getting the approval from Sebastian or Victor.
 
-If the database schema has changed since last time, you'll need to run
-`docker-compose run web django-admin migrate`.
+You can drop the local and test server db though running:
+- docker-compose stop db
+- docker-compose rm db
+- docker-compose run --rm web django-admin migrate
+- divio project push db test
 
-# Rebuilding frontend in development
-Requires: [Node.js](https://nodejs.org/en/)  
-
-To see live changes to the frontend while developing,
-* Run ```docker-compose build --build-arg buildfolder=/eahub/base/static```
-* Run ```docker-compose up```
-* Open a new terminal window and run ```npm install``` (if you run it for the first time)
-* Run ```npm run build-watch```  
-* Hard refresh your browser
+### Links
+- stage server - https://eahub-stage.us.aldryn.io/
+- deployment control panel - https://control.divio.com/control/71735/edit/88402/
 
 # Running Tests
 ```
-$ docker-compose run --use-aliases web pytest
+docker-compose run --rm web pytest
+npm test
 ```
 
-## Running Frontend Test
-Requires: [Node.js](https://nodejs.org/en/)  
-If you're running these for the first time or ```package.json``` has changed, run
-```npm install```
-Then run
-```npm test```  
-
-# Formatting Code
+Running a particular python test, e.g., test_localgroups_model.py:  
 ```
-$ docker-compose run web black .
+docker-compose run --rm web pytest eahub/tests/test_localgroups_model.py
+```
+
+
+## Formatting Code
+```
+docker-compose run --rm web black eahub
 ```
 You must run this before sending a pull request or else it will be automatically blocked from merging.
 
 You can also automatically sort your imports:
-
 ```
-$ docker-compose run web isort -rc --atomic .
-```
-
-# Deploying
-After uploading a new docker image, the website will automatically update
-```
-$ cd eahub
-$ docker build -t eahub:latest .
-$ docker system prune --force
-$ docker tag eahub eahub.azurecr.io/eahub:latest
-$ docker push eahub.azurecr.io/eahub:latest
+docker-compose run --rm web isort -rc --atomic eahub
 ```
 
 # Running django commands
 ```
-$ docker-compose run web bash
-$ docker-compose run web django-admin shell
-$ docker-compose run web django-admin makemigrations
-$ docker-compose run web django-admin migrate
-```
-
-# Docker Image Registry Login
-- Images are privately saved to our Azure Container Registry
-```
-$ docker login eahub.azurecr.io
->>> username: eahub
->>> password: <see lastpass>
+docker-compose run --rm web bash
+docker-compose run --rm web django-admin shell
+docker-compose run --rm web django-admin makemigrations
+docker-compose run --rm web django-admin migrate
 ```
 
 # Browser Support Policy

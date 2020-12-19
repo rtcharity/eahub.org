@@ -1,23 +1,31 @@
+from enum import Enum
+
+import dj_database_url
 import environ
+import sentry_sdk
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+from dotenv import find_dotenv, load_dotenv
+from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
 
-# Core settings: cache
-CACHES = {
-    "default": env.cache_url("CACHE_URL", backend="django_redis.cache.RedisCache")
-}
 
-# Core settings: database
-DATABASES = {
-    "default": env.db_url("DATABASE_URL", engine="django.db.backends.postgresql")
-}
-if "LEGACY_DATABASE_URL" in env:
-    DATABASES["legacy"] = env.db_url(
-        "LEGACY_DATABASE_URL", engine="django.db.backends.mysql"
-    )
+class DjangoEnv(Enum):
+    LOCAL = "local"
+    STAGE = "stage"
+    PROD = "prod"
+
+
+DJANGO_ENV = env.get_value("DJANGO_ENV", DjangoEnv, default=DjangoEnv.LOCAL)
+
+
+if DJANGO_ENV == DjangoEnv.LOCAL:
+    load_dotenv(find_dotenv(".env"))
+
+
+DATABASES = {"default": dj_database_url.parse(env.str("DATABASE_URL"))}
 
 # Core settings: debugging
 DEBUG = env.bool("DEBUG")
@@ -28,15 +36,36 @@ vars().update(
 )
 ADMINS = list(env.dict("ADMINS").items())
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
+GROUPS_EMAIL = env.str("GROUPS_EMAIL")
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
+
+if DJANGO_ENV == DjangoEnv.LOCAL:
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.dummy.DummyCache"}}
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+            "LOCATION": "cache",
+        }
+    }
+    CACHE_MIDDLEWARE_SECONDS = 60 * 60 * 24
+    WHITENOISE_MAX_AGE = 60 * 60 * 24 * 30
+
+    sentry_sdk.init(
+        dsn="https://181e4af66382426fb05bd3133031468a@o487305.ingest.sentry.io/5545943",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True,
+    )
+
+
 # Core settings: error reporting
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
-
-# Core settings: file uploads
-DEFAULT_FILE_STORAGE = "storages.backends.azure_storage.AzureStorage"
 
 # Core settings: globalization
 LANGUAGE_CODE = "en-us"
@@ -46,19 +75,20 @@ USE_L10N = True
 USE_TZ = True
 
 # Core settings: HTTP
-ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1"]
+ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1", "*"]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
     "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
     "django_feature_policy.FeaturePolicyMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "applicationinsights.django.ApplicationInsightsMiddleware",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -66,52 +96,8 @@ SECURE_SSL_REDIRECT = env.bool("HTTPS")
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Core settings: logging
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "django.server": {
-            "()": "django.utils.log.ServerFormatter",
-            "format": "[{server_time}] {message}",
-            "style": "{",
-        }
-    },
-    "handlers": {
-        "appinsights": {
-            "level": "WARNING",
-            "class": "applicationinsights.django.LoggingHandler",
-        },
-        "console": {"level": "INFO", "class": "logging.StreamHandler"},
-        "django.server": {
-            "level": "INFO",
-            "class": "logging.StreamHandler",
-            "formatter": "django.server",
-        },
-        "mail_admins": {
-            "level": "ERROR",
-            "class": "django.utils.log.AdminEmailHandler",
-        },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["appinsights", "console", "mail_admins"],
-            "level": "INFO",
-        },
-        "django.server": {
-            "handlers": ["django.server"],
-            "level": "INFO",
-            "propagate": False,
-        },
-        "eahub": {
-            "handlers": ["appinsights", "console", "mail_admins"],
-            "level": "INFO",
-        },
-    },
-}
-
 # Core settings: models
-from .build_settings import INSTALLED_APPS  # noqa: F401; isort:skip
+from .build_settings import INSTALLED_APPS  # noqa: E402,F401; isort:skip
 
 # Core settings: security
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
@@ -130,6 +116,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "sekizai.context_processors.sekizai",
+                "django_settings_export.settings_export",
             ]
         },
     }
@@ -166,28 +154,29 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 # Static files
-PROD = True if env.str("buildfolder") == "/static_build" else False
-if PROD:
+if DJANGO_ENV == DjangoEnv.PROD:
     from .build_settings import STATICFILES_DIRS
 else:
-    from .build_settings_dev import STATICFILES_DIRS  # noqa: F401; isort:skip
+    from .build_settings_dev import STATICFILES_DIRS  # noqa: F401,F402; isort:skip
 
-from .build_settings import (  # noqa: F401; isort:skip
+from .build_settings import (  # noqa: E402,F401; isort:skip
     STATICFILES_STORAGE,
     STATIC_ROOT,
     STATIC_URL,
 )
 
-# Application Insights
-APPLICATION_INSIGHTS = {
-    "ikey": env.str("APPLICATION_INSIGHTS_INSTRUMENTATION_KEY", default=None)
-}
+from aldryn_django.storage import parse_storage_url  # noqa: E402,F401; isort:skip
 
-# django-storages
-AZURE_CONNECTION_STRING = env.str("AZURE_CONNECTION_STRING")
-AZURE_CONTAINER = env.str("AZURE_CONTAINER")
-AZURE_SSL = SECURE_SSL_REDIRECT
-AZURE_URL_EXPIRATION_SECS = 3600
+media_config = parse_storage_url(env.str("DEFAULT_STORAGE_DSN"))
+DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
+MEDIA_URL = media_config["MEDIA_URL"]
+AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
+AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
+AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
+AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
+AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
+AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
+
 
 # allauth
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
@@ -202,6 +191,12 @@ ACCOUNT_SIGNUP_FORM_CLASS = "eahub.profiles.forms.SignupForm"
 ACCOUNT_USER_DISPLAY = "eahub.base.utils.user_display"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
+
+# search
+ALGOLIA = {
+    "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
+    "API_KEY": env.str("ALGOLIA_API_KEY", default=""),
+}
 
 # Django reCAPTCHA
 recaptcha_v3_secret_key = env.str("RECAPTCHA_V3_SECRET_KEY", default=None)
@@ -253,22 +248,9 @@ REFERRER_POLICY = "no-referrer-when-downgrade"
 # sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
 
-# webpack loader
-STATS_FILE = (
-    "/static_build/webpack-stats.json"
-    if PROD
-    else "eahub/base/static/webpack-stats.json"
-)
+WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-WEBPACK_LOADER = {
-    "DEFAULT": {
-        "CACHE": not DEBUG,
-        "BUNDLE_DIR_NAME": "dist/",
-        "STATS_FILE": STATS_FILE,
-        "POLL_INTERVAL": 0.1,
-        "TIMEOUT": None,
-    }
-}
+SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV", "ALGOLIA"]
 
 # EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
