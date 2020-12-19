@@ -3,8 +3,11 @@ from django import urls
 from django.conf import settings
 from django.contrib.postgres import fields as postgres_fields
 from django.core import validators
+from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_enumfield import enum
 from geopy import geocoders
 
@@ -117,6 +120,21 @@ class LocalGroup(models.Model):
             else:
                 values.append(getattr(self, field))
         return values
+
+    @staticmethod
+    def get_exportable_field_names():
+        fieldnames = [
+            field.name
+            for field in LocalGroup._meta.fields + LocalGroup._meta.many_to_many
+            if field.name != "local_group_type"
+        ]
+        fieldnames.append("organisers_emails")
+        return fieldnames
+
+
+@receiver(post_save, sender=LocalGroup)
+def clear_the_cache(**kwargs):
+    cache.clear()
 
 
 class Organisership(models.Model):

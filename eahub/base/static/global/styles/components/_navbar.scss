@@ -1,0 +1,125 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+$spacing-lg: 25px;
+$spacing-md: 20px;
+$spacing-sm: 15px;
+$spacing-xs: 10px;
+$spacing-xxs: 5px;
+
+.navbar {
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        
+        .navbar__logo {
+            display: flex;
+        }
+        
+        .navbar__page-name {
+            display: flex;
+            margin-left: $spacing-xxs;
+            margin-top: auto;
+            line-height: initial;
+
+            input {
+                font-size: 1.3rem;
+            }
+            @include media-breakpoint-down(sm) {
+                display: none;
+            }
+        }
+    }
+    .navbar__search-input {
+        width: auto;
+        min-width: 200px;
+        margin-left: auto;
+        @include media-breakpoint-down(sm) {
+            min-width: 100px;
+        }
+
+        input {
+            cursor: text;
+            font-size: 0.85rem;
+        }
+    }
+
+    .navbar-collapse {
+        .svg-inline--fa {
+            min-width: $spacing-md;
+            @include media-breakpoint-down(lg) {
+                margin-left: -2px;
+            }
+        }
+
+        .fa-user-plus {
+            @include media-breakpoint-down(lg) {
+                margin-left: -1px;
+            }
+        }
+
+        .nav-link {
+            margin: 0 $spacing-xxs;
+            @include media-breakpoint-down(lg) {
+                margin: 0;
+            }
+        }
+
+        .nav-item.dropdown {
+            .navbar-toggler {
+                height: 37px;
+                align-items: center;
+                margin-left: $spacing-xs;
+                color: transparent;
+                @include media-breakpoint-down(lg) {
+                    margin-left: 0;
+                    margin-bottom: $spacing-sm - 8px;
+                }
+
+                .navbar-toggler-icon {
+                    background-image: url('~global/images/angle-down-solid.svg');
+                    width: $spacing-sm;
+                    height: $spacing-sm;
+                }
+            }
+
+            .navbar-toggler.show {
+                .navbar-toggler-icon {
+                    transform: rotate(180deg);
+                }
+            }
+        }
+
+        .dropdown-menu {
+            right: 0;
+            left: initial;
+            $navbar-height: 43px;
+            top: $navbar-height;
+            &.show {
+                @include media-breakpoint-down(lg) {
+                    margin-bottom: $spacing-lg - 8px;
+                }
+            }
+
+            .dropdown-item {
+                padding-top: $spacing-xs;
+                padding-bottom: $spacing-xs;
+            }
+        }
+    }
+
+    .navbar-toggler {
+        border: none;
+        outline: none;
+    }
+}
+
+.navbar-dark .navbar-toggler {
+    color: transparent;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #FFFFFF;
+    &:hover {
+        color: #ffffffcc;
+    }
+}

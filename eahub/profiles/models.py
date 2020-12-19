@@ -3,14 +3,18 @@ import json
 import pathlib
 import shutil
 import zipfile
+from typing import List, Optional
 
 from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
+from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -18,6 +22,7 @@ from sluggable import fields as sluggable_fields
 from sluggable import models as sluggable_models
 from sluggable import settings as sluggable_settings
 from sorl import thumbnail
+from sorl.thumbnail import get_thumbnail
 
 from ..localgroups.models import LocalGroup
 
@@ -313,8 +318,14 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
 
+    def is_searchable(self) -> bool:
+        return self.is_approved and self.is_public and self.user.is_active
+
     def get_absolute_url(self):
         return urls.reverse("profile", args=[self.slug])
+
+    def get_email_searchable(self) -> Optional[str]:
+        return self.user.email if self.email_visible else None
 
     def geocode(self):
         self.lat = None
@@ -333,19 +344,42 @@ class Profile(models.Model):
             CauseArea, self.cause_areas, self.cause_areas_other
         )
 
+    def get_image_url(self) -> Optional[str]:
+        if self.image:
+            return get_thumbnail(self.image, "200x200", crop="center").url
+        else:
+            return None
+
+    # todo rename to get_list something
+    def get_cause_areas_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.cause_areas, CauseArea)
+
     def get_pretty_expertise(self):
         return prettify_property_list(
             ExpertiseArea, self.expertise_areas, self.expertise_areas_other
         )
 
+    def get_expertise_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(
+            self.expertise_areas, ExpertiseArea
+        )
+
     def get_pretty_career_interest_areas(self):
         return prettify_property_list(ExpertiseArea, self.career_interest_areas)
+
+    def get_career_interest_areas_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(
+            self.career_interest_areas, ExpertiseArea
+        )
 
     def get_pretty_giving_pledges(self):
         if self.giving_pledges:
             return ", ".join(map(GivingPledge.label, self.giving_pledges))
         else:
             return "N/A"
+
+    def get_giving_pledges_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(self.giving_pledges, GivingPledge)
 
     def get_pretty_organisational_affiliations(self):
         if self.organisational_affiliations:
@@ -355,16 +389,22 @@ class Profile(models.Model):
         else:
             return "N/A"
 
+    def get_organisational_affiliations_searchable(self) -> List[str]:
+        return self._format_enum_array_for_searching(
+            self.organisational_affiliations, OrganisationalAffiliation
+        )
+
     def get_pretty_local_groups(self):
         if self.local_groups:
-            return ", ".join(
-                [
-                    "{local_group}".format(local_group=x.name)
-                    for x in self.local_groups.all()
-                ]
-            )
+            return ", ".join(self.get_local_groups_searchable())
         else:
             return "N/A"
+
+    def get_local_groups_searchable(self) -> List[str]:
+        return [f"{group.name}" for group in self.local_groups.all()]
+
+    def get_organizer_of_local_groups_searchable(self) -> List[str]:
+        return [f"{group.name}" for group in self.user.localgroup_set.all()]
 
     def write_data_export_zip(self, request, response):
         with zipfile.ZipFile(response, mode="w") as zip_file:
@@ -488,6 +528,24 @@ class Profile(models.Model):
             else:
                 values.append(getattr(self, field))
         return values
+
+    def _format_enum_array_for_searching(
+        self, array: List[enum.Enum], enum_cls: enum.Enum
+    ) -> List[str]:
+        return [item[1] for item in enum_cls.choices() if item[0] in array]
+
+    @staticmethod
+    def get_exportable_field_names():
+        return [
+            field.name
+            for field in Profile._meta.fields + Profile._meta.many_to_many
+            if "_other" not in field.name
+        ]
+
+
+@receiver(post_save, sender=Profile)
+def clear_the_cache(**kwargs):
+    cache.clear()
 
 
 class Membership(models.Model):
