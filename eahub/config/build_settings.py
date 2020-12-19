@@ -44,5 +44,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 ALGOLIA = {
     "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
-    "API_KEY": env.str("ALGOLIA_API_KEY", default=""),
+    "API_KEY": env.str("ALGOLIA_API_KEY", default="d1c9139b2271e35f44a29b12dddb4b06"),
+    "API_KEY_READ_ONLY": env.str("API_KEY_READ_ONLY", default="1e1434756fb69ac8fcddd9fcc0ffcdc4"),
+    "INDEX_NAME_PROFILES": env.str("ALGOLIA_INDEX_NAME_PROFILES", default="profiles_stage"),
 }
