@@ -1,12 +1,17 @@
-on: [pull_request]
-
-
+on:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
 jobs:
-    test:
+    pytest:
+        name: run code styles checks & tests
         runs-on: ubuntu-latest
         steps:
-            - name: checkout code
+            - name: checkout the current brnach of eahub.org repository
               uses: actions/checkout@v2
-            - name: test
+            - name: run pytest
               shell: bash
               run: docker-compose run --use-aliases web pytest
