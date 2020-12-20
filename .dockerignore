@@ -1,3 +1,6 @@
-.git
-**/.DS_Store
+.git/
+.idea/
+.pytest_cache/
+data/
 node_modules/
+**/.DS_Store
