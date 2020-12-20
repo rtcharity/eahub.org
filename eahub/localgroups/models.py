@@ -128,6 +128,17 @@ class LocalGroup(models.Model):
         return values
 
 
+    @staticmethod
+    def get_exportable_field_names():
+        fieldnames = [
+            field.name
+            for field in LocalGroup._meta.fields + LocalGroup._meta.many_to_many
+            if field.name != "local_group_type"
+        ]
+        fieldnames.append("organisers_emails")
+        return fieldnames
+      
+
 @receiver(post_save, sender=LocalGroup)
 def clear_the_cache(**kwargs):
     cache.clear()
