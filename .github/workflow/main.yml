@@ -2,11 +2,11 @@ on: [pull_request]
 
 
 jobs:
-    pytest:
+    test:
         runs-on: ubuntu-latest
         steps:
-            - name: checkout the current brnach of eahub.org repository
+            - name: checkout code
               uses: actions/checkout@v2
-            - name: run pytest
+            - name: test
               shell: bash
               run: docker-compose run --use-aliases web pytest
