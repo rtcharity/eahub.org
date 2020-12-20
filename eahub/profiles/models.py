@@ -292,7 +292,7 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    email_visible = models.BooleanField(default=False)
+    allow_messaging = models.BooleanField(default=False)
     topics_i_speak_about = models.TextField(
         blank=True, validators=[MaxLengthValidator(2000)]
     )
@@ -325,7 +325,7 @@ class Profile(models.Model):
         return urls.reverse("profile", args=[self.slug])
 
     def get_email_searchable(self) -> Optional[str]:
-        return self.user.email if self.email_visible else None
+        return self.user.email if self.allow_messaging else None
 
     def geocode(self):
         self.lat = None
