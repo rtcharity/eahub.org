@@ -17,7 +17,7 @@ ARG buildfolder=/static_build
 ENV buildfolder=${buildfolder}
 COPY --from=frontend	/eahub/base/static $buildfolder
 RUN	mkdir /static
-RUN DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic
+RUN DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic --ignore=node_modules
 ENV	DJANGO_SETTINGS_MODULE	eahub.config.settings
 EXPOSE	8000
 CMD	["gunicorn","--bind=0.0.0.0:8000","eahub.config.wsgi"]
