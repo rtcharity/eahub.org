@@ -127,7 +127,6 @@ class LocalGroup(models.Model):
                 values.append(getattr(self, field))
         return values
 
-
     @staticmethod
     def get_exportable_field_names():
         fieldnames = [
@@ -137,7 +136,7 @@ class LocalGroup(models.Model):
         ]
         fieldnames.append("organisers_emails")
         return fieldnames
-      
+
 
 @receiver(post_save, sender=LocalGroup)
 def clear_the_cache(**kwargs):

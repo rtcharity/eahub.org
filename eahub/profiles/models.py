@@ -3,8 +3,7 @@ import json
 import pathlib
 import shutil
 import zipfile
-from typing import List, Optional
-from typing import Union
+from typing import List, Optional, Union
 
 from django import urls
 from django.conf import settings
@@ -531,23 +530,13 @@ class Profile(models.Model):
         return values
 
     def _format_enum_array_for_searching(
-        self,
-        enum_values_list: List[Union[enum.Enum, str, int]],
-        enum_cls: enum.Enum,
+        self, enum_values_list: List[Union[enum.Enum, str, int]], enum_cls: enum.Enum
     ) -> List[str]:
         enum_labels: List[str] = []
         for enum_value_raw in enum_values_list:
             enum_value = int(enum_value_raw)
             enum_labels.append(enum_cls.values[enum_value].label)
         return enum_labels
-
-    @staticmethod
-    def get_exportable_field_names():
-        return [
-            field.name
-            for field in Profile._meta.fields + Profile._meta.many_to_many
-            if "_other" not in field.name
-        ]
 
     @staticmethod
     def get_exportable_field_names():
