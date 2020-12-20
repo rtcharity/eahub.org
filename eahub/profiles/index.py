@@ -4,7 +4,7 @@ from django.conf import settings
 
 from eahub.profiles.models import Profile
 
-if not settings.IS_ENABLE_ALGOLIA:
+if settings.IS_ENABLE_ALGOLIA:
 
     @register(Profile)
     class ProfileIndex(AlgoliaIndex):

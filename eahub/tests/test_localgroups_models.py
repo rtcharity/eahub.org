@@ -1,11 +1,10 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 
 from eahub.base.models import User
 from eahub.localgroups.models import LocalGroup, Organisership
 from eahub.profiles.models import Profile
 
 
-@override_settings(IS_ENABLE_ALGOLA=False)
 class LocalGroupTestCase(TestCase):
     def test_organisers_names(self):
         local_group = LocalGroup()
