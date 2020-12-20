@@ -6,9 +6,6 @@ on:
         branches:
             - master
     workflow_dispatch:
-        inputs:
-            name:
-                description: 'Trigger a pytest run'
 jobs:
     pytest:
         name: run code styles checks & tests
