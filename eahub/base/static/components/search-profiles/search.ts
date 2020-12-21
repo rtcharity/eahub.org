@@ -30,7 +30,7 @@ export default class SearchComponent extends Vue {
     @Provide() searchQuery: string = '';
     @Provide() routing = {
         router: historyRouter(),
-        stateMapping: singleIndexMapping('profiles'),
+        stateMapping: singleIndexMapping(this.algoliaIndex),
     }
     @Provide() profileEmptyImages: URL[] = [];
     
