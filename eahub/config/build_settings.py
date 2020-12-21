@@ -41,6 +41,8 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = ("/static_build/",)
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# search
+IS_ENABLE_ALGOLIA = env.str("IS_ENABLE_ALGOLIA", default=True)
 ALGOLIA = {
     "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
     "API_KEY": env.str("ALGOLIA_API_KEY", default="d1c9139b2271e35f44a29b12dddb4b06"),
