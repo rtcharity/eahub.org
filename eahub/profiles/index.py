@@ -1,12 +1,13 @@
 from algoliasearch_django import AlgoliaIndex
 from algoliasearch_django.decorators import register
+from django.conf import settings
 
 from eahub.profiles.models import Profile
 
 
 @register(Profile)
 class ProfileIndex(AlgoliaIndex):
-    index_name = "profiles"
+    index_name = settings.ALGOLIA["INDEX_NAME_PROFILES"]
     should_index = "is_searchable"
 
     fields = [

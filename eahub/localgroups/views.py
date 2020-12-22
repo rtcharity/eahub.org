@@ -99,8 +99,8 @@ class ReportGroupAbuseView(ReportAbuseView):
 class SendGroupMessageView(SendMessageView):
     def form_valid(self, form):
         recipient = LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
-        sender_email: dict = form.cleaned_data["your_email_address"]
-        message: dict = form.cleaned_data["your_message"]
+        sender_email = form.cleaned_data["your_email_address"]
+        message = form.cleaned_data["your_message"]
         send_mail(
             f"{sender_email} sent {recipient.name} a message through the EA hub.",
             render_to_string(
