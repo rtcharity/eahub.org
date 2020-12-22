@@ -508,6 +508,9 @@ class Profile(models.Model):
         ]
         return any(community_details_exist)
 
+    def is_organiser(self):
+        return self.user.localgroup_set.exists()
+
     def convert_to_row(self, field_names):
         values = []
         for field in field_names:
