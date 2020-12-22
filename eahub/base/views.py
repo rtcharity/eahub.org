@@ -3,7 +3,6 @@ from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -12,6 +11,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.templatetags import static
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import base
 from django.views.generic.edit import FormView
 
@@ -245,7 +245,8 @@ class ReportAbuseView(FormView):
         return redirect("/{0}/{1}".format(type, reportee.slug))
 
 
-class SendMessageView(LoginRequiredMixin, FormView):
+@method_decorator(login_required, name="dispatch")
+class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
