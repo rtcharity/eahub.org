@@ -40,5 +40,5 @@ if settings.IS_ENABLE_ALGOLIA:
             ["get_expertise_searchable", "expertise"],
             ["get_career_interest_areas_searchable", "career_interest_areas"],
             ["get_giving_pledges_searchable", "giving_pledges"],
-            "is_organiser"
+            ["is_organiser", "is_organiser"]
         ]
