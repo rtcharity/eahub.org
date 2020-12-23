@@ -11,7 +11,7 @@
         <div class="search__power-by">
             <a
                 href="https://www.algolia.com/?utm_source=vue-instantsearch&utm_medium=website&utm_content=eahub.org&utm_campaign=poweredby"
-                target="_blank"l
+                target="_blank"
                 rel="noopener nofollow"
                 aria-label="search by Algolia"
             >
