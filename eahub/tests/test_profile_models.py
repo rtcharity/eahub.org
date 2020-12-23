@@ -7,9 +7,9 @@ from eahub.profiles.models import Profile
 
 @override_settings(IS_ENABLE_ALGOLA=False)
 class ProfileTestCase(TestCase):
-    def test_is_organiser(self):
+    def test_get_is_organiser(self):
         user = User()
-        user.email = "test00@email.com"
+        user.email = "test@email.com"
         user.save()
 
         profile = Profile()
@@ -22,7 +22,7 @@ class ProfileTestCase(TestCase):
         o = Organisership(user=user, local_group=local_group)
         o.save()
 
-        self.assertTrue(profile.is_organiser())
+        self.assertTrue(profile.get_is_organiser())
 
     def test_get_exportable_field_names(self):
         actual = Profile.get_exportable_field_names()
