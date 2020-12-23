@@ -11,7 +11,7 @@
         <div class="search__power-by">
             <a
                 href="https://www.algolia.com/?utm_source=vue-instantsearch&utm_medium=website&utm_content=eahub.org&utm_campaign=poweredby"
-                target="_blank"
+                target="_blank"l
                 rel="noopener nofollow"
                 aria-label="search by Algolia"
             >
@@ -88,6 +88,12 @@
             <ais-toggle-refinement
                 attribute="open_to_job_offers"
                 :label="'Open to job offers'"
+            />
+        </div>
+        <div class="search__filter-item">
+            <ais-toggle-refinement
+                attribute="is_organiser"
+                :label="'Group organiser'"
             />
         </div>
         <div class="search__filter-item search__filter-item--with-title">
