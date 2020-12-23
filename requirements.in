@@ -7,9 +7,7 @@ sorl-thumbnail
     Pillow
 geographiclib  # for maps
     geopy
-airtable-python-wrapper  # for airtable import
-
-# django
+airtable-python-wrapper  # for airtable import, which we don't do anymore - consider dropping it
 
 django-cleanup
 django-upload-path
@@ -27,6 +25,7 @@ django-admin-relation-links
 django-settings-export
 django-sekizai
 django-environ
+django-extensions  # for python manage.py clear_cache on deployment
 algoliasearch-django  # for profiles & groups search
 https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.16.1/b460938a-f357-49a3-9aef-9dfb40946551/aldryn-django-2.2.16.1.tar.gz#egg=aldryn-django==2.2.16.1
 django-import-export
@@ -34,15 +33,16 @@ django-referrer-policy
 django-feature-policy
 rules
 
-# dev tests
+# dev packages (might try to move it out for deployment speed optimization)
 
-pytest
-pytest-django
-pytest-selenium
-pytest-black
-pytest-flake8
-jasmine
-black
-pep8-naming
 flake8-isort
-isort[requirements]
+    pep8-naming
+    isort[requirements]
+black
+jasmine
+pytest
+    pytest-django
+    pytest-selenium
+    pytest-black
+    pytest-flake8
+pip-tools

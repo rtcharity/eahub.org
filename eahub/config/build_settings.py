@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     "crispy_forms",
     "django_cleanup.apps.CleanupConfig",
     "django_pwned_passwords",
+    "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
     "eahub.base.apps.BaseConfig",
