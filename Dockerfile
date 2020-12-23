@@ -4,14 +4,12 @@ FROM nikolaik/python-nodejs:python3.7-nodejs10
 RUN mkdir /app
 WORKDIR /app
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-deps --no-cache-dir -r requirements.txt
 COPY . .
 ENV PYTHONPATH /app
 
 
 RUN mkdir /static_build
-COPY eahub/base/static eahub/base/static
-COPY package.json package-lock.json webpack.config.js tsconfig.json ./
 RUN npm ci
 RUN npm run build
 ARG buildfolder=/static_build
