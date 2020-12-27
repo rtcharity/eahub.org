@@ -52,6 +52,14 @@ Running a particular python test, e.g., test_localgroups_model.py:
 docker-compose run --rm web pytest eahub/tests/test_localgroups_model.py
 ```
 
+# Debugging python code  
+
+To debug the python code in the docker container:  
+1) Add ```import ipdb``` to the python file you want to debug
+2) Add ```ipdb.set_trace()``` on the line where you want to set a breakpoint  
+3) Run ```docker-compose run --service-ports web``` 
+
+
 
 ## Formatting Code
 ```

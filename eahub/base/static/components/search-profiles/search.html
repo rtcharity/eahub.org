@@ -60,6 +60,9 @@
                                             <div class="search__hit-status" v-bind:is-true="item.available_as_speaker" v-tooltip="'Available as a speaker'">
                                                 <i class="fa fa-chalkboard-teacher"></i>
                                             </div>
+                                            <div class="search__hit-status" v-bind:is-true="item.is_organiser" v-tooltip="'Group Organiser'">
+                                                <i class="fa fa-globe"></i>
+                                            </div>
                                         </div>
                                         <div class="search__hit-location-block">
                                             <span>{{ item.country }}</span>
