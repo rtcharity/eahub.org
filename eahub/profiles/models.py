@@ -3,17 +3,18 @@ import json
 import pathlib
 import shutil
 import zipfile
+from datetime import datetime
 from typing import List, Optional, Union
 
 from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
-from django.core import exceptions
+from django.core import exceptions, serializers
 from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
-from django.db.models.signals import post_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django_enumfield import enum
 from django_upload_path import upload_path
@@ -570,7 +571,41 @@ class Profile(models.Model):
 def clear_the_cache(**kwargs):
     cache.clear()
 
+@receiver(pre_save, sender=Profile)
+def on_change(sender, instance, **kwargs):
+    if instance.id is not None:
+        previous = Profile.objects.get(id=instance.id)
+        new_fields = instance.__dict__.items()
+        for field, value in new_fields:
+            old_value = previous.__dict__[field]
+            if value != old_value and field != "_state":
+                analytics = ProfileAnalyticsLog()
+                analytics.profile = instance
+                analytics.time = datetime.now()
+                analytics.action = f'Update {field}'
+                analytics.value = value if value is not None else ""
+                analytics.old_value = old_value if old_value is not None else ""
+                analytics.save()
+
+@receiver(post_save, sender=Profile)
+def save_new_profile_to_analytics(**kwargs):
+    if kwargs['created']:
+        analytics = ProfileAnalyticsLog()
+        analytics.profile = kwargs['instance']
+        analytics.time = datetime.now()
+        analytics.action = f'Create profile'
+        analytics.value = [(k, v) for (k, v) in kwargs['instance'].__dict__.items() if k != "_state"]
+        analytics.old_value = ""
+        analytics.save()
+
 
 class Membership(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
+
+class ProfileAnalyticsLog(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    time = models.DateTimeField()
+    action = models.CharField(max_length = 255)
+    old_value = models.TextField()
+    value = models.TextField()
