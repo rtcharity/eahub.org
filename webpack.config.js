@@ -2,14 +2,20 @@ const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`);
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const SentryWebpackPlugin = require("@sentry/webpack-plugin");
+
 
 const config = {
   mode: 'production',
   context: __dirname,
   entry: {
-    global: './eahub/base/static/global/main.js',
-    vendor: './eahub/base/static/vendor/main.js',
+    global_bs3: './eahub/base/static/global/main_bs3.js',
+    global_bs5: './eahub/base/static/global/main_bs5.js',
+    vendor_bs3: './eahub/base/static/vendor/main_bs3.js',
+    vendor_bs5: './eahub/base/static/vendor/main_bs5.js',
 
+    component_search_profiles: './eahub/base/static/components/search-profiles/main.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
     component_multiselect_forms: './eahub/base/static/components/multiselect-forms.js',
@@ -23,11 +29,9 @@ const config = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
         exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
       },
       {
         test: /\.svg$/i,
@@ -107,6 +111,10 @@ const config = {
           }
         }
       },
+      {
+        test: /\.vue$/,
+        use: [{loader: 'vue-loader'}]
+      },
     ]
   },
   resolve: {
@@ -115,6 +123,9 @@ const config = {
       path.resolve('eahub/base/static'),
       'node_modules'
     ],
+    alias: {
+      vue: process.env.NODE_ENV === 'prod' ? 'vue/dist/vue.min.js' : 'vue/dist/vue.js',
+    },
   },
   devServer: {
     contentBase: path.resolve(__dirname, `eahub/base/static`),
@@ -125,6 +136,7 @@ const config = {
     inline: true,
   },
   plugins: [
+    new VueLoaderPlugin(),
     new CleanWebpackPlugin(),
     new webpack.ProvidePlugin({
       jQuery: 'jquery',
@@ -137,10 +149,21 @@ const config = {
 
 const isDevelopmentMode = process.env.NODE_ENV !== 'prod';
 if (isDevelopmentMode) {
-    config.mode = 'development';
-    config.devtool = 'eval-source-map';
-    config.output.filename = '[name].bundle.js';
-    config.output.publicPath = 'http://localhost:8090/assets/';
+  config.mode = 'development';
+  config.devtool = 'eval-source-map';
+  config.output.filename = '[name].bundle.js';
+  config.output.publicPath = 'http://localhost:8090/assets/';
+} else {
+  config.plugins.push(
+    new SentryWebpackPlugin({
+      authToken: 'ad1dea680dac46859cd380b7e18ed48769af9779fcc648d1844d3035e002e6e6',
+      org: 'eahub',
+      project: 'eahub-front',
+      include: '.',
+      ignore: ['node_modules', 'webpack.config.js'],
+      release: '1.0.0',
+    }),
+  )
 }
 
 const isDockerMode = process.env.NODE_ENV === 'docker';

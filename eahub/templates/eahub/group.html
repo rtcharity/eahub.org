@@ -24,23 +24,31 @@
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
       {% if group.email %}
-      <div class="btn btn-default purple">
-        <a href="mailto:{{ group.email }}"><i class="fa fa-envelope"></i> Message</a>
-      </div>
+      <a href="mailto:{{ group.email }}">
+        <div class="btn btn-default purple">
+          <i class="fa fa-envelope"></i> Message
+        </div>
+      </a>
       {% elif group.facebook_group %}
-      <div class="btn btn-default purple">
-        <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
-      </div>
+      <a href="{{ group.facebook_group }}" target="_blank">
+        <div class="btn btn-default purple">
+          <i class="fa fa-envelope"></i> Message
+        </div>
+      </a>
       {% elif group.facebook_page %}
-      <div class="btn btn-default purple">
-        <a href="{{ group.facebook_page }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
-      </div>
+      <a href="{{ group.facebook_page }}" target="_blank">
+        <div class="btn btn-default purple">
+          <i class="fa fa-envelope"></i> Message
+        </div>
+      </a>
       {% endif %}
       {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
       {% if can_edit_local_group %}
-        <div class="btn btn-default purple">
-          <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i> Edit</a>
-        </div>
+        <a href="{% url 'localgroups_update' group.slug %}">
+          <div class="btn btn-default purple">
+            <i class="fa fa-pencil-alt"></i> Edit
+          </div>
+        </a>
       {% endif %}
     </div>
   </div>
@@ -78,19 +86,17 @@
         </li>
         <li class="list-group-item"><b>Status: </b>{% if group.is_active %}Active{% else %}Inactive. You can still connect with EAs in the area through the links below.{% endif %}</li>
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
+        {% if group.region %}<li class="list-group-item"><b>Region: </b>{{ group.region }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
-        {% if group.public_organisers %}
+        {% if group.public_organisers or group.organisers_freetext %}
         <li class="list-group-item"><b>Organisers:</b>
-          {% if group.public_organisers.count == 1 %}
-          <a href="{{ group.public_organisers.0.profile.get_absolute_url }}">{{ group.public_organisers.0.profile.name }}</a>
-          {% else %}
-          <ul>
           {% for organiser in group.public_organisers %}
-            <li><a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a></li>
+            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
-          </ul>
-          {% endif %}
+          {{ group.organisers_freetext }}
+        </li>
         {% endif %}
+        
         {% if group.website %}<li class="list-group-item"><b>Website: </b><a href="{{ group.website }}" target="_blank">{{ group.website }}</a></li>{% endif %}
         {% if group.other_website %}<li class="list-group-item"><b>Other Website: </b><a href="{{ group.other_website }}" target="_blank">{{ group.other_website }}</a></li>{% endif %}
         {% if group.facebook_group %}<li class="list-group-item"><b>Facebook Group: </b><a href="{{ group.facebook_group }}" target="_blank">{{ group.facebook_group }}</a></li>{% endif %}
@@ -109,9 +115,11 @@
         {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
         {% if can_edit_local_group %}
           <br>
-          <span class="btn btn-default btn-xs">
-            <a href="{% url 'localgroups_update' group.slug %}"><i class="fa fa-pencil-alt"></i> Edit</a>
-          </span>
+          <a href="{% url 'localgroups_update' group.slug %}">
+            <span class="btn btn-default btn-xs">
+              <i class="fa fa-pencil-alt"></i> Edit
+            </span>
+          </a>
         {% endif %}
       </div>
     </div>
@@ -175,7 +183,9 @@
 
   <div class="text-center margin-top report-btn">
     <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
-      <a href="{% url 'report_abuse_group' group.slug  %}"><button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</a>
+      <a href="{% url 'report_abuse_group' group.slug  %}">
+        <button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</button>
+      </a>
     </div>
   </div>
 

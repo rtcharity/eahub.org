@@ -2,9 +2,21 @@
 
 {% load crispy_forms_tags %}
 
+{% load static sekizai_tags %}
+
+
 {% block title %}{% if form.instance.pk %}Edit Group{% else %}Create Group{% endif %}{% endblock %}
 
 {% block form_fields %}
+
+{% addtoblock 'js' %}
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_multiselect_forms.bundle.js"></script>
+  {% else %}
+    <script src="{% static 'dist/component_multiselect_forms.js' %}"></script>
+  {% endif %}
+{% endaddtoblock %}
+
 <div class="form-edit-group">
 {{ form|crispy }}
 </div>
@@ -21,9 +33,11 @@
 {% if form.instance.pk %}
   <div class="panel panel-default">
     <div class="panel-body">
-      <div class="btn btn-default">
-        <a href="{% url 'localgroups_delete' form.instance.slug %}">Delete this group</a>
-      </div>
+      <a href="{% url 'localgroups_delete' form.instance.slug %}">
+        <div class="btn btn-default">
+          Delete this group
+        </div>
+      </a>
     </div>
   </div>
 {% endif %}

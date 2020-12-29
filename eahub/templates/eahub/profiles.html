@@ -1,93 +1,51 @@
-{% extends 'base.html' %}
+{% extends 'base_bs5.html' %}
 
-{% load static sekizai_tags %}
+{% load static sekizai_tags thumbnail %}
 
-{% load thumbnail %}
+{% block navbar %}
+  {% include 'components/navbar.html' %}
+{% endblock navbar %}
 
 {% block content %}
-
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
+  
+  {% addtoblock 'js' %}
+    {% if settings.DJANGO_ENV.value == 'local' %}
     <script src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
-  {% else %}
+    {% else %}
     <script src="{% static 'dist/component_tables.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
-
-<br><br>
-
-<div class="container profiles animated fadeIn">
-  <div class="row">
-    <div class="col-xs-12 col-sm-4">
-      <div class="profile-action">
-        <div class="list-group">
-          {% if user.is_authenticated %}
-          <a href="{% url 'my_profile' %}" class="list-group-item"><i class="fa fa-id-card"></i> View my profile</a>
-          {% else %}
-          <a href="{% url 'account_signup' %}" class="list-group-item"><i class="fa fa-plus"></i> Add a Profile</a>
-          {% endif %}
-        </div>
-        <div class="list-group">
-          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
-        </div>
-        <div class="list-group">
-          <a href="{% url 'candidates' %}" class="list-group-item"><i class="fas fa-briefcase"></i> Candidates</a>
-        </div>
-        <div class="list-group">
-          <a href="{% url 'speakers' %}" class="list-group-item"><i class="fa fa-chalkboard-teacher"></i> Speakers</a>
-        </div>
-        <div class="list-group">
-          <a href="{% url 'volunteers' %}" class="list-group-item"><i class="fa fa-hands-helping"></i> Volunteers</a>
-        </div>
-      </div>
+    {% endif %}
+  {% endaddtoblock %}
+    
+  {% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
+  
+  <div class="container">
+    <div class="vue-search-component-container"
+         algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+         algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+         algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES }}"
+         profile-empty-images-raw="
+             {% static 'global/images/avatars/Avatar0.jpg' %},
+             {% static 'global/images/avatars/Avatar1.jpg' %},
+             {% static 'global/images/avatars/Avatar2.jpg' %},
+             {% static 'global/images/avatars/Avatar3.jpg' %},
+             {% static 'global/images/avatars/Avatar4.jpg' %},
+             {% static 'global/images/avatars/Avatar5.jpg' %},
+             {% static 'global/images/avatars/Avatar6.jpg' %},
+             {% static 'global/images/avatars/Avatar7.jpg' %},
+             {% static 'global/images/avatars/Avatar8.jpg' %},
+             {% static 'global/images/avatars/Avatar9.jpg' %},
+         "
+    >
+      <div class="vue-search-component"></div>
     </div>
-
-    <div class="col-sm-8">
-      {% include 'eahub/maps/list_page_map.html' with map_type="profiles" map_locations=map_locations %}
-    </div>
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script data-is-reload-on-page-edit defer
+              src="{{ settings.WEBPACK_DEV_URL }}/component_search_profiles.bundle.js"
+      ></script>
+    {% else %}
+      <script data-is-reload-on-page-edit defer src="{% static "dist/component_search_profiles.js" %}"
+      ></script>
+    {% endif %}
   </div>
-</div>
 
-<br><br>
-
-<div class="container animated fadeIn">
-  <div class="search">
-     Search: <input type="text" id="filterbox">
-  </div>
-  <table id="datatable-profiles" class="table enable-datatable table-striped table-bordered dataTable">
-    <thead>
-      <tr>
-        <th class="picture-column"></th>
-        <th>Name</th>
-        <th>City/Town</th>
-        <th>Country</th>
-      </tr>
-    </thead>
-  <tbody>
-    {% for profile in profiles %}
-      <tr>
-        {% thumbnail profile.image "200x200" crop="center" as im %}
-          <td><img class="profile_picture" src="{{ im.url }}"></td>
-        {% empty %}
-          <td><img class="profile_picture" src="/static/global/images/avatars/{{ profile.image_placeholder }}"></td>
-        {% endthumbnail %}
-        <td>
-          <a href="{% url 'profile' profile.slug %}">{{ profile.name }}</a>
-          {% if not profile.is_public %}
-          <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Private profile</span>
-          {% elif not profile.is_approved %}
-          <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Awaiting approval</span>
-          {% endif %}
-        </td>
-        <td class="text-muted">
-          {{ profile.city_or_town|default:'' }}
-        </td>
-        <td class="text-muted">
-          {{ profile.country|default:'' }}
-        </td>
-      </tr>
-    {% endfor %}
-  </tbody>
-  </table>
-</div>
 {% endblock %}
