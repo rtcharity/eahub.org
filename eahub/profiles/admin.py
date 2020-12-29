@@ -1,4 +1,7 @@
 from django.contrib import admin
+from import_export.admin import ImportExportMixin
+from import_export.resources import ModelResource
+from rangefilter.filter import DateRangeFilter
 
 from ..base import utils
 from . import models
@@ -50,6 +53,36 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
 
     giving_pledges_readable.short_description = "Giving Pledges"
     giving_pledges_readable.admin_order_field = "profile.giving_pledges"
+
+
+class ProfileAnalyticsResource(ModelResource):
+    class Meta:
+        model = models.ProfileAnalyticsLog
+        export_order = [
+            "id",
+            "profile",
+            "time",
+            "action",
+            "value",
+            "old_value"
+        ]
+
+@admin.register(models.ProfileAnalyticsLog)
+class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
+    list_display = (
+        "profile",
+        "time",
+        "action",
+        "value",
+        "old_value",
+    )
+    list_filter = [
+        "action",
+        ("time", DateRangeFilter)
+    ]
+    search_fields = ["profile__user__email", "action"]
+    ordering = ["-time"]
+    resource_class = ProfileAnalyticsResource
 
 
 admin.site.register(models.Profile, ProfileAdmin)
