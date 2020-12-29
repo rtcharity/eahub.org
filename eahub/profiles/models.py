@@ -1,7 +1,9 @@
 import io
 import json
 import pathlib
+import pytz
 import shutil
+import uuid
 import zipfile
 from datetime import datetime
 from typing import List, Optional, Union
@@ -590,30 +592,36 @@ profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
 
 
 def save_logs_for_new_profile(instance):
+    action_uuid = uuid.uuid4()
     for (field, value) in instance.__dict__.items():
+        time = datetime.utcnow().replace(tzinfo=pytz.utc)
         if (value and field not in profile_fields_to_ignore) or value is False:
             analytics = ProfileAnalyticsLog()
             analytics.profile = instance
-            analytics.time = datetime.now()
+            analytics.time = time
             analytics.action = "Create"
             analytics.field = field
             analytics.value = value
             analytics.old_value = ""
+            analytics.action_uuid = action_uuid
             analytics.save()
 
 
 def save_logs_for_profile_update(instance, previous):
     new_fields = instance.__dict__.items()
+    action_uuid = uuid.uuid4()
+    time = datetime.utcnow().replace(tzinfo=pytz.utc)
     for field, value in new_fields:
         old_value = previous.__dict__[field]
         if value != old_value and field not in profile_fields_to_ignore:
             analytics = ProfileAnalyticsLog()
             analytics.profile = instance
-            analytics.time = datetime.now()
+            analytics.time = time
             analytics.action = "Update"
             analytics.field = field
             analytics.value = value if value is not None else ""
             analytics.old_value = old_value if old_value is not None else ""
+            analytics.action_uuid = action_uuid
             analytics.save()
 
 
@@ -622,6 +630,7 @@ class ProfileAnalyticsLog(models.Model):
     time = models.DateTimeField()
     field = models.CharField(max_length=255)
     action = models.CharField(max_length=255)
+    action_uuid = models.UUIDField(default=uuid.uuid4)
     old_value = models.TextField()
     value = models.TextField()
 

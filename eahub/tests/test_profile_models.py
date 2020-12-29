@@ -58,8 +58,6 @@ class ProfileTestCase(TestCase):
 
         analytics_logs = ProfileAnalyticsLog.objects.filter(profile=profile)
 
-        for log in analytics_logs:
-            print("Log: " + log.field)
         analytics_logs_name = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="name"
         )
@@ -95,6 +93,9 @@ class ProfileTestCase(TestCase):
         self.assertEqual("False", analytics_logs_email_visible[0].value)
         self.assertEqual(8, len(analytics_logs))
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
+        self.assertTrue(
+            all(x.action_uuid == analytics_logs[0].action_uuid for x in analytics_logs)
+        )
 
     def test_save_analytics_on_change(self):
         profile = create_profile("test@email.com", "User1")
@@ -120,6 +121,12 @@ class ProfileTestCase(TestCase):
             str([CauseArea.META]), analytics_logs_cause_area_updated[0].value
         )
         self.assertEqual(2, len(analytics_logs_update))
+        self.assertTrue(
+            all(
+                x.action_uuid == analytics_logs_update[0].action_uuid
+                for x in analytics_logs_update
+            )
+        )
 
 
 def create_profile(email, username):
