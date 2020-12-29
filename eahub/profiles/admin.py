@@ -58,28 +58,13 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
 class ProfileAnalyticsResource(ModelResource):
     class Meta:
         model = models.ProfileAnalyticsLog
-        export_order = [
-            "id",
-            "profile",
-            "time",
-            "action",
-            "value",
-            "old_value"
-        ]
+        export_order = ["id", "profile", "time", "action", "value", "old_value"]
+
 
 @admin.register(models.ProfileAnalyticsLog)
 class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = (
-        "profile",
-        "time",
-        "action",
-        "value",
-        "old_value",
-    )
-    list_filter = [
-        "action",
-        ("time", DateRangeFilter)
-    ]
+    list_display = ("profile", "time", "action", "value", "old_value")
+    list_filter = ["action", ("time", DateRangeFilter)]
     search_fields = ["profile__user__email", "action"]
     ordering = ["-time"]
     resource_class = ProfileAnalyticsResource
