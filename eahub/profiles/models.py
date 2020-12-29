@@ -573,44 +573,59 @@ def clear_the_cache(**kwargs):
 
 
 @receiver(pre_save, sender=Profile)
-def on_change(sender, instance, **kwargs):
+def on_change(**kwargs):
+    instance = kwargs["instance"]
     if instance.id is not None:
         previous = Profile.objects.get(id=instance.id)
-        new_fields = instance.__dict__.items()
-        for field, value in new_fields:
-            old_value = previous.__dict__[field]
-            if value != old_value and field != "_state":
-                analytics = ProfileAnalyticsLog()
-                analytics.profile = instance
-                analytics.time = datetime.now()
-                analytics.action = f"Update {field}"
-                analytics.value = value if value is not None else ""
-                analytics.old_value = old_value if old_value is not None else ""
-                analytics.save()
+        save_logs_for_profile_update(instance, previous)
 
 
 @receiver(post_save, sender=Profile)
 def save_new_profile_to_analytics(**kwargs):
     if kwargs["created"]:
-        analytics = ProfileAnalyticsLog()
-        analytics.profile = kwargs["instance"]
-        analytics.time = datetime.now()
-        analytics.action = "Create profile"
-        analytics.value = [
-            (k, v) for (k, v) in kwargs["instance"].__dict__.items() if k != "_state"
-        ]
-        analytics.old_value = ""
-        analytics.save()
+        save_logs_for_new_profile(kwargs["instance"])
 
 
-class Membership(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
+profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
+
+
+def save_logs_for_new_profile(instance):
+    for (field, value) in instance.__dict__.items():
+        if (value and field not in profile_fields_to_ignore) or value is False:
+            analytics = ProfileAnalyticsLog()
+            analytics.profile = instance
+            analytics.time = datetime.now()
+            analytics.action = "Create"
+            analytics.field = field
+            analytics.value = value
+            analytics.old_value = ""
+            analytics.save()
+
+
+def save_logs_for_profile_update(instance, previous):
+    new_fields = instance.__dict__.items()
+    for field, value in new_fields:
+        old_value = previous.__dict__[field]
+        if value != old_value and field not in profile_fields_to_ignore:
+            analytics = ProfileAnalyticsLog()
+            analytics.profile = instance
+            analytics.time = datetime.now()
+            analytics.action = "Update"
+            analytics.field = field
+            analytics.value = value if value is not None else ""
+            analytics.old_value = old_value if old_value is not None else ""
+            analytics.save()
 
 
 class ProfileAnalyticsLog(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time = models.DateTimeField()
+    field = models.CharField(max_length=255)
     action = models.CharField(max_length=255)
     old_value = models.TextField()
     value = models.TextField()
+
+
+class Membership(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    local_group = models.ForeignKey(LocalGroup, on_delete=models.CASCADE)
