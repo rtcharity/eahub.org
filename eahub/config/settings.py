@@ -284,6 +284,4 @@ else:
     )
 
 # feature flags
-FLAGS = {
-    'MESSAGING_FLAG': [('boolean', False)]
-}
+FLAGS = {"MESSAGING_FLAG": [("boolean", False)]}
