@@ -96,6 +96,7 @@ class ProfileTestCase(TestCase):
         self.assertTrue(
             all(x.action_uuid == analytics_logs[0].action_uuid for x in analytics_logs)
         )
+        self.assertTrue(all(x.time == analytics_logs[0].time for x in analytics_logs))
 
     def test_save_analytics_on_change(self):
         profile = create_profile("test@email.com", "User1")
@@ -126,6 +127,9 @@ class ProfileTestCase(TestCase):
                 x.action_uuid == analytics_logs_update[0].action_uuid
                 for x in analytics_logs_update
             )
+        )
+        self.assertTrue(
+            all(x.time == analytics_logs_update[0].time for x in analytics_logs_update)
         )
 
 

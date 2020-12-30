@@ -593,8 +593,8 @@ profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
 
 def save_logs_for_new_profile(instance):
     action_uuid = uuid.uuid4()
+    time = datetime.utcnow().replace(tzinfo=pytz.utc)
     for (field, value) in instance.__dict__.items():
-        time = datetime.utcnow().replace(tzinfo=pytz.utc)
         if (value and field not in profile_fields_to_ignore) or value is False:
             analytics = ProfileAnalyticsLog()
             analytics.profile = instance
