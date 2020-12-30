@@ -72,9 +72,23 @@ class ProfileAnalyticsResource(ModelResource):
 
 @admin.register(models.ProfileAnalyticsLog)
 class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ("profile", "time", "action", "action_uuid", "field", "value", "old_value")
+    list_display = (
+        "profile",
+        "time",
+        "action",
+        "action_uuid",
+        "field",
+        "value",
+        "old_value",
+    )
     list_filter = ["action", ("time", DateRangeFilter)]
-    search_fields = ["profile__user__email", "profile__name", "action", "field", "value"]
+    search_fields = [
+        "profile__user__email",
+        "profile__name",
+        "action",
+        "field",
+        "value",
+    ]
     ordering = ["-time"]
     resource_class = ProfileAnalyticsResource
 
