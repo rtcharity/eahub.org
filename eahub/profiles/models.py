@@ -4,20 +4,15 @@ import pathlib
 import shutil
 import uuid
 import zipfile
-from datetime import datetime
 from typing import List, Optional, Union
 
-import pytz
 from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
-from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
-from django.db.models.signals import post_save, pre_save
-from django.dispatch import receiver
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -567,62 +562,6 @@ class Profile(models.Model):
             for field in Profile._meta.fields + Profile._meta.many_to_many
             if "_other" not in field.name
         ]
-
-
-@receiver(post_save, sender=Profile)
-def clear_the_cache(**kwargs):
-    cache.clear()
-
-
-@receiver(pre_save, sender=Profile)
-def on_change(**kwargs):
-    instance = kwargs["instance"]
-    if instance.id is not None:
-        previous = Profile.objects.get(id=instance.id)
-        save_logs_for_profile_update(instance, previous)
-
-
-@receiver(post_save, sender=Profile)
-def save_new_profile_to_analytics(**kwargs):
-    if kwargs["created"]:
-        save_logs_for_new_profile(kwargs["instance"])
-
-
-profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
-
-
-def save_logs_for_new_profile(instance):
-    action_uuid = uuid.uuid4()
-    time = datetime.utcnow().replace(tzinfo=pytz.utc)
-    for (field, value) in instance.__dict__.items():
-        if (value and field not in profile_fields_to_ignore) or value is False:
-            analytics = ProfileAnalyticsLog()
-            analytics.profile = instance
-            analytics.time = time
-            analytics.action = "Create"
-            analytics.field = field
-            analytics.value = value
-            analytics.old_value = ""
-            analytics.action_uuid = action_uuid
-            analytics.save()
-
-
-def save_logs_for_profile_update(instance, previous):
-    new_fields = instance.__dict__.items()
-    action_uuid = uuid.uuid4()
-    time = datetime.utcnow().replace(tzinfo=pytz.utc)
-    for field, value in new_fields:
-        old_value = previous.__dict__[field]
-        if value != old_value and field not in profile_fields_to_ignore:
-            analytics = ProfileAnalyticsLog()
-            analytics.profile = instance
-            analytics.time = time
-            analytics.action = "Update"
-            analytics.field = field
-            analytics.value = value if value is not None else ""
-            analytics.old_value = old_value if old_value is not None else ""
-            analytics.action_uuid = action_uuid
-            analytics.save()
 
 
 class ProfileAnalyticsLog(models.Model):
