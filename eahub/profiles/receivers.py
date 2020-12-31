@@ -2,14 +2,11 @@ import uuid
 from datetime import datetime
 
 import pytz
-from django.db.models.signals import post_save
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 from django.core.cache import cache
+from django.db.models.signals import post_save, pre_save
+from django.dispatch import receiver
 
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileAnalyticsLog
-
+from eahub.profiles.models import Profile, ProfileAnalyticsLog
 
 profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
 
