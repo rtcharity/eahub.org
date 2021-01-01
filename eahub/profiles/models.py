@@ -148,11 +148,13 @@ class GivingPledge(enum.Enum):
 class OrganisationalAffiliation(enum.Enum):
 
     EIGHTY_THOUSAND_HOURS = 1
+    ALLFED = 32
     ANIMAL_CHARITY_EVALUATORS = 2
     BERKELEY_EXISTENTIAL_RISK_INITIATIVE = 3
     CENTER_FOR_APPLIED_RATIONALITY = 4
     CENTER_FOR_HUMAN_COMPATIBLE_AI = 5
     CENTRE_FOR_EFFECTIVE_ALTRUISM = 6
+    CENTRE_ON_LONG_TERM_RISK = 34
     CSER = 7
     CHARITY_ENTREPRENEURSHIP = 8
     CHARITY_SCIENCE_HEALTH = 9
@@ -178,9 +180,7 @@ class OrganisationalAffiliation(enum.Enum):
     THE_GOOD_FOOD_INSTITUTE = 29
     THE_LIFE_YOU_CAN_SAVE = 30
     WILD_ANIMAL_INITIATIVE = 31
-    ALLFED = 32
     FUTURE_OF_HUMANITY_INSTITUTE = 33
-    CENTRE_ON_LONG_TERM_RISK = 34
     ANIMAL_ETHICS = 35
     GIVING_WHAT_WE_CAN = 36
     LESS_WRONG = 37
@@ -192,9 +192,11 @@ class OrganisationalAffiliation(enum.Enum):
     LEGAL_PRIORITIES_PROJECT = 43
     SENTIENCE_POLITICS = 44
     WANBAM = 45
+    E_A_HUB = 46
 
     labels = {
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
+        ALLFED: "ALLFED",
         ANIMAL_CHARITY_EVALUATORS: "Animal Charity Evaluators",
         BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative",
         CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality",
@@ -225,7 +227,6 @@ class OrganisationalAffiliation(enum.Enum):
         THE_GOOD_FOOD_INSTITUTE: "The Good Food Institute",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         WILD_ANIMAL_INITIATIVE: "Wild Animal Initiative",
-        ALLFED: "ALLFED",
         FUTURE_OF_HUMANITY_INSTITUTE: "Future of Humanity Institute",
         CENTRE_ON_LONG_TERM_RISK: "Centre on Long-Term Risk",
         ANIMAL_ETHICS: "Animal Ethics",
@@ -239,6 +240,7 @@ class OrganisationalAffiliation(enum.Enum):
         LEGAL_PRIORITIES_PROJECT: "Legal Priorities Project",
         SENTIENCE_POLITICS: "Sentience Politics",
         WANBAM: "WANBAM",
+        E_A_HUB: "Effective Alturism Hub"
     }
 
 
