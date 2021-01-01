@@ -83,20 +83,25 @@ class ProfileTestCase(TestCase):
             profile=profile, field="email_visible"
         )
 
-        self.assertEqual("User1", analytics_logs_name[0].new_value)
-        self.assertEqual("False", analytics_logs_is_approved[0].new_value)
-        self.assertEqual("True", analytics_logs_is_public[0].new_value)
-        self.assertEqual("False", analytics_logs_slug_changed[0].new_value)
-        self.assertEqual("user1", analytics_logs_slug[0].new_value)
-        self.assertEqual(str(profile.id), analytics_logs_id[0].new_value)
-        self.assertEqual(str(profile.user.id), analytics_logs_user_id[0].new_value)
-        self.assertEqual("False", analytics_logs_email_visible[0].new_value)
+        self.assertEqual("User1", analytics_logs_name.first().new_value)
+        self.assertEqual("False", analytics_logs_is_approved.first().new_value)
+        self.assertEqual("True", analytics_logs_is_public.first().new_value)
+        self.assertEqual("False", analytics_logs_slug_changed.first().new_value)
+        self.assertEqual("user1", analytics_logs_slug.first().new_value)
+        self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
+        self.assertEqual(str(profile.user.id), analytics_logs_user_id.first().new_value)
+        self.assertEqual("False", analytics_logs_email_visible.first().new_value)
         self.assertEqual(8, len(analytics_logs))
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(
-            all(x.action_uuid == analytics_logs[0].action_uuid for x in analytics_logs)
+            all(
+                x.action_uuid == analytics_logs.first().action_uuid
+                for x in analytics_logs
+            )
         )
-        self.assertTrue(all(x.time == analytics_logs[0].time for x in analytics_logs))
+        self.assertTrue(
+            all(x.time == analytics_logs.first().time for x in analytics_logs)
+        )
 
     def test_save_analytics_on_change(self):
         profile = create_profile("test@email.com", "User1")
@@ -117,28 +122,27 @@ class ProfileTestCase(TestCase):
             profile=profile, action="Update"
         )
 
-        self.assertEqual("User1New", analytics_logs_name_updated[0].new_value)
-        self.assertEqual(str(["Meta"]), analytics_logs_cause_area_updated[0].new_value)
+        self.assertEqual("User1New", analytics_logs_name_updated.first().new_value)
+        self.assertEqual(
+            str(["Meta"]), analytics_logs_cause_area_updated.first().new_value
+        )
         self.assertEqual(2, len(analytics_logs_update))
         self.assertTrue(
             all(
-                x.action_uuid == analytics_logs_update[0].action_uuid
+                x.action_uuid == analytics_logs_update.first().action_uuid
                 for x in analytics_logs_update
             )
         )
         self.assertTrue(
-            all(x.time == analytics_logs_update[0].time for x in analytics_logs_update)
+            all(
+                x.time == analytics_logs_update.first().time
+                for x in analytics_logs_update
+            )
         )
 
 
 def create_profile(email, username):
-    user = User()
-    user.email = email
-    user.save()
-
-    profile = Profile()
-    profile.user = user
-    profile.name = username
-    profile.save()
+    user = User.objects.create(email=email)
+    profile = Profile.objects.create(user=user, name=username)
 
     return profile
