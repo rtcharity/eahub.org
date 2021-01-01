@@ -121,7 +121,6 @@ class LocalGroup(models.Model):
                 values.append(getattr(self, field))
         return values
 
-
     @staticmethod
     def get_exportable_field_names():
         fieldnames = [
