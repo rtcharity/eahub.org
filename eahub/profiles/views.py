@@ -111,8 +111,7 @@ def edit_profile(request):
 
 
 def reorder_cause_areas(causes):
-    order = [8, 9, 10, 11, 12, 5, 6, 0, 1, 13, 4, 3, 2, 7, 14, 15]
-    return [causes[i] for i in order]
+    return sorted(causes, key=lambda x: x[1].label)
 
 
 @login_required
