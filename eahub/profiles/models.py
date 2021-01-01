@@ -3,7 +3,7 @@ import json
 import pathlib
 import shutil
 import zipfile
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from django import urls
 from django.conf import settings
@@ -462,11 +462,11 @@ class Profile(models.Model):
                             map(GivingPledge.label, self.giving_pledges)
                         ),
                         "member_of_local_groups": [
-                            request.build_absolute_uri(local_group.get_absolute_uri())
+                            request.build_absolute_uri(local_group.get_absolute_url())
                             for local_group in self.local_groups.all()
                         ],
                         "organiser_of_local_groups": [
-                            request.build_absolute_uri(local_group.get_absolute_uri())
+                            request.build_absolute_uri(local_group.get_absolute_url())
                             for local_group in self.user.localgroup_set.all()
                         ],
                         "aliases": [
@@ -524,6 +524,9 @@ class Profile(models.Model):
         ]
         return any(community_details_exist)
 
+    def get_is_organiser(self):
+        return self.user.localgroup_set.exists()
+
     def convert_to_row(self, field_names):
         values = []
         for field in field_names:
@@ -546,9 +549,21 @@ class Profile(models.Model):
         return values
 
     def _format_enum_array_for_searching(
-        self, array: List[enum.Enum], enum_cls: enum.Enum
+        self, enum_values_list: List[Union[enum.Enum, str, int]], enum_cls: enum.Enum
     ) -> List[str]:
-        return [item for item in map(enum_cls.label, array)]
+        enum_labels: List[str] = []
+        for enum_value_raw in enum_values_list:
+            enum_value = int(enum_value_raw)
+            enum_labels.append(enum_cls.values[enum_value].label)
+        return enum_labels
+
+    @staticmethod
+    def get_exportable_field_names():
+        return [
+            field.name
+            for field in Profile._meta.fields + Profile._meta.many_to_many
+            if "_other" not in field.name
+        ]
 
 
 @receiver(post_save, sender=Profile)
