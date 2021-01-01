@@ -4,8 +4,10 @@ import pathlib
 import shutil
 import uuid
 import zipfile
+from datetime import datetime
 from typing import List, Optional, Union
 
+import pytz
 from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
@@ -571,7 +573,26 @@ class ProfileAnalyticsLog(models.Model):
     action = models.CharField(max_length=255)
     action_uuid = models.UUIDField(default=uuid.uuid4)
     old_value = models.TextField()
-    value = models.TextField()
+    new_value = models.TextField()
+
+    def store(
+        self,
+        profile,
+        field,
+        action,
+        old_value,
+        new_value,
+        time=datetime.utcnow().replace(tzinfo=pytz.utc),
+        action_uuid=uuid.uuid4(),
+    ):
+        self.profile = profile
+        self.field = field
+        self.action = action
+        self.old_value = old_value
+        self.new_value = new_value
+        self.time = time
+        self.action_uuid = action_uuid
+        self.save()
 
 
 class Membership(models.Model):

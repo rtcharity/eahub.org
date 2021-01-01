@@ -9,4 +9,3 @@ class ProfilesConfig(apps.AppConfig):
     def ready(self):
         from eahub.profiles.receivers import clear_the_cache  # noqa: F401
         from eahub.profiles.receivers import on_profile_change  # noqa: F401
-        from eahub.profiles.receivers import membership_updated  # noqa: F401

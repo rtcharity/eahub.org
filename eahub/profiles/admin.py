@@ -65,7 +65,7 @@ class ProfileAnalyticsResource(ModelResource):
             "action",
             "action_uuid",
             "field",
-            "value",
+            "new_value",
             "old_value",
         ]
 
@@ -78,7 +78,7 @@ class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
         "action",
         "action_uuid",
         "field",
-        "value",
+        "new_value",
         "old_value",
     )
     list_filter = ["action", ("time", DateRangeFilter)]
@@ -87,7 +87,8 @@ class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
         "profile__name",
         "action",
         "field",
-        "value",
+        "old_value",
+        "new_value",
     ]
     ordering = ["-time"]
     resource_class = ProfileAnalyticsResource
