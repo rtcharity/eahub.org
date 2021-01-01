@@ -8,5 +8,5 @@ class ProfilesConfig(apps.AppConfig):
     # noinspection PyUnresolvedReferences
     def ready(self):
         from eahub.profiles.receivers import clear_the_cache  # noqa: F401
-        from eahub.profiles.receivers import on_change  # noqa: F401
-        from eahub.profiles.receivers import save_new_profile_to_analytics  # noqa: F401
+        from eahub.profiles.receivers import on_profile_change  # noqa: F401
+        from eahub.profiles.receivers import membership_updated  # noqa: F401
