@@ -86,8 +86,8 @@ class ReportProfileAbuseView(ReportAbuseView):
 class SendProfileMessageView(SendMessageView):
     def form_valid(self, form):
         recipient = Profile.objects.get(slug=self.kwargs["slug"])
-        message: dict = form.cleaned_data["your_message"]
-        sender_email: dict = form.cleaned_data["your_email_address"]
+        message: str = form.cleaned_data["your_message"]
+        sender_email = form.cleaned_data["your_email_address"]
         send_mail(
             f"{sender_email} sent you a message through the EA hub.",
             message,
