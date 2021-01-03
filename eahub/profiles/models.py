@@ -15,6 +15,7 @@ from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
 from django.core.validators import MaxLengthValidator
 from django.db import models
+from django.utils import timezone
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -568,7 +569,7 @@ class Profile(models.Model):
 
 class ProfileAnalyticsLog(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    time = models.DateTimeField()
+    time = models.DateTimeField(default=timezone.now)
     field = models.CharField(max_length=255)
     action = models.CharField(max_length=255)
     action_uuid = models.UUIDField(default=uuid.uuid4)

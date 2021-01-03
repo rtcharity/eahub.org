@@ -1,10 +1,10 @@
+import logging
 import uuid
-from datetime import datetime
 
-import pytz
 from django.core.cache import cache
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 from eahub.profiles.models import (
     CauseArea,
@@ -14,6 +14,8 @@ from eahub.profiles.models import (
     Profile,
     ProfileAnalyticsLog,
 )
+
+logger = logging.getLogger(__name__)
 
 profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
 profile_fields_enums_map = {
@@ -26,16 +28,16 @@ profile_fields_enums_map = {
 
 def save_logs_for_new_profile(instance):
     action_uuid = uuid.uuid4()
-    time = datetime.utcnow().replace(tzinfo=pytz.utc)
+    time = timezone.now()
     for (field, value) in instance.__dict__.items():
         if (value and field not in profile_fields_to_ignore) or value is False:
             log = ProfileAnalyticsLog()
             log.store(
-                instance,
-                field,
-                "Create",
-                "",
-                convert_value_to_printable(value, field),
+                profile=instance,
+                field=field,
+                action="Create",
+                old_value="",
+                new_value=convert_value_to_printable(value, field),
                 time=time,
                 action_uuid=action_uuid,
             )
@@ -44,17 +46,17 @@ def save_logs_for_new_profile(instance):
 def save_logs_for_profile_update(instance, previous):
     new_fields = instance.__dict__.items()
     action_uuid = uuid.uuid4()
-    time = datetime.utcnow().replace(tzinfo=pytz.utc)
+    time = timezone.now()
     for field, value in new_fields:
         old_value = previous.__dict__[field]
         if value != old_value and field not in profile_fields_to_ignore:
             log = ProfileAnalyticsLog()
             log.store(
-                instance,
-                field,
-                "Update",
-                convert_value_to_printable(old_value, field),
-                convert_value_to_printable(value, field),
+                profile=instance,
+                field=field,
+                action="Update",
+                old_value=convert_value_to_printable(old_value, field),
+                new_value=convert_value_to_printable(value, field),
                 time=time,
                 action_uuid=action_uuid,
             )
@@ -70,12 +72,17 @@ def convert_value_to_printable(value, field):
     elif field in profile_fields_enums_map.keys():
         return [profile_fields_enums_map[field].get(int(x)).label for x in value]
     else:
-        raise Exception(f"Value {value} cannot be made printable")
+        logger.warning(f"Value {value} cannot be made printable")
+        return str(value)
 
 
 @receiver(post_save, sender=Profile)
 def clear_the_cache(**kwargs):
     cache.clear()
+
+
+@receiver(post_save, sender=Profile)
+def on_profile_creation(**kwargs):
     if "created" in kwargs.keys() and kwargs["created"]:
         save_logs_for_new_profile(kwargs["instance"])
 

@@ -199,12 +199,6 @@ def edit_profile_community(request):
     if request.method == "POST":
         form = EditProfileCommunityForm(request.POST, instance=request.user.profile)
         if form.is_valid():
-            old_local_groups = [
-                x.name
-                for x in Profile.objects.filter(id=request.user.profile.id)[
-                    0
-                ].local_groups.all()
-            ]
             profile = form.save(commit=False)
             profile.local_groups.clear()
             organisational_affiliations = request.POST.getlist(
@@ -214,6 +208,8 @@ def edit_profile_community(request):
                 int(x) for x in organisational_affiliations
             ]
             profile.save()
+            old_local_groups = [group.name for group in
+                                LocalGroup.objects.filter(membership__profile=request.user.profile)]
             group_affiliations = request.POST.getlist("local_groups")
             local_groups = LocalGroup.objects.filter(id__in=group_affiliations)
 

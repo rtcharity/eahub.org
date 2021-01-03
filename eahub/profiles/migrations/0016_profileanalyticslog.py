@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("time", models.DateTimeField()),
+                ("time", models.DateTimeField(default=django.utils.timezone.now)),
                 ("field", models.CharField(max_length=255)),
                 ("action", models.CharField(max_length=255)),
                 ("action_uuid", models.UUIDField(default=uuid.uuid4)),

@@ -107,7 +107,7 @@ class ProfileTestCase(TestCase):
         profile = create_profile("test@email.com", "User1")
 
         profile.name = "User1New"
-        profile.cause_areas = [CauseArea.META]
+        profile.cause_areas = [CauseArea.BUILDING_EA_COMMUNITIES]
         profile.save()
 
         analytics_logs_name_updated = ProfileAnalyticsLog.objects.filter(
@@ -124,7 +124,8 @@ class ProfileTestCase(TestCase):
 
         self.assertEqual("User1New", analytics_logs_name_updated.first().new_value)
         self.assertEqual(
-            str(["Meta"]), analytics_logs_cause_area_updated.first().new_value
+            str(["Building EA communities"]),
+            analytics_logs_cause_area_updated.first().new_value,
         )
         self.assertEqual(2, len(analytics_logs_update))
         self.assertTrue(
