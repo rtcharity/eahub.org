@@ -11,12 +11,13 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.templatetags import static
 from django.urls import reverse, reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic import base
 from django.views.generic.edit import FormView
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
-from .forms import ReportAbuseForm
+from .forms import ReportAbuseForm, SendMessageForm
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -242,6 +243,12 @@ class ReportAbuseView(FormView):
             "Our admin team will send you an email once they have looked into it.",
         )
         return redirect("/{0}/{1}".format(type, reportee.slug))
+
+
+@method_decorator(login_required, name="dispatch")
+class SendMessageView(FormView):
+    template_name = "eahub/message.html"
+    form_class = SendMessageForm
 
 
 def health_check(request):
