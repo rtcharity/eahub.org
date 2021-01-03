@@ -80,6 +80,13 @@
 </div>
 {% endif %}
 
+{% load feature_flags %}
+{% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+{% if messaging_flag %}
+<div>
+  This is the new, currently hidden messaging feature
+</div>
+{% endif %}
 
 <div class="container profile-info profile-cards">
 

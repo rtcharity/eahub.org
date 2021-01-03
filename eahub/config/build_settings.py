@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "eahub.profiles.apps.ProfilesConfig",
     "import_export",
     "rangefilter",
+    "flags"
 ]
 
 # Core settings: security
