@@ -32,6 +32,7 @@ django-import-export
 django-referrer-policy
 django-feature-policy
 rules
+django-flags  # for feature flags
 
 # dev packages (might try to move it out for deployment speed optimization)
 
