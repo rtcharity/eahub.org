@@ -208,8 +208,12 @@ def edit_profile_community(request):
                 int(x) for x in organisational_affiliations
             ]
             profile.save()
-            old_local_groups = [group.name for group in
-                                LocalGroup.objects.filter(membership__profile=request.user.profile)]
+            old_local_groups = [
+                group.name
+                for group in LocalGroup.objects.filter(
+                    membership__profile=request.user.profile
+                )
+            ]
             group_affiliations = request.POST.getlist("local_groups")
             local_groups = LocalGroup.objects.filter(id__in=group_affiliations)
 
