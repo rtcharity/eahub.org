@@ -90,6 +90,12 @@
                 :label="'Open to job offers'"
             />
         </div>
+        <div class="search__filter-item">
+            <ais-toggle-refinement
+                attribute="is_organiser"
+                :label="'Group organiser'"
+            />
+        </div>
         <div class="search__filter-item search__filter-item--with-title">
             <h4 class="search__filter-title">Country</h4>
             <ais-refinement-list

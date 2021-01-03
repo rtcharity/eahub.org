@@ -282,3 +282,6 @@ else:
         "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
         "provided together"
     )
+
+# feature flags
+FLAGS = {"MESSAGING_FLAG": [("boolean", False)]}

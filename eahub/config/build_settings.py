@@ -23,14 +23,15 @@ INSTALLED_APPS = [
     "crispy_forms",
     "django_cleanup.apps.CleanupConfig",
     "django_pwned_passwords",
+    "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
-    "lockdown",
     "import_export",
     "rangefilter",
+    "flags",
 ]
 
 # Core settings: security

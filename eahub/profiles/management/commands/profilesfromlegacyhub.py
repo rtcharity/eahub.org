@@ -21,15 +21,15 @@ def collect_cause_areas(
 ):
     cause_areas = []
     if global_poverty:
-        cause_areas.append(models.CauseArea.GLOBAL_POVERTY)
+        cause_areas.append(models.CauseArea.GLOBAL_HEALTH_AND_DEVELOPMENT)
     if animal_welfare_and_rights:
-        cause_areas.append(models.CauseArea.ANIMAL_WELFARE_AND_RIGHTS)
+        cause_areas.append(models.CauseArea.FARMED_ANIMAL_WELFARE)
     if long_term_future:
         cause_areas.append(models.CauseArea.LONG_TERM_FUTURE)
     if cause_prioritisation:
-        cause_areas.append(models.CauseArea.CAUSE_PRIORITISATION)
+        cause_areas.append(models.CauseArea.GLOBAL_PRIORITIES_RESEARCH)
     if meta:
-        cause_areas.append(models.CauseArea.META)
+        cause_areas.append(models.CauseArea.BUILDING_EA_COMMUNITIES)
     if climate_change:
         cause_areas.append(models.CauseArea.CLIMATE_CHANGE)
     return cause_areas
