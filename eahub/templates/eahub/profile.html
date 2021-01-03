@@ -47,7 +47,10 @@
         <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil-alt"></i> Change Password</a></span>
       </div>
       {% endif %}
-      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None %}
+
+      {% load feature_flags %}
+      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
       <div class="btn btn-default purple">
         <span><a href="{% url 'message_profile' profile.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a></span>
       </div>
@@ -69,14 +72,6 @@
     </div>
     {% endfor %}
 </div>
-</div>
-{% endif %}
-
-{% load feature_flags %}
-{% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-{% if messaging_flag %}
-<div>
-  This is the new, currently hidden messaging feature
 </div>
 {% endif %}
 
