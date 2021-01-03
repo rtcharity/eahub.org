@@ -67,9 +67,6 @@ class ProfileTestCase(TestCase):
         analytics_logs_is_public = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="is_public"
         )
-        analytics_logs_slug_changed = ProfileAnalyticsLog.objects.filter(
-            profile=profile, field="slug_changed"
-        )
         analytics_logs_slug = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="slug"
         )
@@ -77,7 +74,7 @@ class ProfileTestCase(TestCase):
             profile=profile, field="id"
         )
         analytics_logs_user_id = ProfileAnalyticsLog.objects.filter(
-            profile=profile, field="user_id"
+            profile=profile, field="user"
         )
         analytics_logs_email_visible = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="email_visible"
@@ -86,10 +83,9 @@ class ProfileTestCase(TestCase):
         self.assertEqual("User1", analytics_logs_name.first().new_value)
         self.assertEqual("False", analytics_logs_is_approved.first().new_value)
         self.assertEqual("True", analytics_logs_is_public.first().new_value)
-        self.assertEqual("False", analytics_logs_slug_changed.first().new_value)
         self.assertEqual("user1", analytics_logs_slug.first().new_value)
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
-        self.assertEqual(str(profile.user.id), analytics_logs_user_id.first().new_value)
+        self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
         self.assertEqual(8, len(analytics_logs))
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))

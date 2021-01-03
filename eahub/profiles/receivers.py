@@ -17,7 +17,7 @@ from eahub.profiles.models import (
 
 logger = logging.getLogger(__name__)
 
-profile_fields_to_ignore = ["_state", "_django_cleanup_original_cache"]
+profile_fields_to_ignore_on_creation = ["local_groups"]
 profile_fields_enums_map = {
     "cause_areas": CauseArea,
     "giving_pledges": GivingPledge,
@@ -29,34 +29,42 @@ profile_fields_enums_map = {
 def save_logs_for_new_profile(instance):
     action_uuid = uuid.uuid4()
     time = timezone.now()
-    for (field, value) in instance.__dict__.items():
-        if (value and field not in profile_fields_to_ignore) or value is False:
+    for field in instance._meta.get_fields():
+        try:
+            value = getattr(instance, field.name)
+        except AttributeError:
+            continue
+        if (value and field.name not in profile_fields_to_ignore_on_creation) or value is False:
             log = ProfileAnalyticsLog()
             log.store(
                 profile=instance,
-                field=field,
+                field=field.name,
                 action="Create",
                 old_value="",
-                new_value=convert_value_to_printable(value, field),
+                new_value=convert_value_to_printable(value, field.name),
                 time=time,
                 action_uuid=action_uuid,
             )
 
 
 def save_logs_for_profile_update(instance, previous):
-    new_fields = instance.__dict__.items()
+    new_fields = instance._meta.get_fields()
     action_uuid = uuid.uuid4()
     time = timezone.now()
-    for field, value in new_fields:
-        old_value = previous.__dict__[field]
-        if value != old_value and field not in profile_fields_to_ignore:
+    for field in new_fields:
+        try:
+            old_value = getattr(previous, field.name)
+            value = getattr(instance, field.name)
+        except AttributeError:
+            continue
+        if value != old_value:
             log = ProfileAnalyticsLog()
             log.store(
                 profile=instance,
-                field=field,
+                field=field.name,
                 action="Update",
-                old_value=convert_value_to_printable(old_value, field),
-                new_value=convert_value_to_printable(value, field),
+                old_value=convert_value_to_printable(old_value, field.name),
+                new_value=convert_value_to_printable(value, field.name),
                 time=time,
                 action_uuid=action_uuid,
             )
