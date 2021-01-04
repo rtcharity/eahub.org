@@ -225,7 +225,7 @@ class OrganisationalAffiliation(enum.Enum):
     FAMILY_EMPOWERMENT_MEDIA = 76
     FORTIFY_HEALTH = 77
     GIVEDIRECTLY = 78
-    HELEN_KELLER_INTERNATIONAL_VITAMIN_A = 79
+    H_KELLER = 79
     IDINSIGHT = 80
     LEAD_EXPOSURE_ELIMINATION_PROJECT = 81
     MALARIA_CONSORTIUM = 82
@@ -244,14 +244,14 @@ class OrganisationalAffiliation(enum.Enum):
     labels = {
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
         ANIMAL_CHARITY_EVALUATORS: "Animal Charity Evaluators (ACE)",
-        BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative (BERI)",
+        BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative",
         CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality (CFAR)",
         CENTER_FOR_HUMAN_COMPATIBLE_AI: "Center for Human Compatible AI (CHAI)",
         CENTRE_FOR_EFFECTIVE_ALTRUISM: "Centre for Effective Altruism (CEA)",
         CSER: "Centre for the Study of Existential Risk (CSER)",
         CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
         CHARITY_SCIENCE_HEALTH: "Charity Science Health",
-        FORETHOUGHT_FOUNDATION: "The Forethought Foundation For Global Priorities Research",
+        FORETHOUGHT_FOUNDATION: "The Forethought Foundation",
         FOUNDATIONAL_RESEARCH_INSTITUTE: "Foundational Research Institute (FRI)",
         FOUNDERS_PLEDGE: "Founders Pledge",
         FUTURE_OF_LIFE_INSTITUTE: "Future of Life Institute (FLI)",
@@ -319,7 +319,7 @@ class OrganisationalAffiliation(enum.Enum):
         EVIDENCE_ACTION: "Evidence Action (Deworm the World Initiative programme)",
         FORTIFY_HEALTH: "Fortify Health",
         GIVEDIRECTLY: "GiveDirectly",
-        HELEN_KELLER_INTERNATIONAL_VITAMIN_A: "Hellen Keller International (Vitamin A supplementation programme)",
+        H_KELLER: "Hellen Keller International (Vitamin A supplementation programme)",
         IDINSIGHT: "IDInsight",
         FAMILY_EMPOWERMENT_MEDIA: "Family Empowerment Media",
         LEAD_EXPOSURE_ELIMINATION_PROJECT: "Lead Exposure Elimination Project (LEEP)",
@@ -334,7 +334,7 @@ class OrganisationalAffiliation(enum.Enum):
         QUALIA_RESEARCH_INSTITUTE: "Qualia Research Institute (QRI)",
         GIVING_GREEN: "Giving Green",
         HIGH_IMPACT_CAREERS_IN_GOVERNMENT: "High Impact Careers in Government (HIPE)",
-        SPARKWAVE: "SparkWave"
+        SPARKWAVE: "SparkWave",
     }
 
 
