@@ -149,14 +149,14 @@ class OrganisationalAffiliation(enum.Enum):
 
     EIGHTY_THOUSAND_HOURS = 1
     ANIMAL_CHARITY_EVALUATORS = 2
-    BERKELEY_EXISTENTIAL_RISK_INITIATIVE = 3
+    BERI = 3
     CENTER_FOR_APPLIED_RATIONALITY = 4
     CENTER_FOR_HUMAN_COMPATIBLE_AI = 5
     CENTRE_FOR_EFFECTIVE_ALTRUISM = 6
     CSER = 7
     CHARITY_ENTREPRENEURSHIP = 8
     CHARITY_SCIENCE_HEALTH = 9
-    FORETHOUGHT_FOUNDATION = 10
+    FT_FOUNDATION = 10
     FOUNDATIONAL_RESEARCH_INSTITUTE = 11
     FOUNDERS_PLEDGE = 12
     FUTURE_OF_LIFE_INSTITUTE = 13
@@ -244,14 +244,14 @@ class OrganisationalAffiliation(enum.Enum):
     labels = {
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
         ANIMAL_CHARITY_EVALUATORS: "Animal Charity Evaluators (ACE)",
-        BERKELEY_EXISTENTIAL_RISK_INITIATIVE: "Berkeley Existential Risk Initiative",
+        BERI: "Berkeley Existential Risk Initiative (BERI)",
         CENTER_FOR_APPLIED_RATIONALITY: "Center for Applied Rationality (CFAR)",
         CENTER_FOR_HUMAN_COMPATIBLE_AI: "Center for Human Compatible AI (CHAI)",
         CENTRE_FOR_EFFECTIVE_ALTRUISM: "Centre for Effective Altruism (CEA)",
         CSER: "Centre for the Study of Existential Risk (CSER)",
         CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
         CHARITY_SCIENCE_HEALTH: "Charity Science Health",
-        FORETHOUGHT_FOUNDATION: "The Forethought Foundation",
+        FT_FOUNDATION: "The Forethought Foundation for or Global Priorities Research",
         FOUNDATIONAL_RESEARCH_INSTITUTE: "Foundational Research Institute (FRI)",
         FOUNDERS_PLEDGE: "Founders Pledge",
         FUTURE_OF_LIFE_INSTITUTE: "Future of Life Institute (FLI)",
