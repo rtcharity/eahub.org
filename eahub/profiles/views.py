@@ -191,6 +191,9 @@ def edit_profile_career(request):
         },
     )
 
+def reorder_orgs(orgs):
+    return sorted(orgs, key=lambda x: x[1].label)
+
 
 @login_required
 def edit_profile_community(request):
@@ -239,7 +242,7 @@ def edit_profile_community(request):
         {
             "form": form,
             "profile": Profile.objects.get(pk=request.user.profile.id),
-            "organisational_affiliation_choices": OrganisationalAffiliation.choices,
+            "organisational_affiliation_choices": reorder_orgs(OrganisationalAffiliation.choices()),
         },
     )
 
