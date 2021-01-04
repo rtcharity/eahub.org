@@ -20,7 +20,7 @@
     <label>Organisational Affiliations:</label>
     <div class="label-info">Organisations that you work or worked with</div>
     <select class="form-control multiselect-form" name="organisational_affiliations" multiple>
-        {% for choice in organisational_affiliation_choices %}
+        {% for choice in organisation_choices %}
             <option value="{{ choice.0 }}" {% if choice.0 in profile.organisational_affiliations %}selected{% endif %}>{{ choice.1.label }}</option>
         {% endfor %}
     </select>
