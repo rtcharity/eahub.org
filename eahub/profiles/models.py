@@ -2,6 +2,7 @@ import io
 import json
 import pathlib
 import shutil
+import uuid
 import zipfile
 from typing import List, Optional, Union
 
@@ -10,11 +11,9 @@ from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
 from django.core import exceptions
-from django.core.cache import cache
 from django.core.validators import MaxLengthValidator
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.utils import timezone
 from django_enumfield import enum
 from django_upload_path import upload_path
 from geopy import geocoders
@@ -566,9 +565,14 @@ class Profile(models.Model):
         ]
 
 
-@receiver(post_save, sender=Profile)
-def clear_the_cache(**kwargs):
-    cache.clear()
+class ProfileAnalyticsLog(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    time = models.DateTimeField(default=timezone.now)
+    field = models.CharField(max_length=255)
+    action = models.CharField(max_length=255)
+    action_uuid = models.UUIDField(default=uuid.uuid4)
+    old_value = models.TextField()
+    new_value = models.TextField()
 
 
 class Membership(models.Model):

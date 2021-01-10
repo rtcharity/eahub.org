@@ -25,6 +25,7 @@ from .models import (
     Membership,
     OrganisationalAffiliation,
     Profile,
+    ProfileAnalyticsLog,
     ProfileSlug,
 )
 
@@ -203,13 +204,32 @@ def edit_profile_community(request):
             organisational_affiliations = request.POST.getlist(
                 "organisational_affiliations"
             )
-            profile.organisational_affiliations = organisational_affiliations
+            profile.organisational_affiliations = [
+                int(x) for x in organisational_affiliations
+            ]
             profile.save()
+            old_local_groups = [
+                group.name
+                for group in LocalGroup.objects.filter(
+                    membership__profile=request.user.profile
+                )
+            ]
             group_affiliations = request.POST.getlist("local_groups")
             local_groups = LocalGroup.objects.filter(id__in=group_affiliations)
+
             for group in local_groups:
                 membership = Membership(profile=profile, local_group=group)
                 membership.save()
+
+            log = ProfileAnalyticsLog()
+            log.store(
+                request.user.profile,
+                "Update",
+                "local_groups",
+                old_local_groups,
+                [x.name for x in local_groups.all()],
+            )
+
             return redirect("my_profile")
     else:
         form = EditProfileCommunityForm(instance=request.user.profile)
