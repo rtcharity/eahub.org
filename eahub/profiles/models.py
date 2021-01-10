@@ -287,7 +287,7 @@ class OrganisationalAffiliation(enum.Enum):
         LEGAL_PRIORITIES_PROJECT: "Legal Priorities Project",
         SENTIENCE_POLITICS: "Sentience Politics",
         WANBAM: "WANBAM",
-        E_A_HUB: "Effective Alturism Hub",
+        E_A_HUB: "Effective Altruism Hub",
         ANIMAL_ADVOCACY_CAREERS: "Animal Advocacy Careers",
         AYUDA_EFECTIVA: "Ayuda Efectiva",
         DOEBEM: "Doebem",
