@@ -34,7 +34,9 @@ def save_logs_for_new_profile(instance):
             value = getattr(instance, field.name)
         except AttributeError:
             continue
-        if (value and field.name not in profile_fields_to_ignore_on_creation) or value is False:
+        if (
+            value and field.name not in profile_fields_to_ignore_on_creation
+        ) or value is False:
             log = ProfileAnalyticsLog()
             log.store(
                 profile=instance,
