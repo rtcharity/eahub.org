@@ -224,14 +224,14 @@ def edit_profile_community(request):
             for group in local_groups:
                 membership = Membership(profile=profile, local_group=group)
                 membership.save()
-
-            log = ProfileAnalyticsLog()
-            log.profile = request.user.profile
-            log.action = "Update"
-            log.old_value = old_local_groups
-            log.new_value = [x.name for x in local_groups.all()]
-            log.field = "local_groups"
-            log.save()
+            if old_local_groups != [x.name for x in local_groups.all()]:
+                log = ProfileAnalyticsLog()
+                log.profile = request.user.profile
+                log.action = "Update"
+                log.old_value = old_local_groups
+                log.new_value = [x.name for x in local_groups.all()]
+                log.field = "local_groups"
+                log.save()
 
             return redirect("my_profile")
     else:
