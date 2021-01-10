@@ -1,12 +1,15 @@
 import logging
 
 from django import http
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
 from ..base.models import User
-from ..base.views import ReportAbuseView
+from ..base.views import ReportAbuseView, SendMessageView
 from ..localgroups.models import LocalGroup
 from .forms import (
     DeleteProfileForm,
@@ -78,6 +81,23 @@ class ReportProfileAbuseView(ReportAbuseView):
 
     def get_type(self):
         return "profile"
+
+
+class SendProfileMessageView(SendMessageView):
+    def form_valid(self, form):
+        recipient = Profile.objects.get(slug=self.kwargs["slug"])
+        message: str = form.cleaned_data["your_message"]
+        sender_email = form.cleaned_data["your_email_address"]
+        send_mail(
+            f"{sender_email} sent you a message through the EA hub.",
+            message,
+            sender_email,
+            [recipient.user.email],
+        )
+        messages.success(
+            self.request, "Your message to " + recipient.name + " has been sent"
+        )
+        return redirect(reverse("profile", args=([recipient.slug])))
 
 
 @login_required

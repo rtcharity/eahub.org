@@ -1,0 +1,3 @@
+{{message}}
+
+You have been sent this email as you are an admin of {{group_name}} on the EA hub.

@@ -36,29 +36,24 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ profile.name }}</h1>
-      {% if user.id is not None and profile.email_visible %}
-      <div class="turquoise-links">
-        <a href="mailto:{{ profile.user.email }}"><i class="fa fa-envelope-square"></i> {{ profile.user.email }}</a>
+      {% if request.user.id == profile.user_id %}
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'edit_profile' %}"><i class="fa fa-pencil-alt"></i> Edit</a></span>
       </div>
-      <br>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'account_email' %}"><i class="fa fa-pencil-alt"></i> Change Email Address</a></span>
+      </div>
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'account_change_password' %}"><i class="fa fa-pencil-alt"></i> Change Password</a></span>
+      </div>
       {% endif %}
 
-      {% if user.id == profile.user_id %}
-        <a href="{% url 'edit_profile' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Edit</span>
-          </div>
-        </a>
-        <a href="{% url 'account_email' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
-          </div>
-        </a>
-        <a href="{% url 'account_change_password' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Change Password</span>
-          </div>
-        </a>
+      {% load feature_flags %}
+      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'message_profile' profile.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a></span>
+      </div>
       {% endif %}
     </div>
   </div>
@@ -77,14 +72,6 @@
     </div>
     {% endfor %}
 </div>
-</div>
-{% endif %}
-
-{% load feature_flags %}
-{% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-{% if messaging_flag %}
-<div>
-  This is the new, currently hidden messaging feature
 </div>
 {% endif %}
 
@@ -107,7 +94,7 @@
           {% if profile.available_to_volunteer %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
           {% endif %}
-          {% if user.id == profile.user_id %}
+          {% if request.user.id == profile.user_id %}
             <br>
             <a href="{% url 'edit_profile_cause_areas' %}">
               <span class="btn btn-default btn-xs">
@@ -138,7 +125,7 @@
             <br>
             <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
           {% endif %}
-          {% if user.id == profile.user_id %}
+          {% if request.user.id == profile.user_id %}
             <br>
             <span class="btn btn-default btn-xs">
               <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
@@ -198,7 +185,7 @@
           <br>
           {% endif %}
 
-          {% if user.id == profile.user_id %}
+          {% if request.user.id == profile.user_id %}
             <br>
             <a href="{% url 'edit_profile_community' %}">
               <span class="btn btn-default btn-xs">
@@ -233,7 +220,7 @@
           </div>
           <div class="panel-body">
             {{ profile.summary|default:'N/A'|urlize|linebreaks }}
-            {% if user.id == profile.user_id %}
+            {% if request.user.id == profile.user_id %}
               <br>
               <a href="{% url 'edit_profile' %}">
                 <span class="btn btn-default btn-xs">
