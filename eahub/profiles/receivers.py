@@ -38,15 +38,14 @@ def save_logs_for_new_profile(instance):
             value and field.name not in profile_fields_to_ignore_on_creation
         ) or value is False:
             log = ProfileAnalyticsLog()
-            log.store(
-                profile=instance,
-                field=field.name,
-                action="Create",
-                old_value="",
-                new_value=convert_value_to_printable(value, field.name),
-                time=time,
-                action_uuid=action_uuid,
-            )
+            log.profile = instance
+            log.field = field.name
+            log.action = "Create"
+            log.old_value = ""
+            log.new_value = convert_value_to_printable(value, field.name)
+            log.time = time
+            log.action_uuid = action_uuid
+            log.save()
 
 
 def save_logs_for_profile_update(instance, previous):
@@ -61,15 +60,14 @@ def save_logs_for_profile_update(instance, previous):
             continue
         if value != old_value:
             log = ProfileAnalyticsLog()
-            log.store(
-                profile=instance,
-                field=field.name,
-                action="Update",
-                old_value=convert_value_to_printable(old_value, field.name),
-                new_value=convert_value_to_printable(value, field.name),
-                time=time,
-                action_uuid=action_uuid,
-            )
+            log.profile = instance
+            log.field = field.name
+            log.action = "Update"
+            log.old_value = convert_value_to_printable(old_value, field.name)
+            log.new_value = convert_value_to_printable(value, field.name)
+            log.time = time
+            log.action_uuid = action_uuid
+            log.save()
 
 
 def convert_value_to_printable(value, field):
