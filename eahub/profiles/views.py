@@ -192,6 +192,10 @@ def edit_profile_career(request):
     )
 
 
+def reorder_orgs(orgs):
+    return sorted(orgs, key=lambda x: x[1].label)
+
+
 @login_required
 def edit_profile_community(request):
     if not hasattr(request.user, "profile"):
@@ -239,7 +243,7 @@ def edit_profile_community(request):
         {
             "form": form,
             "profile": Profile.objects.get(pk=request.user.profile.id),
-            "organisational_affiliation_choices": OrganisationalAffiliation.choices,
+            "organisation_choices": reorder_orgs(OrganisationalAffiliation.choices()),
         },
     )
 
