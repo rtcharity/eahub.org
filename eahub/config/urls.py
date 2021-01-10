@@ -66,5 +66,4 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("", include("eahub.config.legacy_urls")),
 ]
