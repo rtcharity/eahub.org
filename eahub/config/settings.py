@@ -208,7 +208,6 @@ ALGOLIA = {
 RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY", "")
 
-
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
