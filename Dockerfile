@@ -2,22 +2,24 @@ FROM nikolaik/python-nodejs:python3.7-nodejs10
 
 
 RUN mkdir /app
+RUN mkdir /app/static_build
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-deps --no-cache-dir -r requirements.txt
-COPY . .
-ENV PYTHONPATH /app
 
 
-RUN mkdir /static_build
+COPY package.json .
+COPY package-lock.json .
+COPY webpack.config.js .
+COPY tsconfig.json .
+COPY eahub/base/static/ .
 RUN npm ci
 RUN npm run build
-ARG buildfolder=/static_build
-ENV buildfolder=${buildfolder}
-COPY /eahub/base/static $buildfolder
-RUN mkdir /static
-RUN DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic --ignore=node_modules
-ENV DJANGO_SETTINGS_MODULE eahub.config.settings
+
+
+COPY . .
+RUN python manage.py collectstatic --ignore=node_modules
+
 
 EXPOSE 8000
 CMD ["gunicorn","--bind=0.0.0.0:8000","eahub.config.wsgi"]
