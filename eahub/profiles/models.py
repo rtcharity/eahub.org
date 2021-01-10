@@ -251,7 +251,7 @@ class OrganisationalAffiliation(enum.Enum):
         CSER: "Centre for the Study of Existential Risk (CSER)",
         CHARITY_ENTREPRENEURSHIP: "Charity Entrepreneurship",
         CHARITY_SCIENCE_HEALTH: "Charity Science Health",
-        FT_FOUNDATION: "The Forethought Foundation for or Global Priorities Research",
+        FT_FOUNDATION: "The Forethought Foundation for Global Priorities Research",
         FOUNDATIONAL_RESEARCH_INSTITUTE: "Foundational Research Institute (FRI)",
         FOUNDERS_PLEDGE: "Founders Pledge",
         FUTURE_OF_LIFE_INSTITUTE: "Future of Life Institute (FLI)",
