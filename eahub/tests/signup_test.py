@@ -1,5 +1,4 @@
 import os
-import socket
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
@@ -13,20 +12,17 @@ class SignUpTest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         cls.host = '0.0.0.0'
-        super().setUpClass()
-
-    # @classmethod
-    # def tearDownClass(cls):
-    #     super().tearDownClass()
-
-    def test_visit_site(self):
-        print("in test")
-        selenium = webdriver.Remote(
+        cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
             desired_capabilities=DesiredCapabilities.CHROME,
         )
-        print("get sel")
-        selenium.get("google.com")
-        print("in test 2")
-        print(selenium.title)
-        selenium.quit()
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super().tearDownClass()
+
+    def test_visit_site(self):
+        self.selenium.get("https://google.com")
+        print(self.selenium.title)
