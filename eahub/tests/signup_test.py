@@ -1,41 +1,32 @@
-import time
+import os
+import socket
 
-import pytest
-from django.test import override_settings
-from selenium.webdriver.common.by import By
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from selenium import webdriver
+from selenium.webdriver import DesiredCapabilities
 
 
-@override_settings(
-    STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
-)
-@pytest.mark.nondestructive
-def test_signup_success(driver, live_server):
-    signup_button = "#navbar_signup"
-    name_field = "#id_name"
-    email_field = "#id_email"
-    password_field_1 = "#id_password1"
-    password_field_2 = "#id_password2"
-    public = "#id_is_public"
-    submit = "#submit"
+os.environ['DJANGO_LIVE_TEST_SERVER_ADDRESS'] = '0.0.0.0:8000'
 
-    name = "TestUser"
-    email = "test@eahub.org"
-    password = "Wa4@;fh>A/~W#6SH"
 
-    # When:
-    driver.get(live_server.url)
+class SignUpTest(StaticLiveServerTestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.host = '0.0.0.0'
+        super().setUpClass()
 
-    # All fields filled in
-    driver.find_element(By.CSS_SELECTOR, signup_button).click()
-    driver.find_element(By.CSS_SELECTOR, name_field).send_keys(name)
-    driver.find_element(By.CSS_SELECTOR, email_field).send_keys(email)
-    driver.find_element(By.CSS_SELECTOR, password_field_1).send_keys(password)
-    driver.find_element(By.CSS_SELECTOR, password_field_2).send_keys(password)
+    # @classmethod
+    # def tearDownClass(cls):
+    #     super().tearDownClass()
 
-    # "Visible to public" unchecked
-    driver.find_element(By.CSS_SELECTOR, public).click()
-
-    # Then:
-    # Submit
-    driver.find_element(By.CSS_SELECTOR, submit).click()
-    time.sleep(10)
+    def test_visit_site(self):
+        print("in test")
+        selenium = webdriver.Remote(
+            command_executor="http://selenium-hub:4444/wd/hub",
+            desired_capabilities=DesiredCapabilities.CHROME,
+        )
+        print("get sel")
+        selenium.get("google.com")
+        print("in test 2")
+        print(selenium.title)
+        selenium.quit()
