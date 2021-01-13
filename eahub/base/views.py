@@ -4,10 +4,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
-from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db.models import Count
-from django.http import Http404, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.templatetags import static
@@ -15,7 +14,6 @@ from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import base
 from django.views.generic.edit import FormView
-from flags.state import flag_enabled
 
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
@@ -251,16 +249,6 @@ class ReportAbuseView(FormView):
 class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
-
-    def get(self, request, *args, **kwargs):
-        if not flag_enabled("MESSAGING_FLAG", request=request):
-            raise Http404("Page does not exist")
-        return super().get(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if not flag_enabled("MESSAGING_FLAG", request=request):
-            raise PermissionDenied
-        return super().post(request, *args, **kwargs)
 
 
 def health_check(request):

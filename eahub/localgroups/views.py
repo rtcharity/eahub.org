@@ -108,7 +108,7 @@ class SendGroupMessageView(SendMessageView):
                 {"message": message, "group_name": recipient.name},
             ),
             sender_email,
-            recipient.get_all_emails(),
+            [recipient.email],
         )
 
         messages.success(

@@ -3,10 +3,12 @@ import logging
 from django import http
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from flags.state import flag_enabled
 
 from ..base.models import User
 from ..base.views import ReportAbuseView, SendMessageView
@@ -99,6 +101,16 @@ class SendProfileMessageView(SendMessageView):
             self.request, "Your message to " + recipient.name + " has been sent"
         )
         return redirect(reverse("profile", args=([recipient.slug])))
+
+    def get(self, request, *args, **kwargs):
+        if not flag_enabled("MESSAGING_FLAG", request=request):
+            raise Http404("Page does not exist")
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if not flag_enabled("MESSAGING_FLAG", request=request):
+            raise PermissionDenied
+        return super().post(request, *args, **kwargs)
 
 
 @login_required
