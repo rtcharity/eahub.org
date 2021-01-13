@@ -260,7 +260,7 @@ class SendMessageView(FormView):
     def post(self, request, *args, **kwargs):
         if not flag_enabled("MESSAGING_FLAG", request=request):
              raise PermissionDenied
-        return super().get(request,*args,**kwargs)
+        return super().post(request,*args,**kwargs)
 
 
 def health_check(request):
