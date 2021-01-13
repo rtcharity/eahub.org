@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "lockdown",
     "import_export",
     "rangefilter",
+    "eahub.feedback.apps.FeedbackConfig",
 ]
 
 # Core settings: security

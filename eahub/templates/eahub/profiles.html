@@ -6,8 +6,10 @@
   {% include 'components/navbar.html' %}
 {% endblock navbar %}
 
+
+
 {% block content %}
-  
+
   {% addtoblock 'js' %}
     {% if settings.DJANGO_ENV.value == 'local' %}
     <script src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
@@ -47,5 +49,9 @@
       ></script>
     {% endif %}
   </div>
+
+{% block feedback %}
+  {% include 'components/feedback.html' %}
+{% endblock feedback %}
 
 {% endblock %}
