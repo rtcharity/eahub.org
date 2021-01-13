@@ -3,10 +3,12 @@ import logging
 from django import http
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from flags.state import flag_enabled
 
 from ..base.models import User
 from ..base.views import ReportAbuseView, SendMessageView
