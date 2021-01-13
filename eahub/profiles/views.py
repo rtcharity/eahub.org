@@ -100,6 +100,16 @@ class SendProfileMessageView(SendMessageView):
         )
         return redirect(reverse("profile", args=([recipient.slug])))
 
+    def get(self, request, *args, **kwargs):
+        if not flag_enabled("MESSAGING_FLAG", request=request):
+            raise Http404("Page does not exist")
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if not flag_enabled("MESSAGING_FLAG", request=request):
+            raise PermissionDenied
+        return super().post(request, *args, **kwargs)
+
 
 @login_required
 def edit_profile(request):
