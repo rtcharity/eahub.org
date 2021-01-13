@@ -250,6 +250,6 @@ class SendMessageView(FormView):
     template_name = "eahub/message.html"
     form_class = SendMessageForm
 
-    
+
 def health_check(request):
     return HttpResponse(status=204)
