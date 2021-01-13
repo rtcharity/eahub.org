@@ -12,8 +12,8 @@ COPY package.json .
 COPY package-lock.json .
 COPY webpack.config.js .
 COPY tsconfig.json .
-COPY eahub/base/static/ .
 RUN npm ci
+COPY /eahub/base/static/ ./eahub/base/static/
 RUN npm run build
 
 
