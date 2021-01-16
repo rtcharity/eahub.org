@@ -94,11 +94,11 @@
                                             <strong>Local groups:</strong>
                                             <span>{{ item.local_groups.join(', ') }}</span>
                                         </div>
-                                        <div class="search__hit-local-group-block" v-if="item.local_groups.length">
+                                        <div class="search__hit-local-group-block" v-if="item.offering">
                                             <strong>Offering:</strong>
                                             <span>{{ item.offering }}</span>
                                         </div>
-                                        <div class="search__hit-local-group-block" v-if="item.local_groups.length">
+                                        <div class="search__hit-local-group-block" v-if="item.looking_for">
                                             <strong>Looking for:</strong>
                                             <span>{{ item.looking_for }}</span>
                                         </div>
