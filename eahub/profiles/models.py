@@ -645,6 +645,8 @@ class Profile(models.Model):
             self.user.localgroup_set.exists(),
             self.available_as_speaker,
             len(self.topics_i_speak_about) > 0,
+            self.offering,
+            self.looking_for
         ]
         return any(community_details_exist)
 
