@@ -444,6 +444,8 @@ class Profile(models.Model):
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )
+    offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
 
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 

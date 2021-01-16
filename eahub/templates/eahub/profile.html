@@ -188,6 +188,12 @@
           {% if profile.topics_i_speak_about %}
           <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about|urlize|linebreaks }}</div>
           {% endif %}
+          {% if profile.offering %}
+          <div class="list"><div class="tag">Offering:</div> {{ profile.offering|urlize|linebreaks }}</div>
+          {% endif %}
+          {% if profile.looking_for %}
+          <div class="list"><div class="tag">Looking for:</div> {{ profile.looking_for|urlize|linebreaks }}</div>
+          {% endif %}
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
           <br>
