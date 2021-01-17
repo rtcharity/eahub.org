@@ -23,12 +23,11 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
-       {% if request.user.id is not None %}
+       {% if request.user.id is not None and group.email %}
       <div class="btn btn-default purple">
         <a href="{% url 'message_group' group.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a>
       </div>
-      {% endif %}
-
+      {% else %}
       {% if group.facebook_group %}
       <div class="btn btn-default purple">
         <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
@@ -41,6 +40,8 @@
         </div>
       </a>
       {% endif %}
+      {% endif %}
+
       {% has_perm 'localgroups.change_local_group' user group as can_edit_local_group %}
       {% if can_edit_local_group %}
         <a href="{% url 'localgroups_update' group.slug %}">
