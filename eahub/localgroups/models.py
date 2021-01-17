@@ -95,6 +95,7 @@ class LocalGroup(models.Model):
         self.lat = None
         self.lon = None
         if self.city_or_town and self.country:
+            geocoders.options.default_user_agent = "eahub"
             location = geocoders.Nominatim(timeout=10).geocode(
                 f"{self.city_or_town}, {self.country}"
             )
