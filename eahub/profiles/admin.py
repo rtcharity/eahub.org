@@ -30,7 +30,7 @@ class GivingPledgesFilter(admin.SimpleListFilter):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
-    actions = ["export_csv"]
+    actions = ["export_csv", "approve_profiles"]
     model = Profile
     list_display = (
         "email",
@@ -70,6 +70,10 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     @options(desc="date joined", order="user__date_joined")
     def date_joined(self, obj: Profile):
         return obj.user.date_joined
+
+    @options(desc="Approve selected profiles", allowed_permissions=["change"])
+    def approve_profiles(self, request, queryset):
+        queryset.update(is_approved=True)
 
 
 class ProfileAnalyticsResource(ModelResource):
