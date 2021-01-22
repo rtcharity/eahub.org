@@ -89,6 +89,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "admin_reorder.middleware.ModelAdminReorder",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -278,3 +279,30 @@ else:
 FLAGS = {
     "MESSAGING_FLAG": [("boolean", env.bool("IS_MESSAGING_ENABLED", default=False))]
 }
+
+
+ADMIN_REORDER = [
+    {
+        "app": "auth",
+        "label": "EAHub",
+        "models": [
+            {"model": "profiles.Profile", "label": "Profiles"},
+            {"model": "localgroups.LocalGroup", "label": "Groups"},
+            {"model": "profiles.ProfileAnalyticsLog", "label": "Profile update logs"},
+        ],
+    },
+    {
+        "app": "sites",
+        "label": "Website administration",
+        "models": [
+            {"model": "auth.User", "label": "User accounts"},
+            {"model": "account.EmailAddress", "label": "User account email addresses"},
+            {"model": "auth.Group", "label": "Admin permission groups"},
+            {"model": "sites.Site", "label": "Domain management & site name"},
+            {
+                "model": "flags.FlagState",
+                "label": "Feature flags (beta features) configuration",
+            },
+        ],
+    },
+]
