@@ -1,7 +1,7 @@
 from captcha import fields
 from django import forms
-from django.conf import settings
 
+from ..config import settings
 from ..localgroups.models import LocalGroup
 from .models import Profile, validate_sluggable_name
 
@@ -24,11 +24,13 @@ class SignupForm(forms.Form):
         label="Show my profile to the public after it is approved",
         initial=True,
     )
-    captcha = fields.ReCaptchaField(
-        label="",
-        public_key=settings.RECAPTCHA_PUBLIC_KEY,
-        private_key=settings.RECAPTCHA_PRIVATE_KEY,
-    )
+
+    if settings.DJANGO_ENV != settings.DjangoEnv.LOCAL:
+        captcha = fields.ReCaptchaField(
+            label="",
+            public_key=settings.RECAPTCHA_PUBLIC_KEY,
+            private_key=settings.RECAPTCHA_PRIVATE_KEY,
+        )
 
     field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
 
