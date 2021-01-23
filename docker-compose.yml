@@ -20,12 +20,13 @@ services:
   db:
     image: postgres:9.6
     ports:
-      - '5432:5432'
+      - '5436:5436'
     environment:
       POSTGRES_DB: 'db'
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - .:/app:rw
+    command: -p 5436
   mail:
     image: dockage/mailcatcher:0.6.5
     ports:
