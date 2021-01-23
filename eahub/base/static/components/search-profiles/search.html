@@ -95,12 +95,12 @@
                                             <span>{{ item.local_groups.join(', ') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-24 col-sm-24 col-md-16 col-lg-24 col-xl-24 order-last order-sm-5 order-md-5 order-lg-5 rder-xl-5 order-xxl-3  col-xxl-9">
+                                    <div class="col-xs-24 col-sm-24 col-md-16 col-lg-24 col-xl-24 order-last order-sm-5 order-md-5 order-lg-5 order-xl-5 order-xxl-3  col-xxl-9">
                                         <div class="row search__hit-summary" v-if="item.summary">
                                             <h5>Summary</h5>
                                             <ais-snippet :hit="item" attribute="summary"/>
                                         </div>
-                                        <div class="row">
+                                        <div class="row" v-if="item.offering || item.looking_for || true">
                                             <div class="search__hit-offering col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <h5>Offering:</h5>
                                                 <span>{{ item.offering }}Teaching Python</span>
