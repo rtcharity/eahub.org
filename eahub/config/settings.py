@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.sitemaps",
+    "django.contrib.redirects",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -69,6 +70,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "admin_reorder.middleware.ModelAdminReorder",
+    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
 ]
 
 
@@ -307,6 +309,7 @@ ADMIN_REORDER = [
             {"model": "account.EmailAddress", "label": "User account email addresses"},
             {"model": "auth.Group", "label": "Admin permission groups"},
             {"model": "sites.Site", "label": "Domain management & site name"},
+            {"model": "redirects.Redirect", "label": "Redirects"},
             {
                 "model": "flags.FlagState",
                 "label": "Feature flags (beta features) configuration",
