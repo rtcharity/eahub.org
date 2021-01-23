@@ -18,7 +18,7 @@ RUN npm run build
 
 
 COPY . .
-RUN python manage.py collectstatic --ignore=node_modules
+RUN python manage.py collectstatic --ignore=node_modules --no-input
 
 
 EXPOSE 8000
