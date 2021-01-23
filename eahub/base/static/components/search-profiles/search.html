@@ -100,14 +100,14 @@
                                             <h5>Summary</h5>
                                             <ais-snippet :hit="item" attribute="summary"/>
                                         </div>
-                                        <div class="row" v-if="item.offering || item.looking_for || true">
+                                        <div class="row" v-if="item.offering || item.looking_for">
                                             <div class="search__hit-offering col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <h5>Offering:</h5>
-                                                <span>{{ item.offering }}Teaching Python</span>
+                                                <span>{{ item.offering }}</span>
                                             </div>
                                             <div class="search__hit-looking_for col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12">
                                                 <h5>Looking for:</h5>
-                                                <span>{{ item.looking_for }}Dogs to walk</span>
+                                                <span>{{ item.looking_for }}</span>
                                             </div>
                                         </div>
                                     </div>
