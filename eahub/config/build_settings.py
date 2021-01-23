@@ -26,12 +26,13 @@ INSTALLED_APPS = [
     "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
-    "eahub.base.apps.BaseConfig",
-    "eahub.localgroups.apps.LocalGroupsConfig",
-    "eahub.profiles.apps.ProfilesConfig",
     "import_export",
     "rangefilter",
     "flags",
+    "admin_reorder",
+    "eahub.base.apps.BaseConfig",
+    "eahub.localgroups.apps.LocalGroupsConfig",
+    "eahub.profiles.apps.ProfilesConfig",
 ]
 
 # Core settings: security
