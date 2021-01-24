@@ -5,7 +5,6 @@ from eahub.tests.e2e.cases import E2ETestCase
 
 
 class SignUpTest(E2ETestCase):
-
     def test_signup(self):
         email = "test@eahub.org"
         password = "Wa4@;fh>A/~W#6SH"
@@ -25,10 +24,10 @@ class SignUpTest(E2ETestCase):
         self.find(".profile-welcome")
 
         user = User.objects.get(email=email)
-        
+
         self.assertEquals(user.email, email)
 
-        self.selenium.get(self.live_server_url + reverse('account_logout'))
+        self.selenium.get(self.live_server_url + reverse("account_logout"))
 
         self.find("#navbar_login").click()
 
@@ -36,5 +35,5 @@ class SignUpTest(E2ETestCase):
         self.find("#id_login").send_keys(email)
         self.find("#id_password").send_keys(password)
         self.find("#submit").click()
-        self.selenium.get(self.live_server_url + reverse('my_profile'))
-        self.find('.profile-info.profile-cards')
+        self.selenium.get(self.live_server_url + reverse("my_profile"))
+        self.find(".profile-info.profile-cards")

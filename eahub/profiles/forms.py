@@ -25,6 +25,7 @@ class SignupForm(forms.Form):
         initial=True,
     )
 
+    # captcha doesn't work well in e2e, even in its test mode
     if settings.DJANGO_ENV != settings.DjangoEnv.LOCAL:
         captcha = fields.ReCaptchaField(
             label="",
