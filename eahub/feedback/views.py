@@ -1,19 +1,16 @@
-from django.http import Http404, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
-from .models import Feedback
+from django.http import HttpResponse, JsonResponse
+
 from .forms import FeedbackForm
+from .models import Feedback
 
-
-def submit_feedback(request):
+def ajax_post_view(request):
+    model = Feedback
+    form_class = FeedbackForm
     if request.method == "POST":
-        url = request.path
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            form = form.save(commit=False)
-            form.page_url = url
+            form.message = request.POST["message"]
             form.save()
-            return HttpResponseRedirect("/profiles")
+            return HttpResponse(status=200)
         else:
-            form = FeedbackForm()
-            return HttpResponse()
-            # display message saying it wasn't valid
+            return HttpResponse(status=418)

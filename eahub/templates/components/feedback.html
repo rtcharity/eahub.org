@@ -1,97 +1,5 @@
 {% block feedback %}
-
-<style>
-  @media (min-width: 1200px) {
-  #feedback {
-    right: -420px;
-    width: 420px;
-    }
-  }
-  
-  @media (max-width: 1200px) {
-  #feedback {
-    right: -200px;
-    width: 200px;
-  }
-
-  #closebtn {
-    display: none;
-  }
-  }
-
-  /*--- All styles ---*/
-
-  #feedback {
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    min-height: 450px;
-    position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: right 0.5s linear;
-    padding: 0 58px 58px;
-    z-index: 1090;
-  }
-
-  #feedback.active {
-      right: 0;
-      box-shadow: 0 10px 18px rgba(0,0,0,0.16);
-  }
-  
-  .modal-content {
-    height: 100%;
-  }
-  
-  #overlay {
-    background-color: rgba(0,0,0,0.4);
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 1080;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.5s linear;
-  }
-  
-  #overlay.active {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  #feedbackModal{
-    display: block;
-  }
-
-  .feedbackbtn {
-    border: 0;
-    color: #fff;
-    background: rgb(99, 82, 116);
-    border-color: rgb(99, 82, 116);
-    cursor: pointer;
-    line-height: 44px;
-    left: 0;
-    padding: 0 28px;
-    position: absolute;
-    text-align: center;
-    top: 50%;
-    transform: rotate(-90deg) translate(-50%, -100%);
-    transform-origin: top left;
-    box-shadow: 0 0 0 rgba(0,112,153,0.4);
-  }
-
-  #closebtn {
-    color: #fff;
-  }
-
-  .submitbtn {
-    color: #fff;
-    background: rgb(99, 82, 116);
-    border-color: rgb(99, 82, 116);
-  }
-</style>
+{% load static %}
   
   <div id="overlay"></div>
 
@@ -109,17 +17,26 @@
           </div>
           <div class="modal-body">
             <p>Do you have any feedback for us?</p>
-            <form class="form-group" method="post" action="{% url 'feedback:submit_feedback' %}">
+
+            <form id="form" class="form-group" method="post" action="/feedback/submit/">
               {% csrf_token %}
-              <textarea class="form-control" name="message" cols="37" rows="5"></textarea>
+
+              <textarea class="form-control" name="message" cols="37" rows="5" required="required"></textarea>
+              <div id="errormsg" style="display:none" class='alert alert-danger'>
+                Feedback message field is required</div>
+            
               <label for="email">Email (optional)</label>
               <input class="form-control" type="text" name="email">
               <input id="page_url" type="hidden" name="page_url" value="">
+              
               <div class="modal-footer">
                 <button  id="closebtn" type="button" class="btn btn-secondary" onClick="togglemodal()">Close</button>
-                <input type="submit" value="Submit Feedback" class="btn submitbtn">
+                <input onClick="ajaxsubmit()" value="Submit" class="btn submitbtn" />
               </div>
               </form>
+
+              <div id="successmsg" style="display:none">
+                Your feedback has been received, thank you!</div>
           </div>     
         </div>
     </div>  
@@ -136,9 +53,27 @@
     document.getElementById("overlay").classList.toggle("active");    
   }
   document.getElementById('page_url').value = document.referrer;
+
+  async function ajaxsubmit(){
+    var form = document.getElementById('form');
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: new URLSearchParams(new FormData(form)),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }).then(response => {
+      if(response.status == "200") {
+        document.getElementById("successmsg").style.display = "block";
+        document.getElementById("form").style.display = "none";
+        console.log("success");
+      }
+      if(response.status == "418") {
+        document.getElementById("errormsg").style.display = "block";
+        
+      }
+    });
+  }
   </script>
 
-
 {% endblock feedback %}
-
-
