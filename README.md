@@ -22,7 +22,7 @@ You can access the email server at localhost:1080.
 
 ### Pulling the db & media to your local instance [optional]
 - receive access to https://control.divio.com/control/71735/edit/88402/
-- add an ssh key to your profile https://control.divio.com/account/httpssh-keys/
+- add an ssh key to your profile https://control.divio.com/account/ssh-keys/
 - cp .divio/config-example.json .divio/config.json
 - pip install divio-cli
 - divio login
