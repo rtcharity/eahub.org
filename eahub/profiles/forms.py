@@ -72,7 +72,7 @@ class EditProfileForm(forms.ModelForm):
             "city_or_town": ("City/Town"),
             "is_public": "Show my profile to the public",
             "email_visible": "Show my email address to other users",
-            "allow_messaging": "Users will be able to send you messages, which you will receive via email.",
+            "allow_messaging": "Allow approved users to message me via email",
             "linkedin_url": "LinkedIn Profile",
             "facebook_url": "Facebook Profile",
             "personal_website_url": "Personal Website",

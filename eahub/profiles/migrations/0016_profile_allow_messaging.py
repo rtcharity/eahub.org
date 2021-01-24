@@ -5,14 +5,12 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('profiles', '0015_profile_email_visible'),
-    ]
+    dependencies = [("profiles", "0015_profile_email_visible")]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='allow_messaging',
+            model_name="profile",
+            name="allow_messaging",
             field=models.BooleanField(default=False),
-        ),
+        )
     ]
