@@ -48,7 +48,7 @@
       </div>
 
       {% endif %}
-      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None %}
+      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and profile.allow_messaging is not False %}
       <div class="btn btn-default purple">
         <span><a href="{% url 'message_profile' profile.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a></span>
       </div>

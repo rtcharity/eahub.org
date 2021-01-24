@@ -292,6 +292,7 @@ class Profile(models.Model):
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
+    email_visible = models.BooleanField(default=False)
     allow_messaging = models.BooleanField(default=False)
     topics_i_speak_about = models.TextField(
         blank=True, validators=[MaxLengthValidator(2000)]
@@ -507,6 +508,9 @@ class Profile(models.Model):
             len(self.topics_i_speak_about) > 0,
         ]
         return any(community_details_exist)
+
+    def is_organiser(self):
+        return self.user.localgroup_set.exists()
 
     def convert_to_row(self, field_names):
         values = []
