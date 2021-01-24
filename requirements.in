@@ -33,6 +33,8 @@ django-referrer-policy
 django-feature-policy
 rules
 django-flags  # for feature flags
+django-modeladmin-reorder  # reorder admin panel homepage apps
+django-adminutils  # a set of shortcuts for admin.py composition
 
 # dev packages (might try to move it out for deployment speed optimization)
 
