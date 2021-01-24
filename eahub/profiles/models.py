@@ -293,6 +293,7 @@ class Profile(models.Model):
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
     email_visible = models.BooleanField(default=False)
+    allow_messaging = models.BooleanField(default=False)
     topics_i_speak_about = models.TextField(
         blank=True, validators=[MaxLengthValidator(2000)]
     )

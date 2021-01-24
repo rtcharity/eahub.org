@@ -48,6 +48,7 @@ class ProfileTestCase(TestCase):
             "career_interest_areas",
             "available_as_speaker",
             "email_visible",
+            "allow_messaging",
             "topics_i_speak_about",
             "organisational_affiliations",
             "summary",
