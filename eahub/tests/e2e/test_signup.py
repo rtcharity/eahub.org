@@ -25,7 +25,7 @@ class SignUpTest(E2ETestCase):
 
         user = User.objects.get(email=email)
 
-        self.assertEquals(user.email, email)
+        self.assertEqual(user.email, email)
 
         self.selenium.get(self.live_server_url + reverse("account_logout"))
 
