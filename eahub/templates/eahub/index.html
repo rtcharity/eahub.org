@@ -2,7 +2,14 @@
 
 {% load static %}
 
+{% block navbar %}{% endblock %}
+
 {% block content %}
+    {% addtoblock 'body_classes' %}homepage{% endaddtoblock %}
+    <div class="container-fluid">
+        
+    </div>
+{% endblock %}
 
-
+{% block footer %}
 {% endblock %}
