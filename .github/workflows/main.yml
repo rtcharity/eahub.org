@@ -1,13 +1,4 @@
 on: [pull_request, workflow_dispatch]
-services:
-    image: postgres
-    env:
-        - POSTGRES_USER: postgres
-        - POSTGRES_PASSWORD: postgres
-        - POSTGRES_BD: postgres
-    ports:
-        - 5432:5432
-    options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 jobs:
     pytest:
         name: run code styles checks & tests
@@ -18,3 +9,16 @@ jobs:
             - name: run pytest
               shell: bash
               run: docker-compose run --use-aliases web pytest
+    services:
+        image: postgres
+        env:
+            - POSTGRES_BD: db
+            - POSTGRES_PORT: 5432
+            - POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+            - 5432:5432
+        options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
