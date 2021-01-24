@@ -86,7 +86,7 @@ class ReportProfileAbuseView(ReportAbuseView):
 class SendProfileMessageView(SendMessageView):
     def profile(self):
         return Profile.objects.get(slug=self.kwargs["slug"])
-        
+
     def form_valid(self, form):
         recipient = Profile.objects.get(slug=self.kwargs["slug"])
         message: dict = form.cleaned_data["your_message"]

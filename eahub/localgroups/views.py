@@ -99,7 +99,7 @@ class ReportGroupAbuseView(ReportAbuseView):
 class SendGroupMessageView(SendMessageView):
     def profile(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
-        
+
     def form_valid(self, form):
         recipient = LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
         sender_email = form.cleaned_data["your_email_address"]
