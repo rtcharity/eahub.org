@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 
 import dj_database_url
@@ -183,7 +184,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 
-STATIC_ROOT = "static_build/"
+STATIC_ROOT = os.path.join(base_dir, "static_build/")
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     "eahub/base/static/",

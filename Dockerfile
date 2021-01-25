@@ -2,7 +2,6 @@ FROM nikolaik/python-nodejs:python3.7-nodejs10
 
 
 RUN mkdir /app
-RUN mkdir /app/static_build
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-deps --no-cache-dir -r requirements.txt
@@ -18,6 +17,7 @@ RUN npm run build
 
 
 COPY . .
+RUN mkdir /app/static_build
 RUN python manage.py collectstatic --ignore=node_modules --no-input
 
 EXPOSE 8000

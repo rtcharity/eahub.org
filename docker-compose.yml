@@ -2,9 +2,28 @@ version: "3.4"
 
 
 services:
-    web:
+    web-base:
         build: .
         command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
+        ports:
+            - 8000:8000
+        volumes:
+            - ./data:/data:rw
+        env_file:
+            - .env
+    web:
+        extends: web-base
+        depends_on:
+            db:
+                condition: service_healthy
+            mail:
+                condition: service_started
+        links:
+            - db:postgres
+        volumes:
+            - .:/app:rw
+    web-e2e:
+        extends: web-base
         depends_on:
             db:
                 condition: service_healthy
@@ -12,15 +31,8 @@ services:
                 condition: service_started
             chrome:
                 condition: service_started
-        ports:
-            - 8000:8000
         links:
             - db:postgres
-        volumes:
-            - .:/app:rw
-            - ./data:/data:rw
-        env_file:
-            - .env
     db:
         image: postgres:9.6
         ports:
