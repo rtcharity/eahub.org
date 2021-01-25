@@ -1,7 +1,8 @@
 from captcha import fields
 from django import forms
+from django.conf import settings
 
-from ..config import settings
+from eahub.config.settings import DjangoEnv
 from ..localgroups.models import LocalGroup
 from .models import Profile, validate_sluggable_name
 
@@ -24,16 +25,18 @@ class SignupForm(forms.Form):
         label="Show my profile to the public after it is approved",
         initial=True,
     )
-
-    # captcha doesn't work well in e2e, even in its test mode
-    if settings.DJANGO_ENV != settings.DjangoEnv.LOCAL:
-        captcha = fields.ReCaptchaField(
-            label="",
-            public_key=settings.RECAPTCHA_PUBLIC_KEY,
-            private_key=settings.RECAPTCHA_PRIVATE_KEY,
-        )
+    captcha = fields.ReCaptchaField(
+        label="",
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY,
+    )
 
     field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if settings.DJANGO_ENV == DjangoEnv.E2E:
+            del self.fields["captcha"]
 
     def signup(self, request, user):
         is_public = self.cleaned_data["is_public"]

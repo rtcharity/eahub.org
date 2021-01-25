@@ -13,7 +13,7 @@ services:
             chrome:
                 condition: service_started
         ports:
-            - 8000
+            - 8000:8000
         links:
             - db:postgres
         volumes:
@@ -24,7 +24,7 @@ services:
     db:
         image: postgres:9.6
         ports:
-            - 5432
+            - 5432:5432
         environment:
             POSTGRES_DB: db
             POSTGRES_HOST_AUTH_METHOD: trust
@@ -39,13 +39,13 @@ services:
     mail:
         image: dockage/mailcatcher:0.6.5
         ports:
-            - 1025
-            - 1080
+            - 1025:1025
+            - 1080:1080
     selenium-hub:
         image: selenium/hub:3.141.59-20210105
         container_name: selenium-hub
         ports:
-            - 4444
+            - 4444:4444
     chrome:
         image: selenium/node-chrome:3.141.59-20210105
         volumes:

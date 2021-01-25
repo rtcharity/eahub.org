@@ -1,11 +1,18 @@
 import socket
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import override_settings
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
+from eahub.config.settings import DjangoEnv
 
+
+@override_settings(
+    DJANGO_ENV=DjangoEnv.E2E,
+)
 class E2ETestCase(StaticLiveServerTestCase):
     host = "0.0.0.0"
     port = 8000
@@ -25,4 +32,5 @@ class E2ETestCase(StaticLiveServerTestCase):
         super().tearDownClass()
 
     def find(self, selector: str) -> WebElement:
-        return self.selenium.find_element_by_css_selector(selector)
+        # find_element_by_css_selector doesn't work in docker, but works outside of docker
+        return self.selenium.find_element(By.CSS_SELECTOR, selector)

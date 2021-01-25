@@ -14,6 +14,7 @@ base_dir = environ.Path(__file__) - 3
 
 class DjangoEnv(Enum):
     LOCAL = "local"
+    E2E = "e2e"
     STAGE = "stage"
     PROD = "prod"
 
@@ -74,12 +75,20 @@ MIDDLEWARE = [
 ]
 
 
-DATABASES = {"default": dj_database_url.parse(env.str("DATABASE_URL"))}
+DATABASES = {
+    "default": dj_database_url.parse(
+        env.str("DATABASE_URL", "postgres://postgres@postgres:5432/db")
+    )
+}
 
 DEBUG = env.bool("DEBUG")
 
 vars().update(
-    env.email_url("EMAIL_URL", backend="django.core.mail.backends.smtp.EmailBackend")
+    env.email_url(
+        "EMAIL_URL",
+        backend="django.core.mail.backends.smtp.EmailBackend",
+        default="smtp://mail:1025",
+    )
 )
 ADMINS = list(env.dict("ADMINS").items())
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
@@ -117,15 +126,15 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-ALLOWED_HOSTS = env.list("HOSTS") + ["*"]
+ALLOWED_HOSTS = env.list("HOSTS", default=[]) + ["*"]
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = env.bool("HTTPS")
+SECURE_SSL_REDIRECT = env.bool("HTTPS", default=not DEBUG)
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
-SECRET_KEY = env.bytes("SECRET_KEY")
+SECRET_KEY = env.str("SECRET_KEY", "development_secret_key")
 X_FRAME_OPTIONS = "DENY"
 
 TEMPLATES = [
@@ -174,10 +183,9 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 
-STATIC_ROOT = "static/"
+STATIC_ROOT = "static_build/"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
-    "static_build/",
     "eahub/base/static/",
 ]
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
