@@ -444,6 +444,8 @@ class Profile(models.Model):
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )
+    offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
 
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 
@@ -643,6 +645,8 @@ class Profile(models.Model):
             self.user.localgroup_set.exists(),
             self.available_as_speaker,
             len(self.topics_i_speak_about) > 0,
+            self.offering,
+            self.looking_for
         ]
         return any(community_details_exist)
 
