@@ -1,17 +1,21 @@
 from adminutils import options
 from django.contrib import admin
+from django.contrib.admin.actions import delete_selected
+from django.db.models import QuerySet
+from django.http import HttpRequest, HttpResponse
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
 from rangefilter.filter import DateRangeFilter
 
+from eahub.base import utils
+from eahub.base.admin import UserAdmin
+from eahub.base.models import User
 from eahub.profiles.models import (
     GivingPledge,
     Profile,
     ProfileAnalyticsLog,
     ProfileSlug,
 )
-
-from ..base import utils
 
 
 class GivingPledgesFilter(admin.SimpleListFilter):
@@ -30,7 +34,7 @@ class GivingPledgesFilter(admin.SimpleListFilter):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
-    actions = ["export_csv", "approve_profiles"]
+    actions = ["export_csv", "approve_profiles", "delete_profiles_and_users"]
     model = Profile
     list_display = (
         "email",
@@ -54,9 +58,20 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     search_fields = ["user__email", "name"]
     ordering = ["-user__date_joined"]
 
-    def export_csv(self, request, queryset):
+    def get_actions(self, request: HttpRequest) -> dict:
+        actions: dict = super().get_actions(request)
+        del actions["delete_selected"]
+        return actions
+
+    def export_csv(
+        self, request: HttpRequest, queryset: QuerySet, **kwargs
+    ) -> HttpResponse:
         return utils.ExportCsvMixin.export_csv(
-            self, request, queryset, Profile, "profiles"
+            self,
+            request=request,
+            queryset=queryset,
+            model=Profile,
+            filename="profiles",
         )
 
     @options(desc="Giving Pledges", order="profile.giving_pledges")
@@ -72,8 +87,18 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         return obj.user.date_joined
 
     @options(desc="Approve selected profiles", allowed_permissions=["change"])
-    def approve_profiles(self, request, queryset):
+    def approve_profiles(self, request: HttpRequest, queryset: QuerySet):
         queryset.update(is_approved=True)
+
+    @options(desc="Delete selected profiles", allowed_permissions=["delete"])
+    def delete_profiles_and_users(
+        self, request: HttpRequest, queryset: QuerySet
+    ) -> HttpResponse:
+        return delete_selected(
+            modeladmin=UserAdmin(User, admin.site),
+            request=request,
+            queryset=queryset,
+        )
 
 
 class ProfileAnalyticsResource(ModelResource):
