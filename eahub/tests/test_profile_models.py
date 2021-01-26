@@ -1,3 +1,4 @@
+import random
 from django.test import TestCase, override_settings
 
 from eahub.base.models import User
@@ -48,6 +49,8 @@ class ProfileTestCase(TestCase):
             "summary",
             "giving_pledges",
             "legacy_record",
+            "offering",
+            "looking_for",
             "local_groups",
         ]
 
@@ -136,6 +139,19 @@ class ProfileTestCase(TestCase):
                 for x in analytics_logs_update
             )
         )
+
+    def test_has_community_details_returns_false_if_none(self):
+        profile = create_profile("test@email.com", "peter")
+
+        self.assertFalse(profile.has_community_details())
+
+    def test_has_community_details_returns_true_if_free_text_field_set(self):
+        profile = create_profile("test@email.com", "peter")
+
+        field_names = ["topics_i_speak_about", "offering", "looking_for"]
+        setattr(profile, random.choice(field_names), "something")
+
+        self.assertTrue(profile.has_community_details())
 
 
 def create_profile(email, username):
