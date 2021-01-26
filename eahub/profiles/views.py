@@ -85,7 +85,10 @@ class ReportProfileAbuseView(ReportAbuseView):
 
 class SendProfileMessageView(SendMessageView):
     def profile(self):
-        return Profile.objects.get(slug=self.kwargs["slug"])
+        profile = Profile.objects.get(slug=self.kwargs["slug"])
+        if not (profile.allow_messaging):
+            raise http.Http404("user has turned off messaging")
+        return profile
 
     def form_valid(self, form):
         recipient = Profile.objects.get(slug=self.kwargs["slug"])
