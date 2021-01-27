@@ -7,7 +7,7 @@ $spacing-xs: 10px;
 $spacing-xxs: 5px;
 
 .navbar {
-    box-shadow: #00000080 0 -4px 13px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -2px 7px;
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
     
@@ -54,8 +54,11 @@ $spacing-xxs: 5px;
     }
 
     .navbar-collapse {
-        .svg-inline--fa {
-            min-width: $spacing-md;
+        .svg-inline--fa, .fa-icon {
+            display: inline-block;
+            min-width: 20px;
+            min-height: 13px;
+            
             @include media-breakpoint-down(lg) {
                 margin-left: -2px;
             }
@@ -68,7 +71,9 @@ $spacing-xxs: 5px;
         }
 
         .nav-link {
-            margin: 0 $spacing-xxs;
+            margin: 0 $spacing-xs;
+            font-size: 0.95rem;
+            
             @include media-breakpoint-down(lg) {
                 margin: 0;
             }

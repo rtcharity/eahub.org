@@ -25,31 +25,31 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'my_profile' %}">
-                            <i class="fa fa-user"></i> My Profile
+                            <span class="fa-icon"><i class="fa fa-user"></i></span> My Profile
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link"
                             href="{% url 'account_login' %}?next={% firstof request.path '/' %}">
-                            <i class="fa fa-sign-in-alt"></i> Log In
+                            <span class="fa-icon"><i class="fa fa-sign-in-alt"></i></span> Log In
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_signup' %}">
-                            <i class="fa fa-user-plus"></i> Sign Up
+                            <span class="fa-icon"><i class="fa fa-user-plus"></i></span> Sign Up
                         </a>
                     </li>
                 {% endif %}
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profiles' %}">
-                        <i class="fa fa-users"></i> Profiles
+                        <span class="fa-icon"><i class="fa fa-users"></i></span> Profiles
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'groups' %}">
-                        <i class="fa fa-globe"></i> Groups
+                        <span class="fa-icon"><i class="fa fa-globe"></i></span> Groups
                     </a>
                 </li>
 

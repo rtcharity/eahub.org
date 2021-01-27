@@ -3,11 +3,12 @@
 .home {
 
     .home__intro {
-        margin-top: 4rem;
+        margin-top: 6.5rem;
         margin-bottom: 4rem;
         
         h1 {
             font-size: 3.8rem;
+            
             @include media-breakpoint-down(xxl) {
                 font-size: 3.5rem;
             }
@@ -21,6 +22,7 @@
         .home__subtitle {
             margin-top: 2rem;
             font-size: 1.5rem;
+            
             @include media-breakpoint-down(xxl) {
                 font-size: 1.3rem;
             }
@@ -34,6 +36,7 @@
             font-size: 1.25rem;
             padding: 0.8rem 1.8rem;
             color: white;
+            
             @include media-breakpoint-down(xxl) {
                 font-size: 1.1rem;
             }
@@ -45,7 +48,9 @@
         }
         .home__map {
             margin-bottom: 8rem;
-            max-width: 100%;
+            max-width: 900px;
+            width: 100%;
+            
             @include media-breakpoint-down(lg) {
                 margin-bottom: 0;
             }
@@ -64,6 +69,11 @@
             }
         }
         
+        @include media-breakpoint-down(lg) {
+            margin-top: 15rem;
+            margin-bottom: 50rem;
+        }
+        
         .hero__img {
             position: absolute;
             margin-left: 0;
@@ -72,6 +82,12 @@
             width: 63%;
             height: 623px;
             z-index: 0;
+            
+            @include media-breakpoint-down(lg) {
+                width: 100%;
+                left: 0;
+                right: 0;
+            }
             
             &::before {
                 content: '';
@@ -97,15 +113,25 @@
         }
         .hero__text-wrap {
             padding: 10rem 0;
-    
+            
+            @include media-breakpoint-down(lg) {
+                padding: 0;
+                .row {
+                    justify-content: center;
+                    .hero__text {
+                        margin-top: -150px;
+                    }
+                }
+            }
             .hero__text {
                 display: flex;
                 align-self: start;
                 flex-direction: column;
                 height: fit-content;
                 max-width: 500px;
-                padding: 3.4rem;
-                padding-top: 2.6rem;
+                $padding: 3.4rem;
+                padding: $padding - 0.3rem;
+                padding-top: 3rem;
                 color: white;
                 background: $color-primary;
                 z-index: 1;
