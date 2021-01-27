@@ -8,19 +8,46 @@
         
         h1 {
             font-size: 3.8rem;
+            @include media-breakpoint-down(xxl) {
+                font-size: 3.5rem;
+            }
+            @include media-breakpoint-down(xl) {
+                font-size: 3rem;
+            }
+            @include media-breakpoint-down(lg) {
+                margin-top: 3rem;
+            }
         }
         .home__subtitle {
             margin-top: 2rem;
             font-size: 1.5rem;
+            @include media-breakpoint-down(xxl) {
+                font-size: 1.3rem;
+            }
+            @include media-breakpoint-down(xl) {
+                margin-top: 1.6rem;
+                font-size: 1.2rem;
+            }
         }
         .btn-primary {
             margin-top: 2rem;
-            padding: 0.8rem 1.8rem;
             font-size: 1.25rem;
             color: white;
+            @include media-breakpoint-down(xxl) {
+                font-size: 1.1rem;
+            }
+            @include media-breakpoint-down(xl) {
+                margin-top: 1.6rem;
+                padding: 0.6rem 1.6rem;
+                font-size: 1.05rem;
+            }
         }
         .home__map {
             margin-bottom: 8rem;
+            max-width: 100%;
+            @include media-breakpoint-down(lg) {
+                margin-bottom: 0;
+            }
         }
     }
     .home__profiles {
