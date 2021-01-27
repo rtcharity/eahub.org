@@ -46,7 +46,6 @@ def index(request):
         request,
         "eahub/homepage.html",
         {
-            "page_name": "Home",
             "groups": groups_data["rows"],
             "profiles": profiles_data["rows"],
             "map_locations": {
