@@ -28,28 +28,28 @@
             </div>
         </div>
     </div>
-    <div class="container home__profiles">
-        <div class="profiles__img"
+    <div class="container home__hero">
+        <div class="hero__img"
              style="background-image: url({% static "global/images/home/profiles-screen.png" %})"
         ></div>
-        <div class="container">
-            <div class="row home__profiles">
-                <div class="col col-lg-9 offset-lg-15 profiles__intro">
-                    <h2 class="profiles__title">Community Directory</h2>
+        <div class="container hero__text-wrap">
+            <div class="row">
+                <div class="col col-lg-9 offset-lg-13 hero__text">
+                    <h2 class="hero__title">Community Directory</h2>
                     <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
                     <a href="{% url 'profiles' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container home__profiles">
-        <div class="profiles__img"
+    <div class="container home__hero" data-image-pos="right">
+        <div class="hero__img"
              style="background-image: url({% static "global/images/home/groups-screen.png" %})"
         ></div>
-        <div class="container">
-            <div class="row home__profiles">
-                <div class="col col-lg-9 offset-lg-15 profiles__intro">
-                    <h2 class="profiles__title">Groups Directory</h2>
+        <div class="container hero__text-wrap">
+            <div class="row">
+                <div class="col col-lg-9 offset-lg-4 hero__text">
+                    <h2 class="hero__title">Groups Directory</h2>
                     <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
                     <a href="{% url 'groups' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
                 </div>

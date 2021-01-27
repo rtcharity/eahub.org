@@ -51,14 +51,25 @@
             }
         }
     }
-    .home__profiles {
-        padding: 10rem 0;
+    .home__hero {
+        margin-top: 12.5rem;
+        margin-bottom: 13rem;
+        position: relative;
         
-        .profiles__img {
+        &[data-image-pos=right] {
+            .hero__img {
+                right: 0;
+            }
+            .hero__text {
+                background: rgb(123, 176, 168) !important;
+            }
+        }
+        
+        .hero__img {
             position: absolute;
-            background-position: 0 -1px;
+            margin-left: 0;
             background-size: cover;
-            margin-left: $grid-gutter-width-half;
+            background-position: 0 -1px;
             width: 63%;
             height: 623px;
             z-index: 0;
@@ -85,34 +96,38 @@
                 opacity: 0.25;
             }
         }
-        .profiles__intro {
-            display: flex;
-            align-self: start;
-            flex-direction: column;
-            background: $color-primary;
-            height: fit-content;
-            max-width: 400px;
-            padding: 2.7rem;
-            padding-top: 2.6rem;
-            color: white;
-            z-index: 1;
-            
-            .profiles__title {
-                margin-bottom: 0;
-            }
-            p {
-                font-size: 1rem;
-                margin-top: 1.8rem;
-                margin-bottom: 0;
-            }
-            .btn {
-                margin-top: 1.8rem;
-                width: fit-content;
+        .hero__text-wrap {
+            padding: 10rem 0;
+    
+            .hero__text {
+                display: flex;
+                align-self: start;
+                flex-direction: column;
+                height: fit-content;
+                max-width: 500px;
+                padding: 3.4rem;
+                padding-top: 2.6rem;
                 color: white;
-                border-color: white;
-                &:hover {
-                    background: white;
-                    color: $color-primary;
+                background: $color-primary;
+                z-index: 1;
+        
+                .hero__title {
+                    margin-bottom: 0;
+                }
+                p {
+                    font-size: 1rem;
+                    margin-top: 1.8rem;
+                    margin-bottom: 0;
+                }
+                .btn {
+                    margin-top: 1.8rem;
+                    width: fit-content;
+                    color: white;
+                    border-color: white;
+                    &:hover {
+                        background: white;
+                        color: $color-primary;
+                    }
                 }
             }
         }
