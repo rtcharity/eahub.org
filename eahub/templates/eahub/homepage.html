@@ -56,6 +56,27 @@
             </div>
         </div>
     </div>
+
+    <div class="container">
+        <div id="homepage-map"></div>
+        <script defer>
+            async function loadMap() {
+                const response = await fetch('/homepage-map/');
+                const homepageMapElem = document.getElementById('homepage-map');
+                homepageMapElem.innerHTML = await response.text();
+                
+                Array.from(homepageMapElem.querySelectorAll('script')).forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array
+                        .from(oldScript.attributes)
+                        .forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                });
+            }
+            loadMap();
+        </script>
+    </div>
 {% endblock %}
 
 {% block footer %}

@@ -1,5 +1,7 @@
-from allauth.account import app_settings, utils
-from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
+from allauth.account import app_settings
+from allauth.account import utils
+from allauth.account.views import PasswordChangeView
+from allauth.account.views import PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,17 +9,21 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.templatetags import static
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
 from django.views.generic import base
 from django.views.generic.edit import FormView
 
+from .forms import ReportAbuseForm
+from .forms import SendMessageForm
 from ..localgroups.models import LocalGroup as Group
 from ..profiles.models import Profile
-from .forms import ReportAbuseForm, SendMessageForm
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -38,23 +44,21 @@ class CustomisedPasswordChangeView(PasswordChangeView):
     success_url = reverse_lazy("my_profile")
 
 
-def index(request):
-    groups_data = get_groups_data()
-    profiles_data = get_profiles_data(request.user)
-    private_profiles = get_private_profiles(request.user)
-    return render(
-        request,
-        "eahub/homepage.html",
-        {
-            "groups": groups_data["rows"],
-            "profiles": profiles_data["rows"],
+class HomepageView(TemplateView):
+    template_name = "eahub/homepage.html"
+
+
+class HomepageMapView(TemplateView):
+    template_name = "eahub/maps/homepage_map.html"
+    
+    def get_context_data(self, **kwargs) -> dict:
+        return {
             "map_locations": {
-                "profiles": profiles_data["map_data"],
-                "groups": groups_data["map_data"],
-                "private_profiles": private_profiles,
-            },
-        },
-    )
+                "profiles": get_profiles_data(self.request.user)["map_data"],
+                "groups": get_groups_data()["map_data"],
+                "private_profiles": get_private_profiles(self.request.user),
+            }
+        }
 
 
 def about(request):

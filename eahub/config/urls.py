@@ -26,7 +26,8 @@ admin.site.login = user_passes_test(staff_or_404)(admin.site.login)
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.HomepageView.as_view(), name="index"),
+    path("homepage-map/", views.HomepageMapView.as_view(), name="homepage_map"),
     path(
         "accounts/password/change/",
         views.CustomisedPasswordChangeView.as_view(),

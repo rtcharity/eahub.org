@@ -3,13 +3,11 @@
 
 {% block map %}
 
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
-    <script src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
-  {% else %}
-    <script src="{% static 'dist/component_maps.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
+{% if settings.DJANGO_ENV.value == 'local' %}
+<script src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
+{% else %}
+<script src="{% static 'dist/component_maps.js' %}"></script>
+{% endif %}
 
 <div id="map" class="map_homepage"></div>
 <div id="map_selector">
