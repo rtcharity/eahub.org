@@ -61,7 +61,6 @@
                 right: 0;
             }
             .hero__text {
-                background: rgb(123, 176, 168) !important;
             }
         }
         
@@ -81,7 +80,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background: linear-gradient(90deg, $color-primary 0%, #0c7eab 100%);
+                background: linear-gradient(90deg, #0c7eab 0%, $color-primary 100%);
                 opacity: 0.4;
             }
             &::after {
@@ -91,7 +90,7 @@
                 right: 0;
                 bottom: 0;
                 left: 0;
-                background: linear-gradient(90deg, $color-primary 0%, #0c7eab 100%);
+                background: linear-gradient(90deg, #0c7eab 0%, $color-primary 100%);
                 mix-blend-mode: soft-light;
                 opacity: 0.25;
             }
