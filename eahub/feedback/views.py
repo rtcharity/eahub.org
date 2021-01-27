@@ -9,7 +9,6 @@ def ajax_post_view(request):
     if request.method == "POST":
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            form.message = request.POST["message"]
             form.save()
             return HttpResponse(status=200)
         else:

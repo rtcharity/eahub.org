@@ -16,9 +16,9 @@
             <h5 class="modal-title">Leave Feedback</h5>
           </div>
           <div class="modal-body">
-            <p>Do you have any feedback for us?</p>
 
             <form id="form" class="form-group" method="post" action="/feedback/submit/">
+              <p>Do you have any feedback for us?</p>
               {% csrf_token %}
 
               <textarea class="form-control" name="message" cols="37" rows="5" required="required"></textarea>
