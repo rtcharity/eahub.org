@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from .forms import FeedbackForm
 from .models import Feedback
 
+
 def ajax_post_view(request):
     model = Feedback
     form_class = FeedbackForm

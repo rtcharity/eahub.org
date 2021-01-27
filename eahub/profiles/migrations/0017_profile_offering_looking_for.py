@@ -6,19 +6,21 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('profiles', '0016_profileanalyticslog'),
-    ]
+    dependencies = [("profiles", "0016_profileanalyticslog")]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='looking_for',
-            field=models.TextField(blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]),
+            model_name="profile",
+            name="looking_for",
+            field=models.TextField(
+                blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]
+            ),
         ),
         migrations.AddField(
-            model_name='profile',
-            name='offering',
-            field=models.TextField(blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]),
+            model_name="profile",
+            name="offering",
+            field=models.TextField(
+                blank=True, validators=[django.core.validators.MaxLengthValidator(2000)]
+            ),
         ),
     ]
