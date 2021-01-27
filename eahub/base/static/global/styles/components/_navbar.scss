@@ -7,12 +7,22 @@ $spacing-xs: 10px;
 $spacing-xxs: 5px;
 
 .navbar {
+    box-shadow: #00000080 0 -4px 13px;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    
     .navbar-brand {
         display: flex;
         align-items: center;
         
-        .navbar__logo {
+        .logo {
             display: flex;
+            max-width: 18px;
+        }
+        .navbar__site-name {
+            display: flex;
+            margin-left: 14px;
+            font-size: 1.2rem;
         }
         
         .navbar__page-name {

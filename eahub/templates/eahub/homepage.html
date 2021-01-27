@@ -42,6 +42,20 @@
             </div>
         </div>
     </div>
+    <div class="container home__profiles">
+        <div class="profiles__img"
+             style="background-image: url({% static "global/images/home/groups-screen.png" %})"
+        ></div>
+        <div class="container">
+            <div class="row home__profiles">
+                <div class="col col-lg-9 offset-lg-15 profiles__intro">
+                    <h2 class="profiles__title">Groups Directory</h2>
+                    <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
+                    <a href="{% url 'groups' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block footer %}
