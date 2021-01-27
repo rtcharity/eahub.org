@@ -2,12 +2,38 @@
 
 {% load static sekizai_tags %}
 
-{% block navbar %}{% endblock %}
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock %}
 
 {% block content %}
-    {% addtoblock 'body_classes' %}homepage{% endaddtoblock %}
+    {% addtoblock 'body_classes' %}homepage home{% endaddtoblock %}
+
+    <div class="container">
+        <div class="row home__intro justify-content-center">
+            <div class="col-md-24 col-lg-8 align-self-end">
+                <h1>EA Hub</h1>
+                <p class="home__subtitle">
+                    The EA Hub is a place for EAs to connect using our community
+                    directory. You can also find volunteers, candidates and EA speakers.
+                </p>
+                <button type="button" class="btn btn-primary btn-lg btn-secondary">
+                    Join the Community
+                </button>
+            </div>
+            <div class="col d-flex justify-content-end">
+                <img class="home__map" src="{% static 'global/images/home/map.svg' %}" alt="world map">
+            </div>
+        </div>
+    </div>
     <div class="container-fluid">
-        
+        <img class="profiles__img offset-lg-1" src="{% static 'global/images/home/community-directory-screenshot.jpg' %}" alt="community directory screenshot">
+        <div class="row home__profiles">
+            <div class="col profiles__intro">
+                <h2>Community Directory</h2>
+                <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

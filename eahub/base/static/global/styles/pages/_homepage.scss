@@ -1,5 +1,48 @@
 @import '../bootstrap-variables';
 
-.homepage {
-    
+.home {
+    .home__intro {
+        margin-top: 4rem;
+        margin-bottom: 4rem;
+        
+        h1 {
+            font-size: 3.8rem;
+        }
+        .home__subtitle {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+        .btn-primary {
+            margin-top: 2rem;
+            padding: 0.8rem 1.8rem;
+            font-size: 1.25rem;
+            color: white;
+        }
+        .home__map {
+            margin-bottom: 8rem;
+        }
+    }
+    .home__profiles {
+        .profiles__img-col {
+            .profiles__img {
+        
+            }
+        }
+        .profiles__intro {
+            display: flex;
+            align-self: start;
+            flex-direction: column;
+            margin-left: -120px;
+            background: $color-primary;
+            height: fit-content;
+            max-width: 400px;
+            padding: 3rem;
+            color: white;
+            
+            p {
+                margin-top: 2rem;
+                margin-bottom: 0;
+            }
+        }
+    }
 }
