@@ -40,7 +40,7 @@
                 bottom: 0;
                 left: 0;
                 background: linear-gradient(90deg, $color-primary 0%, #0c7eab 100%);
-                opacity: 0.52;
+                opacity: 0.4;
             }
             &::after {
                 content: '';
@@ -51,7 +51,7 @@
                 left: 0;
                 background: linear-gradient(90deg, $color-primary 0%, #0c7eab 100%);
                 mix-blend-mode: soft-light;
-                opacity: 0.5;
+                opacity: 0.25;
             }
         }
         .profiles__intro {
@@ -77,6 +77,10 @@
                 width: fit-content;
                 color: white;
                 border-color: white;
+                &:hover {
+                    background: white;
+                    color: $color-primary;
+                }
             }
         }
     }
