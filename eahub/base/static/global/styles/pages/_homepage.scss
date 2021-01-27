@@ -32,6 +32,7 @@
         .btn-primary {
             margin-top: 2rem;
             font-size: 1.25rem;
+            padding: 0.8rem 1.8rem;
             color: white;
             @include media-breakpoint-down(xxl) {
                 font-size: 1.1rem;
