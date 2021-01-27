@@ -65,23 +65,6 @@ def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
 
 
-def profiles(request):
-    profiles_data = get_profiles_data(request.user)
-    private_profiles = get_private_profiles(request.user)
-    return render(
-        request,
-        "eahub/profiles.html",
-        {
-            "page_name": "Profiles",
-            "profiles": profiles_data["rows"],
-            "map_locations": {
-                "profiles": profiles_data["map_data"],
-                "private_profiles": private_profiles,
-            },
-        },
-    )
-
-
 @login_required
 def candidates(request):
     candidates_data = get_talent_search_data(request.user, {"open_to_job_offers": True})

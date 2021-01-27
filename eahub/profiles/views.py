@@ -12,6 +12,8 @@ from flags.state import flag_enabled
 
 from ..base.models import User
 from ..base.views import ReportAbuseView, SendMessageView
+from ..base.views import get_private_profiles
+from ..base.views import get_profiles_data
 from ..localgroups.models import LocalGroup
 from .forms import (
     DeleteProfileForm,
@@ -273,3 +275,20 @@ def delete_profile(request):
     else:
         form = DeleteProfileForm()
         return render(request, "eahub/delete_profile.html", {"form": form})
+
+
+def profiles(request):
+    profiles_data = get_profiles_data(request.user)
+    private_profiles = get_private_profiles(request.user)
+    return render(
+        request,
+        "eahub/profiles.html",
+        {
+            "page_name": "Profiles",
+            "profiles": profiles_data["rows"],
+            "map_locations": {
+                "profiles": profiles_data["map_data"],
+                "private_profiles": private_profiles,
+            },
+        },
+    )

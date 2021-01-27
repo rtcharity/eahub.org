@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from ..base import views
 from ..profiles.models import Profile
 from ..profiles.sitemap import ProfilesSitemap
+from ..profiles.views import profiles
 
 
 def staff_or_404(u):
@@ -38,7 +39,7 @@ urlpatterns = [
     ),
     path("accounts/", include("allauth.urls")),
     path("profile/", include("eahub.profiles.urls")),
-    path("profiles/", views.profiles, name="profiles"),
+    path("profiles/", profiles, name="profiles"),
     path("candidates/", views.candidates, name="candidates"),
     path("speakers/", views.speakers, name="speakers"),
     path("volunteers/", views.volunteers, name="volunteers"),
