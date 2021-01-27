@@ -25,13 +25,16 @@
     }
     .home__profiles {
         padding: 10rem 0;
+        
         .profiles__img {
             position: absolute;
             background-position: 0 -1px;
             background-size: cover;
+            margin-left: $grid-gutter-width-half;
             width: 63%;
             height: 623px;
             z-index: 0;
+            
             &::before {
                 content: '';
                 position: absolute;
@@ -65,10 +68,12 @@
             padding-top: 2.6rem;
             color: white;
             z-index: 1;
+            
             .profiles__title {
                 margin-bottom: 0;
             }
             p {
+                font-size: 1rem;
                 margin-top: 1.8rem;
                 margin-bottom: 0;
             }
