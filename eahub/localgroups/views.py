@@ -7,12 +7,13 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
 from rules.contrib import views as rules_views
 
-from ..base.views import ReportAbuseView
+from ..base.views import ReportAbuseView, SendMessageView
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
@@ -93,6 +94,27 @@ class ReportGroupAbuseView(ReportAbuseView):
 
     def get_type(self):
         return "group"
+
+
+class SendGroupMessageView(SendMessageView):
+    def form_valid(self, form):
+        recipient = LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
+        sender_email = form.cleaned_data["your_email_address"]
+        message = form.cleaned_data["your_message"]
+        send_mail(
+            f"{sender_email} sent {recipient.name} a message through the EA hub.",
+            render_to_string(
+                "emails/message_group.txt",
+                {"message": message, "group_name": recipient.name},
+            ),
+            sender_email,
+            [recipient.email],
+        )
+
+        messages.success(
+            self.request, "Your message to " + recipient.name + " has been sent"
+        )
+        return redirect(reverse("group", args=([recipient.slug])))
 
 
 @login_required

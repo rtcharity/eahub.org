@@ -41,4 +41,6 @@ if settings.IS_ENABLE_ALGOLIA:
             ["get_career_interest_areas_searchable", "career_interest_areas"],
             ["get_giving_pledges_searchable", "giving_pledges"],
             ["get_is_organiser", "is_organiser"],
+            ["offering", "offering"],
+            ["looking_for", "looking_for"],
         ]

@@ -1,2 +1,17 @@
 [tool.black]
 target-version = ['py37']
+
+[tool.pytest]
+addopts = '--black --flake8'
+norecursedirs = 'node_modules/*'
+testpaths = 'eahub/'
+
+[tool.isort]
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+skip = [
+    '.git/',
+    '.pytest_cache/',
+    'node_modules/',
+]

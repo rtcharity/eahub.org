@@ -89,6 +89,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "admin_reorder.middleware.ModelAdminReorder",
 ]
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -205,17 +206,8 @@ ALGOLIA = {
     ),
 }
 
-# Django reCAPTCHA
-recaptcha_v3_secret_key = env.str("RECAPTCHA_V3_SECRET_KEY", default=None)
-recaptcha_v3_site_key = env.str("RECAPTCHA_V3_SITE_KEY", default=None)
-if recaptcha_v3_secret_key is not None and recaptcha_v3_site_key is not None:
-    RECAPTCHA_PRIVATE_KEY = recaptcha_v3_secret_key
-    RECAPTCHA_PUBLIC_KEY = recaptcha_v3_site_key
-    RECAPTCHA_REQUIRED_SCORE = 0.85
-elif recaptcha_v3_secret_key is not None or recaptcha_v3_site_key is not None:
-    raise exceptions.ImproperlyConfigured(
-        "RECAPTCHA_V3_SECRET_KEY and RECAPTCHA_V3_SITE_KEY must be provided together"
-    )
+RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY", "")
+RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY", "")
 
 # django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
@@ -282,3 +274,35 @@ else:
         "LOCAL_GROUPS_AIRTABLE_API_KEY and LOCAL_GROUPS_AIRTABLE_BASE_KEY must be "
         "provided together"
     )
+
+# feature flags
+FLAGS = {
+    "MESSAGING_FLAG": [("boolean", env.bool("IS_MESSAGING_ENABLED", default=False))]
+}
+
+
+ADMIN_REORDER = [
+    {
+        "app": "auth",
+        "label": "EAHub",
+        "models": [
+            {"model": "profiles.Profile", "label": "Profiles"},
+            {"model": "localgroups.LocalGroup", "label": "Groups"},
+            {"model": "profiles.ProfileAnalyticsLog", "label": "Profile update logs"},
+        ],
+    },
+    {
+        "app": "sites",
+        "label": "Website administration",
+        "models": [
+            {"model": "auth.User", "label": "User accounts"},
+            {"model": "account.EmailAddress", "label": "User account email addresses"},
+            {"model": "auth.Group", "label": "Admin permission groups"},
+            {"model": "sites.Site", "label": "Domain management & site name"},
+            {
+                "model": "flags.FlagState",
+                "label": "Feature flags (beta features) configuration",
+            },
+        ],
+    },
+]

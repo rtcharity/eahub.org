@@ -53,7 +53,7 @@ class LocalGroupAdminTestCase(TestCase):
         o2.save()
 
     def test_hydrate_organiser_where_users_with_same_name_and_one_already_organiser(
-        self
+        self,
     ):
         local_group_resource = LocalGroupResource()
         row = {"id": "1"}
