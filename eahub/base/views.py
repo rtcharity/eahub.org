@@ -44,7 +44,7 @@ def index(request):
     private_profiles = get_private_profiles(request.user)
     return render(
         request,
-        "eahub/index.html",
+        "eahub/homepage.html",
         {
             "page_name": "Home",
             "groups": groups_data["rows"],

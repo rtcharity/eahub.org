@@ -26,12 +26,17 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
-        <img class="profiles__img offset-lg-1" src="{% static 'global/images/home/community-directory-screenshot.jpg' %}" alt="community directory screenshot">
-        <div class="row home__profiles">
-            <div class="col profiles__intro">
-                <h2>Community Directory</h2>
-                <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
+    <div class="container home__profiles">
+        <div class="profiles__img"
+             style="background-image: url({% static "global/images/home/profiles-screen.png" %})"
+        ></div>
+        <div class="container">
+            <div class="row home__profiles">
+                <div class="col col-lg-9 offset-lg-15 profiles__intro">
+                    <h2 class="profiles__title">Community Directory</h2>
+                    <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
+                    <a href="{% url 'profiles' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
+                </div>
             </div>
         </div>
     </div>

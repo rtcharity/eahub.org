@@ -1,6 +1,7 @@
 @import '../bootstrap-variables';
 
 .home {
+
     .home__intro {
         margin-top: 4rem;
         margin-bottom: 4rem;
@@ -23,25 +24,59 @@
         }
     }
     .home__profiles {
-        .profiles__img-col {
-            .profiles__img {
-        
+        padding: 10rem 0;
+        .profiles__img {
+            position: absolute;
+            background-position: 0 -1px;
+            background-size: cover;
+            width: 63%;
+            height: 623px;
+            z-index: 0;
+            &::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: linear-gradient(90deg, $color-primary 0%, #0c7eab 100%);
+                opacity: 0.52;
+            }
+            &::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background: linear-gradient(90deg, $color-primary 0%, #0c7eab 100%);
+                mix-blend-mode: soft-light;
+                opacity: 0.5;
             }
         }
         .profiles__intro {
             display: flex;
             align-self: start;
             flex-direction: column;
-            margin-left: -120px;
             background: $color-primary;
             height: fit-content;
             max-width: 400px;
-            padding: 3rem;
+            padding: 2.7rem;
+            padding-top: 2.6rem;
             color: white;
-            
-            p {
-                margin-top: 2rem;
+            z-index: 1;
+            .profiles__title {
                 margin-bottom: 0;
+            }
+            p {
+                margin-top: 1.8rem;
+                margin-bottom: 0;
+            }
+            .btn {
+                margin-top: 1.8rem;
+                width: fit-content;
+                color: white;
+                border-color: white;
             }
         }
     }

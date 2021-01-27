@@ -15,7 +15,7 @@
       })(window,document,'script','dataLayer','GTM-T45ZSS5');</script>
       <!-- End Google Tag Manager -->
 
-    <title>EA Hub {{ page_name }}</title>
+    <title>{% block title %}{{ page_name }}{% endblock %} - EA Hub</title>
     <link rel="shortcut icon" href="{%  static 'favicon.ico' %}">
 
     {% if settings.DJANGO_ENV.value == 'stage' %}
