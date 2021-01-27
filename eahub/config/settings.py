@@ -289,6 +289,7 @@ ADMIN_REORDER = [
             {"model": "profiles.Profile", "label": "Profiles"},
             {"model": "localgroups.LocalGroup", "label": "Groups"},
             {"model": "profiles.ProfileAnalyticsLog", "label": "Profile update logs"},
+            {"model": "feedback.Feedback", "label": "User feedback"},
         ],
     },
     {

@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
+    "eahub.feedback.apps.FeedbackConfig"
 ]
 
 # Core settings: security
