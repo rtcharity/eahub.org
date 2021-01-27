@@ -1,4 +1,8 @@
 [flake8]
 max-line-length = 88
 per-file-ignores =
-  eahub/config/legacy_urls.py:E501
+    eahub/config/legacy_urls.py:E501
+exclude = 
+    .git
+    .pytest_cache
+    node_modules/

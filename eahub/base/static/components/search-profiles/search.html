@@ -80,7 +80,7 @@
                                                 </a>
                                             </div>
                                             <div class="search__hit-social-link" v-if="item.email">
-                                                <a v-bind:href="item.email">
+                                                <a v-bind:href="'mailto:' + item.email" target="_blank">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
                                             </div>
@@ -95,18 +95,20 @@
                                             <span>{{ item.local_groups.join(', ') }}</span>
                                         </div>
                                     </div>
-                                    <div class="col-xs-24 col-sm-24 col-md-16 col-lg-24 col-xl-24 order-last order-sm-5 order-md-5 order-lg-5 rder-xl-5 order-xxl-3  col-xxl-9 search__hit-summary">
-                                        <div v-if="item.summary" >
+                                    <div class="col-xs-24 col-sm-24 col-md-16 col-lg-24 col-xl-24 order-last order-sm-5 order-md-5 order-lg-5 order-xl-5 order-xxl-3  col-xxl-9">
+                                        <div class="row search__hit-summary" v-if="item.summary">
                                             <h5>Summary</h5>
                                             <ais-snippet :hit="item" attribute="summary"/>
                                         </div>
-                                    </div>
-                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-4  order-sm-4 order-md-3 order-lg-4 order-xl-4  col-xxl-4 search__hit-skills search__hit-cause">
-                                        <div v-if="item.cause_areas.length">
-                                            <h5>Cause Areas</h5>
-                                            <ul>
-                                                <li v-for="cause in item.cause_areas">{{cause}}</li>
-                                            </ul>
+                                        <div class="row" v-if="item.offering || item.looking_for">
+                                            <div v-if="item.offering" class="search__hit-offering col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <h5>Offering</h5>
+                                                <span>{{ item.offering }}</span>
+                                            </div>
+                                            <div v-if="item.looking_for" class="search__hit-looking_for col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                                <h5>Looking for</h5>
+                                                <span>{{ item.looking_for }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-24 col-sm-12 col-md-8 col-lg-6  col-xl-6  order-3  order-sm-2 order-md-2 order-lg-3  order-xl-3 col-xxl-4 search__hit-skills search__hit-expertise">
@@ -114,6 +116,14 @@
                                             <h5>Areas of Expertise</h5>
                                             <ul>
                                                 <li v-for="expertise in item.expertise">{{expertise}}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-4  order-sm-4 order-md-3 order-lg-4 order-xl-4  col-xxl-4 search__hit-skills search__hit-cause">
+                                        <div v-if="item.cause_areas.length">
+                                            <h5>Cause Areas</h5>
+                                            <ul>
+                                                <li v-for="cause in item.cause_areas">{{cause}}</li>
                                             </ul>
                                         </div>
                                     </div>

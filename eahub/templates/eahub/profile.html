@@ -36,27 +36,30 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ profile.name }}</h1>
-      {% if user.id is not None and profile.email_visible %}
-      <div class="turquoise-links">
-        <a href="mailto:{{ profile.user.email }}"><i class="fa fa-envelope-square"></i> {{ profile.user.email }}</a>
-      </div>
-      <br>
-      {% endif %}
-
-      {% if user.id == profile.user_id %}
+      {% if request.user.id == profile.user_id %}
         <a href="{% url 'edit_profile' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Edit</span>
-          </div>
+            <div class="btn btn-default purple">
+                <span><i class="fa fa-pencil-alt"></i> Edit</span>
+            </div>
         </a>
         <a href="{% url 'account_email' %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
-          </div>
+            <div class="btn btn-default purple">
+                <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
+            </div>
         </a>
         <a href="{% url 'account_change_password' %}">
+            <div class="btn btn-default purple">
+                <span><i class="fa fa-pencil-alt"></i> Change Password</span>
+            </div>
+        </a>
+      {% endif %}
+
+      {% load feature_flags %}
+      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
+        <a href="{% url 'message_profile' profile.slug  %}">
           <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Change Password</span>
+            <span><i class="fa fa-pencil-alt"></i> Send Message</span>
           </div>
         </a>
       {% endif %}
@@ -80,7 +83,6 @@
 </div>
 {% endif %}
 
-
 <div class="container profile-info profile-cards">
 
 
@@ -100,7 +102,7 @@
           {% if profile.available_to_volunteer %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
           {% endif %}
-          {% if user.id == profile.user_id %}
+          {% if request.user.id == profile.user_id %}
             <br>
             <a href="{% url 'edit_profile_cause_areas' %}">
               <span class="btn btn-default btn-xs">
@@ -131,7 +133,7 @@
             <br>
             <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
           {% endif %}
-          {% if user.id == profile.user_id %}
+          {% if request.user.id == profile.user_id %}
             <br>
             <span class="btn btn-default btn-xs">
               <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
@@ -186,12 +188,18 @@
           {% if profile.topics_i_speak_about %}
           <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about|urlize|linebreaks }}</div>
           {% endif %}
+          {% if profile.offering %}
+          <div class="list"><div class="tag">Offering:</div> {{ profile.offering|urlize|linebreaks }}</div>
+          {% endif %}
+          {% if profile.looking_for %}
+          <div class="list"><div class="tag">Looking for:</div> {{ profile.looking_for|urlize|linebreaks }}</div>
+          {% endif %}
           {% if profile.available_as_speaker %}
           <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
           <br>
           {% endif %}
 
-          {% if user.id == profile.user_id %}
+          {% if request.user.id == profile.user_id %}
             <br>
             <a href="{% url 'edit_profile_community' %}">
               <span class="btn btn-default btn-xs">
@@ -226,7 +234,7 @@
           </div>
           <div class="panel-body">
             {{ profile.summary|default:'N/A'|urlize|linebreaks }}
-            {% if user.id == profile.user_id %}
+            {% if request.user.id == profile.user_id %}
               <br>
               <a href="{% url 'edit_profile' %}">
                 <span class="btn btn-default btn-xs">

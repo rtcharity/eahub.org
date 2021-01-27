@@ -1,4 +1,4 @@
-from captcha import fields, widgets
+from captcha import fields
 from django import forms
 from django.conf import settings
 
@@ -24,8 +24,11 @@ class SignupForm(forms.Form):
         label="Show my profile to the public after it is approved",
         initial=True,
     )
-    if hasattr(settings, "RECAPTCHA_PUBLIC_KEY"):
-        captcha = fields.ReCaptchaField(label="", widget=widgets.ReCaptchaV3)
+    captcha = fields.ReCaptchaField(
+        label="",
+        public_key=settings.RECAPTCHA_PUBLIC_KEY,
+        private_key=settings.RECAPTCHA_PRIVATE_KEY,
+    )
 
     field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
 
@@ -119,13 +122,17 @@ class EditProfileCommunityForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups")
+        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups", "offering", "looking_for")
         widgets = {
-            "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000})
+            "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000}),
+            "offering": forms.Textarea(attrs={"rows": 3, "maxlength": 2000, "placeholder": "Teaching python"}),
+            "looking_for": forms.Textarea(attrs={"rows": 3, "maxlength": 2000, "placeholder": "Chat about wild animal suffering"}),
         }
         labels = {
             "available_as_speaker": ("Available as speaker:"),
             "topics_i_speak_about": ("Topics I speak about:"),
+            "offering": ("Offering:"),
+            "looking_for": ("Looking for:"),
         }
 
 

@@ -12,6 +12,13 @@
 
 {% block submit%}Sign up{% endblock%}
 
+<div class="field">
+    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+    {% if 'captcha_error' in request.GET %}
+    <div class="alert alert-danger login-danger" style="max-width: 304px;">Captcha error</div>
+    {% endif %}
+</div>
+
 {% block form_privacy_note %}
 
 <br>
