@@ -3,11 +3,11 @@
 {% block map %}
 
     {% if settings.DJANGO_ENV.value == 'local' %}
-        <script defer
+        <script id="maps-script" defer
             src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"
         ></script>
     {% else %}
-        <script defer src="{% static 'dist/component_maps.js' %}"></script>
+        <script id="maps-script" defer src="{% static 'dist/component_maps.js' %}"></script>
     {% endif %}
 
     <div id="map" class="map_homepage"></div>
@@ -27,8 +27,14 @@
 
     <script>
         function initMap() {
-            var queryStringMap = "{{ request.GET.map|escapejs }}";
-            window.initHeatmapFull(queryStringMap);
+            const queryStringMap = "{{ request.GET.map|escapejs }}";
+            if (window.initHeatmapFull) {
+                window.initHeatmapFull(queryStringMap);
+            } else {
+                document.getElementById('maps-script').addEventListener('load', () => {
+                    window.initHeatmapFull(queryStringMap);
+                })
+            }
         }
     </script>
     <script defer

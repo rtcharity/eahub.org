@@ -85,24 +85,53 @@
             </div>
 
             <div class="col-12">
+                <h2>Join the community</h2>
+                
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-link active" id="nav-home-tab" href="#nav-home" aria-controls="nav-home"
                             data-bs-toggle="tab"  role="tab" aria-selected="true">
-                            Login
+                            Signup
                         </a>
                         <a class="nav-link" id="nav-profile-tab" href="#nav-profile" aria-controls="nav-profile"
                             data-bs-toggle="tab" role="tab" aria-selected="false">
-                            Signup
+                            Login
                         </a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Login</div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Signup</div>
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <form>
+                            <div class="mt-3">
+                                <input type="text" class="form-control" placeholder="Name">
+                            </div>
+                            <div class="mt-3">
+                                <input type="email" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="mt-3">
+                                <input type="password" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-outline-primary">Signup</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <form>
+                            <div class="mt-3">
+                                <input type="text" class="form-control" placeholder="Email">
+                            </div>
+                            <div class="mt-3">
+                                <input type="password" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-outline-primary">Login</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 <script>
-                    /* because bs5 seems to have a bug with tabs init, we do it manually here */
+                    /* because bs5 seems to have a bug with tabs init, we init them manually here */
                     document.addEventListener('DOMContentLoaded', () => {
                         const triggerTabList = [].slice.call(document.querySelectorAll('#nav-tab a'));
                         triggerTabList.forEach(triggerEl => {
