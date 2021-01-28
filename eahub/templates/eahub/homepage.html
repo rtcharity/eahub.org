@@ -19,9 +19,17 @@
                     The EA Hub is a place for EAs to connect using our community
                     directory. You can also find volunteers, candidates and EA speakers.
                 </p>
-                <button type="button" class="btn btn-primary btn-lg btn-secondary">
+                <button type="button" id="signup-btn" class="btn btn-primary btn-lg btn-secondary">
                     Join the Community
                 </button>
+                <script>
+                    document.getElementById('signup-btn').addEventListener('click', () => {
+                        document.getElementById('join-community-tabs')
+                            .scrollIntoView({
+                                behavior: 'smooth'
+                            });
+                    });
+                </script>
             </div>
             <div class="col col-lg-16 d-flex justify-content-end">
                 <img class="home__map" src="{% static 'global/images/home/map.svg' %}" alt="world map">
@@ -99,7 +107,7 @@
                         </a>
                     </div>
                 </nav>
-                <div class="tab-content" id="nav-tabContent">
+                <div class="tab-content" id="join-community-tabs">
                     <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                         <form>
                             <div class="mt-3">
