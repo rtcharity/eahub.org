@@ -158,12 +158,57 @@
         }
     }
     
-    #homepage-map {
-        margin-bottom: 6rem;
+    .join-community {
+        $margin: 4rem;
         
-        .map_homepage {
-            width: 100%;
-            height: 500px;
+        .join__title {
+            display: flex;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: $margin;
+        }
+        .join__form {
+            padding-left: $margin;
+            $margin-bottom: 2rem;
+            $max-width: 400px;
+            
+            .nav-tabs {
+                max-width: $max-width;
+                margin-bottom: $margin-bottom;
+        
+                .nav-link {
+                    font-size: 1.4rem;
+                }
+            }
+            .tab-content {
+                max-width: $max-width;
+                
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    
+                    .form-control {
+                        border-top: none;
+                        border-left: none;
+                        border-right: none;
+                        margin-bottom: $margin-bottom;
+                    }
+                    .btn {
+                        display: flex;
+                        align-self: center;
+                        min-width: 100px;
+                    }
+                }
+            }
+        }
+        
+        #homepage-map {
+            margin-bottom: 6rem;
+        
+            .map_homepage {
+                width: 100%;
+                height: 500px;
+            }
         }
     }
 }
