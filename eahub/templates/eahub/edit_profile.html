@@ -10,9 +10,9 @@
 
 {% addtoblock 'js' %}
   {% if settings.DJANGO_ENV.value == 'local' %}
-    <script src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit_image.bundle.js"></script>
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit_image.bundle.js"></script>
   {% else %}
-    <script src="{% static 'dist/component_profile_edit_image.js' %}"></script>
+    <script defer src="{% static 'dist/component_profile_edit_image.js' %}"></script>
   {% endif %}
 {% endaddtoblock %}
 
