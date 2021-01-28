@@ -58,24 +58,64 @@
     </div>
 
     <div class="container">
-        <div id="homepage-map"></div>
-        <script defer>
-            async function loadMap() {
-                const response = await fetch('/homepage-map/');
-                const homepageMapElem = document.getElementById('homepage-map');
-                homepageMapElem.innerHTML = await response.text();
-                
-                Array.from(homepageMapElem.querySelectorAll('script')).forEach(oldScript => {
-                    const newScript = document.createElement('script');
-                    Array
-                        .from(oldScript.attributes)
-                        .forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                    oldScript.parentNode.replaceChild(newScript, oldScript);
-                });
-            }
-            loadMap();
-        </script>
+        <div class="row">
+            <div class="col-12">
+                <div id="homepage-map"></div>
+                <script defer>
+                    async function loadMap() {
+                        const response = await fetch('/homepage-map/');
+                        const homepageMapElem = document.getElementById('homepage-map');
+                        homepageMapElem.innerHTML = await response.text();
+
+                        const scriptsNotExecuted = homepageMapElem.querySelectorAll('script');
+                        Array.from(scriptsNotExecuted).forEach(scriptNotExecuted => {
+                            const scriptToExecute = document.createElement('script');
+                            Array
+                                .from(scriptNotExecuted.attributes)
+                                .forEach(
+                                    attr => scriptToExecute.setAttribute(attr.name, attr.value
+                                )
+                            );
+                            scriptToExecute.appendChild(document.createTextNode(scriptNotExecuted.innerHTML));
+                            scriptNotExecuted.parentNode.replaceChild(scriptToExecute, scriptNotExecuted);
+                        });
+                    }
+                    loadMap();
+                </script>
+            </div>
+
+            <div class="col-12">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-link active" id="nav-home-tab" href="#nav-home" aria-controls="nav-home"
+                            data-bs-toggle="tab"  role="tab" aria-selected="true">
+                            Login
+                        </a>
+                        <a class="nav-link" id="nav-profile-tab" href="#nav-profile" aria-controls="nav-profile"
+                            data-bs-toggle="tab" role="tab" aria-selected="false">
+                            Signup
+                        </a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">Login</div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">Signup</div>
+                </div>
+                <script>
+                    /* because bs5 seems to have a bug with tabs init, we do it manually here */
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const triggerTabList = [].slice.call(document.querySelectorAll('#nav-tab a'));
+                        triggerTabList.forEach(triggerEl => {
+                            const tabTrigger = new bootstrap.Tab(triggerEl);
+                            triggerEl.addEventListener('click', event => {
+                                event.preventDefault();
+                                tabTrigger.show();
+                            });
+                        });
+                    })
+                </script>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

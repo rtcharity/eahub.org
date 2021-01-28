@@ -1,4 +1,4 @@
-require('bootstrap');
+window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 require('./main.scss');
 
 import 'cookieconsent/build/cookieconsent.min.css';

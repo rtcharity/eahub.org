@@ -158,8 +158,12 @@
         }
     }
     
-    .map_homepage {
-        width: 100%;
-        height: 500px;
+    #homepage-map {
+        margin-bottom: 6rem;
+        
+        .map_homepage {
+            width: 100%;
+            height: 500px;
+        }
     }
 }

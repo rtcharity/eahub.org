@@ -1,28 +1,37 @@
-
 {% load static sekizai_tags %}
 
 {% block map %}
 
-{% if settings.DJANGO_ENV.value == 'local' %}
-<script src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
-{% else %}
-<script src="{% static 'dist/component_maps.js' %}"></script>
-{% endif %}
+    {% if settings.DJANGO_ENV.value == 'local' %}
+        <script defer
+            src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"
+        ></script>
+    {% else %}
+        <script defer src="{% static 'dist/component_maps.js' %}"></script>
+    {% endif %}
 
-<div id="map" class="map_homepage"></div>
-<div id="map_selector">
-  <label><input type="radio" name="map_selector" value="individuals" id="map_selector_ind">Individuals</label>
-  <label><input type="radio" name="map_selector" value="groups" id="map_selector_groups">Groups</label>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
+    <div id="map" class="map_homepage"></div>
+    <div id="map_selector">
+        <label><input type="radio" name="map_selector" value="individuals"
+            id="map_selector_ind"
+        >Individuals</label>
+        <label><input type="radio" name="map_selector" value="groups"
+            id="map_selector_groups"
+        >Groups</label>
+    </div>
+    <script defer
+        src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"
+    ></script>
 
-<script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
-{{ map_locations|json_script:'map-locations' }}
-<script>
-  function initMap() {
-    var queryStringMap = "{{ request.GET.map|escapejs }}";
-    window.initHeatmapFull(queryStringMap);
-  }
-</script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+    {{ map_locations|json_script:'map-locations' }}
+
+    <script>
+        function initMap() {
+            var queryStringMap = "{{ request.GET.map|escapejs }}";
+            window.initHeatmapFull(queryStringMap);
+        }
+    </script>
+    <script defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"
+    ></script>
 {% endblock %}
