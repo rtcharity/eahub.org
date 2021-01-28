@@ -68,9 +68,9 @@
     <div class="container join-community">
         <h2 class="join__title">Join the community</h2>
 
-        <div class="row">
-            <div class="col-12">
-                <div id="homepage-map"></div>
+        <div class="row row-cols-1 row-cols-lg-2">
+            <div class="col order-2 order-lg-1">
+                <div class="join__map-block" id="homepage-map"></div>
                 <script defer>
                     async function loadMap() {
                         const response = await fetch('/homepage-map/');
@@ -94,55 +94,59 @@
                 </script>
             </div>
 
-            <div class="col-12 join__form">
+            <div class="col order-1 order-lg-2 join__form">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-link active" id="nav-home-tab" href="#nav-home" aria-controls="nav-home"
+                        <a class="nav-link active" id="nav-signup-tab" href="#nav-signup" aria-controls="nav-signup"
                             data-bs-toggle="tab"  role="tab" aria-selected="true">
                             Sign Up
                         </a>
-                        <a class="nav-link" id="nav-profile-tab" href="#nav-profile" aria-controls="nav-profile"
+                        <a class="nav-link" id="nav-login-tab" href="#nav-login" aria-controls="nav-login"
                             data-bs-toggle="tab" role="tab" aria-selected="false">
                             Login
                         </a>
                     </div>
                 </nav>
                 <div class="tab-content" id="join-community-tabs">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="tab-pane fade show active" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
                         <form>
-                        
-                            <input type="text" class="form-control form-control-lg" placeholder="Name">
-                        
-                            <input type="email" class="form-control form-control-lg" placeholder="Email">
-                        
-                            <input type="password" class="form-control form-control-lg" placeholder="Password">
-                            <button type="submit" class="btn btn-lg btn-outline-primary">Sign Up</button>
+
+                            <div class="form-floating">
+                                <input type="text" class="form-control form-control-lg"  placeholder="Name" id="signup-name">
+                                <label for="signup-name">Name</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="email" class="form-control form-control-lg"  placeholder="Email" id="signup-email">
+                                <label for="signup-email">Email address</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="password" class="form-control form-control-lg"  placeholder="Password" id="signup-password">
+                                <label for="signup-password">Password</label>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-lg btn-outline-secondary">Sign Up</button>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
                         <form>
-                        
-                            <input type="text" class="form-control form-control-lg" placeholder="Email">
-                        
-                            <input type="password" class="form-control form-control-lg" placeholder="Password">
-                        
-                            <button type="submit" class="btn btn-lg btn-outline-primary">Login</button>
+
+                            <div class="form-floating">
+                                <input type="email" class="form-control form-control-lg"  placeholder="Email" id="login-email">
+                                <label for="login-email">Email address</label>
+                            </div>
+
+                            <div class="form-floating">
+                                <input type="password" class="form-control form-control-lg"  placeholder="Password" id="login-password">
+                                <label for="login-password">Password</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-lg btn-outline-secondary">Login</button>
                         </form>
                     </div>
                 </div>
-                <script defer>
-                    /* because bs5 seems to have a bug with tabs init, we init them manually here */
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const triggerTabList = [].slice.call(document.querySelectorAll('#nav-tab a'));
-                        triggerTabList.forEach(triggerEl => {
-                            const tabTrigger = new bootstrap.Tab(triggerEl);
-                            triggerEl.addEventListener('click', event => {
-                                event.preventDefault();
-                                tabTrigger.show();
-                            });
-                        });
-                    })
-                </script>
             </div>
         </div>
     </div>

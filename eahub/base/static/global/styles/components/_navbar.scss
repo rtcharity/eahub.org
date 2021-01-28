@@ -54,6 +54,8 @@ $spacing-xxs: 5px;
     }
 
     .navbar-collapse {
+        width: fit-content;
+        
         .svg-inline--fa, .fa-icon {
             display: inline-block;
             min-width: 20px;
