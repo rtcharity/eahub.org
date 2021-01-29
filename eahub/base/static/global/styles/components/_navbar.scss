@@ -58,7 +58,7 @@ $spacing-xxs: 5px;
         
         @include media-breakpoint-down(lg) {
             margin-top: $grid-gutter-width-half;
-            margin-bottom: 10px;
+            margin-bottom: $grid-gutter-width-half - 2px;
             margin-left: 2px;
         }
         
