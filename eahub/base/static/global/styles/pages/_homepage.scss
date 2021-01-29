@@ -187,20 +187,23 @@
                 }
         
                 .nav-link {
+                    display: flex;
+                    justify-content: center;
+                    width: 50%;
+                    padding: 0.5rem 0;
                     font-size: 1.3rem;
                     border: solid 1px $color-secondary;
                     color: $color-secondary;
-                    $padding: 74px;
-                    $padding-horizontal: $padding - 11;
-                    padding: 0.5rem $padding;
                     $radius: 2rem;
+                    
+                    
                     &#nav-signup-tab {
-                        padding-right: $padding-horizontal;
+                        padding-left: 0.5rem;
                         border-bottom-left-radius: $radius;
                         border-top-left-radius: $radius;
                     }
                     &#nav-login-tab {
-                        padding-left: $padding-horizontal;
+                        padding-right: 0.5rem;
                         border-bottom-right-radius: $radius;
                         border-top-right-radius: $radius;
                     }
