@@ -3,7 +3,7 @@
 <nav class="navbar fixed-top bg-secondary navbar-dark navbar-expand-lg">
     <div class="container">
         <a href="/" class="navbar-brand">
-            <img class="logo" id="logo" src="{% static 'global/images/logo.svg' %}"/>
+            <img class="logo" id="logo" src="{% static 'global/images/logo.svg' %}" alt="logo"/>
             <span class="navbar__site-name">EA Hub</span>
         </a>
 
@@ -44,17 +44,59 @@
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profiles' %}">
-                        <span class="fa-icon"><i class="fa fa-users"></i></span> Profiles
+                        <span class="fa-icon"><i class="fa fa-users"></i></span>
+                        Profiles
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'groups' %}">
-                        <span class="fa-icon"><i class="fa fa-globe"></i></span> Groups
+                        <span class="fa-icon"><i class="fa fa-globe"></i></span>
+                        Groups
                     </a>
                 </li>
 
+            
+                <li class="nav-item d-flex d-lg-none">
+                    <a class="nav-link"
+                        href="https://resources.eahub.org/"
+                    >
+                        <i class="fa fa-book"></i> EA Resources
+                    </a>
+                </li>
+                <li class="nav-item d-flex d-lg-none">
+                    <a class="nav-link"
+                        href="https://donationswap.eahub.org"
+                    >
+                        <i class="fa fa-exchange-alt"></i> EA Donation Swap
+                    </a>
+                </li>
+                <li class="nav-item d-flex d-lg-none">
+                    <a class="nav-link" href="{% url 'about' %}">
+                        <i class="fa fa-info"></i> About
+                    </a>
+                </li>
+                <li class="nav-item d-flex d-lg-none">
+                <a class="nav-link"
+                    href="https://feedback.eahub.org"
+                >
+                    <i class="fa fa-comment"></i> Feedback
+                </a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item d-flex d-lg-none">
+                        <a class="nav-link"
+                            href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"
+                        >
+                            <i class="fa fa-sign-out-alt" id="logout"></i>
+
+                            Log out
+                        </a>
+                    </li>
+                {% endif %}
+
+            
                 <li class="nav-item dropdown">
-                    <button class="navbar-toggler nav-link d-lg-flex"
+                    <button class="navbar-toggler nav-link d-none d-lg-flex"
                         type="button"
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
@@ -64,8 +106,10 @@
                     >
                         <span class="navbar-toggler-icon"></span>
                     </button>
+
                     <div class="dropdown-menu"
-                        aria-labelledby="navbar-collapse-lg-content">
+                        aria-labelledby="navbar-collapse-lg-content"
+                    >
                         <a class="dropdown-item"
                             href="https://resources.eahub.org/">
                             <i class="fa fa-book"></i> EA Resources

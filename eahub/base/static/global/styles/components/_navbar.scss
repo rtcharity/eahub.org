@@ -54,22 +54,18 @@ $spacing-xxs: 5px;
     }
 
     .navbar-collapse {
-        width: fit-content;
+        justify-content: flex-end;
+        
+        @include media-breakpoint-down(lg) {
+            margin-top: $grid-gutter-width-half;
+            margin-bottom: 10px;
+            margin-left: 2px;
+        }
         
         .svg-inline--fa, .fa-icon {
             display: inline-block;
             min-width: 20px;
             min-height: 13px;
-            
-            @include media-breakpoint-down(lg) {
-                margin-left: -2px;
-            }
-        }
-
-        .fa-user-plus {
-            @include media-breakpoint-down(lg) {
-                margin-left: -1px;
-            }
         }
 
         .nav-link {
