@@ -646,7 +646,7 @@ class Profile(models.Model):
             self.available_as_speaker,
             len(self.topics_i_speak_about) > 0,
             self.offering,
-            self.looking_for
+            self.looking_for,
         ]
         return any(community_details_exist)
 
