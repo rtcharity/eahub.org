@@ -140,7 +140,7 @@
 {% block footer %}
     <footer>
         <div class="container">
-            <div class="row">
+            <div class="row footer__links">
                 <div class="col col-24 col-md-12 col-lg-6">
                     <a class="footer__item" href="https://feedback.eahub.org" target="_blank">Post feedback</a>
                     <a class="footer__item" href="https://github.com/rtcharity/eahub.org/" target="_blank">Source code</a>
@@ -154,6 +154,14 @@
                     <a class="footer__item" href="{% url 'about' %}">About us</a>
                     <a class="footer__item" href="{% url 'privacy_policy' %}">Privacy Policy</a>
                     <span class="footer__item">Effective Altruism Hub © 2021</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-12 justify-content-start align-items-start">
+                    <span class="footer__captcha">
+                        This site is protected by reCAPTCHA and the Google
+                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and 
+                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
                 </div>
             </div>
         </div>

@@ -8,7 +8,7 @@ footer {
     $margin-top: 10px;
     padding-bottom: $grid-gutter-width + $margin-top;
     
-    .row {
+    .footer__links {
         
         .col {
             display: flex;
@@ -33,6 +33,18 @@ footer {
                     }
                 }
             }
+        }
+    }
+    .footer__captcha {
+        display: block;
+        margin-top: $grid-gutter-width;
+        color: #ffffffbd;
+        font-size: 0.8rem;
+        
+        a {
+            display: inline-block;
+            text-decoration: none;
+            color: #ffffffbd;
         }
     }
 }
