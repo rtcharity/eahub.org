@@ -245,15 +245,16 @@
                         }
                     }
                 }
+                
+                $margin-left: 11px;
                 .g-recaptcha {
                     display: flex;
-                    //justify-content: center;
                     margin-bottom: $margin-bottom;
+                    margin-left: $margin-left - 1px;
                 }
                 .btn {
                     display: flex;
-                    align-self: center;
-                    justify-content: center;
+                    margin-left: $margin-left;
     
                     width: fit-content;
                     $padding: 2.1rem;
