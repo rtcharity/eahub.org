@@ -19,11 +19,6 @@ class SignupForm(forms.Form):
         widget=forms.TextInput(attrs={"placeholder": "Name"}),
         validators=[validate_sluggable_name],
     )
-    is_public = forms.BooleanField(
-        required=False,
-        label="Show my profile to the public after it is approved",
-        initial=True,
-    )
     captcha = fields.ReCaptchaField(
         label="",
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
@@ -33,10 +28,9 @@ class SignupForm(forms.Form):
     field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
 
     def signup(self, request, user):
-        is_public = self.cleaned_data["is_public"]
         name = self.cleaned_data["name"]
         Profile.objects.create(
-            user=user, is_public=is_public, name=name, email_visible=False
+            user=user, name=name, email_visible=False
         )
 
 
