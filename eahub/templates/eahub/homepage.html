@@ -23,11 +23,10 @@
                     Join the Community
                 </button>
                 <script>
-                    document.getElementById('signup-btn').addEventListener('click', () => {
-                        document.getElementById('join-community-tabs')
-                            .scrollIntoView({
-                                behavior: 'smooth'
-                            });
+                    document.addEventListener('DOMContentLoaded', () => {
+                        document.querySelector('#signup-btn').addEventListener('click', () => {
+                            document.querySelector('.join__title').scrollIntoView({behavior: 'smooth'});
+                        });
                     });
                 </script>
             </div>
@@ -69,7 +68,7 @@
         <h2 class="join__title">Join the community</h2>
 
         <div class="row row-cols-1 row-cols-lg-2">
-            <div class="col order-2 order-lg-1">
+            <div class="col order-2 order-lg-1 join__map-col">
                 <div class="join__map-block" id="homepage-map"></div>
                 <script defer>
                     async function loadMap() {
@@ -90,63 +89,30 @@
                             scriptNotExecuted.parentNode.replaceChild(scriptToExecute, scriptNotExecuted);
                         });
                     }
-                    loadMap();
+                    loadMap()
                 </script>
             </div>
 
-            <div class="col order-1 order-lg-2 join__form">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-link active" id="nav-signup-tab" href="#nav-signup" aria-controls="nav-signup"
-                            data-bs-toggle="tab"  role="tab" aria-selected="true">
-                            Sign Up
-                        </a>
-                        <a class="nav-link" id="nav-login-tab" href="#nav-login" aria-controls="nav-login"
-                            data-bs-toggle="tab" role="tab" aria-selected="false">
-                            Login
-                        </a>
+            <div class="col order-1 order-lg-2 join__form-col">
+                <form autocomplete="off">
+
+                    <div class="form-floating">
+                        <input type="text" class="form-control form-control-lg"  placeholder="Name" id="signup-name">
+                        <label for="signup-name">Name</label>
                     </div>
-                </nav>
-                <div class="tab-content" id="join-community-tabs">
-                    <div class="tab-pane fade show active" id="nav-signup" role="tabpanel" aria-labelledby="nav-signup-tab">
-                        <form autocomplete="off">
 
-                            <div class="form-floating">
-                                <input type="text" class="form-control form-control-lg"  placeholder="Name" id="signup-name">
-                                <label for="signup-name">Name</label>
-                            </div>
-
-                            <div class="form-floating">
-                                <input type="email" class="form-control form-control-lg"  placeholder="Email" id="signup-email">
-                                <label for="signup-email">Email address</label>
-                            </div>
-
-                            <div class="form-floating">
-                                <input type="password" class="form-control form-control-lg"  placeholder="Password" id="signup-password">
-                                <label for="signup-password">Password</label>
-                            </div>
-
-
-                            <button type="submit" class="btn btn-lg btn-outline-secondary">Sign Up</button>
-                        </form>
+                    <div class="form-floating">
+                        <input type="email" class="form-control form-control-lg"  placeholder="Email" id="signup-email">
+                        <label for="signup-email">Email address</label>
                     </div>
-                    <div class="tab-pane fade" id="nav-login" role="tabpanel" aria-labelledby="nav-login-tab">
-                        <form>
 
-                            <div class="form-floating">
-                                <input type="email" class="form-control form-control-lg"  placeholder="Email" id="login-email">
-                                <label for="login-email">Email address</label>
-                            </div>
-
-                            <div class="form-floating">
-                                <input type="password" class="form-control form-control-lg"  placeholder="Password" id="login-password">
-                                <label for="login-password">Password</label>
-                            </div>
-
-                            <button type="submit" class="btn btn-lg btn-outline-secondary">Login</button>
-                        </form>
+                    <div class="form-floating">
+                        <input type="password" class="form-control form-control-lg"  placeholder="Password" id="signup-password">
+                        <label for="signup-password">Password</label>
                     </div>
-                </div>
+
+                    <button type="submit" class="btn btn-secondary">Sign Up</button>
+                </form>
             </div>
         </div>
     </div>

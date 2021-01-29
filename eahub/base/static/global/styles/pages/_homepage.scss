@@ -5,6 +5,11 @@
     .home__intro {
         margin-top: 6.5rem;
         margin-bottom: 4rem;
+    
+        @include media-breakpoint-down(lg) {
+            margin-top: 3.5rem;
+            margin-bottom: 3.5rem;
+        }
         
         h1 {
             font-size: 3.8rem;
@@ -52,28 +57,34 @@
             width: 100%;
             
             @include media-breakpoint-down(lg) {
-                margin-bottom: 0;
+                margin-bottom: 1rem;
+                margin-top: 1rem;
             }
         }
     }
     .home__hero {
-        margin-top: 12.5rem;
+        margin-top: 14rem;
         margin-bottom: 13rem;
         position: relative;
         
         &[data-image-pos=right] {
+            margin-top: 12.5rem;
+            
+            @include media-breakpoint-down(lg) {
+                margin-bottom: 600px;
+            }
             .hero__img {
                 right: 0;
             }
             .hero__text {
             }
+
         }
         
         @include media-breakpoint-down(lg) {
             margin-top: 15rem;
-            margin-bottom: 50rem;
+            margin-bottom: 48rem;
         }
-        
         .hero__img {
             position: absolute;
             margin-left: 0;
@@ -135,6 +146,12 @@
                 color: white;
                 background: $color-primary;
                 z-index: 1;
+                
+                @include media-breakpoint-down(lg) {
+                    padding: 2rem;
+                    margin-left: $grid-gutter-width-half;
+                    margin-right: $grid-gutter-width-half;
+                }
         
                 .hero__title {
                     margin-bottom: 0;
@@ -166,110 +183,83 @@
             justify-content: center;
             font-size: 2.6rem;
             margin-bottom: $margin;
+    
+            @include media-breakpoint-down(lg) {
+                margin-bottom: 2rem;
+                font-size: 2rem;
+            }
         }
-        .join__form {
+        .join__form-col {
             margin-bottom: $margin;
             $margin-bottom: 2rem;
-            $max-width: 400px;
+            $max-width: 500px;
             
             @include media-breakpoint-up(lg) {
                 padding-left: $margin;
+                max-width: $max-width;
             }
-            
-            .nav-tabs {
+            form {
                 display: flex;
-                justify-content: center;
-                margin-bottom: $margin-bottom;
-                border-bottom: none;
-    
-                @include media-breakpoint-up(lg) {
-                    max-width: $max-width;
-                }
+                flex-direction: column;
         
-                .nav-link {
-                    display: flex;
-                    justify-content: center;
-                    width: 50%;
-                    padding: 0.5rem 0;
-                    font-size: 1.3rem;
-                    border: solid 1px $color-secondary;
-                    color: $color-secondary;
-                    $radius: 2rem;
-                    
-                    
-                    &#nav-signup-tab {
-                        padding-left: 0.5rem;
-                        border-bottom-left-radius: $radius;
-                        border-top-left-radius: $radius;
+                .form-floating {
+                    .form-control {
+                        border-top: none;
+                        border-left: none;
+                        border-right: none;
+                        margin-bottom: $margin-bottom;
                     }
-                    &#nav-login-tab {
-                        padding-right: 0.5rem;
-                        border-bottom-right-radius: $radius;
-                        border-top-right-radius: $radius;
+                    label {
+                        font-size: 1.2rem;
+                        @include media-breakpoint-down(lg) {
+                            font-size: 1.1rem;
+                        }
                     }
-                    &.active {
+                }
+                .btn {
+                    //display: flex;
+                    //align-self: center;
+                    //justify-content: center;
+                    width: fit-content;
+                    $padding: 2.1rem;
+                    padding-left: $padding;
+                    padding-right: $padding;
+                    font-size: 1.2rem;
+                    &:hover {
                         color: white;
-                        background: $color-secondary;
                     }
-                }
-            }
-            .tab-content {
-                @include media-breakpoint-up(lg) {
-                    max-width: $max-width;
-                }
-                
-                form {
-                    display: flex;
-                    flex-direction: column;
-                    
-                    .form-floating {
-                        .form-control {
-                            border-top: none;
-                            border-left: none;
-                            border-right: none;
-                            margin-bottom: $margin-bottom;
-                        }
-                        label {
-                            font-size: 1.2rem;
-                        }
-                    }
-          
-                    .btn {
-                        display: flex;
-                        align-self: center;
-                        justify-content: center;
-                        $padding: 2.1rem;
-                        padding-left: $padding;
-                        padding-right: $padding;
-                        font-size: 1.3rem;
+                    @include media-breakpoint-down(lg) {
+                        font-size: 1.1rem;
                     }
                 }
             }
         }
-        
-        .join__map-block {
-            margin-bottom: 6rem;
-            position: relative;
-        
-            .join__map {
-                width: 100%;
-                height: 500px;
-            }
-            .join__map-config {
-                position: absolute;
-                top: 0;
-                right: 0;
-                margin: 10px;
-                background: white;
+        .join__map-col {
     
-                .btn-check:checked + label {
-                    font-weight: bold;
-                    z-index: 2;
+            .join__map-block {
+                margin-bottom: 6rem;
+                position: relative;
+        
+                .join__map {
+                    width: 100%;
+                    height: 500px;
                 }
-                label {
-                    box-shadow: rgba(0, 0, 0, 0.3) 0 1px 4px -1px;
-                    z-index: 1;
-                    border: none;
+                .join__map-config {
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    margin: 10px;
+                    background: white;
+            
+                    .btn-check:checked + label {
+                        font-weight: bold;
+                        z-index: 2;
+                    }
+                    label {
+                        box-shadow: rgba(0, 0, 0, 0.3) 0 1px 4px -1px;
+                        z-index: 1;
+                        border: none;
+                    }
                 }
             }
         }
