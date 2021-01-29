@@ -1,6 +1,6 @@
 {% extends 'base_bs5.html' %}
 
-{% load static sekizai_tags %}
+{% load static sekizai_tags crispy_forms_field %}
 
 {% block title %}Home{% endblock %}
 
@@ -26,7 +26,7 @@
                     document.addEventListener('DOMContentLoaded', () => {
                         document.querySelector('#signup-btn').addEventListener('click', () => {
                             document.querySelector('.join__title').scrollIntoView({behavior: 'smooth'});
-                            // todo focus on the name input
+                            document.querySelector('input[name="name"]').focus();
                         });
                     });
                 </script>
@@ -44,7 +44,7 @@
             <div class="row">
                 <div class="col col-lg-9 offset-lg-13 hero__text">
                     <h2 class="hero__title">Community Directory</h2>
-                    <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
+                    <p>Discover & connect with EAs nearby through filtering by cities, organizations, interests, etc</p>
                     <a href="{% url 'profiles' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
                 </div>
             </div>
@@ -58,7 +58,7 @@
             <div class="row">
                 <div class="col col-lg-9 offset-lg-4 hero__text">
                     <h2 class="hero__title">Groups Directory</h2>
-                    <p>Discover & connect with EAs nearby through filtering by cities, organizations, etc</p>
+                    <p>Connect with local, national and virtual groups</p>
                     <a href="{% url 'groups' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
                 </div>
             </div>
@@ -66,7 +66,7 @@
     </div>
 
     <div class="container join-community">
-        <h2 class="join__title">Join the community</h2>
+        <h2 class="join__title">Join the Community</h2>
 
         <div class="row row-cols-1 row-cols-lg-2">
             <div class="col order-2 order-lg-1 join__map-col">
@@ -99,19 +99,36 @@
                     {% csrf_token %}
                     
                     <div class="form-floating">
-                        <input type="text" class="form-control form-control-lg" name="name" placeholder="Name" id="signup-name">
-                        <label for="signup-name">Name</label>
+                        <input type="text"
+                            class="form-control form-control-lg"
+                            name="{{ form.name.name }}"
+                            placeholder="Name"
+                            id="{{ form.name.id }}"
+                            required>
+                        <label for="{{ form.name.id }}">Name</label>
                     </div>
 
                     <div class="form-floating">
-                        <input type="email" class="form-control form-control-lg" name="email" placeholder="Email" id="signup-email">
-                        <label for="signup-email">Email address</label>
+                        <input type="email"
+                            class="form-control form-control-lg"
+                            name="{{ form.email.name }}"
+                            placeholder="Email"
+                            id="{{ form.email.id }}"
+                            required>
+                        <label for="{{ form.email.id }}">Email</label>
                     </div>
 
                     <div class="form-floating">
-                        <input type="password" class="form-control form-control-lg" name="password1" placeholder="Password" id="signup-password">
-                        <label for="signup-password">Password</label>
+                        <input type="password"
+                            class="form-control form-control-lg"
+                            name="{{ form.password1.name }}"
+                            placeholder="Password"
+                            id="{{ form.password1.id }}"
+                            required>
+                        <label for="{{ form.password1.id }}">Password</label>
                     </div>
+
+                    {% crispy_field form.captcha %}
                     
                     <button type="submit" class="btn btn-secondary">Sign Up</button>
                 </form>
@@ -121,4 +138,24 @@
 {% endblock %}
 
 {% block footer %}
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col col-24 col-md-12 col-lg-6">
+                    <a class="footer__item" href="https://feedback.eahub.org" target="_blank">Post feedback</a>
+                    <a class="footer__item" href="https://github.com/rtcharity/eahub.org/" target="_blank">Source code</a>
+                    <a class="footer__item" href="mailto:contact@eahub.org" target="_blank">contact@eahub.org</a>
+                </div>
+                <div class="col col-24 col-md-12 order-md-3 order-lg-2 col-lg-6">
+                    <a class="footer__item" href="https://resources.eahub.org" target="_blank">resources.eahub.org</a>
+                    <a class="footer__item" href="https://donationswap.eahub.org/" target="_blank">EA Donation Swap</a>
+                </div>
+                <div class="col col-24 col-md-12 order-md-2 order-lg-3 col-lg-6">
+                    <a class="footer__item" href="{% url 'about' %}">About us</a>
+                    <a class="footer__item" href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                    <span class="footer__item">Effective Altruism Hub © 2021</span>
+                </div>
+            </div>
+        </div>
+    </footer>
 {% endblock %}

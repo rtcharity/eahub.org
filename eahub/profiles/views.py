@@ -11,9 +11,12 @@ from django.urls import reverse
 from flags.state import flag_enabled
 
 from ..base.models import User
-from ..base.views import ReportAbuseView, SendMessageView
-from ..base.views import get_private_profiles
-from ..base.views import get_profiles_data
+from ..base.views import (
+    ReportAbuseView,
+    SendMessageView,
+    get_private_profiles,
+    get_profiles_data,
+)
 from ..localgroups.models import LocalGroup
 from .forms import (
     DeleteProfileForm,

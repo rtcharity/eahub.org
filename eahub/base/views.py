@@ -1,7 +1,5 @@
-from allauth.account import app_settings
-from allauth.account import utils
-from allauth.account.views import PasswordChangeView
-from allauth.account.views import PasswordResetFromKeyView
+from allauth.account import app_settings, utils
+from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -9,21 +7,18 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.http import HttpResponse
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.templatetags import static
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
-from django.views.generic import base
+from django.views.generic import TemplateView, base
 from django.views.generic.edit import FormView
 
-from .forms import ReportAbuseForm
-from .forms import SendMessageForm
-from ..localgroups.models import LocalGroup as Group
-from ..profiles.models import Profile
+from eahub.base.forms import ReportAbuseForm, SendMessageForm
+from eahub.localgroups.models import LocalGroup as Group
+from eahub.profiles.forms import SignupForm
+from eahub.profiles.models import Profile
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -44,20 +39,23 @@ class CustomisedPasswordChangeView(PasswordChangeView):
     success_url = reverse_lazy("my_profile")
 
 
-class HomepageView(TemplateView):
+class HomepageView(FormView):
+    form_class = SignupForm
     template_name = "eahub/homepage.html"
 
 
 class HomepageMapView(TemplateView):
     template_name = "eahub/maps/homepage_map.html"
-    
+
     def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
         return {
+            **context,
             "map_locations": {
                 "profiles": get_profiles_data(self.request.user)["map_data"],
                 "groups": get_groups_data()["map_data"],
                 "private_profiles": get_private_profiles(self.request.user),
-            }
+            },
         }
 
 

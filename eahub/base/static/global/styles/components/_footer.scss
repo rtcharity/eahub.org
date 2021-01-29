@@ -1,1 +1,38 @@
 @import 'eahub/base/static/global/styles/bootstrap-variables';
+
+
+footer {
+    background: #635274;
+    color: white;
+    padding: $grid-gutter-width 0;
+    $margin-top: 10px;
+    padding-bottom: $grid-gutter-width + $margin-top;
+    
+    .row {
+        
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+    
+            &:last-of-type {
+                @include media-breakpoint-up(md) {
+                    margin-left: auto;
+                    align-items: flex-end;
+                }
+            }
+        
+            .footer__item {
+                display: block;
+                margin-top: $margin-top;
+                text-decoration: none;
+                color: white;
+                &:first-child {
+                    @include media-breakpoint-up(lg) {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+    }
+}

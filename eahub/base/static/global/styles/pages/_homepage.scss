@@ -216,14 +216,18 @@
                         margin-bottom: $margin-bottom;
                         padding-left: 0.85rem;
                         padding-right: 0.85rem;
-    
+
+                        &:focus {
+                            box-shadow: 0 0 0 $input-btn-focus-width rgba($color-secondary, $input-btn-focus-color-opacity);
+                            border-bottom-color: #7bb0a84d;
+                            
+                        }
                         &:-webkit-autofill,
                         &:-webkit-autofill:hover,
                         &:-webkit-autofill:focus,
                         &:-webkit-autofill:active {
                             -webkit-box-shadow: 0 0 0 30px white inset !important;
                         }
-    
                         &:-webkit-autofill ~ label {
                             font-size: $floating-label-size;
                             color: $floating-label-color;
@@ -239,6 +243,11 @@
                             color: $floating-label-color;
                         }
                     }
+                }
+                .g-recaptcha {
+                    display: flex;
+                    //justify-content: center;
+                    margin-bottom: $margin-bottom;
                 }
                 .btn {
                     display: flex;

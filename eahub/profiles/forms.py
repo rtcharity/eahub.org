@@ -14,11 +14,13 @@ class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 class SignupForm(forms.Form):
 
     name = forms.CharField(
-        max_length=200,
+        max_length=300,
         label="First and last name",
         widget=forms.TextInput(attrs={"placeholder": "Name"}),
         validators=[validate_sluggable_name],
     )
+    email = forms.EmailField()
+    password1 = forms.CharField()
     captcha = fields.ReCaptchaField(
         label="",
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
@@ -29,9 +31,7 @@ class SignupForm(forms.Form):
 
     def signup(self, request, user):
         name = self.cleaned_data["name"]
-        Profile.objects.create(
-            user=user, name=name, email_visible=False
-        )
+        Profile.objects.create(user=user, name=name, email_visible=False)
 
 
 class EditProfileForm(forms.ModelForm):
@@ -116,11 +116,27 @@ class EditProfileCommunityForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups", "offering", "looking_for")
+        fields = (
+            "available_as_speaker",
+            "topics_i_speak_about",
+            "local_groups",
+            "offering",
+            "looking_for",
+        )
         widgets = {
-            "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000}),
-            "offering": forms.Textarea(attrs={"rows": 3, "maxlength": 2000, "placeholder": "Teaching python"}),
-            "looking_for": forms.Textarea(attrs={"rows": 3, "maxlength": 2000, "placeholder": "Chat about wild animal suffering"}),
+            "topics_i_speak_about": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 2000}
+            ),
+            "offering": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 2000, "placeholder": "Teaching python"}
+            ),
+            "looking_for": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "maxlength": 2000,
+                    "placeholder": "Chat about wild animal suffering",
+                }
+            ),
         }
         labels = {
             "available_as_speaker": ("Available as speaker:"),
