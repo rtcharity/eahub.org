@@ -55,7 +55,8 @@
             margin-bottom: 3rem;
             max-width: 900px;
             width: 100%;
-            
+            height: min-content;
+    
             @include media-breakpoint-down(lg) {
                 margin-bottom: 1rem;
                 margin-top: 1rem;
@@ -219,7 +220,7 @@
 
                         &:focus {
                             box-shadow: 0 0 0 $input-btn-focus-width rgba($color-secondary, $input-btn-focus-color-opacity);
-                            border-bottom-color: #7bb0a84d;
+                            border-bottom-color: white;
                             
                         }
                         &:-webkit-autofill,
