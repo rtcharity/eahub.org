@@ -52,7 +52,7 @@
             }
         }
         .home__map {
-            margin-bottom: 8rem;
+            margin-bottom: 3rem;
             max-width: 900px;
             width: 100%;
             
@@ -63,12 +63,12 @@
         }
     }
     .home__hero {
-        margin-top: 14rem;
-        margin-bottom: 13rem;
+        margin-top: 10rem;
+        margin-bottom: 10rem;
         position: relative;
         
         &[data-image-pos=right] {
-            margin-top: 12.5rem;
+            margin-top: 10rem;
             
             @include media-breakpoint-down(lg) {
                 margin-bottom: 600px;
@@ -203,31 +203,55 @@
                 flex-direction: column;
         
                 .form-floating {
+                    $floating-label-size: 0.8rem;
+                    $floating-label-color: $gray-700;
+                    label {
+                        font-size: $floating-label-size;
+                        color: $gray-600;
+                    }
                     .form-control {
                         border-top: none;
                         border-left: none;
                         border-right: none;
                         margin-bottom: $margin-bottom;
-                    }
-                    label {
-                        font-size: 1.2rem;
-                        @include media-breakpoint-down(lg) {
-                            font-size: 1.1rem;
+                        padding-left: 0.85rem;
+                        padding-right: 0.85rem;
+    
+                        &:-webkit-autofill,
+                        &:-webkit-autofill:hover,
+                        &:-webkit-autofill:focus,
+                        &:-webkit-autofill:active {
+                            -webkit-box-shadow: 0 0 0 30px white inset !important;
+                        }
+    
+                        &:-webkit-autofill ~ label {
+                            font-size: $floating-label-size;
+                            color: $floating-label-color;
+                        }
+                        &:placeholder-shown ~ label {
+                            font-size: 1.2rem;
+                            @include media-breakpoint-down(lg) {
+                                font-size: 1.1rem;
+                            }
+                        }
+                        &:focus ~ label {
+                            font-size: $floating-label-size;
+                            color: $floating-label-color;
                         }
                     }
                 }
                 .btn {
-                    //display: flex;
-                    //align-self: center;
-                    //justify-content: center;
+                    display: flex;
+                    align-self: center;
+                    justify-content: center;
+    
                     width: fit-content;
                     $padding: 2.1rem;
                     padding-left: $padding;
                     padding-right: $padding;
-                    font-size: 1.2rem;
-                    &:hover {
-                        color: white;
-                    }
+                    font-size: 1.3rem;
+                    color: white !important;
+    
                     @include media-breakpoint-down(lg) {
                         font-size: 1.1rem;
                     }
