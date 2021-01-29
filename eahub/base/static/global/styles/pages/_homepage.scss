@@ -55,7 +55,7 @@
             margin-bottom: 3rem;
             max-width: 900px;
             width: 100%;
-            height: min-content;
+            height: 100%;
     
             @include media-breakpoint-down(lg) {
                 margin-bottom: 1rem;
