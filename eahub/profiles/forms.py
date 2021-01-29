@@ -14,7 +14,7 @@ class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 class SignupForm(forms.Form):
 
     name = forms.CharField(
-        max_length=300,
+        max_length=200,
         label="First and last name",
         widget=forms.TextInput(attrs={"placeholder": "Name"}),
         validators=[validate_sluggable_name],
