@@ -97,6 +97,7 @@ export default class Heatmap {
         typeControl: false,
         scaleControl: false,
         streetViewControl: false,
+        mapTypeControl: false,
         rotateControl: false,
 
         // Snazzy map: pale
