@@ -176,8 +176,8 @@ AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
-LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = "my_profile"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 

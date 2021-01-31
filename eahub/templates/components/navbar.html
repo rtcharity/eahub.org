@@ -31,7 +31,7 @@
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link nav__login"
-                            href="{% url 'account_login' %}?next={% firstof request.path '/' %}">
+                            href="{% url 'account_login' %}">
                             <span class="fa-icon"><i class="fa fa-sign-in-alt"></i></span> Log In
                         </a>
                     </li>
@@ -87,7 +87,7 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item d-flex d-lg-none">
                         <a class="nav-link"
-                            href="{% url 'account_logout' %}?next={% firstof request.path '/' %}"
+                            href="{% url 'account_logout' %}"
                         >
                             <i class="fa fa-sign-out-alt" id="logout"></i>
 

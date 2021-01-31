@@ -99,7 +99,9 @@
             <div class="col order-1 order-lg-2 join__form-col">
                 <form action="{% url 'account_signup' %}" method="post">
                     {% csrf_token %}
-                    
+
+                    <input type="hidden" name="next" value="{% url 'my_profile_first_visit' %}" />
+
                     <div class="form-floating">
                         <input type="text"
                             class="form-control form-control-lg"
@@ -130,7 +132,7 @@
                         <label for="{{ form.password1.id }}">Password</label>
                     </div>
 
-                    {% crispy_field form.captcha %}
+                    {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
                     
                     <button type="submit" class="btn btn-primary">Sign Up</button>
                 </form>

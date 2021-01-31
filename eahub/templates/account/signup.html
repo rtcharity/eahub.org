@@ -7,7 +7,7 @@
 {% block form_fields %}
 
 {{ form|crispy }}
-<input type="hidden" name="{{ redirect_field_name }}" value="/profile/first_visit/" />
+<input type="hidden" name="{{ redirect_field_name }}" value="{% url 'my_profile_first_visit' %}" />
 {% endblock %}
 
 {% block submit%}Sign up{% endblock%}
