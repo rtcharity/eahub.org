@@ -30,24 +30,22 @@ footer {
                 margin-top: $margin-top;
                 text-decoration: none;
                 color: white;
+                
                 &:first-child {
                     @include media-breakpoint-up(lg) {
                         margin-top: 0;
                     }
                 }
+                svg {
+                    font-size: 0.7rem;
+                    margin-left: 3px;
+                    margin-bottom: 1px;
+                }
             }
-        }
-    }
-    .footer__captcha {
-        display: block;
-        margin-top: $grid-gutter-width;
-        color: #ffffffbd;
-        font-size: 0.8rem;
-        
-        a {
-            display: inline-block;
-            text-decoration: none;
-            color: #ffffffbd;
+            a:hover {
+                color: #e8d1ff;
+                
+            }
         }
     }
 }

@@ -16,8 +16,7 @@
             <div class="col-sm-24 col-lg-8 order-1 order-lg-0 align-self-end">
                 <h1>EA Hub</h1>
                 <p class="home__subtitle">
-                    The EA Hub is a place for EAs to connect using our community
-                    directory. You can also find volunteers, candidates and EA speakers.
+                    A global directory for effective altruists to connect
                 </p>
                 <button type="button" id="signup-btn" class="btn btn-primary btn-lg btn-secondary">
                     Join the Community
@@ -46,7 +45,7 @@
             <div class="row">
                 <div class="col col-lg-9 offset-lg-13 hero__text">
                     <h2 class="hero__title">Community Directory</h2>
-                    <p>Discover & connect with EAs nearby through filtering by cities, organizations, interests, etc</p>
+                    <p>Search our directory of thousands of EAs from around the world</p>
                     <a href="{% url 'profiles' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
                 </div>
             </div>
@@ -147,25 +146,30 @@
             <div class="row footer__links">
                 <div class="col col-24 col-md-12 col-lg-6">
                     <a class="footer__item" href="https://feedback.eahub.org" target="_blank">Post feedback</a>
-                    <a class="footer__item" href="https://github.com/rtcharity/eahub.org/" target="_blank">Source code</a>
+                    <a class="footer__item" href="https://github.com/rtcharity/eahub.org/" target="_blank" rel="nofollow">
+                        Source code
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
                     <a class="footer__item" href="mailto:contact@eahub.org" target="_blank">contact@eahub.org</a>
                 </div>
                 <div class="col col-24 col-md-12 order-md-3 order-lg-2 col-lg-6">
-                    <a class="footer__item" href="https://resources.eahub.org" target="_blank">resources.eahub.org</a>
-                    <a class="footer__item" href="https://donationswap.eahub.org/" target="_blank">EA Donation Swap</a>
+                    <a class="footer__item" href="https://www.eawork.club/" target="_blank" rel="nofollow">
+                        Opportunities Board
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a class="footer__item" href="https://resources.eahub.org" target="_blank" rel="nofollow">
+                        EA Resources
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a class="footer__item" href="https://donationswap.eahub.org/" target="_blank" rel="nofollow">
+                        EA Donation Swap
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
                 </div>
                 <div class="col col-24 col-md-12 order-md-2 order-lg-3 col-lg-6">
                     <a class="footer__item" href="{% url 'about' %}">About us</a>
                     <a class="footer__item" href="{% url 'privacy_policy' %}">Privacy Policy</a>
                     <span class="footer__item">Effective Altruism Hub © {% now "Y" %}</span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col col-12 justify-content-start align-items-start">
-                    <span class="footer__captcha">
-                        This site is protected by reCAPTCHA and the Google
-                        <a href="https://policies.google.com/privacy">Privacy Policy</a> and 
-                        <a href="https://policies.google.com/terms">Terms of Service</a> apply.
                 </div>
             </div>
         </div>

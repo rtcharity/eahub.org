@@ -45,7 +45,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profiles' %}">
                         <span class="fa-icon"><i class="fa fa-users"></i></span>
-                        Profiles
+                        Community
                     </a>
                 </li>
                 <li class="nav-item">
@@ -59,16 +59,10 @@
                 <li class="nav-item d-flex d-lg-none">
                     <a class="nav-link"
                         href="https://resources.eahub.org/"
+                        rel="nofollow"
+                        target="_blank"
                     >
                         <i class="fa fa-book"></i> EA Resources
-                        <i class="fas fa-external-link-alt"></i>
-                    </a>
-                </li>
-                <li class="nav-item d-flex d-lg-none">
-                    <a class="nav-link"
-                        href="https://donationswap.eahub.org"
-                    >
-                        <i class="fa fa-exchange-alt"></i> EA Donation Swap
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                 </li>
@@ -78,11 +72,31 @@
                     </a>
                 </li>
                 <li class="nav-item d-flex d-lg-none">
-                <a class="nav-link"
-                    href="https://feedback.eahub.org"
-                >
-                    <i class="fa fa-comment"></i> Feedback
-                </a>
+                    <a class="nav-link"
+                        href="https://feedback.eahub.org"
+                    >
+                        <i class="fa fa-comment"></i> Feedback
+                    </a>
+                </li>
+                <li class="nav-item d-flex d-lg-none">
+                    <a class="nav-link"
+                        href="https://donationswap.eahub.org"
+                        rel="nofollow"
+                        target="_blank"
+                    >
+                        <i class="fa fa-exchange-alt"></i> EA Donation Swap
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-flex d-lg-none">
+                    <a class="nav-link"
+                        href="https://www.eawork.club/"
+                        rel="nofollow"
+                        target="_blank"
+                    >
+                        <i class="fas fa-briefcase"></i> Opportunities Board
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
                 </li>
                 {% if user.is_authenticated %}
                     <li class="nav-item d-flex d-lg-none">
@@ -95,7 +109,6 @@
                         </a>
                     </li>
                 {% endif %}
-
             
                 <li class="nav-item dropdown">
                     <button class="navbar-toggler nav-link d-none d-lg-flex"
@@ -113,13 +126,27 @@
                         aria-labelledby="navbar-collapse-lg-content"
                     >
                         <a class="dropdown-item"
-                            href="https://resources.eahub.org/">
+                            href="https://resources.eahub.org/"
+                            rel="nofollow"
+                            target="_blank"
+                        >
                             <i class="fa fa-book"></i> EA Resources
                             <i class="fas fa-external-link-alt"></i>
                         </a>
                         <a class="dropdown-item"
-                            href="https://donationswap.eahub.org">
+                            href="https://donationswap.eahub.org"
+                            rel="nofollow"
+                            target="_blank"
+                        >
                             <i class="fa fa-exchange-alt"></i> EA Donation Swap
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a class="dropdown-item"
+                            href="https://www.eawork.club/"
+                            rel="nofollow"
+                            target="_blank"
+                        >
+                            <i class="fas fa-briefcase"></i> Opportunities Board
                             <i class="fas fa-external-link-alt"></i>
                         </a>
                         <a class="dropdown-item" href="{% url 'about' %}">
