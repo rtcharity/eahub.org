@@ -30,7 +30,7 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link"
+                        <a class="nav-link nav__login"
                             href="{% url 'account_login' %}?next={% firstof request.path '/' %}">
                             <span class="fa-icon"><i class="fa fa-sign-in-alt"></i></span> Log In
                         </a>
