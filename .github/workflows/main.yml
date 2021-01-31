@@ -1,11 +1,11 @@
 on: [pull_request, workflow_dispatch]
 jobs:
     pytest:
-        name: run code styles checks & tests
+        name: test & styles checks
         runs-on: ubuntu-latest
         steps:
             - name: git clone the current branch
               uses: actions/checkout@v2
             - name: run pytest
               shell: bash
-              run: docker-compose run --use-aliases web pytest
+              run: docker-compose run --use-aliases web-e2e pytest

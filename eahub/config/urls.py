@@ -52,7 +52,6 @@ urlpatterns = [
         name="newsletter",
     ),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
-    path("favicon.ico", views.FaviconView.as_view(), name="favicon"),
     path("robots.txt", views.RobotsTxtView.as_view(), name="robots.txt"),
     path("robots933456.txt", views.health_check, name="health_check"),
     path("ads.txt", views.AdsTxtView.as_view(), name="ads.txt"),
@@ -66,5 +65,4 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("", include("eahub.config.legacy_urls")),
 ]
