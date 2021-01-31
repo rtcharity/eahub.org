@@ -11,11 +11,11 @@ import '@fortawesome/fontawesome-free/js/brands'
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGlobe, faUserAstronaut, faSignInAlt, faUserPlus, faUser, faUsers, faBook, faExchangeAlt,
          faInfo, faComment, faSignOutAlt, faPencilAlt, faEnvelope, faSitemap, faBed, faFlag, faPlus,
-         faLock, faMap, faDownload, faTrash, faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
+         faLock, faMap, faDownload, faTrash, faEnvelopeSquare, faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faUserAstronaut, faSignInAlt, faUserPlus, faUser, faUsers, faGlobe, faBook, faExchangeAlt,
 faInfo, faComment, faSignOutAlt, faPencilAlt, faEnvelope, faSitemap, faFlag, faBed, faPlus, faLock, faMap,
-faDownload, faTrash, faEnvelopeSquare);
+faDownload, faTrash, faEnvelopeSquare, faExternalLinkAlt);
 
 // Replace any existing <i> tags with <svg>
 dom.i2svg();
