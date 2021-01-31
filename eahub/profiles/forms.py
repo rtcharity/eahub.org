@@ -3,6 +3,7 @@ from django import forms
 from django.conf import settings
 
 from eahub.config.settings import DjangoEnv
+
 from ..localgroups.models import LocalGroup
 from .models import Profile, validate_sluggable_name
 
