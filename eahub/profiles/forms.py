@@ -2,6 +2,7 @@ from captcha import fields
 from django import forms
 from django.conf import settings
 
+from eahub.config.settings import DjangoEnv
 from ..localgroups.models import LocalGroup
 from .models import Profile, validate_sluggable_name
 
@@ -28,6 +29,11 @@ class SignupForm(forms.Form):
     )
 
     field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if settings.DJANGO_ENV == DjangoEnv.E2E:
+            del self.fields["captcha"]
 
     def signup(self, request, user):
         name = self.cleaned_data["name"]

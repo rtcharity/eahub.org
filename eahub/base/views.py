@@ -9,7 +9,6 @@ from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
-from django.templatetags import static
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView, base
@@ -175,11 +174,6 @@ def get_private_profiles(user):
         for x in private_profiles
     ]
     return private_profiles_json
-
-
-class FaviconView(base.RedirectView):
-    def get_redirect_url(self):
-        return static.static("favicon.ico")
 
 
 class LegacyRedirectView(base.RedirectView):

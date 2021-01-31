@@ -10,7 +10,7 @@ Backend for [https://eahub.org](https://eahub.org)
 - npm ci
 - npm run build-watch
 - docker-compose run --rm web django-admin migrate (only necessary when you're setting it up for the first time or pulled python migration changes)
-- docker-compose up
+- docker-compose up web
 
 If everything went well, you should be able to get the Hub at http://localhost:8000
 
