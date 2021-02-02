@@ -127,7 +127,7 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1", "*"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[]) + ["127.0.0.1", "*"]
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
