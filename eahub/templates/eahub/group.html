@@ -4,13 +4,15 @@
 
 {% load static sekizai_tags %}
 
+{% block title %}{{ group.name }}{% endblock %}
+
 {% block content %}
 
 {% addtoblock 'js' %}
   {% if settings.DJANGO_ENV.value == 'local' %}
-    <script src="{{ settings.WEBPACK_DEV_URL }}/component_group_page_actions.bundle.js"></script>
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_group_page_actions.bundle.js"></script>
   {% else %}
-    <script src="{% static 'dist/component_group_page_actions.js' %}"></script>
+    <script defer src="{% static 'dist/component_group_page_actions.js' %}"></script>
   {% endif %}
 {% endaddtoblock %}
 
@@ -24,15 +26,18 @@
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
        {% if request.user.id is not None and group.email %}
-      <div class="btn btn-default purple">
-        <a href="{% url 'message_group' group.slug  %}"><i class="fa fa-pencil-alt"></i> Send Message</a>
-      </div>
+           <a href="{% url 'message_group' group.slug %}">
+               <div class="btn btn-default purple">
+                   <i class="fa fa-pencil-alt"></i> Send Message
+               </div>
+           </a>
       {% else %}
       {% if group.facebook_group %}
-      <div class="btn btn-default purple">
-        <a href="{{ group.facebook_group }}" target="_blank"><i class="fa fa-envelope"></i> Message</a>
-      </div>
-
+          <a href="{{ group.facebook_group }}" target="_blank">
+              <div class="btn btn-default purple">
+                  <i class="fa fa-envelope"></i> Message
+              </div>
+          </a>
       {% elif group.facebook_page %}
       <a href="{{ group.facebook_page }}" target="_blank">
         <div class="btn btn-default purple">
@@ -184,11 +189,16 @@
 
 
   <div class="text-center margin-top report-btn">
-    <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
-      <a href="{% url 'report_abuse_group' group.slug  %}">
-        <button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</button>
+      <a href="{% url 'report_abuse_group' group.slug %}">
+          <div class="btn-group btn-group-sm text-center" role="group"
+              id="report_profile_abuse_toggle"
+          >
+              <button type="button" class="btn btn-default"><i
+                  class="fa fa-flag"
+              ></i> Report abuse
+              </button>
+          </div>
       </a>
-    </div>
   </div>
 
 </div>

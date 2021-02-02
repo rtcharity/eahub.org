@@ -3,6 +3,7 @@ from django import forms
 from django.conf import settings
 
 from eahub.config.settings import DjangoEnv
+
 from ..localgroups.models import LocalGroup
 from .models import Profile, validate_sluggable_name
 
@@ -20,11 +21,8 @@ class SignupForm(forms.Form):
         widget=forms.TextInput(attrs={"placeholder": "Name"}),
         validators=[validate_sluggable_name],
     )
-    is_public = forms.BooleanField(
-        required=False,
-        label="Show my profile to the public after it is approved",
-        initial=True,
-    )
+    email = forms.EmailField()
+    password1 = forms.CharField()
     captcha = fields.ReCaptchaField(
         label="",
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
@@ -39,11 +37,8 @@ class SignupForm(forms.Form):
             del self.fields["captcha"]
 
     def signup(self, request, user):
-        is_public = self.cleaned_data["is_public"]
         name = self.cleaned_data["name"]
-        Profile.objects.create(
-            user=user, is_public=is_public, name=name, email_visible=False
-        )
+        Profile.objects.create(user=user, name=name, email_visible=False)
 
 
 class EditProfileForm(forms.ModelForm):
@@ -128,11 +123,27 @@ class EditProfileCommunityForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ("available_as_speaker", "topics_i_speak_about", "local_groups", "offering", "looking_for")
+        fields = (
+            "available_as_speaker",
+            "topics_i_speak_about",
+            "local_groups",
+            "offering",
+            "looking_for",
+        )
         widgets = {
-            "topics_i_speak_about": forms.Textarea(attrs={"rows": 3, "maxlength": 2000}),
-            "offering": forms.Textarea(attrs={"rows": 3, "maxlength": 2000, "placeholder": "Teaching python"}),
-            "looking_for": forms.Textarea(attrs={"rows": 3, "maxlength": 2000, "placeholder": "Chat about wild animal suffering"}),
+            "topics_i_speak_about": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 2000}
+            ),
+            "offering": forms.Textarea(
+                attrs={"rows": 3, "maxlength": 2000, "placeholder": "Teaching python"}
+            ),
+            "looking_for": forms.Textarea(
+                attrs={
+                    "rows": 3,
+                    "maxlength": 2000,
+                    "placeholder": "Chat about wild animal suffering",
+                }
+            ),
         }
         labels = {
             "available_as_speaker": ("Available as speaker:"),

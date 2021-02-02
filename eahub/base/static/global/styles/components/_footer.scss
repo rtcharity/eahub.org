@@ -1,0 +1,51 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+
+footer {
+    background: #635274;
+    color: white;
+    $margin-top: 10px;
+    padding: $grid-gutter-width 0;
+    
+    @include media-breakpoint-up(md) {
+        padding: $grid-gutter-width + $margin-top 0;
+    }
+    
+    .footer__links {
+        
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+    
+            &:last-of-type {
+                @include media-breakpoint-up(md) {
+                    margin-left: auto;
+                    align-items: flex-end;
+                }
+            }
+        
+            .footer__item {
+                display: block;
+                margin-top: $margin-top;
+                text-decoration: none;
+                color: white;
+                
+                &:first-child {
+                    @include media-breakpoint-up(lg) {
+                        margin-top: 0;
+                    }
+                }
+                svg {
+                    font-size: 0.7rem;
+                    margin-left: 3px;
+                    margin-bottom: 1px;
+                }
+            }
+            a:hover {
+                color: #e8d1ff;
+                
+            }
+        }
+    }
+}

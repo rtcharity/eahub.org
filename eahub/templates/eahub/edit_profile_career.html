@@ -10,9 +10,9 @@
 
 {% addtoblock 'js' %}
   {% if settings.DJANGO_ENV.value == 'local' %}
-    <script src="{{ settings.WEBPACK_DEV_URL }}/component_multiselect_forms.bundle.js"></script>
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_multiselect_forms.bundle.js"></script>
   {% else %}
-    <script src="{% static 'dist/component_multiselect_forms.js' %}"></script>
+    <script defer src="{% static 'dist/component_multiselect_forms.js' %}"></script>
   {% endif %}
 {% endaddtoblock %}
 

@@ -160,6 +160,7 @@ $spacing-xxs: 5px;
 
                     .ais-CurrentRefinements-item {
                         width: fit-content;
+                        width: -moz-fit-content;
                         background: $gray-300;
                         color: $gray-800;
                         margin: $spacing-sm 0;
