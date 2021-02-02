@@ -74,7 +74,7 @@
                 <div class="join__map-block" id="homepage-map"></div>
                 <script defer>
                     async function loadMap() {
-                        const response = await fetch('/homepage-map/');
+                        const response = await fetch({% url 'homepage_map' %});
                         const homepageMapElem = document.getElementById('homepage-map');
                         homepageMapElem.innerHTML = await response.text();
 
@@ -91,7 +91,14 @@
                             scriptNotExecuted.parentNode.replaceChild(scriptToExecute, scriptNotExecuted);
                         });
                     }
-                    loadMap()
+
+                    const homepageMapObserver = new window.IntersectionObserver(([entry]) => {
+                        if (entry.isIntersecting) {
+                            loadMap();
+                            homepageMapObserver.disconnect();
+                        }
+                    }, {root: null, threshold: 0,});
+                    homepageMapObserver.observe(document.querySelector('#homepage-map'));
                 </script>
             </div>
 
