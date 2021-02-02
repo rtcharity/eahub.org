@@ -127,13 +127,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-ALLOWED_HOSTS = env.list("HOSTS", default=[]) + ["*"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[]) + ["127.0.0.1", "*"]
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_SSL_REDIRECT = env.bool(
-    "HTTPS",
-    default=(DJANGO_ENV == DjangoEnv.PROD or DJANGO_ENV == DjangoEnv.STAGE),
+    "SECURE_SSL_REDIRECT",
+    default=(DJANGO_ENV == DjangoEnv.PROD) or (DJANGO_ENV == DjangoEnv.STAGE),
 )
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -176,8 +176,8 @@ AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
-LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = "my_profile"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
@@ -220,6 +220,8 @@ ACCOUNT_SIGNUP_FORM_CLASS = "eahub.profiles.forms.SignupForm"
 ACCOUNT_USER_DISPLAY = "eahub.base.utils.user_display"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
 IS_ENABLE_ALGOLIA = env.str("IS_ENABLE_ALGOLIA", default=True)
 ALGOLIA = {
