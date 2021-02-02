@@ -49,3 +49,5 @@ pytest
     pytest-black
     pytest-flake8
 pip-tools
+faker
+model_bakery
