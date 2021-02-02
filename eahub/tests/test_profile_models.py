@@ -1,4 +1,5 @@
 import random
+
 from django.test import TestCase, override_settings
 
 from eahub.base.models import User

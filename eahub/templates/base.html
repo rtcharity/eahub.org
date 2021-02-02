@@ -15,7 +15,7 @@
       })(window,document,'script','dataLayer','GTM-T45ZSS5');</script>
       <!-- End Google Tag Manager -->
 
-    <title>EA Hub {{ page_name }}</title>
+    <title>{% block title %}{{ page_name }}{% endblock %} - EA Hub</title>
     <link rel="shortcut icon" href="{%  static 'global/images/favicon.ico' %}">
 
     {% if settings.DJANGO_ENV.value == 'stage' %}
@@ -24,8 +24,8 @@
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script defer src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script defer src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -94,7 +94,7 @@
                 <li><a href="{% url 'groups' %}"><i class="fa fa-globe"></i> Groups</a></li>
               {% endif %}
               {% if page_name != 'Profiles' %}
-                <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Profiles</a></li>
+                <li><a href="{% url 'profiles' %}"><i class="fa fa-users"></i> Community</a></li>
               {% endif %}
               <li>
                 <button type="button" id="menu-toggle-icon" class="menu-toggle menu-toggle-down">
@@ -121,13 +121,16 @@
     {% endblock %}
 
     {% block content %}{% endblock %}
-    <footer class="footer">
-      <div class="container">
-        <strong>&copy; {% now "Y" %} Effective Altruism Hub.</strong>
-        <p class="hidden-xs">The codebase of this project is licensed under the <a rel="license" target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a>.
-        <a target="_blank" href="https://feedback.eahub.org">Post feedback</a>. <a href="{% url 'privacy_policy' %}">Privacy Policy</a>. <a href="https://github.com/rtcharity/hubreboot">View source</a>. <a href="{% url 'about' %}">About</a>. <a href="mailto:contact@eahub.org">Contact us</a>.
-        </p>
-      </div>
-    </footer>
+      
+    {% block footer %}
+        <footer class="footer">
+          <div class="container">
+            <strong>&copy; {% now "Y" %} Effective Altruism Hub.</strong>
+            <p class="hidden-xs">The codebase of this project is licensed under the <a rel="license" target="_blank" href="https://opensource.org/licenses/MIT">MIT License</a>.
+            <a target="_blank" href="https://feedback.eahub.org">Post feedback</a>. <a href="{% url 'privacy_policy' %}">Privacy Policy</a>. <a href="https://github.com/rtcharity/hubreboot">View source</a>. <a href="{% url 'about' %}">About</a>. <a href="mailto:contact@eahub.org">Contact us</a>.
+            </p>
+          </div>
+        </footer>
+    {% endblock %}
   </body>
 </html>

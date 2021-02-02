@@ -7,12 +7,22 @@ $spacing-xs: 10px;
 $spacing-xxs: 5px;
 
 .navbar {
+    box-shadow: rgba(0, 0, 0, 0.5) 0 -2px 7px;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+    
     .navbar-brand {
         display: flex;
         align-items: center;
         
-        .navbar__logo {
+        .logo {
             display: flex;
+            max-width: 18px;
+        }
+        .navbar__site-name {
+            display: flex;
+            margin-left: 14px;
+            font-size: 1.2rem;
         }
         
         .navbar__page-name {
@@ -44,21 +54,32 @@ $spacing-xxs: 5px;
     }
 
     .navbar-collapse {
-        .svg-inline--fa {
-            min-width: $spacing-md;
-            @include media-breakpoint-down(lg) {
-                margin-left: -2px;
-            }
+        justify-content: flex-end;
+        
+        @include media-breakpoint-down(lg) {
+            margin-top: $grid-gutter-width-half;
+            margin-bottom: $grid-gutter-width-half - 2px;
+            margin-left: 2px;
         }
-
-        .fa-user-plus {
-            @include media-breakpoint-down(lg) {
-                margin-left: -1px;
-            }
+        
+        .svg-inline--fa, .fa-icon {
+            display: inline-block;
+            min-width: 20px;
+            min-height: 13px;
+        }
+        .fa-external-link-alt {
+            display: inline-flex;
+            min-width: 0;
+            min-height: 0;
+            font-size: 0.7rem;
+            margin-left: 4px;
+            margin-bottom: 3px;
         }
 
         .nav-link {
-            margin: 0 $spacing-xxs;
+            margin: 0 $spacing-xs;
+            font-size: 0.95rem;
+            
             @include media-breakpoint-down(lg) {
                 margin: 0;
             }
