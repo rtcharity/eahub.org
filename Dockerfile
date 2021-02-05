@@ -5,19 +5,20 @@ RUN mkdir /app
 WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-deps --no-cache-dir -r requirements.txt
-COPY . .
-ENV PYTHONPATH /app
 
 
-RUN mkdir /static_build
+COPY package.json .
+COPY package-lock.json .
+COPY webpack.config.js .
+COPY tsconfig.json .
 RUN npm ci
+COPY /eahub/base/static/ ./eahub/base/static/
 RUN npm run build
-ARG buildfolder=/static_build
-ENV buildfolder=${buildfolder}
-COPY /eahub/base/static $buildfolder
-RUN mkdir /static
-RUN DJANGO_SETTINGS_MODULE=eahub.config.build_settings django-admin collectstatic --ignore=node_modules
-ENV DJANGO_SETTINGS_MODULE eahub.config.settings
+
+
+COPY . .
+RUN mkdir /app/static_build
+RUN python manage.py collectstatic --ignore=node_modules --no-input
 
 EXPOSE 8000
 CMD ["gunicorn","--bind=0.0.0.0:8000","eahub.config.wsgi"]

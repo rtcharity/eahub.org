@@ -10,6 +10,7 @@ from django.views.generic import TemplateView
 from ..base import views
 from ..profiles.models import Profile
 from ..profiles.sitemap import ProfilesSitemap
+from ..profiles.views import profiles
 
 
 def staff_or_404(u):
@@ -25,7 +26,8 @@ admin.site.login = user_passes_test(staff_or_404)(admin.site.login)
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.HomepageView.as_view(), name="index"),
+    path("homepage-map/", views.HomepageMapView.as_view(), name="homepage_map"),
     path(
         "accounts/password/change/",
         views.CustomisedPasswordChangeView.as_view(),
@@ -38,7 +40,7 @@ urlpatterns = [
     ),
     path("accounts/", include("allauth.urls")),
     path("profile/", include("eahub.profiles.urls")),
-    path("profiles/", views.profiles, name="profiles"),
+    path("profiles/", profiles, name="profiles"),
     path("candidates/", views.candidates, name="candidates"),
     path("speakers/", views.speakers, name="speakers"),
     path("volunteers/", views.volunteers, name="volunteers"),
@@ -52,7 +54,6 @@ urlpatterns = [
         name="newsletter",
     ),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
-    path("favicon.ico", views.FaviconView.as_view(), name="favicon"),
     path("robots.txt", views.RobotsTxtView.as_view(), name="robots.txt"),
     path("robots933456.txt", views.health_check, name="health_check"),
     path("ads.txt", views.AdsTxtView.as_view(), name="ads.txt"),
@@ -66,5 +67,4 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
-    path("", include("eahub.config.legacy_urls")),
 ]

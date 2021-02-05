@@ -9,15 +9,15 @@ from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
-from django.templatetags import static
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import base
+from django.views.generic import TemplateView, base
 from django.views.generic.edit import FormView
 
-from ..localgroups.models import LocalGroup as Group
-from ..profiles.models import Profile
-from .forms import ReportAbuseForm, SendMessageForm
+from eahub.base.forms import ReportAbuseForm, SendMessageForm
+from eahub.localgroups.models import LocalGroup as Group
+from eahub.profiles.forms import SignupForm
+from eahub.profiles.models import Profile
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
@@ -38,24 +38,24 @@ class CustomisedPasswordChangeView(PasswordChangeView):
     success_url = reverse_lazy("my_profile")
 
 
-def index(request):
-    groups_data = get_groups_data()
-    profiles_data = get_profiles_data(request.user)
-    private_profiles = get_private_profiles(request.user)
-    return render(
-        request,
-        "eahub/index.html",
-        {
-            "page_name": "Home",
-            "groups": groups_data["rows"],
-            "profiles": profiles_data["rows"],
+class HomepageView(FormView):
+    form_class = SignupForm
+    template_name = "eahub/homepage.html"
+
+
+class HomepageMapView(TemplateView):
+    template_name = "eahub/maps/homepage_map.html"
+
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        return {
+            **context,
             "map_locations": {
-                "profiles": profiles_data["map_data"],
-                "groups": groups_data["map_data"],
-                "private_profiles": private_profiles,
+                "profiles": get_profiles_data(self.request.user)["map_data"],
+                "groups": get_groups_data()["map_data"],
+                "private_profiles": get_private_profiles(self.request.user),
             },
-        },
-    )
+        }
 
 
 def about(request):
@@ -64,23 +64,6 @@ def about(request):
 
 def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
-
-
-def profiles(request):
-    profiles_data = get_profiles_data(request.user)
-    private_profiles = get_private_profiles(request.user)
-    return render(
-        request,
-        "eahub/profiles.html",
-        {
-            "page_name": "Profiles",
-            "profiles": profiles_data["rows"],
-            "map_locations": {
-                "profiles": profiles_data["map_data"],
-                "private_profiles": private_profiles,
-            },
-        },
-    )
 
 
 @login_required
@@ -191,11 +174,6 @@ def get_private_profiles(user):
         for x in private_profiles
     ]
     return private_profiles_json
-
-
-class FaviconView(base.RedirectView):
-    def get_redirect_url(self):
-        return static.static("favicon.ico")
 
 
 class LegacyRedirectView(base.RedirectView):

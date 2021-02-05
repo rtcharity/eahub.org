@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 
 import dj_database_url
@@ -14,6 +15,7 @@ base_dir = environ.Path(__file__) - 3
 
 class DjangoEnv(Enum):
     LOCAL = "local"
+    E2E = "e2e"
     STAGE = "stage"
     PROD = "prod"
 
@@ -25,14 +27,69 @@ if DJANGO_ENV == DjangoEnv.LOCAL:
     load_dotenv(find_dotenv(".env"))
 
 
-DATABASES = {"default": dj_database_url.parse(env.str("DATABASE_URL"))}
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django.contrib.sitemaps",
+    "django.contrib.redirects",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "authtools",
+    "algoliasearch_django",
+    "sekizai",
+    "captcha",
+    "crispy_forms",
+    "django_cleanup.apps.CleanupConfig",
+    "django_pwned_passwords",
+    "django_extensions",
+    "rules.apps.AutodiscoverRulesConfig",
+    "sorl.thumbnail",
+    "eahub.base.apps.BaseConfig",
+    "eahub.localgroups.apps.LocalGroupsConfig",
+    "eahub.profiles.apps.ProfilesConfig",
+    "import_export",
+    "rangefilter",
+    "flags",
+]
 
-# Core settings: debugging
+MIDDLEWARE = [
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.middleware.cache.UpdateCacheMiddleware",
+    "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
+    "django_feature_policy.FeaturePolicyMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.cache.FetchFromCacheMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "admin_reorder.middleware.ModelAdminReorder",
+    "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+]
+
+
+DATABASES = {
+    "default": dj_database_url.parse(
+        env.str("DATABASE_URL", "postgres://postgres@postgres:5432/db")
+    )
+}
+
 DEBUG = env.bool("DEBUG")
 
-# Core settings: email
 vars().update(
-    env.email_url("EMAIL_URL", backend="django.core.mail.backends.smtp.EmailBackend")
+    env.email_url(
+        "EMAIL_URL",
+        backend="django.core.mail.backends.smtp.EmailBackend",
+        default="smtp://mail:1025",
+    )
 )
 ADMINS = list(env.dict("ADMINS").items())
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
@@ -58,54 +115,32 @@ else:
         dsn="https://181e4af66382426fb05bd3133031468a@o487305.ingest.sentry.io/5545943",
         integrations=[DjangoIntegration()],
         traces_sample_rate=1.0,
-        # If you wish to associate users to errors (assuming you are using
-        # django.contrib.auth) you may enable sending PII data.
         send_default_pii=True,
     )
 
 
-# Core settings: error reporting
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 
-# Core settings: globalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Core settings: HTTP
-ALLOWED_HOSTS = env.list("HOSTS") + ["127.0.0.1", "*"]
-MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-    "django.middleware.cache.UpdateCacheMiddleware",
-    "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
-    "django_feature_policy.FeaturePolicyMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.cache.FetchFromCacheMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "admin_reorder.middleware.ModelAdminReorder",
-]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[]) + ["127.0.0.1", "*"]
+
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = env.bool("HTTPS")
+SECURE_SSL_REDIRECT = env.bool(
+    "SECURE_SSL_REDIRECT",
+    default=(DJANGO_ENV == DjangoEnv.PROD) or (DJANGO_ENV == DjangoEnv.STAGE),
+)
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# Core settings: models
-from .build_settings import INSTALLED_APPS  # noqa: E402,F401; isort:skip
-
-# Core settings: security
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
-SECRET_KEY = env.bytes("SECRET_KEY")
+SECRET_KEY = env.str("SECRET_KEY", "development_secret_key")
 X_FRAME_OPTIONS = "DENY"
 
-# Core settings: templates
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -124,7 +159,6 @@ TEMPLATES = [
     }
 ]
 
-# Core settings: URLs
 ROOT_URLCONF = "eahub.config.urls"
 
 # Auth
@@ -142,29 +176,24 @@ AUTHENTICATION_BACKENDS = [
     "rules.permissions.ObjectPermissionBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
-LOGIN_REDIRECT_URL = "index"
 LOGIN_URL = "account_login"
+LOGIN_REDIRECT_URL = "my_profile"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
-# Sessions
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 
-# Sites
 SITE_ID = 1
 
-# Static files
-if DJANGO_ENV == DjangoEnv.PROD:
-    from .build_settings import STATICFILES_DIRS
-else:
-    from .build_settings_dev import STATICFILES_DIRS  # noqa: F401,F402; isort:skip
 
-from .build_settings import (  # noqa: E402,F401; isort:skip
-    STATICFILES_STORAGE,
-    STATIC_ROOT,
-    STATIC_URL,
-)
+STATIC_ROOT = os.path.join(base_dir, "static_build/")
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    "eahub/base/static/",
+]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 from aldryn_django.storage import parse_storage_url  # noqa: E402,F401; isort:skip
 
@@ -179,7 +208,6 @@ AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
 AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
 
 
-# allauth
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = "https" if SECURE_SSL_REDIRECT else "http"
@@ -192,8 +220,9 @@ ACCOUNT_SIGNUP_FORM_CLASS = "eahub.profiles.forms.SignupForm"
 ACCOUNT_USER_DISPLAY = "eahub.base.utils.user_display"
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 
-# search
 IS_ENABLE_ALGOLIA = env.str("IS_ENABLE_ALGOLIA", default=True)
 ALGOLIA = {
     "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
@@ -233,7 +262,6 @@ FEATURE_POLICY = {
     "vr": "none",
 }
 
-# Django PWNED Passwords
 PWNED_VALIDATOR_ERROR = mark_safe(
     "For your security, consider using a password that hasn't been "
     "<a target='_blank' href='https://haveibeenpwned.com/passwords'>"
@@ -241,21 +269,17 @@ PWNED_VALIDATOR_ERROR = mark_safe(
 )
 PWNED_VALIDATOR_FAIL_SAFE = False
 
-# django-referrer-policy
 REFERRER_POLICY = "no-referrer-when-downgrade"
 
-# sorl-thumbnail
 THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
 SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV", "ALGOLIA"]
 
-# EA Hub
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])
 
-# Local groups
 LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS").items())
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
@@ -299,6 +323,7 @@ ADMIN_REORDER = [
             {"model": "account.EmailAddress", "label": "User account email addresses"},
             {"model": "auth.Group", "label": "Admin permission groups"},
             {"model": "sites.Site", "label": "Domain management & site name"},
+            {"model": "redirects.Redirect", "label": "Redirects"},
             {
                 "model": "flags.FlagState",
                 "label": "Feature flags (beta features) configuration",

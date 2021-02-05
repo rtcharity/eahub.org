@@ -10,7 +10,7 @@ Backend for [https://eahub.org](https://eahub.org)
 - npm ci
 - npm run build-watch
 - docker-compose run --rm web django-admin migrate (only necessary when you're setting it up for the first time or pulled python migration changes)
-- docker-compose up
+- docker-compose up web
 
 If everything went well, you should be able to get the Hub at http://localhost:8000
 
@@ -83,8 +83,6 @@ docker-compose run --rm web django-admin migrate
 # Browser Support Policy
 
 We support the most recent version of Google Chrome, Mozilla Firefox, Safari, and Microsoft Edge.
-
-We support browsers with JavaScript disabled, but they will receive a degraded experience without dynamic client-side functionality. Because our JavaScript works only in modern browsers, legacy browsers like Internet Explorer receive the same degraded experience.
 
 # Commit Message Practices
 

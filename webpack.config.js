@@ -63,7 +63,6 @@ const config = {
               loader: 'file-loader',
               options: {
                 name: '[name].[ext]',
-                outputPath: '../../static/fonts/'
               }
           }]
       },
@@ -105,9 +104,6 @@ const config = {
             // url-loader sets mimetype if it's passed.
             // Without this it derives it from the file extension
             mimetype: "application/font-woff",
-
-            // Output below fonts directory
-            name: "../../static/fonts/[name].[ext]",
           }
         }
       },
