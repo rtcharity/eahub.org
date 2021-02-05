@@ -70,11 +70,11 @@
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     }).then(response => {
-      if(response.status == "200") {
+      if(response.status === "200") {
         document.getElementById("successmsg").style.display = "block";
         document.getElementById("form").style.display = "none"; 
       }
-      if(response.status == "418") {
+      if(response.status === "418") {
         document.getElementById("errormsg").style.display = "block";    
       }
     });
