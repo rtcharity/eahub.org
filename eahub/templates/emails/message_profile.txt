@@ -1,0 +1,12 @@
+Dear {{ recipient }},
+
+{{ sender_name }} has sent you a message:
+
+{{ message }}
+
+Thanks,
+EA Hub
+
+Feedback: {{ feedback_url }}
+Messaging Preferences: {{ user_profile }}
+Report an issue: Send an email to {{ admin_email }}

@@ -40,30 +40,27 @@
       <h1 class="word-break">{{ profile.name }}</h1>
       {% if request.user.id == profile.user_id %}
         <a href="{% url 'edit_profile' %}">
-            <div class="btn btn-default purple">
-                <span><i class="fa fa-pencil-alt"></i> Edit</span>
-            </div>
-        </a>
-        <a href="{% url 'account_email' %}">
-            <div class="btn btn-default purple">
-                <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
-            </div>
-        </a>
-        <a href="{% url 'account_change_password' %}">
-            <div class="btn btn-default purple">
-                <span><i class="fa fa-pencil-alt"></i> Change Password</span>
-            </div>
-        </a>
-      {% endif %}
-
-      {% load feature_flags %}
-      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
-        <a href="{% url 'message_profile' profile.slug  %}">
           <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Send Message</span>
+            <span><i class="fa fa-pencil-alt"></i> Edit</span>
           </div>
         </a>
+        <a href="{% url 'account_email' %}">
+          <div class="btn btn-default purple">
+            <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
+          </div>
+        </a>
+        <a href="{% url 'account_change_password' %}">
+          <div class="btn btn-default purple">
+            <span><i class="fa fa-pencil-alt"></i> Change Password</span>
+          </div>
+        </a>
+      {% endif %}
+      {% load feature_flags %}
+      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and profile.allow_messaging is not False and messaging_flag %}
+      <div class="btn btn-default purple">
+        <span><a href="{% url 'message_profile' profile.slug  %}"><i class="fa fa-envelope"></i> Send Message</a></span>
+      </div>
       {% endif %}
     </div>
   </div>

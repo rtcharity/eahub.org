@@ -25,25 +25,17 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
-       {% if request.user.id is not None and group.email %}
-           <a href="{% url 'message_group' group.slug %}">
-               <div class="btn btn-default purple">
-                   <i class="fa fa-pencil-alt"></i> Send Message
-               </div>
-           </a>
-      {% else %}
-      {% if group.facebook_group %}
-          <a href="{{ group.facebook_group }}" target="_blank">
-              <div class="btn btn-default purple">
-                  <i class="fa fa-envelope"></i> Message
-              </div>
-          </a>
-      {% elif group.facebook_page %}
-      <a href="{{ group.facebook_page }}" target="_blank">
-        <div class="btn btn-default purple">
-          <i class="fa fa-envelope"></i> Message
-        </div>
-      </a>
+      {% load feature_flags %}
+      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+      {% if request.user.id is not None %}
+      {% if messaging_flag and group.has_organisers_with_messaging_enabled or group.email %}
+
+        <a href="{% url 'message_group' group.slug  %}">
+          <div class="btn btn-default purple">
+            <i class="fa fa-envelope"></i> Send Message
+          </div>
+        </a>
+
       {% endif %}
       {% endif %}
 

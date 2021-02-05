@@ -45,6 +45,7 @@ class ProfileTestCase(TestCase):
             "career_interest_areas",
             "available_as_speaker",
             "email_visible",
+            "allow_messaging",
             "topics_i_speak_about",
             "organisational_affiliations",
             "summary",
@@ -83,6 +84,9 @@ class ProfileTestCase(TestCase):
         analytics_logs_email_visible = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="email_visible"
         )
+        analytics_logs_allow_messaging = ProfileAnalyticsLog.objects.filter(
+            profile=profile, field="allow_messaging"
+        )
 
         self.assertEqual("User1", analytics_logs_name.first().new_value)
         self.assertEqual("False", analytics_logs_is_approved.first().new_value)
@@ -91,7 +95,8 @@ class ProfileTestCase(TestCase):
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(8, len(analytics_logs))
+        self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
+        self.assertEqual(9, len(analytics_logs))
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(
             all(

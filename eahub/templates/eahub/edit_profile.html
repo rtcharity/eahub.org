@@ -57,15 +57,19 @@ If you make your profile private but enter a location, an anonymous pin represen
 {{ form.facebook_url|as_crispy_field }}
 {{ form.personal_website_url|as_crispy_field }}
 
-{{ form.is_public|as_crispy_field }}
-{{ form.email_visible|as_crispy_field }}
 
-<div class="privacy-note">
+{{ form.is_public|as_crispy_field }}
+<div class="profile-edit-privacy-note">
   {% if profile.is_approved %}
   Everything in public profiles is public and searchable.
   {% else %}
   Everything in public profiles becomes public and searchable as soon as the profile is approved.
   {% endif %}
+</div>
+
+{{ form.allow_messaging|as_crispy_field }}
+<div class="profile-edit-privacy-note">
+  Your email address won't be visible to them
 </div>
 
 {% endblock %}

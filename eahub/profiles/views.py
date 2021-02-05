@@ -1,5 +1,6 @@
 import logging
 
+import environ
 from django import http
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -7,10 +8,12 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from flags.state import flag_enabled
 
 from ..base.models import User
+from ..base.utils import get_feedback_url
 from ..base.views import (
     ReportAbuseView,
     SendMessageView,
@@ -92,15 +95,47 @@ class ReportProfileAbuseView(ReportAbuseView):
 
 
 class SendProfileMessageView(SendMessageView):
+    def profile(self):
+        profile = Profile.objects.get(slug=self.kwargs["slug"])
+        if not (profile.allow_messaging):
+            raise http.Http404("user has turned off messaging")
+        return profile
+
     def form_valid(self, form):
         recipient = Profile.objects.get(slug=self.kwargs["slug"])
-        message: str = form.cleaned_data["your_message"]
-        sender_email = form.cleaned_data["your_email_address"]
+        sender_name = form.cleaned_data["your_name"]
+        sender_email_address = form.cleaned_data["your_email_address"]
+        env = environ.Env()
+        admin_email = list(env.dict("ADMINS").values())[0]
+        feedback_url = get_feedback_url(self.request)
+        txt_message = render_to_string(
+            "emails/message_profile.txt",
+            {
+                "sender_name": sender_name,
+                "recipient": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "user_profile": reverse("my_profile"),
+                "admin_email": admin_email,
+                "feedback_url": feedback_url,
+            },
+        )
+        html_message = render_to_string(
+            "emails/message_profile.html",
+            {
+                "sender_name": sender_name,
+                "recipient": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "user_profile": reverse("my_profile"),
+                "admin_email": admin_email,
+                "feedback_url": feedback_url,
+            },
+        )
         send_mail(
-            f"{sender_email} sent you a message through the EA hub.",
-            message,
-            sender_email,
+            f"{sender_name} wants to connect with you!",
+            txt_message,
+            sender_email_address,
             [recipient.user.email],
+            html_message=html_message,
         )
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
@@ -109,7 +144,7 @@ class SendProfileMessageView(SendMessageView):
 
     def get(self, request, *args, **kwargs):
         if not flag_enabled("MESSAGING_FLAG", request=request):
-            raise Http404("Page does not exist")
+            raise Http404("Messaging not available for group")
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):

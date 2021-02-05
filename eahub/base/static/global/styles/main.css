@@ -633,6 +633,14 @@ td .privacy-banner {
   display: block;
 }
 
+.profile-edit-privacy-note {
+  font-size: small;
+  font-style: italic;
+  margin-top: -5px;
+  margin-bottom: 15px;
+  display: block;
+}
+
 .control-group {
   margin-bottom: 10px;
 }

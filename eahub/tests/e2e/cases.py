@@ -32,5 +32,5 @@ class E2ETestCase(StaticLiveServerTestCase):
         super().tearDownClass()
 
     def find(self, selector: str) -> WebElement:
-        # find_element_by_css_selector doesn't work in docker, but works outside of docker
+        # find_element_by_css_selector doesn't work in docker, but works outside of it
         return self.selenium.find_element(By.CSS_SELECTOR, selector)

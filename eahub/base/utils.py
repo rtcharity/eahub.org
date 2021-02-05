@@ -1,5 +1,6 @@
 import csv
 
+from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 
 from ..profiles import models
@@ -11,6 +12,10 @@ def user_display(user):
     except models.Profile.DoesNotExist:
         return user.email
     return profile.name
+
+
+def get_feedback_url(request):
+    return f"https://feedback.{get_current_site(request).domain}"
 
 
 class ExportCsvMixin:

@@ -1,3 +1,10 @@
-{{message}}
+Dear {{ group_name }} admin,
 
-You have been sent this email as you are an admin of {{group_name}} on the EA hub.
+{{ sender_name }} has sent {{ group_name }} a message:
+
+{{ message }}
+
+Thanks,
+EA Hub
+
+feedback: {{ feedback_url }} | Report an issue: Send an email to {{ admin_email }}

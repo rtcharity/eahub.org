@@ -38,7 +38,9 @@ class SignupForm(forms.Form):
 
     def signup(self, request, user):
         name = self.cleaned_data["name"]
-        Profile.objects.create(user=user, name=name, email_visible=False)
+        Profile.objects.create(
+            user=user, is_public=True, name=name, allow_messaging=True
+        )
 
 
 class EditProfileForm(forms.ModelForm):
@@ -55,6 +57,7 @@ class EditProfileForm(forms.ModelForm):
             "country",
             "is_public",
             "email_visible",
+            "allow_messaging",
         )
         widgets = {
             "city_or_town": forms.TextInput(attrs={"placeholder": "London"}),
@@ -75,6 +78,7 @@ class EditProfileForm(forms.ModelForm):
             "city_or_town": ("City/Town"),
             "is_public": "Show my profile to the public",
             "email_visible": "Show my email address to other users",
+            "allow_messaging": "Allow approved users to message me via email",
             "linkedin_url": "LinkedIn Profile",
             "facebook_url": "Facebook Profile",
             "personal_website_url": "Personal Website",
