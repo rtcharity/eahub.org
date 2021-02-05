@@ -3,12 +3,17 @@
   
   <div id="overlay"></div>
 
+   <!-- Button trigger modal mobile-->
+  <button type="button" class="btn feedbackbtn-mobile" onClick="togglemodal()">
+    Feedback?
+  </button>
+
   <div id="feedback">
-  <!-- Button trigger modal -->
+  <!-- Button trigger modal desktop -->
   <button type="button" class="btn feedbackbtn" onClick="togglemodal()">
-      Feedback?
-    </button>
-    
+    Feedback?
+  </button>
+
     <!-- Modal -->
     <div class="modal fade" id="feedbackModal" tabindex="-1">
       <div class="modal-content">
@@ -16,7 +21,7 @@
             <h5 class="modal-title">Leave Feedback</h5>
           </div>
           <div class="modal-body">
-
+            
             <form id="form" class="form-group" method="post" action="/feedback/submit/">
               <p>Do you have any feedback for us?</p>
               {% csrf_token %}
@@ -28,19 +33,21 @@
               <label for="email">Email (optional)</label>
               <input class="form-control" type="text" name="email">
               <input id="page_url" type="hidden" name="page_url" value="">
-              
+
               <div class="modal-footer">
                 <button  id="closebtn" type="button" class="btn btn-secondary" onClick="togglemodal()">Close</button>
                 <input onClick="ajaxsubmit()" value="Submit" class="btn submitbtn" />
               </div>
               </form>
-
               <div id="successmsg" style="display:none">
-                Your feedback has been received, thank you!</div>
+                  <p>Your feedback has been received, thank you!</p>
+              <button  id="closebtn2"  type="button" class="btn btn-secondary" onClick="togglemodal()">Close</button>
+              <button id="submit2" style="width: auto;" onClick="refreshFeedback()" class="btn submitbtn">Submit more feedback</button>
+              </div>
           </div>     
+
         </div>
     </div>  
-
   </div>
 
   
@@ -52,7 +59,7 @@
     element.classList.toggle("active");
     document.getElementById("overlay").classList.toggle("active");    
   }
-  document.getElementById('page_url').value = document.referrer;
+  document.getElementById('page_url').value = window.location.href;
 
   async function ajaxsubmit(){
     var form = document.getElementById('form');
@@ -65,14 +72,18 @@
     }).then(response => {
       if(response.status == "200") {
         document.getElementById("successmsg").style.display = "block";
-        document.getElementById("form").style.display = "none";
-        console.log("success");
+        document.getElementById("form").style.display = "none"; 
       }
       if(response.status == "418") {
-        document.getElementById("errormsg").style.display = "block";
-        
+        document.getElementById("errormsg").style.display = "block";    
       }
     });
+  }
+
+  function refreshFeedback() {
+    document.getElementById("successmsg").style.display = "none";
+    document.getElementById("form").reset();
+    document.getElementById("form").style.display = "block";
   }
   </script>
 
