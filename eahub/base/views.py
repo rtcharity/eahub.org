@@ -35,15 +35,18 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
         )
 
 
-
 class CustomisedPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "account/password_change.html"
-    success_url = reverse_lazy("my_profile")
+    success_url = reverse_lazy("index")
 
     def render_to_response(self, context, **response_kwargs):
         return super(PasswordChangeView, self).render_to_response(
             context, **response_kwargs
         )
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, "Your password has been successfully updated.")
+        return super().form_valid(form)
 
 
 class HomepageView(FormView):
