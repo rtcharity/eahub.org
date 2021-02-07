@@ -91,16 +91,22 @@ def clear_the_cache(**kwargs):
 
 @receiver(post_save, sender=Profile)
 def on_profile_creation(**kwargs):
-    if "created" in kwargs.keys() and kwargs["created"]:
-        save_logs_for_new_profile(kwargs["instance"])
+    try:
+        if "created" in kwargs.keys() and kwargs["created"]:
+            save_logs_for_new_profile(kwargs["instance"])
+    except:
+        logger.exception("Profile creation logging failed")
 
 
 @receiver(pre_save, sender=Profile)
 def on_profile_change(**kwargs):
-    instance = kwargs["instance"]
-    if instance.id is not None:
-        previous = Profile.objects.get(id=instance.id)
-        save_logs_for_profile_update(instance, previous)
+    try:
+        instance = kwargs["instance"]
+        if instance.id is not None:
+            previous = Profile.objects.get(id=instance.id)
+            save_logs_for_profile_update(instance, previous)
+    except:
+        logger.exception("Profile update logging failed")
 
 
 @receiver(pre_save, sender=User)
