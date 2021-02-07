@@ -1,6 +1,5 @@
 from adminutils import options
-from django.contrib import admin
-from django.contrib.admin.actions import delete_selected
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpRequest, HttpResponse
 from import_export.admin import ImportExportMixin
@@ -8,7 +7,6 @@ from import_export.resources import ModelResource
 from rangefilter.filter import DateRangeFilter
 
 from eahub.base import utils
-from eahub.base.admin import UserAdmin
 from eahub.base.models import User
 from eahub.profiles.models import (
     GivingPledge,
@@ -43,7 +41,9 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "personal_website_url",
         "summary",
         "cause_areas_other",
-        "giving_pledges_readable",
+        "expertise_areas_other",
+        "looking_for",
+        "offering",
         "is_public",
         "date_joined",
     )
@@ -90,15 +90,16 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     def approve_profiles(self, request: HttpRequest, queryset: QuerySet):
         queryset.update(is_approved=True)
 
-    @options(desc="Delete selected profiles", allowed_permissions=["delete"])
+    @options(desc="Delete selected profiles & users", allowed_permissions=["delete"])
     def delete_profiles_and_users(
         self, request: HttpRequest, queryset: QuerySet
-    ) -> HttpResponse:
-        return delete_selected(
-            modeladmin=UserAdmin(User, admin.site),
-            request=request,
-            queryset=queryset,
+    ):
+        user_queryset = User.objects.filter(
+            profile__pk__in=queryset.values_list("pk", flat=True)
         )
+        count = user_queryset.count()
+        user_queryset.delete()
+        messages.success(request, f"Deleted '{count}' users & their profiles.")
 
 
 class ProfileAnalyticsResource(ModelResource):
