@@ -20,10 +20,12 @@ class Gen:
     def user(self, **kwargs) -> User:
         return baker.make("base.User", **kwargs)
 
+    def email(self) -> str:
+        return self.faker.unique.email()
+
 
 @override_settings(IS_ENABLE_ALGOLA=False)
 class EAHubTestCase(TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.gen = Gen()

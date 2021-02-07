@@ -70,6 +70,32 @@ def save_logs_for_profile_update(instance_new: Profile, instance_old: Profile):
             log.save()
 
 
+def _save_logs_for_profile_user_update(user_old: User, user_new: User):
+    action_uuid = uuid.uuid4()
+    time = timezone.now()
+    for field in user_new._meta.get_fields():
+        try:
+            value_new = getattr(user_new, field.name)
+            value_old = getattr(user_old, field.name)
+        except AttributeError:
+            continue
+        if value_new != value_old:
+            is_must_protect_password = field.name == "password"
+            if is_must_protect_password and value_old == "":
+                value_old_formatted = ""
+            else:
+                value_old_formatted = "[protected]"
+            ProfileAnalyticsLog.objects.create(
+                action_uuid=action_uuid,
+                time=time,
+                action="Update",
+                old_value=value_old_formatted,
+                new_value="[protected]" if is_must_protect_password else value_new,
+                profile=user_new.profile,
+                field=field.name,
+            )
+
+
 def convert_value_to_printable(value, field):
     if value is None:
         return ""
@@ -112,27 +138,12 @@ def on_profile_change(**kwargs):
 @receiver(pre_save, sender=User)
 def on_user_change(**kwargs):
     try:
-        instance_new: User = kwargs["instance"]
-        is_change_action = instance_new.id is not None
-        if is_change_action and instance_new.has_profile():
-            instance_old: User = User.objects.get(id=instance_new.id)
-            action_uuid = uuid.uuid4()
-            time = timezone.now()
-            for field in instance_new._meta.get_fields():
-                try:
-                    value_new = getattr(instance_new, field.name)
-                    value_old = getattr(instance_old, field.name)
-                except AttributeError:
-                    continue
-                if value_old != value_new:
-                    ProfileAnalyticsLog.objects.create(
-                        action_uuid=action_uuid,
-                        time=time,
-                        action="Update",
-                        old_value='',
-                        new_value='',
-                        profile=instance_new.profile,
-                        field=field.name,
-                    )
+        user_new: User = kwargs["instance"]
+        is_change_action = user_new.id is not None
+        if is_change_action and user_new.has_profile():
+            _save_logs_for_profile_user_update(
+                user_old=User.objects.get(id=user_new.id),
+                user_new=user_new,
+            )
     except:
         logger.exception("User update logging failed")

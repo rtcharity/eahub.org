@@ -115,6 +115,15 @@ class ProfileTestCase(EAHubTestCase):
         user.save()
         self.assertEqual(ProfileAnalyticsLog.objects.all().count(), 0)
 
+    def test_save_profile_analytics_creation_on_change_email(self):
+        profile = self.gen.profile()
+        profile.user.email = self.gen.email()
+        profile.user.save()
+        ProfileAnalyticsLog.objects.get(
+            profile=profile,
+            new_value=profile.user.email,
+        )
+
     def test_save_profile_analytics_on_change(self):
         profile = create_profile("test@email.com", "User1")
 
