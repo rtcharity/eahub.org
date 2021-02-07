@@ -105,8 +105,7 @@ class ProfileTestCase(EAHubTestCase):
         profile = self.gen.profile()
         profile.user.password = "new"
         profile.user.save()
-        log = ProfileAnalyticsLog.objects.get(profile=profile, field="password")
-        self.assertEqual(log.new_value, profile.user.password)
+        ProfileAnalyticsLog.objects.get(profile=profile, field="password")
 
     def test_skip_profile_analytics_creation_on_change_without_profile(self):
         user = self.gen.user()

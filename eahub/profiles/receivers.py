@@ -123,8 +123,8 @@ def on_user_change(**kwargs):
                         action_uuid=action_uuid,
                         time=time,
                         action="Update",
-                        old_value=value_old,
-                        new_value=value_new,
+                        old_value='',
+                        new_value='',
                         profile=instance_new.profile,
                         field=field.name,
                     )
