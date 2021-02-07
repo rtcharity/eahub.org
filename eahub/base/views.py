@@ -3,10 +3,12 @@ from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
@@ -33,9 +35,18 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
         )
 
 
-class CustomisedPasswordChangeView(PasswordChangeView):
+class CustomisedPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
     template_name = "account/password_change.html"
-    success_url = reverse_lazy("my_profile")
+    success_url = reverse_lazy("index")
+
+    def render_to_response(self, context, **response_kwargs):
+        return super(PasswordChangeView, self).render_to_response(
+            context, **response_kwargs
+        )
+
+    def form_valid(self, form):
+        messages.add_message(self.request, messages.SUCCESS, "Your password has been successfully updated.")
+        return super().form_valid(form)
 
 
 class HomepageView(FormView):
