@@ -1,14 +1,12 @@
 import random
 
-from django.test import TestCase, override_settings
-
 from eahub.base.models import User
 from eahub.localgroups.models import LocalGroup, Organisership
 from eahub.profiles.models import CauseArea, Profile, ProfileAnalyticsLog
+from eahub.tests.cases import EAHubTestCase
 
 
-@override_settings(IS_ENABLE_ALGOLA=False)
-class ProfileTestCase(TestCase):
+class ProfileTestCase(EAHubTestCase):
     def test_get_is_organiser(self):
         profile = create_profile("test@email.com", "User1")
 
@@ -103,7 +101,22 @@ class ProfileTestCase(TestCase):
             all(x.time == analytics_logs.first().time for x in analytics_logs)
         )
 
-    def test_save_analytics_on_change(self):
+    def test_save_profile_analytics_on_user_change(self):
+        profile = self.gen.profile()
+        profile.user.password = "new"
+        profile.user.save()
+        log = ProfileAnalyticsLog.objects.get(profile=profile, field="password")
+        self.assertEqual(log.new_value, profile.user.password)
+
+    def test_skip_profile_analytics_creation_on_change_without_profile(self):
+        user = self.gen.user()
+        self.assertEqual(ProfileAnalyticsLog.objects.all().count(), 0)
+
+        user.password = "new"
+        user.save()
+        self.assertEqual(ProfileAnalyticsLog.objects.all().count(), 0)
+
+    def test_save_profile_analytics_on_change(self):
         profile = create_profile("test@email.com", "User1")
 
         profile.name = "User1New"

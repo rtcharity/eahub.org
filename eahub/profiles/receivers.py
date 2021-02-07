@@ -6,6 +6,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 
+from eahub.base.models import User
 from eahub.profiles.models import (
     CauseArea,
     ExpertiseArea,
@@ -26,7 +27,7 @@ profile_fields_enums_map = {
 }
 
 
-def save_logs_for_new_profile(instance):
+def save_logs_for_new_profile(instance: Profile):
     action_uuid = uuid.uuid4()
     time = timezone.now()
     for field in instance._meta.get_fields():
@@ -48,23 +49,22 @@ def save_logs_for_new_profile(instance):
             log.save()
 
 
-def save_logs_for_profile_update(instance, previous):
-    new_fields = instance._meta.get_fields()
+def save_logs_for_profile_update(instance_new: Profile, instance_old: Profile):
     action_uuid = uuid.uuid4()
     time = timezone.now()
-    for field in new_fields:
+    for field in instance_new._meta.get_fields():
         try:
-            old_value = getattr(previous, field.name)
-            value = getattr(instance, field.name)
+            value_new = getattr(instance_new, field.name)
+            value_old = getattr(instance_old, field.name)
         except AttributeError:
             continue
-        if value != old_value:
+        if value_new != value_old:
             log = ProfileAnalyticsLog()
-            log.profile = instance
+            log.profile = instance_new
             log.field = field.name
             log.action = "Update"
-            log.old_value = convert_value_to_printable(old_value, field.name)
-            log.new_value = convert_value_to_printable(value, field.name)
+            log.old_value = convert_value_to_printable(value_old, field.name)
+            log.new_value = convert_value_to_printable(value_new, field.name)
             log.time = time
             log.action_uuid = action_uuid
             log.save()
@@ -101,3 +101,32 @@ def on_profile_change(**kwargs):
     if instance.id is not None:
         previous = Profile.objects.get(id=instance.id)
         save_logs_for_profile_update(instance, previous)
+
+
+@receiver(pre_save, sender=User)
+def on_user_change(**kwargs):
+    try:
+        instance_new: User = kwargs["instance"]
+        is_change_action = instance_new.id is not None
+        if is_change_action and instance_new.has_profile():
+            instance_old: User = User.objects.get(id=instance_new.id)
+            action_uuid = uuid.uuid4()
+            time = timezone.now()
+            for field in instance_new._meta.get_fields():
+                try:
+                    value_new = getattr(instance_new, field.name)
+                    value_old = getattr(instance_old, field.name)
+                except AttributeError:
+                    continue
+                if value_old != value_new:
+                    ProfileAnalyticsLog.objects.create(
+                        action_uuid=action_uuid,
+                        time=time,
+                        action="Update",
+                        old_value=value_old,
+                        new_value=value_new,
+                        profile=instance_new.profile,
+                        field=field.name,
+                    )
+    except:
+        logger.exception("User update logging failed")

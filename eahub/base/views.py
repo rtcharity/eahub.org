@@ -7,8 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from django.db.models import Count
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
@@ -45,7 +44,11 @@ class CustomisedPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
         )
 
     def form_valid(self, form):
-        messages.add_message(self.request, messages.SUCCESS, "Your password has been successfully updated.")
+        messages.add_message(
+            self.request,
+            messages.SUCCESS,
+            "Your password has been successfully updated.",
+        )
         return super().form_valid(form)
 
 

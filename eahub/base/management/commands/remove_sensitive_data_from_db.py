@@ -3,8 +3,7 @@ from django.core.management import base
 from faker import Faker
 
 from eahub.base.models import User
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileAnalyticsLog
+from eahub.profiles.models import Profile, ProfileAnalyticsLog
 
 
 class Command(base.BaseCommand):

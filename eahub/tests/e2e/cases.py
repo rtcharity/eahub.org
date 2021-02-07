@@ -1,7 +1,7 @@
 import socket
 
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.test import override_settings
+from django.test import override_settings, tag
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.common.by import By
@@ -13,6 +13,7 @@ from eahub.config.settings import DjangoEnv
 @override_settings(
     DJANGO_ENV=DjangoEnv.E2E,
 )
+@tag("e2e")
 class E2ETestCase(StaticLiveServerTestCase):
     host = "0.0.0.0"
     port = 8000
