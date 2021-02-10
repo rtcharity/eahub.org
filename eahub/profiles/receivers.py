@@ -81,10 +81,10 @@ def _save_logs_for_profile_user_update(user_old: User, user_new: User):
             continue
         if value_new != value_old:
             is_must_protect_password = field.name == "password"
-            if is_must_protect_password and value_old == "":
-                value_old_formatted = ""
-            else:
+            if is_must_protect_password and value_old != "":
                 value_old_formatted = "[protected]"
+            else:
+                value_old_formatted = value_old
             ProfileAnalyticsLog.objects.create(
                 action_uuid=action_uuid,
                 time=time,
