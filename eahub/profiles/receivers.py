@@ -1,5 +1,7 @@
 import logging
 import uuid
+from typing import Any
+from typing import Union
 
 from django.core.cache import cache
 from django.db.models.signals import post_save, pre_save
@@ -84,7 +86,7 @@ def _save_logs_for_profile_user_update(user_old: User, user_new: User):
             if is_must_protect_password and value_old != "":
                 value_old_formatted = "[protected]"
             else:
-                value_old_formatted = value_old
+                value_old_formatted = convert_value_to_printable(value_old, field.name)
             ProfileAnalyticsLog.objects.create(
                 action_uuid=action_uuid,
                 time=time,
@@ -96,7 +98,7 @@ def _save_logs_for_profile_user_update(user_old: User, user_new: User):
             )
 
 
-def convert_value_to_printable(value, field):
+def convert_value_to_printable(value: Any, field: str) -> Union[str, list]:
     if value is None:
         return ""
     if type(value) is not list:
