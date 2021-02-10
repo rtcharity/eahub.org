@@ -70,21 +70,21 @@
                                         </div>
                                         <div class="search__hit-social-link-block">
                                             <div class="search__hit-social-link" v-if="item.personal_website_url">
-                                                <a v-bind:href="item.personal_website_url">
+                                                <a v-bind:href="item.personal_website_url" rel="nofollow">
                                                     <i class="fa fa-home"></i>
                                                 </a>
                                             </div>
-                                            <div class="search__hit-social-link" v-if="item.linkedin_url">
+                                            <div class="search__hit-social-link" v-if="item.linkedin_url" rel="nofollow">
                                                 <a v-bind:href="item.linkedin_url">
                                                     <i class="fab fa-linkedin-in"></i>
                                                 </a>
                                             </div>
-                                            <div class="search__hit-social-link" v-if="item.email">
+                                            <div class="search__hit-social-link" v-if="item.email" rel="nofollow">
                                                 <a v-bind:href="'mailto:' + item.email" target="_blank">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
                                             </div>
-                                            <div class="search__hit-social-link" v-if="item.facebook_url">
+                                            <div class="search__hit-social-link" v-if="item.facebook_url" rel="nofollow">
                                                 <a v-bind:href="item.facebook_url">
                                                     <i class="fab fa-facebook-f"></i>
                                                 </a>

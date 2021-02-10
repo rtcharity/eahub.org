@@ -224,13 +224,13 @@
             <div class="summary-panel-title">Summary</div>
             <div class="summary-panel-external-links turquoise-links">
               {% if profile.linkedin_url %}
-              <a href="{{ profile.linkedin_url }}"><i class="fab fa-linkedin-in"></i></a>
+              <a href="{{ profile.linkedin_url }}" rel="nofollow"><i class="fab fa-linkedin-in"></i></a>
               {% endif %}
               {% if profile.facebook_url %}
-              <a href="{{ profile.facebook_url }}"><i class="fab fa-facebook"></i></a>
+              <a href="{{ profile.facebook_url }}" rel="nofollow"><i class="fab fa-facebook"></i></a>
               {% endif %}
               {% if profile.personal_website_url %}
-              <a href="{{ profile.personal_website_url }}"><i class="fa fa-link"></i></a>
+              <a href="{{ profile.personal_website_url }}" rel="nofollow"><i class="fa fa-link"></i></a>
               {% endif %}
             </div>
           </div>
