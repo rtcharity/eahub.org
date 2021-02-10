@@ -82,7 +82,7 @@ DATABASES = {
     )
 }
 
-DEBUG = env.bool("DEBUG")
+DEBUG = env.bool("DEBUG", default=False)
 
 vars().update(
     env.email_url(
