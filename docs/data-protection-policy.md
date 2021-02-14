@@ -10,7 +10,7 @@ Administrators credentials which grant direct access to the production database 
 - Passwords must be generated out of random characters and be 64+ symbols long.
 - Passwords must be stored in a separate password manager database, which is decrypted only when the production database access is required.
 - SSH access to the running production server must use a separate EA Hub ssh key that can be decrypted only by a password that satisfies the aforementioned criteria.
-- 2 factor authentication must be enabled when it is possible.
+- Two-Factor Authentication must be enabled when it is possible.
 - Passwords must be renewed every 12 months, which is managed through an assigned ticket with a due date.
 
 Access sharing guidelines:
