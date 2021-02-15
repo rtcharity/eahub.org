@@ -320,7 +320,7 @@ ADMIN_REORDER = [
         "app": "sites",
         "label": "Website administration",
         "models": [
-            {"model": "auth.User", "label": "User accounts"},
+            {"model": "base.User", "label": "User accounts"},
             {"model": "account.EmailAddress", "label": "User account email addresses"},
             {"model": "auth.Group", "label": "Admin permission groups"},
             {"model": "sites.Site", "label": "Domain management & site name"},
