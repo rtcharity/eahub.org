@@ -1,0 +1,24 @@
+@import '../bootstrap-variables';
+
+
+.verification-sent {
+    padding-top: 5rem;
+    margin-bottom: 5rem;
+    
+    @include media-breakpoint-up(md) {
+        padding-top: 10rem;
+        margin-bottom: 10rem;
+    }
+    @include media-breakpoint-up(lg) {
+        padding-top: 15rem;
+        margin-bottom: 15rem;
+    }
+    @include media-breakpoint-up(xl) {
+        max-width: 800px;
+        
+    }
+    
+    h1 {
+        margin-bottom: 2rem;
+    }
+}

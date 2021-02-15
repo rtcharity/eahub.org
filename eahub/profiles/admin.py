@@ -1,4 +1,5 @@
 from adminutils import options
+from allauth.account.models import EmailAddress
 from django.contrib import admin
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
@@ -36,6 +37,7 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "email",
         "name",
         "is_approved",
+        "is_email_verified",
         "personal_website_url",
         "summary",
         "cause_areas_other",
@@ -44,6 +46,7 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "date_joined",
     )
     list_filter = [
+        "user__emailaddress__verified",
         "is_approved",
         "is_public",
         "email_visible",
@@ -66,6 +69,13 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     @options(desc="email", order="user__email")
     def email(self, obj: Profile):
         return obj.user.email
+
+    @options(desc="email checked", order="user__emailaddress__verified", boolean=True)
+    def is_email_verified(self, obj: Profile):
+        return EmailAddress.objects.filter(
+            user=obj.user,
+            verified=True,
+        ).exists()
 
     @options(desc="date joined", order="user__date_joined")
     def date_joined(self, obj: Profile):
