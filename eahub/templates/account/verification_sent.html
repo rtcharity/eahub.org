@@ -11,12 +11,11 @@
 {% block content %}
     <div class="container verification-sent">
         <h1>Please Verify Your E-mail Address</h1>
+        {% for message in messages %}
+            <p class="fs-5">{{ message }}</p>
+        {% endfor %}
         <p class="fs-5">
-            We have sent an e-mail to you for verification. 
-            Follow the link provided to finalize the signup process.
-        </p>
-        <p class="fs-5">
-            Please contact us if you do not receive it.
+            Please reach out to us at <a href="mailto:contact@eahub.org">contact@eahub.org</a> if didn't receive the confirmation email.
         </p>
     </div>
 {% endblock %}
