@@ -18,3 +18,13 @@
     <div class="alert alert-danger login-danger" style="max-width: 304px;">Captcha error</div>
     {% endif %}
 </div>
+
+{% block form_privacy_note %}
+
+<br>
+
+<div class="privacy-note">
+  <p>Read more about our approach to privacy in our <a href="{% url 'privacy_policy' %}" rel="nofollow">Privacy Policy</a>.</p>
+</div>
+
+{% endblock %}
