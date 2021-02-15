@@ -86,11 +86,8 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         return obj.user.email
 
     @options(desc="email checked", order="user__emailaddress__verified", boolean=True)
-    def is_email_verified(self, obj: Profile):
-        return EmailAddress.objects.filter(
-            user=obj.user,
-            verified=True,
-        ).exists()
+    def is_email_verified(self, obj: Profile) -> bool:
+        return EmailAddress.objects.filter(user=obj.user, verified=True).exists()
 
     @options(desc="date joined", order="user__date_joined")
     def date_joined(self, obj: Profile):
@@ -101,9 +98,7 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         queryset.update(is_approved=True)
 
     @options(desc="Delete selected profiles & users", allowed_permissions=["delete"])
-    def delete_profiles_and_users(
-        self, request: HttpRequest, queryset: QuerySet
-    ):
+    def delete_profiles_and_users(self, request: HttpRequest, queryset: QuerySet):
         user_queryset = User.objects.filter(
             profile__pk__in=queryset.values_list("pk", flat=True)
         )
