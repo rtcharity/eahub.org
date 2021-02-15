@@ -1,3 +1,4 @@
+from allauth.account.models import EmailAddress
 from django.urls import reverse
 
 from eahub.base.models import User
@@ -19,13 +20,12 @@ class SignUpTest(E2ETestCase):
 
         self.find("form button[type='submit']").click()
 
-        self.find(".profile-welcome")
+        self.find(".verification-sent")
 
-        user = User.objects.get(email=user_email)
-
-        self.assertEqual(user.email, user_email)
-
-        self.selenium.get(self.live_server_url + reverse("account_logout"))
+        User.objects.get(email=user_email)
+        email_address = EmailAddress.objects.get(email=user_email)
+        email_address.verified = True
+        email_address.save()
 
         self.selenium.get(self.live_server_url + reverse("account_login"))
         self.find("#id_login").send_keys(user_email)
