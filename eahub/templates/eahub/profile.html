@@ -59,9 +59,13 @@
         <img class="profile_picture" src="/static/global/images/avatars/{{ profile.image_placeholder }}">
       {% endthumbnail %}
       {% if not profile.is_public %}
-      <div class="privacy-banner hub-info" title="This profile is not public. Click on 'Edit' to change your settings."><i class="fa fa-lock"></i>Private profile</div>
+      <div class="privacy-banner hub-info" title="This profile is not public. Click on 'Edit' to change your settings.">
+          <i class="fa fa-lock"></i>Private profile
+      </div>
       {% elif not profile.is_approved %}
-      <div class="privacy-banner hub-info" title="This profile has not yet been approved, so other people can't see it yet."><i class="fa fa-lock"></i>Awaiting approval</div>
+      <div class="privacy-banner hub-info" title="This profile has not yet been approved, so other people can't see it yet.">
+          <i class="fa fa-lock"></i>Awaiting approval
+      </div>
       {% endif %}
     </div>
     <div class="col-xs-12 col-md-6">
