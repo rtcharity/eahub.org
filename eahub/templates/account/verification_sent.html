@@ -1,0 +1,26 @@
+{% extends 'base_bs5.html' %}
+
+{% load crispy_forms_field crispy_forms_tags %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}Verify Your E-mail Address{% endblock %}
+
+{% block content %}
+    <div class="container verification-sent">
+        <h1>Please Verify Your E-mail Address</h1>
+        {% for message in messages %}
+            <p class="fs-5">{{ message }}</p>
+        {% endfor %}
+        <p class="fs-5">
+            Please reach out to us at <a href="mailto:contact@eahub.org">contact@eahub.org</a> if didn't receive the confirmation email.
+        </p>
+    </div>
+{% endblock %}
+
+
+{% block footer %}
+    {% include 'includes/footer.html' %}
+{% endblock %}

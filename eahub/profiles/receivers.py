@@ -1,7 +1,6 @@
 import logging
 import uuid
-from typing import Any
-from typing import Union
+from typing import Any, Union
 
 from django.core.cache import cache
 from django.db.models.signals import post_save, pre_save
