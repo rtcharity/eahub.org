@@ -578,7 +578,7 @@ textarea {
 }
 
 .privacy-banner {
-  padding: 5px 5px 5px 5px;
+  padding: 5px 10px;
   border-radius: 5px;
   margin-top: 10px;
   display: inline-block;
@@ -588,9 +588,13 @@ textarea {
   margin-right: 5px;
 }
 
+.privacy-banner .fa-lock {
+  margin-right: 10px;
+}
+
 td .privacy-banner {
   margin-left: 5px;
-  margin-top: 0px;
+  margin-top: 0;
 }
 
 #report_abuse .control-label {
