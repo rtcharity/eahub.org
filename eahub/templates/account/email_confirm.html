@@ -1,32 +1,26 @@
-{% extends "account/base.html" %}
+{% extends 'base_bs5.html' %}
 
 {% block head_title %}Confirm E-mail Address{% endblock %}
 
 {% load i18n %}
 {% load account %}
 
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}Confirm E-mail Address{% endblock %}
+
 {% block content %}
-<div class="container user-action">
-<h1>Confirm E-mail Address</h1>
-{% if confirmation %}
+    <div class="container verification-sent">
+        <h1>Confirm E-mail Address</h1>
+        <p>
+            This e-mail confirmation link expired or is invalid. Please
+            <a href="{% url 'account_email' %}">issue a new e-mail confirmation request</a>.
+        </p>
+    </div>
+{% endblock %}
 
-{% user_display confirmation.email_address.user as user_display %}
-
-<p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an e-mail address for user {{ user_display }}.{% endblocktrans %}</p>
-
-<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-{% csrf_token %}
-    <button type="submit">{% trans 'Confirm' %}</button>
-</form>
-
-{% else %}
-
-{% url 'account_email' as email_url %}
-
-<p>{% blocktrans %}This e-mail confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new e-mail confirmation request</a>.{% endblocktrans %}</p>
-
-{% endif %}
-
-</div>
-
+{% block footer %}
+    {% include 'includes/footer.html' %}
 {% endblock %}
