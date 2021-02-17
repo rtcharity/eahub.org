@@ -276,12 +276,15 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
+DOMAIN = env.str("DOMAIN", "localhost:8000")
+
 SETTINGS_EXPORT = [
     "WEBPACK_DEV_URL",
     "DEBUG",
     "DJANGO_ENV",
     "ALGOLIA",
     "RECAPTCHA_PUBLIC_KEY",
+    "DOMAIN",
 ]
 
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
