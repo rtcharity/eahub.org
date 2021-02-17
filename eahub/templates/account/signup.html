@@ -11,6 +11,9 @@
 {% block content %}
     <div class="container account-floating-form">
         <h1>Sign Up</h1>
+
+        {% include 'includes/messages.html' %}        
+    
         <form method="POST" action="{% url 'account_signup' %}">
             {% csrf_token %}
 
