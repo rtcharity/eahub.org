@@ -1,5 +1,11 @@
 .btn-outline-secondary {
-    &:hover {
+    &:hover, &:active {
+        color: white;
+    }
+}
+.btn-secondary {
+    color: white;
+    &:hover, &:active {
         color: white;
     }
 }
