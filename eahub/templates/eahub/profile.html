@@ -1,295 +1,272 @@
-{% extends 'base.html' %}
+{% extends 'base_bs5.html' %}
 
-{% load thumbnail %}
-{% load static %}
-{% load crispy_forms_tags %}
+{% load thumbnail crispy_forms_tags sekizai_tags static feature_flags %}
+
 
 {% block title %}{{ profile.name }}{% endblock %}
 
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock %}
+
 {% block content %}
 
-<br><br>
+    {% addtoblock 'body_classes' %}profile-detail{% endaddtoblock %}
 
-{% if messages %}
-    <div class="container">
+    {% include 'includes/messages.html' %}
+
+    <div class="container prof__header my-5">
         <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                {% for message in messages %}
-                    <div {% if message.tags %}
-                        class="alert alert-{{ message.tags }} hub-{{ message.tags }} alert alert-dismissable"{% endif %}>
-                        <button type="button" class="close" data-dismiss="alert"
-                            aria-label="Close"
-                        >
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div>{{ message }}</div>
+            <div class="col-xs-24 col-md-4">
+                {% thumbnail profile.image "200x200" crop="center" as im %}
+                    <img class="prof__img" loading="lazy" src="{{ im.url }}">
+                {% empty %}
+                    <img class="prof__img" loading="lazy" src="/static/global/images/avatars/{{ profile.image_placeholder }}">
+                {% endthumbnail %}
+                {% if not profile.is_public %}
+                    <div class="privacy-banner hub-info"
+                        title="This profile is not public. Click on 'Edit' to change your settings."
+                    >
+                        <i class="fa fa-lock"></i>Private profile
                     </div>
-                {% endfor %}
+                {% elif not profile.is_approved %}
+                    <div class="privacy-banner hub-info"
+                        title="This profile has not yet been approved, so other people can't see it yet."
+                    >
+                        <i class="fa fa-lock"></i>Awaiting approval
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="col-xs-24 col-md-12">
+                <div class="prof__title">
+                    <h1>{{ profile.name }}</h1>
+                    {% if profile.facebook_url %}
+                        <a class="prof_social-link" href="{{ profile.facebook_url }}" rel="nofollow">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                    {% endif %}
+                    {% if profile.personal_website_url %}
+                        <a class="prof_social-link" href="{{ profile.personal_website_url }}" rel="nofollow">
+                            <i class="fa fa-link"></i>
+                        </a>
+                    {% endif %}
+                    {% if profile.linkedin_url %}
+                        <a class="prof_social-link" href="{{ profile.linkedin_url }}" rel="nofollow">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    {% endif %}
+                </div>
+
+                {% if request.user.id == profile.user_id %}
+                    <div class="prof__btns">
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_profile' %}">
+                            <span><i class="fa fa-pencil-alt"></i> Edit</span>
+                        </a>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'account_email' %}">
+                            <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
+                        </a>
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'account_change_password' %}">
+                            <span><i class="fa fa-pencil-alt"></i> Change Password</span>
+                        </a>
+
+                        {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+                        {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'message_profile' profile.slug %}">
+                                <span><i class="fa fa-pencil-alt"></i> Send Message</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
-{% endif %}
 
-
-{% if first_visit %}
-    <div class="container-fluid">
+    <div class="container prof__cards">
         <div class="row">
-            <div
-                class="col-sm-4 col-sm-offset-4 alert alert-info alert-dismissable profile-welcome"
-            >
-                <button type="button" class="close" data-dismiss="alert"
-                    aria-label="Close"
-                >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <p>Welcome to the EA Hub!</p>
-                <p>Please fill out your profile as much as you can so that
-                    other users can get to know you.</p>
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <img class="card__img mb-2" loading="lazy"
+                            src="{% static 'global/images/profile-detail/heart-and-box.webp' %}"
+                        >
+                        <h3 class="card__heading">Cause Area</h3>
+                        {% if not profile.has_cause_area_details %}N/A{% endif %}
+                        {% if profile.cause_areas or profile.cause_areas_other %}
+                            <div class="card__section">
+                                {{ profile.get_pretty_cause_areas|urlize|linebreaks }}
+                            </div>
+                        {% endif %}
+                        {% if profile.giving_pledges %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Giving Pledges Taken</div>
+                                {{ profile.get_pretty_giving_pledges }}
+                            </div>
+                        {% endif %}
+                        {% if profile.available_to_volunteer %}
+                            <div class="alert alert-secondary">Available to volunteer</div>
+                        {% endif %}
+                        {% if request.user.id == profile.user_id %}
+                            <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'edit_profile_cause_areas' %}">
+                                <i class="fa fa-pencil-alt"></i> Edit
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <img class="card__img mb-2" src="{% static 'global/images/profile-detail/briefcase.webp' %}" loading="lazy">
+                        <h3 class="card__heading">Career</h3>
+
+                        {% if not profile.has_career_details %}N/A{% endif %}
+
+                        {% if profile.expertise_areas or profile.expertise_areas_other %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Areas of expertise</div>
+                                {{ profile.get_pretty_expertise|urlize|linebreaks }}
+                            </div>
+                        {% endif %}
+                        {% if profile.career_interest_areas %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Career interest areas</div>
+                                {{ profile.get_pretty_career_interest_areas|urlize|linebreaks }}
+                            </div>
+                        {% endif %}
+                        {% if profile.open_to_job_offers %}
+                            <div class="alert alert-secondary">Open to job offers
+                            </div>
+                        {% endif %}
+                        {% if request.user.id == profile.user_id %}
+                            <a href="{% url 'edit_profile_career' %}">
+                                <span class="btn btn-edit btn-outline-primary btn-sm">
+                                    <i class="fa fa-pencil-alt"></i> Edit
+                                </span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <img class="card__img mb-2" src="{% static 'global/images/profile-detail/round-profile-pics.webp' %}" loading="lazy">
+                        <h3 class="card__heading">Community</h3>
+
+                        {% if not profile.has_community_details %}N/A{% endif %}
+
+                        {% if profile.organisational_affiliations %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Organisational affiliations</div>
+                                {{ profile.get_pretty_organisational_affiliations }}
+                            </div>
+                        {% endif %}
+                        {% if profile.local_groups.exists %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Local group membership</div>
+                                {% if profile.local_groups.all.count == 1 %}
+                                    <a href="{% url 'group' profile.local_groups.first.slug %}">
+                                        {{ profile.local_groups.first.name }}
+                                    </a>
+                                {% else %}
+                                    {% for group in profile.local_groups.all %}
+                                        <a class="list-item"
+                                            href="{% url 'group' group.slug %}"
+                                        >{{ group.name }}</a>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {% if profile.user.localgroup_set.exists %}
+                            <div class="list turquoise-links">
+                                <div class="card__subtitle">Organiser of</div>
+                                {% if profile.user.localgroup_set.all.count == 1 %}
+                                    <a href="{% url 'group' profile.user.localgroup_set.first.slug %}">
+                                        {{ profile.user.localgroup_set.first.name }}
+                                    </a>
+                                {% else %}
+                                    {% for group in profile.user.localgroup_set.all %}
+                                        <a class="list-item"
+                                            href="{% url 'group' group.slug %}"
+                                        >{{ group.name }}</a>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {% if profile.topics_i_speak_about %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Topics I speak about</div>
+                                {{ profile.topics_i_speak_about|urlize|linebreaks }}
+                            </div>
+                        {% endif %}
+                        {% if profile.offering %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Offering</div>
+                                {{ profile.offering|urlize|linebreaks }}</div>
+                        {% endif %}
+                        {% if profile.looking_for %}
+                            <div class="card__section">
+                                <div class="card__subtitle">Looking for</div>
+                                {{ profile.looking_for|urlize|linebreaks }}
+                            </div>
+                        {% endif %}
+                        {% if profile.available_as_speaker %}
+                            <div class="alert alert-secondary">Available as speaker</div>
+                        {% endif %}
+
+                        {% if request.user.id == profile.user_id %}
+                            <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'edit_profile_community' %}">
+                                <i class="fa fa-pencil-alt"></i> Edit
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card card__summary">
+                    <div class="card-header">
+                        <div class="summary_header">Summary</div>
+                        <div class="summary_btns">
+                            {% if request.user.id == profile.user_id %}
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_profile' %}">
+                                    <i class="fa fa-pencil-alt"></i> Edit
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {{ profile.summary|default:'N/A'|urlize|linebreaks }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
             </div>
         </div>
     </div>
-{% endif %}
 
-<div class="container animated">
-  <div class="row profile-head">
-    <div class="col-xs-12 col-md-3">
-      {% thumbnail profile.image "200x200" crop="center" as im %}
-        <img class="profile_picture" src="{{ im.url }}">
-      {% empty %}
-        <img class="profile_picture" src="/static/global/images/avatars/{{ profile.image_placeholder }}">
-      {% endthumbnail %}
-      {% if not profile.is_public %}
-      <div class="privacy-banner hub-info" title="This profile is not public. Click on 'Edit' to change your settings.">
-          <i class="fa fa-lock"></i>Private profile
-      </div>
-      {% elif not profile.is_approved %}
-      <div class="privacy-banner hub-info" title="This profile has not yet been approved, so other people can't see it yet.">
-          <i class="fa fa-lock"></i>Awaiting approval
-      </div>
-      {% endif %}
-    </div>
-    <div class="col-xs-12 col-md-6">
-      <h1 class="word-break">{{ profile.name }}</h1>
-      {% if request.user.id == profile.user_id %}
-        <a href="{% url 'edit_profile' %}">
-            <div class="btn btn-default purple">
-                <span><i class="fa fa-pencil-alt"></i> Edit</span>
-            </div>
-        </a>
-        <a href="{% url 'account_email' %}">
-            <div class="btn btn-default purple">
-                <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
-            </div>
-        </a>
-        <a href="{% url 'account_change_password' %}">
-            <div class="btn btn-default purple">
-                <span><i class="fa fa-pencil-alt"></i> Change Password</span>
-            </div>
-        </a>
-      {% endif %}
-
-      {% load feature_flags %}
-      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
-        <a href="{% url 'message_profile' profile.slug  %}">
-          <div class="btn btn-default purple">
-            <span><i class="fa fa-pencil-alt"></i> Send Message</span>
-          </div>
-        </a>
-      {% endif %}
-    </div>
-  </div>
-</div>
-
-<br><br>
-
-<div class="container profile-info profile-cards">
-
-    <!-- cause area -->
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <img style="width: 100px; margin-top: 20px;" src="/static/global/images/HubHeartBox.jpg">
-        <div class="panel-body">
-          <h3>Cause Area</h3>
-          {% if profile.has_cause_area_details == False %}N/A{% endif %}
-          {% if profile.cause_areas or profile.cause_areas_other %}
-          <div class="list"><div class="tag">Cause areas:</div> {{ profile.get_pretty_cause_areas|urlize|linebreaks }}</div>
-          {% endif %}
-          {% if profile.giving_pledges %}
-          <div class="list"><div class="tag">Giving Pledges Taken:</div> {{ profile.get_pretty_giving_pledges }}</div>
-          {% endif %}
-          {% if profile.available_to_volunteer %}
-          <div class="alert alert-success" style="margin-bottom: -10px;">Available to volunteer</div>
-          {% endif %}
-          {% if request.user.id == profile.user_id %}
-            <br>
-            <a href="{% url 'edit_profile_cause_areas' %}">
-              <span class="btn btn-default btn-xs">
-                <i class="fa fa-pencil-alt"></i> Edit
-              </span>
+    <div class="prof__buttons-bottom my-3">
+        {% if user.id == profile.user_id %}
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'delete_profile' %}">
+                <i class="fa fa-trash"></i> Delete My Profile
             </a>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    <!-- career -->
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <img style="width: 100px; margin-top: 20px;" src="/static/global/images/BriefcaseHub.jpg">
-        <div class="panel-body">
-          <h3>Career</h3>
-
-          {% if profile.has_career_details == False %}N/A{% endif %}
-
-          {% if profile.expertise_areas or profile.expertise_areas_other %}
-          <div class="list"><div class="tag">Areas of expertise:</div> {{ profile.get_pretty_expertise|urlize|linebreaks }}</div>
-          {% endif %}
-          {% if profile.career_interest_areas %}
-          <div class="list"><div class="tag">Career interest areas:</div> {{ profile.get_pretty_career_interest_areas|urlize|linebreaks }}</div>
-          {% endif %}
-          {% if profile.open_to_job_offers %}
-            <br>
-            <div class="alert alert-success" style="margin-bottom: -10px;">Open to job offers</div>
-          {% endif %}
-          {% if request.user.id == profile.user_id %}
-            <br>
-            <span class="btn btn-default btn-xs">
-              <a href="{% url 'edit_profile_career' %}"><i class="fa fa-pencil-alt"></i> Edit</a>
-            </span>
-          {% endif %}
-        </div>
-      </div>
-    </div>
-
-    <!-- community -->
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <img style="width: 100px; margin-top: 20px;" src="{% static 'global/images/ea_profiles.jpg' %}">
-        <div class="panel-body">
-          <h3>Community</h3>
-
-          {% if profile.has_community_details == False %}N/A{% endif %}
-
-          {% if profile.organisational_affiliations %}
-          <div class="list"><div class="tag">Organisational affiliations:</div> {{ profile.get_pretty_organisational_affiliations }}</div>
-          {% endif %}
-          {% if profile.local_groups.exists %}
-          <div class="list turquoise-links">
-            <div class="tag" style="display: block">Local group membership:</div>
-            {% if profile.local_groups.all.count == 1 %}
-              <a href="{% url 'group' profile.local_groups.first.slug %}">
-                {{profile.local_groups.first.name}}
-              </a>
-            {% else %}
-              {% for group in profile.local_groups.all %}
-                <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
-              {% endfor%}
-            {% endif %}
-          </div>
-          {% endif %}
-
-          {% if profile.user.localgroup_set.exists %}
-          <div class="list turquoise-links">
-            <div class="tag">Organiser of:</div>
-            {% if profile.user.localgroup_set.all.count == 1 %}
-              <a href="{% url 'group' profile.user.localgroup_set.first.slug %}">
-                {{profile.user.localgroup_set.first.name}}
-              </a>
-            {% else %}
-              {% for group in profile.user.localgroup_set.all %}
-                <a class="list-item" href="{% url 'group' group.slug %}">{{group.name}}</a>
-              {% endfor%}
-            {% endif %}
-          </div>
-          {% endif %}
-
-          {% if profile.topics_i_speak_about %}
-          <div class="list"><div class="tag">Topics I speak about:</div> {{ profile.topics_i_speak_about|urlize|linebreaks }}</div>
-          {% endif %}
-          {% if profile.offering %}
-          <div class="list"><div class="tag">Offering:</div> {{ profile.offering|urlize|linebreaks }}</div>
-          {% endif %}
-          {% if profile.looking_for %}
-          <div class="list"><div class="tag">Looking for:</div> {{ profile.looking_for|urlize|linebreaks }}</div>
-          {% endif %}
-          {% if profile.available_as_speaker %}
-          <div class="alert alert-success" style="margin-bottom: -10px;">Available as speaker</div>
-          <br>
-          {% endif %}
-
-          {% if request.user.id == profile.user_id %}
-            <br>
-            <a href="{% url 'edit_profile_community' %}">
-              <span class="btn btn-default btn-xs">
-                <i class="fa fa-pencil-alt"></i> Edit
-              </span>
+        {% else %}
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'report_abuse_profile' profile.slug %}">
+                <i class="fa fa-flag"></i> Report abuse
             </a>
-          {% endif %}
-        </div>
-      </div>
+        {% endif %}
     </div>
-  </div>
 
+{% endblock %}
 
-
-  <div class="container profile-info">
-
-      <div class="col-md-6 key-facts">
-        <div class="panel panel-default summary">
-          <div class="summary-panel-heading panel-heading">
-            <div class="summary-panel-title">Summary</div>
-            <div class="summary-panel-external-links turquoise-links">
-              {% if profile.linkedin_url %}
-              <a href="{{ profile.linkedin_url }}" rel="nofollow"><i class="fab fa-linkedin-in"></i></a>
-              {% endif %}
-              {% if profile.facebook_url %}
-              <a href="{{ profile.facebook_url }}" rel="nofollow"><i class="fab fa-facebook"></i></a>
-              {% endif %}
-              {% if profile.personal_website_url %}
-              <a href="{{ profile.personal_website_url }}" rel="nofollow"><i class="fa fa-link"></i></a>
-              {% endif %}
-            </div>
-          </div>
-          <div class="panel-body">
-            {{ profile.summary|default:'N/A'|urlize|linebreaks }}
-            {% if request.user.id == profile.user_id %}
-              <br>
-              <a href="{% url 'edit_profile' %}">
-                <span class="btn btn-default btn-xs">
-                  <i class="fa fa-pencil-alt"></i> Edit
-                </span>
-              </a>
-            {% endif %}
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-          {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
-      </div>
-
-  </div>
-
-  <br>
-  {% if user.id == profile.user_id %}
-  <div class="text-center">
-    <div class="btn-group btn-group-sm text-center" role="group">
-        <a href="{% url 'download_profile' %}">
-          <button type="button" class="btn btn-default"><i class="fa fa-download"></i> Download My Profile Data</button>
-        </a>
-        <a href="{% url 'delete_profile' %}">
-          <button type="button" class="btn btn-default"><i class="fa fa-trash"></i> Delete My Profile</button>
-        </a>
-    </div>
-  </div>
-  {% else %}
-  <div class="text-center margin-top report-btn">
-    <div class="btn-group btn-group-sm text-center" role="group" id="report_profile_abuse_toggle">
-      <a href="{% url 'report_abuse_profile' profile.slug  %}">
-        <button type="button" class="btn btn-default"><i class="fa fa-flag"></i> Report abuse</button>
-      </a>
-    </div>
-  </div>
-  {% endif %}
-
+{% block footer %}
+    {% include 'includes/footer.html' %}
 {% endblock %}
