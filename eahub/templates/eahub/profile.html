@@ -15,13 +15,13 @@
 
     {% include 'includes/messages.html' %}
 
-    <div class="container prof__header my-5">
+    <div class="container prof__header mt-5 mb-4">
         <div class="row">
-            <div class="col-xs-24 col-md-4">
+            <div class="col-xs-24 col-md-auto mb-3 mb-lg-0">
                 {% thumbnail profile.image "200x200" crop="center" as im %}
-                    <img class="prof__img" loading="lazy" src="{{ im.url }}">
+                    <img class="prof__img" loading="lazy" src="{{ im.url }}" alt="photo">
                 {% empty %}
-                    <img class="prof__img" loading="lazy" src="/static/global/images/avatars/{{ profile.image_placeholder }}">
+                    <img class="prof__img" loading="lazy" src="/static/global/images/avatars/{{ profile.image_placeholder }}" alt="photo">
                 {% endthumbnail %}
                 {% if not profile.is_public %}
                     <div class="privacy-banner hub-info"
@@ -37,54 +37,76 @@
                     </div>
                 {% endif %}
             </div>
-
-            <div class="col-xs-24 col-md-12">
-                <div class="prof__title">
-                    <h1>{{ profile.name }}</h1>
-                    {% if profile.facebook_url %}
-                        <a class="prof_social-link" href="{{ profile.facebook_url }}" rel="nofollow">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                    {% endif %}
-                    {% if profile.personal_website_url %}
-                        <a class="prof_social-link" href="{{ profile.personal_website_url }}" rel="nofollow">
-                            <i class="fa fa-link"></i>
-                        </a>
-                    {% endif %}
-                    {% if profile.linkedin_url %}
-                        <a class="prof_social-link" href="{{ profile.linkedin_url }}" rel="nofollow">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    {% endif %}
-                </div>
-
-                {% if request.user.id == profile.user_id %}
-                    <div class="prof__btns">
-                        <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_profile' %}">
-                            <span><i class="fa fa-pencil-alt"></i> Edit</span>
-                        </a>
-                        <a class="btn btn-outline-primary btn-sm" href="{% url 'account_email' %}">
-                            <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
-                        </a>
-                        <a class="btn btn-outline-primary btn-sm" href="{% url 'account_change_password' %}">
-                            <span><i class="fa fa-pencil-alt"></i> Change Password</span>
-                        </a>
-
-                        {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-                        {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'message_profile' profile.slug %}">
-                                <span><i class="fa fa-pencil-alt"></i> Send Message</span>
+            
+            <div class="col-xs-24 col-md-18">
+                <div class="prof__title row">
+                    <h1 class="col col-auto">{{ profile.name }}</h1>
+                
+                    <div class="col col-auto d-flex">
+                        {% if profile.facebook_url %}
+                            <a class="prof_social-link" href="{{ profile.facebook_url }}" rel="nofollow">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        {% endif %}
+                        {% if profile.personal_website_url %}
+                            <a class="prof_social-link" href="{{ profile.personal_website_url }}" rel="nofollow">
+                                <i class="fa fa-link"></i>
+                            </a>
+                        {% endif %}
+                        {% if profile.linkedin_url %}
+                            <a class="prof_social-link" href="{{ profile.linkedin_url }}" rel="nofollow">
+                                <i class="fab fa-linkedin-in"></i>
                             </a>
                         {% endif %}
                     </div>
-                {% endif %}
+
+                    {% if request.user.id == profile.user_id %}
+                        <div class="prof__btns col col-24">
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'account_email' %}">
+                                <span><i class="fa fa-pencil-alt"></i> Change Email Address</span>
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'account_change_password' %}">
+                                <span><i class="fa fa-pencil-alt"></i> Change Password</span>
+                            </a>
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_profile' %}">
+                                <span><i class="fa fa-pencil-alt"></i> Edit</span>
+                            </a>
+
+                            {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+                            {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'message_profile' profile.slug %}">
+                                    <span><i class="fa fa-pencil-alt"></i> Send Message</span>
+                                </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            
+                <div class="prof__summary">
+                    {{ profile.summary|default:''|urlize|linebreaks }}
+
+                    <div class="row summary__sections">
+                    {% if profile.offering %}
+                        <div class="summary__section col-auto">
+                            <div class="summary__subtitle">Offering</div>
+                            {{ profile.offering|urlize|linebreaks }}
+                        </div>
+                    {% endif %}
+                    {% if profile.looking_for %}
+                        <div class="summary__section col-auto">
+                            <div class="summary__subtitle">Looking for</div>
+                            {{ profile.looking_for|urlize|linebreaks }}
+                        </div>
+                    {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="container prof__cards">
-        <div class="row">
-            <div class="col-md-8">
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col mb-3 mb-md-0">
                 <div class="card">
                     <div class="card-body">
                         <img class="card__img mb-2" loading="lazy"
@@ -115,7 +137,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="col mb-3 mb-md-0">
                 <div class="card">
                     <div class="card-body">
                         <img class="card__img mb-2" src="{% static 'global/images/profile-detail/briefcase.webp' %}" loading="lazy">
@@ -150,104 +172,78 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <img class="card__img mb-2" src="{% static 'global/images/profile-detail/round-profile-pics.webp' %}" loading="lazy">
-                        <h3 class="card__heading">Community</h3>
-
-                        {% if not profile.has_community_details %}N/A{% endif %}
-
-                        {% if profile.organisational_affiliations %}
-                            <div class="card__section">
-                                <div class="card__subtitle">Organisational affiliations</div>
-                                {{ profile.get_pretty_organisational_affiliations }}
-                            </div>
-                        {% endif %}
-                        {% if profile.local_groups.exists %}
-                            <div class="card__section">
-                                <div class="card__subtitle">Local group membership</div>
-                                {% if profile.local_groups.all.count == 1 %}
-                                    <a href="{% url 'group' profile.local_groups.first.slug %}">
-                                        {{ profile.local_groups.first.name }}
-                                    </a>
-                                {% else %}
-                                    {% for group in profile.local_groups.all %}
-                                        <a class="list-item"
-                                            href="{% url 'group' group.slug %}"
-                                        >{{ group.name }}</a>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        {% endif %}
-
-                        {% if profile.user.localgroup_set.exists %}
-                            <div class="list turquoise-links">
-                                <div class="card__subtitle">Organiser of</div>
-                                {% if profile.user.localgroup_set.all.count == 1 %}
-                                    <a href="{% url 'group' profile.user.localgroup_set.first.slug %}">
-                                        {{ profile.user.localgroup_set.first.name }}
-                                    </a>
-                                {% else %}
-                                    {% for group in profile.user.localgroup_set.all %}
-                                        <a class="list-item"
-                                            href="{% url 'group' group.slug %}"
-                                        >{{ group.name }}</a>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        {% endif %}
-
-                        {% if profile.topics_i_speak_about %}
-                            <div class="card__section">
-                                <div class="card__subtitle">Topics I speak about</div>
-                                {{ profile.topics_i_speak_about|urlize|linebreaks }}
-                            </div>
-                        {% endif %}
-                        {% if profile.offering %}
-                            <div class="card__section">
-                                <div class="card__subtitle">Offering</div>
-                                {{ profile.offering|urlize|linebreaks }}</div>
-                        {% endif %}
-                        {% if profile.looking_for %}
-                            <div class="card__section">
-                                <div class="card__subtitle">Looking for</div>
-                                {{ profile.looking_for|urlize|linebreaks }}
-                            </div>
-                        {% endif %}
-                        {% if profile.available_as_speaker %}
-                            <div class="alert alert-secondary">Available as speaker</div>
-                        {% endif %}
-
-                        {% if request.user.id == profile.user_id %}
-                            <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'edit_profile_community' %}">
-                                <i class="fa fa-pencil-alt"></i> Edit
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <div class="card card__summary">
-                    <div class="card-header">
-                        <div class="summary_header">Summary</div>
-                        <div class="summary_btns">
+            {% if profile.organisational_affiliations or profile.local_groups.exists or profile.user.localgroup_set.exists or profile.topics_i_speak_about or profile.available_as_speaker or request.user.id == profile.user_id %}
+                <div class="col mb-3 mb-md-0">
+                    <div class="card">
+                        <div class="card-body">
+                            <img class="card__img mb-2" src="{% static 'global/images/profile-detail/round-profile-pics.webp' %}" loading="lazy">
+                            <h3 class="card__heading">Community</h3>
+    
+                            {% if not profile.has_community_details %}N/A{% endif %}
+    
+                            {% if profile.organisational_affiliations %}
+                                <div class="card__section">
+                                    <div class="card__subtitle">Organisational affiliations</div>
+                                    {{ profile.get_pretty_organisational_affiliations }}
+                                </div>
+                            {% endif %}
+                            {% if profile.local_groups.exists %}
+                                <div class="card__section">
+                                    <div class="card__subtitle">Local group membership</div>
+                                    {% if profile.local_groups.all.count == 1 %}
+                                        <a href="{% url 'group' profile.local_groups.first.slug %}">
+                                            {{ profile.local_groups.first.name }}
+                                        </a>
+                                    {% else %}
+                                        {% for group in profile.local_groups.all %}
+                                            <a class="list-item"
+                                                href="{% url 'group' group.slug %}"
+                                            >{{ group.name }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+    
+                            {% if profile.user.localgroup_set.exists %}
+                                <div class="list turquoise-links">
+                                    <div class="card__subtitle">Organiser of</div>
+                                    {% if profile.user.localgroup_set.all.count == 1 %}
+                                        <a href="{% url 'group' profile.user.localgroup_set.first.slug %}">
+                                            {{ profile.user.localgroup_set.first.name }}
+                                        </a>
+                                    {% else %}
+                                        {% for group in profile.user.localgroup_set.all %}
+                                            <a class="list-item"
+                                                href="{% url 'group' group.slug %}"
+                                            >{{ group.name }}</a>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+    
+                            {% if profile.topics_i_speak_about %}
+                                <div class="card__section">
+                                    <div class="card__subtitle">Topics I speak about</div>
+                                    {{ profile.topics_i_speak_about|urlize|linebreaks }}
+                                </div>
+                            {% endif %}
+                            {% if profile.available_as_speaker %}
+                                <div class="alert alert-secondary">Available as speaker</div>
+                            {% endif %}
+    
                             {% if request.user.id == profile.user_id %}
-                                <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_profile' %}">
+                                <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'edit_profile_community' %}">
                                     <i class="fa fa-pencil-alt"></i> Edit
                                 </a>
                             {% endif %}
                         </div>
                     </div>
-                    <div class="card-body">
-                        {{ profile.summary|default:'N/A'|urlize|linebreaks }}
-                    </div>
                 </div>
-            </div>
-            <div class="col-md-12">
+            {% endif %}
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-24">
                 {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
             </div>
         </div>
