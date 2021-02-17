@@ -132,6 +132,9 @@ $spacing-xxs: 5px;
             .search__filter-title {
                 margin-top: $spacing-xl;
             }
+            &:last-of-type {
+                margin-bottom: 2rem;
+            }
         }
         .search__search-box,
         .ais-RefinementList-searchBox {
