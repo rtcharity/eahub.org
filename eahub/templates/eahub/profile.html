@@ -106,13 +106,17 @@
 
     <div class="container prof__cards">
         <div class="row row-cols-1 row-cols-md-3">
-            <div class="col mb-3 mb-md-0">
+            <div class="col mb-7 mb-md-0">
                 <div class="card">
                     <div class="card-body">
-                        <img class="card__img mb-2" loading="lazy"
-                            src="{% static 'global/images/profile-detail/heart-and-box.webp' %}"
-                        >
-                        <h3 class="card__heading">Cause Area</h3>
+                        <div class="row row-cols-2 card__header">
+                            <div class="col col-auto">
+                                <img class="card__img mb-2" src="{% static 'global/images/profile-detail/heart-and-box.webp' %}" loading="lazy">
+                            </div>
+                            <div class="col col-heading">
+                                <h3 class="card__heading">Cause Area</h3>
+                            </div>
+                        </div>
                         {% if not profile.has_cause_area_details %}N/A{% endif %}
                         {% if profile.cause_areas or profile.cause_areas_other %}
                             <div class="card__section">
@@ -137,12 +141,17 @@
                 </div>
             </div>
 
-            <div class="col mb-3 mb-md-0">
+            <div class="col mb-7 mb-md-0">
                 <div class="card">
                     <div class="card-body">
-                        <img class="card__img mb-2" src="{% static 'global/images/profile-detail/briefcase.webp' %}" loading="lazy">
-                        <h3 class="card__heading">Career</h3>
-
+                        <div class="row row-cols-2 card__header">
+                            <div class="col col-auto">
+                                <img class="card__img mb-2" src="{% static 'global/images/profile-detail/briefcase.webp' %}" loading="lazy">
+                            </div>
+                            <div class="col col-heading">
+                                <h3 class="card__heading">Career</h3>
+                            </div>
+                        </div>
                         {% if not profile.has_career_details %}N/A{% endif %}
 
                         {% if profile.expertise_areas or profile.expertise_areas_other %}
@@ -173,12 +182,18 @@
             </div>
 
             {% if profile.organisational_affiliations or profile.local_groups.exists or profile.user.localgroup_set.exists or profile.topics_i_speak_about or profile.available_as_speaker or request.user.id == profile.user_id %}
-                <div class="col mb-3 mb-md-0">
+                <div class="col mb-7 mb-md-0">
                     <div class="card">
                         <div class="card-body">
-                            <img class="card__img mb-2" src="{% static 'global/images/profile-detail/round-profile-pics.webp' %}" loading="lazy">
-                            <h3 class="card__heading">Community</h3>
-    
+                            <div class="row row-cols-2 card__header">
+                                <div class="col col-auto">
+                                    <img class="card__img mb-2" src="{% static 'global/images/profile-detail/round-profile-pics.webp' %}" loading="lazy">
+                                </div>
+                                <div class="col col-heading">
+                                    <h3 class="card__heading">Community</h3>
+                                </div>
+                            </div>
+
                             {% if not profile.has_community_details %}N/A{% endif %}
     
                             {% if profile.organisational_affiliations %}
@@ -242,14 +257,16 @@
             {% endif %}
         </div>
 
-        <div class="row mt-3">
-            <div class="col-24">
-                {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
+        {% if lat and lon %}
+            <div class="row mt-3">
+                <div class="col-24">
+                    {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
-    <div class="prof__buttons-bottom my-3">
+    <div class="prof__buttons-bottom my-4">
         {% if user.id == profile.user_id %}
             <a class="btn btn-outline-secondary btn-sm" href="{% url 'delete_profile' %}">
                 <i class="fa fa-trash"></i> Delete My Profile

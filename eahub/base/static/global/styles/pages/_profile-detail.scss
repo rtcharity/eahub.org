@@ -74,66 +74,60 @@
     .prof__cards {
         .card {
             height: 100%;
-            
+            border: 0;
+
             .card-body {
                 display: flex;
                 flex-direction: column;
-            }
-
-            &:hover {
-                .card__img {
-                    filter: grayscale(0);
-                }
-            }
-            .card__img {
-                max-width: 100px;
-                margin: 0 auto;
-                justify-content: center;
-                display: flex;
-                transition: 0.1s filter linear;
-            }
-            .card__section {
-                margin-bottom: 1.2rem;
+                padding: 0;
     
-                .card__subtitle {
-                    margin-bottom: 0.25rem;
-                    font-weight: bold;
+                .card__header {
+                    margin-bottom: 1rem;
+                    
+                    .col {
+                        display: flex;
+                        align-items: center;
+
+                        .card__heading {
+                            display: flex;
+                            margin-bottom: 0;
+                            padding-bottom: 0.5rem;
+                            font-size: 1.5rem;
+                            color: $color-primary;
+                        }
+                        .card__img {
+                            max-width: 40px;
+                            display: flex;
+                        }
+                    }
+                    .col-heading {
+                        padding-left: 0;
+                    }
                 }
-                p:last-of-type {
+                .card__section {
+                    margin-bottom: 1.2rem;
+        
+                    .card__subtitle {
+                        margin-bottom: 0.25rem;
+                        font-weight: bold;
+                    }
+                    p:last-of-type {
+                        margin-bottom: 0;
+                    }
+                }
+                .alert {
+                    margin-top: auto;
                     margin-bottom: 0;
                 }
             }
-            .alert {
-                margin-top: auto;
-                margin-bottom: 0;
-            }
+
             .btn-edit {
                 position: absolute;
-                top: $grid-gutter-width-half;
-                right: $grid-gutter-width-half;
+                top: 0;
+                right: 0;
             }
         }
-        .card__heading {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 1rem;
-            color: $color-primary;
-        }
-        .card__summary {
-            
-            .card-header {
-                display: flex;
-                justify-content: space-between;
-                
-                .summary_header {
-                    align-self: center;
-                }
-                
-                .summary_btns {
-                    display: flex;
-                }
-            }
-        }
+
     }
     .prof__buttons-bottom {
         display: flex;
