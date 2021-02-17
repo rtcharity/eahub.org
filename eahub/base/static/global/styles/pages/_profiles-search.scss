@@ -16,6 +16,13 @@ $spacing-xxs: 5px;
     margin-top: $grid-gutter-width;
     margin-bottom: $spacing-xxl;
     
+    a {
+        color: $color-primary;
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
     #search-box-modal {
         background: white;
         
