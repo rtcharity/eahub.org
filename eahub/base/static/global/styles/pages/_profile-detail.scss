@@ -1,0 +1,99 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+.profile-detail {
+    .container {
+        max-width: 1280px;
+    }
+    .prof__header {
+        
+        .prof__img {
+        
+        }
+        .prof__title {
+            display: flex;
+            align-items: baseline;
+            
+            h1 {
+                display: inline-flex;
+                margin-right: $spacer;
+            }
+            .prof_social-link {
+                display: flex;
+                text-decoration: none;
+                color: $color-secondary;
+                margin-right: 10px;
+                
+                $icon-size: 24px;
+                svg {
+                    width: $icon-size;
+                    height: $icon-size;
+                }
+                .fa-link {
+                    width: $icon-size - 2px;
+                    height: $icon-size - 2px;
+                }
+            }
+        }
+        .prof__btns {
+            .btn {
+                margin-right: 9px;
+            }
+        }
+    }
+    .prof__cards {
+        .card {
+            height: 100%;
+
+            &:hover {
+                .card__img {
+                    filter: grayscale(0);
+                }
+            }
+            .card__img {
+                max-width: 100px;
+                margin: auto;
+                justify-content: center;
+                display: flex;
+                transition: 0.1s filter linear;
+            }
+            .card__section {
+                margin-bottom: 1.2rem;
+    
+                .card__subtitle {
+                    margin-bottom: 0.25rem;
+                    font-weight: bold;
+                }
+            }
+            .btn-edit {
+                position: absolute;
+                top: $grid-gutter-width-half;
+                right: $grid-gutter-width-half;
+            }
+        }
+        .card__heading {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: $color-primary;
+        }
+        .card__summary {
+            
+            .card-header {
+                display: flex;
+                justify-content: space-between;
+                
+                .summary_header {
+                    align-self: center;
+                }
+                
+                .summary_btns {
+                    display: flex;
+                }
+            }
+        }
+    }
+    .prof__buttons-bottom {
+        display: flex;
+        justify-content: center;
+    }
+}

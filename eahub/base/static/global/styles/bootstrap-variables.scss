@@ -31,6 +31,19 @@ $container-max-widths: (
 );
 
 
+$spacer: 1rem;
+$spacers: (
+    0: 0,
+    1: $spacer / 4,
+    2: $spacer / 2,
+    3: $spacer * 1.88,
+    4: $spacer * 2.5,
+    5: $spacer * 3,
+    6: $spacer * 5,
+    7: $spacer * 7,
+);
+
+
 $navbar-dark-color: transparentize(white, 0.2);
 $navbar-dark-toggler-border-color: transparentize(white, 0.4);
 $navbar-dark-hover-color: rgba(white, 1) !default;
