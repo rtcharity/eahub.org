@@ -5,17 +5,21 @@
         max-width: 1280px;
     }
     .prof__header {
+        position: relative;
         
         .prof__img {
-        
+            min-width: 200px;
+            min-height: 200px;
+            border: 1px solid #e0e0e0;
         }
         .prof__title {
             display: flex;
             align-items: baseline;
+            margin-bottom: 0.6rem;
             
             h1 {
                 display: inline-flex;
-                margin-right: $spacer;
+                line-height: 0.9;
             }
             .prof_social-link {
                 display: flex;
@@ -33,16 +37,48 @@
                     height: $icon-size - 2px;
                 }
             }
+    
+            .prof__btns {
+                display: flex;
+                align-self: end;
+                margin-left: auto;
+                margin-bottom: 1rem;
+                
+                @include media-breakpoint-up(xl) {
+                    position: absolute;
+                    right: 0;
+                    width: fit-content;
+                }
+                
+                .btn {
+                    margin-right: 9px;
+                }
+            }
         }
-        .prof__btns {
-            .btn {
-                margin-right: 9px;
+        .prof__summary {
+            margin-bottom: 1rem;
+            
+            p:last-of-type {
+                margin-bottom: 0;
+            }
+            
+            .summary__sections {
+                margin-top: 1rem;
+                .summary__subtitle {
+                    margin-bottom: 0.25rem;
+                    font-weight: bold;
+                }
             }
         }
     }
     .prof__cards {
         .card {
             height: 100%;
+            
+            .card-body {
+                display: flex;
+                flex-direction: column;
+            }
 
             &:hover {
                 .card__img {
@@ -51,7 +87,7 @@
             }
             .card__img {
                 max-width: 100px;
-                margin: auto;
+                margin: 0 auto;
                 justify-content: center;
                 display: flex;
                 transition: 0.1s filter linear;
@@ -63,6 +99,13 @@
                     margin-bottom: 0.25rem;
                     font-weight: bold;
                 }
+                p:last-of-type {
+                    margin-bottom: 0;
+                }
+            }
+            .alert {
+                margin-top: auto;
+                margin-bottom: 0;
             }
             .btn-edit {
                 position: absolute;
