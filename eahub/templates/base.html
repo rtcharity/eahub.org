@@ -64,7 +64,7 @@
       {% endblock %}
 
       {% block meta_image %}
-          <meta property="og:image" content="{% static 'global/images/eahub-header.webp' %}">
+          <meta property="og:image" content="https://{{ settings.DOMAIN }}{% static 'global/images/eahub-header.webp' %}">
           <meta property="og:image:width" content="1280">
           <meta property="og:image:height" content="885">
           <meta property="og:image:type" content="image/webp">
