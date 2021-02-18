@@ -1,6 +1,6 @@
-{% load account i18n %}Greetings,
+{% load account i18n %}Hi,
 
-We're happy you sign up for the EA Hub. Please click the following link to verify your email: {{ activate_url }}
+We're happy you've signed up for the EA Hub. Please click the following link to verify your email: {{ activate_url }}
 
 Thank you,
 EA Hub
