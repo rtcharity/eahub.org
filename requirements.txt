@@ -387,6 +387,7 @@ zc.lockfile==2.0
     # via cherrypy
 zipp==3.4.0
     # via importlib-metadata
+django-enumfields==2.0.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip

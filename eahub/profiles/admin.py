@@ -14,6 +14,8 @@ from eahub.profiles.models import (
     Profile,
     ProfileAnalyticsLog,
     ProfileSlug,
+    ProfileTag,
+    ProfileTagType,
 )
 
 
@@ -144,6 +146,32 @@ class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
     ]
     ordering = ["-time"]
     resource_class = ProfileAnalyticsResource
+
+
+@admin.register(ProfileTagType)
+class ProfileTagTypeAdmin(admin.ModelAdmin):
+    list_display = [
+        "type",
+    ]
+
+
+@admin.register(ProfileTag)
+class ProfileTagAdmin(admin.ModelAdmin):
+    list_display = [
+        "name",
+        "author",
+        "description",
+        "is_verified",
+        "created_at",
+    ]
+    filter_horizontal = [
+        "types",
+    ]
+    list_filter = [
+        "types",
+        "is_verified",
+        "created_at",
+    ]
 
 
 admin.site.register(ProfileSlug)

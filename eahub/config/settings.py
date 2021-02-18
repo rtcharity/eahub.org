@@ -50,12 +50,13 @@ INSTALLED_APPS = [
     "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
-    "eahub.base.apps.BaseConfig",
-    "eahub.localgroups.apps.LocalGroupsConfig",
-    "eahub.profiles.apps.ProfilesConfig",
     "import_export",
     "rangefilter",
     "flags",
+    "rest_framework",
+    "eahub.base.apps.BaseConfig",
+    "eahub.localgroups.apps.LocalGroupsConfig",
+    "eahub.profiles.apps.ProfilesConfig",
 ]
 
 MIDDLEWARE = [
@@ -322,6 +323,8 @@ ADMIN_REORDER = [
         "models": [
             {"model": "profiles.Profile", "label": "Profiles"},
             {"model": "localgroups.LocalGroup", "label": "Groups"},
+            "profiles.ProfileTag",
+            "profiles.ProfileTagType",
             {"model": "profiles.ProfileAnalyticsLog", "label": "Profile update logs"},
         ],
     },

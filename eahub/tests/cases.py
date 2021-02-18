@@ -1,10 +1,17 @@
+from typing import List
+
 from django.test import TestCase, override_settings
 from faker import Faker
 from model_bakery import baker
 
 from eahub.base.models import User
 from eahub.localgroups.models import LocalGroup
-from eahub.profiles.models import Profile
+from eahub.profiles.models import (
+    Profile,
+    ProfileTag,
+    ProfileTagType,
+    ProfileTagTypeEnum,
+)
 
 
 class Gen:
@@ -22,6 +29,15 @@ class Gen:
 
     def email(self) -> str:
         return self.faker.unique.email()
+
+    def tag(self, types: List[ProfileTagTypeEnum] = [], **kwargs) -> ProfileTag:
+        type_instances = []
+        for tag_type in types:
+            type_instance = ProfileTagType.objects.get_or_create(type=tag_type)[0]
+            type_instances.append(type_instance)
+        tag = baker.make("profiles.ProfileTag", **kwargs)
+        tag.types.set(type_instances)
+        return baker.make("profiles.ProfileTag", **kwargs)
 
 
 @override_settings(IS_ENABLE_ALGOLA=False)

@@ -1,6 +1,8 @@
-from django.urls import path
+from django.urls import include, path
 
 from . import views
+
+app_name = "profiles_app"
 
 urlpatterns = [
     path("", views.my_profile, name="my_profile"),
@@ -32,4 +34,5 @@ urlpatterns = [
         views.SendProfileMessageView.as_view(),
         name="message_profile",
     ),
+    path("api/", include("eahub.profiles.api.urls", namespace="api")),
 ]

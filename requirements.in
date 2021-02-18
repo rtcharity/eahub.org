@@ -14,6 +14,7 @@ django-upload-path
 django-sluggable
 django-autoslug
 django-enumfield < 2
+django-enumfields  # a better version of django-enumfield
 django-crispy-forms
 django-allauth
 django-authtools
@@ -35,6 +36,7 @@ rules
 django-flags  # for feature flags
 django-modeladmin-reorder  # reorder admin panel homepage apps
 django-adminutils  # a set of shortcuts for admin.py composition
+djangorestframework
 
 # dev packages (might try to move it out for deployment speed optimization)
 

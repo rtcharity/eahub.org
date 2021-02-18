@@ -16,6 +16,7 @@ from django.db import models
 from django.utils import timezone
 from django_enumfield import enum
 from django_upload_path import upload_path
+from enumfields import Enum, EnumField
 from geopy import geocoders
 from sluggable import fields as sluggable_fields
 from sluggable import models as sluggable_models
@@ -383,6 +384,38 @@ def validate_sluggable_name(name):
         )
 
 
+class ProfileTagTypeEnum(Enum):
+    GENERIC = "generic"
+    EXPERTISE = "expertise"
+    CAUSE_AREA = "cause_area"
+    ORGANISATIONAL_AFFILIATION = "organisational_affiliation"
+    CAREER_INTEREST_AREA = "career_interest_area"
+    SPEECH_TOPIC = "speech_topic"
+    PLEDGE = "pledge"
+    EVENT_ATTENDED = "event_attended"
+
+
+class ProfileTagType(models.Model):
+    type = EnumField(ProfileTagTypeEnum, max_length=128)
+
+    def __str__(self):
+        return str(self.type)
+
+
+class ProfileTag(models.Model):
+    name = models.CharField(max_length=128)
+    types = models.ManyToManyField(ProfileTagType, blank=True)
+    author = models.ForeignKey(
+        "profiles.Profile", on_delete=models.SET_NULL, null=True, blank=True
+    )
+    description = models.TextField(blank=True)
+    is_verified = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
 class ProfileManager(models.Manager):
     def visible_to_user(self, user):
         if user.is_superuser:
@@ -411,6 +444,12 @@ class Profile(models.Model):
     personal_website_url = models.URLField(max_length=400, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
+
+    tags = models.ManyToManyField(ProfileTag, blank=True, related_name="profiles")
+    causes = models.ManyToManyField(
+        ProfileTag, blank=True, related_name="cause_profiles"
+    )
+
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
