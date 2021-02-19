@@ -2,9 +2,7 @@ from typing import Tuple
 
 from rest_framework.test import APITestCase
 
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileTag
-from eahub.profiles.models import ProfileTagTypeEnum
+from eahub.profiles.models import Profile, ProfileTag, ProfileTagTypeEnum
 from eahub.tests.cases import EAHubTestCase
 
 

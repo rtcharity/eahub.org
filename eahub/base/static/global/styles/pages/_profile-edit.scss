@@ -20,6 +20,11 @@
         margin-right: 0;
         background: #ddefec94;
         color: #0b5046;
+    
+        &:hover {
+            cursor: pointer;
+            background: #b0dcd594;
+        }
     }
     
     .tags__input {
@@ -72,7 +77,7 @@
             .tag__count {
                 margin-left: 0.4rem;
                 color: $gray-600;
-                font-size: 0.8rem;
+                font-size: 0.7rem;
             }
             .tag__desc {
                 margin-top: 0.2rem;

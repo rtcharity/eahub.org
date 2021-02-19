@@ -403,9 +403,9 @@ class ProfileTagType(models.Model):
 
 
 class ProfileTagStatus(Enum):
-    APPROVED = 'approved'
-    REJECTED = 'rejected'
-    PENDING = 'pending'
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    PENDING = "pending"
 
 
 class ProfileTag(models.Model):
@@ -415,7 +415,9 @@ class ProfileTag(models.Model):
         "profiles.Profile", on_delete=models.SET_NULL, null=True, blank=True
     )
     description = models.TextField(blank=True)
-    status = EnumField(ProfileTagStatus, default=ProfileTagStatus.APPROVED, max_length=64)
+    status = EnumField(
+        ProfileTagStatus, default=ProfileTagStatus.APPROVED, max_length=64
+    )
     is_featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 

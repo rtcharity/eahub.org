@@ -2,9 +2,7 @@ from algoliasearch_django import AlgoliaIndex
 from algoliasearch_django.decorators import register
 from django.conf import settings
 
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileTag
-
+from eahub.profiles.models import Profile, ProfileTag
 
 if settings.IS_ENABLE_ALGOLIA:
 

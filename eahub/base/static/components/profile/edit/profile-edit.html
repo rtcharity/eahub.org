@@ -46,7 +46,7 @@
               <div class="tag__name">
                 <ais-highlight :hit="item" attribute="name"/> 
               </div>
-              <span class="tag__count">{{item.count}}</span>
+              <span class="tag__count" v-if="item.count">{{item.count}}</span>
               <div class="tag__desc"><ais-highlight :hit="item" attribute="description"/></div>
             </div>
           </div>

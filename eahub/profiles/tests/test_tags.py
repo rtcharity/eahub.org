@@ -6,7 +6,9 @@ from eahub.tests.cases import EAHubTestCase
 
 class TagsApiTestCase(EAHubTestCase, APITestCase):
     def test_tags_count(self):
-        tag1 = self.gen.tag(types=[ProfileTagTypeEnum.GENERIC, ProfileTagTypeEnum.EXPERTISE_AREA])
+        tag1 = self.gen.tag(
+            types=[ProfileTagTypeEnum.GENERIC, ProfileTagTypeEnum.EXPERTISE_AREA]
+        )
         tag2 = self.gen.tag(types=[ProfileTagTypeEnum.EXPERTISE_AREA])
         tag3 = self.gen.tag(types=[ProfileTagTypeEnum.CAUSE_AREA])
         profile1 = self.gen.profile()

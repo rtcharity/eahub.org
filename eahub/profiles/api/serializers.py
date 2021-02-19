@@ -2,9 +2,12 @@ from enumfields.drf import EnumSupportSerializerMixin
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from eahub.profiles.models import Profile, ProfileTag
-from eahub.profiles.models import ProfileTagType
-from eahub.profiles.models import ProfileTagTypeEnum
+from eahub.profiles.models import (
+    Profile,
+    ProfileTag,
+    ProfileTagType,
+    ProfileTagTypeEnum,
+)
 
 
 class TagTypeSerializer(EnumSupportSerializerMixin, serializers.ModelSerializer):

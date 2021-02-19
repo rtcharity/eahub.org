@@ -1,16 +1,11 @@
 from rest_framework import mixins
-from rest_framework.decorators import api_view
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from eahub.profiles.api.serializers import ProfileSerializer
-from eahub.profiles.api.serializers import TagSerializer
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileTag
-from eahub.profiles.models import ProfileTagStatus
-from eahub.profiles.models import ProfileTagType
+from eahub.profiles.api.serializers import ProfileSerializer, TagSerializer
+from eahub.profiles.models import Profile, ProfileTag, ProfileTagStatus, ProfileTagType
 
 
 class ProfileViewSet(
