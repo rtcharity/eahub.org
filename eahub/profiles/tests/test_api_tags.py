@@ -9,6 +9,20 @@ from eahub.tests.cases import EAHubTestCase
 
 
 class TagsApiTestCase(EAHubTestCase, APITestCase):
+    def test_creation(self):
+        profile, _, _, _ = self._generate_tags()
+        self.client.force_login(profile.user)
+        response = self.client.post(
+            f"/profile/api/profiles/tags/create/",
+            data={
+                "name": "Management",
+                "type": ProfileTagTypeEnum.CAREER_INTEREST_AREA.value,
+            },
+            format="json",
+        )
+        tag = ProfileTag.objects.get(pk=response.data["pk"])
+        self.assertEqual(tag.author, profile)
+
     def test_addition(self):
         for tag_type in [
             ProfileTagTypeEnum.GENERIC,
@@ -53,9 +67,7 @@ class TagsApiTestCase(EAHubTestCase, APITestCase):
         self.assertEqual(response.data[f"{tags_field_name}_pks"], [tag1.pk, tag2.pk])
         for tag in tags:
             if tag["name"] == tag1.name:
-                self.assertEqual(
-                    tag["types"][0]["type"], type_enum.value
-                )
+                self.assertEqual(tag["types"][0]["type"], type_enum.value)
 
     def _test_deletion(self, type_enum: ProfileTagTypeEnum):
         profile, tag1, tag2, tags_field_name = self._generate_tags(type_enum)
@@ -70,7 +82,8 @@ class TagsApiTestCase(EAHubTestCase, APITestCase):
         self.assertFalse(tags_field.filter(pk=tag2.pk).exists())
 
     def _generate_tags(
-        self, type_enum: ProfileTagTypeEnum
+        self,
+        type_enum: ProfileTagTypeEnum = ProfileTagTypeEnum.GENERIC,
     ) -> Tuple[Profile, ProfileTag, ProfileTag, str]:
         profile = self.gen.profile()
         tag1 = self.gen.tag(types=[type_enum])

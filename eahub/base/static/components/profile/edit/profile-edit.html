@@ -20,7 +20,7 @@
     </div>
     <ais-search-box
         v-model="searchQuery"
-        v-on:input="checkSearchTagInput($event)"
+        v-on:input="processTagSearchInput($event)"
     />
     <ais-refinement-list
         attribute="types"

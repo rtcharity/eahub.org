@@ -22,7 +22,7 @@ class Gen:
         return baker.make("localgroups.LocalGroup", slug="", **kwargs)
 
     def profile(self, **kwargs) -> Profile:
-        return baker.make("profiles.Profile", slug="", **kwargs)
+        return baker.make("profiles.Profile", slug="", is_approved=True, **kwargs)
 
     def user(self, **kwargs) -> User:
         return baker.make("base.User", **kwargs)

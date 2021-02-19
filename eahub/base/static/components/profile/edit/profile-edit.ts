@@ -38,18 +38,19 @@ export default class ProfileEditComponent extends Vue {
     @Provide() tagsSelected: Tag[] = [];
 
     @Ref('typesRef') readonly typesRef;
-    private profileUrl = `/profile/api/profiles/${this.profilePk}/`;
+    private tagsUrl = `/profile/api/profiles/${this.profilePk}/`;
     private http = new HttpService();
 
     async mounted() {
-        const response = await this.http.get(this.profileUrl);
+        const response = await this.http.get(this.tagsUrl);
         this.tagsSelected = response.data[`tags_${this.typeName}`];
 
+        // todo fix vue nextTick bug, ie from vrt
         await this.sleep(300);
         this.typesRef.refine(this.typeName);
     }
 
-    checkSearchTagInput(value) {
+    processTagSearchInput(value: string) {
         console.log('change', value);
         if (value.includes(',')) {
             this.searchQuery = '';
@@ -72,7 +73,7 @@ export default class ProfileEditComponent extends Vue {
         try {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsPksSelected;
-            const response = await this.http.patch(this.profileUrl, data);
+            const response = await this.http.patch(this.tagsUrl, data);
             console.log(response)
         } catch (e) {
             console.log(e);
@@ -89,7 +90,7 @@ export default class ProfileEditComponent extends Vue {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsSelectedNew.map(tag => tag.pk);
             console.log(data);
-            const response = await this.http.patch(this.profileUrl, data);
+            const response = await this.http.patch(this.tagsUrl, data);
             console.log(response)
             this.tagsSelected = tagsSelectedNew;
         } catch (e) {
