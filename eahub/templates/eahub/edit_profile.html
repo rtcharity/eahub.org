@@ -1,73 +1,61 @@
-{% extends 'form.html' %}
+{% extends 'base_bs5.html' %}
 
-{% load static sekizai_tags %}
+{% load crispy_forms_field crispy_forms_tags static %}
+
+{% block navbar %}
+  {% include 'components/navbar.html' %}
+{% endblock navbar %}
 
 {% block title %}Edit Profile{% endblock %}
 
-{% load crispy_forms_tags %}
+{% block content %}
+  <div class="container">
+    <h1>Edit</h1>
+    <form method="POST">
 
-{% block form_fields %}
+      <div class="row row-cols-2">
+        <div
+          class="col"
+          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          type="expertise"
+          type-name="Expertise"
+          type-field-name="expertise_areas_new"
+          profile-pk="{{ profile.pk }}"
+        >
+          <div class="vue-profile-edit"></div>
+        </div>
 
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
-    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit_image.bundle.js"></script>
-  {% else %}
-    <script defer src="{% static 'dist/component_profile_edit_image.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
+        <div
+          class="col"
+          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          type="cause_area"
+          type-field-name="cause_areas_new"
+          type-name="Cause Area"
+          profile-pk="{{ profile.pk }}"
+        >
+          <div class="vue-profile-edit"></div>
+        </div>
+      </div>
 
-{{ form.name|as_crispy_field }}
+      {% if settings.DJANGO_ENV.value == "local" %}
+        <script
+          src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
+        ></script>
+      {% else %}
+        <script defer src="{% static "dist/component_profile_edit.js" %}"
+        ></script>
+      {% endif %}
 
+      {% crispy form %}
 
-<label>Profile picture</label>
-{% if profile.image %}
-<button id="image-change-toggle" type="button" class="image-change-btn">Change current picture</button>
-
-<div class="field image_upload" id="image-change" style="display: none">
-  <input type="file" name="image" id="id_image" class="form-control">
-</div>
-
-<div class="image-clear" id="image-clear">
-  <input type="checkbox" name="image-clear" id="image-clear_id">
-  <label for="image-clear_id">Clear current picture</label>
-</div>
-{% else %}
-<div class="field image_upload">
-  <input type="file" name="image" id="id_image" class="form-control">
-</div>
-{% endif %}
-
-{% if form.image.errors %}
-  {% for error in form.image.errors %}
-    <div class="alert alert-danger">{{ error }}</div>
-  {% endfor %}
-{% endif %}
-
-{{ form.city_or_town|as_crispy_field }}
-
-{{ form.country|as_crispy_field }}
-
-<div class="privacy-note">
-If you make your profile private but enter a location, an anonymous pin representing you will be shown on the map if there are enough other EAs near you.
-</div>
-
-{{ form.summary|as_crispy_field }}
-
-{{ form.linkedin_url|as_crispy_field }}
-{{ form.facebook_url|as_crispy_field }}
-{{ form.personal_website_url|as_crispy_field }}
-
-{{ form.is_public|as_crispy_field }}
-{{ form.email_visible|as_crispy_field }}
-
-<div class="privacy-note">
-  {% if profile.is_approved %}
-  Everything in public profiles is public and searchable.
-  {% else %}
-  Everything in public profiles becomes public and searchable as soon as the profile is approved.
-  {% endif %}
-</div>
-
+    </form>
+  </div>
 {% endblock %}
 
-{% block submit%}Update{% endblock%}
+{% block footer %}
+  {% include 'includes/footer.html' %}
+{% endblock %}

@@ -1,0 +1,13 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+.profile-edit-tags {
+    .ais-RefinementList,
+    .ais-InfiniteHits-loadMore,
+    .ais-SearchBox-submit {
+        display: none;
+    }
+    
+    .selected {
+        display: none;
+    }
+}

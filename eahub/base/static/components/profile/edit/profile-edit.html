@@ -1,0 +1,49 @@
+<div class="profile-edit-tags">
+
+  <ais-instant-search
+      :search-client="searchClient"
+      :index-name="algoliaIndex"
+  >
+    <h5>{{ typeName }}</h5>
+    <div>
+      <span 
+        v-for="tag of tagsSelected"
+      >
+        {{ tag.pk }} {{ tag.name }}
+        <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            v-on:click="remove(tag.pk)"
+        ></button>
+  
+      </span>
+    </div>
+    <ais-search-box
+        v-model="searchQuery"
+        v-on:input="checkSearchTagInput($event)"
+    />
+    <ais-refinement-list
+        attribute="types"
+        ref="typesRef"
+    />
+
+    <ais-state-results>
+      <div slot-scope="{ state: { query }, results: { hits } }">
+        <ais-infinite-hits>
+          <ul slot-scope="{ items }">
+            <li
+                v-for="item of items"
+                :key="item.objectID"
+                :class="{selected: isSelected(item.objectID)}"
+            >
+              {{ item.objectID }}
+              <ais-highlight :hit="item" attribute="name"/>
+              <pre><ais-highlight :hit="item" attribute="description"/></pre>
+            </li>
+          </ul>
+        </ais-infinite-hits>
+      </div>
+    </ais-state-results>
+  </ais-instant-search>
+</div>

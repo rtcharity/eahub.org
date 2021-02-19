@@ -6,7 +6,6 @@ app_name = "profiles_app"
 
 urlpatterns = [
     path("", views.my_profile, name="my_profile"),
-    path("first_visit/", views.my_profile_first_visit, name="my_profile_first_visit"),
     path("edit/", views.edit_profile, name="edit_profile"),
     path(
         "edit/cause_areas/",

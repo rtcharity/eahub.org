@@ -67,11 +67,6 @@ def my_profile(request, first_visit=False):
     )
 
 
-@login_required
-def my_profile_first_visit(request):
-    return my_profile(request, True)
-
-
 class ReportProfileAbuseView(ReportAbuseView):
     def profile(self):
         return Profile.objects.get(slug=self.kwargs["slug"])
@@ -120,7 +115,7 @@ def edit_profile(request):
             profile = form.save(commit=False)
             profile = profile.geocode()
             profile.save()
-            return redirect("my_profile")
+            return redirect("profiles_app:my_profile")
     else:
         form = EditProfileForm(instance=request.user.profile)
     opportunities = []
@@ -154,7 +149,7 @@ def edit_profile_cause_areas(request):
             giving_pledges = request.POST.getlist("giving_pledges")
             profile.giving_pledges = giving_pledges
             profile.save()
-            return redirect("my_profile")
+            return redirect("profiles_app:my_profile")
     else:
         form = EditProfileCauseAreasForm(instance=request.user.profile)
     return render(
@@ -184,7 +179,7 @@ def edit_profile_career(request):
             profile.career_interest_areas = career_interest_areas
 
             profile.save()
-            return redirect("my_profile")
+            return redirect("profiles_app:my_profile")
     else:
         form = EditProfileCareerForm(instance=request.user.profile)
     return render(
@@ -239,7 +234,7 @@ def edit_profile_community(request):
                 log.field = "local_groups"
                 log.save()
 
-            return redirect("my_profile")
+            return redirect("profiles_app:my_profile")
     else:
         form = EditProfileCommunityForm(instance=request.user.profile)
     return render(

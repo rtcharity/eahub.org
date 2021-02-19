@@ -16,6 +16,7 @@ const config = {
     vendor_bs5: './eahub/base/static/vendor/main_bs5.js',
 
     component_search_profiles: './eahub/base/static/components/search-profiles/main.js',
+    component_profile_edit: './eahub/base/static/components/profile/edit/main.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
     component_multiselect_forms: './eahub/base/static/components/multiselect-forms.js',

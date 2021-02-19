@@ -54,7 +54,7 @@
   {% else %}
   This information will become publicly visible as soon as your profile is approved.
   {% endif %}
-  You can <a href="{% url 'edit_profile' %}">change your privacy settings</a>, or <a href="{% url 'privacy_policy' %}">read more about our privacy policy</a>.
+  You can <a href="{% url 'profiles_app:edit_profile' %}">change your privacy settings</a>, or <a href="{% url 'privacy_policy' %}">read more about our privacy policy</a>.
 </div>
 {% endif %}
 {% endblock %}

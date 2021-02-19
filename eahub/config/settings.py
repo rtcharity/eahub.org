@@ -178,7 +178,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 LOGIN_URL = "account_login"
-LOGIN_REDIRECT_URL = "my_profile"
+LOGIN_REDIRECT_URL = "profiles:my_profile"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
@@ -233,7 +233,12 @@ ALGOLIA = {
         "API_KEY_READ_ONLY", default="19fd60051efeddf42e707383bf2f15a7"
     ),
     "INDEX_NAME_PROFILES": env.str(
-        "ALGOLIA_INDEX_NAME_PROFILES", default="profiles_stage"
+        "ALGOLIA_INDEX_NAME_PROFILES",
+        default="profiles_stage",
+    ),
+    "INDEX_NAME_TAGS": env.str(
+        "ALGOLIA_INDEX_NAME_TAGS",
+        default="tags_stage",
     ),
 }
 

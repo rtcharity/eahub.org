@@ -30,7 +30,7 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
             self.request,
             self.reset_user,
             email_verification=app_settings.EMAIL_VERIFICATION,
-            redirect_url=reverse("edit_profile"),
+            redirect_url=reverse("profiles_app:edit_profile"),
         )
 
 

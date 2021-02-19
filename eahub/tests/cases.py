@@ -37,7 +37,7 @@ class Gen:
             type_instances.append(type_instance)
         tag = baker.make("profiles.ProfileTag", **kwargs)
         tag.types.set(type_instances)
-        return baker.make("profiles.ProfileTag", **kwargs)
+        return tag
 
 
 @override_settings(IS_ENABLE_ALGOLA=False)

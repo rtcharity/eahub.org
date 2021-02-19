@@ -108,8 +108,6 @@
                 <form action="{% url 'account_signup' %}" method="post">
                     {% csrf_token %}
 
-                    <input type="hidden" name="next" value="{% url 'my_profile_first_visit' %}" />
-
                     <div class="form-floating">
                         <input type="text"
                             class="form-control form-control-lg"

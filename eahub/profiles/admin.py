@@ -62,6 +62,11 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     ]
     search_fields = ["user__email", "name"]
     ordering = ["-user__date_joined"]
+    filter_horizontal = [
+        "tags",
+        "cause_areas_new",
+        "expertise_areas_new",
+    ]
 
     def get_actions(self, request: HttpRequest) -> dict:
         actions: dict = super().get_actions(request)
@@ -161,6 +166,7 @@ class ProfileTagAdmin(admin.ModelAdmin):
         "name",
         "author",
         "description",
+        "get_types_formatted",
         "is_verified",
         "created_at",
     ]
@@ -172,6 +178,11 @@ class ProfileTagAdmin(admin.ModelAdmin):
         "is_verified",
         "created_at",
     ]
+
+    @options(desc="types")
+    def get_types_formatted(self, instance: ProfileTag) -> str:
+        type_list = [str(type_instance.type) for type_instance in instance.types.all()]
+        return ", ".join(type_list)
 
 
 admin.site.register(ProfileSlug)

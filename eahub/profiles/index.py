@@ -3,6 +3,8 @@ from algoliasearch_django.decorators import register
 from django.conf import settings
 
 from eahub.profiles.models import Profile
+from eahub.profiles.models import ProfileTag
+
 
 if settings.IS_ENABLE_ALGOLIA:
 
@@ -43,4 +45,15 @@ if settings.IS_ENABLE_ALGOLIA:
             ["get_is_organiser", "is_organiser"],
             ["offering", "offering"],
             ["looking_for", "looking_for"],
+        ]
+
+    @register(ProfileTag)
+    class ProfileTagIndex(AlgoliaIndex):
+        index_name = settings.ALGOLIA["INDEX_NAME_TAGS"]
+        fields = [
+            "name",
+            "description",
+            ["get_types_formatted", "types"],
+            "created_at",
+            "is_verified",
         ]

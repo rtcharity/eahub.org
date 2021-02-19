@@ -85,13 +85,13 @@
                             <a class="btn btn-outline-primary btn-sm" href="{% url 'account_change_password' %}">
                                 <span><i class="fa fa-pencil-alt"></i> Change Password</span>
                             </a>
-                            <a class="btn btn-outline-primary btn-sm" href="{% url 'edit_profile' %}">
+                            <a class="btn btn-outline-primary btn-sm" href="{% url 'profiles_app:edit_profile' %}">
                                 <span><i class="fa fa-pencil-alt"></i> Edit</span>
                             </a>
 
                             {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
                             {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
-                                <a class="btn btn-outline-primary btn-sm" href="{% url 'message_profile' profile.slug %}">
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'profiles_app:message_profile' profile.slug %}">
                                     <span><i class="fa fa-pencil-alt"></i> Send Message</span>
                                 </a>
                             {% endif %}
@@ -150,7 +150,7 @@
                             <div class="alert alert-secondary">Available to volunteer</div>
                         {% endif %}
                         {% if request.user.id == profile.user_id %}
-                            <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'edit_profile_cause_areas' %}">
+                            <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'profiles_app:edit_profile_cause_areas' %}">
                                 <i class="fa fa-pencil-alt"></i> Edit
                             </a>
                         {% endif %}
@@ -188,7 +188,7 @@
                             </div>
                         {% endif %}
                         {% if request.user.id == profile.user_id %}
-                            <a href="{% url 'edit_profile_career' %}">
+                            <a href="{% url 'profiles_app:edit_profile_career' %}">
                                 <span class="btn btn-edit btn-outline-primary btn-sm">
                                     <i class="fa fa-pencil-alt"></i> Edit
                                 </span>
@@ -264,7 +264,7 @@
                             {% endif %}
     
                             {% if request.user.id == profile.user_id %}
-                                <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'edit_profile_community' %}">
+                                <a class="btn btn-edit btn-outline-primary btn-sm" href="{% url 'profiles_app:edit_profile_community' %}">
                                     <i class="fa fa-pencil-alt"></i> Edit
                                 </a>
                             {% endif %}
@@ -285,11 +285,11 @@
 
     <div class="prof__buttons-bottom my-4">
         {% if user.id == profile.user_id %}
-            <a class="btn btn-outline-secondary btn-sm" href="{% url 'delete_profile' %}">
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'profiles_app:delete_profile' %}">
                 <i class="fa fa-trash"></i> Delete My Profile
             </a>
         {% else %}
-            <a class="btn btn-outline-secondary btn-sm" href="{% url 'report_abuse_profile' profile.slug %}">
+            <a class="btn btn-outline-secondary btn-sm" href="{% url 'profiles_app:report_abuse_profile' profile.slug %}">
                 <i class="fa fa-flag"></i> Report abuse
             </a>
         {% endif %}

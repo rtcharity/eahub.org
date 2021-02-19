@@ -412,6 +412,9 @@ class ProfileTag(models.Model):
     is_verified = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def get_types_formatted(self) -> List[str]:
+        return [type_instance.type.value for type_instance in self.types.all()]
+
     def __str__(self):
         return self.name
 
@@ -445,9 +448,32 @@ class Profile(models.Model):
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
 
-    tags = models.ManyToManyField(ProfileTag, blank=True, related_name="profiles")
-    causes = models.ManyToManyField(
-        ProfileTag, blank=True, related_name="cause_profiles"
+    available_to_volunteer = models.BooleanField(null=True, blank=True, default=None)
+    open_to_job_offers = models.BooleanField(null=True, blank=True, default=None)
+    available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
+    email_visible = models.BooleanField(default=False)
+
+    summary = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+
+    tags = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.GENERIC},
+        blank=True,
+        related_name="profiles",
+    )
+    cause_areas_new = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.CAUSE_AREA},
+        blank=True,
+        related_name="cause_areas",
+    )
+    expertise_areas_new = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.EXPERTISE},
+        blank=True,
+        related_name="expertise_areas",
     )
 
     cause_areas = postgres_fields.ArrayField(
@@ -456,8 +482,6 @@ class Profile(models.Model):
     cause_areas_other = models.TextField(
         blank=True, validators=[MaxLengthValidator(2000)]
     )
-    available_to_volunteer = models.BooleanField(null=True, blank=True, default=None)
-    open_to_job_offers = models.BooleanField(null=True, blank=True, default=None)
     expertise_areas = postgres_fields.ArrayField(
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
@@ -467,15 +491,12 @@ class Profile(models.Model):
     career_interest_areas = postgres_fields.ArrayField(
         enum.EnumField(ExpertiseArea), blank=True, default=list
     )
-    available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
-    email_visible = models.BooleanField(default=False)
-    topics_i_speak_about = models.TextField(
-        blank=True, validators=[MaxLengthValidator(2000)]
-    )
     organisational_affiliations = postgres_fields.ArrayField(
         enum.EnumField(OrganisationalAffiliation), blank=True, default=list
     )
-    summary = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    topics_i_speak_about = models.TextField(
+        blank=True, validators=[MaxLengthValidator(2000)]
+    )
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
     )
@@ -483,8 +504,6 @@ class Profile(models.Model):
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )
-    offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
-    looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
 
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 
@@ -642,7 +661,7 @@ class Profile(models.Model):
                             self.legacy_record
                             and request.build_absolute_uri(
                                 urls.reverse(
-                                    "profile_legacy",
+                                    "profiles_app:profile_legacy",
                                     kwargs={"legacy_record": self.legacy_record},
                                 )
                             )
