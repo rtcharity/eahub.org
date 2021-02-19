@@ -24,6 +24,7 @@ class TagSerializer(serializers.ModelSerializer):
             "pk",
             "name",
             "types",
+            "count",
         ]
 
 

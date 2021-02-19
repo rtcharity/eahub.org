@@ -170,6 +170,7 @@ class ProfileTagAdmin(admin.ModelAdmin):
         "status",
         "is_featured",
         "created_at",
+        "count",
     ]
     filter_horizontal = [
         "types",

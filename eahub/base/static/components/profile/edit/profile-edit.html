@@ -10,6 +10,7 @@
         v-for="tag of tagsSelected"
       >
         {{ tag.name }}
+        <span v-if="tag.count">({{ tag.count }})</span>
         <button
             type="button"
             class="btn-close"
@@ -37,7 +38,7 @@
                 :class="{selected: isSelected(item.objectID)}"
                 v-on:click="add(item)"
             >
-              <ais-highlight :hit="item" attribute="name"/>
+              <ais-highlight :hit="item" attribute="name"/> ({{item.count}})
               <pre><ais-highlight :hit="item" attribute="description"/></pre>
             </li>
           </ul>

@@ -57,4 +57,5 @@ if settings.IS_ENABLE_ALGOLIA:
             "created_at",
             "status",
             "is_featured",
+            "count",
         ]

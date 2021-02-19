@@ -422,8 +422,16 @@ class ProfileTag(models.Model):
     def get_types_formatted(self) -> List[str]:
         return [type_instance.type.value for type_instance in self.types.all()]
 
-    # def count(self) -> int:
-    #     return Profile.objects.filter(tags__in=[self]).count()
+    def count(self) -> int:
+        count = 0
+        for enum_member in [
+            ProfileTagTypeEnum.GENERIC,
+            ProfileTagTypeEnum.CAUSE_AREA,
+            ProfileTagTypeEnum.EXPERTISE_AREA,
+        ]:
+            lookup_name = f"tags_{enum_member.value}__in"
+            count += Profile.objects.filter(**{lookup_name: [self]}).count()
+        return count
 
     def __str__(self):
         return self.name
