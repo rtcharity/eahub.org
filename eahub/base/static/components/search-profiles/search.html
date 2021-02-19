@@ -33,7 +33,7 @@
                             <template slot="item" slot-scope="{ item }">
                                 <div class="search__hit row">
                                     <div class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-5  order-1 order-sm-1 order-md-1 order-lg-1 order-xl-1  col-xxl-3 search__hit-image-wrapper">
-                                        <a v-bind:href="item.url">
+                                        <a v-bind:href="item.url" class="search__hit-image-href">
                                             <img v-if="item.image"
                                                  class="search__hit-image"
                                                  height="150"
@@ -70,22 +70,22 @@
                                         </div>
                                         <div class="search__hit-social-link-block">
                                             <div class="search__hit-social-link" v-if="item.personal_website_url">
-                                                <a v-bind:href="item.personal_website_url" rel="nofollow">
+                                                <a v-bind:href="item.personal_website_url" rel="nofollow" class="search__hit-href">
                                                     <i class="fa fa-home"></i>
                                                 </a>
                                             </div>
-                                            <div class="search__hit-social-link" v-if="item.linkedin_url" rel="nofollow">
-                                                <a v-bind:href="item.linkedin_url">
+                                            <div class="search__hit-social-link" v-if="item.linkedin_url">
+                                                <a v-bind:href="item.linkedin_url" rel="nofollow" class="search__hit-href">
                                                     <i class="fab fa-linkedin-in"></i>
                                                 </a>
                                             </div>
-                                            <div class="search__hit-social-link" v-if="item.email" rel="nofollow">
-                                                <a v-bind:href="'mailto:' + item.email" target="_blank">
+                                            <div class="search__hit-social-link" v-if="item.email">
+                                                <a v-bind:href="'mailto:' + item.email" target="_blank" rel="nofollow" class="search__hit-href">
                                                     <i class="fa fa-envelope"></i>
                                                 </a>
                                             </div>
-                                            <div class="search__hit-social-link" v-if="item.facebook_url" rel="nofollow">
-                                                <a v-bind:href="item.facebook_url">
+                                            <div class="search__hit-social-link" v-if="item.facebook_url">
+                                                <a v-bind:href="item.facebook_url" rel="nofollow" class="search__hit-href">
                                                     <i class="fab fa-facebook-f"></i>
                                                 </a>
                                             </div>
