@@ -39,6 +39,7 @@ export default class ProfileEditComponent extends Vue {
 
     @Ref('typesRef') readonly typesRef;
     private tagsUrl = `/profile/api/profiles/${this.profilePk}/`;
+    private tagsCreateUrl = `/profile/api/profiles/tags/create/`;
     private http = new HttpService();
 
     async mounted() {
@@ -50,10 +51,20 @@ export default class ProfileEditComponent extends Vue {
         this.typesRef.refine(this.typeName);
     }
 
-    processTagSearchInput(value: string) {
+    async processTagSearchInput(value: string) {
         console.log('change', value);
-        if (value.includes(',')) {
+        if (value.endsWith(',')) {
             this.searchQuery = '';
+            const tagName = value.slice(0, -1)
+            const response = await this.http.post(
+                this.tagsCreateUrl,
+                {name: tagName, type: this.typeName},
+            );
+            const tag: Tag = response.data;
+            await this.add(tag);
+        } else if (value.includes(',')) {
+            // todo handle
+            console.error('invalid input')
         }
     }
 
@@ -63,9 +74,9 @@ export default class ProfileEditComponent extends Vue {
         );
     }
 
-    async add(tagRaw: TagAlgolia) {
+    async add(tagRaw: TagAlgolia | Tag) {
         const tag: Tag = {
-            pk: Number(tagRaw.objectID),
+            pk: Number(tagRaw['objectID']) || tagRaw['pk'],
             name: tagRaw.name,
         }
         const tagsPksSelected = this.tagsSelected.map(tag => tag.pk);

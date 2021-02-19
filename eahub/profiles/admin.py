@@ -167,7 +167,8 @@ class ProfileTagAdmin(admin.ModelAdmin):
         "author",
         "description",
         "get_types_formatted",
-        "is_verified",
+        "status",
+        "is_featured",
         "created_at",
     ]
     filter_horizontal = [
@@ -175,7 +176,8 @@ class ProfileTagAdmin(admin.ModelAdmin):
     ]
     list_filter = [
         "types",
-        "is_verified",
+        "status",
+        "is_featured",
         "created_at",
     ]
 

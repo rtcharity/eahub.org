@@ -23,4 +23,14 @@ export default class HttpService {
             }
         );
     }
+
+    async post(url: string, data: any): Promise<AxiosResponse> {
+        return await axios.post(
+            url,
+            data,
+            {
+                headers: {'X-CSRFToken': Cookies.get('csrftoken')}
+            }
+        );
+    }
 }

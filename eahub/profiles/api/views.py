@@ -9,6 +9,7 @@ from eahub.profiles.api.serializers import ProfileSerializer
 from eahub.profiles.api.serializers import TagSerializer
 from eahub.profiles.models import Profile
 from eahub.profiles.models import ProfileTag
+from eahub.profiles.models import ProfileTagStatus
 from eahub.profiles.models import ProfileTagType
 
 
@@ -24,9 +25,13 @@ class ProfileViewSet(
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def create_tag_view(request: Response):
+    # todo handle duplicates
     tag = ProfileTag.objects.create(
-        name=request.data["name"], author=Profile.objects.get(user=request.user)
+        name=request.data["name"],
+        author=Profile.objects.get(user=request.user),
+        status=ProfileTagStatus.PENDING,
     )
     tag_type = ProfileTagType.objects.get_or_create(type=request.data["type"])[0]
     tag.types.add(tag_type)
+    tag.save()
     return Response(TagSerializer(tag).data)

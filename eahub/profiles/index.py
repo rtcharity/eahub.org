@@ -55,5 +55,6 @@ if settings.IS_ENABLE_ALGOLIA:
             "description",
             ["get_types_formatted", "types"],
             "created_at",
-            "is_verified",
+            "status",
+            "is_featured",
         ]

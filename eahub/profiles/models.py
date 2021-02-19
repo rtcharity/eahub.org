@@ -402,19 +402,26 @@ class ProfileTagType(models.Model):
         return str(self.type)
 
 
+class ProfileTagStatus(Enum):
+    APPROVED = 'approved'
+    REJECTED = 'rejected'
+    PENDING = 'pending'
+
+
 class ProfileTag(models.Model):
-    name = models.CharField(max_length=128)
-    types = models.ManyToManyField(ProfileTagType, blank=True)
+    name = models.CharField(max_length=128, unique=True)
+    types = models.ManyToManyField(ProfileTagType)
     author = models.ForeignKey(
         "profiles.Profile", on_delete=models.SET_NULL, null=True, blank=True
     )
     description = models.TextField(blank=True)
-    is_verified = models.BooleanField(default=False)
+    status = EnumField(ProfileTagStatus, default=ProfileTagStatus.APPROVED, max_length=64)
+    is_featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def get_types_formatted(self) -> List[str]:
         return [type_instance.type.value for type_instance in self.types.all()]
-    # 
+
     # def count(self) -> int:
     #     return Profile.objects.filter(tags__in=[self]).count()
 
