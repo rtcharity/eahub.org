@@ -1,4 +1,4 @@
-<div class="profile-edit-tags mt-5 mb-5">
+<div class="profile-edit-tags">
 
   <ais-instant-search
       :search-client="searchClient"
@@ -6,7 +6,7 @@
   >
     <h4 class="mb-3">{{ typeLabel }}</h4>
     
-    <div class="tags__input">
+    <div class="tags__input-container">
       <div class="tags__selected">
         <div
           class="tags__tag"
@@ -24,7 +24,8 @@
       <ais-search-box
           v-model="searchQuery"
           v-on:input="processTagSearchInput($event)"
-          :placeholder="'Add a new tag...'"
+          :placeholder="'Add tags separated by commas...'"
+          @focus="isShowSearchResultBox = true"
       />
     </div>
 
@@ -32,12 +33,20 @@
         attribute="types"
         ref="typesRef"
     />
+    
+    <div class="tags__result-box-background"
+      v-show="isShowSearchResultBox"
+      @click="isShowSearchResultBox = false"
+    ></div>
 
-    <ais-state-results>
-      <div slot-scope="{ state: { query }, results: { hits } }">
+    <ais-state-results
+      v-show="isShowSearchResultBox"
+      
+    >
+      <div>
         <ais-infinite-hits>
-          <div class="row row-cols-3" slot-scope="{ items }">
-            <div class="col tag"
+          <div class="row row-cols-1 row-cols-xl-3" slot-scope="{ items }" v-show="items">
+            <div class="col tag mb-3"
                 v-for="item of items"
                 :key="item.objectID"
                 :class="{selected: isSelected(item.objectID)}"
@@ -47,7 +56,13 @@
                 <ais-highlight :hit="item" attribute="name"/> 
               </div>
               <span class="tag__count" v-if="item.count">{{item.count}}</span>
-              <div class="tag__desc"><ais-highlight :hit="item" attribute="description"/></div>
+              <div class="tag__desc">
+                <ais-highlight :hit="item" attribute="description"/>
+              </div>
+              <div class="tag__synonyms" v-if="item.synonyms">
+                <span class="fst-italic">Also:</span>
+                <ais-highlight :hit="item" attribute="synonyms"/>
+              </div>
             </div>
           </div>
         </ais-infinite-hits>

@@ -36,6 +36,7 @@ export default class ProfileEditComponent extends Vue {
     @Provide() searchQuery: string = '';
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
+    @Provide() isShowSearchResultBox: boolean = false;
 
     @Ref('typesRef') readonly typesRef;
     private tagsUrl = `/profile/api/profiles/${this.profilePk}/`;

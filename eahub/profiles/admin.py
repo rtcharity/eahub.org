@@ -164,10 +164,11 @@ class ProfileTagTypeAdmin(admin.ModelAdmin):
 class ProfileTagAdmin(admin.ModelAdmin):
     list_display = [
         "name",
-        "author",
+        "synonyms",
         "description",
         "get_types_formatted",
         "status",
+        "author",
         "is_featured",
         "created_at",
         "count",
@@ -180,6 +181,13 @@ class ProfileTagAdmin(admin.ModelAdmin):
         "status",
         "is_featured",
         "created_at",
+    ]
+    search_fields = [
+        "name",
+        "synonyms",
+        "description",
+        "author__user__email",
+        "author__name",
     ]
 
     @options(desc="types")

@@ -415,6 +415,7 @@ class ProfileTag(models.Model):
         "profiles.Profile", on_delete=models.SET_NULL, null=True, blank=True
     )
     description = models.TextField(blank=True)
+    synonyms = models.CharField(blank=True, max_length=1024)
     status = EnumField(
         ProfileTagStatus, default=ProfileTagStatus.APPROVED, max_length=64
     )

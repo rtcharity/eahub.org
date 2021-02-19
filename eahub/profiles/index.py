@@ -51,6 +51,7 @@ if settings.IS_ENABLE_ALGOLIA:
         fields = [
             "name",
             "description",
+            "synonyms",
             ["get_types_formatted", "types"],
             "created_at",
             "status",
