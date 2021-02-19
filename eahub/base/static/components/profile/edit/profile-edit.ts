@@ -52,7 +52,6 @@ export default class ProfileEditComponent extends Vue {
     }
 
     async processTagSearchInput(value: string) {
-        console.log('change', value);
         if (value.endsWith(',')) {
             this.searchQuery = '';
             const tagName = value.slice(0, -1)
@@ -84,13 +83,13 @@ export default class ProfileEditComponent extends Vue {
         try {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsPksSelected;
-            const response = await this.http.patch(this.tagsUrl, data);
-            console.log(response)
+            await this.http.patch(this.tagsUrl, data);
         } catch (e) {
-            console.log(e);
+            console.error(e);
         }
         
         this.tagsSelected.push(tag);
+        this.searchQuery = '';
     }
     
     async remove(pkToDrop: number) {
@@ -100,9 +99,7 @@ export default class ProfileEditComponent extends Vue {
         try {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsSelectedNew.map(tag => tag.pk);
-            console.log(data);
             const response = await this.http.patch(this.tagsUrl, data);
-            console.log(response)
             this.tagsSelected = tagsSelectedNew;
         } catch (e) {
             console.log(e);

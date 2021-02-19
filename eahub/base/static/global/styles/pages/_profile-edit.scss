@@ -3,11 +3,82 @@
 .profile-edit-tags {
     .ais-RefinementList,
     .ais-InfiniteHits-loadMore,
+    .ais-SearchBox-reset,
     .ais-SearchBox-submit {
         display: none;
     }
     
     .selected {
         display: none;
+    }
+    
+    %tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.2rem 0.4rem;
+        margin: 0.4rem;
+        margin-right: 0;
+        background: #ddefec94;
+        color: #0b5046;
+    }
+    
+    .tags__input {
+        border: 1px solid $gray-500;
+        z-index: 2;
+    
+        .tags__selected {
+            display: inline-flex;
+            
+            .tags__tag {
+                @extend %tag;
+                .btn-close {
+                    margin-left: 0.2rem;
+                    background-size: 0.7em;
+                }
+            }
+        }
+        .ais-SearchBox {
+            display: inline-flex;
+            
+            form {
+                input {
+                    border: 0;
+                    margin-left: 0.4rem;
+                    
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+        }
+    }
+    .ais-StateResults {
+        margin-bottom: 1.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        padding-bottom: 0.5rem;
+        box-shadow: 0 0 7px #00000014;
+        border: 1px solid #e2e2e2;
+        border-radius: 4px;
+        z-index: 1;
+        
+        .tag {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+    
+            .tag__name {
+                @extend %tag;
+            }
+            .tag__count {
+                margin-left: 0.4rem;
+                color: $gray-600;
+                font-size: 0.8rem;
+            }
+            .tag__desc {
+                margin-top: 0.2rem;
+                padding-left: 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
     }
 }
