@@ -68,6 +68,11 @@ If you make your profile private but enter a location, an anonymous pin represen
   {% endif %}
 </div>
 
+{{ form.allow_messaging|as_crispy_field }}
+<div class="profile-edit-privacy-note">
+  Your email address won't be visible to them
+</div>
+
 {% endblock %}
 
 {% block submit%}Update{% endblock%}

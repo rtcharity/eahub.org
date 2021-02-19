@@ -13,7 +13,7 @@ if settings.IS_ENABLE_ALGOLIA:
 
         fields = [
             "name",
-            ["get_email_searchable", "email"],
+            "messaging_url_if_allowed",
             "summary",
             "topics_i_speak_about",
             "expertise_areas_other",

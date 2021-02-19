@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from flags.state import flag_enabled
 
@@ -92,15 +93,40 @@ class ReportProfileAbuseView(ReportAbuseView):
 
 
 class SendProfileMessageView(SendMessageView):
+    def profile(self):
+        profile = Profile.objects.get(slug=self.kwargs["slug"])
+        if not (profile.allow_messaging):
+            raise http.Http404("user has turned off messaging")
+    
+        return profile
+    
     def form_valid(self, form):
         recipient = Profile.objects.get(slug=self.kwargs["slug"])
-        message: str = form.cleaned_data["your_message"]
-        sender_email = form.cleaned_data["your_email_address"]
+        sender_name = form.cleaned_data["your_name"]
+        sender_email_address = form.cleaned_data["your_email_address"]
+        message = form.cleaned_data["your_message"]
+        txt_message = render_to_string(
+            "emails/message_profile.txt",
+            {
+                    "sender_name": sender_name,
+                    "recipient": recipient.name,
+                    "message": message,
+             },
+        )
+        html_message = render_to_string(
+            "emails/message_profile.html",
+            {
+                "sender_name": sender_name,
+                "recipient": recipient.name,
+                "message": message,
+            },
+        )
         send_mail(
-            f"{sender_email} sent you a message through the EA hub.",
-            message,
-            sender_email,
+            f"{sender_name} wants to connect with you!",
+            txt_message,
+            sender_email_address,
             [recipient.user.email],
+            html_message = html_message,
         )
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
@@ -109,7 +135,7 @@ class SendProfileMessageView(SendMessageView):
 
     def get(self, request, *args, **kwargs):
         if not flag_enabled("MESSAGING_FLAG", request=request):
-            raise Http404("Page does not exist")
+            raise Http404("Messaging not available for this user")
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
