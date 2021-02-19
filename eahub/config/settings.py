@@ -178,7 +178,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 LOGIN_URL = "account_login"
-LOGIN_REDIRECT_URL = "profiles:my_profile"
+LOGIN_REDIRECT_URL = "profiles_app:my_profile"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
