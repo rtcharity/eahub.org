@@ -14,7 +14,7 @@ class TagsApiTestCase(EAHubTestCase, APITestCase):
             f"/profile/api/profiles/tags/create/",
             data={
                 "name": "Management",
-                "type": ProfileTagTypeEnum.CAREER_INTEREST_AREA.value,
+                "type": ProfileTagTypeEnum.CAREER_INTEREST.value,
             },
             format="json",
         )
@@ -22,27 +22,18 @@ class TagsApiTestCase(EAHubTestCase, APITestCase):
         self.assertEqual(tag.author, profile)
 
     def test_addition(self):
-        for tag_type in [
-            ProfileTagTypeEnum.GENERIC,
-            ProfileTagTypeEnum.CAUSE_AREA,
-            ProfileTagTypeEnum.EXPERTISE_AREA,
-        ]:
+        # noinspection PyTypeChecker
+        for tag_type in ProfileTagTypeEnum:
             self._test_addition(tag_type)
 
     def test_retrieval(self):
-        for tag_type in [
-            ProfileTagTypeEnum.GENERIC,
-            ProfileTagTypeEnum.CAUSE_AREA,
-            ProfileTagTypeEnum.EXPERTISE_AREA,
-        ]:
+        # noinspection PyTypeChecker
+        for tag_type in ProfileTagTypeEnum:
             self._test_retrieval(tag_type)
 
     def test_deletion(self):
-        for tag_type in [
-            ProfileTagTypeEnum.GENERIC,
-            ProfileTagTypeEnum.CAUSE_AREA,
-            ProfileTagTypeEnum.EXPERTISE_AREA,
-        ]:
+        # noinspection PyTypeChecker
+        for tag_type in ProfileTagTypeEnum:
             self._test_deletion(tag_type)
 
     def _test_addition(self, type_enum: ProfileTagTypeEnum):
@@ -53,16 +44,17 @@ class TagsApiTestCase(EAHubTestCase, APITestCase):
             data={f"{tags_field_name}_pks": [tag1.pk, tag2.pk, tag3.pk]},
         )
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.data[f"{tags_field_name}_pks"], [tag1.pk, tag2.pk, tag3.pk]
-        )
+        self.assertIn(tag1.pk, response.data[f"{tags_field_name}_pks"])
+        self.assertIn(tag2.pk, response.data[f"{tags_field_name}_pks"])
+        self.assertIn(tag3.pk, response.data[f"{tags_field_name}_pks"])
 
     def _test_retrieval(self, type_enum: ProfileTagTypeEnum):
         profile, tag1, tag2, tags_field_name = self._generate_tags(type_enum)
         response = self.client.get(self._url_detail(profile.pk))
         self.assertEqual(response.status_code, 200)
         tags = response.data[tags_field_name]
-        self.assertEqual(response.data[f"{tags_field_name}_pks"], [tag1.pk, tag2.pk])
+        self.assertIn(tag1.pk, response.data[f"{tags_field_name}_pks"])
+        self.assertIn(tag2.pk, response.data[f"{tags_field_name}_pks"])
         for tag in tags:
             if tag["name"] == tag1.name:
                 self.assertEqual(tag["types"][0]["type"], type_enum.value)

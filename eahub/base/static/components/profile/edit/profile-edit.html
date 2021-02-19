@@ -41,11 +41,10 @@
 
     <ais-state-results
       v-show="isShowSearchResultBox"
-      
     >
       <div>
         <ais-infinite-hits>
-          <div class="row row-cols-1 row-cols-xl-3" slot-scope="{ items }" v-show="items">
+          <div class="row row-cols-1 row-cols-xl-2" slot-scope="{ items }" v-show="items">
             <div class="col tag mb-3"
                 v-for="item of items"
                 :key="item.objectID"

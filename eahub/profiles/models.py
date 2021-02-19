@@ -389,10 +389,10 @@ class ProfileTagTypeEnum(Enum):
     EXPERTISE_AREA = "expertise_area"
     CAUSE_AREA = "cause_area"
     ORGANISATIONAL_AFFILIATION = "organisational_affiliation"
-    CAREER_INTEREST_AREA = "career_interest_area"
+    CAREER_INTEREST = "career_interest"
     SPEECH_TOPIC = "speech_topic"
     PLEDGE = "pledge"
-    ATTENDED_EVENT = "attended_event"
+    # ATTENDED_EVENT = "attended_event"
 
 
 class ProfileTagType(models.Model):
@@ -494,6 +494,30 @@ class Profile(models.Model):
         limit_choices_to={"types__type": ProfileTagTypeEnum.EXPERTISE_AREA},
         blank=True,
         related_name="tags_expertise_area",
+    )
+    tags_organisational_affiliation = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION},
+        blank=True,
+        related_name="tags_organisational_affiliation",
+    )
+    tags_career_interest = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.CAREER_INTEREST},
+        blank=True,
+        related_name="tags_career_interest",
+    )
+    tags_speech_topic = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.SPEECH_TOPIC},
+        blank=True,
+        related_name="tags_speech_topic",
+    )
+    tags_pledge = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.PLEDGE},
+        blank=True,
+        related_name="tags_pledge",
     )
 
     cause_areas = postgres_fields.ArrayField(

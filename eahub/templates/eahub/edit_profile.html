@@ -50,6 +50,55 @@
         >
           <div class="vue-profile-edit"></div>
         </div>
+
+        <div
+          class="col mb-5"
+          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          type-name="organisational_affiliation"
+          type-label="Organisational affiliations"
+          profile-pk="{{ profile.pk }}"
+        >
+          <div class="vue-profile-edit"></div>
+        </div>
+      
+        <div
+          class="col mb-5"
+          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          type-name="career_interest"
+          type-label="Career interests"
+          profile-pk="{{ profile.pk }}"
+        >
+          <div class="vue-profile-edit"></div>
+        </div>
+      
+        <div
+          class="col mb-5"
+          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          type-name="speech_topic"
+          type-label="Speech topic"
+          profile-pk="{{ profile.pk }}"
+        >
+          <div class="vue-profile-edit"></div>
+        </div>
+      
+        <div
+          class="col mb-5"
+          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          type-name="pledge"
+          type-label="Pledges"
+          profile-pk="{{ profile.pk }}"
+        >
+          <div class="vue-profile-edit"></div>
+        </div>
+      
       </div>
 
       {% if settings.DJANGO_ENV.value == "local" %}
