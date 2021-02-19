@@ -37,7 +37,7 @@ certifi==2020.12.5
     #   djeese-fs
     #   requests
     #   sentry-sdk
-cffi==1.14.4
+cffi==1.14.5
     # via cryptography
 chardet==4.0.0
     # via
@@ -53,7 +53,7 @@ click==7.1.2
     #   aldryn-django
     #   black
     #   pip-tools
-cryptography==3.3.1
+cryptography==3.4.6
     # via pyjwt
 defusedxml==0.6.0
     # via
@@ -81,19 +81,21 @@ django-authtools==1.7.0
     # via -r requirements.in
 django-autoslug==1.9.8
     # via -r requirements.in
-django-cache-url==3.1.2
+django-cache-url==3.2.3
     # via aldryn-django
 django-classy-tags==2.0.0
     # via django-sekizai
 django-cleanup==5.1.0
     # via -r requirements.in
-django-crispy-forms==1.10.0
+django-crispy-forms==1.11.0
     # via -r requirements.in
 django-enumfield==1.6
     # via -r requirements.in
+django-enumfields==2.0.0
+    # via -r requirements.in
 django-environ==0.4.5
     # via -r requirements.in
-django-extensions==3.1.0
+django-extensions==3.1.1
     # via -r requirements.in
 django-feature-policy==3.7.0
     # via -r requirements.in
@@ -148,15 +150,18 @@ django==2.2.16
     #   django-settings-export
     #   django-storages
     #   django-upload-path
+    #   djangorestframework
     #   easy-thumbnails
     #   model-bakery
+djangorestframework==3.12.2
+    # via -r requirements.in
 djeese-fs==0.1.21
     # via aldryn-django
 easy-thumbnails==2.7.1
     # via aldryn-django
 et-xmlfile==1.0.1
     # via openpyxl
-faker==5.8.0
+faker==6.4.1
     # via -r requirements.in
 flake8-isort==4.0.0
     # via -r requirements.in
@@ -192,14 +197,14 @@ isort[requirements]==5.7.0
     #   flake8-isort
 jaraco.classes==3.2.0
     # via jaraco.collections
-jaraco.collections==3.1.0
+jaraco.collections==3.2.0
     # via cherrypy
-jaraco.functools==3.1.0
+jaraco.functools==3.2.0
     # via
     #   cheroot
     #   jaraco.text
     #   tempora
-jaraco.text==3.4.0
+jaraco.text==3.5.0
     # via jaraco.collections
 jasmine-core==3.6.0
     # via jasmine
@@ -209,7 +214,7 @@ jdcal==1.4.1
     # via openpyxl
 jellyfish==0.6.1
     # via us
-jinja2==2.11.2
+jinja2==2.11.3
     # via jasmine
 markuppy==1.14
     # via tablib
@@ -219,7 +224,7 @@ mccabe==0.6.1
     # via flake8
 model-bakery==1.2.1
     # via -r requirements.in
-more-itertools==8.6.0
+more-itertools==8.7.0
     # via
     #   cheroot
     #   cherrypy
@@ -249,7 +254,7 @@ pip-tools==5.5.0
     # via -r requirements.in
 pluggy==0.13.1
     # via pytest
-portend==2.7.0
+portend==2.7.1
     # via cherrypy
 psycopg2==2.8.6
     # via aldryn-django
@@ -298,7 +303,7 @@ python-dotenv==0.15.0
     # via -r requirements.in
 python3-openid==3.2.0
     # via django-allauth
-pytz==2020.5
+pytz==2021.1
     # via
     #   django
     #   tempora
@@ -325,7 +330,7 @@ selenium==3.141.0
     # via
     #   jasmine
     #   pytest-selenium
-sentry-sdk==0.19.5
+sentry-sdk==0.20.3
     # via
     #   -r requirements.in
     #   aldryn-django
@@ -333,7 +338,6 @@ six==1.15.0
     # via
     #   aldryn-client
     #   cheroot
-    #   cryptography
     #   django-adminutils
     #   python-dateutil
     #   tenacity
@@ -343,7 +347,7 @@ sqlparse==0.4.1
     # via django
 tablib[html,ods,xls,xlsx,yaml]==3.0.0
     # via django-import-export
-tabulate==0.8.7
+tabulate==0.8.8
     # via aldryn-client
 tempora==4.0.1
     # via portend
@@ -387,7 +391,6 @@ zc.lockfile==2.0
     # via cherrypy
 zipp==3.4.0
     # via importlib-metadata
-django-enumfields==2.0.0
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
