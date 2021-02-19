@@ -1,22 +1,25 @@
 import {SearchClient} from 'algoliasearch/dist/algoliasearch-lite';
 import algoliasearch from 'algoliasearch/lite';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import VueObserveVisibility from 'vue-observe-visibility';
 import {Ref} from 'vue-property-decorator';
 import {Provide} from 'vue-property-decorator';
 import {Component, Prop, Vue} from 'vue-property-decorator';
-
-
-Vue.use(VueObserveVisibility);
+import HttpService from 'eahub/base/static/components/services/http';
 
 
 interface Tag {
     pk: number
     name: string
-    types: [
+    count?: number
+    types?: [
         {type: string}
     ]
+}
+
+
+interface TagAlgolia {
+    objectID: string
+    name: string
+    description: string
 }
 
 
@@ -25,9 +28,8 @@ export default class ProfileEditComponent extends Vue {
     @Prop(String) algoliaApiKey: string;
     @Prop(String) algoliaApplicationId: string;
     @Prop(String) algoliaIndex: string;
-    @Prop(String) type: string;
+    @Prop(String) typeLabel: string;
     @Prop(String) typeName: string;
-    @Prop(String) typeFieldName: string;
     @Prop(Number) profilePk: number;
 
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
@@ -37,13 +39,14 @@ export default class ProfileEditComponent extends Vue {
 
     @Ref('typesRef') readonly typesRef;
     private profileUrl = `/profile/api/profiles/${this.profilePk}/`;
+    private http = new HttpService();
 
     async mounted() {
-        const response = await axios.get(this.profileUrl);
-        this.tagsSelected = response.data[this.typeFieldName];
+        const response = await this.http.get(this.profileUrl);
+        this.tagsSelected = response.data[`tags_${this.typeName}`];
 
         await this.sleep(300);
-        this.typesRef.refine(this.type);
+        this.typesRef.refine(this.typeName);
     }
 
     checkSearchTagInput(value) {
@@ -59,24 +62,36 @@ export default class ProfileEditComponent extends Vue {
         );
     }
 
+    async add(tagRaw: TagAlgolia) {
+        const tag: Tag = {
+            pk: Number(tagRaw.objectID),
+            name: tagRaw.name,
+        }
+        const tagsPksSelected = this.tagsSelected.map(tag => tag.pk);
+        tagsPksSelected.push(tag.pk);
+        try {
+            let data = {};
+            data[`tags_${this.typeName}_pks`] = tagsPksSelected;
+            const response = await this.http.patch(this.profileUrl, data);
+            console.log(response)
+        } catch (e) {
+            console.log(e);
+        }
+        
+        this.tagsSelected.push(tag);
+    }
+    
     async remove(pkToDrop: number) {
-        const tagsSelected = this.tagsSelected.filter(
+        const tagsSelectedNew = this.tagsSelected.filter(
             tag => tag.pk !== Number(pkToDrop)
         );
         try {
             let data = {};
-            data[`${this.typeFieldName}_pks`] = tagsSelected.map(tag => tag.pk);
-            const response = await axios.patch(
-                this.profileUrl,
-                data,
-                {
-                    headers: {
-                        'X-CSRFToken': Cookies.get('csrftoken')
-                    }
-                }
-            );
+            data[`tags_${this.typeName}_pks`] = tagsSelectedNew.map(tag => tag.pk);
+            console.log(data);
+            const response = await this.http.patch(this.profileUrl, data);
             console.log(response)
-            this.tagsSelected = tagsSelected;
+            this.tagsSelected = tagsSelectedNew;
         } catch (e) {
             console.log(e);
         }

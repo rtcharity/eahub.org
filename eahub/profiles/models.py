@@ -386,13 +386,13 @@ def validate_sluggable_name(name):
 
 class ProfileTagTypeEnum(Enum):
     GENERIC = "generic"
-    EXPERTISE = "expertise"
+    EXPERTISE_AREA = "expertise_area"
     CAUSE_AREA = "cause_area"
     ORGANISATIONAL_AFFILIATION = "organisational_affiliation"
     CAREER_INTEREST_AREA = "career_interest_area"
     SPEECH_TOPIC = "speech_topic"
     PLEDGE = "pledge"
-    EVENT_ATTENDED = "event_attended"
+    ATTENDED_EVENT = "attended_event"
 
 
 class ProfileTagType(models.Model):
@@ -414,6 +414,9 @@ class ProfileTag(models.Model):
 
     def get_types_formatted(self) -> List[str]:
         return [type_instance.type.value for type_instance in self.types.all()]
+    # 
+    # def count(self) -> int:
+    #     return Profile.objects.filter(tags__in=[self]).count()
 
     def __str__(self):
         return self.name
@@ -429,7 +432,6 @@ class ProfileManager(models.Manager):
 
 
 class Profile(models.Model):
-
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
@@ -457,23 +459,23 @@ class Profile(models.Model):
     offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
     looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
 
-    tags = models.ManyToManyField(
+    tags_generic = models.ManyToManyField(
         ProfileTag,
         limit_choices_to={"types__type": ProfileTagTypeEnum.GENERIC},
         blank=True,
-        related_name="profiles",
+        related_name="tags_generic",
     )
-    cause_areas_new = models.ManyToManyField(
+    tags_cause_area = models.ManyToManyField(
         ProfileTag,
         limit_choices_to={"types__type": ProfileTagTypeEnum.CAUSE_AREA},
         blank=True,
-        related_name="cause_areas",
+        related_name="tags_cause_area",
     )
-    expertise_areas_new = models.ManyToManyField(
+    tags_expertise_area = models.ManyToManyField(
         ProfileTag,
-        limit_choices_to={"types__type": ProfileTagTypeEnum.EXPERTISE},
+        limit_choices_to={"types__type": ProfileTagTypeEnum.EXPERTISE_AREA},
         blank=True,
-        related_name="expertise_areas",
+        related_name="tags_expertise_area",
     )
 
     cause_areas = postgres_fields.ArrayField(
@@ -519,7 +521,7 @@ class Profile(models.Model):
         return self.is_approved and self.is_public and self.user.is_active
 
     def get_absolute_url(self):
-        return urls.reverse("profile", args=[self.slug])
+        return urls.reverse("profiles_app:profile", args=[self.slug])
 
     def get_email_searchable(self) -> Optional[str]:
         return self.user.email if self.email_visible else None
@@ -653,7 +655,9 @@ class Profile(models.Model):
                         ],
                         "aliases": [
                             request.build_absolute_uri(
-                                urls.reverse("profile", kwargs={"slug": slug.slug})
+                                urls.reverse(
+                                    "profiles_app:profile", kwargs={"slug": slug.slug}
+                                )
                             )
                             for slug in self.slugs.filter(redirect=True)
                         ],

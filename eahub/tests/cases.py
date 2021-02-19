@@ -35,6 +35,7 @@ class Gen:
         for tag_type in types:
             type_instance = ProfileTagType.objects.get_or_create(type=tag_type)[0]
             type_instances.append(type_instance)
+        kwargs["name"] = kwargs.get("name") or self.faker.unique.job()
         tag = baker.make("profiles.ProfileTag", **kwargs)
         tag.types.set(type_instances)
         return tag

@@ -64,7 +64,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.cache.UpdateCacheMiddleware",
     "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
-    "django_feature_policy.FeaturePolicyMiddleware",
+    "django_feature_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
@@ -245,29 +245,25 @@ ALGOLIA = {
 RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY", "")
 
-# django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
-# django-feature-policy
-FEATURE_POLICY = {
-    "accelerometer": "none",
-    "ambient-light-sensor": "none",
-    "autoplay": "none",
-    "camera": "none",
-    "encrypted-media": "none",
-    "fullscreen": "none",
-    "geolocation": "none",
-    "gyroscope": "none",
-    "magnetometer": "none",
-    "microphone": "none",
-    "midi": "none",
-    "payment": "none",
-    "picture-in-picture": "none",
-    "speaker": "none",
-    "sync-xhr": "none",
-    "usb": "none",
-    "vr": "none",
-}
+if DJANGO_ENV != DjangoEnv.LOCAL:
+    PERMISSIONS_POLICY = {
+        "accelerometer": [],
+        "autoplay": [],
+        "camera": [],
+        "encrypted-media": [],
+        "fullscreen": [],
+        "geolocation": [],
+        "gyroscope": [],
+        "magnetometer": [],
+        "microphone": [],
+        "midi": [],
+        "payment": [],
+        "picture-in-picture": [],
+        "sync-xhr": [],
+        "usb": [],
+    }
 
 PWNED_VALIDATOR_ERROR = mark_safe(
     "For your security, consider using a password that hasn't been "

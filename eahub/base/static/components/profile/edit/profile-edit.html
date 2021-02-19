@@ -4,19 +4,18 @@
       :search-client="searchClient"
       :index-name="algoliaIndex"
   >
-    <h5>{{ typeName }}</h5>
+    <h5>{{ typeLabel }}</h5>
     <div>
       <span 
         v-for="tag of tagsSelected"
       >
-        {{ tag.pk }} {{ tag.name }}
+        {{ tag.name }}
         <button
             type="button"
             class="btn-close"
             aria-label="Close"
             v-on:click="remove(tag.pk)"
         ></button>
-  
       </span>
     </div>
     <ais-search-box
@@ -36,8 +35,8 @@
                 v-for="item of items"
                 :key="item.objectID"
                 :class="{selected: isSelected(item.objectID)}"
+                v-on:click="add(item)"
             >
-              {{ item.objectID }}
               <ais-highlight :hit="item" attribute="name"/>
               <pre><ais-highlight :hit="item" attribute="description"/></pre>
             </li>

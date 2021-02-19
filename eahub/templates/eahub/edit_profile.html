@@ -19,9 +19,8 @@
           algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
           algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
           algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type="expertise"
-          type-name="Expertise"
-          type-field-name="expertise_areas_new"
+          type-name="expertise_area"
+          type-label="Expertise"
           profile-pk="{{ profile.pk }}"
         >
           <div class="vue-profile-edit"></div>
@@ -32,9 +31,8 @@
           algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
           algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
           algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type="cause_area"
-          type-field-name="cause_areas_new"
-          type-name="Cause Area"
+          type-name="cause_area"
+          type-label="Cause Area"
           profile-pk="{{ profile.pk }}"
         >
           <div class="vue-profile-edit"></div>

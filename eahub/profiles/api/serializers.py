@@ -2,8 +2,9 @@ from enumfields.drf import EnumSupportSerializerMixin
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from eahub.profiles.models import Profile, ProfileTag, ProfileTagTypeEnum
+from eahub.profiles.models import Profile, ProfileTag
 from eahub.profiles.models import ProfileTagType
+from eahub.profiles.models import ProfileTagTypeEnum
 
 
 class TagTypeSerializer(EnumSupportSerializerMixin, serializers.ModelSerializer):
@@ -27,48 +28,50 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, required=False)
-    tags_pks = PrimaryKeyRelatedField(
+    tags_generic = TagSerializer(many=True, required=False)
+    tags_generic_pks = PrimaryKeyRelatedField(
         many=True,
         read_only=False,
-        queryset=ProfileTag.objects.all(),
-        source="tags",
+        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.GENERIC),
+        source=f"tags_{ProfileTagTypeEnum.GENERIC.value}",
         required=False,
     )
-    expertise_areas_new = TagSerializer(many=True, required=False)
-    expertise_areas_new_pks = PrimaryKeyRelatedField(
+    tags_expertise_area = TagSerializer(many=True, required=False)
+    tags_expertise_area_pks = PrimaryKeyRelatedField(
         many=True,
         read_only=False,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.EXPERTISE),
-        source="expertise_areas_new",
+        queryset=ProfileTag.objects.filter(
+            types__type=ProfileTagTypeEnum.EXPERTISE_AREA
+        ),
+        source=f"tags_{ProfileTagTypeEnum.EXPERTISE_AREA.value}",
         required=False,
     )
-    cause_areas_new = TagSerializer(many=True, required=False)
-    cause_areas_new_pks = PrimaryKeyRelatedField(
+    tags_cause_area = TagSerializer(many=True, required=False)
+    tags_cause_area_pks = PrimaryKeyRelatedField(
         many=True,
-        read_only=False,
+        read_only=False,  # todo redundant?
         queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.CAUSE_AREA),
-        source="cause_areas_new",
+        source=f"tags_{ProfileTagTypeEnum.CAUSE_AREA.value}",
         required=False,
     )
 
     class Meta:
         model = Profile
         fields = [
-            "tags",
-            "tags_pks",
-            "expertise_areas_new",
-            "expertise_areas_new_pks",
-            "cause_areas_new",
-            "cause_areas_new_pks",
+            "tags_generic",
+            "tags_generic_pks",
+            "tags_expertise_area",
+            "tags_expertise_area_pks",
+            "tags_cause_area",
+            "tags_cause_area_pks",
         ]
 
-    def update(self, instance: Profile, validated_data: dict, **kwargs) -> Profile:
-        self._m2m_field_update(instance, validated_data, field_name="tags")
+    def update(self, instance: Profile, validated_data: dict) -> Profile:
+        self._m2m_field_update(instance, validated_data, field_name="tags_generic")
         self._m2m_field_update(
-            instance, validated_data, field_name="expertise_areas_new"
+            instance, validated_data, field_name="tags_expertise_area"
         )
-        self._m2m_field_update(instance, validated_data, field_name="cause_areas_new")
+        self._m2m_field_update(instance, validated_data, field_name="tags_cause_area")
         return super().update(instance, validated_data)
 
     def _m2m_field_update(

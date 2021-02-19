@@ -1,6 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`);
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const SentryWebpackPlugin = require("@sentry/webpack-plugin");
@@ -19,8 +19,6 @@ const config = {
     component_profile_edit: './eahub/base/static/components/profile/edit/main.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
-    component_multiselect_forms: './eahub/base/static/components/multiselect-forms.js',
-    component_profile_edit_image: './eahub/base/static/components/profile-edit-image.js',
     component_tables: './eahub/base/static/components/tables.js'
   },
   output: {
@@ -59,13 +57,13 @@ const config = {
         ]
       },
       {
-          test: /\.(ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
-          use: [{
-              loader: 'file-loader',
-              options: {
-                name: '[name].[ext]',
-              }
-          }]
+        test: /\.(ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+          }
+        }]
       },
       {
         // images
@@ -118,6 +116,7 @@ const config = {
     extensions: ['.ts', '.tsx', '.js',],
     modules: [
       path.resolve('eahub/base/static'),
+      path.resolve('.'),
       'node_modules'
     ],
     alias: {
@@ -131,6 +130,7 @@ const config = {
     port: 8090,
     hot: true,
     inline: true,
+    clientLogLevel: 'silent'
   },
   plugins: [
     new VueLoaderPlugin(),
@@ -142,7 +142,6 @@ const config = {
     new MiniCssExtractPlugin({filename: '[name].css'}),
   ],
 }
-
 
 const isDevelopmentMode = process.env.NODE_ENV !== 'prod';
 if (isDevelopmentMode) {
@@ -165,9 +164,9 @@ if (isDevelopmentMode) {
 
 const isDockerMode = process.env.NODE_ENV === 'docker';
 if (isDockerMode) {
-    config.devServer.watchOptions = {
-        poll: 100, // enable polling since fsevents are not supported in docker
-    }
+  config.devServer.watchOptions = {
+    poll: 100, // enable polling since fsevents are not supported in docker
+  }
 }
 
 module.exports = config;

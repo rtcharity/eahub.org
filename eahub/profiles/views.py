@@ -89,7 +89,7 @@ class SendProfileMessageView(SendMessageView):
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
         )
-        return redirect(reverse("profile", args=([recipient.slug])))
+        return redirect(reverse("profiles_app:profile", args=([recipient.slug])))
 
     def get(self, request, *args, **kwargs):
         if not flag_enabled("MESSAGING_FLAG", request=request):

@@ -15,9 +15,8 @@ const Widget = Vue.extend({
                 algoliaApiKey: this.$el.parentElement.getAttribute('algolia-api-key'),
                 algoliaApplicationId: this.$el.parentElement.getAttribute('algolia-application-id'),
                 algoliaIndex: this.$el.parentElement.getAttribute('algolia-index'),
-                type: this.$el.parentElement.getAttribute('type'),
-                typeFieldName: this.$el.parentElement.getAttribute('type-field-name'),
                 typeName: this.$el.parentElement.getAttribute('type-name'),
+                typeLabel: this.$el.parentElement.getAttribute('type-label'),
                 profilePk: eval(this.$el.parentElement.getAttribute('profile-pk')),
             }
         })

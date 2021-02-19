@@ -63,9 +63,9 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     search_fields = ["user__email", "name"]
     ordering = ["-user__date_joined"]
     filter_horizontal = [
-        "tags",
-        "cause_areas_new",
-        "expertise_areas_new",
+        "tags_generic",
+        "tags_cause_area",
+        "tags_expertise_area",
     ]
 
     def get_actions(self, request: HttpRequest) -> dict:
