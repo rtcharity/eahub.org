@@ -59,6 +59,7 @@ class EditProfileForm(forms.ModelForm):
         widgets = {
             "city_or_town": forms.TextInput(attrs={"placeholder": "London"}),
             "country": forms.TextInput(attrs={"placeholder": "UK"}),
+            "allow_messaging" : forms.BooleanField(),
             "linkedin_url": forms.TextInput(),
             "facebook_url": forms.TextInput(),
             "personal_website_url": forms.TextInput(),
