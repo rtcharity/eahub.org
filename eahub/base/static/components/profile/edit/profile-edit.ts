@@ -30,13 +30,15 @@ export default class ProfileEditComponent extends Vue {
     @Prop(String) algoliaIndex: string;
     @Prop(String) typeLabel: string;
     @Prop(String) typeName: string;
-    @Prop(Number) profilePk: number;
+    @Prop(String) profilePk: string;
+    @Prop(String) searchResultsCols: string;
 
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
     @Provide() searchQuery: string = '';
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
     @Provide() isShowResultsPopup: boolean = false;
+    
     private hideResultsPopupEventName: string = 'hide-popup-background';
 
     @Ref('typesRef') readonly typesRef;

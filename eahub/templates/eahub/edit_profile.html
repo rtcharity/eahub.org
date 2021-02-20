@@ -14,87 +14,58 @@
     <form method="post" action="{% url 'profiles_app:edit_profile' %}">
       {% csrf_token %}
       
-      <div class="row row-cols-1 row-cols-xl-2 pt-5">
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="expertise_area"
-          type-label="Expertise"
-          profile-pk="{{ profile.pk }}"
+      <div class="row row-cols-1 row-cols-xl-2 pt-5"
+        data-algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+        data-algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+        data-algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+        data-profile-pk="{{ profile.pk }}"
+      >
+        <div class="col mb-5"
+          data-type-name="expertise_area"
+          data-type-label="Expertise"
         >
           <div class="vue-profile-edit"></div>
         </div>
 
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="cause_area"
-          type-label="Cause Area"
-          profile-pk="{{ profile.pk }}"
+        <div class="col mb-5"
+          data-type-name="cause_area"
+          data-type-label="Cause Area"
         >
           <div class="vue-profile-edit"></div>
         </div>
 
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="generic"
-          type-label="Tags"
-          profile-pk="{{ profile.pk }}"
+        <div class="col mb-5"
+          data-type-name="generic"
+          data-type-label="Tags"
         >
           <div class="vue-profile-edit"></div>
         </div>
 
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="organisational_affiliation"
-          type-label="Organisational affiliations"
-          profile-pk="{{ profile.pk }}"
+        <div class="col mb-5"
+          data-type-name="organisational_affiliation"
+          data-type-label="Organisational affiliations"
+          data-search-results-cols="1"
         >
           <div class="vue-profile-edit"></div>
         </div>
       
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="career_interest"
-          type-label="Career interests"
-          profile-pk="{{ profile.pk }}"
+        <div class="col mb-5"
+          data-type-name="career_interest"
+          data-type-label="Career interests"
         >
           <div class="vue-profile-edit"></div>
         </div>
       
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="speech_topic"
-          type-label="Speech topic"
-          profile-pk="{{ profile.pk }}"
+        <div class="col mb-5"
+          data-type-name="speech_topic"
+          data-type-label="Speech topic"
         >
           <div class="vue-profile-edit"></div>
         </div>
       
-        <div
-          class="col mb-5"
-          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          type-name="pledge"
-          type-label="Pledges"
-          profile-pk="{{ profile.pk }}"
+        <div class="col mb-5"
+          data-type-name="pledge"
+          data-type-label="Pledges"
         >
           <div class="vue-profile-edit"></div>
         </div>
