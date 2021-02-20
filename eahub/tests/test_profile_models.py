@@ -19,43 +19,6 @@ class ProfileTestCase(EAHubTestCase):
 
         self.assertTrue(profile.get_is_organiser())
 
-    def test_get_exportable_field_names(self):
-        actual = Profile.get_exportable_field_names()
-
-        expected_field_names = [
-            "id",
-            "user",
-            "slug",
-            "is_public",
-            "is_approved",
-            "name",
-            "image",
-            "city_or_town",
-            "country",
-            "linkedin_url",
-            "facebook_url",
-            "personal_website_url",
-            "lat",
-            "lon",
-            "cause_areas",
-            "available_to_volunteer",
-            "open_to_job_offers",
-            "expertise_areas",
-            "career_interest_areas",
-            "available_as_speaker",
-            "email_visible",
-            "topics_i_speak_about",
-            "organisational_affiliations",
-            "summary",
-            "giving_pledges",
-            "legacy_record",
-            "offering",
-            "looking_for",
-            "local_groups",
-        ]
-
-        self.assertListEqual(expected_field_names, actual)
-
     def test_save_analytics_on_profile_creation(self):
         profile = create_profile("test@email.com", "User1")
 
@@ -90,7 +53,7 @@ class ProfileTestCase(EAHubTestCase):
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(8, len(analytics_logs))
+        self.assertEqual(15, len(analytics_logs))
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(
             all(
