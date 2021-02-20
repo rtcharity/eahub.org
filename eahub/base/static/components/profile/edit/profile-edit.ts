@@ -36,7 +36,8 @@ export default class ProfileEditComponent extends Vue {
     @Provide() searchQuery: string = '';
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
-    @Provide() isShowPopupBackground: boolean = false;
+    @Provide() isShowResultsPopup: boolean = false;
+    private hideResultsPopupEventName: string = 'hide-popup-background';
 
     @Ref('typesRef') readonly typesRef;
     private tagsUrl = `/profile/api/profiles/${this.profilePk}/`;
@@ -51,9 +52,8 @@ export default class ProfileEditComponent extends Vue {
         await this.sleep(300);
         this.typesRef.refine(this.typeName);
         
-        this.initPopupBackgroundHandler();
+        this.initResultsPopupHandler();
     }
-
     async processTagSearchInput(value: string) {
         if (value.endsWith(',')) {
             this.searchQuery = '';
@@ -69,24 +69,21 @@ export default class ProfileEditComponent extends Vue {
             console.error('invalid input')
         }
     }
-    
-    hidePopupBackground() {
-        const event = new Event('hide-popup-background');
+    showResultsPopup() {
+        const event = new Event(this.hideResultsPopupEventName);
         document.dispatchEvent(event);
+        this.isShowResultsPopup = true;
     }
-    
-    initPopupBackgroundHandler() {
-        document.addEventListener('hide-popup-background', () => {
-            this.isShowPopupBackground = false;
+    initResultsPopupHandler() {
+        document.addEventListener(this.hideResultsPopupEventName, () => {
+            this.isShowResultsPopup = false;
         });
     }
-
     isSelected(pk: string): boolean {
         return Boolean(
             this.tagsSelected.find(tag => tag.pk === Number(pk))
         );
     }
-
     async add(tagRaw: TagAlgolia | Tag) {
         const tag: Tag = {
             pk: Number(tagRaw['objectID']) || tagRaw['pk'],
@@ -105,7 +102,6 @@ export default class ProfileEditComponent extends Vue {
         this.tagsSelected.push(tag);
         this.searchQuery = '';
     }
-    
     async remove(pkToDrop: number) {
         const tagsSelectedNew = this.tagsSelected.filter(
             tag => tag.pk !== Number(pkToDrop)
@@ -119,7 +115,6 @@ export default class ProfileEditComponent extends Vue {
             console.log(e);
         }
     }
-
     private async sleep(ms): Promise<any> {
         return new Promise(res => {
             setTimeout(res, ms);
