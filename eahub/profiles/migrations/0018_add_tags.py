@@ -1,24 +1,24 @@
-from typing import Any
-from typing import List
-from typing import Union
+from typing import Any, List, Union
 
 import django.db.models.deletion
 import enumfields.fields
-from django.db import migrations
-from django.db import migrations
-from django.db import models
+from django.db import migrations, models
 from django_enumfield.enum import Enum as OldEnum
 from enumfields import Enum
 
 import eahub.profiles.models
-from eahub.profiles.legacy import CauseArea
-from eahub.profiles.legacy import ExpertiseArea
-from eahub.profiles.legacy import GivingPledge
-from eahub.profiles.legacy import OrganisationalAffiliation
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileTag
-from eahub.profiles.models import ProfileTagType
-from eahub.profiles.models import ProfileTagTypeEnum
+from eahub.profiles.legacy import (
+    CauseArea,
+    ExpertiseArea,
+    GivingPledge,
+    OrganisationalAffiliation,
+)
+from eahub.profiles.models import (
+    Profile,
+    ProfileTag,
+    ProfileTagType,
+    ProfileTagTypeEnum,
+)
 
 
 def migrate_to_tags_from_enums(apps, schema_editor):
