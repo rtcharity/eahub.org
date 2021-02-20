@@ -66,6 +66,9 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "tags_generic",
         "tags_cause_area",
         "tags_expertise_area",
+        "tags_organisational_affiliation",
+        "tags_speech_topic",
+        "tags_pledge",
     ]
 
     def get_actions(self, request: HttpRequest) -> dict:
