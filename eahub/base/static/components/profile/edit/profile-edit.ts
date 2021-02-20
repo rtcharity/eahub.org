@@ -36,7 +36,7 @@ export default class ProfileEditComponent extends Vue {
     @Provide() searchQuery: string = '';
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
-    @Provide() isShowSearchResultBox: boolean = false;
+    @Provide() isShowPopupBackground: boolean = false;
 
     @Ref('typesRef') readonly typesRef;
     private tagsUrl = `/profile/api/profiles/${this.profilePk}/`;
@@ -50,6 +50,8 @@ export default class ProfileEditComponent extends Vue {
         // todo fix vue nextTick bug, ie from vrt
         await this.sleep(300);
         this.typesRef.refine(this.typeName);
+        
+        this.initPopupBackgroundHandler();
     }
 
     async processTagSearchInput(value: string) {
@@ -66,6 +68,17 @@ export default class ProfileEditComponent extends Vue {
             // todo handle
             console.error('invalid input')
         }
+    }
+    
+    hidePopupBackground() {
+        const event = new Event('hide-popup-background');
+        document.dispatchEvent(event);
+    }
+    
+    initPopupBackgroundHandler() {
+        document.addEventListener('hide-popup-background', () => {
+            this.isShowPopupBackground = false;
+        });
     }
 
     isSelected(pk: string): boolean {

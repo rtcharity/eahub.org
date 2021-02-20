@@ -25,7 +25,7 @@
           v-model="searchQuery"
           v-on:input="processTagSearchInput($event)"
           :placeholder="'Add tags separated by commas...'"
-          @focus="isShowSearchResultBox = true"
+          @focus="isShowPopupBackground = true"
       />
     </div>
 
@@ -36,12 +36,12 @@
     <ais-configure :hits-per-page.camel="6"/>
 
     <div class="tags__result-box-background"
-      v-show="isShowSearchResultBox"
-      @click="isShowSearchResultBox = false"
+      v-show="isShowPopupBackground"
+      @click="hidePopupBackground()"
     ></div>
 
     <ais-state-results
-      v-show="isShowSearchResultBox"
+      v-show="isShowPopupBackground"
     >
       <div>
         <ais-infinite-hits>
