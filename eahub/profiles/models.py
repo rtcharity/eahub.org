@@ -95,11 +95,7 @@ class ProfileTag(models.Model):
 
     def count(self) -> int:
         count = 0
-        for enum_member in [
-            ProfileTagTypeEnum.GENERIC,
-            ProfileTagTypeEnum.CAUSE_AREA,
-            ProfileTagTypeEnum.EXPERTISE_AREA,
-        ]:
+        for enum_member in ProfileTagTypeEnum:
             lookup_name = f"tags_{enum_member.value}__in"
             count += Profile.objects.filter(**{lookup_name: [self]}).count()
         return count
@@ -219,7 +215,7 @@ class Profile(models.Model):
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
     )
-    
+
     objects = ProfileManager()
 
     class Meta:
@@ -261,7 +257,7 @@ class Profile(models.Model):
 
     def get_email_searchable(self) -> Optional[str]:
         return self.user.email if self.email_visible else None
-    
+
     def get_tags_cause_area_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_cause_area.all()]
 
