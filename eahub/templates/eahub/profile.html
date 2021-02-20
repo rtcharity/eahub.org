@@ -137,13 +137,13 @@
                         {% if not profile.has_cause_area_details %}N/A{% endif %}
                         {% if profile.cause_areas or profile.cause_areas_other %}
                             <div class="card__section">
-                                {{ profile.get_pretty_cause_areas|urlize|linebreaks }}
+                                {{ profile.get_tags_cause_area_formatted|join:", " }}
                             </div>
                         {% endif %}
                         {% if profile.giving_pledges %}
                             <div class="card__section">
                                 <div class="card__subtitle">Giving Pledges Taken</div>
-                                {{ profile.get_pretty_giving_pledges }}
+                                {{ profile.get_tags_pledge_formatted|join:", " }}
                             </div>
                         {% endif %}
                         {% if profile.available_to_volunteer %}
@@ -174,13 +174,13 @@
                         {% if profile.expertise_areas or profile.expertise_areas_other %}
                             <div class="card__section">
                                 <div class="card__subtitle">Areas of expertise</div>
-                                {{ profile.get_pretty_expertise|urlize|linebreaks }}
+                                {{ profile.get_tags_expertise_formatted|join:", " }}
                             </div>
                         {% endif %}
                         {% if profile.career_interest_areas %}
                             <div class="card__section">
                                 <div class="card__subtitle">Career interest areas</div>
-                                {{ profile.get_pretty_career_interest_areas|urlize|linebreaks }}
+                                {{ profile.get_tags_organisational_affiliation_formatted|join:", " }}
                             </div>
                         {% endif %}
                         {% if profile.open_to_job_offers %}
@@ -216,7 +216,7 @@
                             {% if profile.organisational_affiliations %}
                                 <div class="card__section">
                                     <div class="card__subtitle">Organisational affiliations</div>
-                                    {{ profile.get_pretty_organisational_affiliations }}
+                                    {{ profile.get_tags_organisational_affiliation_formatted|join:", " }}
                                 </div>
                             {% endif %}
                             {% if profile.local_groups.exists %}
