@@ -219,7 +219,7 @@ class Profile(models.Model):
     giving_pledges = postgres_fields.ArrayField(
         enum.EnumField(GivingPledge), blank=True, default=list
     )
-
+    
     objects = ProfileManager()
 
     class Meta:
@@ -261,12 +261,30 @@ class Profile(models.Model):
 
     def get_email_searchable(self) -> Optional[str]:
         return self.user.email if self.email_visible else None
+    
+    def get_tags_cause_area_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_cause_area.all()]
+
+    def get_tags_generic_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_generic.all()]
+
+    def get_tags_expertise_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_expertise_area.all()]
+
+    def get_tags_organisational_affiliation_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_organisational_affiliation.all()]
+
+    def get_tags_career_interest_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_career_interest.all()]
+
+    def get_tags_pledge_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_pledge.all()]
 
     def get_local_groups_searchable(self) -> List[str]:
-        return [f"{group.name}" for group in self.local_groups.all()]
+        return [group.name for group in self.local_groups.all()]
 
     def get_organizer_of_local_groups_searchable(self) -> List[str]:
-        return [f"{group.name}" for group in self.user.localgroup_set.all()]
+        return [group.name for group in self.user.localgroup_set.all()]
 
     def image_placeholder(self):
         return f"Avatar{self.id % 10}.jpg"
