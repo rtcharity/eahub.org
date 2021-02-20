@@ -135,12 +135,12 @@
                             </div>
                         </div>
                         {% if not profile.has_cause_area_details %}N/A{% endif %}
-                        {% if profile.cause_areas or profile.cause_areas_other %}
+                        {% if profile.get_tags_cause_area_formatted or profile.cause_areas_other %}
                             <div class="card__section">
                                 {{ profile.get_tags_cause_area_formatted|join:", " }}
                             </div>
                         {% endif %}
-                        {% if profile.giving_pledges %}
+                        {% if profile.get_tags_pledge_formatted %}
                             <div class="card__section">
                                 <div class="card__subtitle">Giving Pledges Taken</div>
                                 {{ profile.get_tags_pledge_formatted|join:", " }}
@@ -171,13 +171,13 @@
                         </div>
                         {% if not profile.has_career_details %}N/A{% endif %}
 
-                        {% if profile.expertise_areas or profile.expertise_areas_other %}
+                        {% if profile.get_tags_expertise_formatted or profile.expertise_areas_other %}
                             <div class="card__section">
                                 <div class="card__subtitle">Areas of expertise</div>
                                 {{ profile.get_tags_expertise_formatted|join:", " }}
                             </div>
                         {% endif %}
-                        {% if profile.career_interest_areas %}
+                        {% if profile.get_tags_organisational_affiliation_formatted %}
                             <div class="card__section">
                                 <div class="card__subtitle">Career interest areas</div>
                                 {{ profile.get_tags_organisational_affiliation_formatted|join:", " }}
@@ -213,7 +213,7 @@
 
                             {% if not profile.has_community_details %}N/A{% endif %}
     
-                            {% if profile.organisational_affiliations %}
+                            {% if profile.get_tags_organisational_affiliation_formatted %}
                                 <div class="card__section">
                                     <div class="card__subtitle">Organisational affiliations</div>
                                     {{ profile.get_tags_organisational_affiliation_formatted|join:", " }}
