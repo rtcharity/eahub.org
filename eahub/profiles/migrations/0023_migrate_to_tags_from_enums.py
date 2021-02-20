@@ -1,15 +1,15 @@
-from typing import Any
-from typing import List
-from typing import Union
+from typing import Any, List, Union
 
 from django.db import migrations
 from django_enumfield.enum import Enum as OldEnum
 from enumfields import Enum
 
-from eahub.profiles.legacy import CauseArea
-from eahub.profiles.legacy import ExpertiseArea
-from eahub.profiles.legacy import GivingPledge
-from eahub.profiles.legacy import OrganisationalAffiliation
+from eahub.profiles.legacy import (
+    CauseArea,
+    ExpertiseArea,
+    GivingPledge,
+    OrganisationalAffiliation,
+)
 from eahub.profiles.models import (
     Profile,
     ProfileTag,

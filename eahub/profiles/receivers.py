@@ -3,7 +3,7 @@ import uuid
 from typing import Any, Union
 
 from django.core.cache import cache
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import m2m_changed, post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 
@@ -14,7 +14,7 @@ from eahub.profiles.legacy import (
     GivingPledge,
     OrganisationalAffiliation,
 )
-from eahub.profiles.models import Profile, ProfileAnalyticsLog
+from eahub.profiles.models import Profile, ProfileAnalyticsLog, ProfileTag
 
 logger = logging.getLogger(__name__)
 
@@ -147,3 +147,27 @@ def on_user_change(**kwargs):
             )
     except:
         logger.exception("User update logging failed")
+
+
+@receiver(m2m_changed, sender=ProfileTag.types.through)
+def reindex_on_tag_types_change(sender, instance: ProfileTag, **kwargs):
+    try:
+        instance.save()
+    except:
+        logger.exception("Algolia tag types reindexing failed")
+
+
+def reindex_profile_on_tags_change(sender, instance: Profile, **kwargs):
+    try:
+        instance.save()
+    except:
+        logger.exception("Algolia tag reindexing failed")
+
+
+# fmt: off
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_generic.through)
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_cause_area.through)
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_expertise_area.through)
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_organisational_affiliation.through)
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_pledge.through)
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_speech_topic.through)

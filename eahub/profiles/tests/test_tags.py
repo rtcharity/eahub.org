@@ -1,8 +1,6 @@
 from rest_framework.test import APITestCase
 
-from eahub.profiles.models import (
-    ProfileTagTypeEnum,
-)
+from eahub.profiles.models import ProfileTagTypeEnum
 from eahub.tests.cases import EAHubTestCase
 
 

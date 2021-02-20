@@ -30,14 +30,15 @@ if settings.IS_ENABLE_ALGOLIA:
             "country",
             "lon",
             "lat",
-            
             ["get_tags_generic_formatted", "tags"],
             ["get_tags_cause_area_formatted", "cause_areas"],
             ["get_tags_expertise_formatted", "expertise"],
             ["get_tags_career_interest_formatted", "career_interest_areas"],
             ["get_tags_pledge_formatted", "giving_pledges"],
-            ["get_tags_organisational_affiliation_formatted", "organisational_affiliations"],
-
+            [
+                "get_tags_organisational_affiliation_formatted",
+                "organisational_affiliations",
+            ],
             ["get_local_groups_searchable", "local_groups"],
             ["get_organizer_of_local_groups_searchable", "organizer_of_local_groups"],
             ["get_is_organiser", "is_organiser"],
