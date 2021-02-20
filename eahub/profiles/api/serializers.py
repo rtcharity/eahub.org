@@ -58,14 +58,18 @@ class ProfileSerializer(serializers.ModelSerializer):
     tags_organisational_affiliation = TagSerializer(many=True, required=False)
     tags_organisational_affiliation_pks = PrimaryKeyRelatedField(
         many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION),
+        queryset=ProfileTag.objects.filter(
+            types__type=ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION
+        ),
         source=f"tags_{ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION.value}",
         required=False,
     )
     tags_career_interest = TagSerializer(many=True, required=False)
     tags_career_interest_pks = PrimaryKeyRelatedField(
         many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.CAREER_INTEREST),
+        queryset=ProfileTag.objects.filter(
+            types__type=ProfileTagTypeEnum.CAREER_INTEREST
+        ),
         source=f"tags_{ProfileTagTypeEnum.CAREER_INTEREST.value}",
         required=False,
     )

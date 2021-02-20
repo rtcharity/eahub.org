@@ -6,17 +6,17 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0020_add_field_tag_also_known_as'),
+        ("profiles", "0020_add_field_tag_also_known_as"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='profiletag',
-            name='also_known_as',
+            model_name="profiletag",
+            name="also_known_as",
         ),
         migrations.AddField(
-            model_name='profiletag',
-            name='synonyms',
+            model_name="profiletag",
+            name="synonyms",
             field=models.CharField(blank=True, max_length=1024),
         ),
     ]

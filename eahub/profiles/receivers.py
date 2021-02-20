@@ -8,14 +8,13 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from eahub.base.models import User
-from eahub.profiles.models import (
+from eahub.profiles.legacy import (
     CauseArea,
     ExpertiseArea,
     GivingPledge,
     OrganisationalAffiliation,
-    Profile,
-    ProfileAnalyticsLog,
 )
+from eahub.profiles.models import Profile, ProfileAnalyticsLog
 
 logger = logging.getLogger(__name__)
 

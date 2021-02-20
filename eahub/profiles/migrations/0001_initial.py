@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db import migrations, models
 from django_upload_path import upload_path
 
+import eahub.profiles.legacy
 import eahub.profiles.models
 
 
@@ -51,7 +52,7 @@ class Migration(migrations.Migration):
                     "cause_areas",
                     django.contrib.postgres.fields.ArrayField(
                         base_field=django_enumfield.db.fields.EnumField(
-                            default=1, enum=eahub.profiles.models.CauseArea
+                            default=1, enum=eahub.profiles.legacy.CauseArea
                         ),
                         blank=True,
                         default=list,
@@ -70,7 +71,7 @@ class Migration(migrations.Migration):
                     "expertise_areas",
                     django.contrib.postgres.fields.ArrayField(
                         base_field=django_enumfield.db.fields.EnumField(
-                            default=1, enum=eahub.profiles.models.ExpertiseArea
+                            default=1, enum=eahub.profiles.legacy.ExpertiseArea
                         ),
                         blank=True,
                         default=list,
@@ -86,7 +87,7 @@ class Migration(migrations.Migration):
                     "giving_pledges",
                     django.contrib.postgres.fields.ArrayField(
                         base_field=django_enumfield.db.fields.EnumField(
-                            default=1, enum=eahub.profiles.models.GivingPledge
+                            default=1, enum=eahub.profiles.legacy.GivingPledge
                         ),
                         blank=True,
                         default=list,

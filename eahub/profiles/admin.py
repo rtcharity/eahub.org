@@ -9,8 +9,8 @@ from rangefilter.filter import DateRangeFilter
 
 from eahub.base import utils
 from eahub.base.models import User
+from eahub.profiles.legacy import GivingPledge
 from eahub.profiles.models import (
-    GivingPledge,
     Profile,
     ProfileAnalyticsLog,
     ProfileSlug,

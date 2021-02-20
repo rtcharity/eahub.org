@@ -25,16 +25,8 @@ from .forms import (
     EditProfileCommunityForm,
     EditProfileForm,
 )
-from .models import (
-    CauseArea,
-    ExpertiseArea,
-    GivingPledge,
-    Membership,
-    OrganisationalAffiliation,
-    Profile,
-    ProfileAnalyticsLog,
-    ProfileSlug,
-)
+from .legacy import CauseArea, ExpertiseArea, GivingPledge, OrganisationalAffiliation
+from .models import Membership, Profile, ProfileAnalyticsLog, ProfileSlug
 
 
 def profile_detail_or_redirect(request, slug, first_visit=False):

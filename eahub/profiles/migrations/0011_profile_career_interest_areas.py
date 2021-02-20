@@ -2,6 +2,7 @@ import django.contrib.postgres.fields
 import django_enumfield.db.fields
 from django.db import migrations
 
+import eahub.profiles.legacy
 import eahub.profiles.models
 
 
@@ -15,7 +16,7 @@ class Migration(migrations.Migration):
             name="career_interest_areas",
             field=django.contrib.postgres.fields.ArrayField(
                 base_field=django_enumfield.db.fields.EnumField(
-                    default=1, enum=eahub.profiles.models.ExpertiseArea
+                    default=1, enum=eahub.profiles.legacy.ExpertiseArea
                 ),
                 blank=True,
                 default=list,

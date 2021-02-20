@@ -2,7 +2,8 @@ import random
 
 from eahub.base.models import User
 from eahub.localgroups.models import LocalGroup, Organisership
-from eahub.profiles.models import CauseArea, Profile, ProfileAnalyticsLog
+from eahub.profiles.legacy import CauseArea
+from eahub.profiles.models import Profile, ProfileAnalyticsLog
 from eahub.tests.cases import EAHubTestCase
 
 

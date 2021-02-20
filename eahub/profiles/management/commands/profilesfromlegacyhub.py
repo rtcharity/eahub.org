@@ -7,6 +7,8 @@ from django.db import transaction
 from django.utils import html, timezone
 from geopy import geocoders
 
+import eahub.profiles.legacy
+
 from ....base import models as base_models
 from ... import models
 
@@ -21,36 +23,38 @@ def collect_cause_areas(
 ):
     cause_areas = []
     if global_poverty:
-        cause_areas.append(models.CauseArea.GLOBAL_HEALTH_AND_DEVELOPMENT)
+        cause_areas.append(
+            eahub.profiles.legacy.CauseArea.GLOBAL_HEALTH_AND_DEVELOPMENT
+        )
     if animal_welfare_and_rights:
-        cause_areas.append(models.CauseArea.FARMED_ANIMAL_WELFARE)
+        cause_areas.append(eahub.profiles.legacy.CauseArea.FARMED_ANIMAL_WELFARE)
     if long_term_future:
-        cause_areas.append(models.CauseArea.LONG_TERM_FUTURE)
+        cause_areas.append(eahub.profiles.legacy.CauseArea.LONG_TERM_FUTURE)
     if cause_prioritisation:
-        cause_areas.append(models.CauseArea.GLOBAL_PRIORITIES_RESEARCH)
+        cause_areas.append(eahub.profiles.legacy.CauseArea.GLOBAL_PRIORITIES_RESEARCH)
     if meta:
-        cause_areas.append(models.CauseArea.BUILDING_EA_COMMUNITIES)
+        cause_areas.append(eahub.profiles.legacy.CauseArea.BUILDING_EA_COMMUNITIES)
     if climate_change:
-        cause_areas.append(models.CauseArea.CLIMATE_CHANGE)
+        cause_areas.append(eahub.profiles.legacy.CauseArea.CLIMATE_CHANGE)
     return cause_areas
 
 
 CODED_AREAS_BY_LEGACY_NAME = {
-    "Coding": models.ExpertiseArea.SOFTWARE_ENGINEERING,
-    "Entrepreneurship": models.ExpertiseArea.ENTREPRENEURSHIP,
-    "Event planning": models.ExpertiseArea.EVENT_PLANNING,
-    "Finance/Investment strategy": models.ExpertiseArea.FINANCE,
-    "Graphic design": models.ExpertiseArea.GRAPHIC_DESIGN,
-    "Journalism": models.ExpertiseArea.JOURNALISM,
-    "Law": models.ExpertiseArea.LAW,
-    "Management": models.ExpertiseArea.MANAGEMENT,
-    "Marketing/Sales": models.ExpertiseArea.COMMUNICATIONS,
-    "Philanthropy": models.ExpertiseArea.PHILANTHROPY_EARNING_TO_GIVE,
-    "Public policy/Politics": models.ExpertiseArea.GOVERNMENT_AND_POLICY,
-    "Public speaking": models.ExpertiseArea.PUBLIC_SPEAKING,
-    "Recruitment": models.ExpertiseArea.RECRUITMENT,
-    "Research/Analysis": models.ExpertiseArea.RESEARCH,
-    "Statistics/Data science": models.ExpertiseArea.MATH_QUANT_STATS_EXPERTISE,
+    "Coding": eahub.profiles.legacy.ExpertiseArea.SOFTWARE_ENGINEERING,
+    "Entrepreneurship": eahub.profiles.legacy.ExpertiseArea.ENTREPRENEURSHIP,
+    "Event planning": eahub.profiles.legacy.ExpertiseArea.EVENT_PLANNING,
+    "Finance/Investment strategy": eahub.profiles.legacy.ExpertiseArea.FINANCE,
+    "Graphic design": eahub.profiles.legacy.ExpertiseArea.GRAPHIC_DESIGN,
+    "Journalism": eahub.profiles.legacy.ExpertiseArea.JOURNALISM,
+    "Law": eahub.profiles.legacy.ExpertiseArea.LAW,
+    "Management": eahub.profiles.legacy.ExpertiseArea.MANAGEMENT,
+    "Marketing/Sales": eahub.profiles.legacy.ExpertiseArea.COMMUNICATIONS,
+    "Philanthropy": eahub.profiles.legacy.ExpertiseArea.PHILANTHROPY_EARNING_TO_GIVE,
+    "Public policy/Politics": eahub.profiles.legacy.ExpertiseArea.GOVERNMENT_AND_POLICY,
+    "Public speaking": eahub.profiles.legacy.ExpertiseArea.PUBLIC_SPEAKING,
+    "Recruitment": eahub.profiles.legacy.ExpertiseArea.RECRUITMENT,
+    "Research/Analysis": eahub.profiles.legacy.ExpertiseArea.RESEARCH,
+    "Statistics/Data science": eahub.profiles.legacy.ExpertiseArea.MATH_QUANT_STATS_EXPERTISE,
 }
 
 
