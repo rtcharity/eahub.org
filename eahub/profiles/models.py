@@ -64,7 +64,7 @@ class ProfileTagTypeEnum(Enum):
 
 
 class ProfileTagType(models.Model):
-    type = EnumField(ProfileTagTypeEnum, max_length=128)
+    type = EnumField(ProfileTagTypeEnum, max_length=128, unique=True)
 
     def __str__(self):
         return str(self.type)
