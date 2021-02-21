@@ -1,5 +1,3 @@
-import environ
-
 from django import urls
 from django.conf import settings
 from django.contrib import messages
@@ -18,6 +16,7 @@ from django.views.generic import edit as edit_views
 from flags.state import flag_enabled
 from rules.contrib import views as rules_views
 
+from ..base.utils import get_admin_email, get_feedback_url
 from ..base.views import ReportAbuseView, SendMessageView
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
@@ -109,9 +108,8 @@ class SendGroupMessageView(SendMessageView):
         recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
         sender_email_address = form.cleaned_data["your_email_address"]
-        env = environ.Env()
-        feedback_url = env.str("FEEDBACK_URL")
-        admins_email = list(env.dict("ADMINS").values())[0]
+        feedback_url = get_feedback_url()
+        admins_email = get_admin_email()
         txt_message = render_to_string(
             "emails/message_group.txt",
             {

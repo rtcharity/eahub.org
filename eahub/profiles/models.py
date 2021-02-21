@@ -464,8 +464,8 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return urls.reverse("profile", args=[self.slug])
 
-    def messaging_url_if_allowed(self) -> str:
-        if self.allow_messaging:
+    def messaging_url_if_can_receive_message(self) -> str:
+        if self.get_can_receive_message():
             return urls.reverse("message_profile", args=[self.slug])
         return ''
 
@@ -655,6 +655,9 @@ class Profile(models.Model):
 
     def get_is_organiser(self):
         return self.user.localgroup_set.exists()
+
+    def get_can_receive_message(self):
+        return self.is_approved and self.is_public and self.allow_messaging
 
     def convert_to_row(self, field_names):
         values = []

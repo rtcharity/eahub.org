@@ -95,7 +95,7 @@ class LocalGroup(models.Model):
     def has_organisers_with_messaging_enabled(self):
         return (
            len(
-             [user for user in self.organisers.all() if user.profile.allow_messaging]
+             [user for user in self.organisers.all() if user.profile.get_can_receive_message()]
            )
            > 0
         )

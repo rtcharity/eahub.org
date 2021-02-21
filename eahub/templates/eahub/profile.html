@@ -90,7 +90,7 @@
 
       {% load feature_flags %}
       {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-      {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
+      {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message and messaging_flag %}
         <a href="{% url 'message_profile' profile.slug  %}">
           <div class="btn btn-default purple">
             <span><i class="fa fa-pencil-alt"></i> Send Message</span>

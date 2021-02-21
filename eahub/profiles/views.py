@@ -12,6 +12,7 @@ from django.urls import reverse
 from flags.state import flag_enabled
 
 from ..base.models import User
+from ..base.utils import get_admin_email, get_feedback_url
 from ..base.views import (
     ReportAbuseView,
     SendMessageView,
@@ -94,22 +95,27 @@ class ReportProfileAbuseView(ReportAbuseView):
 class SendProfileMessageView(SendMessageView):
     def profile(self):
         profile = Profile.objects.get(slug=self.kwargs["slug"])
-        if not (profile.allow_messaging):
-            raise http.Http404("user has turned off messaging")
-    
+        if profile is None:
+            raise Exception("Could not find profile")
         return profile
     
     def form_valid(self, form):
-        recipient = Profile.objects.get(slug=self.kwargs["slug"])
+        recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
         sender_email_address = form.cleaned_data["your_email_address"]
         message = form.cleaned_data["your_message"]
+        admin_email = get_admin_email()
+        feedback_url = get_feedback_url()
+        profile_edit_url = self.request.build_absolute_uri(reverse("edit_profile"))
         txt_message = render_to_string(
             "emails/message_profile.txt",
             {
                     "sender_name": sender_name,
                     "recipient": recipient.name,
                     "message": message,
+                    "admin_email": admin_email,
+                    "feedback_url": feedback_url,
+                    "profile_edit_url": profile_edit_url
              },
         )
         html_message = render_to_string(
@@ -118,6 +124,9 @@ class SendProfileMessageView(SendMessageView):
                 "sender_name": sender_name,
                 "recipient": recipient.name,
                 "message": message,
+                "admin_email": admin_email,
+                "feedback_url": feedback_url,
+                "profile_edit_url": profile_edit_url
             },
         )
         send_mail(
@@ -133,17 +142,27 @@ class SendProfileMessageView(SendMessageView):
         return redirect(reverse("profile", args=([recipient.slug])))
 
     def get(self, request, *args, **kwargs):
+        if not request.user.has_perm("profiles.message_users"):
+            raise PermissionDenied
+        recipient = self.profile()
         if not flag_enabled("MESSAGING_FLAG", request=request):
-            raise Http404("Messaging not available for this user")
-        if request.user.has_perm("profiles.message_users"):
+            raise Http404("Messaging toggled off")
+        if recipient.get_can_receive_message():
             return super().get(request, *args, **kwargs)
         else:
-            raise PermissionDenied
+            raise Http404("Messaging not enabled for this user")
 
     def post(self, request, *args, **kwargs):
-        if not flag_enabled("MESSAGING_FLAG", request=request) or not request.user.has_perm("profiles.message_users"):
+        if not request.user.has_perm("profiles.message_users"):
             raise PermissionDenied
-        return super().post(request, *args, **kwargs)
+        recipient = self.profile()
+        if not flag_enabled("MESSAGING_FLAG", request=request):
+            raise Http404("Messaging toggled off")
+        if recipient.get_can_receive_message():
+            return super().post(request, *args, **kwargs)
+        else:
+            raise Http404("Messaging not enabled for this user")
+
 
 
 @login_required
