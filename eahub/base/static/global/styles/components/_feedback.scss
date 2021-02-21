@@ -16,7 +16,7 @@
     left: 0;
   }
   }
-  
+
   @media (max-width: 600px) {
   #feedback {
     right: -100%;
@@ -24,15 +24,11 @@
   }
 
   .feedbackbtn-mobile {
-    right: 35%;
-    left: 35%;
-    /*--- For sticky support in all browsers---*/
-    position: -webkit-sticky;
-    position: -moz-sticky;
-    position: -ms-sticky;
-    position: -o-sticky;
-    position: sticky;
-    bottom: 0px;
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    bottom: -30px;
+    position: absolute;
+    right: -85px;
   }
 
   .feedbackbtn {
@@ -41,6 +37,10 @@
   }
 
   /*--- All size screens ---*/
+
+  a {
+    color: inherit;
+  }
 
   #feedback {
     background-color: #fff;

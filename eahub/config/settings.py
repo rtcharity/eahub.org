@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "import_export",
     "rangefilter",
     "flags",
+    "eahub.feedback.apps.FeedbackConfig",
 ]
 
 MIDDLEWARE = [
