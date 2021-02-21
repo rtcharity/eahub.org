@@ -1,3 +1,5 @@
+import environ
+
 from django import urls
 from django.conf import settings
 from django.contrib import messages
@@ -107,12 +109,17 @@ class SendGroupMessageView(SendMessageView):
         recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
         sender_email_address = form.cleaned_data["your_email_address"]
+        env = environ.Env()
+        feedback_url = env.str("FEEDBACK_URL")
+        admins_email = list(env.dict("ADMINS").values())[0]
         txt_message = render_to_string(
             "emails/message_group.txt",
             {
                 "sender_name": sender_name,
                 "group_name": recipient.name,
                 "message": form.cleaned_data["your_message"],
+                "feedback_url": feedback_url,
+                "admins_email": admins_email
            },
          )
         html_message = render_to_string(
@@ -121,6 +128,8 @@ class SendGroupMessageView(SendMessageView):
                     "sender_name": sender_name,
                     "group_name": recipient.name,
                     "message": form.cleaned_data["your_message"],
+                    "feedback_url": feedback_url,
+                    "admins_email": admins_email
              },
          )
         send_mail(
