@@ -117,19 +117,19 @@ class SendGroupMessageView(SendMessageView):
                 "group_name": recipient.name,
                 "message": form.cleaned_data["your_message"],
                 "feedback_url": feedback_url,
-                "admins_email": admins_email
-           },
-         )
+                "admins_email": admins_email,
+            },
+        )
         html_message = render_to_string(
             "emails/message_group.html",
             {
-                    "sender_name": sender_name,
-                    "group_name": recipient.name,
-                    "message": form.cleaned_data["your_message"],
-                    "feedback_url": feedback_url,
-                    "admins_email": admins_email
-             },
-         )
+                "sender_name": sender_name,
+                "group_name": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "feedback_url": feedback_url,
+                "admins_email": admins_email,
+            },
+        )
         send_mail(
             f"{sender_name} wants to connect with {recipient.name}!",
             txt_message,
@@ -149,7 +149,7 @@ class SendGroupMessageView(SendMessageView):
         if group.email or (
             flag_enabled("MESSAGING_FLAG", request=request)
             and group.has_organisers_with_messaging_enabled()
-            ):
+        ):
             if not request.user.has_perm("profiles.message_users"):
                 raise PermissionDenied
 
@@ -159,9 +159,13 @@ class SendGroupMessageView(SendMessageView):
 
     def post(self, request, *args, **kwargs):
         group = self.profile()
-        if request.user.has_perm("profiles.message_users") and group.email or (
-            flag_enabled("MESSAGING_FLAG", request=request)
-            and group.has_organisers_with_messaging_enabled
+        if (
+            request.user.has_perm("profiles.message_users")
+            and group.email
+            or (
+                flag_enabled("MESSAGING_FLAG", request=request)
+                and group.has_organisers_with_messaging_enabled
+            )
         ):
             return super().post(request, *args, **kwargs)
 

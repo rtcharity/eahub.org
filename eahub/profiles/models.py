@@ -467,7 +467,7 @@ class Profile(models.Model):
     def messaging_url_if_can_receive_message(self) -> str:
         if self.get_can_receive_message():
             return urls.reverse("message_profile", args=[self.slug])
-        return ''
+        return ""
 
     def geocode(self):
         self.lat = None

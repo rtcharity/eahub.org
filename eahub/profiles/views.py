@@ -92,13 +92,14 @@ class ReportProfileAbuseView(ReportAbuseView):
     def get_type(self):
         return "profile"
 
+
 class SendProfileMessageView(SendMessageView):
     def profile(self):
         profile = Profile.objects.get(slug=self.kwargs["slug"])
         if profile is None:
             raise Exception("Could not find profile")
         return profile
-    
+
     def form_valid(self, form):
         recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
@@ -110,13 +111,13 @@ class SendProfileMessageView(SendMessageView):
         txt_message = render_to_string(
             "emails/message_profile.txt",
             {
-                    "sender_name": sender_name,
-                    "recipient": recipient.name,
-                    "message": message,
-                    "admin_email": admin_email,
-                    "feedback_url": feedback_url,
-                    "profile_edit_url": profile_edit_url
-             },
+                "sender_name": sender_name,
+                "recipient": recipient.name,
+                "message": message,
+                "admin_email": admin_email,
+                "feedback_url": feedback_url,
+                "profile_edit_url": profile_edit_url,
+            },
         )
         html_message = render_to_string(
             "emails/message_profile.html",
@@ -126,7 +127,7 @@ class SendProfileMessageView(SendMessageView):
                 "message": message,
                 "admin_email": admin_email,
                 "feedback_url": feedback_url,
-                "profile_edit_url": profile_edit_url
+                "profile_edit_url": profile_edit_url,
             },
         )
         send_mail(
@@ -134,7 +135,7 @@ class SendProfileMessageView(SendMessageView):
             txt_message,
             sender_email_address,
             [recipient.user.email],
-            html_message = html_message,
+            html_message=html_message,
         )
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
@@ -162,7 +163,6 @@ class SendProfileMessageView(SendMessageView):
             return super().post(request, *args, **kwargs)
         else:
             raise Http404("Messaging not enabled for this user")
-
 
 
 @login_required

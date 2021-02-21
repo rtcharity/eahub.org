@@ -1,6 +1,6 @@
 import csv
-import environ
 
+import environ
 from django.http import HttpResponse
 
 from ..profiles import models

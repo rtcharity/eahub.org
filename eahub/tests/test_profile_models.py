@@ -43,8 +43,7 @@ class ProfileTestCase(EAHubTestCase):
             "career_interest_areas",
             "available_as_speaker",
             "email_visible",
-            "allow_messaging"
-            "topics_i_speak_about",
+            "allow_messaging" "topics_i_speak_about",
             "organisational_affiliations",
             "summary",
             "giving_pledges",
@@ -83,7 +82,7 @@ class ProfileTestCase(EAHubTestCase):
             profile=profile, field="email_visible"
         )
         analytics_logs_allow_messaging = ProfileAnalyticsLog.objects.filter(
-            profile = profile, field = "allow_messaging"
+            profile=profile, field="allow_messaging"
         )
 
         self.assertEqual("User1", analytics_logs_name.first().new_value)

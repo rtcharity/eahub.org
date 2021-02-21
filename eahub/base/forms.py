@@ -27,5 +27,5 @@ class SendMessageForm(forms.Form):
         label="Email", max_length=254, widget=forms.EmailInput
     )
     your_message = forms.CharField(
-        label="Message", max_length=10000, widget = forms.Textarea
+        label="Message", max_length=10000, widget=forms.Textarea
     )
