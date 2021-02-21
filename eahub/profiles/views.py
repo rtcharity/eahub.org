@@ -91,7 +91,6 @@ class ReportProfileAbuseView(ReportAbuseView):
     def get_type(self):
         return "profile"
 
-
 class SendProfileMessageView(SendMessageView):
     def profile(self):
         profile = Profile.objects.get(slug=self.kwargs["slug"])
@@ -136,10 +135,13 @@ class SendProfileMessageView(SendMessageView):
     def get(self, request, *args, **kwargs):
         if not flag_enabled("MESSAGING_FLAG", request=request):
             raise Http404("Messaging not available for this user")
-        return super().get(request, *args, **kwargs)
+        if request.user.has_perm("profiles.message_users"):
+            return super().get(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
 
     def post(self, request, *args, **kwargs):
-        if not flag_enabled("MESSAGING_FLAG", request=request):
+        if not flag_enabled("MESSAGING_FLAG", request=request) or not request.user.has_perm("profiles.message_users"):
             raise PermissionDenied
         return super().post(request, *args, **kwargs)
 

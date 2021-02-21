@@ -141,8 +141,10 @@ class SendGroupMessageView(SendMessageView):
 
         if group.email or (
             flag_enabled("MESSAGING_FLAG", request=request)
-             and group.has_organisers_with_messaging_enabled()
+            and group.has_organisers_with_messaging_enabled()
             ):
+            if not request.user.has_perm("profiles.message_users"):
+                raise PermissionDenied
 
             return super().get(request, *args, **kwargs)
 
@@ -150,9 +152,9 @@ class SendGroupMessageView(SendMessageView):
 
     def post(self, request, *args, **kwargs):
         group = self.profile()
-        if group.email or (
-                    flag_enabled("MESSAGING_FLAG", request=request)
-         and group.has_organisers_with_messaging_enabled
+        if request.user.has_perm("profiles.message_users") and group.email or (
+            flag_enabled("MESSAGING_FLAG", request=request)
+            and group.has_organisers_with_messaging_enabled
         ):
             return super().post(request, *args, **kwargs)
 
