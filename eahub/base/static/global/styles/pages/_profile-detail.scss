@@ -48,8 +48,8 @@
                     position: absolute;
                     right: 0;
                     width: fit-content;
+                    width: -moz-fit-content;
                 }
-                
                 .btn {
                     margin-right: 9px;
                 }
@@ -77,6 +77,7 @@
         }
     }
     .prof__cards {
+
         .card {
             height: 100%;
             border: 0;
@@ -125,17 +126,23 @@
                     margin-bottom: 0;
                 }
             }
-
             .btn-edit {
                 position: absolute;
                 top: 0;
                 right: 0;
             }
         }
-
     }
     .prof__buttons-bottom {
         display: flex;
         justify-content: center;
+        margin-bottom: 30vh;
+        
+        @include media-breakpoint-down(lg) {
+            margin-bottom: 10vh;
+        }
+        @include media-breakpoint-down(md) {
+            margin-bottom: 5vh;
+        }
     }
 }

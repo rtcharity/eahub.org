@@ -5,26 +5,30 @@
 
 {% block title %}{{ profile.name }}{% endblock %}
 
+
+{% addtoblock 'head' %}
+  {% if profile.image %}
+    {% block meta_image %}
+      <meta property="og:image" content="{% thumbnail profile.image "524x274" crop="top" %}">
+      <meta property="og:image:width" content="524">
+      <meta property="og:image:height" content="274">
+      <meta property="og:image:type" content="image/png">
+    {% endblock %}
+  {% endif %}
+  {% block meta_info %}
+    <meta name="description" content="{{ profile.summary }}">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="{{ profile.name }} - EA Hub">
+    <meta property="og:description" content="{{ profile.summary }}">
+  {% endblock %}
+{% endaddtoblock %}
+
+
 {% block navbar %}
     {% include 'components/navbar.html' %}
 {% endblock %}
 
 {% block content %}
-    {% if profile.image %}
-        {% block meta_image %}
-            <meta property="og:image" content="{% thumbnail profile.image "524x274" crop="top" %}">
-            <meta property="og:image:width" content="524">
-            <meta property="og:image:height" content="274">
-            <meta property="og:image:type" content="image/png">
-        {% endblock %}
-    {% endif %}
-    {% block meta_info %}
-        <meta name="description" content="{{ profile.summary }}">
-        <meta property="og:type" content="profile">
-        <meta property="og:title" content="{{ profile.name }} - EA Hub">
-        <meta property="og:description" content="{{ profile.summary }}">
-    {% endblock %}
-
     {% addtoblock 'body_classes' %}profile-detail{% endaddtoblock %}
 
     {% include 'includes/messages.html' %}
@@ -283,7 +287,7 @@
         {% endif %}
     </div>
 
-    <div class="prof__buttons-bottom my-4">
+    <div class="prof__buttons-bottom mt-4">
         {% if user.id == profile.user_id %}
             <a class="btn btn-outline-secondary btn-sm" href="{% url 'profiles_app:delete_profile' %}">
                 <i class="fa fa-trash"></i> Delete My Profile
