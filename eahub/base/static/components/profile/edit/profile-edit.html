@@ -23,8 +23,7 @@
       </div>
       <ais-search-box
           v-model="searchQuery"
-          v-on:input="processTagSearchInput($event)"
-          :placeholder="'Add tags separated by commas...'"
+          :placeholder="'Find tags to add...'"
           @focus="showResultsPopup()"
       />
     </div>
