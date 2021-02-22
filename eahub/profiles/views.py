@@ -37,7 +37,6 @@ from .models import (
     Profile,
     ProfileAnalyticsLog,
     ProfileSlug,
-    UserMessagingLog
 )
 
 
