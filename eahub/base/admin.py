@@ -2,6 +2,8 @@ import django_admin_relation_links
 from authtools import admin as authtools_admin
 from django.contrib import admin
 from rangefilter.filter import DateRangeFilter
+from solo.admin import SingletonModelAdmin
+
 
 from ..profiles import models as profiles_models
 from . import models
@@ -68,3 +70,6 @@ def get_profile(user):
         return user.profile
     except profiles_models.Profile.DoesNotExist:
         return None
+
+
+admin.site.register(models.FeedbackURLConfig, SingletonModelAdmin)
