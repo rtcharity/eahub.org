@@ -19,11 +19,6 @@ def get_admin_email():
     return list(env.dict("ADMINS").values())[0]
 
 
-def get_feedback_url():
-    env = environ.Env()
-    return env.str("FEEDBACK_URL")
-
-
 class ExportCsvMixin:
     def export_csv(self, request, queryset, model, filename):
         response = HttpResponse(content_type="text/csv")

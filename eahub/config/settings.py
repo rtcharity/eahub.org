@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
     "eahub.base.apps.BaseConfig",
-    "eahub.config.apps.ConfigConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
     "import_export",

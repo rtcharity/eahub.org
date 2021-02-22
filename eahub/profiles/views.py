@@ -11,15 +11,14 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from flags.state import flag_enabled
 
-from ..base.models import User
-from ..base.utils import get_admin_email, get_feedback_url
+from ..base.models import FeedbackURLConfig, User
+from ..base.utils import get_admin_email
 from ..base.views import (
     ReportAbuseView,
     SendMessageView,
     get_private_profiles,
     get_profiles_data,
 )
-from ..config.models import FeedbackURLConfig
 from ..localgroups.models import LocalGroup
 from .forms import (
     DeleteProfileForm,
@@ -107,7 +106,7 @@ class SendProfileMessageView(SendMessageView):
         sender_email_address = form.cleaned_data["your_email_address"]
         message = form.cleaned_data["your_message"]
         admin_email = get_admin_email()
-        feedback_url = FeedbackURLConfig.get_solo()
+        feedback_url = FeedbackURLConfig.get_solo().site_url
         profile_edit_url = self.request.build_absolute_uri(reverse("edit_profile"))
         txt_message = render_to_string(
             "emails/message_profile.txt",

@@ -16,9 +16,9 @@ from django.views.generic import edit as edit_views
 from flags.state import flag_enabled
 from rules.contrib import views as rules_views
 
-from ..base.utils import get_admin_email, get_feedback_url
+from ..base.models import FeedbackURLConfig
+from ..base.utils import get_admin_email
 from ..base.views import ReportAbuseView, SendMessageView
-from ..config.models import FeedbackURLConfig
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
@@ -109,7 +109,7 @@ class SendGroupMessageView(SendMessageView):
         recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
         sender_email_address = form.cleaned_data["your_email_address"]
-        feedback_url = FeedbackURLConfig.get_solo()
+        feedback_url = FeedbackURLConfig.get_solo().site_url
         admins_email = get_admin_email()
         txt_message = render_to_string(
             "emails/message_group.txt",
