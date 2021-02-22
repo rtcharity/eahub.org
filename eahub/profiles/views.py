@@ -19,6 +19,7 @@ from ..base.views import (
     get_private_profiles,
     get_profiles_data,
 )
+from ..config.models import FeedbackURLConfig
 from ..localgroups.models import LocalGroup
 from .forms import (
     DeleteProfileForm,
@@ -36,6 +37,7 @@ from .models import (
     Profile,
     ProfileAnalyticsLog,
     ProfileSlug,
+    UserMessagingLog
 )
 
 
@@ -106,7 +108,7 @@ class SendProfileMessageView(SendMessageView):
         sender_email_address = form.cleaned_data["your_email_address"]
         message = form.cleaned_data["your_message"]
         admin_email = get_admin_email()
-        feedback_url = get_feedback_url()
+        feedback_url = FeedbackURLConfig.get_solo()
         profile_edit_url = self.request.build_absolute_uri(reverse("edit_profile"))
         txt_message = render_to_string(
             "emails/message_profile.txt",

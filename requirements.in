@@ -51,3 +51,4 @@ pytest
 pip-tools
 faker
 model_bakery
+django-solo
