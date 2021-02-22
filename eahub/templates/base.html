@@ -18,7 +18,7 @@
     <title>{% block title %}{{ page_name }}{% endblock %} - EA Hub</title>
     <link rel="shortcut icon" href="{%  static 'global/images/favicon.ico' %}">
 
-    {% if settings.DJANGO_ENV.value == 'stage' %}
+    {% if settings.DJANGO_ENV.value != 'prod' %}
       <meta name="robots" content="noindex, nofollow">
     {% endif %}
 
