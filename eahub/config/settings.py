@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     "import_export",
     "rangefilter",
     "flags",
-    "solo"
+    "solo",
 ]
 
 MIDDLEWARE = [

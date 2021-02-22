@@ -10,7 +10,9 @@ class User(authtools_models.AbstractEmailUser):
 
 
 class FeedbackURLConfig(SingletonModel):
-    site_url = models.TextField(default="feedback.eahub.org", validators=[URLValidator()])
+    site_url = models.TextField(
+        default="feedback.eahub.org", validators=[URLValidator()]
+    )
 
     def __str__(self):
         return "Feedback URL"

@@ -4,7 +4,6 @@ from django.contrib import admin
 from rangefilter.filter import DateRangeFilter
 from solo.admin import SingletonModelAdmin
 
-
 from ..profiles import models as profiles_models
 from . import models
 

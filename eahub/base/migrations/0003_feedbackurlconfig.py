@@ -7,18 +7,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('base', '0002_create_superusers'),
+        ("base", "0002_create_superusers"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='FeedbackURLConfig',
+            name="FeedbackURLConfig",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('site_url', models.TextField(default='https://feedback.eahub.org', validators=[django.core.validators.URLValidator()])),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "site_url",
+                    models.TextField(
+                        default="https://feedback.eahub.org",
+                        validators=[django.core.validators.URLValidator()],
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Feedback URL',
+                "verbose_name": "Feedback URL",
             },
         ),
     ]
