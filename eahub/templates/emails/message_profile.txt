@@ -4,7 +4,10 @@ Dear {{ recipient }},
 
 {{ message }}
 
+You can respond to them by replying to this email.
+
 Thanks,
+
 EA Hub
 
 Feedback: {{ feedback_url }}
