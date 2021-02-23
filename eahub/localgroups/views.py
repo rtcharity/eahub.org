@@ -4,15 +4,20 @@ from django.contrib import messages
 from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
+from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
+from flags.state import flag_enabled
 from rules.contrib import views as rules_views
 
+from ..base.models import FeedbackURLConfig
+from ..base.utils import get_admin_email
 from ..base.views import ReportAbuseView, SendMessageView
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
@@ -97,24 +102,75 @@ class ReportGroupAbuseView(ReportAbuseView):
 
 
 class SendGroupMessageView(SendMessageView):
+    def profile(self):
+        return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
+
     def form_valid(self, form):
-        recipient = LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
-        sender_email = form.cleaned_data["your_email_address"]
-        message = form.cleaned_data["your_message"]
+        recipient = self.profile()
+        sender_name = form.cleaned_data["your_name"]
+        sender_email_address = form.cleaned_data["your_email_address"]
+        feedback_url = FeedbackURLConfig.get_solo().site_url
+        admins_email = get_admin_email()
+        txt_message = render_to_string(
+            "emails/message_group.txt",
+            {
+                "sender_name": sender_name,
+                "group_name": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "feedback_url": feedback_url,
+                "admins_email": admins_email,
+            },
+        )
+        html_message = render_to_string(
+            "emails/message_group.html",
+            {
+                "sender_name": sender_name,
+                "group_name": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "feedback_url": feedback_url,
+                "admins_email": admins_email,
+            },
+        )
         send_mail(
-            f"{sender_email} sent {recipient.name} a message through the EA hub.",
-            render_to_string(
-                "emails/message_group.txt",
-                {"message": message, "group_name": recipient.name},
-            ),
-            sender_email,
-            [recipient.email],
+            f"{sender_name} wants to connect with {recipient.name}!",
+            txt_message,
+            sender_email_address,
+            recipient.get_messaging_emails(self.request),
+            html_message=html_message,
         )
 
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
         )
         return redirect(reverse("group", args=([recipient.slug])))
+
+    def get(self, request, *args, **kwargs):
+        group = self.profile()
+
+        if group.email or (
+            flag_enabled("MESSAGING_FLAG", request=request)
+            and group.has_organisers_with_messaging_enabled()
+        ):
+            if not request.user.has_perm("profiles.message_users"):
+                raise PermissionDenied
+
+            return super().get(request, *args, **kwargs)
+
+        raise Http404("Messaging not available for this group")
+
+    def post(self, request, *args, **kwargs):
+        group = self.profile()
+        if (
+            request.user.has_perm("profiles.message_users")
+            and group.email
+            or (
+                flag_enabled("MESSAGING_FLAG", request=request)
+                and group.has_organisers_with_messaging_enabled
+            )
+        ):
+            return super().post(request, *args, **kwargs)
+
+        raise PermissionDenied
 
 
 @login_required
