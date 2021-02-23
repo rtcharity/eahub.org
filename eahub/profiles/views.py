@@ -4,7 +4,7 @@ from django import http
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
@@ -101,20 +101,22 @@ class SendProfileMessageView(SendMessageView):
         return profile
 
     def form_valid(self, form):
+        message = form.cleaned_data["your_message"]
         recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
+        subject = f"{sender_name} wants to connect with {recipient.name}!"
         sender_email_address = form.cleaned_data["your_email_address"]
-        message = form.cleaned_data["your_message"]
-        admin_email = get_admin_email()
         feedback_url = FeedbackURLConfig.get_solo().site_url
+        admins_email = get_admin_email()
         profile_edit_url = self.request.build_absolute_uri(reverse("edit_profile"))
+
         txt_message = render_to_string(
             "emails/message_profile.txt",
             {
                 "sender_name": sender_name,
                 "recipient": recipient.name,
                 "message": message,
-                "admin_email": admin_email,
+                "admin_email": admins_email,
                 "feedback_url": feedback_url,
                 "profile_edit_url": profile_edit_url,
             },
@@ -125,19 +127,22 @@ class SendProfileMessageView(SendMessageView):
                 "sender_name": sender_name,
                 "recipient": recipient.name,
                 "message": message,
-                "admin_email": admin_email,
+                "admin_email": admins_email,
                 "feedback_url": feedback_url,
                 "profile_edit_url": profile_edit_url,
             },
         )
-        send_mail(
-            f"{sender_name} wants to connect with you!",
-            txt_message,
-            admin_email,
-            [recipient.user.email],
-            html_message=html_message,
-            reply_to = sender_email_address
-        )
+
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=txt_message,
+            from_email=admins_email,
+            to=[recipient.user.email],
+            reply_to=[sender_email_address])
+        email.attach_alternative(html_message, "text/html")
+
+        email.send()
+
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
         )
