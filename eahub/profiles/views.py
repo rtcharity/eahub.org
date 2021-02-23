@@ -94,7 +94,7 @@ class ReportProfileAbuseView(ReportAbuseView):
 
 
 class SendProfileMessageView(SendMessageView):
-    def profile(self):
+    def get_recipient(self):
         profile = Profile.objects.get(slug=self.kwargs["slug"])
         if profile is None:
             raise Exception("Could not find profile")
@@ -102,7 +102,7 @@ class SendProfileMessageView(SendMessageView):
 
     def form_valid(self, form):
         message = form.cleaned_data["your_message"]
-        recipient = self.profile()
+        recipient = self.get_recipient()
         sender_name = form.cleaned_data["your_name"]
         subject = f"{sender_name} wants to connect with {recipient.name}!"
         sender_email_address = form.cleaned_data["your_email_address"]
@@ -138,7 +138,8 @@ class SendProfileMessageView(SendMessageView):
             body=txt_message,
             from_email=admins_email,
             to=[recipient.user.email],
-            reply_to=[sender_email_address])
+            reply_to=[sender_email_address],
+        )
         email.attach_alternative(html_message, "text/html")
 
         email.send()
@@ -151,7 +152,7 @@ class SendProfileMessageView(SendMessageView):
     def get(self, request, *args, **kwargs):
         if not request.user.has_perm("profiles.message_users"):
             raise PermissionDenied
-        recipient = self.profile()
+        recipient = self.get_recipient()
         if not flag_enabled("MESSAGING_FLAG", request=request):
             raise Http404("Messaging toggled off")
         if recipient.get_can_receive_message():
@@ -162,7 +163,7 @@ class SendProfileMessageView(SendMessageView):
     def post(self, request, *args, **kwargs):
         if not request.user.has_perm("profiles.message_users"):
             raise PermissionDenied
-        recipient = self.profile()
+        recipient = self.get_recipient()
         if not flag_enabled("MESSAGING_FLAG", request=request):
             raise Http404("Messaging toggled off")
         if recipient.get_can_receive_message():
