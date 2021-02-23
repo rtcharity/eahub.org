@@ -8,8 +8,6 @@ Dear {{ recipient }},
 
 You can respond to them by replying to this email.
 
-You can respond to them by replying to this email.
-
 Thanks,
 
 EA Hub
