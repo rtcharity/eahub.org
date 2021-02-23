@@ -134,9 +134,10 @@ class SendGroupMessageView(SendMessageView):
         send_mail(
             f"{sender_name} wants to connect with {recipient.name}!",
             txt_message,
-            sender_email_address,
+            admins_email,
             recipient.get_messaging_emails(self.request),
             html_message=html_message,
+            reply_to=sender_email_address
         )
 
         messages.success(

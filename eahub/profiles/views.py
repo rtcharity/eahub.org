@@ -133,9 +133,10 @@ class SendProfileMessageView(SendMessageView):
         send_mail(
             f"{sender_name} wants to connect with you!",
             txt_message,
-            sender_email_address,
+            admin_email,
             [recipient.user.email],
             html_message=html_message,
+            reply_to = sender_email_address
         )
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
