@@ -5,7 +5,7 @@ from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -106,17 +106,20 @@ class SendGroupMessageView(SendMessageView):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 
     def form_valid(self, form):
+        message = form.cleaned_data["your_message"]
         recipient = self.profile()
         sender_name = form.cleaned_data["your_name"]
+        subject = f"{sender_name} wants to connect with {recipient.name}!"
         sender_email_address = form.cleaned_data["your_email_address"]
         feedback_url = FeedbackURLConfig.get_solo().site_url
         admins_email = get_admin_email()
+
         txt_message = render_to_string(
             "emails/message_group.txt",
             {
                 "sender_name": sender_name,
                 "group_name": recipient.name,
-                "message": form.cleaned_data["your_message"],
+                "message": message,
                 "feedback_url": feedback_url,
                 "admins_email": admins_email,
             },
@@ -126,18 +129,21 @@ class SendGroupMessageView(SendMessageView):
             {
                 "sender_name": sender_name,
                 "group_name": recipient.name,
-                "message": form.cleaned_data["your_message"],
+                "message": message,
                 "feedback_url": feedback_url,
                 "admins_email": admins_email,
             },
         )
-        send_mail(
-            f"{sender_name} wants to connect with {recipient.name}!",
-            txt_message,
-            sender_email_address,
-            recipient.get_messaging_emails(self.request),
-            html_message=html_message,
-        )
+
+        email = EmailMultiAlternatives(
+            subject=subject,
+            body=txt_message,
+            from_email=admins_email,
+            to=recipient.get_messaging_emails(self.request),
+            reply_to=[sender_email_address])
+        email.attach_alternative(html_message, "text/html")
+
+        email.send()
 
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"

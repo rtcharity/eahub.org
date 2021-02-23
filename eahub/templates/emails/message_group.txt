@@ -1,7 +1,15 @@
 Dear {{ group_name }} admin,
+
 {{ sender_name }} has sent {{ group_name }} a message:
+
+---
 {{ message }}
+---
+
+You can respond to them by replying to this email.
+
 Thanks,
+
 EA Hub
 
 Feedback: {{ feedback_url }}
