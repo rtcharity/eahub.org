@@ -19,3 +19,10 @@ class FeedbackURLConfig(SingletonModel):
 
     class Meta:
         verbose_name = "Feedback URL"
+
+
+class MessagingLog(models.Model):
+    sender_email = models.EmailField(max_length=254)
+    recipient_email = models.EmailField(max_length=254)
+    send_action_guid = models.UUIDField(default=uuid.uuid4)
+    time = models.DateTimeField(default=timezone.now)

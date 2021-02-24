@@ -11,7 +11,7 @@ from django.template.loader import render_to_string
 from django.urls import reverse
 from flags.state import flag_enabled
 
-from ..base.models import FeedbackURLConfig, User
+from ..base.models import FeedbackURLConfig, MessagingLog, User
 from ..base.utils import get_admin_email
 from ..base.views import (
     ReportAbuseView,
@@ -143,6 +143,9 @@ class SendProfileMessageView(SendMessageView):
         email.attach_alternative(html_message, "text/html")
 
         email.send()
+
+        log = MessagingLog(sender_email=sender_email_address, recipient_email=recipient.user.email)
+        log.save()
 
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"
