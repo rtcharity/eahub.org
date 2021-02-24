@@ -1,3 +1,6 @@
+import uuid
+
+
 from django import urls
 from django.conf import settings
 from django.contrib import messages
@@ -16,7 +19,7 @@ from django.views.generic import edit as edit_views
 from flags.state import flag_enabled
 from rules.contrib import views as rules_views
 
-from ..base.models import FeedbackURLConfig
+from ..base.models import FeedbackURLConfig, MessagingLog
 from ..base.utils import get_admin_email
 from ..base.views import ReportAbuseView, SendMessageView
 from ..profiles.models import Profile
@@ -135,16 +138,27 @@ class SendGroupMessageView(SendMessageView):
             },
         )
 
+        recipient_emails = recipient.get_messaging_emails(self.request)
+
         email = EmailMultiAlternatives(
             subject=subject,
             body=txt_message,
             from_email=admins_email,
-            to=recipient.get_messaging_emails(self.request),
+            to=recipient_emails,
             reply_to=[sender_email_address],
         )
         email.attach_alternative(html_message, "text/html")
 
         email.send()
+
+        send_action_uuid = uuid.uuid4()
+        for recipient_email in recipient_emails:
+            log = MessagingLog(
+                sender_email=sender_email_address,
+                recipient_email=recipient_email,
+                recipient_type=MessagingLog.GROUP,
+                send_action_uuid=send_action_uuid)
+            log.save()
 
         messages.success(
             self.request, "Your message to " + recipient.name + " has been sent"

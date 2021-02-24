@@ -144,7 +144,10 @@ class SendProfileMessageView(SendMessageView):
 
         email.send()
 
-        log = MessagingLog(sender_email=sender_email_address, recipient_email=recipient.user.email)
+        log = MessagingLog(
+            sender_email=sender_email_address,
+            recipient_email=recipient.user.email,
+            recipient_type=MessagingLog.USER)
         log.save()
 
         messages.success(

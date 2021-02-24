@@ -71,4 +71,23 @@ def get_profile(user):
         return None
 
 
+@admin.register(models.MessagingLog)
+class MessagingLogAdmin(admin.ModelAdmin):
+    list_display = [
+        "sender_email",
+        "recipient_email",
+        "recipient_type",
+        "send_action_uuid",
+        "time",
+    ]
+    list_filter = [
+        "recipient_type",
+        ("time", DateRangeFilter),
+    ]
+    search_fields = [
+        "sender",
+        "recipient"
+    ]
+
+
 admin.site.register(models.FeedbackURLConfig, SingletonModelAdmin)
