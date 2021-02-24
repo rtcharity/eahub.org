@@ -1,6 +1,5 @@
 import uuid
 
-
 from django import urls
 from django.conf import settings
 from django.contrib import messages
@@ -157,7 +156,8 @@ class SendGroupMessageView(SendMessageView):
                 sender_email=sender_email_address,
                 recipient_email=recipient_email,
                 recipient_type=MessagingLog.GROUP,
-                send_action_uuid=send_action_uuid)
+                send_action_uuid=send_action_uuid,
+            )
             log.save()
 
         messages.success(

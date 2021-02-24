@@ -1,6 +1,5 @@
 import uuid
 
-
 from authtools import models as authtools_models
 from django.core.validators import URLValidator
 from django.db import models

@@ -84,10 +84,7 @@ class MessagingLogAdmin(admin.ModelAdmin):
         "recipient_type",
         ("time", DateRangeFilter),
     ]
-    search_fields = [
-        "sender",
-        "recipient"
-    ]
+    search_fields = ["sender", "recipient"]
 
 
 admin.site.register(models.FeedbackURLConfig, SingletonModelAdmin)
