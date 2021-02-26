@@ -12,6 +12,15 @@
             min-height: 200px;
             border: 1px solid #e0e0e0;
         }
+        .prof__msg-btn {
+            width: 100%;
+            display: block;
+            margin-top: $grid-gutter-width-half / 2;
+            
+            @include media-breakpoint-up(md) {
+                margin-top: 1.5rem;
+            }
+        }
         .prof__title {
             display: flex;
             align-items: baseline;
