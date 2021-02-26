@@ -199,22 +199,15 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 from aldryn_django.storage import parse_storage_url  # noqa: E402,F401; isort:skip
 
-if env.str("DEFAULT_STORAGE_DSN", ""):
-    DEFAULT_STORAGE_DSN = env.str("DEFAULT_STORAGE_DSN")
-    media_config = parse_storage_url(DEFAULT_STORAGE_DSN)
-    MEDIA_URL = media_config["MEDIA_URL"]
-    DefaultStorageClass = dsn_configured_storage_class("DEFAULT_STORAGE_DSN")
-    DEFAULT_FILE_STORAGE = "eahub.config.settings.DefaultStorageClass"
-    AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
-    AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
-    AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
-    AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
-    AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
-    AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
-else:
-    MEDIA_URL = "/media/"
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_ROOT = os.path.join(base_dir, "data/media/")
+media_config = parse_storage_url(env.str("DEFAULT_STORAGE_DSN"))
+DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
+MEDIA_URL = media_config["MEDIA_URL"]
+AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
+AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
+AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
+AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
+AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
+AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
 
 
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
