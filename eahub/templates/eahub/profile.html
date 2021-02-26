@@ -276,7 +276,7 @@
               {% endif %}
 
               {% if profile.user.localgroup_set.exists %}
-                <div class="list turquoise-links">
+                <div class="card__section">
                   <div class="card__subtitle">Organiser of</div>
                   {% if profile.user.localgroup_set.all.count == 1 %}
                     <a

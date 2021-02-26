@@ -1,6 +1,13 @@
 @import 'eahub/base/static/global/styles/bootstrap-variables';
 
 .profile-detail {
+
+    main {
+        @include media-breakpoint-up(md) {
+            min-height: 75vh;
+        }
+    }
+    
     .container {
         max-width: 1280px;
     }
@@ -145,13 +152,6 @@
     .prof__buttons-bottom {
         display: flex;
         justify-content: center;
-        margin-bottom: 27vh;
-        
-        @include media-breakpoint-down(lg) {
-            margin-bottom: 10vh;
-        }
-        @include media-breakpoint-down(md) {
-            margin-bottom: 5vh;
-        }
+        margin-bottom: 2rem;
     }
 }
