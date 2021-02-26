@@ -111,14 +111,13 @@
                 <span><i class="fa fa-pencil-alt"></i> Edit</span>
               </a>
 
-              {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-              {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
-                <a class="btn btn-outline-primary btn-sm"
-                  href="{% url 'message_profile' profile.slug %}"
-                >
-                  <span><i class="fa fa-pencil-alt"></i> Send Message</span>
-                </a>
-              {% endif %}
+                {% load feature_flags %}
+                {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+                {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message and messaging_flag %}
+                    <a href="{% url 'message_profile' profile.slug %}" class="btn btn-default purple">
+                        <i class="fa fa-pencil-alt"></i> Send Message
+                    </a>
+                {% endif %}
             </div>
           {% endif %}
         </div>

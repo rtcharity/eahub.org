@@ -430,6 +430,7 @@ class Profile(models.Model):
     )
     available_as_speaker = models.BooleanField(null=True, blank=True, default=None)
     email_visible = models.BooleanField(default=False)
+    allow_messaging = models.BooleanField(default=True)
     topics_i_speak_about = models.TextField(
         blank=True, validators=[MaxLengthValidator(2000)]
     )
@@ -463,8 +464,10 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return urls.reverse("profile", args=[self.slug])
 
-    def get_email_searchable(self) -> Optional[str]:
-        return self.user.email if self.email_visible else None
+    def messaging_url_if_can_receive_message(self) -> str:
+        if self.get_can_receive_message():
+            return urls.reverse("message_profile", args=[self.slug])
+        return ""
 
     def geocode(self):
         self.lat = None
@@ -652,6 +655,9 @@ class Profile(models.Model):
 
     def get_is_organiser(self):
         return self.user.localgroup_set.exists()
+
+    def get_can_receive_message(self):
+        return self.is_approved and self.is_public and self.allow_messaging
 
     def convert_to_row(self, field_names):
         values = []

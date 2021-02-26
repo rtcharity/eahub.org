@@ -121,6 +121,8 @@ django-settings-export==1.2.1
     # via -r requirements.in
 django-sluggable==0.7.0
     # via -r requirements.in
+django-solo==1.1.5
+    # via -r requirements.in
 django-storages==1.8
     # via aldryn-django
 django-upload-path==0.1.1

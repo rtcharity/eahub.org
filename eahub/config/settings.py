@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "import_export",
     "rangefilter",
     "flags",
+    "solo",
 ]
 
 MIDDLEWARE = [
@@ -338,6 +339,7 @@ ADMIN_REORDER = [
                 "model": "flags.FlagState",
                 "label": "Feature flags (beta features) configuration",
             },
+            {"model": "base.FeedbackURLConfig", "label": "URL of feedback page"},
         ],
     },
 ]
