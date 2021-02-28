@@ -67,4 +67,5 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
+    path("feedback/", include("eahub.feedback.urls")),
 ]
