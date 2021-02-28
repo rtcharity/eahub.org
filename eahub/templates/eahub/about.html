@@ -1,80 +1,99 @@
-{% extends 'base.html' %}
+{% extends 'base_bs5.html' %}
+
+{% load static %}
 
 {% block title %}About{% endblock %}
 
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock %}
+
 {% block content %}
-<div class="container info turquoise-links">
-<img src="/static/global/images/about.jpg"></img>
-<h1>About</h1>
-<p>The Effective Altruism Hub is here to make it easier for Effective Altruists to get together and collaborate on shared goals.
-  Our vision is to increase visibility for individuals, projects and groups, and to make ideas and opportunities easier to find.</p>
-<p>The Hub allows you to create, share or find personal and group profiles. Users can search for volunteers, speakers, and talent.
-  You can also find, join or start local groups. Each of these entities are helpfully displayed on the interactive map of EAs.
-  Improved privacy settings allow users to customise how they use the Hub.</p>
-<p>In the near future we will be working on introducing more functionality.</p>
 
-<p><a href="{% url 'newsletter' %}">Subscribe here</a> to receive announcements.</p>
+    {% include 'includes/messages.html' with messages=messages %}
 
-<h4> Participation </h4>
+    <div class="container">
+        <img class="img-fluid m-auto my-4 d-flex" loading="lazy" width="250" height="244" src="{% static 'global/images/about.jpg' %}"/>
+        <h1>About</h1>
+        <p>The Effective Altruism Hub is here to make it easier for Effective
+            Altruists to get together and collaborate on shared goals.
+            Our vision is to increase visibility for individuals, projects and
+            groups, and to make ideas and opportunities easier to find.</p>
+        <p>The Hub allows you to create, share or find personal and group
+            profiles. Users can search for volunteers, speakers, and talent.
+            You can also find, join or start local groups. Each of these
+            entities are helpfully displayed on the interactive map of EAs.
+            Improved privacy settings allow users to customise how they use the
+            Hub.</p>
+        <p>In the near future we will be working on introducing more
+            functionality.</p>
 
-<p>Originally founded by .impact in 2014, the Effective Altruism Hub is a project by the Local Effective Altruism Network and Rethink Charity, proudly delivered by our team of staff and volunteers:</p>
+        <p><a href="{% url 'newsletter' %}">Subscribe here</a> to receive
+            announcements.</p>
 
-Engineers:
+        <h4> Participation </h4>
 
-<ul>
-  <li>Taymon Beal: Back-End Developer</li>
-  <li>Sebastian Becker: Front-End Developer</li>
-  <li>Manoj Nathwani: Back-End Developer</li>
-</ul>
+        <p>Originally founded by .impact in 2014, the Effective Altruism Hub is
+            a project by the Local Effective Altruism Network and Rethink
+            Charity, proudly delivered by our team of staff and volunteers:</p>
 
-Product team:
+        Engineers:
+        <ul>
+            <li>Taymon Beal: Back-End Developer</li>
+            <li>Sebastian Becker: Front-End Developer</li>
+            <li>Manoj Nathwani: Back-End Developer</li>
+        </ul>
 
-<ul>
-  <li>Piotr Cieszynski: Tester</li>
-  <li>Alexander Herwix: Advisor</li>
-  <li>Richenda Herzig: Product Manager and Illustrator</li>
-  <li>Michal Trzesimiech: Project Manager</li>
-  <li>Nadia Williams: Illustrator</li>
-</ul>
+        Product team:
+        <ul>
+            <li>Piotr Cieszynski: Tester</li>
+            <li>Alexander Herwix: Advisor</li>
+            <li>Richenda Herzig: Product Manager and Illustrator</li>
+            <li>Michal Trzesimiech: Project Manager</li>
+            <li>Nadia Williams: Illustrator</li>
+        </ul>
 
-  Resources team:
-<ul>
-  <li>Catherine Low</li>
-  <li>Vaidehi Agarwalla</li>
-  <li>Eve McCormick</li>
-  <li>Jo Duyvestyn</li>
-  <li>Katie Gertsch</li>
-  <li>Liz Aderhold</li>
-  <li>Emma Caplan</li>
-  <li>Rebecca Baron</li>
-  <li>David Vatousios</li>
-  <li>Mac Jordan</li>
-  <li>James Faville</li>
-  <li>Pim Kang</li>
-  <li>Riley Peebles</li>
-  <li>Avi Iyer</li>
-  <li>and Marcin Kowrygo</li>
-</ul>
+        Resources team:
+        <ul>
+            <li>Catherine Low</li>
+            <li>Vaidehi Agarwalla</li>
+            <li>Eve McCormick</li>
+            <li>Jo Duyvestyn</li>
+            <li>Katie Gertsch</li>
+            <li>Liz Aderhold</li>
+            <li>Emma Caplan</li>
+            <li>Rebecca Baron</li>
+            <li>David Vatousios</li>
+            <li>Mac Jordan</li>
+            <li>James Faville</li>
+            <li>Pim Kang</li>
+            <li>Riley Peebles</li>
+            <li>Avi Iyer</li>
+            <li>and Marcin Kowrygo</li>
+        </ul>
 
-  Data Privacy Officer: Victor Yunenko
+        Data Privacy Officer: Victor Yunenko
 
-<h4> Feedback </h4>
+        <h4 class="mt-4"> Feedback </h4>
 
-<p>Last but not least, this website is about you and for you – its user. We are grateful for your honest feedback!</p>
-<div class="col-xs-12 col-md-6">
-  <a href="mailto:tech@rtcharity.org">
-    <button class="tech-btn">
-      Tech Support
-    </button>
-  </a>
-</div>
-<div class="col-xs-12 col-md-6">
-  <a target="_blank" href="https://feedback.eahub.org">
-    <button class="suggestions-btn">
-      Suggestions or Requests
-    </button>
-  </a>
-</div>
+        <p>Last but not least, this website is about you and for you – its user.
+            We are grateful for your honest feedback!</p>
+        
+        <div class="row row-cols-auto mb-5">
+            <div class="col">
+                <a class="btn btn-outline-primary" href="mailto:contact@eahub.org">
+                    Tech Support
+                </a>
+            </div>
+            <div class="col">
+                <a class="btn btn-outline-primary" target="_blank" href="https://feedback.eahub.org">
+                    Suggestions or Requests
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
-</div>
+{% block footer %}
+    {% include 'includes/footer.html' %}
 {% endblock %}

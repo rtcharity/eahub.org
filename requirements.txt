@@ -10,7 +10,7 @@ aldryn-addons==2.0.1
     # via aldryn-django
 aldryn-client==2.3.5
     # via aldryn-django
-https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.16.1/b460938a-f357-49a3-9aef-9dfb40946551/aldryn-django-2.2.16.1.tar.gz#egg=aldryn-django==2.2.16.1
+https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.17.1/152a6e71-0596-4bfc-9d14-d94bb1e1a6ca/aldryn-django-2.2.17.1.tar.gz#egg=aldryn-django==2.2.17.1
     # via -r requirements.in
 aldryn-sites==0.6.0
     # via aldryn-django
@@ -28,8 +28,14 @@ black==20.8b1
     # via
     #   -r requirements.in
     #   pytest-black
+boto3==1.17.16
+    # via -r requirements.in
 boto==2.49.0
     # via aldryn-django
+botocore==1.20.16
+    # via
+    #   boto3
+    #   s3transfer
 brotli==1.0.9
     # via whitenoise
 certifi==2020.12.5
@@ -37,7 +43,7 @@ certifi==2020.12.5
     #   djeese-fs
     #   requests
     #   sentry-sdk
-cffi==1.14.4
+cffi==1.14.5
     # via cryptography
 chardet==4.0.0
     # via
@@ -53,7 +59,7 @@ click==7.1.2
     #   aldryn-django
     #   black
     #   pip-tools
-cryptography==3.3.1
+cryptography==3.4.6
     # via pyjwt
 defusedxml==0.6.0
     # via
@@ -67,7 +73,7 @@ dj-email-url==1.0.2
     # via aldryn-django
 dj-redis-url==0.1.4
     # via aldryn-django
-django-admin-rangefilter==0.6.4
+django-admin-rangefilter==0.7.0
     # via -r requirements.in
 django-admin-relation-links==0.2.5
     # via -r requirements.in
@@ -81,23 +87,23 @@ django-authtools==1.7.0
     # via -r requirements.in
 django-autoslug==1.9.8
     # via -r requirements.in
-django-cache-url==3.1.2
+django-cache-url==3.2.3
     # via aldryn-django
 django-classy-tags==2.0.0
     # via django-sekizai
 django-cleanup==5.1.0
     # via -r requirements.in
-django-crispy-forms==1.10.0
+django-crispy-forms==1.11.1
     # via -r requirements.in
 django-enumfield==1.6
     # via -r requirements.in
 django-environ==0.4.5
     # via -r requirements.in
-django-extensions==3.1.0
+django-extensions==3.1.1
     # via -r requirements.in
 django-feature-policy==3.7.0
     # via -r requirements.in
-django-flags==5.0.2
+django-flags==5.0.3
     # via -r requirements.in
 django-getenv==1.3.2
     # via
@@ -123,13 +129,17 @@ django-sluggable==0.7.0
     # via -r requirements.in
 django-solo==1.1.5
     # via -r requirements.in
+django-storage-url==0.6.0
+    # via -r requirements.in
 django-storages==1.8
-    # via aldryn-django
+    # via
+    #   aldryn-django
+    #   django-storage-url
 django-upload-path==0.1.1
     # via -r requirements.in
 django-webpack-loader==0.7.0
     # via -r requirements.in
-django==2.2.16
+django==2.2.17
     # via
     #   aldryn-addons
     #   aldryn-django
@@ -148,6 +158,7 @@ django==2.2.16
     #   django-referrer-policy
     #   django-sekizai
     #   django-settings-export
+    #   django-storage-url
     #   django-storages
     #   django-upload-path
     #   easy-thumbnails
@@ -158,7 +169,7 @@ easy-thumbnails==2.7.1
     # via aldryn-django
 et-xmlfile==1.0.1
     # via openpyxl
-faker==5.8.0
+faker==6.5.0
     # via -r requirements.in
 flake8-isort==4.0.0
     # via -r requirements.in
@@ -169,6 +180,8 @@ flake8==3.8.4
     #   flake8-isort
     #   flake8-polyfill
     #   pytest-flake8
+furl==2.1.0
+    # via django-storage-url
 geographiclib==1.50
     # via
     #   -r requirements.in
@@ -181,27 +194,27 @@ gunicorn==20.0.4
     # via -r requirements.in
 idna==2.10
     # via requests
-importlib-metadata==3.4.0
+importlib-metadata==3.7.0
     # via
     #   flake8
     #   pluggy
     #   pytest
 iniconfig==1.1.1
     # via pytest
-isort[requirements]==5.7.0
+isort==5.7.0
     # via
     #   -r requirements.in
     #   flake8-isort
-jaraco.classes==3.2.0
+jaraco.classes==3.2.1
     # via jaraco.collections
-jaraco.collections==3.1.0
+jaraco.collections==3.2.0
     # via cherrypy
-jaraco.functools==3.1.0
+jaraco.functools==3.2.1
     # via
     #   cheroot
     #   jaraco.text
     #   tempora
-jaraco.text==3.4.0
+jaraco.text==3.5.0
     # via jaraco.collections
 jasmine-core==3.6.0
     # via jasmine
@@ -211,8 +224,12 @@ jdcal==1.4.1
     # via openpyxl
 jellyfish==0.6.1
     # via us
-jinja2==2.11.2
+jinja2==2.11.3
     # via jasmine
+jmespath==0.10.0
+    # via
+    #   boto3
+    #   botocore
 markuppy==1.14
     # via tablib
 markupsafe==1.1.1
@@ -221,7 +238,7 @@ mccabe==0.6.1
     # via flake8
 model-bakery==1.2.1
     # via -r requirements.in
-more-itertools==8.6.0
+more-itertools==8.7.0
     # via
     #   cheroot
     #   cherrypy
@@ -237,6 +254,8 @@ openpyxl==3.0.6
     # via tablib
 ordereddict==1.1
     # via jasmine-core
+orderedmultidict==1.0.1
+    # via furl
 packaging==20.9
     # via pytest
 pathspec==0.8.1
@@ -251,7 +270,7 @@ pip-tools==5.5.0
     # via -r requirements.in
 pluggy==0.13.1
     # via pytest
-portend==2.7.0
+portend==2.7.1
     # via cherrypy
 psycopg2==2.8.6
     # via aldryn-django
@@ -295,12 +314,14 @@ pytest==6.2.2
     #   pytest-selenium
     #   pytest-variables
 python-dateutil==2.8.1
-    # via faker
+    # via
+    #   botocore
+    #   faker
 python-dotenv==0.15.0
     # via -r requirements.in
 python3-openid==3.2.0
     # via django-allauth
-pytz==2020.5
+pytz==2021.1
     # via
     #   django
     #   tempora
@@ -323,11 +344,13 @@ requests==2.25.1
     #   requests-oauthlib
 rules==2.2
     # via -r requirements.in
+s3transfer==0.3.4
+    # via boto3
 selenium==3.141.0
     # via
     #   jasmine
     #   pytest-selenium
-sentry-sdk==0.19.5
+sentry-sdk==0.20.3
     # via
     #   -r requirements.in
     #   aldryn-django
@@ -335,8 +358,9 @@ six==1.15.0
     # via
     #   aldryn-client
     #   cheroot
-    #   cryptography
     #   django-adminutils
+    #   furl
+    #   orderedmultidict
     #   python-dateutil
     #   tenacity
 sorl-thumbnail==12.7.0
@@ -345,7 +369,7 @@ sqlparse==0.4.1
     # via django
 tablib[html,ods,xls,xlsx,yaml]==3.0.0
     # via django-import-export
-tabulate==0.8.7
+tabulate==0.8.9
     # via aldryn-client
 tempora==4.0.1
     # via portend
@@ -368,6 +392,7 @@ typing-extensions==3.7.4.3
     #   importlib-metadata
 urllib3==1.26.3
     # via
+    #   botocore
     #   requests
     #   selenium
     #   sentry-sdk

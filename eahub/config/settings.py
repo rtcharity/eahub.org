@@ -6,6 +6,7 @@ import environ
 import sentry_sdk
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+from django_storage_url import dsn_configured_storage_class
 from dotenv import find_dotenv, load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -278,7 +279,16 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-SETTINGS_EXPORT = ["WEBPACK_DEV_URL", "DEBUG", "DJANGO_ENV", "ALGOLIA"]
+DOMAIN = env.str("DOMAIN", "localhost:8000")
+
+SETTINGS_EXPORT = [
+    "WEBPACK_DEV_URL",
+    "DEBUG",
+    "DJANGO_ENV",
+    "ALGOLIA",
+    "RECAPTCHA_PUBLIC_KEY",
+    "DOMAIN",
+]
 
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])

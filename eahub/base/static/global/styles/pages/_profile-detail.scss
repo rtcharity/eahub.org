@@ -1,0 +1,157 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+.profile-detail {
+
+    main {
+        @include media-breakpoint-up(md) {
+            min-height: 75vh;
+        }
+    }
+    
+    .container {
+        max-width: 1280px;
+    }
+    .prof__header {
+        position: relative;
+        
+        .prof__img {
+            min-width: 200px;
+            min-height: 200px;
+            border: 1px solid #e0e0e0;
+        }
+        .prof__msg-btn {
+            width: 100%;
+            display: block;
+            margin-top: $grid-gutter-width-half / 2;
+            
+            @include media-breakpoint-up(md) {
+                margin-top: 1.5rem;
+            }
+        }
+        .prof__title {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: 0.6rem;
+            
+            h1 {
+                display: inline-flex;
+                line-height: 0.9;
+            }
+            .prof_social-link {
+                display: flex;
+                text-decoration: none;
+                color: $color-secondary;
+                margin-right: 10px;
+                
+                $icon-size: 24px;
+                svg {
+                    width: $icon-size;
+                    height: $icon-size;
+                }
+                .fa-link {
+                    width: $icon-size - 2px;
+                    height: $icon-size - 2px;
+                }
+            }
+    
+            .prof__btns {
+                display: flex;
+                align-self: end;
+                margin-left: auto;
+                margin-bottom: 1rem;
+                
+                @include media-breakpoint-up(xl) {
+                    position: absolute;
+                    right: 0;
+                    width: fit-content;
+                    width: -moz-fit-content;
+                }
+                .btn {
+                    margin-right: 9px;
+                }
+            }
+        }
+        .alert {
+            .svg-inline--fa {
+                margin-right: 10px;
+            }
+        }
+        .prof__summary {
+            margin-bottom: 1rem;
+            
+            p:last-of-type {
+                margin-bottom: 0;
+            }
+            
+            .summary__sections {
+                margin-top: 1rem;
+                .summary__subtitle {
+                    margin-bottom: 0.25rem;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+    .prof__cards {
+
+        .card {
+            height: 100%;
+            border: 0;
+
+            .card-body {
+                display: flex;
+                flex-direction: column;
+                padding: 0;
+    
+                .card__header {
+                    margin-bottom: 1rem;
+                    
+                    .col {
+                        display: flex;
+                        align-items: center;
+
+                        .card__heading {
+                            display: flex;
+                            margin-bottom: 0;
+                            padding-bottom: 0.5rem;
+                            font-size: 1.5rem;
+                            color: $color-primary;
+                        }
+                        .card__img {
+                            max-width: 40px;
+                            display: flex;
+                        }
+                    }
+                    .col-heading {
+                        padding-left: 0;
+                    }
+                }
+                .card__section {
+                    margin-bottom: 1.2rem;
+        
+                    .card__subtitle {
+                        margin-bottom: 0.25rem;
+                        font-weight: bold;
+                    }
+                    p:last-of-type {
+                        margin-bottom: 0;
+                    }
+                }
+                .alert {
+                    margin-top: auto;
+                    margin-bottom: 0;
+                }
+            }
+            .btn-edit {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+        }
+    }
+    .prof__buttons-bottom {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+}
