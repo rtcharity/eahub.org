@@ -85,6 +85,10 @@
             
             .summary__sections {
                 margin-top: 1rem;
+                
+                .summary__section:nth-child(2) {
+                    margin-top: 1rem;
+                }
                 .summary__subtitle {
                     margin-bottom: 0.25rem;
                     font-weight: bold;
