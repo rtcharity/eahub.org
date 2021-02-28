@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "rangefilter",
     "flags",
     "solo",
+    "eahub.feedback.apps.FeedbackConfig",
 ]
 
 MIDDLEWARE = [
@@ -347,6 +348,7 @@ ADMIN_REORDER = [
             },
             {"model": "base.FeedbackURLConfig", "label": "URL of feedback page"},
             {"model": "base.MessagingLog", "label": "Messaging logs"},
+            {"model": "feedback.Feedback", "label": "User feedback"},
         ],
     },
 ]
