@@ -18,14 +18,24 @@ Roles and data access
 Technical Administrators’ credentials which grant direct access to the production database must follow the following guidelines:
   * Passwords must have 130+ bits of entropy.
   * Passwords must be stored in a password manager database.
-  * SSH access to the running production server must use a separate EA Hub ssh key that can be decrypted only by a password that satisfies the aforementioned criteria.
-  * Two-Factor Authentication must be enabled when it is possible.
-  * Passwords must be renewed every 12 months, which is managed through an assigned ticket with a due date.
-Access sharing guidelines:
-* Passwords sharing requests must be confirmed via a video call.
-* Passwords must be transferred only as a text document in an encrypted archive, using an end-to-end encrypted communication channel. The password to the archive must be shared through a different communication channel.
+  * SSH access to the running production server must use a separate EA Hub ssh key that can be decrypted only by a password that satisfies the aforementioned criteria. 
+  * General guidelines for credentials management (see below)  
 
 ## Backups Management
 * The hosting provider is creating a backup each morning (04:00 GMT) and stores up to 7 backups at a time.
 * An export of the database and media files is done by the end of each month. That backup is encrypted with a secure password and uploaded to a secure hosting platform. By the end of each backup the security of the resulting file is confirmed by at least two lead developers.
-* The monthly backups are stored for 6 months only.
+* The monthly backups are stored for 6 months only.  
+
+## Credentials management
+* "Credentials" here refers to credentials to all production services used for eahub.org, i.e.,
+  * deployment tools  
+  * backup storage 
+  * email service providers
+  * version control tools
+  * eahub.org admin panel 
+* Two-Factor Authentication must be enabled where possible  
+* Where SSH keys are used, they must be encrypted and different keys must be used for different services  
+* Credentials must be rotated every 12 months  
+* Access sharing guidelines:
+  * Passwords sharing requests must be confirmed via a video call.
+  * Passwords must be transferred only as a text document in an encrypted archive, using an end-to-end encrypted communication channel. The password to the archive must be shared through a different communication channel. 
