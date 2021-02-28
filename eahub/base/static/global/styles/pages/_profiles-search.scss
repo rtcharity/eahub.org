@@ -16,6 +16,13 @@ $spacing-xxs: 5px;
     margin-top: $grid-gutter-width;
     margin-bottom: $spacing-xxl;
     
+    a {
+        color: $color-primary;
+        &:hover {
+            color: $color-primary;
+        }
+    }
+
     #search-box-modal {
         background: white;
         
@@ -124,6 +131,9 @@ $spacing-xxs: 5px;
         .search__filter-item--with-title {
             .search__filter-title {
                 margin-top: $spacing-xl;
+            }
+            &:last-of-type {
+                margin-bottom: 2rem;
             }
         }
         .search__search-box,

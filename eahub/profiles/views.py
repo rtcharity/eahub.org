@@ -74,17 +74,6 @@ def my_profile_first_visit(request):
     return my_profile(request, True)
 
 
-@login_required
-def download(request):
-    if not hasattr(request.user, "profile"):
-        raise http.Http404("user has no profile")
-    profile = Profile.objects.get(pk=request.user.profile.id)
-    response = HttpResponse(content_type="application/zip")
-    response["Content-Disposition"] = f'attachment; filename="{profile.slug}.zip"'
-    profile.write_data_export_zip(request, response)
-    return response
-
-
 class ReportProfileAbuseView(ReportAbuseView):
     def profile(self):
         return Profile.objects.get(slug=self.kwargs["slug"])

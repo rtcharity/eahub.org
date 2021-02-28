@@ -16,7 +16,6 @@ urlpatterns = [
         "edit/community/", views.edit_profile_community, name="edit_profile_community"
     ),
     path("delete/", views.delete_profile, name="delete_profile"),
-    path("download/", views.download, name="download_profile"),
     path(
         "<int:legacy_record>/",
         views.profile_redirect_from_legacy_record,

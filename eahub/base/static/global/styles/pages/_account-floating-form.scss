@@ -1,13 +1,18 @@
 @import '../bootstrap-variables';
 
 
-.password-reset-form {
+.account-floating-form {
     min-height: 50vh;
-    margin-top: 10rem;
-    margin-bottom: 10rem;
-    
+    margin-top: 8rem;
+    margin-bottom: 8rem;
+    max-width: 500px;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
     h1 {
         margin-bottom: 2rem;
+        text-align: center;
     }
     
     .form-control {
@@ -59,7 +64,27 @@
             }
         }
     }
+    .g-recaptcha {
+        display: flex;
+        margin-left: 11px;
+    }
+    .additional-links {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        a {
+            color: $color-secondary;
+            text-decoration: none;
+        }
+    }
     .btn {
+        display: flex;
+        margin: auto;
+        text-align: center;
+        justify-content: center;
+        $padding: 0.7rem;
+        font-size: 1.3rem;
+        padding: $padding 3rem;
         margin-top: 2rem;
     }
 }
