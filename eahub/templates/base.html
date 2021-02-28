@@ -18,7 +18,7 @@
     <title>{% block title %}{{ page_name }}{% endblock %} - EA Hub</title>
     <link rel="shortcut icon" href="{%  static 'global/images/favicon.ico' %}">
 
-    {% if settings.DJANGO_ENV.value == 'stage' %}
+    {% if settings.DJANGO_ENV.value != 'prod' %}
       <meta name="robots" content="noindex, nofollow">
     {% endif %}
 
@@ -56,7 +56,23 @@
     {% render_block "css" %}
     {% render_block "js" %}
 
-    {% block header %}{% endblock %}
+      <meta property="og:site_name" content="Effective Altruism Hub">
+      {% block meta_info %}
+          <meta name="description" content="A global directory for effective altruists to connect">
+          <meta property="og:type" content="website">
+          <meta property="og:description" content="A global directory for effective altruists to connect">
+      {% endblock %}
+
+      {% block meta_image %}
+          <meta property="og:image" content="https://{{ settings.DOMAIN }}{% static 'global/images/eahub-header.webp' %}">
+          <meta property="og:image:width" content="1280">
+          <meta property="og:image:height" content="885">
+          <meta property="og:image:type" content="image/webp">
+      {% endblock %}
+
+      {% render_block "head" %}
+
+      {% block header %}{% endblock %}
 
   </head>
   <body id="body" class="{% render_block 'body_classes' %}">
@@ -120,7 +136,9 @@
     </nav>
     {% endblock %}
 
-    {% block content %}{% endblock %}
+    <main>
+      {% block content %}{% endblock %}
+    </main>
       
     {% block footer %}
         <footer class="footer">

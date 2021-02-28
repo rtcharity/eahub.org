@@ -1,0 +1,20 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+.btn-outline-secondary {
+    &:hover, &:active {
+        color: white;
+    }
+}
+.btn-secondary {
+    color: white;
+    &:hover, &:active {
+        color: white;
+    }
+}
+a {
+    color: #26ab98;
+    text-decoration: none;
+    &:hover {
+        color: #26ab98;
+    }
+}
