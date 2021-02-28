@@ -22,7 +22,9 @@ class ReportAbuseForm(forms.Form):
 
 
 class SendMessageForm(forms.Form):
-    your_name = forms.CharField(label="Your name", max_length=200, widget=forms.TextInput)
+    your_name = forms.CharField(
+        label="Your name", max_length=200, widget=forms.TextInput
+    )
     your_email_address = forms.CharField(
         label="Your email", max_length=254, widget=forms.EmailInput
     )

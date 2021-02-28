@@ -331,6 +331,7 @@ ADMIN_REORDER = [
                 "label": "Feature flags (beta features) configuration",
             },
             {"model": "base.FeedbackURLConfig", "label": "URL of feedback page"},
+            {"model": "base.MessagingLog", "label": "Messaging logs"},
         ],
     },
 ]
