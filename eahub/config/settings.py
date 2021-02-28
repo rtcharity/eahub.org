@@ -14,6 +14,7 @@ base_dir = environ.Path(__file__) - 3
 
 
 class DjangoEnv(Enum):
+    DOCKER_BUILD = "docker_build"
     LOCAL = "local"
     E2E = "e2e"
     STAGE = "stage"
