@@ -1,9 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'base_bs5.html' %}
 
 {% block title %}Privacy Policy{% endblock %}
 
+<!--navbar block required include after bs3 to bs5 upgrade for page to format correctly-->
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock %}
+
 {% block content %}
 <div class="container info">
+<br>
 <h1>Rethink Charity Privacy Policy</h1>
 <p>This Privacy Policy describes how your personal information is collected, used, and shared when you visit eahub.org (the “Site”).</p>
 
