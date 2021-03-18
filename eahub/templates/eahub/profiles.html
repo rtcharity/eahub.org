@@ -50,12 +50,11 @@
     {% endif %}
   </div>
 
-{% endblock %}
-
-{% block feedback %}
+  {% block feedback %}
     {% include 'components/feedback.html' %}
-{% endblock feedback %}
+  {% endblock feedback %}
 
+{% endblock %}
 
 {% block footer %}
     {% include 'includes/footer.html' %}

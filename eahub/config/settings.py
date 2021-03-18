@@ -95,7 +95,9 @@ vars().update(
         default="smtp://mail:1025",
     )
 )
-ADMINS = list(env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items())
+ADMINS = list(
+    env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items()
+)
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
 GROUPS_EMAIL = env.str("GROUPS_EMAIL", "admin@eahub.org")
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
@@ -202,6 +204,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 if env.str("DEFAULT_STORAGE_DSN", ""):
     DEFAULT_STORAGE_DSN = env.str("DEFAULT_STORAGE_DSN", "")
     from aldryn_django.storage import parse_storage_url
+
     media_config = parse_storage_url(DEFAULT_STORAGE_DSN)
     MEDIA_URL = media_config["MEDIA_URL"]
     DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
@@ -298,7 +301,9 @@ SETTINGS_EXPORT = [
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])
 
-LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items())
+LEAN_MANAGERS = list(
+    env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items()
+)
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
 if local_groups_airtable_api_key is None and local_groups_airtable_base_key is None:
