@@ -1,48 +1,48 @@
 @media (min-width: 601px) {
-#feedback {
-  right: -420px;
-  width: 420px;
+  #feedback {
+    right: -420px;
+    width: 420px;
   }
 
   .feedbackbtn-mobile {
-  display: none;
-}
+    display: none;
+  }
 
   .feedbackbtn {
-  top: 50%;
-  transform: rotate(-90deg) translate(-50%, -100%);
-  transform-origin: top left;
-  position: absolute;
-  left: 0;
-}
+    top: 50%;
+    transform: rotate(-90deg) translate(-50%, -100%);
+    transform-origin: top left;
+    position: absolute;
+    left: 0;
+  }
 }
 
-  @media (max-width: 600px) {
-#feedback {
-  right: -100%;
-  width: 100%;    
-}
+@media (max-width: 600px) {
+  #feedback {
+      right: -100%;
+      width: 100%;    
+  }
 
   .feedbackbtn-mobile {
-  transform: rotate(-90deg);
-  transform-origin: top left;
-  bottom: -30px;
-  position: absolute;
-  right: -85px;
-}
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    bottom: -30px;
+    position: fixed;
+    right: -85px;
+  }
 
   .feedbackbtn {
-  display: none;
-}
+    display: none;
+  }
 }
 
   /*--- All size screens ---*/
 
-  a {
+a {
   color: inherit;
 }
 
-  #feedback {
+#feedback {
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -55,20 +55,20 @@
   z-index: 1090;
 }
 
-  #feedback.active {
+#feedback.active {
     right: 0;
     box-shadow: 0 10px 18px rgba(0,0,0,0.16);
 }
 
-  .modal-content {
+.modal-content {
   height: 100%;
 }
 
-  #feedbackModal {
+#feedbackModal {
   display: block;
 }
 
-  #overlay {
+#overlay {
   background-color: rgba(0,0,0,0.4);
     position: fixed;
     top: 0;
@@ -81,24 +81,24 @@
     transition: all 0.5s linear;
 }
 
-  #overlay.active {
+#overlay.active {
   visibility: visible;
   opacity: 1;
 }
 
-  #closebtn, #closebtn2 {
+#closebtn, #closebtn2 {
   color: #fff;
   width: 30%;
 }
 
-  .submitbtn {
+.submitbtn {
   color: #fff;
   background: rgb(99, 82, 116);
   border-color: rgb(99, 82, 116);
   width: 30%;
 }
 
-  .feedbackbtn, .feedbackbtn-mobile {
+.feedbackbtn, .feedbackbtn-mobile {
   border: 0;
   color: #fff;
   background: rgb(99, 82, 116);
