@@ -120,7 +120,7 @@ def on_profile_creation(**kwargs):
     try:
         if "created" in kwargs.keys() and kwargs["created"]:
             save_logs_for_new_profile(kwargs["instance"])
-    except:
+    except Exception:
         logger.exception("Profile creation logging failed")
 
 
@@ -131,7 +131,7 @@ def on_profile_change(**kwargs):
         if instance.id is not None:
             previous = Profile.objects.get(id=instance.id)
             save_logs_for_profile_update(instance, previous)
-    except:
+    except Exception:
         logger.exception("Profile update logging failed")
 
 
@@ -145,7 +145,7 @@ def on_user_change(**kwargs):
                 user_old=User.objects.get(id=user_new.id),
                 user_new=user_new,
             )
-    except:
+    except Exception:
         logger.exception("User update logging failed")
 
 

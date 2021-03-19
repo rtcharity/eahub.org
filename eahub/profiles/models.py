@@ -227,6 +227,11 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return urls.reverse("profiles_app:profile", args=[self.slug])
 
+    def messaging_url_if_can_receive_message(self) -> str:
+        if self.get_can_receive_message():
+            return urls.reverse("message_profile", args=[self.slug])
+        return ""
+
     def geocode(self):
         self.lat = None
         self.lon = None
@@ -316,6 +321,9 @@ class Profile(models.Model):
 
     def get_is_organiser(self) -> bool:
         return self.user.localgroup_set.exists()
+    
+    def get_can_receive_message(self):
+        return self.is_approved and self.is_public and self.allow_messaging
 
 
 class ProfileAnalyticsLog(models.Model):

@@ -1,0 +1,17 @@
+Dear {{ recipient }},
+
+{{ sender_name }} has sent you a message:
+
+---
+{{ message }}
+---
+
+You can respond to them by replying to this email.
+
+Thanks,
+
+EA Hub
+
+Feedback: {{ feedback_url }}
+Messaging Preferences: {{ profile_edit_url }}
+Report an issue: Email {{ admin_email }}

@@ -1,5 +1,6 @@
 import csv
 
+import environ
 from django.http import HttpResponse
 
 from ..profiles import models
@@ -11,6 +12,11 @@ def user_display(user):
     except models.Profile.DoesNotExist:
         return user.email
     return profile.name
+
+
+def get_admin_email():
+    env = environ.Env()
+    return list(env.dict("ADMINS").values())[0]
 
 
 class ExportCsvMixin:

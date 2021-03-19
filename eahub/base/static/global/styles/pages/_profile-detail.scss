@@ -1,6 +1,13 @@
 @import 'eahub/base/static/global/styles/bootstrap-variables';
 
 .profile-detail {
+
+    main {
+        @include media-breakpoint-up(md) {
+            min-height: 75vh;
+        }
+    }
+    
     .container {
         max-width: 1280px;
     }
@@ -11,6 +18,15 @@
             min-width: 200px;
             min-height: 200px;
             border: 1px solid #e0e0e0;
+        }
+        .prof__msg-btn {
+            width: 100%;
+            display: block;
+            margin-top: $grid-gutter-width-half / 2;
+            
+            @include media-breakpoint-up(md) {
+                margin-top: 1.5rem;
+            }
         }
         .prof__title {
             display: flex;
@@ -69,6 +85,10 @@
             
             .summary__sections {
                 margin-top: 1rem;
+                
+                .summary__section:nth-child(2) {
+                    margin-top: 1rem;
+                }
                 .summary__subtitle {
                     margin-bottom: 0.25rem;
                     font-weight: bold;
@@ -136,13 +156,6 @@
     .prof__buttons-bottom {
         display: flex;
         justify-content: center;
-        margin-bottom: 27vh;
-        
-        @include media-breakpoint-down(lg) {
-            margin-bottom: 10vh;
-        }
-        @include media-breakpoint-down(md) {
-            margin-bottom: 5vh;
-        }
+        margin-bottom: 2rem;
     }
 }

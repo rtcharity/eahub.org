@@ -6,6 +6,7 @@ import environ
 import sentry_sdk
 from django.core import exceptions
 from django.utils.safestring import mark_safe
+from django_storage_url import dsn_configured_storage_class
 from dotenv import find_dotenv, load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
 
@@ -14,6 +15,7 @@ base_dir = environ.Path(__file__) - 3
 
 
 class DjangoEnv(Enum):
+    DOCKER_BUILD = "docker_build"
     LOCAL = "local"
     E2E = "e2e"
     STAGE = "stage"
@@ -54,6 +56,8 @@ INSTALLED_APPS = [
     "rangefilter",
     "flags",
     "rest_framework",
+    "solo",
+
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
@@ -92,9 +96,9 @@ vars().update(
         default="smtp://mail:1025",
     )
 )
-ADMINS = list(env.dict("ADMINS").items())
+ADMINS = list(env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items())
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
-GROUPS_EMAIL = env.str("GROUPS_EMAIL")
+GROUPS_EMAIL = env.str("GROUPS_EMAIL", "admin@eahub.org")
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
@@ -139,7 +143,7 @@ SECURE_SSL_REDIRECT = env.bool(
 if SECURE_SSL_REDIRECT:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_COOKIE_SECURE = SECURE_SSL_REDIRECT
-SECRET_KEY = env.str("SECRET_KEY", "development_secret_key")
+SECRET_KEY = env.str("SECRET_KEY", default="development_secret_key")
 X_FRAME_OPTIONS = "DENY"
 
 TEMPLATES = [
@@ -196,17 +200,21 @@ STATICFILES_DIRS = [
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
-from aldryn_django.storage import parse_storage_url  # noqa: E402,F401; isort:skip
-
-media_config = parse_storage_url(env.str("DEFAULT_STORAGE_DSN"))
-DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
-MEDIA_URL = media_config["MEDIA_URL"]
-AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
-AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
-AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
-AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
-AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
-AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
+if env.str("DEFAULT_STORAGE_DSN", ""):
+    DEFAULT_STORAGE_DSN = env.str("DEFAULT_STORAGE_DSN", "")
+    from aldryn_django.storage import parse_storage_url
+    media_config = parse_storage_url(DEFAULT_STORAGE_DSN)
+    MEDIA_URL = media_config["MEDIA_URL"]
+    DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
+    AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
+    AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
+    AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
+    AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
+    AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
+    AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
+else:
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(base_dir, "data/media/")
 
 
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
@@ -225,7 +233,7 @@ ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 
-IS_ENABLE_ALGOLIA = env.str("IS_ENABLE_ALGOLIA", default=True)
+IS_ENABLE_ALGOLIA = env.bool("IS_ENABLE_ALGOLIA", default=False)
 ALGOLIA = {
     "APPLICATION_ID": env.str("ALGOLIA_APPLICATION_ID", default="PFD0UVG9YB"),
     "API_KEY": env.str("ALGOLIA_API_KEY", default="d1c9139b2271e35f44a29b12dddb4b06"),
@@ -292,7 +300,7 @@ SETTINGS_EXPORT = [
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])
 
-LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS").items())
+LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items())
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
 if local_groups_airtable_api_key is None and local_groups_airtable_base_key is None:
@@ -342,6 +350,8 @@ ADMIN_REORDER = [
                 "model": "flags.FlagState",
                 "label": "Feature flags (beta features) configuration",
             },
+            {"model": "base.FeedbackURLConfig", "label": "URL of feedback page"},
+            {"model": "base.MessagingLog", "label": "Messaging logs"},
         ],
     },
 ]

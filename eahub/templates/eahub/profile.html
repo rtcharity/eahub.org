@@ -37,7 +37,7 @@
 
   <div class="container prof__header mt-6 mb-2 mb-lg-5">
     <div class="row">
-      <div class="col-xs-24 col-md-auto mb-3 mb-lg-0">
+      <div class="col col-auto mb-3 mb-lg-0">
         {% thumbnail profile.image "200x200" crop="center" as im %}
           <img class="prof__img mb-3 mb-md-0" loading="lazy" src="{{ im.url }}" alt="photo">
         {% empty %}
@@ -61,6 +61,13 @@
           >
             <i class="fa fa-lock"></i> Awaiting approval
           </div>
+        {% endif %}
+
+        {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
+        {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message and messaging_flag %}
+          <a href="{% url 'message_profile' profile.slug %}" class="btn btn-primary prof__msg-btn">
+            <i class="fa fa-pencil-alt"></i> Send Message
+          </a>
         {% endif %}
       </div>
 
@@ -110,15 +117,6 @@
               >
                 <span><i class="fa fa-pencil-alt"></i> Edit</span>
               </a>
-
-              {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-              {% if request.user.id is not None and request.user.id != profile.user_id and profile.user.email is not None and messaging_flag %}
-                <a class="btn btn-outline-primary btn-sm"
-                  href="{% url 'profiles_app:message_profile' profile.slug %}"
-                >
-                  <span><i class="fa fa-pencil-alt"></i> Send Message</span>
-                </a>
-              {% endif %}
             </div>
           {% endif %}
         </div>
@@ -221,11 +219,11 @@
             {% endif %}
             {% if request.user.id == profile.user_id %}
               <a href="{% url 'profiles_app:edit_profile_career' %}">
-                <span
-                  class="btn btn-edit btn-outline-primary btn-sm"
-                >
-                  <i class="fa fa-pencil-alt"></i> Edit
-                </span>
+                                <span
+                                  class="btn btn-edit btn-outline-primary btn-sm"
+                                >
+                                    <i class="fa fa-pencil-alt"></i> Edit
+                                </span>
               </a>
             {% endif %}
           </div>
@@ -278,7 +276,7 @@
               {% endif %}
 
               {% if profile.user.localgroup_set.exists %}
-                <div class="list turquoise-links">
+                <div class="card__section">
                   <div class="card__subtitle">Organiser of</div>
                   {% if profile.user.localgroup_set.all.count == 1 %}
                     <a

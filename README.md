@@ -2,14 +2,12 @@ Backend for [https://eahub.org](https://eahub.org)
 
 ![eahub.org reboot](https://i.imgur.com/02FNAlY.png)
 
-[![Build Status](https://dev.azure.com/rtcharity/eahub.org/_apis/build/status/rtcharity.eahub.org?branchName=master)](https://dev.azure.com/rtcharity/eahub.org/_build/latest?definitionId=1&branchName=master)
-
 # Setup
 
 - Make sure to have Docker Compose 3 and Nodejs 10.X installed.
 - npm ci
 - npm run build-watch
-- docker-compose run --rm web django-admin migrate (only necessary when you're setting it up for the first time or pulled python migration changes)
+- docker-compose run --rm web bash -c "python manage.py migrate" (only necessary when you're setting it up for the first time or pulled python migration changes)
 - docker-compose up web
 
 If everything went well, you should be able to get the Hub at http://localhost:8000
@@ -19,27 +17,6 @@ If requirements.txt or Dockerfile have changed since last time you built the pro
 If `package.json` changes - run `npm install` to generate a new `package-json.lock`.
 
 You can access the email server at localhost:1080.
-
-### Pulling the db & media to your local instance [optional]
-- receive access to https://control.divio.com/control/71735/edit/88402/
-- add an ssh key to your profile https://control.divio.com/account/ssh-keys/
-- cp .divio/config-example.json .divio/config.json
-- pip install divio-cli
-- divio login
-- divio project pull db test
-- divio project pull media test
-
-You can also push the db & media, but don't do it without getting the approval from Sebastian or Victor.
-
-You can drop the local and test server db though running:
-- docker-compose stop db
-- docker-compose rm db
-- docker-compose run --rm web django-admin migrate
-- divio project push db test
-
-### Links
-- stage server - https://eahub-stage.us.aldryn.io/
-- deployment control panel - https://control.divio.com/control/71735/edit/88402/
 
 # Running Tests
 ```
@@ -75,9 +52,9 @@ docker-compose run --rm web isort -rc --atomic eahub
 # Running django commands
 ```
 docker-compose run --rm web bash
-docker-compose run --rm web django-admin shell
-docker-compose run --rm web django-admin makemigrations
-docker-compose run --rm web django-admin migrate
+docker-compose run --rm web bash -c "python manage.py shell_plus"
+docker-compose run --rm web bash -c "python manage.py makemigrations"
+docker-compose run --rm web bash -c "python manage.py migrate"
 ```
 
 # Browser Support Policy
