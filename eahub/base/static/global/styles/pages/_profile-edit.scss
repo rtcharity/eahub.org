@@ -58,7 +58,7 @@ $input-height: 37px;
     padding: 1.2rem 0;
     bottom: 0;
     left: 0;
-    background: white;
+    background: $color-primary-light;
     box-shadow: rgba(0, 0, 0, 0.11) 0 -2px 7px;
     z-index: 3;
     
@@ -66,6 +66,7 @@ $input-height: 37px;
       display: flex;
       min-width: 200px;
       justify-content: center;
+      background: white;
     }
   }
 }
