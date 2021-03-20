@@ -291,7 +291,7 @@
     {% endif %}
   </div>
 
-  <div class="prof__buttons-bottom mt-4">
+  <div class="prof__buttons-bottom container">
     {% if user.id == profile.user_id %}
       <a class="btn btn-outline-secondary btn-sm"
         href="{% url 'profiles_app:delete_profile' %}"
