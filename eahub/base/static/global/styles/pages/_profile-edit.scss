@@ -1,133 +1,189 @@
 @import 'eahub/base/static/global/styles/bootstrap-variables';
 
+$input-height: 37px;
+
 .profile-edit {
-    @include media-breakpoint-up(xxl) {
-        max-width: 1140px;
+  margin-bottom: 150px;
+  padding-bottom: 6rem;
+  
+  h1 {
+    margin-top: 3.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .form-group {
+    margin-bottom: 2.5rem;
+    position: relative;
+    
+    .control-label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-size: 1.15rem;
     }
-    .form-group {
-        margin-bottom: 1.5rem;
-        
-        .control-label {
-            margin-bottom: 0.5rem;
+    .select2-container {
+  
+      &.select2-container--focus {
+        .select2-selection {
+          border-color: #aaa;
         }
+      }
+      .select2-selection {
+        border-radius: 0;
+        border-color: $gray-400;
+        
+        .select2-selection__choice {
+          border: 0;
+          background: #ddefec94;
+          color: #0b5046;
+          border-radius: 0;
+        }
+      }
     }
+    .btn-input-edit {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: $input-height - 2px;
+    }
+  }
+  .form-check {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .profile-tags-column {
+    padding-left: 6rem;
+  }
+  .btn-submit-container {
+    position: fixed;
+    width: 100%;
+    padding: 1.2rem 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.11) 0 -2px 7px;
+    z-index: 3;
+    
+    .btn-submit {
+      display: flex;
+      min-width: 200px;
+      justify-content: center;
+    }
+  }
 }
 
 .profile-edit-tags {
+  position: relative;
+  
+  .ais-RefinementList,
+  .ais-InfiniteHits-loadMore,
+  .ais-SearchBox-reset,
+  .ais-SearchBox-submit {
+    display: none;
+  }
+  
+  .selected {
+    display: none;
+  }
+  
+  %tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.4rem;
+    margin: 0.3rem;
+    margin-right: 0;
+    background: #ddefec94;
+    color: #0b5046;
+    white-space: nowrap;
+  }
+  .tags__input-container {
+    display: flex;
+    flex-wrap: wrap;
     position: relative;
-
-    .ais-RefinementList,
-    .ais-InfiniteHits-loadMore,
-    .ais-SearchBox-reset,
-    .ais-SearchBox-submit {
-        display: none;
-    }
+    z-index: 2;
+    min-height: $input-height;
+    border: 1px solid $gray-400;
     
-    .selected {
-        display: none;
-    }
-    
-    %tag {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.2rem 0.4rem;
-        margin: 0.4rem;
-        margin-right: 0;
-        background: #ddefec94;
-        color: #0b5046;
-        white-space: nowrap;
-    }
-    
-    .tags__input-container {
-        display: flex;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 2;
-        min-height: 43px;
-        border: 1px solid $gray-500;
-    
-        .tags__selected {
-            display: flex;
-            flex-wrap: wrap;
-            
-            .tags__tag {
-                @extend %tag;
-                
-                .btn-close {
-                    margin-left: 0.2rem;
-                    background-size: 0.7em;
-    
-                    &:hover {
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
-        .ais-SearchBox {
-            display: inline-flex;
-            flex-grow: 2;
-            min-height: 40px;
-            
-            .ais-SearchBox-form {
-                display: flex;
-                width: 100%;
-                
-                input {
-                    width: 100%;
-                    border: 0;
-                    margin-left: 0.4rem;
-                    
-                    &:focus {
-                        outline: none;
-                    }
-                }
-            }
-        }
-    }
-    .tags__result-box-background {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        bottom: 0;
-        z-index: 0;
-    }
-    .ais-StateResults {
-        position: absolute;
-        width: 100%;
-        margin-bottom: 1.5rem;
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        padding-bottom: 0.5rem;
-        box-shadow: 0 0 7px #00000014;
-        border: 1px solid #e2e2e2;
-        border-radius: 4px;
-        background: white;
-        z-index: 3;
+    .tags__selected {
+      display: flex;
+      flex-wrap: wrap;
+      
+      .tags__tag {
+        @extend %tag;
         
-        .tag {
-            margin-top: 0.5rem;
-            margin-bottom: 0.5rem;
-    
-            .tag__name {
-                @extend %tag;
-
-                &:hover {
-                    cursor: pointer;
-                    background: #b0dcd594;
-                }
-            }
-            .tag__count {
-                margin-left: 0.4rem;
-                color: $gray-600;
-                font-size: 0.7rem;
-            }
-            .tag__desc,
-            .tag__synonyms {
-                margin-top: 0.2rem;
-                padding-left: 0.8rem;
-                font-size: 0.8rem;
-            }
+        .btn-close {
+          margin-left: 0.2rem;
+          background-size: 0.7em;
+          
+          &:hover {
+            cursor: pointer;
+          }
         }
+      }
     }
+    .ais-SearchBox {
+      display: inline-flex;
+      flex-grow: 2;
+      min-height: 35px;
+      
+      .ais-SearchBox-form {
+        display: flex;
+        width: 100%;
+        
+        input {
+          width: 100%;
+          border: 0;
+          margin-left: 0.4rem;
+          
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }
+  .tags__result-box-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  .ais-StateResults {
+    position: absolute;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: 0.5rem;
+    box-shadow: 0 0 7px #00000014;
+    border: 1px solid #e2e2e2;
+    border-radius: 4px;
+    background: white;
+    z-index: 3;
+    
+    .tag {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+      
+      .tag__name {
+        @extend %tag;
+        
+        &:hover {
+          cursor: pointer;
+          background: #b0dcd594;
+        }
+      }
+      .tag__count {
+        margin-left: 0.4rem;
+        color: $gray-600;
+        font-size: 0.7rem;
+      }
+      .tag__desc,
+      .tag__synonyms {
+        margin-top: 0.2rem;
+        padding-left: 0.8rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
 }

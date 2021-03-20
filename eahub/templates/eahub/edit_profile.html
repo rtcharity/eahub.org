@@ -1,6 +1,6 @@
 {% extends 'base_bs5.html' %}
 
-{% load crispy_forms_field crispy_forms_tags static %}
+{% load crispy_forms_field crispy_forms_tags static widget_tweaks %}
 
 {% block navbar %}
   {% include 'components/navbar.html' %}
@@ -10,84 +10,153 @@
 
 {% block content %}
   <div class="container profile-edit">
-    <h1 class="mt-5">Edit your profile</h1>
+    <h1>Edit your profile</h1>
     <form method="post" action="{% url 'profiles_app:edit_profile' %}">
       {% csrf_token %}
       
-      <div class="row row-cols-1 row-cols-xl-2 pt-5"
-        data-algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-        data-algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-        data-algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-        data-profile-pk="{{ profile.pk }}"
-      >
-        <div class="col mb-5"
-          data-type-name="expertise_area"
-          data-type-label="Expertise"
-        >
-          <div class="vue-profile-edit"></div>
-        </div>
+      <div class="row">
+        <div class="col-10">
+          {% include 'includes/field.html' with form=form field=form.name %}
+          {% include 'includes/field.html' with form=form field=form.image %}
+          <div class="row row-cols-2">
+            <div class="col">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input value="{{ profile.user.email}}" class="form-control" disabled>
+                <a class="btn btn-secondary btn-input-edit" 
+                  href="{% url 'account_email' %}">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <label class="control-label">Password</label>
+                <input type="password" value="{{ profile.user.email }}" class="form-control" disabled>
+                <a class="btn btn-secondary btn-input-edit"
+                  href="{% url 'account_change_password' %}">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+          </div>
 
-        <div class="col mb-5"
-          data-type-name="cause_area"
-          data-type-label="Cause Area"
-        >
-          <div class="vue-profile-edit"></div>
+          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In Alabama born and raised" %}
+          {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="In Alabama born and raised" %}
+          {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="In Alabama born and raised" %}
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.country %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.city_or_town %}
+            </div>
+          </div>
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.facebook_url %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.linkedin_url %}
+            </div>
+          </div>
+          {% include 'includes/field.html' with form=form field=form.personal_website_url %}
+          
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
+              {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
+              {% include 'includes/field.html' with form=form field=form.allow_messaging %}
+            </div>
+          </div>
         </div>
+        
+        <div class="col-14 profile-tags-column"
+          data-algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+          data-algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+          data-algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
+          data-profile-pk="{{ profile.pk }}"
+        >
+          <div class="mb-5"
+            data-type-name="expertise_area"
+            data-type-label="Expertise areas"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
 
-        <div class="col mb-5"
-          data-type-name="generic"
-          data-type-label="Tags"
-        >
-          <div class="vue-profile-edit"></div>
-        </div>
+          {% include 'includes/field.html' with form=form rows=1 field=form.expertise_areas_other %}
 
-        <div class="col mb-5"
-          data-type-name="organisational_affiliation"
-          data-type-label="Organisational affiliations"
-          data-search-results-cols="1"
-        >
-          <div class="vue-profile-edit"></div>
+          <div class="mb-5"
+            data-type-name="cause_area"
+            data-type-label="Cause areas"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
+
+          {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
+          {% include 'includes/field.html' with form=form field=form.local_groups %}
+
+          <div class="mb-5"
+            data-type-name="generic"
+            data-type-label="Tags"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="organisational_affiliation"
+            data-type-label="Organisational affiliations"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="career_interest"
+            data-type-label="Career interests"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="speech_topic"
+            data-type-label="Speech topics"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
+          {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
+
+          <div class="mb-5"
+            data-type-name="pledge"
+            data-type-label="Pledges"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
         </div>
-      
-        <div class="col mb-5"
-          data-type-name="career_interest"
-          data-type-label="Career interests"
-        >
-          <div class="vue-profile-edit"></div>
-        </div>
-      
-        <div class="col mb-5"
-          data-type-name="speech_topic"
-          data-type-label="Speech topic"
-        >
-          <div class="vue-profile-edit"></div>
-        </div>
-      
-        <div class="col mb-5"
-          data-type-name="pledge"
-          data-type-label="Pledges"
-        >
-          <div class="vue-profile-edit"></div>
-        </div>
-      
       </div>
 
-      {% if settings.DJANGO_ENV.value == "local" %}
-        <script
-          src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
-        ></script>
-      {% else %}
-        <script defer src="{% static "dist/component_profile_edit.js" %}"
-        ></script>
-      {% endif %}
-
-      {{ form|crispy }}
-      <button class="btn btn-primary btn-lg mb-5" type="submit">Save</button>
-
+      <div class="btn-submit-container">
+        <div class="container">
+          <button class="btn btn-submit btn-secondary" type="submit">Save</button>
+        </div>
+      </div>
     </form>
+
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script
+        src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
+      ></script>
+    {% else %}
+      <script defer src="{% static "dist/component_profile_edit.js" %}"
+      ></script>
+    {% endif %}
+    {{ form.media.js }}
+    {{ form.media.css }}
   </div>
+
 {% endblock %}
 
 {% block footer %}
-  {% include 'includes/footer.html' %}
 {% endblock %}

@@ -23,6 +23,7 @@ interface TagAlgolia {
 }
 
 
+// todo rename to tags something
 @Component
 export default class ProfileEditComponent extends Vue {
     @Prop(String) algoliaApiKey: string;

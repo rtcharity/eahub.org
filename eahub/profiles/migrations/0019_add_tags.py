@@ -97,7 +97,7 @@ def _migrate_enum(
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("profiles", "0017_profile_offering_looking_for"),
+        ("profiles", "0018_profile_allow_messaging"),
     ]
 
     operations = [

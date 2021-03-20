@@ -111,7 +111,7 @@ def convert_value_to_printable(value: Any, field: str) -> Union[str, list]:
 
 
 @receiver(post_save, sender=Profile)
-def clear_the_cache(**kwargs):
+def on_profile_save_clear_cache(**kwargs):
     cache.clear()
 
 
@@ -129,8 +129,8 @@ def on_profile_change(**kwargs):
     try:
         instance = kwargs["instance"]
         if instance.id is not None:
-            previous = Profile.objects.get(id=instance.id)
-            save_logs_for_profile_update(instance, previous)
+            instance_old = Profile.objects.get(id=instance.id)
+            save_logs_for_profile_update(instance, instance_old)
     except Exception:
         logger.exception("Profile update logging failed")
 
@@ -165,6 +165,7 @@ def reindex_profile_on_tags_change(sender, instance: Profile, **kwargs):
 
 
 # fmt: off
+m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.local_groups.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_generic.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_cause_area.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_expertise_area.through)

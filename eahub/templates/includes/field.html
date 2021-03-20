@@ -1,0 +1,32 @@
+{% load widget_tweaks %}
+
+
+{% if field|field_type == "booleanfield" %}
+  <div class="form-group form-check">
+    {% render_field field class+="form-check-input" %}
+    <label
+      class="form-check-label"
+      for="{{ field.id_for_label }}"
+      data-is-required="{{ field.field.required|lower }}"
+    >
+      {{ field.label }}
+    </label>
+    {% for error in field.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="form-group">
+    <label
+      class="control-label"
+      for="{{ field.id_for_label }}"
+      data-is-required="{{ field.field.required|lower }}"
+    >
+      {{ field.label }}
+    </label>
+    {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
+    {% for error in field.errors %}
+      <div class="invalid-feedback">{{ error }}</div>
+    {% endfor %}
+  </div>
+{% endif %}

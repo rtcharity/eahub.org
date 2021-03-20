@@ -1,6 +1,10 @@
 import Vue from 'vue';
 import InstantSearchPlugin from 'vue-instantsearch';
 import App from './profile-edit.vue';
+import $ from 'jquery';
+
+
+window.jQuery = $;
 
 
 Vue.use(InstantSearchPlugin);

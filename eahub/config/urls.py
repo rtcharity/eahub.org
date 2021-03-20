@@ -67,4 +67,5 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
+    path("select2/", include("django_select2.urls")),
 ]

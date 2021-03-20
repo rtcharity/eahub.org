@@ -6,16 +6,7 @@ app_name = "profiles_app"
 
 urlpatterns = [
     path("", views.my_profile, name="my_profile"),
-    path("edit/", views.edit_profile, name="edit_profile"),
-    path(
-        "edit/cause_areas/",
-        views.edit_profile_cause_areas,
-        name="edit_profile_cause_areas",
-    ),
-    path("edit/career/", views.edit_profile_career, name="edit_profile_career"),
-    path(
-        "edit/community/", views.edit_profile_community, name="edit_profile_community"
-    ),
+    path("edit/", views.ProfileUpdate.as_view(), name="edit_profile"),
     path("delete/", views.delete_profile, name="delete_profile"),
     path(
         "<int:legacy_record>/",

@@ -17,6 +17,7 @@ django-autoslug
 django-enumfield < 2
 django-enumfields  # a better version of django-enumfield
 django-crispy-forms
+django-widget-tweaks  # a better version of django-crispy-forms
 django-allauth
 django-authtools
 django-pwned-passwords
@@ -40,6 +41,7 @@ django-adminutils  # a set of shortcuts for admin.py composition
 djangorestframework
 django-storage-url
 django-solo
+djangocms-helpers  # for send_email function
 
 # dev packages (might try to move it out for deployment speed optimization)
 
