@@ -65,7 +65,7 @@
         {% endif %}
 
         {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message %}
-          <a href="{% url 'message_profile' profile.slug %}" class="btn btn-primary prof__msg-btn">
+          <a href="{% url 'profiles_all:message_profile' profile.slug %}" class="btn btn-primary prof__msg-btn">
             <i class="fa fa-pencil-alt"></i> Send Message
           </a>
         {% endif %}
