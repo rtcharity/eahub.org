@@ -15,7 +15,7 @@
       {% csrf_token %}
       
       <div class="row">
-        <div class="col-10">
+        <div class="col-24 col-xl-11 col-xxl-10">
           {% include 'includes/field.html' with form=form field=form.name %}
           {% include 'includes/field.html' with form=form field=form.image %}
           <div class="row row-cols-2">
@@ -74,7 +74,7 @@
           </div>
         </div>
         
-        <div class="col-14 profile-tags-column"
+        <div class="col-24 col-xl-13 col-xxl-14 profile-tags-column"
           data-algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
           data-algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
           data-algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"

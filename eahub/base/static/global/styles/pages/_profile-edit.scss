@@ -4,7 +4,7 @@ $input-height: 37px;
 
 .profile-edit {
   margin-bottom: 150px;
-  padding-bottom: 6rem;
+  padding-bottom: 8rem;
   
   h1 {
     margin-top: 3.5rem;
@@ -50,7 +50,12 @@ $input-height: 37px;
     margin-bottom: 1.5rem;
   }
   .profile-tags-column {
-    padding-left: 6rem;
+    @include media-breakpoint-up(xl) {
+      padding-left: 4rem;
+    }
+    @include media-breakpoint-up(xxl) {
+      padding-left: 6rem;
+    }
   }
   .btn-submit-container {
     position: fixed;
@@ -66,6 +71,11 @@ $input-height: 37px;
       display: flex;
       min-width: 200px;
       justify-content: center;
+      margin-left: auto;
+  
+  
+      @include media-breakpoint-up(xxl) {
+      }
     }
   }
 }
