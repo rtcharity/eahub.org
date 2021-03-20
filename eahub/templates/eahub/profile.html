@@ -52,7 +52,7 @@
             role="alert"
             title="This profile is not public. Click on 'Edit' to change your settings."
           >
-            <i class="fa fa-lock"></i>Private profile
+            <i class="fa fa-lock"></i> Invisible profile
           </div>
         {% endif %}
         {% if not profile.is_approved %}
@@ -64,8 +64,7 @@
           </div>
         {% endif %}
 
-        {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-        {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message and messaging_flag %}
+        {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message %}
           <a href="{% url 'message_profile' profile.slug %}" class="btn btn-primary prof__msg-btn">
             <i class="fa fa-pencil-alt"></i> Send Message
           </a>

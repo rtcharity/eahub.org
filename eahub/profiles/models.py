@@ -120,14 +120,20 @@ class Profile(models.Model):
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
     )
-    is_public = models.BooleanField(default=True)
+    is_public = models.BooleanField(
+        default=True,
+        verbose_name="Public profile",
+        help_text="Unchecking this will completely conceal your profile",
+    )
     is_approved = models.BooleanField(default=False)
     image = thumbnail.ImageField(
         upload_to=upload_path.auto_cleaned_path_stripped_uuid4, blank=True
     )
     linkedin_url = models.URLField(max_length=400, blank=True, verbose_name="Linkedin")
     facebook_url = models.URLField(max_length=400, blank=True, verbose_name="Facebook")
-    personal_website_url = models.URLField(max_length=400, blank=True, verbose_name="Personal website")
+    personal_website_url = models.URLField(
+        max_length=400, blank=True, verbose_name="Personal website"
+    )
 
     city_or_town = models.CharField(max_length=100, blank=True)
     country = models.CharField(max_length=100, blank=True)
@@ -138,18 +144,22 @@ class Profile(models.Model):
     open_to_job_offers = models.BooleanField(blank=True, default=False)
     available_as_speaker = models.BooleanField(blank=True, default=False)
     email_visible = models.BooleanField(default=False)
-    allow_messaging = models.BooleanField(default=True)
+    allow_messaging = models.BooleanField(
+        default=True, verbose_name="Allow approved users to message me"
+    )
 
     summary = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
     offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
     looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
     topics_i_speak_about = models.TextField(
-        blank=True, validators=[MaxLengthValidator(2000)], verbose_name="Speech topics other"
+        blank=True,
+        validators=[MaxLengthValidator(2000)],
+        verbose_name="Topics I speak about other",
     )
 
     local_groups = models.ManyToManyField(LocalGroup, through="Membership", blank=True)
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
-    
+
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
     )

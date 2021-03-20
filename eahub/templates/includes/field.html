@@ -11,6 +11,9 @@
     >
       {{ field.label }}
     </label>
+    {% if field.help_text %}
+      <div class="form-text">{{ field.help_text }}</div>
+    {% endif %}
     {% for error in field.errors %}
       <div class="invalid-feedback">{{ error }}</div>
     {% endfor %}
@@ -25,6 +28,9 @@
       {{ field.label }}
     </label>
     {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
+    {% if field.help_text %}
+      <div class="form-text">{{ field.help_text }}</div>
+    {% endif %}
     {% for error in field.errors %}
       <div class="invalid-feedback">{{ error }}</div>
     {% endfor %}

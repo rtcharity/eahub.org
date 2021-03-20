@@ -61,7 +61,7 @@ class ProfileForm(ModelForm):
             "available_to_volunteer",
             "open_to_job_offers",
             "available_as_speaker",
-            "email_visible",
+            "is_public",
             "summary",
             "offering",
             "looking_for",

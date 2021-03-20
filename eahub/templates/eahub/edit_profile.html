@@ -41,9 +41,9 @@
             </div>
           </div>
 
-          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In Alabama born and raised" %}
-          {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="In Alabama born and raised" %}
-          {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="In Alabama born and raised" %}
+          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
+          {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="Teaching python" %}
+          {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="Chat about wild animal suffering" %}
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.country %}
@@ -60,12 +60,12 @@
               {% include 'includes/field.html' with form=form field=form.linkedin_url %}
             </div>
           </div>
-          {% include 'includes/field.html' with form=form field=form.personal_website_url %}
+          {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="example.com" %}
           
           <div class="row row-cols-2">
             <div class="col">
-              {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
               {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
+              {% include 'includes/field.html' with form=form field=form.is_public %}
             </div>
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
@@ -121,19 +121,20 @@
           </div>
 
           <div class="mb-5"
-            data-type-name="speech_topic"
-            data-type-label="Speech topics"
-          >
-            <div class="vue-profile-edit"></div>
-          </div>
-          {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
-
-          <div class="mb-5"
             data-type-name="pledge"
             data-type-label="Pledges"
           >
             <div class="vue-profile-edit"></div>
           </div>
+
+          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
+          <div class="mb-5"
+            data-type-name="speech_topic"
+            data-type-label="Topics I speak about"
+          >
+            <div class="vue-profile-edit"></div>
+          </div>
+          {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
         </div>
       </div>
 

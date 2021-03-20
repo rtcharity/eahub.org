@@ -82,7 +82,9 @@ django-adminutils==0.0.10
 django-allauth==0.44.0
     # via -r requirements.in
 django-appconf==1.0.4
-    # via aldryn-sites
+    # via
+    #   aldryn-sites
+    #   django-select2
 django-authtools==1.7.0
     # via -r requirements.in
 django-autoslug==1.9.8
@@ -129,6 +131,8 @@ django-referrer-policy==1.0
     # via -r requirements.in
 django-sekizai==2.0.0
     # via -r requirements.in
+django-select2==7.6.2
+    # via -r requirements.in
 django-settings-export==1.2.1
     # via -r requirements.in
 django-sluggable==0.7.0
@@ -165,6 +169,7 @@ django==2.2.17
     #   django-recaptcha
     #   django-referrer-policy
     #   django-sekizai
+    #   django-select2
     #   django-settings-export
     #   django-storage-url
     #   django-storages

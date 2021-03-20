@@ -42,6 +42,7 @@ djangorestframework
 django-storage-url
 django-solo
 djangocms-helpers  # for send_email function
+django-select2
 
 # dev packages (might try to move it out for deployment speed optimization)
 
