@@ -147,13 +147,15 @@
 
     {% if settings.DJANGO_ENV.value == "local" %}
       <script
+        defer
         src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
       ></script>
     {% else %}
       <script defer src="{% static "dist/component_profile_edit.js" %}"
       ></script>
     {% endif %}
-    {{ form.media.js }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js" defer></script>
+    <script src="{% static 'django_select2/django_select2.js' %}" defer></script>
     {{ form.media.css }}
   </div>
 
