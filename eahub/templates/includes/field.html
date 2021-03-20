@@ -1,8 +1,10 @@
-{% load widget_tweaks %}
+{% load widget_tweaks thumbnail %}
 
-
-{% if field|field_type == "booleanfield" %}
-  <div class="form-group form-check">
+<div
+  class="form-group {% if field|field_type == "booleanfield" %}form-check{% endif %}"
+>
+  {% if field|field_type == "booleanfield" %}
+    
     {% render_field field class+="form-check-input" %}
     <label
       class="form-check-label"
@@ -11,15 +13,9 @@
     >
       {{ field.label }}
     </label>
-    {% if field.help_text %}
-      <div class="form-text">{{ field.help_text }}</div>
-    {% endif %}
-    {% for error in field.errors %}
-      <div class="invalid-feedback">{{ error }}</div>
-    {% endfor %}
-  </div>
-{% else %}
-  <div class="form-group">
+    
+  {% else %}
+    
     <label
       class="control-label"
       for="{{ field.id_for_label }}"
@@ -27,12 +23,19 @@
     >
       {{ field.label }}
     </label>
-    {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
-    {% if field.help_text %}
-      <div class="form-text">{{ field.help_text }}</div>
+    
+    {% if field.initial and field|field_type == "imageformfield" %}
+      <input type="file" name="{{ field.name }}" class="form-control">
+    {% else %}
+      {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
     {% endif %}
-    {% for error in field.errors %}
-      <div class="invalid-feedback">{{ error }}</div>
-    {% endfor %}
-  </div>
-{% endif %}
+  
+  {% endif %}
+
+  {% if field.help_text %}
+    <div class="form-text">{{ field.help_text }}</div>
+  {% endif %}
+  {% for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+  {% endfor %}
+</div>

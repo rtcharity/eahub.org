@@ -60,7 +60,7 @@ $input-height: 37px;
   .btn-submit-container {
     position: fixed;
     width: 100%;
-    padding: 1.2rem 0;
+    padding: 0.9rem 0;
     bottom: 0;
     left: 0;
     background: white;
@@ -72,10 +72,6 @@ $input-height: 37px;
       min-width: 200px;
       justify-content: center;
       margin-left: auto;
-  
-  
-      @include media-breakpoint-up(xxl) {
-      }
     }
   }
 }

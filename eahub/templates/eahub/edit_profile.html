@@ -11,7 +11,7 @@
 {% block content %}
   <div class="container profile-edit">
     <h1>Edit your profile</h1>
-    <form method="post" action="{% url 'profiles_app:edit_profile' %}">
+    <form method="post" action="{% url 'profiles_app:edit_profile' %}" enctype="multipart/form-data">
       {% csrf_token %}
       
       <div class="row">
