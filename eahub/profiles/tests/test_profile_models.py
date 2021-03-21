@@ -53,7 +53,7 @@ class ProfileTestCase(EAHubTestCase):
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(19, len(analytics_logs))
+        self.assertEqual(24, len(analytics_logs))
         self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(

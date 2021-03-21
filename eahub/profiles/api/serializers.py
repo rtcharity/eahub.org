@@ -87,6 +87,34 @@ class ProfileSerializer(serializers.ModelSerializer):
         source=f"tags_{ProfileTagTypeEnum.PLEDGE.value}",
         required=False,
     )
+    tags_university = TagSerializer(many=True, required=False)
+    tags_university_pks = PrimaryKeyRelatedField(
+        many=True,
+        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.UNIVERSITY),
+        source=f"tags_{ProfileTagTypeEnum.UNIVERSITY.value}",
+        required=False,
+    )
+    tags_event_attended = TagSerializer(many=True, required=False)
+    tags_event_attended_pks = PrimaryKeyRelatedField(
+        many=True,
+        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.EVENT_ATTENDED),
+        source=f"tags_{ProfileTagTypeEnum.EVENT_ATTENDED.value}",
+        required=False,
+    )
+    tags_career_stage = TagSerializer(many=True, required=False)
+    tags_career_stage_pks = PrimaryKeyRelatedField(
+        many=True,
+        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.CAREER_STAGE),
+        source=f"tags_{ProfileTagTypeEnum.CAREER_STAGE.value}",
+        required=False,
+    )
+    tags_ea_involvement = TagSerializer(many=True, required=False)
+    tags_ea_involvement_pks = PrimaryKeyRelatedField(
+        many=True,
+        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.EA_INVOLVEMENT),
+        source=f"tags_{ProfileTagTypeEnum.EA_INVOLVEMENT.value}",
+        required=False,
+    )
 
     class Meta:
         model = Profile
@@ -105,6 +133,14 @@ class ProfileSerializer(serializers.ModelSerializer):
             "tags_speech_topic_pks",
             "tags_pledge",
             "tags_pledge_pks",
+            "tags_university",
+            "tags_university_pks",
+            "tags_event_attended",
+            "tags_event_attended_pks",
+            "tags_career_stage",
+            "tags_career_stage_pks",
+            "tags_ea_involvement",
+            "tags_ea_involvement_pks",
         ]
 
     def update(self, instance: Profile, validated_data: dict) -> Profile:

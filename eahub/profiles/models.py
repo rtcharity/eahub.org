@@ -60,7 +60,10 @@ class ProfileTagTypeEnum(Enum):
     CAREER_INTEREST = "career_interest"
     SPEECH_TOPIC = "speech_topic"
     PLEDGE = "pledge"
-    # ATTENDED_EVENT = "attended_event"
+    UNIVERSITY = "university"
+    EVENT_ATTENDED = "event_attended"
+    CAREER_STAGE = "career_stage"
+    EA_INVOLVEMENT = "ea_involvement"
 
 
 class ProfileTagType(models.Model):
@@ -117,7 +120,9 @@ class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
     last_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
-    # job_title = models.CharField(max_length=1024, blank=True)
+    job_title = models.CharField(max_length=1024, blank=True)
+    organization = models.CharField(max_length=1024, blank=True)
+    study_subject = models.CharField(max_length=1024, blank=True)
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug,
         populate_from="get_full_name",
@@ -146,6 +151,7 @@ class Profile(models.Model):
 
     available_to_volunteer = models.BooleanField(blank=True, default=False)
     open_to_job_offers = models.BooleanField(blank=True, default=False)
+    is_hiring = models.BooleanField(blank=True, default=False)
     available_as_speaker = models.BooleanField(blank=True, default=False)
     email_visible = models.BooleanField(default=False)
     allow_messaging = models.BooleanField(
@@ -212,7 +218,34 @@ class Profile(models.Model):
         blank=True,
         related_name="tags_pledge",
     )
+    tags_university = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.UNIVERSITY},
+        blank=True,
+        related_name="tags_university",
+    )
+    tags_event_attended = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.EVENT_ATTENDED},
+        blank=True,
+        related_name="tags_event_attended",
+    )
+    tags_career_stage = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.CAREER_STAGE},
+        blank=True,
+        related_name="tags_career_stage",
+    )
+    tags_ea_involvement = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.EA_INVOLVEMENT},
+        blank=True,
+        related_name="tags_ea_involvement",
+    )
 
+    objects = ProfileManager()
+
+    # legacy
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
@@ -235,7 +268,6 @@ class Profile(models.Model):
         enum.EnumField(GivingPledge), blank=True, default=list
     )
 
-    objects = ProfileManager()
 
     class Meta:
         ordering = ["first_name", "slug"]

@@ -71,6 +71,7 @@ class ProfileForm(ModelForm):
             "country",
             "city_or_town",
             "available_to_volunteer",
+            "job_title",
             "open_to_job_offers",
             "available_as_speaker",
             "is_public",
