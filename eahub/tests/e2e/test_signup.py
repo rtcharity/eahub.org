@@ -32,5 +32,5 @@ class SignUpTest(E2ETestCase):
         self.find("[name='login']").send_keys(user_email)
         self.find("[name='password']").send_keys(user_password)
         self.find("[type='submit']").click()
-        self.selenium.get(self.live_server_url + reverse("my_profile"))
+        self.selenium.get(self.live_server_url + reverse("profiles_app:my_profile"))
         self.find(".prof__btns .btn")
