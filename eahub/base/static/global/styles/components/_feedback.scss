@@ -1,111 +1,35 @@
 @media (min-width: 601px) {
-  #feedback {
-    right: -420px;
-    width: 420px;
-  }
-
-  .feedbackbtn-mobile {
-    display: none;
-  }
-
   .feedbackbtn {
-    top: 50%;
-    transform: rotate(-90deg) translate(-50%, -100%);
-    transform-origin: top left;
-    position: absolute;
-    left: 0;
+    top: 60%;
   }
 }
 
 @media (max-width: 600px) {
-  #feedback {
-      right: -100%;
-      width: 100%;    
-  }
-
-  .feedbackbtn-mobile {
-    transform: rotate(-90deg);
-    transform-origin: top left;
-    bottom: -30px;
-    position: fixed;
-    right: -85px;
-  }
-
   .feedbackbtn {
-    display: none;
+    bottom: -30px; 
   }
 }
 
-  /*--- All size screens ---*/
+.feedbackbtn {
+  position: fixed;
+  transform: rotate(-90deg);
+  transform-origin: top left;
+  color: #fff;
+  text-align: center;
+  right: -65px;
+} 
 
 a {
   color: inherit;
 }
 
-#feedback {
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  min-height: 450px;
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: right 0.5s linear;
-  padding: 0 58px 58px;
-  z-index: 1090;
-}
-
-#feedback.active {
-    right: 0;
-    box-shadow: 0 10px 18px rgba(0,0,0,0.16);
-}
-
-.modal-content {
-  height: 100%;
-}
-
-#feedbackModal {
-  display: block;
-}
-
-#overlay {
-  background-color: rgba(0,0,0,0.4);
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1080;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.5s linear;
-}
-
-#overlay.active {
-  visibility: visible;
-  opacity: 1;
-}
-
-#closebtn, #closebtn2 {
+#closebtn, #closebtn2, .submitbtn {
   color: #fff;
   width: 30%;
 }
 
-.submitbtn {
-  color: #fff;
+.submitbtn, .feedbackbtn {
   background: rgb(99, 82, 116);
   border-color: rgb(99, 82, 116);
-  width: 30%;
 }
 
-.feedbackbtn, .feedbackbtn-mobile {
-  border: 0;
-  color: #fff;
-  background: rgb(99, 82, 116);
-  border-color: rgb(99, 82, 116);
-  cursor: pointer;
-  line-height: 44px;
-  padding: 0 28px;
-  text-align: center;
-  box-shadow: 0 0 0 rgba(0,112,153,0.4);
-} 
