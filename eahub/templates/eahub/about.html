@@ -14,83 +14,136 @@
 
     <div class="container">
         <img class="img-fluid m-auto my-4 d-flex" loading="lazy" width="250" height="244" src="{% static 'global/images/about.jpg' %}"/>
-        <h1>About</h1>
-        <p>The Effective Altruism Hub is here to make it easier for Effective
-            Altruists to get together and collaborate on shared goals.
-            Our vision is to increase visibility for individuals, projects and
-            groups, and to make ideas and opportunities easier to find.</p>
-        <p>The Hub allows you to create, share or find personal and group
-            profiles. Users can search for volunteers, speakers, and talent.
-            You can also find, join or start local groups. Each of these
-            entities are helpfully displayed on the interactive map of EAs.
-            Improved privacy settings allow users to customise how they use the
-            Hub.</p>
-        <p>In the near future we will be working on introducing more
-            functionality.</p>
-
-        <p><a href="{% url 'newsletter' %}">Subscribe here</a> to receive
-            announcements.</p>
-
-        <h4> Participation </h4>
-
-        <p>Originally founded by .impact in 2014, the Effective Altruism Hub is
-            a project by the Local Effective Altruism Network and Rethink
-            Charity, proudly delivered by our team of staff and volunteers:</p>
-
-        Engineers:
+        <h2>What we do</h2>
+        <p>The EA Hub enables collaboration and facilitates connections between EAs to make it easier to learn, network, collaborate on projects, and find career opportunities. By improving community infrastructure projects, individuals, and groups, initiatives can build traction more effectively.</p>
+        <p>To do this we:</p>
         <ul>
-            <li>Taymon Beal: Back-End Developer</li>
-            <li>Sebastian Becker: Front-End Developer</li>
-            <li>Manoj Nathwani: Back-End Developer</li>
+          <li>Research, design and build features needed by the community</li>
+          <li>Work with other community building organisations to coordinate efforts and provide value where possible</li>
+        </ul>
+        <p>Currently, we host global directories of individuals and groups and are working on other features to enable connections within the community.</p>
+
+        <h4>For community members</h4>
+        <p>Community members can use the <a href="http://eahub.org/profiles">Hub Community Directory</a> to create personal profiles and search for potential friends, mentors, speakers, employers, and collaborators. You can also use the <a href="http://eahub.org/groups">Hub Groups Directory</a> to connect with local, cause, career and affinity groups.</p>
+
+        <p>This website is for you – its users! – and we are always looking to improve, so don’t hesitate to make suggestions, vote on new features and enhancements, or report bugs on our <a href="https://feedback.eahub.org/">feedback page</a>. Check out our <a href="https://docs.google.com/document/d/1Lj2lXidJOlha-rKjtZgzpnkOnb90GNDOT0NsfXAUTWI/edit#">FAQs</a> if you have any questions.</p>
+
+        <h4>For community builders</h4>
+        <p>We are working with a number of group organisers to help launch local group directories here on the Hub. If you’re interested in onboarding your group, we can help with mass uploading data (if you have the consent of your members), and we will consider feature requests to improve the directory for your local group.</p>
+
+        <h4>For organisations</h4>
+        <p>You can use the Hub to search for and contact potential candidates for paid or voluntary roles.</p>
+        <p>If you are an EA-aligned organisation and believe you could benefit from our data, please contact <a href="mailto:vaidehi@eahub.org">Vaidehi</a>, our Product Manager.</p>
+
+        <p>Our current and past collaborators include: CEA, GWWC, Rethink Priorities (on the EA Survey), One For The World (sharing data), EA Forum (sharing a data source and features), and Rethink Charity.</p>
+        <p>The Hub is an open-source project, and we are keen to work with other EA tech initiatives whenever it makes sense to do so.</p>
+
+        <h2>The Team</h2>
+        <p>The Hub is an <a rel="nofollow" target="_blank" href="https://github.com/rtcharity/eahub.org">open-source project</a> and has been contributed to and run by a team of volunteers:</p>
+
+        <p><strong>Tech Leads</strong></p>
+        <p>
+          <a href="https://eahub.org/profile/sebastian-becker-2/">Sebastian Becker</a>
+          <a href="mailto:seb@eahub.org">(seb@eahub.org)</a>
+        </p>
+
+        <p>
+          <a href="https://eahub.org/profile/victor">Victor Yunenko</a>
+          <a href="mailto:victor@eahub.org">(victor@eahub.org)</a>
+        </p>
+
+        <p><strong>Product Manager</strong></p>
+        <p>
+          <a href="https://eahub.org/profile/vaidehi-agarwalla">Vaidehi Agarwalla</a>
+          <a href="mailto:vaidehi@eahub.org">(vaidehi@eahub.org)</a>
+        </p>
+
+        <p><strong>Data Protection Officer</strong></p>
+        <p>
+          <a href="https://eahub.org/profile/victor">Victor Yunenko</a>
+          <a href="mailto:victor@eahub.org">(victor@eahub.org)</a></p>
+        </p>
+
+        <p><strong>Technical Contributors</strong></p>
+        <ul>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/austin226">Austin Almond</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/taymonbeal">Taymon Beal</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/sebgrebe">Sebastian Becker</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/patbl">Patrick Brinich-Langlois</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/mattg95">Matthew Goodman</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/Richenda">Richenda Herzig</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/LisaJD">Lisa Johnson-Davies</a></li>
+          <li>Anastasiia Kuvshinova</li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/cephalin">Cephas Lin</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/cafelow">Catherine Low</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/david-mears">David Mears</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/Manoj-nathwani">Manoj Nathwani</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/jnsya">Jonathan Senior</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/michaltrzesimiech">Michal Trzesimiech</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/berndverst">Bernd Verst</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/marcin-wosinek">Marcin Wosinek</a></li>
+          <li><a rel="nofollow" target="_blank" href="https://github.com/victor-yunenko">Victor Yunenko</a></li>
         </ul>
 
-        Product team:
+        <p><strong>Other contributors</strong></p>
         <ul>
-            <li>Piotr Cieszynski: Tester</li>
-            <li>Alexander Herwix: Advisor</li>
-            <li>Richenda Herzig: Product Manager and Illustrator</li>
-            <li>Michal Trzesimiech: Project Manager</li>
-            <li>Nadia Williams: Illustrator</li>
+          <li><a href="https://eahub.org/profile/catherine-low/">Catherine Low</a> (CEA): Group management</li>
+          <li><a href="https://eahub.org/profile/michal-trzesimiech/">Michael Trzesiemich</a>: Operations</li>
+          <li><a href="https://eahub.org/profile/annie-alexander-barnes/">Annie Alexander-Barnes</a>: Communications</li>
+          <li><a href="https://eahub.org/profile/balazs-rapi/">Balázs Rapi</a>: Operations</li>
+          <li>Haneesha Puruchuri: UX Design</li>
+        </ul>
+        <p>We are also grateful for the feedback of several volunteers and advisors.</p>
+
+
+        <h2>History</h2>
+        <p>The EA Hub was originally created by Tom Ash in 2014 to host both his own projects (beginning with the
+            <a href="https://www.rethinkprojects.org/easurvey">EA Survey</a> and the public
+            <a href="https://eahub.org/profiles/">EA Profiles</a> that came out of it) and other independent ones.
+            Tom's projects later moved to their own non-profit, .impact Focus Projects, which was
+            <a href="https://forum.effectivealtruism.org/posts/a3sScjxdgNTCseBMJ/impact-is-now-rethink-charity">renamed</a> Rethink Charity in 2017.
+            The Hub is now fiscally sponsored by <a href="https://rtcharity.org/">Rethink Charity</a>, and run by our team of volunteers. </p>
+
+        <p>The Hub was relaunched in 2019 by a team of staff and volunteers, and we would like to recognize the efforts of the following people who made this possible:</p>
+        <ul>
+          <li>Richenda Herzig: Product Manager and Illustrator</li>
+          <li>Michal Trezsimiech: Project Manager</li>
+          <li>Manoj Nathwani: Tech Lead/Back-End Developer</li>
+          <li>Taymon Beal: Tech Lead/Back-End Developer</li>
+          <li>Sebastian Becker: Front-End Developer</li>
+          <li>Nadia Williams: Illustrator</li>
+          <li>Piotr Cieszynski: Tester</li>
+          <li>Alexander Herwix: Advisor</li>
         </ul>
 
-        Resources team:
-        <ul>
-            <li>Catherine Low</li>
-            <li>Vaidehi Agarwalla</li>
-            <li>Eve McCormick</li>
-            <li>Jo Duyvestyn</li>
-            <li>Katie Gertsch</li>
-            <li>Liz Aderhold</li>
-            <li>Emma Caplan</li>
-            <li>Rebecca Baron</li>
-            <li>David Vatousios</li>
-            <li>Mac Jordan</li>
-            <li>James Faville</li>
-            <li>Pim Kang</li>
-            <li>Riley Peebles</li>
-            <li>Avi Iyer</li>
-            <li>and Marcin Kowrygo</li>
-        </ul>
+        <h2>Get involved</h2>
+        <h4>Volunteer</h4>
+        <p>We are always <a rel="nofollow" target="_blank" href="http://bit.ly/eahub-openroles">looking for volunteers</a> to help build the Hub, in both technical and non-technical roles. If you’re interested in tech roles, please <a href="https://docs.google.com/forms/d/1DH5mNALNNe79Kbx8akGi56TpvrtaepAEaKsu96jZ-Ks/edit">sign up</a> before starting to work on an issue in our repo so that we can direct you to the most pressing or suitable tasks.</p>
+        <p>Don’t see a position for your skill set? Email us with a summary of how you’d like to contribute, and we will get in touch with you. </p>
 
-        Data Privacy Officer: Victor Yunenko
-
-        <h4 class="mt-4"> Feedback </h4>
-
-        <p>Last but not least, this website is about you and for you – its user.
-            We are grateful for your honest feedback!</p>
-        
         <div class="row row-cols-auto mb-5">
             <div class="col">
-                <a class="btn btn-outline-primary" href="mailto:contact@eahub.org">
-                    Tech Support
+                <a class="btn btn-outline-primary" href="http://bit.ly/eahub-openroles" rel="nofollow" target="_blank">
+                   Open Roles
                 </a>
             </div>
             <div class="col">
-                <a class="btn btn-outline-primary" target="_blank" href="https://feedback.eahub.org">
-                    Suggestions or Requests
+                <a class="btn btn-outline-primary" target="_blank" href="mailto:contact@eahub.org" rel="nofollow" target="_blank">
+                   Email Us
+                </a>
+            </div>
+            <div class="col">
+                <a href="https://github.com/rtcharity/eahub.org" rel="nofollow" target="_blank">
+                  <img  width="90" height="35" src="{% static 'global/images/github-logo.png' %}"/>
                 </a>
             </div>
         </div>
+
+        <h4>Donate</h4>
+        <p>Please make any donations via <a href="https://www.rethinkprojects.org/donate">Rethink Charity</a> and specify that you are donating to the EA Hub. If you are making donations in Canadian Dollars, please contact us at <a href="mailto:donations@eahub.org">donations@eahub.org</a>, and we can arrange for donations to be tax-exempt.</p>
+
+        <h4>Stay Connected</h4>
+        <p><a href="{% url 'newsletter' %}">Sign up for our newsletter</a> for updates every 2-3 months.</p>
     </div>
 {% endblock %}
 
