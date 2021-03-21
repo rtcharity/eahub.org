@@ -2,12 +2,10 @@ from adminutils import options
 from allauth.account.models import EmailAddress
 from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from import_export.admin import ImportExportMixin
-from import_export.resources import ModelResource
 from rangefilter.filter import DateRangeFilter
 
-from eahub.base import utils
 from eahub.base.models import User
 from eahub.profiles.legacy import GivingPledge
 from eahub.profiles.models import (
@@ -17,6 +15,7 @@ from eahub.profiles.models import (
     ProfileTag,
     ProfileTagType,
 )
+from eahub.profiles.resources import ProfileAnalyticsResource, ProfileResource
 
 
 class GivingPledgesFilter(admin.SimpleListFilter):
@@ -34,9 +33,10 @@ class GivingPledgesFilter(admin.SimpleListFilter):
 
 
 @admin.register(Profile)
-class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
-    actions = ["export_csv", "approve_profiles", "delete_profiles_and_users"]
+class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
+    actions = ["approve_profiles", "delete_profiles_and_users"]
     model = Profile
+    resource_class = ProfileResource
     list_display = (
         "email",
         "first_name",
@@ -61,7 +61,11 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         "user__date_joined",
         GivingPledgesFilter,
     ]
-    search_fields = ["user__email", "name"]
+    search_fields = [
+        "user__email",
+        "first_name",
+        "last_name",
+    ]
     ordering = ["-user__date_joined"]
     filter_horizontal = [
         "tags_generic",
@@ -76,17 +80,6 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         actions: dict = super().get_actions(request)
         del actions["delete_selected"]
         return actions
-
-    def export_csv(
-        self, request: HttpRequest, queryset: QuerySet, **kwargs
-    ) -> HttpResponse:
-        return utils.ExportCsvMixin.export_csv(
-            self,
-            request=request,
-            queryset=queryset,
-            model=Profile,
-            filename="profiles",
-        )
 
     @options(desc="Giving Pledges", order="profile.giving_pledges")
     def giving_pledges_readable(self, obj: Profile):
@@ -118,21 +111,6 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
         messages.success(request, f"Deleted '{count}' users & their profiles.")
 
 
-class ProfileAnalyticsResource(ModelResource):
-    class Meta:
-        model = ProfileAnalyticsLog
-        export_order = [
-            "id",
-            "profile",
-            "time",
-            "action",
-            "action_uuid",
-            "field",
-            "new_value",
-            "old_value",
-        ]
-
-
 @admin.register(ProfileAnalyticsLog)
 class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
     list_display = (
@@ -147,7 +125,8 @@ class ProfileAnalyticsAdmin(ImportExportMixin, admin.ModelAdmin):
     list_filter = ["action", ("time", DateRangeFilter)]
     search_fields = [
         "profile__user__email",
-        "profile__name",
+        "profile__first_name",
+        "profile__last_name",
         "action",
         "field",
         "old_value",

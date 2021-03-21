@@ -3,7 +3,7 @@ import csv
 import environ
 from django.http import HttpResponse
 
-from ..profiles import models
+from eahub.profiles import models
 
 
 def user_display(user):

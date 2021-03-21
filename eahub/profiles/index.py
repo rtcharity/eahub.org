@@ -13,7 +13,7 @@ if settings.IS_ENABLE_ALGOLIA:
 
         fields = [
             ["get_full_name", "name"],
-            "messaging_url_if_can_receive_message",
+            ["get_messaging_url_if_can_receive_message", "messaging_url"],
             "summary",
             "topics_i_speak_about",
             "expertise_areas_other",
@@ -39,9 +39,9 @@ if settings.IS_ENABLE_ALGOLIA:
                 "get_tags_organisational_affiliation_formatted",
                 "organisational_affiliations",
             ],
-            ["get_local_groups_searchable", "local_groups"],
-            ["get_organizer_of_local_groups_searchable", "organizer_of_local_groups"],
-            ["get_is_organiser", "is_organiser"],
+            ["get_local_groups_formatted", "local_groups"],
+            ["get_organizer_of_local_groups_formatted", "organizer_of_local_groups"],
+            ["is_organiser", "is_organiser"],
             ["offering", "offering"],
             ["looking_for", "looking_for"],
         ]

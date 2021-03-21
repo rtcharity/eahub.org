@@ -2,6 +2,7 @@
 
 import django.core.validators
 from django.db import migrations, models
+
 import eahub.profiles.validators
 from eahub.profiles.models import Profile
 

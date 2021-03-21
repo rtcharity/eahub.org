@@ -1,6 +1,5 @@
 from eahub.localgroups.admin import LocalGroupResource
-from eahub.localgroups.models import LocalGroup
-from eahub.localgroups.models import Organisership
+from eahub.localgroups.models import LocalGroup, Organisership
 from eahub.profiles.models import Profile
 from eahub.tests.cases import EAHubTestCase
 

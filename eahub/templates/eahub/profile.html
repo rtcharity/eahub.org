@@ -42,7 +42,7 @@
           <img class="prof__img mb-3 mb-md-0" loading="lazy" src="{{ im.url }}" alt="photo">
         {% empty %}
           <img class="prof__img mb-3 mb-md-0" loading="lazy"
-            src="/static/global/images/avatars/{{ profile.image_placeholder }}"
+            src="/static/global/images/avatars/{{ profile.get_image_placeholder }}"
             alt="photo"
             data-is-empty="true"
           >
@@ -64,7 +64,7 @@
           </div>
         {% endif %}
 
-        {% if request.user.id is not None and request.user.id != profile.user_id and profile.get_can_receive_message %}
+        {% if request.user.id is not None and request.user.id != profile.user_id and profile.is_can_receive_message %}
           <a href="{% url 'profiles_app:message_profile' profile.slug %}" class="btn btn-primary prof__msg-btn">
             <i class="fa fa-pencil-alt"></i> Send Message
           </a>
@@ -148,7 +148,6 @@
                 <h3 class="card__heading">Cause Area</h3>
               </div>
             </div>
-            {% if not profile.has_cause_area_details %}N/A{% endif %}
             {% if profile.get_tags_cause_area_formatted or profile.cause_areas_other %}
               <div class="card__section">
                 {{ profile.get_tags_cause_area_formatted|join:", " }}
@@ -181,7 +180,6 @@
                 <h3 class="card__heading">Career</h3>
               </div>
             </div>
-            {% if not profile.has_career_details %}N/A{% endif %}
 
             {% if profile.get_tags_expertise_formatted or profile.expertise_areas_other %}
               <div class="card__section">
@@ -218,8 +216,6 @@
                   <h3 class="card__heading">Community</h3>
                 </div>
               </div>
-
-              {% if not profile.has_community_details %}N/A{% endif %}
 
               {% if profile.get_tags_organisational_affiliation_formatted %}
                 <div class="card__section">

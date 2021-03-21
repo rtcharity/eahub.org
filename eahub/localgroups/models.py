@@ -12,7 +12,7 @@ from django_enumfield import enum
 from flags.state import flag_enabled
 from geopy import geocoders
 
-from ..base.models import User
+from eahub.base.models import User
 
 
 class LocalGroupType(enum.Enum):
@@ -98,7 +98,7 @@ class LocalGroup(models.Model):
                 [
                     user
                     for user in self.organisers.all()
-                    if user.profile.get_can_receive_message()
+                    if user.profile.is_can_receive_message()
                 ]
             )
             > 0
@@ -131,29 +131,6 @@ class LocalGroup(models.Model):
             return ", ".join(map(LocalGroupType.label, self.local_group_types))
         else:
             return "Other"
-
-    def convert_to_row(self, field_names):
-        values = []
-        for field in field_names:
-            if field == "local_group_types":
-                values.append(self.get_local_group_types())
-            elif field == "organisers":
-                values.append(self.organisers_names())
-            elif field == "organisers_emails":
-                values.append(self.organisers_emails())
-            else:
-                values.append(getattr(self, field))
-        return values
-
-    @staticmethod
-    def get_exportable_field_names():
-        fieldnames = [
-            field.name
-            for field in LocalGroup._meta.fields + LocalGroup._meta.many_to_many
-            if field.name != "local_group_type"
-        ]
-        fieldnames.append("organisers_emails")
-        return fieldnames
 
 
 @receiver(post_save, sender=LocalGroup)

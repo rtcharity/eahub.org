@@ -19,7 +19,7 @@ class Command(base.BaseCommand):
                     "available_to_volunteer": profile.available_to_volunteer,
                     "open_to_job_offers": profile.open_to_job_offers,
                     "available_as_speaker": profile.available_as_speaker,
-                    "is_organiser": profile.get_is_organiser(),
+                    "is_organiser": profile.is_organiser(),
                     "country": profile.country,
                     "city_or_town": profile.city_or_town,
                     "lat": profile.lat,
@@ -31,7 +31,7 @@ class Command(base.BaseCommand):
                     "tags_organisational_affiliation": profile.get_tags_organisational_affiliation_formatted(),
                     "tags_career_interest": profile.get_tags_career_interest_formatted(),
                     "tags_pledge": profile.get_tags_pledge_formatted(),
-                    "local_groups": profile.get_local_groups_searchable(),
-                    "organizer_of_local_groups": profile.get_organizer_of_local_groups_searchable(),
+                    "local_groups": profile.get_local_groups_formatted(),
+                    "organizer_of_local_groups": profile.get_organizer_of_local_groups_formatted(),
                 }
             )

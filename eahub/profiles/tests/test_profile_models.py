@@ -8,12 +8,12 @@ from eahub.tests.cases import EAHubTestCase
 
 
 class ProfileTestCase(EAHubTestCase):
-    def test_get_is_organiser(self):
+    def test_is_organiser(self):
         profile = self.gen.profile()
         local_group = LocalGroup.objects.create()
         o = Organisership(user=profile.user, local_group=local_group)
         o.save()
-        self.assertTrue(profile.get_is_organiser())
+        self.assertTrue(profile.is_organiser())
 
     def test_save_analytics_on_profile_creation(self):
         first_name = "User1"
@@ -126,19 +126,6 @@ class ProfileTestCase(EAHubTestCase):
                 for x in analytics_logs_update
             )
         )
-
-    def test_has_community_details_returns_false_if_none(self):
-        profile = self.gen.profile()
-
-        self.assertFalse(profile.has_community_details())
-
-    def test_has_community_details_returns_true_if_free_text_field_set(self):
-        profile = self.gen.profile()
-
-        field_names = ["topics_i_speak_about", "offering", "looking_for"]
-        setattr(profile, random.choice(field_names), "something")
-
-        self.assertTrue(profile.has_community_details())
 
 
 def create_profile(email, username):

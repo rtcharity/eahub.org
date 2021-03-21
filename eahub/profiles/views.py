@@ -94,7 +94,7 @@ class SendProfileMessageView(SendMessageView):
         if not request.user.has_perm("profiles.message_users"):
             raise PermissionDenied()
         recipient = self.get_recipient()
-        if recipient.get_can_receive_message():
+        if recipient.is_can_receive_message():
             return super().get(request, *args, **kwargs)
         else:
             raise Http404("Messaging not enabled for this user")
@@ -103,7 +103,7 @@ class SendProfileMessageView(SendMessageView):
         if not request.user.has_perm("profiles.message_users"):
             raise PermissionDenied()
         recipient = self.get_recipient()
-        if recipient.get_can_receive_message():
+        if recipient.is_can_receive_message():
             return super().post(request, *args, **kwargs)
         else:
             raise Http404("Messaging not enabled for this user")

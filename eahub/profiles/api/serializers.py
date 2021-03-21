@@ -97,7 +97,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     tags_event_attended = TagSerializer(many=True, required=False)
     tags_event_attended_pks = PrimaryKeyRelatedField(
         many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.EVENT_ATTENDED),
+        queryset=ProfileTag.objects.filter(
+            types__type=ProfileTagTypeEnum.EVENT_ATTENDED
+        ),
         source=f"tags_{ProfileTagTypeEnum.EVENT_ATTENDED.value}",
         required=False,
     )
@@ -111,7 +113,9 @@ class ProfileSerializer(serializers.ModelSerializer):
     tags_ea_involvement = TagSerializer(many=True, required=False)
     tags_ea_involvement_pks = PrimaryKeyRelatedField(
         many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.EA_INVOLVEMENT),
+        queryset=ProfileTag.objects.filter(
+            types__type=ProfileTagTypeEnum.EA_INVOLVEMENT
+        ),
         source=f"tags_{ProfileTagTypeEnum.EA_INVOLVEMENT.value}",
         required=False,
     )

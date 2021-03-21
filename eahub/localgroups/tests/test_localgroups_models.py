@@ -51,34 +51,3 @@ class LocalGroupTestCase(TestCase):
         organisers_names = local_group.organisers_names()
 
         self.assertEqual("User profile missing", organisers_names)
-
-    def test_get_exportable_field_names(self):
-        actual = LocalGroup.get_exportable_field_names()
-
-        expected_field_names = [
-            "id",
-            "slug",
-            "is_public",
-            "name",
-            "is_active",
-            "organisers_freetext",
-            "local_group_types",
-            "city_or_town",
-            "region",
-            "country",
-            "lat",
-            "lon",
-            "website",
-            "other_website",
-            "facebook_group",
-            "facebook_page",
-            "email",
-            "meetup_url",
-            "airtable_record",
-            "last_edited",
-            "other_info",
-            "organisers",
-            "organisers_emails",
-        ]
-
-        self.assertListEqual(expected_field_names, actual)

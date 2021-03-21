@@ -118,23 +118,18 @@ class ProfileManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    is_approved = models.BooleanField(default=False)
     first_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
     last_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
-    job_title = models.CharField(max_length=1024, blank=True)
-    organization = models.CharField(max_length=1024, blank=True)
-    study_subject = models.CharField(max_length=1024, blank=True)
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug,
         populate_from="get_full_name",
         slugify=slugify_user,
         unique=True,
     )
-    is_public = models.BooleanField(
-        default=True,
-        verbose_name="Public profile",
-        help_text="Unchecking this will completely conceal your profile",
-    )
-    is_approved = models.BooleanField(default=False)
+    job_title = models.CharField(max_length=1024, blank=True)
+    organization = models.CharField(max_length=1024, blank=True)
+    study_subject = models.CharField(max_length=1024, blank=True)
     image = thumbnail.ImageField(
         upload_to=upload_path.auto_cleaned_path_stripped_uuid4, blank=True
     )
@@ -171,10 +166,6 @@ class Profile(models.Model):
 
     local_groups = models.ManyToManyField(LocalGroup, through="Membership", blank=True)
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
-
-    legacy_record = models.PositiveIntegerField(
-        null=True, default=None, editable=False, unique=True
-    )
 
     tags_generic = models.ManyToManyField(
         ProfileTag,
@@ -245,7 +236,15 @@ class Profile(models.Model):
 
     objects = ProfileManager()
 
-    # legacy
+    # legacy fields
+    is_public = models.BooleanField(
+        default=True,
+        verbose_name="Public profile",
+        help_text="Unchecking this will completely conceal your profile",
+    )
+    legacy_record = models.PositiveIntegerField(
+        null=True, default=None, editable=False, unique=True
+    )
     cause_areas = postgres_fields.ArrayField(
         enum.EnumField(CauseArea), blank=True, default=list
     )
@@ -268,7 +267,6 @@ class Profile(models.Model):
         enum.EnumField(GivingPledge), blank=True, default=list
     )
 
-
     class Meta:
         ordering = ["first_name", "slug"]
 
@@ -278,8 +276,8 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return urls.reverse("profiles_app:profile", args=[self.slug])
 
-    def messaging_url_if_can_receive_message(self) -> str:
-        if self.get_can_receive_message():
+    def get_messaging_url_if_can_receive_message(self) -> str:
+        if self.is_can_receive_message():
             return urls.reverse("profiles_app:message_profile", args=[self.slug])
         return ""
 
@@ -307,17 +305,14 @@ class Profile(models.Model):
         else:
             return None
 
-    def get_pretty_local_groups(self):
-        if self.local_groups:
-            return ", ".join(self.get_local_groups_searchable())
-        else:
-            return "N/A"
-
     def is_searchable(self) -> bool:
         return self.is_approved and self.is_public and self.user.is_active
 
-    def get_email_searchable(self) -> Optional[str]:
-        return self.user.email if self.email_visible else None
+    def is_can_receive_message(self) -> bool:
+        return self.is_approved and self.is_public and self.allow_messaging
+
+    def is_organiser(self) -> bool:
+        return self.user.localgroup_set.exists()
 
     def get_tags_cause_area_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_cause_area.all()]
@@ -337,49 +332,14 @@ class Profile(models.Model):
     def get_tags_pledge_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_pledge.all()]
 
-    def get_local_groups_searchable(self) -> List[str]:
+    def get_local_groups_formatted(self) -> List[str]:
         return [group.name for group in self.local_groups.all()]
 
-    def get_organizer_of_local_groups_searchable(self) -> List[str]:
+    def get_organizer_of_local_groups_formatted(self) -> List[str]:
         return [group.name for group in self.user.localgroup_set.all()]
 
-    def image_placeholder(self):
+    def get_image_placeholder(self) -> str:
         return f"Avatar{self.id % 10}.jpg"
-
-    def has_cause_area_details(self) -> bool:
-        cause_area_details_exist = [
-            len(self.cause_areas) > 0,
-            len(self.cause_areas_other) > 0,
-            len(self.giving_pledges) > 0,
-            self.available_to_volunteer,
-        ]
-        return any(cause_area_details_exist)
-
-    def has_career_details(self) -> bool:
-        career_details_exist = [
-            len(self.expertise_areas),
-            len(self.expertise_areas_other),
-            self.open_to_job_offers,
-        ]
-        return any(career_details_exist)
-
-    def has_community_details(self) -> bool:
-        community_details_exist = [
-            len(self.organisational_affiliations) > 0,
-            self.local_groups.exists(),
-            self.user.localgroup_set.exists(),
-            self.available_as_speaker,
-            len(self.topics_i_speak_about) > 0,
-            self.offering,
-            self.looking_for,
-        ]
-        return any(community_details_exist)
-
-    def get_is_organiser(self) -> bool:
-        return self.user.localgroup_set.exists()
-
-    def get_can_receive_message(self):
-        return self.is_approved and self.is_public and self.allow_messaging
 
 
 class ProfileAnalyticsLog(models.Model):
