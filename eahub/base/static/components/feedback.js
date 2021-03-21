@@ -1,14 +1,6 @@
-function togglemodal(){
-  var m = document.getElementById("feedbackModal")
-  m.classList.toggle("show");
-  var element = document.getElementById("feedback");
-  element.classList.toggle("active");
-  document.getElementById("overlay").classList.toggle("active");    
-}
-document.getElementById('page_url').value = window.location.href;
-
 async function ajaxsubmit(){
-  var form = document.getElementById('form');
+  document.getElementById('page_url').value = window.location.href;
+  const form = document.getElementById('form');
   const response = await fetch(form.action, {
     method: form.method,
     body: new URLSearchParams(new FormData(form)),
