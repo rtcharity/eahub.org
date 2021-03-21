@@ -17,6 +17,15 @@
       <div class="row">
         <div class="col-24 col-xl-11 col-xxl-10">
           {% include 'includes/field.html' with form=form field=form.name %}
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.name %}
+            </div>
+            <div class="col col-bool-with-margin-top">
+              {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
+            </div>
+          </div>
+
           {% include 'includes/field.html' with form=form field=form.image %}
           <div class="row row-cols-2">
             <div class="col">
@@ -28,6 +37,7 @@
                   <i class="fa fa-pencil-alt"></i>
                 </a>
               </div>
+              {% include 'includes/field.html' with form=form field=form.allow_messaging %}
             </div>
             <div class="col">
               <div class="form-group">
@@ -38,12 +48,9 @@
                   <i class="fa fa-pencil-alt"></i>
                 </a>
               </div>
+              {% include 'includes/field.html' with form=form field=form.is_public %}
             </div>
           </div>
-
-          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
-          {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="Teaching python" %}
-          {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="Chat about wild animal suffering" %}
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.country %}
@@ -52,6 +59,7 @@
               {% include 'includes/field.html' with form=form field=form.city_or_town %}
             </div>
           </div>
+          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.facebook_url %}
@@ -61,15 +69,16 @@
             </div>
           </div>
           {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="example.com" %}
+
+          {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="Teaching python" %}
+          {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="Chat about wild animal suffering" %}
           
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
-              {% include 'includes/field.html' with form=form field=form.is_public %}
             </div>
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
-              {% include 'includes/field.html' with form=form field=form.allow_messaging %}
             </div>
           </div>
         </div>

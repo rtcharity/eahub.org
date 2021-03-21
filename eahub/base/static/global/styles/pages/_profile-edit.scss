@@ -10,10 +10,28 @@ $input-height: 37px;
     margin-top: 3.5rem;
     margin-bottom: 2.5rem;
   }
+  .col-bool-with-margin-top {
+    display: flex;
+    align-items: flex-end;
+    
+    .form-group.form-check {
+      height: $input-height;
+      margin-bottom: 2.5rem;
+      .form-check-input {
+        margin-top: 12px;
+      }
+      .form-check-label {
+        margin-top: 12px - 4px;
+      }
+    }
+  }
   .form-group {
     margin-bottom: 2.5rem;
     position: relative;
     
+    .form-text {
+      font-size: 0.7rem;
+    }
     .control-label {
       display: block;
       margin-bottom: 0.75rem;

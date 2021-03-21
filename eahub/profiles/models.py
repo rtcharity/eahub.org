@@ -149,7 +149,9 @@ class Profile(models.Model):
         default=True, verbose_name="Allow approved users to message me"
     )
 
-    summary = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
+    summary = models.TextField(
+        blank=True, validators=[MaxLengthValidator(6000)], verbose_name="Bio"
+    )
     offering = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
     looking_for = models.TextField(blank=True, validators=[MaxLengthValidator(2000)])
     topics_i_speak_about = models.TextField(
