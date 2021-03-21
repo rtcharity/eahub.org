@@ -1,9 +1,9 @@
 import {SearchClient} from 'algoliasearch/dist/algoliasearch-lite';
 import algoliasearch from 'algoliasearch/lite';
+import HttpService from 'eahub/base/static/components/services/http';
 import {Ref} from 'vue-property-decorator';
 import {Provide} from 'vue-property-decorator';
 import {Component, Prop, Vue} from 'vue-property-decorator';
-import HttpService from 'eahub/base/static/components/services/http';
 
 
 interface Tag {
@@ -40,7 +40,7 @@ export default class ProfileEditComponent extends Vue {
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
     @Provide() isShowResultsPopup: boolean = false;
-    
+
     private hideResultsPopupEventName: string = 'hide-popup-background';
 
     @Ref('typesRef') readonly typesRef;
@@ -52,49 +52,66 @@ export default class ProfileEditComponent extends Vue {
         const response = await this.http.get(this.tagsUrl);
         this.tagsSelected = response.data[`tags_${this.typeName}`];
 
-        // todo fix vue nextTick bug, ie from vrt
+        // todo fix vue nextTick bug, ie with what/vert snippet I wrote for Vlad
         await this.sleep(300);
         this.typesRef.refine(this.typeName);
-        
+
         this.initResultsPopupHandler();
     }
+
     async processTagSearchInput(value: string) {
         if (value.endsWith(',')) {
             this.searchQuery = '';
-            const tagName = value.slice(0, -1)
-            const response = await this.http.post(
-                this.tagsCreateUrl,
-                {name: tagName, type: this.typeName},
-            );
-            const tag: Tag = response.data;
-            tag.isLoading = false;
-            await this.add(tag);
+            const tagName = value.slice(0, -1);
+            const tag = await this.createTag(tagName);
+            await this.selectTag(tag);
         } else if (value.includes(',')) {
-            // todo handle
-            console.error('invalid input')
+            this.searchQuery = '';
+            for (const tagNameRaw of value.trim().split(',')) {
+                const tagName = tagNameRaw.trim();
+                if (tagName === "") {
+                    continue
+                }
+                const tag = await this.createTag(tagName);
+                await this.selectTag(tag);
+            }
         }
     }
+
+    async createTag(tagName: string): Promise<Tag> {
+        const response = await this.http.post(
+            this.tagsCreateUrl,
+            {name: tagName, type: this.typeName},
+        );
+        const tag: Tag = response.data;
+        tag.isLoading = false;
+        return tag;
+    }
+
     showResultsPopup() {
         const event = new Event(this.hideResultsPopupEventName);
         document.dispatchEvent(event);
         this.isShowResultsPopup = true;
     }
+
     initResultsPopupHandler() {
         document.addEventListener(this.hideResultsPopupEventName, () => {
             this.isShowResultsPopup = false;
         });
     }
+
     isSelected(pk: string): boolean {
         return Boolean(
             this.tagsSelected.find(tag => tag.pk === Number(pk))
         );
     }
-    async add(tagRaw: TagAlgolia | Tag) {
+
+    async selectTag(tagRaw: TagAlgolia | Tag) {
         const tag: Tag = {
             pk: Number(tagRaw['objectID']) || tagRaw['pk'],
             name: tagRaw.name,
             isLoading: true,
-        }
+        };
         const tagsPksSelected = this.tagsSelected.map(tag => tag.pk);
         tagsPksSelected.push(tag.pk);
         this.tagsSelected.push(tag);
@@ -105,11 +122,12 @@ export default class ProfileEditComponent extends Vue {
             tag.isLoading = false;
         } catch (e) {
             console.error(e);
-            this.remove(tag.pk);
+            this.unselectTag(tag.pk);
         }
         this.searchQuery = '';
     }
-    async remove(pkToDrop: number) {
+
+    async unselectTag(pkToDrop: number) {
         const tagToDrop = this.tagsSelected.find(tag => tag.pk === Number(pkToDrop));
         tagToDrop.isLoading = true;
         const tagsSelectedNew = this.tagsSelected.filter(
@@ -122,9 +140,10 @@ export default class ProfileEditComponent extends Vue {
             this.tagsSelected = tagsSelectedNew;
         } catch (e) {
             tagToDrop.isLoading = false;
-            alert("An error occurred");
+            alert('An error occurred');
         }
     }
+
     private async sleep(ms): Promise<any> {
         return new Promise(res => {
             setTimeout(res, ms);

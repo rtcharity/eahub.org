@@ -20,12 +20,13 @@ class ProfileViewSet(
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def create_tag_view(request: Response):
-    # todo handle duplicates
-    tag = ProfileTag.objects.create(
+    tag, is_created = ProfileTag.objects.get_or_create(
         name=request.data["name"],
-        author=Profile.objects.get(user=request.user),
-        status=ProfileTagStatus.PENDING,
     )
+    if is_created:
+        tag.author = Profile.objects.get(user=request.user)
+        tag.status = ProfileTagStatus.PENDING
+
     tag_type = ProfileTagType.objects.get_or_create(type=request.data["type"])[0]
     tag.types.add(tag_type)
     tag.save()

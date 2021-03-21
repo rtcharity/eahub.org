@@ -27,7 +27,8 @@
       </div>
       <ais-search-box
           v-model="searchQuery"
-          :placeholder="'Find tags to add...'"
+          v-on:input="processTagSearchInput($event)"
+          :placeholder="'Find or create tags with a comma...'"
           @focus="showResultsPopup()"
       />
     </div>
@@ -48,12 +49,7 @@
     >
       <div>
         <div class="tags__intro">
-          <span>How to use tags:</span>
-          <ul>
-            <li>
-              Always try to find an existing tag instead of creating a new one.
-            </li>
-          </ul>
+          <span>Always try to find an existing tag instead of creating a new one.</span>
         </div>
 
         <ais-infinite-hits>

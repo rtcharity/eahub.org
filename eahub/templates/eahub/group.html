@@ -86,7 +86,7 @@
         {% if group.public_organisers or group.organisers_freetext %}
         <li class="list-group-item"><b>Organisers:</b>
           {% for organiser in group.public_organisers %}
-            <a href="{{ organiser.profile.get_absolute_url }}" rel="nofollow">{{ organiser.profile.name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
+            <a href="{{ organiser.profile.get_absolute_url }}" rel="nofollow">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
           {{ group.organisers_freetext }}
         </li>

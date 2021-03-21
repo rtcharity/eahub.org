@@ -1,9 +1,6 @@
-import random
-
-from eahub.base.models import User
 from eahub.localgroups.models import LocalGroup, Organisership
 from eahub.profiles.legacy import CauseArea
-from eahub.profiles.models import Profile, ProfileAnalyticsLog
+from eahub.profiles.models import ProfileAnalyticsLog
 from eahub.tests.cases import EAHubTestCase
 
 
@@ -126,10 +123,3 @@ class ProfileTestCase(EAHubTestCase):
                 for x in analytics_logs_update
             )
         )
-
-
-def create_profile(email, username):
-    user = User.objects.create(email=email)
-    profile = Profile.objects.create(user=user, name=username)
-
-    return profile
