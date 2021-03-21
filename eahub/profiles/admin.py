@@ -39,7 +39,8 @@ class ProfileAdmin(admin.ModelAdmin, utils.ExportCsvMixin):
     model = Profile
     list_display = (
         "email",
-        "name",
+        "first_name",
+        "last_name",
         "is_approved",
         "is_email_verified",
         "personal_website_url",

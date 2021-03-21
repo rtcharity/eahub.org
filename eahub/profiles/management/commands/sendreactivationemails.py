@@ -195,7 +195,7 @@ class Command(base.BaseCommand):
                 subject="Announcing the EA Hub 2.0",
                 body=loader.render_to_string("emails/reactivate.txt", context),
                 from_email="Michael from LEAN <contact@eahub.org>",
-                to=[email_utils.formataddr((profile.name, user.email))],
+                to=[email_utils.formataddr((profile.get_full_name(), user.email))],
             )
             message.attach_alternative(
                 loader.render_to_string("emails/reactivate.html", context), "text/html"

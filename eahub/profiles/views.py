@@ -68,7 +68,7 @@ class SendProfileMessageView(SendMessageView):
             template_path_without_extension="emails/message_profile",
             template_context={
                 "sender_name": sender_name,
-                "recipient": recipient.name,
+                "recipient": recipient.get_full_name(),
                 "message": form.cleaned_data["your_message"],
                 "admin_email": get_admin_email(),
                 "feedback_url": FeedbackURLConfig.get_solo().site_url,
@@ -86,7 +86,7 @@ class SendProfileMessageView(SendMessageView):
             recipient_type=MessagingLog.USER,
         )
         messages.success(
-            self.request, f"Your message to {recipient.name} has been sent"
+            self.request, f"Your message to {recipient.first_name} has been sent"
         )
         return redirect(reverse("profiles_app:profile", args=([recipient.slug])))
 

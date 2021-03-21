@@ -156,7 +156,7 @@ def get_profiles_data(user):
         {
             "lat": profile.lat,
             "lng": profile.lon,
-            "label": profile.name,
+            "label": profile.get_full_name(),
             "path": f"/profile/{profile.slug}",
         }
         for profile in rows
@@ -212,11 +212,11 @@ class ReportAbuseView(FormView):
         reasons = form.cleaned_data
         reportee = self.profile()
         type = self.get_type()
-        subject = f"EA {type} reported as abuse: {reportee.name}"
+        subject = f"EA {type} reported as abuse: {reportee.get_full_name()}"
         message = render_to_string(
             "emails/report_{}_abuse.txt".format(type),
             {
-                "profile_name": reportee.name,
+                "profile_name": reportee.get_full_name(),
                 "profile_url": "https://{0}/profile/{1}".format(
                     get_current_site(self.request).domain, reportee.slug
                 ),

@@ -16,11 +16,12 @@ class CustomisedModelMultipleChoiceField(forms.ModelMultipleChoiceField):
 
 
 class SignupForm(forms.Form):
-
-    name = forms.CharField(
+    first_name = forms.CharField(
         max_length=200,
-        label="First and last name",
-        widget=forms.TextInput(attrs={"placeholder": "Name"}),
+        validators=[validate_sluggable_name],
+    )
+    last_name = forms.CharField(
+        max_length=200,
         validators=[validate_sluggable_name],
     )
     email = forms.EmailField()
@@ -30,8 +31,15 @@ class SignupForm(forms.Form):
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
         private_key=settings.RECAPTCHA_PRIVATE_KEY,
     )
-
-    field_order = ["name", "email", "password1", "password2", "is_public", "captcha"]
+    field_order = [
+        "first_name",
+        "last_name",
+        "email",
+        "password1",
+        "password2",
+        "is_public",
+        "captcha",
+    ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -39,8 +47,11 @@ class SignupForm(forms.Form):
             del self.fields["captcha"]
 
     def signup(self, request, user):
-        name = self.cleaned_data["name"]
-        Profile.objects.create(user=user, name=name, email_visible=False)
+        Profile.objects.create(
+            user=user,
+            first_name=self.cleaned_data["first_name"],
+            last_name=self.cleaned_data["last_name"],
+        )
 
 
 class DeleteProfileForm(forms.Form):
@@ -51,7 +62,8 @@ class ProfileForm(ModelForm):
     class Meta:
         model = Profile
         fields = [
-            "name",
+            "first_name",
+            "last_name",
             "image",
             "linkedin_url",
             "facebook_url",

@@ -111,11 +111,21 @@
                     <div class="form-floating">
                         <input type="text"
                             class="form-control form-control-lg"
-                            name="{{ form.name.name }}"
-                            placeholder="Name"
-                            id="{{ form.name.id }}"
+                            name="{{ form.first_name.name }}"
+                            placeholder="First Name"
+                            id="{{ form.first_name.id }}"
                             required>
-                        <label for="{{ form.name.id }}">Full Name</label>
+                        <label for="{{ form.first_name.id }}">First Name</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text"
+                            class="form-control form-control-lg"
+                            name="{{ form.last_name.name }}"
+                            placeholder="Last Name"
+                            id="{{ form.last_name.id }}"
+                            required>
+                        <label for="{{ form.last_name.id }}">Last Name</label>
                     </div>
 
                     <div class="form-floating">

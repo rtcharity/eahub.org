@@ -44,7 +44,7 @@
             <td><img class="profile_picture" src="/static/global/images/avatars/{{ profile.image_placeholder }}"></td>
           {% endthumbnail %}
           <td>
-            <a href="{% url 'profiles_app:profile' profile.slug %}">{{ profile.name }}</a>
+            <a href="{% url 'profiles_app:profile' profile.slug %}">{{ profile.get_full_name }}</a>
             {% if not profile.is_public %}
             <span class="privacy-banner hub-info"><i class="fa fa-lock"></i>Private profile</span>
             {% elif not profile.is_approved %}

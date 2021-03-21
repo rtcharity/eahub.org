@@ -20,13 +20,13 @@ class LocalGroupTestCase(TestCase):
 
         profile1 = Profile()
         name1 = "Peter"
-        profile1.name = name1
+        profile1.first_name = name1
         profile1.user = user1
         profile1.save()
 
         profile2 = Profile()
         name2 = "Mary"
-        profile2.name = name2
+        profile2.first_name = name2
         profile2.user = user2
         profile2.save()
 

@@ -14,7 +14,8 @@ class SignUpTest(E2ETestCase):
 
         self.find("#signup-btn").click()
 
-        self.find("[name='name']").send_keys("Test User")
+        self.find("[name='first_name']").send_keys("Test")
+        self.find("[name='last_name']").send_keys("User")
         self.find("[name='email']").send_keys(user_email)
         self.find("[name='password1']").send_keys(user_password)
 

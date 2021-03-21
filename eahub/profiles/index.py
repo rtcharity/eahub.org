@@ -12,7 +12,7 @@ if settings.IS_ENABLE_ALGOLIA:
         should_index = "is_searchable"
 
         fields = [
-            "name",
+            ["get_full_name", "name"],
             "messaging_url_if_can_receive_message",
             "summary",
             "topics_i_speak_about",

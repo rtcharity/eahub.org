@@ -111,7 +111,7 @@ class SendGroupMessageView(SendMessageView):
         message = form.cleaned_data["your_message"]
         recipient = self.get_recipient()
         sender_name = form.cleaned_data["your_name"]
-        subject = f"{sender_name} wants to connect with {recipient.name}!"
+        subject = f"{sender_name} sent a message to {recipient.get_full_name()}"
         sender_email_address = form.cleaned_data["your_email_address"]
         feedback_url = FeedbackURLConfig.get_solo().site_url
         admins_email = get_admin_email()
@@ -161,7 +161,7 @@ class SendGroupMessageView(SendMessageView):
             log.save()
 
         messages.success(
-            self.request, "Your message to " + recipient.name + " has been sent"
+            self.request, f"Your message to {recipient.get_full_name()} has been sent"
         )
         return redirect(reverse("group", args=([recipient.slug])))
 
@@ -203,7 +203,7 @@ def claim_group(request, slug):
         user_eahub_url = "https://{0}/profile/{1}".format(
             get_current_site(request).domain, request.user.profile.slug
         )
-        user_name = request.user.profile.name
+        user_name = request.user.profile.get_full_name()
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
         user_name = request.user.email
@@ -247,7 +247,7 @@ def report_group_inactive(request, slug):
         "emails/report_group_inactive.txt",
         {
             "user_eahub_url": user_eahub_url,
-            "user_name": request.user.profile.name,
+            "user_name": request.user.profile.get_full_name(),
             "group_name": group.name,
             "group_url": "https://{0}/group/{1}".format(
                 get_current_site(request).domain, group.slug
@@ -286,7 +286,7 @@ def send_mail_on_change(request, template, name, slug):
         user_eahub_url = "https://{0}/profile/{1}".format(
             get_current_site(request).domain, request.user.profile.slug
         )
-        user_name = request.user.profile.name
+        user_name = request.user.profile.get_full_name()
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
         user_name = request.user.email

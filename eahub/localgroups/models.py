@@ -84,7 +84,7 @@ class LocalGroup(models.Model):
         profile_names = []
         for user in self.organisers.all():
             try:
-                profile_names.append(user.profile.name)
+                profile_names.append(user.profile.get_full_name())
             except User.profile.RelatedObjectDoesNotExist:
                 profile_names.append("User profile missing")
         return ", ".join(profile_names)

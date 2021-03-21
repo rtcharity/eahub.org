@@ -9,23 +9,20 @@ from eahub.tests.cases import EAHubTestCase
 
 class ProfileTestCase(EAHubTestCase):
     def test_get_is_organiser(self):
-        profile = create_profile("test@email.com", "User1")
-
-        local_group = LocalGroup()
-        local_group.save()
-
+        profile = self.gen.profile()
+        local_group = LocalGroup.objects.create()
         o = Organisership(user=profile.user, local_group=local_group)
         o.save()
-
         self.assertTrue(profile.get_is_organiser())
 
     def test_save_analytics_on_profile_creation(self):
-        profile = create_profile("test@email.com", "User1")
+        first_name = "User1"
+        profile = self.gen.profile(first_name=first_name, last_name="")
 
         analytics_logs = ProfileAnalyticsLog.objects.filter(profile=profile)
 
         analytics_logs_name = ProfileAnalyticsLog.objects.filter(
-            profile=profile, field="name"
+            profile=profile, field="first_name"
         )
         analytics_logs_is_approved = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="is_approved"
@@ -49,14 +46,14 @@ class ProfileTestCase(EAHubTestCase):
             profile=profile, field="allow_messaging"
         )
 
-        self.assertEqual("User1", analytics_logs_name.first().new_value)
-        self.assertEqual("False", analytics_logs_is_approved.first().new_value)
+        self.assertEqual(first_name, analytics_logs_name.first().new_value)
+        self.assertEqual("True", analytics_logs_is_approved.first().new_value)
         self.assertEqual("True", analytics_logs_is_public.first().new_value)
         self.assertEqual("user1", analytics_logs_slug.first().new_value)
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(16, len(analytics_logs))
+        self.assertEqual(19, len(analytics_logs))
         self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(
@@ -93,14 +90,14 @@ class ProfileTestCase(EAHubTestCase):
         )
 
     def test_save_profile_analytics_on_change(self):
-        profile = create_profile("test@email.com", "User1")
+        profile = self.gen.profile()
 
-        profile.name = "User1New"
+        profile.first_name = "User1New"
         profile.cause_areas = [CauseArea.BUILDING_EA_COMMUNITIES]
         profile.save()
 
         analytics_logs_name_updated = ProfileAnalyticsLog.objects.filter(
-            profile=profile, field="name", action="Update"
+            profile=profile, field="first_name", action="Update"
         )
 
         analytics_logs_cause_area_updated = ProfileAnalyticsLog.objects.filter(
@@ -131,12 +128,12 @@ class ProfileTestCase(EAHubTestCase):
         )
 
     def test_has_community_details_returns_false_if_none(self):
-        profile = create_profile("test@email.com", "peter")
+        profile = self.gen.profile()
 
         self.assertFalse(profile.has_community_details())
 
     def test_has_community_details_returns_true_if_free_text_field_set(self):
-        profile = create_profile("test@email.com", "peter")
+        profile = self.gen.profile()
 
         field_names = ["topics_i_speak_about", "offering", "looking_for"]
         setattr(profile, random.choice(field_names), "something")

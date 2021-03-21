@@ -11,7 +11,7 @@ def user_display(user):
         profile = user.profile
     except models.Profile.DoesNotExist:
         return user.email
-    return profile.name
+    return profile.get_full_name()
 
 
 def get_admin_email():

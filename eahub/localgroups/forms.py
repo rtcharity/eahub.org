@@ -37,7 +37,7 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
             profile = value.profile
         except profiles_models.Profile.DoesNotExist:
             return value.email
-        return profile.name
+        return profile.get_full_name()
 
     def prepare_value(self, value):
         if isinstance(value, base_models.User):

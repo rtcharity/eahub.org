@@ -115,11 +115,14 @@ class ProfileManager(models.Manager):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    name = models.CharField(max_length=200, validators=[validate_sluggable_name])
-    # last_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
+    first_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
+    last_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
     # job_title = models.CharField(max_length=1024, blank=True)
     slug = sluggable_fields.SluggableField(
-        decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
+        decider=ProfileSlug,
+        populate_from="get_full_name",
+        slugify=slugify_user,
+        unique=True,
     )
     is_public = models.BooleanField(
         default=True,
@@ -235,10 +238,10 @@ class Profile(models.Model):
     objects = ProfileManager()
 
     class Meta:
-        ordering = ["name", "slug"]
+        ordering = ["first_name", "slug"]
 
     def __str__(self):
-        return self.name
+        return self.get_full_name()
 
     def get_absolute_url(self):
         return urls.reverse("profiles_app:profile", args=[self.slug])
@@ -260,6 +263,11 @@ class Profile(models.Model):
                 self.lat = location.latitude
                 self.lon = location.longitude
         return self
+
+    def get_full_name(self) -> str:
+        if self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        return self.first_name
 
     def get_image_url(self) -> Optional[str]:
         if self.image:

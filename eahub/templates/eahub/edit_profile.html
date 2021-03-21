@@ -16,7 +16,16 @@
       
       <div class="row">
         <div class="col-24 col-xl-11 col-xxl-10">
-          {% include 'includes/field.html' with form=form field=form.name %}
+          
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.first_name %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.last_name %}
+            </div>
+          </div>
+
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.name %}
