@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 (
                     "slug",
                     autoslug.fields.AutoSlugField(
-                        editable=False, populate_from="name", unique=True
+                        editable=False, populate_from="get_full_name", unique=True
                     ),
                 ),
                 ("name", models.CharField(max_length=200)),

@@ -13,15 +13,11 @@ from eahub.profiles.legacy import (
     GivingPledge,
     OrganisationalAffiliation,
 )
-from eahub.profiles.models import (
-    Profile,
-    ProfileTag,
-    ProfileTagType,
-    ProfileTagTypeEnum,
-)
+from eahub.profiles.models import ProfileTag, ProfileTagType, ProfileTagTypeEnum
 
 
 def migrate_to_tags_from_enums(apps, schema_editor):
+    Profile = apps.get_model("profiles", "Profile")
     for profile in Profile.objects.all():
         _migrate_enum(
             profile,
@@ -74,7 +70,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
 
 
 def _migrate_enum(
-    profile: Profile,
+    profile,
     enum_cls_old: Union[OldEnum, Any],
     field_name_old: str,
     field_name_new: str,
