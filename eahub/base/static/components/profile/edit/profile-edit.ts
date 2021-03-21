@@ -13,6 +13,7 @@ interface Tag {
     types?: [
         {type: string}
     ]
+    isLoading?: boolean
 }
 
 
@@ -66,6 +67,7 @@ export default class ProfileEditComponent extends Vue {
                 {name: tagName, type: this.typeName},
             );
             const tag: Tag = response.data;
+            tag.isLoading = false;
             await this.add(tag);
         } else if (value.includes(',')) {
             // todo handle
@@ -91,31 +93,36 @@ export default class ProfileEditComponent extends Vue {
         const tag: Tag = {
             pk: Number(tagRaw['objectID']) || tagRaw['pk'],
             name: tagRaw.name,
+            isLoading: true,
         }
         const tagsPksSelected = this.tagsSelected.map(tag => tag.pk);
         tagsPksSelected.push(tag.pk);
+        this.tagsSelected.push(tag);
         try {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsPksSelected;
             await this.http.patch(this.tagsUrl, data);
+            tag.isLoading = false;
         } catch (e) {
             console.error(e);
+            this.remove(tag.pk);
         }
-        
-        this.tagsSelected.push(tag);
         this.searchQuery = '';
     }
     async remove(pkToDrop: number) {
+        const tagToDrop = this.tagsSelected.find(tag => tag.pk === Number(pkToDrop));
+        tagToDrop.isLoading = true;
         const tagsSelectedNew = this.tagsSelected.filter(
             tag => tag.pk !== Number(pkToDrop)
         );
         try {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsSelectedNew.map(tag => tag.pk);
-            const response = await this.http.patch(this.tagsUrl, data);
+            await this.http.patch(this.tagsUrl, data);
             this.tagsSelected = tagsSelectedNew;
         } catch (e) {
-            console.log(e);
+            tagToDrop.isLoading = false;
+            alert("An error occurred");
         }
     }
     private async sleep(ms): Promise<any> {

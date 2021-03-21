@@ -17,8 +17,12 @@
               type="button"
               class="btn-close"
               aria-label="Close"
+              v-if="!tag.isLoading"
               v-on:click="remove(tag.pk)"
           ></button>
+          <div v-if="tag.isLoading" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
         </div>
       </div>
       <ais-search-box
@@ -43,11 +47,20 @@
       v-show="isShowResultsPopup"
     >
       <div>
+        <div class="tags__intro">
+          <span>How to use tags:</span>
+          <ul>
+            <li>
+              Always try to find an existing tag instead of creating a new one.
+            </li>
+          </ul>
+        </div>
+
         <ais-infinite-hits>
           <div
-            :class="`row row-cols-1 row-cols-xl-${searchResultsCols || 3}`"
+            :class="`row row-cols-1 row-cols-xl-2 row-cols-xxl-${searchResultsCols || 3}`"
             slot-scope="{ items }" v-show="items">
-            <div class="col tag mb-3"
+            <div class="col tag"
                 v-for="item of items"
                 :key="item.objectID"
                 :class="{selected: isSelected(item.objectID)}"
@@ -57,7 +70,7 @@
                 <ais-highlight :hit="item" attribute="name"/> 
               </div>
               <span class="tag__count" v-if="item.count">{{item.count}}</span>
-              <div class="tag__desc">
+              <div class="tag__desc" v-if="item.description">
                 <ais-highlight :hit="item" attribute="description"/>
               </div>
               <div class="tag__synonyms" v-if="item.synonyms">

@@ -116,6 +116,7 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, validators=[validate_sluggable_name])
+    # last_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
     # job_title = models.CharField(max_length=1024, blank=True)
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug, populate_from="name", slugify=slugify_user, unique=True
