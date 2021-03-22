@@ -18,7 +18,7 @@
               class="btn-close"
               aria-label="Close"
               v-if="!tag.isLoading"
-              v-on:click="remove(tag.pk)"
+              v-on:click="unselectTag(tag.pk)"
           ></button>
           <div v-if="tag.isLoading" class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
@@ -60,7 +60,7 @@
                 v-for="item of items"
                 :key="item.objectID"
                 :class="{selected: isSelected(item.objectID)}"
-                v-on:click="add(item)"
+                v-on:click="selectTag(item)"
             >
               <div class="tag__name">
                 <ais-highlight :hit="item" attribute="name"/> 
