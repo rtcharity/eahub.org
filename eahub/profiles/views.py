@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils.decorators import method_decorator
@@ -15,7 +15,7 @@ from eahub.profiles.forms import DeleteProfileForm, ProfileForm
 from eahub.profiles.models import Profile, ProfileSlug
 
 
-def profile_detail_or_redirect(request, slug, first_visit=False):
+def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
     profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
@@ -23,7 +23,32 @@ def profile_detail_or_redirect(request, slug, first_visit=False):
     if slug_entry.redirect:
         return redirect("profile", slug=profile.slug, permanent=True)
     return render(
-        request, "eahub/profile.html", {"profile": profile, "first_visit": first_visit}
+        request,
+        template_name="eahub/profile.html",
+        context={
+            "profile": profile,
+            "is_cause_area_section": (
+                profile.tags_organisational_affiliation.exists()
+                or profile.tags_pledge.exists()
+                or profile.cause_areas_other
+                or profile.available_to_volunteer
+            ),
+            "is_render_career_section": (
+                profile.tags_expertise_area.exists()
+                or profile.expertise_areas_other
+                or profile.tags_career_interest.exists()
+                or profile.open_to_job_offers
+            ),
+            "is_render_community_section": (
+                profile.tags_organisational_affiliation.exists()
+                or profile.tags_event_attended.exists()
+                or profile.tags_generic.exists()
+                or profile.local_groups.exists()
+                or profile.user.localgroup_set.exists
+                or profile.topics_i_speak_about
+                or profile.available_as_speaker
+            ),
+        },
     )
 
 
@@ -37,12 +62,10 @@ def profile_redirect_from_legacy_record(request, legacy_record):
 
 
 @login_required
-def my_profile(request, first_visit=False):
+def my_profile(request: HttpRequest) -> HttpResponse:
     if not hasattr(request.user, "profile"):
         raise Http404("user has no profile")
-    return profile_detail_or_redirect(
-        request, slug=request.user.profile.slug, first_visit=first_visit
-    )
+    return profile_detail_or_redirect(request, slug=request.user.profile.slug)
 
 
 class ReportProfileAbuseView(ReportAbuseView):
@@ -120,7 +143,7 @@ class ProfileUpdate(UpdateView):
 
 
 @login_required
-def delete_profile(request) -> HttpResponse:
+def delete_profile(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         user = User.objects.get(id=request.user.id)
         user.delete()
