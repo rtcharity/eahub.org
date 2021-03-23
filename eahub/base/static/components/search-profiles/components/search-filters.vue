@@ -44,7 +44,7 @@
                     <span class="search__reset-item-label">
                         {{ item.label.replaceAll('_', ' ') }}<span v-show="item.refinements[0].value !== 'true'">: </span>
                     </span>
-                    <span v-for="refinement in item.refinements">
+                    <span v-for="refinement in item.refinements" class="search__reset-item-btn-wrapper">
                         <slot name="refinement"
                               :refine="item.refine"
                               :refinement="refinement"
@@ -159,6 +159,14 @@
         <div class="search__filter-item search__filter-item--with-title">
             <h4 class="search__filter-title">Cause areas</h4>
             <ais-refinement-list attribute="cause_areas"/>
+        </div>
+        <div class="search__filter-item search__filter-item--with-title">
+            <h4 class="search__filter-title">Tags</h4>
+            <ais-refinement-list attribute="tags_generic"/>
+        </div>
+        <div class="search__filter-item search__filter-item--with-title">
+          <h4 class="search__filter-title">Events attended</h4>
+          <ais-refinement-list attribute="tags_event_attended"/>
         </div>
         <div class="search__filter-item search__filter-item--with-title">
             <h4 class="search__filter-title">Giving pledges</h4>

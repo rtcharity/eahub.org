@@ -147,13 +147,13 @@
                           class="search__hit-offering col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12"
                       >
                         <h5>Offering</h5>
-                        <span>{{ item.offering }}</span>
+                        <ais-snippet :hit="item" attribute="offering"/>
                       </div>
                       <div v-if="item.looking_for"
                           class="search__hit-looking_for col-xs-24 col-sm-12 col-md-12 col-lg-12 col-xl-12"
                       >
                         <h5>Looking for</h5>
-                        <span>{{ item.looking_for }}</span>
+                        <ais-snippet :hit="item" attribute="looking_for"/>
                       </div>
                     </div>
                   </div>
