@@ -102,6 +102,9 @@
               </a>
             {% endif %}
           </div>
+          {% if profile.job_title %}
+            <div class="prof__job-title">{{ profile.job_title }}</div>
+          {% endif %}
 
           {% if request.user.id == profile.user_id %}
             <div class="prof__btns col col-24">
