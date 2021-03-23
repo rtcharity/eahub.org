@@ -378,7 +378,17 @@ $spacing-xxs: 5px;
         @include media-breakpoint-down(lg) {
           margin-top: 1rem;
         }
-        
+
+        .search__hit-title {
+          &[data-is-job-title=true] {
+            margin-bottom: 0;
+          }
+        }
+        .search__job-title {
+          display: block;
+          margin-top: 0.25rem;
+          margin-bottom: 0.5rem;
+        }
         .search__hit-link,
         .search__hit-status-block,
         .search__hit-location-block,

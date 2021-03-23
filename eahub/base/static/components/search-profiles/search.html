@@ -33,8 +33,8 @@
           <template slot-scope="{ state: { query }, results: { hits } }">
             <ais-infinite-hits
                 :class-names="{
-                                'ais-InfiniteHits-list': 'search__hits',
-                            }"
+                    'ais-InfiniteHits-list': 'search__hits',
+                }"
             >
               <template slot="item" slot-scope="{ item }">
                 <div class="search__hit row">
@@ -59,9 +59,12 @@
                   <div
                       class="col-xs-24 col-sm-12 col-md-8  col-lg-6  col-xl-6  order-2 order-sm-3 order-md-4 order-lg-2  order-xl-2 col-xxl-4 search__hit-details"
                   >
-                    <a v-bind:href="item.url" class="search__hit-link">
+                    <a v-bind:href="item.url" class="search__hit-title search__hit-link" :data-is-job-title="Boolean(item.job_title)">
                       <ais-highlight :hit="item" attribute="name"/>
                     </a>
+                    <span v-if="item.job_title" class="search__job-title">
+                      <ais-highlight :hit="item" attribute="job_title"/>
+                    </span>
                     <div class="search__hit-status-block">
                       <div class="search__hit-status"
                           v-bind:is-true="item.available_to_volunteer"
