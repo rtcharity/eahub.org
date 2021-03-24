@@ -75,7 +75,7 @@
       
       </div>
 
-      <div class="col-xs-24 col-md-18">
+      <div class="col-xs-24 col-lg-18">
         <div class="prof__title row">
           <h1 class="col col-auto">{{ profile.get_full_name }}</h1>
 
@@ -84,22 +84,24 @@
               <a class="prof_social-link" href="{{ profile.facebook_url }}"
                 rel="nofollow"
               >
-                <i class="fab fa-facebook"></i>
-              </a>
-            {% endif %}
-            {% if profile.personal_website_url %}
-              <a class="prof_social-link"
-                href="{{ profile.personal_website_url }}" rel="nofollow"
-              >
-                <i class="fa fa-link"></i>
+                <i class="fab fa-facebook-square"></i>
               </a>
             {% endif %}
             {% if profile.linkedin_url %}
               <a class="prof_social-link" href="{{ profile.linkedin_url }}"
                 rel="nofollow"
               >
-                <i class="fab fa-linkedin-in"></i>
-              </a>ad
+                <i class="fab fa-linkedin"></i>
+              </a>
+            {% endif %}
+            {% if profile.personal_website_url %}
+              <a class="prof_social-link"
+                href="{{ profile.personal_website_url }}"
+                rel="nofollow"
+                data-bs-content="Personal website" data-bs-toggle="popover" data-bs-container="body" data-bs-trigger="hover focus" data-bs-placement="bottom"
+              >
+                <i class="fa fa-link"></i>
+              </a>
             {% endif %}
           </div>
 
@@ -166,12 +168,12 @@
                   >
                 </div>
                 <div class="col col-heading">
-                  <h3 class="card__heading">Cause Area</h3>
+                  <h3 class="card__heading">Cause Areas</h3>
                 </div>
               </div>
               <div class="card__section">
-                {% if profile.get_tags_cause_area.count == 1 %}
-                  {{ profile.get_tags_cause_area_formatted }}
+                {% if profile.get_tags_cause_area_formatted|length == 1 %}
+                  <p>{{ profile.get_tags_cause_area_formatted.0 }}</p>
                 {% else %}
                   <ul>
                     {% for pledge in profile.get_tags_cause_area_formatted %}
@@ -351,6 +353,12 @@
       </a>
     {% endif %}
   </div>
+
+  {% if settings.DJANGO_ENV.value == "local" %}
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_profile_detail.bundle.js"></script>
+  {% else %}
+    <script defer src="{% static "dist/component_profile_detail.js" %}"></script>
+  {% endif %}
 
 {% endblock %}
 

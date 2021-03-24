@@ -17,6 +17,7 @@ const config = {
 
     component_search_profiles: './eahub/base/static/components/search-profiles/main.js',
     component_profile_edit: './eahub/base/static/components/profile/edit/main.js',
+    component_profile_detail: './eahub/base/static/components/profile/profile-detail.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
     component_tables: './eahub/base/static/components/tables.js'

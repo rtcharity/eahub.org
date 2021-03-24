@@ -161,7 +161,7 @@ class Profile(models.Model):
     topics_i_speak_about = models.TextField(
         blank=True,
         validators=[MaxLengthValidator(2000)],
-        verbose_name="Topics I speak about other",
+        verbose_name="Topics I speak about",
     )
 
     local_groups = models.ManyToManyField(LocalGroup, through="Membership", blank=True)

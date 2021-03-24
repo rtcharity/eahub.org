@@ -35,27 +35,35 @@
     }
     .prof__title {
       display: flex;
-      align-items: baseline;
+      align-items: flex-start;
       margin-bottom: 0.6rem;
       
       h1 {
         display: inline-flex;
         line-height: 0.9;
       }
+      .col {
+        align-items: flex-end;
+      }
       .prof_social-link {
         display: flex;
+        margin-right: 10px;
         text-decoration: none;
         color: $color-secondary;
-        margin-right: 10px;
         
-        $icon-size: 24px;
+        $icon-size: 34px;
         svg {
           width: $icon-size;
           height: $icon-size;
         }
         .fa-link {
+          padding: 3px;
+          margin-bottom: 2px;
+          background: $color-secondary;
+          color: white;
           width: $icon-size - 2px;
-          height: $icon-size - 2px;
+          height: $icon-size - 4px;
+          border-radius: 3px;
         }
       }
       
