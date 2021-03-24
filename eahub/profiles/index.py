@@ -27,6 +27,7 @@ if settings.IS_ENABLE_ALGOLIA:
             "available_as_speaker",
             "available_to_volunteer",
             "open_to_job_offers",
+            "is_organiser",
             "city_or_town",
             "country",
             "lon",
@@ -42,7 +43,6 @@ if settings.IS_ENABLE_ALGOLIA:
             ],
             ["get_local_groups_formatted", "local_groups"],
             ["get_organizer_of_local_groups_formatted", "organizer_of_local_groups"],
-            ["is_organiser", "is_organiser"],
             ["offering", "offering"],
             ["looking_for", "looking_for"],
         ]

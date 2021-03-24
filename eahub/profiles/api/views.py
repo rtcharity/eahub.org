@@ -1,6 +1,7 @@
 from rest_framework import mixins
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -19,7 +20,7 @@ class ProfileViewSet(
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def create_tag_view(request: Response):
+def create_tag_view(request: Request) -> Response:
     tag, is_created = ProfileTag.objects.get_or_create(
         name=request.data["name"],
     )
@@ -27,7 +28,7 @@ def create_tag_view(request: Response):
         tag.author = Profile.objects.get(user=request.user)
         tag.status = ProfileTagStatus.PENDING
 
-    tag_type = ProfileTagType.objects.get_or_create(type=request.data["type"])[0]
+    tag_type = ProfileTagType.objects.get(type=request.data["type"])
     tag.types.add(tag_type)
     tag.save()
     return Response(TagSerializer(tag).data)

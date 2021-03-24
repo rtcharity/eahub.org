@@ -31,15 +31,6 @@ class SignupForm(forms.Form):
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
         private_key=settings.RECAPTCHA_PRIVATE_KEY,
     )
-    field_order = [
-        "first_name",
-        "last_name",
-        "email",
-        "password1",
-        "password2",
-        "is_public",
-        "captcha",
-    ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
