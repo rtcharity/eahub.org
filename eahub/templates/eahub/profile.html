@@ -59,6 +59,7 @@
         {% if not profile.is_approved %}
           <div class="alert alert-warning"
             role="alert"
+            data-is-image-empty="{% if not profile.image %}true{% endif %}"
             title="This profile has not yet been approved, so other people can't see it yet."
           >
             <i class="fa fa-lock"></i> Awaiting approval

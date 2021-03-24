@@ -9,6 +9,8 @@
 {% block title %}Edit Profile{% endblock %}
 
 {% block content %}
+  {% include 'includes/messages.html' %}
+
   <div class="container profile-edit">
     <h1>Edit your profile</h1>
     <form method="post" action="{% url 'profiles_app:edit_profile' %}" enctype="multipart/form-data">

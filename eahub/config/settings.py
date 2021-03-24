@@ -5,6 +5,7 @@ import dj_database_url
 import environ
 import sentry_sdk
 from django.core import exceptions
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django_storage_url import dsn_configured_storage_class
 from dotenv import find_dotenv, load_dotenv
@@ -236,6 +237,13 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
+    "profiles_app:edit_profile"
+)
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
+    "profiles_app:edit_profile"
+)
+
 
 IS_ENABLE_ALGOLIA = env.bool("IS_ENABLE_ALGOLIA", default=False)
 ALGOLIA = {
