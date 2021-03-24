@@ -99,11 +99,21 @@
                 rel="nofollow"
               >
                 <i class="fab fa-linkedin-in"></i>
-              </a>
+              </a>ad
             {% endif %}
           </div>
+
+
+          {% if profile.tags_generic.exists %}
+            <div class="prof__tags col col-auto align-self-start">
+              {% for tag in profile.get_tags_generic_formatted %}
+                <span class="prof__tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        
           {% if profile.job_title %}
-            <div class="prof__job-title">{{ profile.job_title }}</div>
+            <div class="prof__job-title col col-24">{{ profile.job_title }}</div>
           {% endif %}
 
           {% if request.user.id == profile.user_id %}
@@ -120,20 +130,22 @@
         <div class="prof__summary">
           {{ profile.summary|default:''|urlize|linebreaks }}
 
-          <div class="row summary__sections">
-            {% if profile.offering %}
-              <div class="summary__section col-auto">
-                <div class="summary__subtitle">Offering</div>
-                {{ profile.offering|urlize|linebreaks }}
-              </div>
-            {% endif %}
-            {% if profile.looking_for %}
-              <div class="summary__section col-auto">
-                <div class="summary__subtitle">Looking for</div>
-                {{ profile.looking_for|urlize|linebreaks }}
-              </div>
-            {% endif %}
-          </div>
+          {% if profile.offering or profile.looking_for %}
+            <div class="row summary__sections">
+              {% if profile.offering %}
+                <div class="summary__section col-auto">
+                  <div class="summary__subtitle">Offering</div>
+                  {{ profile.offering|urlize|linebreaks }}
+                </div>
+              {% endif %}
+              {% if profile.looking_for %}
+                <div class="summary__section col-auto">
+                  <div class="summary__subtitle">Looking for</div>
+                  {{ profile.looking_for|urlize|linebreaks }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>

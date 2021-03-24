@@ -80,6 +80,21 @@
       margin-top: 0.4rem;
       font-size: 1.25rem;
     }
+    .prof__tags {
+      margin-left: auto;
+      
+      .prof__tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.1rem 0.4rem;
+        margin: 0.3rem;
+        margin-right: 0;
+        background: #ddefec94;
+        color: #0b5046;
+        margin-right: 0.25rem;
+        margin-top: 0;
+      }
+    }
     .alert {
       .svg-inline--fa {
         margin-right: 10px;
