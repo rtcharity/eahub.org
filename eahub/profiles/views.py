@@ -77,6 +77,13 @@ class ReportProfileAbuseView(ReportAbuseView):
 
 
 class SendProfileMessageView(SendMessageView):
+    def get_initial(self) -> dict:
+        data_initial = super().get_initial()
+        profile = Profile.objects.get(user=self.request.user)
+        data_initial["your_name"] = profile.get_full_name()
+        data_initial["your_email_address"] = profile.user.email
+        return data_initial
+
     def get_recipient(self):
         profile = Profile.objects.get(slug=self.kwargs["slug"])
         if profile is None:
