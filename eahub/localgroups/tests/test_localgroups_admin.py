@@ -7,11 +7,21 @@ from eahub.tests.cases import EAHubTestCase
 class LocalGroupAdminTestCase(EAHubTestCase):
     def setUp(self):
         self.first_name = "Peter"
+        self.last_name = "Jackson"
         self.local_group = LocalGroup.objects.create(id=1)
 
-        self.profile_peter = self.gen.profile(first_name=self.first_name)
-        self.profile_mary = self.gen.profile(first_name="Mary")
-        self.profile_peter2 = self.gen.profile(first_name=self.first_name)
+        self.profile_peter = self.gen.profile(
+            first_name=self.first_name,
+            last_name=self.last_name,
+        )
+        self.profile_mary = self.gen.profile(
+            first_name="Mary",
+            last_name=self.last_name,
+        )
+        self.profile_peter2 = self.gen.profile(
+            first_name=self.first_name,
+            last_name=self.last_name,
+        )
 
         Organisership.objects.create(
             user=self.profile_peter.user, local_group=self.local_group
@@ -24,7 +34,7 @@ class LocalGroupAdminTestCase(EAHubTestCase):
         self,
     ):
         organizer_found = LocalGroupResource().hydrate_organiser(
-            self.first_name, row={"id": "1"}
+            self.profile_peter.get_full_name(), row={"id": "1"}
         )
         self.assertEqual(self.profile_peter.user, organizer_found)
 
@@ -33,7 +43,7 @@ class LocalGroupAdminTestCase(EAHubTestCase):
             user=self.profile_peter2.user, local_group=self.local_group
         )
         organizer_found = LocalGroupResource().hydrate_organiser(
-            self.first_name, row={"id": "1"}
+            self.profile_peter.get_full_name(), row={"id": "1"}
         )
         self.assertEqual(
             self.profile_peter2.get_full_name(),
