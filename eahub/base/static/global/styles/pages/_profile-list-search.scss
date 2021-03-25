@@ -252,15 +252,14 @@ $spacing-xxs: 5px;
       
       .ais-ToggleRefinement-count,
       .ais-RefinementList-count {
-        //color: #9e959f;
-        //background: #f7f7f7;
-        //padding: 1px 3px;
-        //margin-left: $spacing-xxs;
-        //border: 1px solid $gray-500;
-        //font-size: 0.65rem;
-        //height: 19px;
-        //align-self: flex-start;
-        display: none;
+        color: #9e959f;
+        background: #f7f7f7;
+        padding: 1px 3px;
+        margin-left: $spacing-xxs;
+        border: 1px solid $gray-500;
+        font-size: 0.65rem;
+        height: 19px;
+        align-self: flex-start;
       }
       
       .ais-RefinementList-list {

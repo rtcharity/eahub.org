@@ -162,16 +162,17 @@
         </div>
         <div class="search__filter-item search__filter-item--with-title">
             <h4 class="search__filter-title">Tags</h4>
-            <ais-refinement-list attribute="tags_generic"/>
+            <ais-refinement-list attribute="tags"/>
+        </div>
+        <div class="search__filter-item search__filter-item--with-title">
+          <h4 class="search__filter-title">Giving pledges</h4>
+          <ais-refinement-list attribute="giving_pledges"/>
         </div>
         <div class="search__filter-item search__filter-item--with-title">
           <h4 class="search__filter-title">Events attended</h4>
-          <ais-refinement-list attribute="tags_event_attended"/>
+          <ais-refinement-list attribute="events_attended"/>
         </div>
-        <div class="search__filter-item search__filter-item--with-title">
-            <h4 class="search__filter-title">Giving pledges</h4>
-            <ais-refinement-list attribute="giving_pledges"/>
-        </div>
+
     </div>
 </template>
 

@@ -149,7 +149,6 @@ def on_user_change(**kwargs):
         logger.exception("User update logging failed")
 
 
-@receiver(m2m_changed, sender=ProfileTag.types.through)
 def reindex_on_tag_types_change(sender, instance: ProfileTag, **kwargs):
     try:
         instance.save()
@@ -164,7 +163,7 @@ def reindex_profile_on_tags_change(sender, instance: Profile, **kwargs):
         logger.exception("Algolia tag reindexing failed")
 
 
-# fmt: off
+m2m_changed.connect(reindex_profile_on_tags_change, sender=ProfileTag.types.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.local_groups.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_generic.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_cause_area.through)

@@ -37,6 +37,7 @@ if settings.IS_ENABLE_ALGOLIA:
             ["get_tags_expertise_formatted", "expertise"],
             ["get_tags_career_interest_formatted", "career_interest_areas"],
             ["get_tags_pledge_formatted", "giving_pledges"],
+            ["get_tags_event_attended_formatted", "events_attended"],
             [
                 "get_tags_organisational_affiliation_formatted",
                 "organisational_affiliations",
