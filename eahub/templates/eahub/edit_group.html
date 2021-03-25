@@ -9,36 +9,42 @@
 
 {% block form_fields %}
 
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
-    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_multiselect_forms.bundle.js"></script>
-  {% else %}
-    <script defer src="{% static 'dist/component_multiselect_forms.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
+  {% addtoblock 'js' %}
+    {% if settings.DJANGO_ENV.value == 'local' %}
+      <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_local_groups_edit.bundle.js"></script>
+    {% else %}
+      <script defer src="{% static 'dist/component_local_groups_edit.js' %}"></script>
+    {% endif %}
+  {% endaddtoblock %}
+  
+  <div class="form-edit-group">
+    {{ form|crispy }}
+  </div>
+  
+  <div class="privacy-note">
+    <b>Note:</b> All group information is public.
+    The organisers of a group can see who each other are, even if their profiles are private.
+    Read more about our <a href="{% url 'privacy_policy' %}">privacy policy</a>.
+  </div>
+  
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+  <script defer src="{% static 'django_select2/django_select2.js' %}"></script>
+  {{ form.media.css }}
 
-<div class="form-edit-group">
-{{ form|crispy }}
-</div>
-<div class="privacy-note">
-  <b>Note:</b> All group information is public.
-  The organisers of a group can see who each other are, even if their profiles are private.
-  Read more about our <a href="{% url 'privacy_policy' %}">privacy policy</a>.
-</div>
 {% endblock %}
 
 {% block submit %}Save{% endblock %}
 
 {% block content_after_form %}
-{% if form.instance.pk %}
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <a href="{% url 'localgroups_delete' form.instance.slug %}">
-        <div class="btn btn-default">
-          Delete this group
-        </div>
-      </a>
+  {% if form.instance.pk %}
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <a href="{% url 'localgroups_delete' form.instance.slug %}">
+          <div class="btn btn-default">
+            Delete this group
+          </div>
+        </a>
+      </div>
     </div>
-  </div>
-{% endif %}
+  {% endif %}
 {% endblock %}

@@ -20,7 +20,8 @@ const config = {
     component_profile_detail: './eahub/base/static/components/profile/profile-detail.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
-    component_tables: './eahub/base/static/components/tables.js'
+    component_tables: './eahub/base/static/components/tables.js',
+    component_local_groups_edit: './eahub/base/static/components/local-groups-edit.js',
   },
   output: {
     filename: '[name].js',

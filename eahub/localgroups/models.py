@@ -132,6 +132,29 @@ class LocalGroup(models.Model):
         else:
             return "Other"
 
+    def convert_to_row(self, field_names):
+        values = []
+        for field in field_names:
+            if field == "local_group_types":
+                values.append(self.get_local_group_types())
+            elif field == "organisers":
+                values.append(self.organisers_names())
+            elif field == "organisers_emails":
+                values.append(self.organisers_emails())
+            else:
+                values.append(getattr(self, field))
+        return values
+
+    @staticmethod
+    def get_exportable_field_names():
+        fieldnames = [
+            field.name
+            for field in LocalGroup._meta.fields + LocalGroup._meta.many_to_many
+            if field.name != "local_group_type"
+        ]
+        fieldnames.append("organisers_emails")
+        return fieldnames
+
 
 @receiver(post_save, sender=LocalGroup)
 def clear_the_cache(**kwargs):

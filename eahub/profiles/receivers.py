@@ -163,6 +163,7 @@ def reindex_profile_on_tags_change(sender, instance: Profile, **kwargs):
         logger.exception("Algolia tag reindexing failed")
 
 
+# fmt: off
 m2m_changed.connect(reindex_profile_on_tags_change, sender=ProfileTag.types.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.local_groups.through)
 m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_generic.through)
