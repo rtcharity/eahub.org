@@ -120,7 +120,6 @@ $spacing-xxs: 5px;
     }
     .search__filter-title {
       font-size: 1rem;
-      font-weight: bold;
       margin-top: $spacing-lg;
       margin-bottom: $spacing-sm;
       &:first-of-type {
@@ -236,6 +235,7 @@ $spacing-xxs: 5px;
       .ais-RefinementList-label {
         display: flex;
         align-items: baseline;
+        font-size: 0.8rem;
       }
       
       .ais-RefinementList-labelText,
