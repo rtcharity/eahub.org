@@ -73,6 +73,14 @@
           {% include 'includes/field.html' with form=form field=form.image %}
 
           {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
+
+          <div class="mb-5"
+            data-type-name="generic"
+            data-type-label="Tags"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
           <div class="row row-cols-1 row-cols-lg-3">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.facebook_url %}
@@ -94,19 +102,21 @@
             </div>
           </div>
 
-          <div class="mb-5"
-            data-type-name="generic"
-            data-type-label="Tags"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
-
 
           <h2>Community</h2>
 
           {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
           {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
 
+          {% include 'includes/field.html' with form=form field=form.local_groups %}
+
+          <div class="mb-5"
+            data-type-name="organisational_affiliation"
+            data-type-label="Organisational affiliations"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+          
           <div class="mb-5"
             data-type-name="pledge"
             data-type-label="Pledges"
@@ -133,6 +143,14 @@
               {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
             </div>
           </div>
+
+          <div class="mb-5"
+            data-type-name="career_interest"
+            data-type-label="Career interests"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
           <div class="mb-5"
             data-type-name="expertise_area"
             data-type-label="Expertise areas"
@@ -150,21 +168,6 @@
           </div>
 
           {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
-          {% include 'includes/field.html' with form=form field=form.local_groups %}
-
-          <div class="mb-5"
-            data-type-name="organisational_affiliation"
-            data-type-label="Organisational affiliations"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
-
-          <div class="mb-5"
-            data-type-name="career_interest"
-            data-type-label="Career interests"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
 
 
           <h2>Settings</h2>
