@@ -34,7 +34,7 @@ class LocalGroupAdminTestCase(EAHubTestCase):
         self,
     ):
         organizer_found = LocalGroupResource().hydrate_organiser(
-            self.profile_peter.get_full_name(), row={"id": "1"}
+            self.profile_peter.get_full_name(), row={"id": self.local_group.id}
         )
         self.assertEqual(self.profile_peter.user, organizer_found)
 
@@ -43,7 +43,7 @@ class LocalGroupAdminTestCase(EAHubTestCase):
             user=self.profile_peter2.user, local_group=self.local_group
         )
         organizer_found = LocalGroupResource().hydrate_organiser(
-            self.profile_peter.get_full_name(), row={"id": "1"}
+            self.profile_peter.get_full_name(), row={"id": self.local_group.id}
         )
         self.assertEqual(
             self.profile_peter2.get_full_name(),
