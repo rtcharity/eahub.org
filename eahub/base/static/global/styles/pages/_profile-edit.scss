@@ -2,13 +2,54 @@
 
 $input-height: 37px;
 
+
+.profile-edit-body {
+  .container {
+    @include media-breakpoint-up(xl) {
+      max-width: 1280px;
+    }
+  }
+}
+
 .profile-edit {
+  margin-top: 4.5rem;
   margin-bottom: 150px;
   padding-bottom: 8rem;
   
   h1 {
-    margin-top: 3.5rem;
-    margin-bottom: 2.5rem;
+    font-size: 3rem;
+    margin-bottom: 4rem;
+  }
+  .btn-submit__col {
+    padding-top: 15px;
+    
+    .btn-submit__container {
+      display: flex;
+      justify-content: flex-end;
+      position: sticky;
+      $navbar-height: 63px;
+      top: $navbar-height + $grid-gutter-width;
+      z-index: 3;
+      
+      .btn-submit {
+        display: flex;
+        justify-content: center;
+        min-width: 100%;
+      }
+    }
+  }
+  h2 {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 125px;
+      margin-top: 1rem;
+      border-bottom: 5px solid $color-secondary;
+    }
   }
   .col-bool-with-margin-top {
     display: flex;
@@ -29,6 +70,12 @@ $input-height: 37px;
     margin-bottom: 2.5rem;
     position: relative;
     
+    &.form-group__password {
+      input {
+        font-size: 0.5rem;
+        height: $input-height - 2px;
+      }
+    }
     .form-text {
       font-size: 0.7rem;
     }
@@ -67,29 +114,10 @@ $input-height: 37px;
     font-size: 1rem;
     margin-bottom: 1.5rem;
   }
-  .profile-tags-column {
-    @include media-breakpoint-up(xl) {
-      padding-left: 4rem;
-    }
-    @include media-breakpoint-up(xxl) {
-      padding-left: 6rem;
-    }
-  }
-  .btn-submit-container {
-    position: fixed;
-    width: 100%;
-    padding: 0.9rem 0;
-    bottom: 0;
-    left: 0;
-    background: white;
-    box-shadow: rgba(0, 0, 0, 0.2) 0 -2px 7px;
-    z-index: 3;
-    
-    .btn-submit {
-      display: flex;
-      min-width: 200px;
-      justify-content: center;
-      margin-left: auto;
+  .btn-submit__container[data-pos="bottom"] {
+    margin-top: 5rem;
+    .btn {
+      width: 150px;
     }
   }
 }

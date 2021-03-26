@@ -1,6 +1,7 @@
 {% extends 'base_bs5.html' %}
 
-{% load crispy_forms_field crispy_forms_tags static widget_tweaks %}
+{% load crispy_forms_field crispy_forms_tags static widget_tweaks sekizai_tags %}
+
 
 {% block navbar %}
   {% include 'components/navbar.html' %}
@@ -9,16 +10,27 @@
 {% block title %}Edit Profile{% endblock %}
 
 {% block content %}
+  {% addtoblock 'body_classes' %}profile-edit-body{% endaddtoblock %}
+
   {% include 'includes/messages.html' %}
 
+  <script>
+    const DJANGO = {
+      algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,
+      algoliaApplicationId: `{{ settings.ALGOLIA.APPLICATION_ID }}`,
+      algoliaIndexName: `{{ settings.ALGOLIA.INDEX_NAME_TAGS }}`,
+      profilePk: {{ profile.pk }},
+    }
+  </script>
+
   <div class="container profile-edit">
-    <h1>Edit your profile</h1>
+
     <form method="post" action="{% url 'profiles_app:edit_profile' %}" enctype="multipart/form-data">
       {% csrf_token %}
-      
+
       <div class="row">
-        <div class="col-24 col-xl-11 col-xxl-10">
-          
+        <div class="col-24 col-lg-21">
+          <h1>Edit your profile</h1>
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.first_name %}
@@ -30,36 +42,24 @@
 
           <div class="row row-cols-2">
             <div class="col">
-              {% include 'includes/field.html' with form=form field=form.job_title %}
-            </div>
-            <div class="col col-bool-with-margin-top">
-              {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
-            </div>
-          </div>
-
-          {% include 'includes/field.html' with form=form field=form.image %}
-          <div class="row row-cols-2">
-            <div class="col">
               <div class="form-group">
                 <label class="control-label">Email</label>
                 <input value="{{ profile.user.email}}" class="form-control" disabled>
-                <a class="btn btn-secondary btn-input-edit" 
+                <a class="btn btn-secondary btn-input-edit"
                   href="{% url 'account_email' %}">
                   <i class="fa fa-pencil-alt"></i>
                 </a>
               </div>
-              {% include 'includes/field.html' with form=form field=form.allow_messaging %}
             </div>
             <div class="col">
-              <div class="form-group">
+              <div class="form-group form-group__password">
                 <label class="control-label">Password</label>
-                <input type="password" value="{{ profile.user.email }}" class="form-control" disabled>
+                <input type="text" value="●●●●●●●●●●●●●●" class="form-control" disabled>
                 <a class="btn btn-secondary btn-input-edit"
                   href="{% url 'account_change_password' %}">
                   <i class="fa fa-pencil-alt"></i>
                 </a>
               </div>
-              {% include 'includes/field.html' with form=form field=form.is_public %}
             </div>
           </div>
           <div class="row row-cols-2">
@@ -70,36 +70,69 @@
               {% include 'includes/field.html' with form=form field=form.city_or_town %}
             </div>
           </div>
+          {% include 'includes/field.html' with form=form field=form.image %}
+
           {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
-          <div class="row row-cols-2">
+          <div class="row row-cols-1 row-cols-lg-3">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.facebook_url %}
             </div>
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.linkedin_url %}
             </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="https://example.com" %}
+            </div>
           </div>
-          {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="https://example.com" %}
 
-          {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="Teaching python" %}
-          {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="Chat about wild animal suffering" %}
-          
+          <div class="row row-cols-1 row-cols-lg-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="Teaching python" %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="Chat about wild animal suffering" %}
+            </div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="generic"
+            data-type-label="Tags"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+
+          <h2>Community</h2>
+
+          {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
+          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
+
+          <div class="mb-5"
+            data-type-name="pledge"
+            data-type-label="Pledges"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="event_attended"
+            data-type-label="Events attended"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+          {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
+
+
+
+          <h2>Career</h2>
           <div class="row row-cols-2">
             <div class="col">
+              {% include 'includes/field.html' with form=form field=form.job_title %}
+            </div>
+            <div class="col col-bool-with-margin-top">
               {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
             </div>
-            <div class="col">
-              {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
-            </div>
           </div>
-        </div>
-        
-        <div class="col-24 col-xl-13 col-xxl-14 profile-tags-column"
-          data-algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
-          data-algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-          data-algolia-index="{{ settings.ALGOLIA.INDEX_NAME_TAGS }}"
-          data-profile-pk="{{ profile.pk }}"
-        >
           <div class="mb-5"
             data-type-name="expertise_area"
             data-type-label="Expertise areas"
@@ -120,13 +153,6 @@
           {% include 'includes/field.html' with form=form field=form.local_groups %}
 
           <div class="mb-5"
-            data-type-name="generic"
-            data-type-label="Tags"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
-
-          <div class="mb-5"
             data-type-name="organisational_affiliation"
             data-type-label="Organisational affiliations"
           >
@@ -140,30 +166,26 @@
             <div class="vue-profile-tag-input"></div>
           </div>
 
-          <div class="mb-5"
-            data-type-name="pledge"
-            data-type-label="Pledges"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
 
-          <div class="mb-5"
-            data-type-name="event_attended"
-            data-type-label="Events attended"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
+          <h2>Settings</h2>
+          {% include 'includes/field.html' with form=form field=form.is_public %}
+          {% include 'includes/field.html' with form=form field=form.allow_messaging %}
+          <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
 
-          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
-          {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
         </div>
+        
+        <div class="col-3 btn-submit__col d-none d-lg-block">
+          <div class="btn-submit__container">
+            <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+          </div>
+        </div>
+
       </div>
 
-      <div class="btn-submit-container">
-        <div class="container">
-          <button class="btn btn-secondary btn-submit" type="submit">Save</button>
-        </div>
+      <div class="btn-submit__container" data-pos="bottom">
+        <button class="btn btn-primary btn-submit" type="submit">Save</button>
       </div>
+
     </form>
 
     {% if settings.DJANGO_ENV.value == "local" %}

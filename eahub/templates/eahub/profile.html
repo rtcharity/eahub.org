@@ -340,13 +340,7 @@
   </div>
 
   <div class="prof__buttons-bottom container">
-    {% if user.id == profile.user_id %}
-      <a class="btn btn-outline-secondary btn-sm"
-        href="{% url 'profiles_app:delete_profile' %}"
-      >
-        <i class="fa fa-trash"></i> Delete My Profile
-      </a>
-    {% else %}
+    {% if user.id != profile.user_id %}
       <a class="btn btn-outline-secondary btn-sm"
         href="{% url 'profiles_app:report_abuse_profile' profile.slug %}"
       >

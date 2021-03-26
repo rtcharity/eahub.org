@@ -14,14 +14,10 @@ const Widget = Vue.extend({
   render(createElement) {
     return createElement(App, {
       props: {
-        algoliaApiKey: this.$el
-          .parentElement.parentElement.getAttribute('data-algolia-api-key'),
-        algoliaApplicationId: this.$el
-          .parentElement.parentElement.getAttribute('data-algolia-application-id'),
-        algoliaIndex: this.$el
-          .parentElement.parentElement.getAttribute('data-algolia-index'),
-        profilePk: this.$el
-          .parentElement.parentElement.getAttribute('data-profile-pk'),
+        algoliaApiKey: DJANGO.algoliaApiKey,
+        algoliaApplicationId: DJANGO.algoliaApplicationId,
+        algoliaIndex: DJANGO.algoliaIndexName,
+        profilePk: DJANGO.profilePk,
         typeName: this.$el
           .parentElement.getAttribute('data-type-name'),
         typeLabel: this.$el
