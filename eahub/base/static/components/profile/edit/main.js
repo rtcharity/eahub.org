@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import InstantSearchPlugin from 'vue-instantsearch';
-import App from './profile-edit.vue';
+import App from './profile-tag-input.vue';
 import $ from 'jquery';
 
 
@@ -33,7 +33,7 @@ const Widget = Vue.extend({
     })
   },
 });
-const nodes = document.querySelectorAll('.vue-profile-edit');
+const nodes = document.querySelectorAll('.vue-profile-tag-input');
 for (const node of nodes) {
   new Widget({el: node});
 }

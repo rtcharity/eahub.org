@@ -24,9 +24,8 @@ interface TagAlgolia {
 }
 
 
-// todo rename to tags something
 @Component
-export default class ProfileEditComponent extends Vue {
+export default class ProfileTagInputComponent extends Vue {
     @Prop(String) algoliaApiKey: string;
     @Prop(String) algoliaApplicationId: string;
     @Prop(String) algoliaIndex: string;
@@ -52,10 +51,9 @@ export default class ProfileEditComponent extends Vue {
         const response = await this.http.get(this.tagsUrl);
         this.tagsSelected = response.data[`tags_${this.typeName}`];
 
-        // todo fix vue nextTick bug, ie with what/vert snippet I wrote for Vlad
-        await this.sleep(300);
-        this.typesRef.refine(this.typeName);
-
+        this.$nextTick(() => {
+            this.typesRef.refine(this.typeName);
+        });
         this.initResultsPopupHandler();
     }
 
