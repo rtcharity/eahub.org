@@ -141,10 +141,4 @@ export default class ProfileTagInputComponent extends Vue {
             alert('An error occurred');
         }
     }
-
-    private async sleep(ms): Promise<any> {
-        return new Promise(res => {
-            setTimeout(res, ms);
-        });
-    }
 }
