@@ -149,26 +149,19 @@ def on_user_change(**kwargs):
         logger.exception("User update logging failed")
 
 
-def reindex_on_tag_types_change(sender, instance: ProfileTag, **kwargs):
+def reindex_algolia_on_m2m_change(sender, instance: Profile, **kwargs):
     try:
         instance.save()
     except:
-        logger.exception("Algolia tag types reindexing failed")
-
-
-def reindex_profile_on_tags_change(sender, instance: Profile, **kwargs):
-    try:
-        instance.save()
-    except:
-        logger.exception("Algolia tag reindexing failed")
+        logger.exception(f"Algolia tag reindexing failed for {type(instance)}")
 
 
 # fmt: off
-m2m_changed.connect(reindex_profile_on_tags_change, sender=ProfileTag.types.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.local_groups.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_generic.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_cause_area.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_expertise_area.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_organisational_affiliation.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_pledge.through)
-m2m_changed.connect(reindex_profile_on_tags_change, sender=Profile.tags_speech_topic.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=ProfileTag.types.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.local_groups.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_generic.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_cause_area.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_expertise_area.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_organisational_affiliation.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_pledge.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_speech_topic.through)
