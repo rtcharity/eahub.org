@@ -49,7 +49,9 @@ export default class ProfileTagInputComponent extends Vue {
 
     async mounted() {
         const response = await this.http.get(this.tagsUrl);
-        this.tagsSelected = response.data[`tags_${this.typeName}`];
+        const tagsSelected = response.data[`tags_${this.typeName}`];
+        tagsSelected.map(tag => tag.isLoading = false);
+        this.tagsSelected = tagsSelected;
 
         this.$nextTick(() => {
             this.typesRef.refine(this.typeName);
@@ -119,7 +121,7 @@ export default class ProfileTagInputComponent extends Vue {
             await this.http.patch(this.tagsUrl, data);
             tag.isLoading = false;
         } catch (e) {
-            console.error(e);
+            alert('An error occurred');
             this.unselectTag(tag.pk);
         }
         this.searchQuery = '';

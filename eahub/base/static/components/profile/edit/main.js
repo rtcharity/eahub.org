@@ -27,8 +27,7 @@ const Widget = Vue.extend({
         typeLabel: this.$el
           .parentElement.getAttribute('data-type-label'),
         searchResultsCols: this.$el
-          .parentElement.getAttribute('data-search-results-cols')
-        ,
+          .parentElement.getAttribute('data-search-results-cols'),
       }
     })
   },
