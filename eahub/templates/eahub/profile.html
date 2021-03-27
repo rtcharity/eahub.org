@@ -109,7 +109,7 @@
           </div>
 
           {% if profile.tags_generic.exists %}
-            <div class="prof__tags col col-auto align-self-start">
+            <div class="prof__tags col col-24 col-lg-auto align-self-start">
               {% for tag in profile.get_tags_generic_formatted %}
                 <span class="prof__tag">{{ tag }}</span>
               {% endfor %}
