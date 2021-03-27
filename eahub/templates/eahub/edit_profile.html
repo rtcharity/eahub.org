@@ -158,7 +158,9 @@
             <div class="vue-profile-tag-input"></div>
           </div>
 
-          {% include 'includes/field.html' with form=form rows=1 field=form.expertise_areas_other %}
+          {% if profile.expertise_areas_other %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.expertise_areas_other %}
+          {% endif %}
 
           <div class="mb-5"
             data-type-name="cause_area"
@@ -167,8 +169,10 @@
             <div class="vue-profile-tag-input"></div>
           </div>
 
-          {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
-
+          {% if profile.cause_areas_other %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
+          {% endif %}
+        
 
           <h2>Settings</h2>
           {% include 'includes/field.html' with form=form field=form.is_public %}
@@ -186,7 +190,7 @@
       </div>
 
       <div class="btn-submit__container" data-pos="bottom">
-        <button class="btn btn-primary btn-submit" type="submit">Save</button>
+      <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
       </div>
 
     </form>
