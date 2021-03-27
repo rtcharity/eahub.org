@@ -4,6 +4,7 @@ from typing import Any, Union
 from typing import Set
 
 from django.core.cache import cache
+from django.db.models import ManyToManyField
 from django.db.models.base import ModelBase
 from django.db.models.signals import m2m_changed, post_save, pre_save
 from django.dispatch import receiver
@@ -33,7 +34,7 @@ def on_profile_save_clear_cache(**kwargs):
 def on_profile_creation(**kwargs):
     try:
         if "created" in kwargs.keys() and kwargs["created"]:
-            _save_logs_for_new_profile(kwargs["instance"])
+            _save_logs_for_profile_creation(kwargs["instance"])
     except Exception:
         logger.exception("Profile creation logging failed")
 
@@ -61,13 +62,6 @@ def on_user_change(**kwargs):
             )
     except Exception:
         logger.exception("User update logging failed")
-
-
-def reindex_algolia_on_m2m_change(sender, instance: Profile, **kwargs):
-    try:
-        instance.save()
-    except:
-        logger.exception(f"Algolia tag reindexing failed for {type(instance)}")
 
 
 @receiver(m2m_changed, sender=Profile.local_groups.through)
@@ -109,7 +103,45 @@ def log_group_update_on_m2m_change(
         )
 
 
-def _save_logs_for_new_profile(instance: Profile):
+def reindex_algolia_on_m2m_change(sender, instance: Profile, **kwargs):
+    try:
+        instance.save()
+    except:
+        logger.exception(f"Algolia tag reindexing failed for {type(instance)}")
+
+
+def log_profile_tag_update(sender, instance: Profile, **kwargs):
+    action = kwargs["action"]
+    if action == "post_add" or action == "post_remove":
+        remote_field_name: str = sender.profile.field.opts.model_name
+        field_name = remote_field_name.replace("profile_", "")
+        ProfileAnalyticsLog.objects.create(
+            action_uuid=uuid.uuid4(),
+            time=timezone.now(),
+            action="Update",
+            old_value="",
+            new_value="",
+            profile=instance,
+            field=field_name,
+        )
+
+
+for tag_m2m_rel in [
+    Profile.tags_generic.through,
+    Profile.tags_cause_area.through,
+    Profile.tags_expertise_area.through,
+    Profile.tags_organisational_affiliation.through,
+    Profile.tags_pledge.through,
+    Profile.tags_speech_topic.through,
+]:
+    m2m_changed.connect(reindex_algolia_on_m2m_change, sender=tag_m2m_rel)
+    m2m_changed.connect(log_profile_tag_update, sender=tag_m2m_rel)
+
+
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=ProfileTag.types.through)
+
+
+def _save_logs_for_profile_creation(instance: Profile):
     action_uuid = uuid.uuid4()
     time = timezone.now()
     for field in instance._meta.get_fields():
@@ -118,8 +150,10 @@ def _save_logs_for_new_profile(instance: Profile):
         except AttributeError:
             continue
 
-        fields_to_ignore = ["local_groups"]
-        if value and field.name not in fields_to_ignore or value is False:
+        if type(field) == ManyToManyField:
+            continue
+
+        if value and field.name or value is False:
             ProfileAnalyticsLog.objects.create(
                 profile=instance,
                 field=field.name,
@@ -135,6 +169,8 @@ def _save_logs_for_profile_update(instance_new: Profile, instance_old: Profile):
     action_uuid = uuid.uuid4()
     time = timezone.now()
     for field in instance_new._meta.get_fields():
+        if type(field) == ManyToManyField:
+            continue
         try:
             value_new = getattr(instance_new, field.name)
             value_old = getattr(instance_old, field.name)
@@ -156,6 +192,9 @@ def _save_logs_for_profile_user_update(user_old: User, user_new: User):
     action_uuid = uuid.uuid4()
     time = timezone.now()
     for field in user_new._meta.get_fields():
+        if type(field) == ManyToManyField:
+            continue
+
         try:
             value_new = getattr(user_new, field.name)
             value_old = getattr(user_old, field.name)
@@ -196,14 +235,3 @@ def _convert_value_to_printable(value: Any, field: str) -> Union[str, list]:
     else:
         logger.warning(f"Value {value} cannot be made printable")
         return str(value)
-
-
-# fmt: off
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=ProfileTag.types.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.local_groups.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_generic.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_cause_area.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_expertise_area.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_organisational_affiliation.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_pledge.through)
-m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.tags_speech_topic.through)
