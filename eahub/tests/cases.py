@@ -19,13 +19,20 @@ class Gen:
         self.faker = Faker()
 
     def group(self, **kwargs) -> LocalGroup:
-        return baker.make("localgroups.LocalGroup", slug="", **kwargs)
+        return baker.make(
+            "localgroups.LocalGroup",
+            slug="",
+            name=kwargs.pop("name", self.faker.unique.company()),
+            **kwargs,
+        )
 
     def profile(self, **kwargs) -> Profile:
         return baker.make(
             "profiles.Profile",
             slug="",
-            is_approved=kwargs.get("is_approved", True),
+            first_name=kwargs.pop("first_name", self.faker.first_name()),
+            last_name=kwargs.pop("last_name", self.faker.last_name()),
+            is_approved=kwargs.pop("is_approved", True),
             **kwargs,
         )
 

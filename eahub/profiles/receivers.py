@@ -1,113 +1,27 @@
 import logging
 import uuid
 from typing import Any, Union
+from typing import Set
 
 from django.core.cache import cache
+from django.db.models.base import ModelBase
 from django.db.models.signals import m2m_changed, post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 
 from eahub.base.models import User
+from eahub.localgroups.models import LocalGroup
 from eahub.profiles.legacy import (
     CauseArea,
     ExpertiseArea,
     GivingPledge,
     OrganisationalAffiliation,
 )
+from eahub.profiles.models import Membership
 from eahub.profiles.models import Profile, ProfileAnalyticsLog, ProfileTag
 
+
 logger = logging.getLogger(__name__)
-
-profile_fields_to_ignore_on_creation = ["local_groups"]
-profile_fields_enums_map = {
-    "cause_areas": CauseArea,
-    "giving_pledges": GivingPledge,
-    "expertise_areas": ExpertiseArea,
-    "organisational_affiliations": OrganisationalAffiliation,
-}
-
-
-def save_logs_for_new_profile(instance: Profile):
-    action_uuid = uuid.uuid4()
-    time = timezone.now()
-    for field in instance._meta.get_fields():
-        try:
-            value = getattr(instance, field.name)
-        except AttributeError:
-            continue
-        if (
-            value and field.name not in profile_fields_to_ignore_on_creation
-        ) or value is False:
-            log = ProfileAnalyticsLog()
-            log.profile = instance
-            log.field = field.name
-            log.action = "Create"
-            log.old_value = ""
-            log.new_value = convert_value_to_printable(value, field.name)
-            log.time = time
-            log.action_uuid = action_uuid
-            log.save()
-
-
-def save_logs_for_profile_update(instance_new: Profile, instance_old: Profile):
-    action_uuid = uuid.uuid4()
-    time = timezone.now()
-    for field in instance_new._meta.get_fields():
-        try:
-            value_new = getattr(instance_new, field.name)
-            value_old = getattr(instance_old, field.name)
-        except AttributeError:
-            continue
-        if value_new != value_old:
-            log = ProfileAnalyticsLog()
-            log.profile = instance_new
-            log.field = field.name
-            log.action = "Update"
-            log.old_value = convert_value_to_printable(value_old, field.name)
-            log.new_value = convert_value_to_printable(value_new, field.name)
-            log.time = time
-            log.action_uuid = action_uuid
-            log.save()
-
-
-def _save_logs_for_profile_user_update(user_old: User, user_new: User):
-    action_uuid = uuid.uuid4()
-    time = timezone.now()
-    for field in user_new._meta.get_fields():
-        try:
-            value_new = getattr(user_new, field.name)
-            value_old = getattr(user_old, field.name)
-        except AttributeError:
-            continue
-        if value_new != value_old:
-            is_must_protect_password = field.name == "password"
-            if is_must_protect_password and value_old != "":
-                value_old_formatted = "[protected]"
-            else:
-                value_old_formatted = convert_value_to_printable(value_old, field.name)
-            ProfileAnalyticsLog.objects.create(
-                action_uuid=action_uuid,
-                time=time,
-                action="Update",
-                old_value=value_old_formatted,
-                new_value="[protected]" if is_must_protect_password else value_new,
-                profile=user_new.profile,
-                field=field.name,
-            )
-
-
-def convert_value_to_printable(value: Any, field: str) -> Union[str, list]:
-    if value is None:
-        return ""
-    if type(value) is not list:
-        return value
-    elif len(value) == 0:
-        return ""
-    elif field in profile_fields_enums_map.keys():
-        return [profile_fields_enums_map[field].get(int(x)).label for x in value]
-    else:
-        logger.warning(f"Value {value} cannot be made printable")
-        return str(value)
 
 
 @receiver(post_save, sender=Profile)
@@ -119,7 +33,7 @@ def on_profile_save_clear_cache(**kwargs):
 def on_profile_creation(**kwargs):
     try:
         if "created" in kwargs.keys() and kwargs["created"]:
-            save_logs_for_new_profile(kwargs["instance"])
+            _save_logs_for_new_profile(kwargs["instance"])
     except Exception:
         logger.exception("Profile creation logging failed")
 
@@ -130,7 +44,7 @@ def on_profile_change(**kwargs):
         instance = kwargs["instance"]
         if instance.id is not None:
             instance_old = Profile.objects.get(id=instance.id)
-            save_logs_for_profile_update(instance, instance_old)
+            _save_logs_for_profile_update(instance, instance_old)
     except Exception:
         logger.exception("Profile update logging failed")
 
@@ -154,6 +68,134 @@ def reindex_algolia_on_m2m_change(sender, instance: Profile, **kwargs):
         instance.save()
     except:
         logger.exception(f"Algolia tag reindexing failed for {type(instance)}")
+
+
+@receiver(m2m_changed, sender=Profile.local_groups.through)
+def log_group_update_on_m2m_change(
+    sender: Membership,
+    instance: Profile,
+    model: ModelBase,
+    pk_set: Set[int],
+    action: str,
+    **kwargs,
+):
+    if action == "pre_add":
+        ProfileAnalyticsLog.objects.create(
+            action_uuid=uuid.uuid4(),
+            time=timezone.now(),
+            action="Update",
+            old_value=instance.get_local_groups_formatted(),
+            new_value=[
+                group.name for group in LocalGroup.objects.filter(pk__in=pk_set)
+            ],
+            profile=instance,
+            field="local_groups",
+        )
+    if action == "pre_remove":
+        local_groups_pks_old = set(instance.local_groups.values_list("pk", flat=True))
+        local_groups_pks_removed = pk_set
+        local_groups_pks_new = local_groups_pks_old - local_groups_pks_removed
+        ProfileAnalyticsLog.objects.create(
+            action_uuid=uuid.uuid4(),
+            time=timezone.now(),
+            action="Update",
+            old_value=instance.get_local_groups_formatted(),
+            new_value=[
+                group.name
+                for group in LocalGroup.objects.filter(pk__in=local_groups_pks_new)
+            ],
+            profile=instance,
+            field="local_groups",
+        )
+
+
+def _save_logs_for_new_profile(instance: Profile):
+    action_uuid = uuid.uuid4()
+    time = timezone.now()
+    for field in instance._meta.get_fields():
+        try:
+            value = getattr(instance, field.name)
+        except AttributeError:
+            continue
+
+        fields_to_ignore = ["local_groups"]
+        if value and field.name not in fields_to_ignore or value is False:
+            ProfileAnalyticsLog.objects.create(
+                profile=instance,
+                field=field.name,
+                action="Create",
+                old_value="",
+                new_value=_convert_value_to_printable(value, field.name),
+                time=time,
+                action_uuid=action_uuid,
+            )
+
+
+def _save_logs_for_profile_update(instance_new: Profile, instance_old: Profile):
+    action_uuid = uuid.uuid4()
+    time = timezone.now()
+    for field in instance_new._meta.get_fields():
+        try:
+            value_new = getattr(instance_new, field.name)
+            value_old = getattr(instance_old, field.name)
+        except AttributeError:
+            continue
+        if value_new != value_old:
+            ProfileAnalyticsLog.objects.create(
+                profile=instance_new,
+                field=field.name,
+                action="Update",
+                old_value=_convert_value_to_printable(value_old, field.name),
+                new_value=_convert_value_to_printable(value_new, field.name),
+                time=time,
+                action_uuid=action_uuid,
+            )
+
+
+def _save_logs_for_profile_user_update(user_old: User, user_new: User):
+    action_uuid = uuid.uuid4()
+    time = timezone.now()
+    for field in user_new._meta.get_fields():
+        try:
+            value_new = getattr(user_new, field.name)
+            value_old = getattr(user_old, field.name)
+        except AttributeError:
+            continue
+        if value_new != value_old:
+            is_must_protect_password = field.name == "password"
+            if is_must_protect_password and value_old != "":
+                value_old_formatted = "[protected]"
+            else:
+                value_old_formatted = _convert_value_to_printable(value_old, field.name)
+            ProfileAnalyticsLog.objects.create(
+                action_uuid=action_uuid,
+                time=time,
+                action="Update",
+                old_value=value_old_formatted,
+                new_value="[protected]" if is_must_protect_password else value_new,
+                profile=user_new.profile,
+                field=field.name,
+            )
+
+
+def _convert_value_to_printable(value: Any, field: str) -> Union[str, list]:
+    profile_fields_enums_map = {
+        "cause_areas": CauseArea,
+        "giving_pledges": GivingPledge,
+        "expertise_areas": ExpertiseArea,
+        "organisational_affiliations": OrganisationalAffiliation,
+    }
+    if value is None:
+        return ""
+    if type(value) is not list:
+        return value
+    elif len(value) == 0:
+        return ""
+    elif field in profile_fields_enums_map.keys():
+        return [profile_fields_enums_map[field].get(int(x)).label for x in value]
+    else:
+        logger.warning(f"Value {value} cannot be made printable")
+        return str(value)
 
 
 # fmt: off

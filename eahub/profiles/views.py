@@ -70,10 +70,10 @@ def my_profile(request: HttpRequest) -> HttpResponse:
 
 
 class ReportProfileAbuseView(ReportAbuseView):
-    def profile(self):
+    def profile(self) -> Profile:
         return Profile.objects.get(slug=self.kwargs["slug"])
 
-    def get_type(self):
+    def get_type(self) -> str:
         return "profile"
 
 
@@ -85,7 +85,7 @@ class SendProfileMessageView(SendMessageView):
         data_initial["your_email_address"] = profile.user.email
         return data_initial
 
-    def get_recipient(self):
+    def get_recipient(self) -> Profile:
         profile = Profile.objects.get(slug=self.kwargs["slug"])
         if profile is None:
             raise Http404("Could not find profile")

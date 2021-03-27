@@ -1,3 +1,5 @@
+from typing import List
+
 from eahub.localgroups.models import LocalGroup, Organisership
 from eahub.profiles.legacy import CauseArea
 from eahub.profiles.models import ProfileAnalyticsLog
@@ -62,6 +64,31 @@ class ProfileTestCase(EAHubTestCase):
         self.assertTrue(
             all(x.time == analytics_logs.first().time for x in analytics_logs)
         )
+
+    def test_groups_logging(self):
+        profile = self.gen.profile()
+        groups_initial = [self.gen.group(), self.gen.group(), self.gen.group()]
+        profile.local_groups.set(groups_initial)
+        group_log = ProfileAnalyticsLog.objects.get(
+            field="local_groups", old_value="[]"
+        )
+        for group in groups_initial:
+            self.assertIn(group.name, group_log.new_value)
+
+        groups_new: List[LocalGroup] = groups_initial[1:]
+        profile.local_groups.set(groups_new)
+        self.assertEqual(
+            ProfileAnalyticsLog.objects.filter(field="local_groups").count(), 2
+        )
+        group_log_last = (
+            ProfileAnalyticsLog.objects.filter(field="local_groups")
+            .order_by("time")
+            .last()
+        )
+        for group in groups_initial:
+            self.assertIn(group.name, group_log_last.old_value)
+        for group in groups_new:
+            self.assertIn(group.name, group_log_last.new_value)
 
     def test_save_profile_analytics_on_user_change(self):
         profile = self.gen.profile()
