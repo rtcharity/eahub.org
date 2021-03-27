@@ -39,11 +39,12 @@
     <div class="row">
       <div class="col col-auto mb-3 mb-lg-0">
         {% thumbnail profile.image "200x200" crop="center" as im %}
-          <img class="prof__img mb-3 mb-md-0" loading="lazy" src="{{ im.url }}" alt="photo">
+          <img class="prof__img mb-3 mb-md-0" loading="lazy" src="{{ im.url }}" width="200" height="200" alt="photo">
         {% empty %}
           <img class="prof__img mb-3 mb-md-0" loading="lazy"
             src="/static/global/images/avatars/{{ profile.get_image_placeholder }}"
             alt="photo"
+            width="150" height="150"
             data-is-empty="true"
           >
         {% endthumbnail %}
