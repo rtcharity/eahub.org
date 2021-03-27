@@ -27,7 +27,7 @@ def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
         template_name="eahub/profile.html",
         context={
             "profile": profile,
-            "is_cause_area_section": (
+            "is_render_cause_area_section": (
                 profile.tags_organisational_affiliation.exists()
                 or profile.tags_pledge.exists()
                 or profile.cause_areas_other
