@@ -104,9 +104,10 @@
 
 
           <h2>Community</h2>
+          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
 
           {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
-          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
+          {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
 
           {% include 'includes/field.html' with form=form field=form.local_groups %}
 
@@ -130,7 +131,6 @@
           >
             <div class="vue-profile-tag-input"></div>
           </div>
-          {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
 
 
 

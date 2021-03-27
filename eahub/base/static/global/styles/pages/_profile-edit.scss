@@ -54,16 +54,12 @@ $input-height: 37px;
   .col-bool-with-margin-top {
     display: flex;
     align-items: flex-end;
-    
-    .form-group.form-check {
-      height: $input-height;
-      margin-bottom: 2.5rem;
-      .form-check-input {
-        margin-top: 12px;
-      }
-      .form-check-label {
-        margin-top: 12px - 4px;
-      }
+  
+    .form-check-input {
+      margin-top: 12px;
+    }
+    .form-check-label {
+      margin-top: 12px - 4px;
     }
   }
   .form-group {
@@ -74,6 +70,17 @@ $input-height: 37px;
       input {
         font-size: 0.5rem;
         height: $input-height - 2px;
+      }
+    }
+    &.form-check {
+      height: $input-height;
+      margin-bottom: 2.5rem;
+  
+      .form-check-input {
+        margin-top: 12px;
+      }
+      .form-check-label {
+        margin-top: 12px - 4px;
       }
     }
     .form-text {
