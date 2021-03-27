@@ -27,7 +27,11 @@
     {% if field.initial and field|field_type == "imageformfield" %}
       <input type="file" name="{{ field.name }}" class="form-control">
     {% else %}
-      {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
+      {% if field.errors %}
+        {% render_field field rows=rows placeholder=placeholder class+="form-control is-invalid" %}
+      {% else %}
+        {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
+      {% endif %}
     {% endif %}
   
   {% endif %}
@@ -35,6 +39,7 @@
   {% if field.help_text %}
     <div class="form-text">{{ field.help_text }}</div>
   {% endif %}
+
   {% for error in field.errors %}
     <div class="invalid-feedback">{{ error }}</div>
   {% endfor %}

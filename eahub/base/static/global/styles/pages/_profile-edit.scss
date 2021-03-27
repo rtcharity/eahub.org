@@ -116,6 +116,9 @@ $input-height: 37px;
       bottom: 0;
       height: $input-height - 2px;
     }
+    .invalid-feedback {
+      display: block;
+    }
   }
   .form-check {
     font-size: 1rem;
