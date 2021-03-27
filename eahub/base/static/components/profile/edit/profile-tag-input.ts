@@ -121,8 +121,8 @@ export default class ProfileTagInputComponent extends Vue {
             await this.http.patch(this.tagsUrl, data);
             tag.isLoading = false;
         } catch (e) {
-            alert('An error occurred');
             this.unselectTag(tag.pk);
+            alert('An error occurred');
         }
         this.searchQuery = '';
     }
