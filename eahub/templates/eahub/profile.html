@@ -76,6 +76,16 @@
       
       </div>
 
+      {% if request.user.id == profile.user_id %}
+        <div class="prof__btns col col-auto d-block d-lg-none">
+          <a class="btn btn-primary"
+            href="{% url 'profiles_app:edit_profile' %}"
+          >
+            <span><i class="fa fa-pencil-alt"></i> Edit</span>
+          </a>
+        </div>
+      {% endif %}
+
       <div class="col-xs-24 col-lg-18">
         <div class="prof__title row">
           <h1 class="col col-auto">{{ profile.get_full_name }}</h1>
@@ -121,7 +131,7 @@
           {% endif %}
 
           {% if request.user.id == profile.user_id %}
-            <div class="prof__btns col col-24">
+            <div class="prof__btns col col-24 d-none d-lg-flex">
               <a class="btn btn-primary"
                 href="{% url 'profiles_app:edit_profile' %}"
               >

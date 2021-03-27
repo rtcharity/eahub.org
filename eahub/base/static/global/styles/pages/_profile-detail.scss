@@ -70,18 +70,19 @@
           border-radius: 3px;
         }
       }
-      
-      .prof__btns {
-        display: flex;
-        align-self: end;
-        margin-bottom: 1rem;
-        margin-left: auto;
-        position: absolute;
-        right: 0;
-        width: fit-content;
-        width: -moz-fit-content;
-        
-        .btn {
+    }
+    .prof__btns {
+      display: flex;
+      align-self: end;
+      margin-bottom: 1rem;
+      margin-left: auto;
+      position: absolute;
+      right: 0;
+      width: fit-content;
+      width: -moz-fit-content;
+    
+      .btn {
+        @include media-breakpoint-up(lg) {
           margin-right: 9px;
         }
       }
