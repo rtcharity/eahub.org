@@ -133,6 +133,10 @@ for tag_m2m_rel in [
     Profile.tags_organisational_affiliation.through,
     Profile.tags_pledge.through,
     Profile.tags_speech_topic.through,
+    Profile.tags_ea_involvement.through,
+    Profile.tags_event_attended.through,
+    Profile.tags_career_stage.through,
+    Profile.tags_university.through,
 ]:
     m2m_changed.connect(reindex_algolia_on_m2m_change, sender=tag_m2m_rel)
     m2m_changed.connect(log_profile_tag_update, sender=tag_m2m_rel)
