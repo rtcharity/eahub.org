@@ -150,7 +150,9 @@ class Profile(models.Model):
     available_as_speaker = models.BooleanField(blank=True, default=False)
     email_visible = models.BooleanField(default=False)
     allow_messaging = models.BooleanField(
-        default=True, verbose_name="Allow approved users to message me"
+        default=True,
+        verbose_name="Allow approved users to message me",
+        help_text="Your email address won't be visible to them",
     )
 
     summary = models.TextField(
