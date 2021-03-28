@@ -337,6 +337,9 @@ class Profile(models.Model):
     def get_tags_event_attended_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_event_attended.all()]
 
+    def get_tags_speech_topic_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_speech_topic.all()]
+
     def get_local_groups_formatted(self) -> List[str]:
         return [group.name for group in self.local_groups.all()]
 

@@ -16,6 +16,7 @@ if settings.IS_ENABLE_ALGOLIA:
             ["get_full_name", "name"],
             ["get_messaging_url_if_can_receive_message", "messaging_url"],
             "summary",
+            ["get_tags_speech_topic_formatted", "speech_topics"],
             "topics_i_speak_about",
             "expertise_areas_other",
             "cause_areas_other",

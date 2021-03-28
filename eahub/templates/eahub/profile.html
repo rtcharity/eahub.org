@@ -328,10 +328,15 @@
                 </div>
               {% endif %}
 
-              {% if profile.topics_i_speak_about %}
+              {% if profile.topics_i_speak_about or profile.tags_speech_topic.exists %}
                 <div class="card__section">
                   <div class="card__subtitle">Topics I speak about</div>
                   {{ profile.topics_i_speak_about|urlize|linebreaks }}
+                  <ul>
+                    {% for topic in profile.tags_speech_topic.all %}
+                      <li class="list-item">{{ topic }}</li>
+                    {% endfor %}
+                  </ul>
                 </div>
               {% endif %}
               {% if profile.available_as_speaker %}
