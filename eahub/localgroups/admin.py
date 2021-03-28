@@ -103,10 +103,10 @@ class LocalGroupResource(ModelResource):
                 return key
         return None
 
-    def hydrate_organiser(self, organiser_raw: str, row: dict) -> Optional[User]:
+    def hydrate_organiser(self, organiser_name_full: str, row: dict) -> Optional[User]:
         profiles = Profile.objects.annotate(
             full_name=Concat("first_name", Value(" "), "last_name")
-        ).filter(full_name=organiser_raw)
+        ).filter(full_name=organiser_name_full)
         if len(profiles) == 1:
             return profiles[0].user
         elif len(profiles) > 1:
