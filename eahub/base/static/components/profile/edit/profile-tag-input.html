@@ -70,8 +70,7 @@
                 v-for="item of items"
                 :key="item.objectID"
                 :class="{selected: isSelected(item.objectID)}"
-                v-on:click="selectTag(item)"
-                :disabled="isLoadingInProgress"
+                v-on:click="isLoadingInProgress ? null : selectTag(item)"
             >
               <div class="tag__name">
                 <ais-highlight :hit="item" attribute="name"/> 

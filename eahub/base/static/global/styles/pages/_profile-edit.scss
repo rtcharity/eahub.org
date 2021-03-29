@@ -135,17 +135,20 @@ $input-height: 37px;
 .profile-edit-tags {
   position: relative;
   
+  &[data-is-loading=true] {
+    &:hover {
+      cursor: wait;
+    }
+  }
   .ais-RefinementList,
   .ais-InfiniteHits-loadMore,
   .ais-SearchBox-reset,
   .ais-SearchBox-submit {
     display: none;
   }
-  
   .selected {
     display: none;
   }
-  
   %tag {
     display: inline-flex;
     align-items: center;
@@ -248,7 +251,12 @@ $input-height: 37px;
       .tag {
         margin-top: 0.75rem;
         padding-left: 1rem;
-    
+        
+        &[data-is-loading=true] {
+          &:hover {
+            cursor: wait;
+          }
+        }
         .tag__name {
           @extend %tag;
           margin: 0;
