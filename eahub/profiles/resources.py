@@ -92,6 +92,18 @@ class ProfileResource(ModelResource):
             enum_types=[ProfileTagTypeEnum.GENERIC],
         ),
     )
+    tags_organisational_affiliation = fields.Field(
+        attribute="tags_organisational_affiliation",
+        widget=ProfileTagWidget(
+            enum_types=[ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION],
+        ),
+    )
+    tags_speech_topic = fields.Field(
+        attribute="tags_speech_topic",
+        widget=ProfileTagWidget(
+            enum_types=[ProfileTagTypeEnum.SPEECH_TOPIC],
+        ),
+    )
 
     class Meta:
         model = Profile
@@ -106,6 +118,10 @@ class ProfileResource(ModelResource):
             "study_subject",
             "job_title",
             "is_hiring",
+            "available_to_volunteer",
+            "linkedin_url",
+            "facebook_url",
+            "personal_website_url",
             "country",
             "city_or_town",
             "linkedin",
