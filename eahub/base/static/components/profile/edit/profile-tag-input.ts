@@ -39,10 +39,12 @@ export default class ProfileTagInputComponent extends Vue {
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
     @Provide() isShowResultsPopup: boolean = false;
+    @Provide() isLoadingInProgress: boolean = false;
 
     private hideResultsPopupEventName: string = 'hide-popup-background';
 
     @Ref('typesRef') readonly typesRef;
+    @Ref('algoliaInput') readonly algoliaInput;
     private tagsUrl = `/profile/api/profiles/${this.profilePk}/`;
     private tagsCreateUrl = `/profile/api/profiles/tags/create/`;
     private http = new HttpService();
@@ -65,6 +67,7 @@ export default class ProfileTagInputComponent extends Vue {
             const tagName = value.slice(0, -1);
             const tag = await this.createTag(tagName);
             await this.selectTag(tag);
+            this.algoliaInput.focus();
         } else if (value.includes(',')) {
             this.searchQuery = '';
             for (const tagNameRaw of value.trim().split(',')) {
@@ -75,6 +78,7 @@ export default class ProfileTagInputComponent extends Vue {
                 const tag = await this.createTag(tagName);
                 await this.selectTag(tag);
             }
+            this.algoliaInput.focus();
         }
     }
 
@@ -107,6 +111,8 @@ export default class ProfileTagInputComponent extends Vue {
     }
 
     async selectTag(tagRaw: TagAlgolia | Tag) {
+        this.isLoadingInProgress = true;
+
         const tag: Tag = {
             pk: Number(tagRaw['objectID']) || tagRaw['pk'],
             name: tagRaw.name,
@@ -125,9 +131,13 @@ export default class ProfileTagInputComponent extends Vue {
             alert('An error occurred');
         }
         this.searchQuery = '';
+
+        this.isLoadingInProgress = false;
     }
 
     async unselectTag(pkToDrop: number) {
+        this.isLoadingInProgress = true;
+
         const tagToDrop = this.tagsSelected.find(tag => tag.pk === Number(pkToDrop));
         tagToDrop.isLoading = true;
         const tagsSelectedNew = this.tagsSelected.filter(
@@ -142,5 +152,7 @@ export default class ProfileTagInputComponent extends Vue {
             tagToDrop.isLoading = false;
             alert('An error occurred');
         }
+        
+        this.isLoadingInProgress = false;
     }
 }

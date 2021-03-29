@@ -205,6 +205,9 @@ $input-height: 37px;
           &:focus {
             outline: none;
           }
+          &:disabled {
+            background: initial;
+          }
         }
       }
     }
