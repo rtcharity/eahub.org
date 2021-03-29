@@ -146,15 +146,15 @@
           {{ profile.summary|default:''|urlize|linebreaks }}
 
           {% if profile.offering or profile.looking_for %}
-            <div class="row summary__sections">
+            <div class="row row-cols-1 row-cols-lg-2 summary__sections">
               {% if profile.offering %}
-                <div class="summary__section col-auto">
+                <div class="summary__section col">
                   <div class="summary__subtitle">Offering</div>
                   {{ profile.offering|urlize|linebreaks }}
                 </div>
               {% endif %}
               {% if profile.looking_for %}
-                <div class="summary__section col-auto">
+                <div class="summary__section col">
                   <div class="summary__subtitle">Looking for</div>
                   {{ profile.looking_for|urlize|linebreaks }}
                 </div>

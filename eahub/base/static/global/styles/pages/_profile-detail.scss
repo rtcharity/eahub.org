@@ -78,6 +78,7 @@
       margin-left: auto;
       position: absolute;
       right: 0;
+      top: 0;
       width: fit-content;
       width: -moz-fit-content;
     
@@ -134,12 +135,9 @@
       }
       
       .summary__sections {
-        margin-top: 1rem;
         
-        .summary__section:nth-child(2) {
-          margin-top: 1rem;
-        }
         .summary__subtitle {
+          margin-top: 1rem;
           margin-bottom: 0.25rem;
           font-weight: bold;
         }
