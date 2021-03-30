@@ -130,16 +130,19 @@
     .prof__summary {
       margin-bottom: 1rem;
       
-      p:last-of-type {
-        margin-bottom: 0;
+      p {
+        margin-bottom: 0.9rem;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
       }
       
       .summary__sections {
         
         .summary__subtitle {
           margin-top: 1rem;
-          margin-bottom: 0.25rem;
-          font-weight: bold;
+          margin-bottom: 0.75rem;
+          font-size: 1.2rem;
         }
       }
     }
@@ -182,8 +185,8 @@
           margin-bottom: 1.2rem;
           
           .card__subtitle {
-            margin-bottom: 0.25rem;
-            font-weight: bold;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
           }
           p:last-of-type {
             margin-bottom: 0;

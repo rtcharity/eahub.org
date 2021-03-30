@@ -38,12 +38,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
             enum_cls_old=CauseArea,
             field_name_old="cause_areas",
             field_name_new="tags_cause_area",
-            enum_types=[
-                ProfileTagTypeEnum.EXPERTISE_AREA,
-                ProfileTagTypeEnum.CAUSE_AREA,
-                ProfileTagTypeEnum.CAREER_INTEREST,
-                ProfileTagTypeEnum.SPEECH_TOPIC,
-            ],
+            enum_types=[ProfileTagTypeEnum.CAUSE_AREA],
         )
         _migrate_enum(
             profile,
