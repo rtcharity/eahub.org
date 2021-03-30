@@ -129,6 +129,7 @@ def log_profile_tag_update(sender, instance: Profile, **kwargs):
 for tag_m2m_rel in [
     Profile.tags_generic.through,
     Profile.tags_cause_area.through,
+    Profile.tags_cause_area_expertise.through,
     Profile.tags_expertise_area.through,
     Profile.tags_organisational_affiliation.through,
     Profile.tags_pledge.through,
@@ -137,6 +138,7 @@ for tag_m2m_rel in [
     Profile.tags_event_attended.through,
     Profile.tags_career_stage.through,
     Profile.tags_university.through,
+    Profile.tags_affiliation.through,
 ]:
     m2m_changed.connect(reindex_algolia_on_m2m_change, sender=tag_m2m_rel)
     m2m_changed.connect(log_profile_tag_update, sender=tag_m2m_rel)

@@ -33,11 +33,11 @@
           <input
             type="search"
             placeholder="Find or create tags with a comma..."
-            :value="currentRefinement"
             :disabled="isLoadingInProgress"
+            v-model="currentRefinement"
             ref="algoliaInput"
             @focus="showResultsPopup()"
-            @input="processTagSearchInput($event.currentTarget.value)"
+            @input="refine($event.currentTarget.value); processTagSearchInput($event.currentTarget.value)"
           >
         </div>
       </ais-search-box>

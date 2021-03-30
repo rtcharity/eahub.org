@@ -32,124 +32,28 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class ProfileSerializer(serializers.ModelSerializer):
-    tags_generic = TagSerializer(many=True, required=False)
-    tags_generic_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.GENERIC),
-        source=f"tags_{ProfileTagTypeEnum.GENERIC.value}",
-        required=False,
-    )
-    tags_expertise_area = TagSerializer(many=True, required=False)
-    tags_expertise_area_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(
-            types__type=ProfileTagTypeEnum.EXPERTISE_AREA
-        ),
-        source=f"tags_{ProfileTagTypeEnum.EXPERTISE_AREA.value}",
-        required=False,
-    )
-    tags_cause_area = TagSerializer(many=True, required=False)
-    tags_cause_area_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.CAUSE_AREA),
-        source=f"tags_{ProfileTagTypeEnum.CAUSE_AREA.value}",
-        required=False,
-    )
-    tags_organisational_affiliation = TagSerializer(many=True, required=False)
-    tags_organisational_affiliation_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(
-            types__type=ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION
-        ),
-        source=f"tags_{ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION.value}",
-        required=False,
-    )
-    tags_career_interest = TagSerializer(many=True, required=False)
-    tags_career_interest_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(
-            types__type=ProfileTagTypeEnum.CAREER_INTEREST
-        ),
-        source=f"tags_{ProfileTagTypeEnum.CAREER_INTEREST.value}",
-        required=False,
-    )
-    tags_speech_topic = TagSerializer(many=True, required=False)
-    tags_speech_topic_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.SPEECH_TOPIC),
-        source=f"tags_{ProfileTagTypeEnum.SPEECH_TOPIC.value}",
-        required=False,
-    )
-    tags_pledge = TagSerializer(many=True, required=False)
-    tags_pledge_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.PLEDGE),
-        source=f"tags_{ProfileTagTypeEnum.PLEDGE.value}",
-        required=False,
-    )
-    tags_university = TagSerializer(many=True, required=False)
-    tags_university_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.UNIVERSITY),
-        source=f"tags_{ProfileTagTypeEnum.UNIVERSITY.value}",
-        required=False,
-    )
-    tags_event_attended = TagSerializer(many=True, required=False)
-    tags_event_attended_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(
-            types__type=ProfileTagTypeEnum.EVENT_ATTENDED
-        ),
-        source=f"tags_{ProfileTagTypeEnum.EVENT_ATTENDED.value}",
-        required=False,
-    )
-    tags_career_stage = TagSerializer(many=True, required=False)
-    tags_career_stage_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(types__type=ProfileTagTypeEnum.CAREER_STAGE),
-        source=f"tags_{ProfileTagTypeEnum.CAREER_STAGE.value}",
-        required=False,
-    )
-    tags_ea_involvement = TagSerializer(many=True, required=False)
-    tags_ea_involvement_pks = PrimaryKeyRelatedField(
-        many=True,
-        queryset=ProfileTag.objects.filter(
-            types__type=ProfileTagTypeEnum.EA_INVOLVEMENT
-        ),
-        source=f"tags_{ProfileTagTypeEnum.EA_INVOLVEMENT.value}",
-        required=False,
-    )
+
+    for tag_type_enum in ProfileTagTypeEnum:
+        locals()[f"tags_{tag_type_enum.value}"] = TagSerializer(
+            many=True, required=False
+        )
+        locals()[f"tags_{tag_type_enum.value}_pks"] = PrimaryKeyRelatedField(
+            many=True,
+            queryset=ProfileTag.objects.filter(types__type=tag_type_enum),
+            source=f"tags_{tag_type_enum.value}",
+            required=False,
+        )
 
     class Meta:
         model = Profile
-        fields = [
-            "tags_generic",
-            "tags_generic_pks",
-            "tags_expertise_area",
-            "tags_expertise_area_pks",
-            "tags_cause_area",
-            "tags_cause_area_pks",
-            "tags_organisational_affiliation",
-            "tags_organisational_affiliation_pks",
-            "tags_career_interest",
-            "tags_career_interest_pks",
-            "tags_speech_topic",
-            "tags_speech_topic_pks",
-            "tags_pledge",
-            "tags_pledge_pks",
-            "tags_university",
-            "tags_university_pks",
-            "tags_event_attended",
-            "tags_event_attended_pks",
-            "tags_career_stage",
-            "tags_career_stage_pks",
-            "tags_ea_involvement",
-            "tags_ea_involvement_pks",
-        ]
+        fields = []
+        for tag_type_enum in ProfileTagTypeEnum:
+            fields.append(f"tags_{tag_type_enum.value}")
+            fields.append(f"tags_{tag_type_enum.value}_pks")
 
     def update(self, instance: Profile, validated_data: dict) -> Profile:
         for field in self.Meta.fields:
-            is_updatable_field = "_pks" not in field
+            is_updatable_field = not field.endswith("_pks")
             if is_updatable_field:
                 self._m2m_field_update(
                     instance,

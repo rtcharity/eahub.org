@@ -126,7 +126,7 @@
           {% if profile.tags_generic.exists %}
             <div class="prof__tags col col-24 {% if profile.job_title %}col-lg-auto{% endif %} align-self-start">
               {% for tag in profile.get_tags_generic_formatted %}
-              <span class="prof__tag">{{ tag }}</span>
+                <span class="prof__tag">{{ tag }}</span>
               {% endfor %}
             </div>
           {% endif %}
@@ -185,21 +185,38 @@
                   <h3 class="card__heading">Cause Areas</h3>
                 </div>
               </div>
-              <div class="card__section">
-                {% if profile.get_tags_cause_area_formatted|length == 1 %}
-                  <p>{{ profile.get_tags_cause_area_formatted.0 }}</p>
-                {% else %}
-                  <ul>
-                    {% for pledge in profile.get_tags_cause_area_formatted %}
-                      <li>{{ pledge }}</li>
-                    {% endfor %}
-                  </ul>
-                {% endif %}
+              {% if profile.get_tags_cause_area_formatted %}
+                <div class="card__section">
+                  {% if profile.get_tags_cause_area_formatted|length == 1 %}
+                    <p>{{ profile.get_tags_cause_area_formatted.0 }}</p>
+                  {% else %}
+                    <ul>
+                      {% for area in profile.get_tags_cause_area_formatted %}
+                        <li>{{ area }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                
+                  {% if profile.cause_areas_other %}
+                    <p>{{ profile.cause_areas_other }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if profile.get_tags_cause_area_expertise_formatted %}
+                <div class="card__section">
+                  {% if profile.get_tags_cause_area_expertise_formatted|length == 1 %}
+                    <p>{{ profile.get_tags_cause_area_expertise_formatted.0 }}</p>
+                  {% else %}
+                    <ul>
+                      {% for area in profile.get_tags_cause_area_expertise_formatted %}
+                        <li>{{ area }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
               
-                {% if profile.cause_areas_other %}
-                  <p>{{ profile.cause_areas_other }}</p>
-                {% endif %}
-              </div>
               {% if profile.get_tags_pledge_formatted %}
                 <div class="card__section">
                   <div class="card__subtitle">Giving Pledges Taken</div>
@@ -288,6 +305,22 @@
                   {{ profile.get_tags_organisational_affiliation_formatted|join:", " }}
                 </div>
               {% endif %}
+
+              {% if profile.get_tags_affiliation_formatted %}
+                <div class="card__section">
+                  {% if profile.get_tags_affiliation_formatted|length == 1 %}
+                    <p>{{ profile.get_tags_affiliation_formatted.0 }}</p>
+                  {% else %}
+                  <ul>
+                    {% for affiliation in profile.get_tags_affiliation_formatted %}
+                      <li>{{ affiliation }}</li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+
               {% if profile.local_groups.exists %}
                 <div class="card__section">
                   <div class="card__subtitle">Local group membership</div>

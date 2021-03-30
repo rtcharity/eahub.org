@@ -13,13 +13,14 @@ from eahub.profiles.legacy import (
     GivingPledge,
     OrganisationalAffiliation,
 )
-from eahub.profiles.models import ProfileTag, ProfileTagType, ProfileTagTypeEnum
+from eahub.profiles.models import ProfileTagTypeEnum
 
 
 def migrate_to_tags_from_enums(apps, schema_editor):
     Profile = apps.get_model("profiles", "Profile")
     for profile in Profile.objects.all():
         _migrate_enum(
+            apps,
             profile,
             enum_cls_old=OrganisationalAffiliation,
             field_name_old="organisational_affiliations",
@@ -27,6 +28,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
             enum_types=[ProfileTagTypeEnum.ORGANISATIONAL_AFFILIATION],
         )
         _migrate_enum(
+            apps,
             profile,
             enum_cls_old=GivingPledge,
             field_name_old="giving_pledges",
@@ -34,6 +36,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
             enum_types=[ProfileTagTypeEnum.PLEDGE],
         )
         _migrate_enum(
+            apps,
             profile,
             enum_cls_old=CauseArea,
             field_name_old="cause_areas",
@@ -41,6 +44,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
             enum_types=[ProfileTagTypeEnum.CAUSE_AREA],
         )
         _migrate_enum(
+            apps,
             profile,
             enum_cls_old=ExpertiseArea,
             field_name_old="expertise_areas",
@@ -52,6 +56,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
             ],
         )
         _migrate_enum(
+            apps,
             profile,
             enum_cls_old=ExpertiseArea,
             field_name_old="career_interest_areas",
@@ -65,6 +70,7 @@ def migrate_to_tags_from_enums(apps, schema_editor):
 
 
 def _migrate_enum(
+    apps,
     profile,
     enum_cls_old: Union[OldEnum, Any],
     field_name_old: str,
@@ -72,6 +78,8 @@ def _migrate_enum(
     enum_types: List[Enum],
 ):
     tags_new = []
+    ProfileTag = apps.get_model("profiles", "ProfileTag")
+    ProfileTagType = apps.get_model("profiles", "ProfileTagType")
     for enum_key in getattr(profile, field_name_old):
         tag_types = []
         for enum_type in enum_types:

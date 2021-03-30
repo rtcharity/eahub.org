@@ -74,13 +74,6 @@
 
           {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
 
-          <div class="mb-5"
-            data-type-name="generic"
-            data-type-label="Tags"
-          >
-            <div class="vue-profile-tag-input"></div>
-          </div>
-
           <div class="row row-cols-1 row-cols-lg-3">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.facebook_url %}
@@ -95,10 +88,10 @@
 
           <div class="row row-cols-1 row-cols-lg-2">
             <div class="col">
-              {% include 'includes/field.html' with form=form rows=2 field=form.offering placeholder="Teaching python" %}
+              {% include 'includes/field.html' with form=form rows=3 field=form.offering placeholder="Teaching python" %}
             </div>
             <div class="col">
-              {% include 'includes/field.html' with form=form rows=2 field=form.looking_for placeholder="Chat about wild animal suffering" %}
+              {% include 'includes/field.html' with form=form rows=3 field=form.looking_for placeholder="Chat about wild animal suffering" %}
             </div>
           </div>
 
@@ -126,17 +119,17 @@
           >
             <div class="vue-profile-tag-input"></div>
           </div>
-          
+
           <div class="mb-5"
-            data-type-name="pledge"
-            data-type-label="Pledges"
+            data-type-name="affiliation"
+            data-type-label="Affiliations"
           >
             <div class="vue-profile-tag-input"></div>
           </div>
 
           <div class="mb-5"
-            data-type-name="event_attended"
-            data-type-label="Events attended"
+            data-type-name="pledge"
+            data-type-label="Giving pledges"
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -181,7 +174,22 @@
             {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
           {% endif %}
 
+          <div class="mb-5"
+            data-type-name="cause_area_expertise"
+            data-type-label="Cause areas expertise"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
 
+
+          <h2>Tags</h2>
+          <div class="mb-5"
+            data-type-name="generic"
+            data-type-label=""
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+          
           <h2>Settings</h2>
           {% include 'includes/field.html' with form=form field=form.is_public %}
           {% include 'includes/field.html' with form=form field=form.allow_messaging %}

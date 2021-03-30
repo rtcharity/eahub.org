@@ -17,7 +17,7 @@ from eahub.profiles.models import Profile, ProfileSlug
 
 def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
-    profile = slug_entry.content_object
+    profile: Profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
@@ -28,23 +28,22 @@ def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
         context={
             "profile": profile,
             "is_render_cause_area_section": (
-                profile.tags_organisational_affiliation.exists()
+                profile.available_to_volunteer
                 or profile.tags_pledge.exists()
                 or profile.tags_cause_area.exists()
+                or profile.tags_cause_area_expertise.exists()
                 or profile.cause_areas_other
-                or profile.available_to_volunteer
             ),
             "is_render_career_section": (
-                profile.tags_expertise_area.exists()
-                or profile.expertise_areas_other
+                profile.open_to_job_offers
+                or profile.tags_expertise_area.exists()
                 or profile.tags_career_interest.exists()
-                or profile.open_to_job_offers
+                or profile.expertise_areas_other
             ),
             "is_render_community_section": (
-                profile.tags_organisational_affiliation.exists()
-                or profile.tags_event_attended.exists()
-                or profile.tags_generic.exists()
-                or profile.local_groups.exists()
+                profile.local_groups.exists()
+                or profile.tags_affiliation.exists()
+                or profile.tags_organisational_affiliation.exists()
                 or profile.user.localgroup_set.exists
                 or profile.topics_i_speak_about
                 or profile.available_as_speaker

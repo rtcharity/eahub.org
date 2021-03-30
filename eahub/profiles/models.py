@@ -54,8 +54,10 @@ def slugify_user(name):
 
 class ProfileTagTypeEnum(Enum):
     GENERIC = "generic"
+    AFFILIATION = "affiliation"
     EXPERTISE_AREA = "expertise_area"
     CAUSE_AREA = "cause_area"
+    CAUSE_AREA_EXPERTISE = "cause_area_expertise"
     ORGANISATIONAL_AFFILIATION = "organisational_affiliation"
     CAREER_INTEREST = "career_interest"
     SPEECH_TOPIC = "speech_topic"
@@ -175,11 +177,23 @@ class Profile(models.Model):
         blank=True,
         related_name="tags_generic",
     )
+    tags_affiliation = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.AFFILIATION},
+        blank=True,
+        related_name="tags_affiliation",
+    )
     tags_cause_area = models.ManyToManyField(
         ProfileTag,
         limit_choices_to={"types__type": ProfileTagTypeEnum.CAUSE_AREA},
         blank=True,
         related_name="tags_cause_area",
+    )
+    tags_cause_area_expertise = models.ManyToManyField(
+        ProfileTag,
+        limit_choices_to={"types__type": ProfileTagTypeEnum.CAUSE_AREA_EXPERTISE},
+        blank=True,
+        related_name="tags_cause_area_expertise",
     )
     tags_expertise_area = models.ManyToManyField(
         ProfileTag,
@@ -321,6 +335,12 @@ class Profile(models.Model):
 
     def get_tags_generic_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_generic.all()]
+
+    def get_tags_affiliation_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_affiliation.all()]
+
+    def get_tags_cause_area_expertise_formatted(self) -> List[str]:
+        return [tag.name for tag in self.tags_cause_area_expertise.all()]
 
     def get_tags_expertise_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_expertise_area.all()]

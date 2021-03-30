@@ -54,11 +54,11 @@ export default class ProfileTagInputComponent extends Vue {
         const tagsSelected = response.data[`tags_${this.typeName}`];
         tagsSelected.map(tag => tag.isLoading = false);
         this.tagsSelected = tagsSelected;
-
+        
+        this.initResultsPopupHandler();
         this.$nextTick(() => {
             this.typesRef.refine(this.typeName);
         });
-        this.initResultsPopupHandler();
     }
 
     async processTagSearchInput(value: string) {

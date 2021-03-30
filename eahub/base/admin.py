@@ -37,7 +37,7 @@ class UserAdmin(
         ("date_joined", DateRangeFilter),
         ("last_login", DateRangeFilter),
     ]
-    search_fields = ["email", "profile__name"]
+    search_fields = ["email", "profile__first_name", "profile__last_name"]
     actions = ["approve_profiles"]
 
     def is_profile_approved(self, user):
