@@ -35,7 +35,6 @@ export default class ProfileTagInputComponent extends Vue {
     @Prop(String) searchResultsCols: string;
 
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
-    @Provide() searchQuery: string = '';
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
     @Provide() isShowResultsPopup: boolean = false;
@@ -63,13 +62,13 @@ export default class ProfileTagInputComponent extends Vue {
 
     async processTagSearchInput(value: string) {
         if (value.endsWith(',')) {
-            this.searchQuery = '';
+            this.algoliaInput.value = '';
             const tagName = value.slice(0, -1);
             const tag = await this.createTag(tagName);
             await this.selectTag(tag);
             this.algoliaInput.focus();
         } else if (value.includes(',')) {
-            this.searchQuery = '';
+            this.algoliaInput.value = '';
             for (const tagNameRaw of value.trim().split(',')) {
                 const tagName = tagNameRaw.trim();
                 if (tagName === "") {
@@ -128,9 +127,9 @@ export default class ProfileTagInputComponent extends Vue {
             tag.isLoading = false;
         } catch (e) {
             this.unselectTag(tag.pk);
-            alert('An error occurred');
+            alert(`An error occurred:\n ${e}`);
         }
-        this.searchQuery = '';
+        this.algoliaInput.value = '';
 
         this.isLoadingInProgress = false;
     }
@@ -150,7 +149,7 @@ export default class ProfileTagInputComponent extends Vue {
             this.tagsSelected = tagsSelectedNew;
         } catch (e) {
             tagToDrop.isLoading = false;
-            alert('An error occurred');
+            alert(`An error occurred:\n ${e}`);
         }
         
         this.isLoadingInProgress = false;
