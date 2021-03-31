@@ -168,6 +168,9 @@
                       <ul>
                         <li v-for="expertise in item.expertise">{{ expertise }}</li>
                       </ul>
+                      <div class="search__hit-expertise-other">
+                        <ais-snippet :hit="item" attribute="expertise_areas_other"/>
+                      </div>
                     </div>
                   </div>
                   <div
@@ -178,6 +181,9 @@
                       <ul>
                         <li v-for="cause in item.cause_areas">{{ cause }}</li>
                       </ul>
+                      <div class="search__hit-expertise-other">
+                        <ais-snippet :hit="item" attribute="cause_areas_other"/>
+                      </div>
                     </div>
                   </div>
                 </div>

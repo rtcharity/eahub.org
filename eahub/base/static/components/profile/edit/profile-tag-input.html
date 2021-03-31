@@ -37,7 +37,7 @@
             v-model="currentRefinement"
             ref="algoliaInput"
             @focus="showResultsPopup()"
-            @input="refine($event.currentTarget.value); processTagSearchInput($event.currentTarget.value)"
+            @input="processTagSearchInput($event.currentTarget.value); refine($event.currentTarget.value)"
           >
         </div>
       </ais-search-box>

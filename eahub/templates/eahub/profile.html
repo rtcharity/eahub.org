@@ -308,6 +308,8 @@
 
               {% if profile.get_tags_affiliation_formatted %}
                 <div class="card__section">
+                  <div class="card__subtitle">Affiliations</div>
+
                   {% if profile.get_tags_affiliation_formatted|length == 1 %}
                     <p>{{ profile.get_tags_affiliation_formatted.0 }}</p>
                   {% else %}
@@ -319,7 +321,6 @@
                   {% endif %}
                 </div>
               {% endif %}
-
 
               {% if profile.local_groups.exists %}
                 <div class="card__section">
