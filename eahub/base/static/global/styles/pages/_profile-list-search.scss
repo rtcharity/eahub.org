@@ -353,6 +353,12 @@ $spacing-xxs: 5px;
           .svg-inline--fa {
             color: $white;
           }
+          
+          @include media-breakpoint-between(lg, xl) {
+            &:last-of-type {
+              margin-top: 7px;
+            }
+          }
         }
       }
       
