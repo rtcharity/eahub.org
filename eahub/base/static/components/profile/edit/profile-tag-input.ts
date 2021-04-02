@@ -7,7 +7,7 @@ import {Component, Prop, Vue} from 'vue-property-decorator';
 
 
 interface Tag {
-    pk: number
+    pk?: number
     name: string
     count?: number
     types?: [
@@ -39,6 +39,7 @@ export default class ProfileTagInputComponent extends Vue {
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
     @Provide() tagsPksSelected: number[] = [];
     @Provide() tagsSelected: Tag[] = [];
+    @Provide() tagsToCreate: Tag[] = [];
     @Provide() isShowResultsPopup: boolean = false;
     @Provide() isLoadingInProgress: boolean = false;
 
@@ -66,7 +67,9 @@ export default class ProfileTagInputComponent extends Vue {
         if (value.endsWith(',')) {
             this.algoliaInput.value = '';
             const tagName = value.slice(0, -1);
+            this.tagsToCreate.push({name: tagName})
             const tag = await this.createTag(tagName);
+            this.tagsToCreate = [];
             await this.selectTag(tag);
             this.algoliaInput.focus();
         } else if (value.includes(',')) {
@@ -76,14 +79,17 @@ export default class ProfileTagInputComponent extends Vue {
                 if (tagName === "") {
                     continue
                 }
+                this.tagsToCreate.push({name: tagName})
                 const tag = await this.createTag(tagName);
                 await this.selectTag(tag);
             }
+            this.tagsToCreate = [];
             this.algoliaInput.focus();
         }
     }
 
     async createTag(tagName: string): Promise<Tag> {
+        
         const response = await this.http.post(
             this.tagsCreateUrl,
             {name: tagName, type: this.typeName},
