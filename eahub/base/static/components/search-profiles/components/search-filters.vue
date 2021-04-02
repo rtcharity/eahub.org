@@ -41,24 +41,36 @@
         <template slot="item"
             slot-scope="{ refine, item, createURL, refinement }"
         >
-                    <span class="search__reset-item-label">
-                        {{ item.label.replaceAll('_', ' ') }}<span
-                        v-show="item.refinements[0].value !== 'true'"
-                    >: </span>
-                    </span>
+          <span
+              v-if="item.refinements[0].value === 'true'"
+              class="search__reset-item-bool"
+          >
+            {{ item.label.replaceAll('_', ' ') }}
+            <span
+                @click="refine(item.refinements[0])"
+                class="btn btn-outline search__reset-item-btn"
+            >✕</span>
+          </span>
+          <span v-else class="search__reset-item-title">
+            {{ item.label.replaceAll('_', ' ') }}
+          </span>
+          
           <span v-for="refinement in item.refinements"
-              class="search__reset-item-btn-wrapper"
+              class="search__reset-item-body"
+              v-if="refinement.value !== 'true'"
           >
             <slot name="refinement"
               :refine="item.refine"
               :refinement="refinement"
               :createURL="createURL"
             >
-              <span v-show="refinement.value !== 'true'">{{ refinement.label }}</span>
-              <button
-                class="btn btn-outline search__reset-item-btn"
-                @click="item.refine(refinement)"
-              >✕</button>
+              <div class="search__reset-item">
+                <span v-show="refinement.value !== 'true'">{{ refinement.label }}</span>
+                <button
+                  class="btn btn-outline search__reset-item-btn"
+                  @click="item.refine(refinement)"
+                >✕</button>
+              </div>
             </slot>
           </span>
         </template>
@@ -109,8 +121,9 @@
           attribute="country"
           searchable
           show-more
-          :limit="5"
+          :limit="6"
           :show-more-limit="20"
+          :searchablePlaceholder="'filter countries...'"
       />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
@@ -119,8 +132,9 @@
           attribute="city_or_town"
           searchable
           show-more
-          :limit="5"
+          :limit="6"
           :show-more-limit="20"
+          :searchablePlaceholder="'filter cities...'"
       />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
@@ -131,6 +145,7 @@
           show-more
           :limit="5"
           :show-more-limit="26"
+          :searchablePlaceholder="'filter expertise...'"
       />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
@@ -141,15 +156,17 @@
           show-more
           :limit="5"
           :show-more-limit="26"
+          :searchablePlaceholder="'filter interests...'"
       />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
-      <h4 class="search__filter-title">Local groups</h4>
+      <h4 class="search__filter-title">EA groups</h4>
       <ais-refinement-list
           attribute="local_groups"
           searchable
           show-more
           :limit="5"
+          :searchablePlaceholder="'filter groups...'"
           :show-more-limit="25"
       />
     </div>
@@ -160,28 +177,47 @@
           searchable
           show-more
           :limit="5"
+          :searchablePlaceholder="'filter affiliations...'"
           :show-more-limit="25"
       />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
       <h4 class="search__filter-title">Cause areas</h4>
-      <ais-refinement-list attribute="cause_areas"/>
+      <ais-refinement-list
+          attribute="cause_areas"
+          searchable
+          show-more
+          :searchablePlaceholder="'filter cause areas...'"
+      />
+    </div>
+    <div class="search__filter-item search__filter-item--with-title">
+      <h4 class="search__filter-title">Affiliations</h4>
+      <ais-refinement-list
+          attribute="affiliations"
+          searchable
+          show-more
+          :searchablePlaceholder="'filter affiliations...'"
+      />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
       <h4 class="search__filter-title">Tags</h4>
-      <ais-refinement-list attribute="tags"/>
+      <ais-refinement-list
+          attribute="tags"
+          searchable
+          show-more
+          :searchablePlaceholder="'filter tags...'"
+      />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
       <h4 class="search__filter-title">Speech topics</h4>
-      <ais-refinement-list attribute="speech_topics"/>
+      <ais-refinement-list attribute="speech_topics"
+          :searchablePlaceholder="'filter topics...'"
+      />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
       <h4 class="search__filter-title">Giving pledges</h4>
-      <ais-refinement-list attribute="giving_pledges"/>
-    </div>
-    <div class="search__filter-item search__filter-item--with-title">
-      <h4 class="search__filter-title">Events attended</h4>
-      <ais-refinement-list attribute="events_attended"/>
+      <ais-refinement-list attribute="giving_pledges" :searchablePlaceholder="'filter pledges...'"
+      />
     </div>
 
   </div>

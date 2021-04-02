@@ -168,7 +168,9 @@ class Profile(models.Model):
         verbose_name="Topics I speak about",
     )
 
-    local_groups = models.ManyToManyField(LocalGroup, through="Membership", blank=True)
+    local_groups = models.ManyToManyField(
+        LocalGroup, through="Membership", blank=True, verbose_name="EA Groups"
+    )
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 
     tags_generic = models.ManyToManyField(
