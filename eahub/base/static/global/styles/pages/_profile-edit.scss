@@ -240,8 +240,15 @@ $input-height: 37px;
       margin-top: 0.6rem;
       padding-left: 0.25rem;
       font-size: 0.8rem;
+      color: $gray-600;
       ul {
         margin-bottom: 0;
+      }
+      p {
+        margin-bottom: 0.4rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
       }
     }
     

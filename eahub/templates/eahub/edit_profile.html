@@ -88,10 +88,10 @@
 
           <div class="row row-cols-1 row-cols-lg-2">
             <div class="col">
-              {% include 'includes/field.html' with form=form rows=3 field=form.offering placeholder="Teaching python" %}
+              {% include 'includes/field.html' with form=form rows=3 field=form.offering placeholder="How can you help other community members?" %}
             </div>
             <div class="col">
-              {% include 'includes/field.html' with form=form rows=3 field=form.looking_for placeholder="Chat about wild animal suffering" %}
+              {% include 'includes/field.html' with form=form rows=3 field=form.looking_for placeholder="How can other community members help you?" %}
             </div>
           </div>
 
@@ -104,7 +104,7 @@
           {% endif %}
           <div class="mb-5"
             data-type-name="speech_topic"
-            data-type-label="Topics I speak about"
+            data-type-label="Topics I Speak About"
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -115,7 +115,7 @@
 
           <div class="mb-5"
             data-type-name="organisational_affiliation"
-            data-type-label="Organisational affiliations"
+            data-type-label="Organisational Affiliations"
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -129,7 +129,7 @@
 
           <div class="mb-5"
             data-type-name="pledge"
-            data-type-label="Giving pledges"
+            data-type-label="Giving Pledges"
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -147,14 +147,17 @@
 
           <div class="mb-5"
             data-type-name="career_interest"
-            data-type-label="Career interests"
+            data-type-label="Career Areas of Interest"
+            data-type-label-short="area"
           >
             <div class="vue-profile-tag-input"></div>
           </div>
 
           <div class="mb-5"
             data-type-name="expertise_area"
-            data-type-label="Expertise areas"
+            data-type-label="Career Areas of Expertise"
+            data-type-label-short="area"
+
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -165,7 +168,9 @@
 
           <div class="mb-5"
             data-type-name="cause_area"
-            data-type-label="Cause areas"
+            data-type-label="Cause Areas of Interest"
+            data-type-label-short="area"
+            data-input-popup-intro="Cause areas you are interested in learning more about or that you want to develop expertise in."
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -176,7 +181,9 @@
 
           <div class="mb-5"
             data-type-name="cause_area_expertise"
-            data-type-label="Cause areas expertise"
+            data-type-label="Cause Areas of Expertise"
+            data-type-label-short="area"
+            data-input-popup-intro="Cause areas you have expertise in."
           >
             <div class="vue-profile-tag-input"></div>
           </div>
@@ -186,6 +193,7 @@
           <div class="mb-5"
             data-type-name="generic"
             data-type-label=""
+            data-input-popup-intro="Use this field to tag any other relevant things you'd like others to be able to find about you."
           >
             <div class="vue-profile-tag-input"></div>
           </div>

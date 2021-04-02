@@ -57,7 +57,11 @@
     >
       <div>
         <div class="tags__intro">
-          <span>Always try to find an existing tag instead of creating a new one.</span>
+          <p>
+            {{ inputPopupIntro }}
+            Try to find an existing {{ typeLabelShort || "tag" }} 
+            instead of creating a new one.
+          </p>
         </div>
 
         <ais-infinite-hits>

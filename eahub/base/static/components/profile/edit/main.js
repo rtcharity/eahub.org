@@ -22,8 +22,12 @@ const Widget = Vue.extend({
           .parentElement.getAttribute('data-type-name'),
         typeLabel: this.$el
           .parentElement.getAttribute('data-type-label'),
+        typeLabelShort: this.$el
+          .parentElement.getAttribute('data-type-label-short'),
         searchResultsCols: this.$el
           .parentElement.getAttribute('data-search-results-cols'),
+        inputPopupIntro: this.$el
+          .parentElement.getAttribute('data-input-popup-intro'),
       }
     })
   },

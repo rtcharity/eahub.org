@@ -121,15 +121,15 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
-    last_name = models.CharField(max_length=200, validators=[validate_sluggable_name])
+    first_name = models.CharField(max_length=200, validators=[validate_sluggable_name], verbose_name="First Name")
+    last_name = models.CharField(max_length=200, validators=[validate_sluggable_name], verbose_name="Last Name")
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug,
         populate_from="get_full_name",
         slugify=slugify_user,
         unique=True,
     )
-    job_title = models.CharField(max_length=1024, blank=True)
+    job_title = models.CharField(max_length=1024, blank=True, verbose_name="Job Title")
     organization = models.CharField(max_length=1024, blank=True)
     study_subject = models.CharField(max_length=1024, blank=True)
     image = thumbnail.ImageField(
@@ -138,10 +138,10 @@ class Profile(models.Model):
     linkedin_url = models.URLField(max_length=400, blank=True, verbose_name="Linkedin")
     facebook_url = models.URLField(max_length=400, blank=True, verbose_name="Facebook")
     personal_website_url = models.URLField(
-        max_length=400, blank=True, verbose_name="Personal website"
+        max_length=400, blank=True, verbose_name="Personal Website"
     )
 
-    city_or_town = models.CharField(max_length=100, blank=True)
+    city_or_town = models.CharField(max_length=100, blank=True, verbose_name="City")
     country = models.CharField(max_length=100, blank=True)
     lat = models.FloatField(null=True, blank=True, default=None)
     lon = models.FloatField(null=True, blank=True, default=None)
@@ -165,7 +165,7 @@ class Profile(models.Model):
     topics_i_speak_about = models.TextField(
         blank=True,
         validators=[MaxLengthValidator(2000)],
-        verbose_name="Topics I speak about",
+        verbose_name="Topics I Speak About",
     )
 
     local_groups = models.ManyToManyField(
@@ -258,7 +258,7 @@ class Profile(models.Model):
     is_public = models.BooleanField(
         default=True,
         verbose_name="Public profile",
-        help_text="Unchecking this will completely conceal your profile",
+        help_text="Unchecking this will completely conceal your profile, while public profiles are visible on the web.",
     )
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True

@@ -30,9 +30,11 @@ export default class ProfileTagInputComponent extends Vue {
     @Prop(String) algoliaApplicationId: string;
     @Prop(String) algoliaIndex: string;
     @Prop(String) typeLabel: string;
+    @Prop(String) typeLabelShort: string = "";
     @Prop(String) typeName: string;
     @Prop(Number) profilePk: number;
     @Prop(String) searchResultsCols: string;
+    @Prop(String) inputPopupIntro: string = "";
 
     @Provide() searchClient: SearchClient = algoliasearch(this.algoliaApplicationId, this.algoliaApiKey);
     @Provide() tagsPksSelected: number[] = [];
