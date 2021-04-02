@@ -1,5 +1,5 @@
 async function ajaxsubmit(){
-  document.getElementById('page_url').value = window.location.href;
+  document.getElementById('page_url').value = window.location.pathname;
   const form = document.getElementById('form');
   const response = await fetch(form.action, {
     method: form.method,
@@ -8,11 +8,11 @@ async function ajaxsubmit(){
       'Content-Type': 'application/x-www-form-urlencoded'
     }
   }).then(response => {
-    if(response.status == "200") {
+    if(response.status === "200") {
       document.getElementById("successmsg").style.display = "block";
       document.getElementById("form").style.display = "none"; 
     }
-    if(response.status != "200") {
+    if(response.status !== "200") {
       document.getElementById("errormsg").style.display = "block";    
     }
   });

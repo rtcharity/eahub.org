@@ -12,7 +12,7 @@ class FeedbackResource(ModelResource):
 
 
 class FeedbackAdmin(ImportExportMixin, admin.ModelAdmin):
-    list_display = ("creation_time", "email", "message")
+    list_display = ("creation_time", "email", "message", "page_url")
     search_fields = ["email", "message"]
     ordering = ["-creation_time"]
     resource_class = FeedbackResource
