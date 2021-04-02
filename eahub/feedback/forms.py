@@ -12,4 +12,5 @@ class FeedbackForm(forms.ModelForm):
                 attrs={"rows": 3, "maxlength": 5000, "required": "true"}
             )
         }
+        # todo: replace with CreateView
         labels = {"message": ("Feedback"), "email": ("Email address (optional)")}
