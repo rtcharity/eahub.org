@@ -103,7 +103,7 @@ class SendProfileMessageView(SendMessageView):
                 "admin_email": get_admin_email(),
                 "feedback_url": FeedbackURLConfig.get_solo().site_url,
                 "profile_edit_url": self.request.build_absolute_uri(
-                    reverse("edit_profile")
+                    reverse("profiles_app:edit_profile")
                 ),
             },
             email_destination=recipient.user.email,
