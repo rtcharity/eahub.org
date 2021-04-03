@@ -258,7 +258,7 @@ class Profile(models.Model):
     is_public = models.BooleanField(
         default=True,
         verbose_name="Public profile",
-        help_text="Unchecking this will completely conceal your profile, while public profiles are visible on the web.",
+        help_text="Unchecking this will completely conceal your profile from everyone, while public profiles are visible on the web.",
     )
     legacy_record = models.PositiveIntegerField(
         null=True, default=None, editable=False, unique=True
