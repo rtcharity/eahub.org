@@ -1,0 +1,46 @@
+{% load widget_tweaks thumbnail %}
+
+<div
+  class="form-group {% if field|field_type == "booleanfield" %}form-check{% endif %}"
+>
+  {% if field|field_type == "booleanfield" %}
+    
+    {% render_field field class+="form-check-input" %}
+    <label
+      class="form-check-label"
+      for="{{ field.id_for_label }}"
+      data-is-required="{{ field.field.required|lower }}"
+    >
+      {{ field.label }}
+    </label>
+    
+  {% else %}
+    
+    <label
+      class="control-label"
+      for="{{ field.id_for_label }}"
+      data-is-required="{{ field.field.required|lower }}"
+    >
+      {{ field.label }}
+    </label>
+    
+    {% if field.initial and field|field_type == "imageformfield" %}
+      <input type="file" name="{{ field.name }}" class="form-control">
+    {% else %}
+      {% if field.errors %}
+        {% render_field field rows=rows placeholder=placeholder class+="form-control is-invalid" %}
+      {% else %}
+        {% render_field field rows=rows placeholder=placeholder class+="form-control" %}
+      {% endif %}
+    {% endif %}
+  
+  {% endif %}
+
+  {% if field.help_text %}
+    <div class="form-text">{{ field.help_text }}</div>
+  {% endif %}
+
+  {% for error in field.errors %}
+    <div class="invalid-feedback">{{ error }}</div>
+  {% endfor %}
+</div>

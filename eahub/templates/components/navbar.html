@@ -24,7 +24,7 @@
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'my_profile' %}">
+                        <a class="nav-link" href="{% url 'profiles_app:my_profile' %}">
                             <span class="fa-icon"><i class="fa fa-user"></i></span> My Profile
                         </a>
                     </li>

@@ -30,7 +30,7 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
             self.request,
             self.reset_user,
             email_verification=app_settings.EMAIL_VERIFICATION,
-            redirect_url=reverse("edit_profile"),
+            redirect_url=reverse("profiles_app:edit_profile"),
         )
 
 
@@ -80,47 +80,6 @@ def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
 
 
-@login_required
-def candidates(request):
-    candidates_data = get_talent_search_data(request.user, {"open_to_job_offers": True})
-    return render(
-        request,
-        "eahub/talentsearch.html",
-        {
-            "page_name": "Candidates",
-            "profiles": candidates_data["rows"],
-            "include_summary": True,
-        },
-    )
-
-
-@login_required
-def speakers(request):
-    speakers_data = get_talent_search_data(request.user, {"available_as_speaker": True})
-    return render(
-        request,
-        "eahub/talentsearch.html",
-        {
-            "page_name": "Speakers",
-            "profiles": speakers_data["rows"],
-            "include_summary": True,
-            "include_topics_i_speak_about": True,
-        },
-    )
-
-
-@login_required
-def volunteers(request):
-    volunteers_data = get_talent_search_data(
-        request.user, {"available_to_volunteer": True}
-    )
-    return render(
-        request,
-        "eahub/talentsearch.html",
-        {"page_name": "Volunteers", "profiles": volunteers_data["rows"]},
-    )
-
-
 def groups(request):
     groups_data = get_groups_data()
     return render(
@@ -156,7 +115,7 @@ def get_profiles_data(user):
         {
             "lat": profile.lat,
             "lng": profile.lon,
-            "label": profile.name,
+            "label": profile.get_full_name(),
             "path": f"/profile/{profile.slug}",
         }
         for profile in rows
@@ -212,11 +171,11 @@ class ReportAbuseView(FormView):
         reasons = form.cleaned_data
         reportee = self.profile()
         type = self.get_type()
-        subject = f"EA {type} reported as abuse: {reportee.name}"
+        subject = f"EA {type} reported as abuse: {reportee.get_full_name()}"
         message = render_to_string(
             "emails/report_{}_abuse.txt".format(type),
             {
-                "profile_name": reportee.name,
+                "profile_name": reportee.get_full_name(),
                 "profile_url": "https://{0}/profile/{1}".format(
                     get_current_site(self.request).domain, reportee.slug
                 ),

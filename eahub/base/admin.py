@@ -1,11 +1,14 @@
+from typing import Optional
+
 import django_admin_relation_links
 from authtools import admin as authtools_admin
 from django.contrib import admin
 from rangefilter.filter import DateRangeFilter
 from solo.admin import SingletonModelAdmin
 
-from ..profiles import models as profiles_models
-from . import models
+from eahub.base.models import User
+from eahub.base import models
+from eahub.profiles.models import Profile
 
 
 @admin.register(models.User)
@@ -34,7 +37,7 @@ class UserAdmin(
         ("date_joined", DateRangeFilter),
         ("last_login", DateRangeFilter),
     ]
-    search_fields = ["email", "profile__name"]
+    search_fields = ["email", "profile__first_name", "profile__last_name"]
     actions = ["approve_profiles"]
 
     def is_profile_approved(self, user):
@@ -47,9 +50,7 @@ class UserAdmin(
     is_profile_approved.boolean = True
 
     def approve_profiles(self, request, queryset):
-        profiles_models.Profile.objects.filter(user__in=queryset).update(
-            is_approved=True
-        )
+        Profile.objects.filter(user__in=queryset).update(is_approved=True)
 
     approve_profiles.short_description = "Approve selected users' profiles"
     approve_profiles.allowed_permissions = ["change"]
@@ -64,10 +65,10 @@ class UserAdmin(
     is_profile_public.boolean = False
 
 
-def get_profile(user):
+def get_profile(user: User) -> Optional[Profile]:
     try:
         return user.profile
-    except profiles_models.Profile.DoesNotExist:
+    except Profile.DoesNotExist:
         return None
 
 

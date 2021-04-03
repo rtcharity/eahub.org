@@ -1,12 +1,23 @@
+import * as Sentry from "@sentry/browser";
+import {Integrations} from "@sentry/tracing";
+
+Sentry.init({
+  dsn: "https://f439be67331248918a9e6f35965bb6a6@o487305.ingest.sentry.io/5545929",
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+  environment: DJANGO_ENV,
+});
+
+
 window.bootstrap = require('bootstrap/dist/js/bootstrap.bundle.js');
 require('./main.scss');
 
 import 'cookieconsent/build/cookieconsent.min.css';
 
-import '@fortawesome/fontawesome-free/js/fontawesome'
-import '@fortawesome/fontawesome-free/js/solid'
-import '@fortawesome/fontawesome-free/js/regular'
-import '@fortawesome/fontawesome-free/js/brands'
+import '@fortawesome/fontawesome-free/js/fontawesome';
+import '@fortawesome/fontawesome-free/js/solid';
+import '@fortawesome/fontawesome-free/js/regular';
+import '@fortawesome/fontawesome-free/js/brands';
 
 import { library, dom } from '@fortawesome/fontawesome-svg-core';
 import { faGlobe, faUserAstronaut, faSignInAlt, faUserPlus, faUser, faUsers, faBook, faExchangeAlt,
@@ -19,13 +30,3 @@ faDownload, faTrash, faEnvelopeSquare, faExternalLinkAlt);
 
 // Replace any existing <i> tags with <svg>
 dom.i2svg();
-
-
-import * as Sentry from "@sentry/browser";
-import { Integrations } from "@sentry/tracing";
-
-Sentry.init({
-    dsn: "https://f439be67331248918a9e6f35965bb6a6@o487305.ingest.sentry.io/5545929",
-    integrations: [new Integrations.BrowserTracing()],
-    tracesSampleRate: 1.0,
-});

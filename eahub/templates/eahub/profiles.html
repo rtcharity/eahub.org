@@ -17,9 +17,9 @@
     <script src="{% static 'dist/component_tables.js' %}"></script>
     {% endif %}
   {% endaddtoblock %}
-    
+
   {% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
-  
+
   <div class="container">
     <div class="vue-search-component-container"
          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"

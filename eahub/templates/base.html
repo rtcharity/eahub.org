@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1">
 
       <!-- Google Tag Manager -->
       <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -101,7 +101,7 @@
           <div id="navbar-collapsable">
             <ul class="navbar-signup-md">
               {% if user.is_authenticated and request.path != "/profile/" and request.path != "/profile/first_visit/" %}
-                <li><a class="nav-link" href="{% url 'my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
+                <li><a class="nav-link" href="{% url 'profiles_app:my_profile' %}"><i class="fa fa-user"></i> My Profile</a></li>
               {% elif not user.is_authenticated %}
                 <li><a class="nav-link" href="{% url 'account_login' %}?next={% firstof request.path '/' %}" id="navbar_login" ><i class="fa fa-sign-in-alt"></i> Log In</a></li>
                 <li><a class="nav-link" href="{% url 'account_signup' %}" id="navbar_signup"><i class="fa fa-user-plus"></i> Sign Up</a></li>

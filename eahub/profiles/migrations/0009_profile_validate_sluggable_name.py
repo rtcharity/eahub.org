@@ -1,6 +1,7 @@
 from django.db import migrations, models
 
 import eahub.profiles.models
+import eahub.profiles.validators
 
 
 class Migration(migrations.Migration):
@@ -13,7 +14,7 @@ class Migration(migrations.Migration):
             name="name",
             field=models.CharField(
                 max_length=200,
-                validators=[eahub.profiles.models.validate_sluggable_name],
+                validators=[eahub.profiles.validators.validate_sluggable_name],
             ),
         )
     ]

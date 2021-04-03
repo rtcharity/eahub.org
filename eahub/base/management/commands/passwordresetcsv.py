@@ -22,7 +22,7 @@ class Command(base.BaseCommand):
             writer.writerow(
                 [
                     user.email,
-                    profile.name,
+                    profile.get_full_name(),
                     urls.reverse(
                         "password_reset_confirm",
                         kwargs={

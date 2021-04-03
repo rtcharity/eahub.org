@@ -5,6 +5,7 @@ import dj_database_url
 import environ
 import sentry_sdk
 from django.core import exceptions
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django_storage_url import dsn_configured_storage_class
 from dotenv import find_dotenv, load_dotenv
@@ -52,13 +53,16 @@ INSTALLED_APPS = [
     "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
-    "eahub.base.apps.BaseConfig",
-    "eahub.localgroups.apps.LocalGroupsConfig",
-    "eahub.profiles.apps.ProfilesConfig",
     "import_export",
     "rangefilter",
     "flags",
+    "rest_framework",
     "solo",
+    "widget_tweaks",
+    "django_select2",
+    "eahub.base.apps.BaseConfig",
+    "eahub.localgroups.apps.LocalGroupsConfig",
+    "eahub.profiles.apps.ProfilesConfig",
 ]
 
 MIDDLEWARE = [
@@ -66,7 +70,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.cache.UpdateCacheMiddleware",
     "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
-    "django_feature_policy.FeaturePolicyMiddleware",
+    "django_feature_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
@@ -94,7 +98,9 @@ vars().update(
         default="smtp://mail:1025",
     )
 )
-ADMINS = list(env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items())
+ADMINS = list(
+    env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items()
+)
 DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
 GROUPS_EMAIL = env.str("GROUPS_EMAIL", "admin@eahub.org")
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
@@ -180,7 +186,7 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 LOGIN_URL = "account_login"
-LOGIN_REDIRECT_URL = "my_profile"
+LOGIN_REDIRECT_URL = "profiles_app:my_profile"
 LOGOUT_REDIRECT_URL = "index"
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
@@ -201,6 +207,7 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 if env.str("DEFAULT_STORAGE_DSN", ""):
     DEFAULT_STORAGE_DSN = env.str("DEFAULT_STORAGE_DSN", "")
     from aldryn_django.storage import parse_storage_url
+
     media_config = parse_storage_url(DEFAULT_STORAGE_DSN)
     MEDIA_URL = media_config["MEDIA_URL"]
     DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
@@ -230,6 +237,13 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
+    "profiles_app:edit_profile"
+)
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
+    "profiles_app:edit_profile"
+)
+
 
 IS_ENABLE_ALGOLIA = env.bool("IS_ENABLE_ALGOLIA", default=False)
 ALGOLIA = {
@@ -239,36 +253,37 @@ ALGOLIA = {
         "API_KEY_READ_ONLY", default="19fd60051efeddf42e707383bf2f15a7"
     ),
     "INDEX_NAME_PROFILES": env.str(
-        "ALGOLIA_INDEX_NAME_PROFILES", default="profiles_stage"
+        "ALGOLIA_INDEX_NAME_PROFILES",
+        default="profiles_stage",
+    ),
+    "INDEX_NAME_TAGS": env.str(
+        "ALGOLIA_INDEX_NAME_TAGS",
+        default="tags_stage",
     ),
 }
 
 RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY", "")
 
-# django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
-# django-feature-policy
-FEATURE_POLICY = {
-    "accelerometer": "none",
-    "ambient-light-sensor": "none",
-    "autoplay": "none",
-    "camera": "none",
-    "encrypted-media": "none",
-    "fullscreen": "none",
-    "geolocation": "none",
-    "gyroscope": "none",
-    "magnetometer": "none",
-    "microphone": "none",
-    "midi": "none",
-    "payment": "none",
-    "picture-in-picture": "none",
-    "speaker": "none",
-    "sync-xhr": "none",
-    "usb": "none",
-    "vr": "none",
-}
+if DJANGO_ENV != DjangoEnv.LOCAL:
+    PERMISSIONS_POLICY = {
+        "accelerometer": [],
+        "autoplay": [],
+        "camera": [],
+        "encrypted-media": [],
+        "fullscreen": [],
+        "geolocation": [],
+        "gyroscope": [],
+        "magnetometer": [],
+        "microphone": [],
+        "midi": [],
+        "payment": [],
+        "picture-in-picture": [],
+        "sync-xhr": [],
+        "usb": [],
+    }
 
 PWNED_VALIDATOR_ERROR = mark_safe(
     "For your security, consider using a password that hasn't been "
@@ -297,7 +312,9 @@ SETTINGS_EXPORT = [
 ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])
 
-LEAN_MANAGERS = list(env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items())
+LEAN_MANAGERS = list(
+    env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items()
+)
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)
 if local_groups_airtable_api_key is None and local_groups_airtable_base_key is None:
@@ -329,6 +346,8 @@ ADMIN_REORDER = [
         "models": [
             {"model": "profiles.Profile", "label": "Profiles"},
             {"model": "localgroups.LocalGroup", "label": "Groups"},
+            "profiles.ProfileTag",
+            "profiles.ProfileTagType",
             {"model": "profiles.ProfileAnalyticsLog", "label": "Profile update logs"},
         ],
     },

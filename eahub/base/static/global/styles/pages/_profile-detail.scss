@@ -1,161 +1,213 @@
 @import 'eahub/base/static/global/styles/bootstrap-variables';
 
 .profile-detail {
-
-    main {
-        @include media-breakpoint-up(md) {
-            min-height: 75vh;
-        }
+  
+  main {
+    @include media-breakpoint-up(md) {
+      min-height: 75vh;
     }
+  }
+  
+  .container {
+    @include media-breakpoint-up(xxl) {
+      max-width: 1280px;
+    }
+  }
+  .prof__header {
+    position: relative;
     
-    .container {
-        max-width: 1280px;
+    .prof__img {
+      display: flex;
+      margin: 0 auto;
+      min-width: 200px;
+      min-height: 200px;
+      border: 1px solid #e0e0e0;
+      &[data-is-empty=true] {
+        border: none;
+        min-width: 150px;
+        min-height: 150px;
+      }
     }
-    .prof__header {
-        position: relative;
+    .prof__msg-btn {
+      width: 100%;
+      display: block;
+      margin-top: $grid-gutter-width-half / 2;
+      
+      @include media-breakpoint-up(md) {
+        margin-top: 1.5rem;
+      }
+    }
+    .prof__title {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 0.6rem;
+      
+      h1 {
+        display: inline-flex;
+        line-height: 0.9;
+      }
+      .col {
+        align-items: flex-end;
+      }
+      .prof_social-link {
+        display: flex;
+        margin-right: 10px;
+        text-decoration: none;
+        color: $color-secondary;
         
-        .prof__img {
-            min-width: 200px;
-            min-height: 200px;
-            border: 1px solid #e0e0e0;
+        $icon-size: 34px;
+        svg {
+          width: $icon-size;
+          height: $icon-size;
         }
-        .prof__msg-btn {
-            width: 100%;
-            display: block;
-            margin-top: $grid-gutter-width-half / 2;
-            
-            @include media-breakpoint-up(md) {
-                margin-top: 1.5rem;
-            }
+        .fa-link {
+          padding: 3px 4px;
+          margin-bottom: 2px;
+          background: $color-secondary;
+          color: white;
+          width: $icon-size - 4px;
+          height: $icon-size - 4px;
+          border-radius: 3px;
         }
-        .prof__title {
-            display: flex;
-            align-items: baseline;
-            margin-bottom: 0.6rem;
-            
-            h1 {
-                display: inline-flex;
-                line-height: 0.9;
-            }
-            .prof_social-link {
-                display: flex;
-                text-decoration: none;
-                color: $color-secondary;
-                margin-right: 10px;
-                
-                $icon-size: 24px;
-                svg {
-                    width: $icon-size;
-                    height: $icon-size;
-                }
-                .fa-link {
-                    width: $icon-size - 2px;
-                    height: $icon-size - 2px;
-                }
-            }
+      }
+    }
+    .prof__btns {
+      display: flex;
+      align-self: end;
+      margin-bottom: 1rem;
+      margin-left: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: fit-content;
+      width: -moz-fit-content;
     
-            .prof__btns {
-                display: flex;
-                align-self: end;
-                margin-left: auto;
-                margin-bottom: 1rem;
-                
-                @include media-breakpoint-up(xl) {
-                    position: absolute;
-                    right: 0;
-                    width: fit-content;
-                    width: -moz-fit-content;
-                }
-                .btn {
-                    margin-right: 9px;
-                }
+      .btn {
+        @include media-breakpoint-up(lg) {
+          margin-right: 9px;
+        }
+      }
+    }
+    .prof__job-title {
+      margin-top: 0.4rem;
+      font-size: 1.25rem;
+    }
+    .prof__tags {
+      margin-top: 10px;
+  
+      @include media-breakpoint-up(xl) {
+        margin-top: 0;
+        margin-right: 30px;
+      }
+      @include media-breakpoint-up(xxl) {
+        margin-right: 0;
+      }
+      
+      .prof__tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.1rem 0.4rem;
+        margin-top: 0.4rem;
+        margin-bottom: 0.5rem;
+        margin-left: 0;
+        margin-right: 0.25rem;
+        color: #0b5046;
+        background: #ddefec94;
+        
+        @include media-breakpoint-up(xl) {
+          margin-top: 1rem;
+        }
+      }
+    }
+    .alert {
+      &[data-is-image-empty=true] {
+        margin-top: 1rem;
+      }
+      .svg-inline--fa {
+        margin-right: 10px;
+      }
+    }
+    .prof__summary {
+      margin-bottom: 1rem;
+      
+      p {
+        margin-bottom: 0.9rem;
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+      }
+      
+      .summary__sections {
+        
+        .summary__subtitle {
+          margin-top: 1rem;
+          margin-bottom: 0.75rem;
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
+  .prof__cards {
+    
+    .card {
+      height: 100%;
+      border: 0;
+      
+      .card-body {
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        
+        .card__header {
+          margin-bottom: 1rem;
+          
+          .col {
+            display: flex;
+            align-items: center;
+            
+            .card__heading {
+              display: flex;
+              margin-bottom: 0;
+              padding-bottom: 0.5rem;
+              font-size: 1.5rem;
+              color: $color-primary;
             }
+            .card__img {
+              max-width: 40px;
+              display: flex;
+            }
+          }
+          .col-heading {
+            padding-left: 0;
+          }
+        }
+        .card__section {
+          margin-bottom: 1.2rem;
+          
+          .card__subtitle {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+          }
+          p:last-of-type {
+            margin-bottom: 0;
+          }
         }
         .alert {
-            .svg-inline--fa {
-                margin-right: 10px;
-            }
+          margin-top: auto;
+          margin-bottom: 0;
         }
-        .prof__summary {
-            margin-bottom: 1rem;
-            
-            p:last-of-type {
-                margin-bottom: 0;
-            }
-            
-            .summary__sections {
-                margin-top: 1rem;
-                
-                .summary__section:nth-child(2) {
-                    margin-top: 1rem;
-                }
-                .summary__subtitle {
-                    margin-bottom: 0.25rem;
-                    font-weight: bold;
-                }
-            }
-        }
+      }
+      .btn-edit {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
     }
-    .prof__cards {
-
-        .card {
-            height: 100%;
-            border: 0;
-
-            .card-body {
-                display: flex;
-                flex-direction: column;
-                padding: 0;
-    
-                .card__header {
-                    margin-bottom: 1rem;
-                    
-                    .col {
-                        display: flex;
-                        align-items: center;
-
-                        .card__heading {
-                            display: flex;
-                            margin-bottom: 0;
-                            padding-bottom: 0.5rem;
-                            font-size: 1.5rem;
-                            color: $color-primary;
-                        }
-                        .card__img {
-                            max-width: 40px;
-                            display: flex;
-                        }
-                    }
-                    .col-heading {
-                        padding-left: 0;
-                    }
-                }
-                .card__section {
-                    margin-bottom: 1.2rem;
-        
-                    .card__subtitle {
-                        margin-bottom: 0.25rem;
-                        font-weight: bold;
-                    }
-                    p:last-of-type {
-                        margin-bottom: 0;
-                    }
-                }
-                .alert {
-                    margin-top: auto;
-                    margin-bottom: 0;
-                }
-            }
-            .btn-edit {
-                position: absolute;
-                top: 0;
-                right: 0;
-            }
-        }
-    }
-    .prof__buttons-bottom {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 2rem;
-    }
+  }
+  .prof__buttons-bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
 }

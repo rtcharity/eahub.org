@@ -1,0 +1,17 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+
+.cc-banner {
+  box-shadow: rgba(0, 0, 0, 0.7) 0 2px 9px;
+  background-color: #61566b;
+  
+  .cc-btn {
+    user-select: none;
+    &:focus {
+      outline: 0;
+    }
+    &:hover, &:focus {
+      text-decoration: none;
+    }
+  }
+}

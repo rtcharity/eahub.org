@@ -1,81 +1,239 @@
-{% extends 'form.html' %}
+{% extends 'base_bs5.html' %}
 
-{% load static sekizai_tags %}
+{% load crispy_forms_field crispy_forms_tags static widget_tweaks sekizai_tags %}
+
+
+{% block navbar %}
+  {% include 'components/navbar.html' %}
+{% endblock navbar %}
 
 {% block title %}Edit Profile{% endblock %}
 
-{% load crispy_forms_tags %}
+{% block content %}
+  {% addtoblock 'body_classes' %}profile-edit-body{% endaddtoblock %}
 
-{% block form_fields %}
+  {% include 'includes/messages.html' %}
 
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
-    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit_image.bundle.js"></script>
-  {% else %}
-    <script defer src="{% static 'dist/component_profile_edit_image.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
+  <script>
+    const DJANGO = {
+      algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,
+      algoliaApplicationId: `{{ settings.ALGOLIA.APPLICATION_ID }}`,
+      algoliaIndexName: `{{ settings.ALGOLIA.INDEX_NAME_TAGS }}`,
+      profilePk: {{ profile.pk }},
+    }
+  </script>
 
-{{ form.name|as_crispy_field }}
+  <div class="container profile-edit">
+
+    <form method="post" action="{% url 'profiles_app:edit_profile' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="col-24 col-lg-21">
+          <h1>Edit your profile</h1>
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.first_name %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.last_name %}
+            </div>
+          </div>
+
+          <div class="row row-cols-2">
+            <div class="col">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input value="{{ profile.user.email}}" class="form-control" disabled>
+                <a class="btn btn-secondary btn-input-edit"
+                  href="{% url 'account_email' %}">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group form-group__password">
+                <label class="control-label">Password</label>
+                <input type="text" value="●●●●●●●●●●●●●●" class="form-control" disabled>
+                <a class="btn btn-secondary btn-input-edit"
+                  href="{% url 'account_change_password' %}">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.city_or_town %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.country %}
+            </div>
+          </div>
+          {% include 'includes/field.html' with form=form field=form.image %}
+
+          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
+
+          <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.facebook_url %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.linkedin_url %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="https://example.com" %}
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-lg-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form rows=3 field=form.offering placeholder="How can you help other community members?" %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form rows=3 field=form.looking_for placeholder="How can other community members help you?" %}
+            </div>
+          </div>
 
 
-<label>Profile picture</label>
-{% if profile.image %}
-<button id="image-change-toggle" type="button" class="image-change-btn">Change current picture</button>
+          <h2>Community</h2>
+          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
 
-<div class="field image_upload" id="image-change" style="display: none">
-  <input type="file" name="image" id="id_image" class="form-control">
-</div>
+          {% if profile.topics_i_speak_about %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
+          {% endif %}
+          <div class="mb-5"
+            data-type-name="speech_topic"
+            data-type-label="Topics I Speak About"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
 
-<div class="image-clear" id="image-clear">
-  <input type="checkbox" name="image-clear" id="image-clear_id">
-  <label for="image-clear_id">Clear current picture</label>
-</div>
-{% else %}
-<div class="field image_upload">
-  <input type="file" name="image" id="id_image" class="form-control">
-</div>
-{% endif %}
+          {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
 
-{% if form.image.errors %}
-  {% for error in form.image.errors %}
-    <div class="alert alert-danger">{{ error }}</div>
-  {% endfor %}
-{% endif %}
+          {% include 'includes/field.html' with form=form field=form.local_groups %}
 
-{{ form.city_or_town|as_crispy_field }}
+          <div class="mb-5"
+            data-type-name="organisational_affiliation"
+            data-type-label="Organisational Affiliations"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
 
-{{ form.country|as_crispy_field }}
+          <div class="mb-5"
+            data-type-name="affiliation"
+            data-type-label="Affiliations"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
 
-<div class="privacy-note">
-If you make your profile private but enter a location, an anonymous pin representing you will be shown on the map if there are enough other EAs near you.
-</div>
+          <div class="mb-5"
+            data-type-name="pledge"
+            data-type-label="Giving Pledges"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
 
-{{ form.summary|as_crispy_field }}
 
-{{ form.linkedin_url|as_crispy_field }}
-{{ form.facebook_url|as_crispy_field }}
-{{ form.personal_website_url|as_crispy_field }}
+          <h2>Career</h2>
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.job_title %}
+            </div>
+            <div class="col col-bool-with-margin-top">
+              {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
+            </div>
+          </div>
 
-{{ form.is_public|as_crispy_field }}
+          <div class="mb-5"
+            data-type-name="career_interest"
+            data-type-label="Career Areas of Interest"
+            data-type-label-short="area"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
 
-<div class="privacy-note">
-  {% if profile.is_approved %}
-  Everything in public profiles is public and searchable.
-  {% else %}
-  Everything in public profiles becomes public and searchable as soon as the profile is approved.
-  {% endif %}
-</div>
+          <div class="mb-5"
+            data-type-name="expertise_area"
+            data-type-label="Career Areas of Expertise"
+            data-type-label-short="area"
 
-{% load feature_flags %}
-{% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-{% if messaging_flag %}
-{{ form.allow_messaging|as_crispy_field }}
-<div class="profile-edit-privacy-note">
-  Your email address won't be visible to them
-</div>
-{% endif %}
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          {% if profile.expertise_areas_other %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.expertise_areas_other %}
+          {% endif %}
+
+          <div class="mb-5"
+            data-type-name="cause_area"
+            data-type-label="Cause Areas of Interest"
+            data-type-label-short="area"
+            data-input-popup-intro="Cause areas you are interested in learning more about or that you want to develop expertise in."
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          {% if profile.cause_areas_other %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
+          {% endif %}
+
+          <div class="mb-5"
+            data-type-name="cause_area_expertise"
+            data-type-label="Cause Areas of Expertise"
+            data-type-label-short="area"
+            data-input-popup-intro="Cause areas you have expertise in."
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+
+          <h2>Tags</h2>
+          <div class="mb-5"
+            data-type-name="generic"
+            data-type-label=""
+            data-input-popup-intro="Use this field to tag any other relevant things you'd like others to be able to find about you."
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+          
+          <h2>Settings</h2>
+          {% include 'includes/field.html' with form=form field=form.is_public %}
+          {% include 'includes/field.html' with form=form field=form.allow_messaging %}
+          <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
+
+        </div>
+        
+        <div class="col-3 btn-submit__col d-none d-lg-block">
+          <div class="btn-submit__container">
+            <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-submit__container" data-pos="bottom">
+      <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+      </div>
+
+    </form>
+
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script
+        defer
+        src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
+      ></script>
+    {% else %}
+      <script defer src="{% static "dist/component_profile_edit.js" %}"
+      ></script>
+    {% endif %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js" defer></script>
+    <script src="{% static 'django_select2/django_select2.js' %}" defer></script>
+    {{ form.media.css }}
+  </div>
 
 {% endblock %}
 
-{% block submit%}Update{% endblock%}
+{% block footer %}
+{% endblock %}

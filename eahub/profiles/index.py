@@ -2,7 +2,7 @@ from algoliasearch_django import AlgoliaIndex
 from algoliasearch_django.decorators import register
 from django.conf import settings
 
-from eahub.profiles.models import Profile
+from eahub.profiles.models import Profile, ProfileTag
 
 if settings.IS_ENABLE_ALGOLIA:
 
@@ -12,9 +12,11 @@ if settings.IS_ENABLE_ALGOLIA:
         should_index = "is_searchable"
 
         fields = [
-            "name",
-            "messaging_url_if_can_receive_message",
+            "job_title",
+            ["get_full_name", "name"],
+            ["get_messaging_url_if_can_receive_message", "messaging_url"],
             "summary",
+            ["get_tags_speech_topic_formatted", "speech_topics"],
             "topics_i_speak_about",
             "expertise_areas_other",
             "cause_areas_other",
@@ -26,21 +28,39 @@ if settings.IS_ENABLE_ALGOLIA:
             "available_as_speaker",
             "available_to_volunteer",
             "open_to_job_offers",
+            "is_organiser",
             "city_or_town",
             "country",
             "lon",
             "lat",
-            ["get_local_groups_searchable", "local_groups"],
-            ["get_organizer_of_local_groups_searchable", "organizer_of_local_groups"],
+            ["get_tags_generic_formatted", "tags"],
+            ["get_tags_affiliation_formatted", "affiliations"],
+            ["get_tags_cause_area_formatted", "cause_areas"],
+            ["get_tags_cause_area_expertise_formatted", "cause_areas_expertise"],
+            ["get_tags_expertise_formatted", "expertise"],
+            ["get_tags_career_interest_formatted", "career_interest_areas"],
+            ["get_tags_pledge_formatted", "giving_pledges"],
+            ["get_tags_event_attended_formatted", "events_attended"],
             [
-                "get_organisational_affiliations_searchable",
+                "get_tags_organisational_affiliation_formatted",
                 "organisational_affiliations",
             ],
-            ["get_cause_areas_searchable", "cause_areas"],
-            ["get_expertise_searchable", "expertise"],
-            ["get_career_interest_areas_searchable", "career_interest_areas"],
-            ["get_giving_pledges_searchable", "giving_pledges"],
-            ["get_is_organiser", "is_organiser"],
+            ["get_local_groups_formatted", "local_groups"],
+            ["get_organizer_of_local_groups_formatted", "organizer_of_local_groups"],
             ["offering", "offering"],
             ["looking_for", "looking_for"],
+        ]
+
+    @register(ProfileTag)
+    class ProfileTagIndex(AlgoliaIndex):
+        index_name = settings.ALGOLIA["INDEX_NAME_TAGS"]
+        fields = [
+            "name",
+            "description",
+            "synonyms",
+            ["get_types_formatted", "types"],
+            "created_at",
+            "status",
+            "is_featured",
+            "count",
         ]

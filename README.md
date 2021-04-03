@@ -4,7 +4,7 @@ Backend for [https://eahub.org](https://eahub.org)
 
 # Setup
 
-- Make sure to have Docker Compose 3 and Nodejs 10.X installed.
+- Make sure to have Docker Compose 2 and Nodejs 10.X installed.
 - npm ci
 - npm run build-watch
 - docker-compose run --rm web bash -c "python manage.py migrate" (only necessary when you're setting it up for the first time or pulled python migration changes)

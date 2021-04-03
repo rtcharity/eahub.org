@@ -12,7 +12,7 @@ from django_enumfield import enum
 from flags.state import flag_enabled
 from geopy import geocoders
 
-from ..base.models import User
+from eahub.base.models import User
 
 
 class LocalGroupType(enum.Enum):
@@ -84,7 +84,7 @@ class LocalGroup(models.Model):
         profile_names = []
         for user in self.organisers.all():
             try:
-                profile_names.append(user.profile.name)
+                profile_names.append(user.profile.get_full_name())
             except User.profile.RelatedObjectDoesNotExist:
                 profile_names.append("User profile missing")
         return ", ".join(profile_names)
@@ -98,7 +98,7 @@ class LocalGroup(models.Model):
                 [
                     user
                     for user in self.organisers.all()
-                    if user.profile.get_can_receive_message()
+                    if user.profile.is_can_receive_message()
                 ]
             )
             > 0
