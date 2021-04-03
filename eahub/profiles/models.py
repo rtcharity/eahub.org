@@ -121,8 +121,12 @@ class ProfileManager(models.Manager):
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     is_approved = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=200, validators=[validate_sluggable_name], verbose_name="First Name")
-    last_name = models.CharField(max_length=200, validators=[validate_sluggable_name], verbose_name="Last Name")
+    first_name = models.CharField(
+        max_length=200, validators=[validate_sluggable_name], verbose_name="First Name"
+    )
+    last_name = models.CharField(
+        max_length=200, validators=[validate_sluggable_name], verbose_name="Last Name"
+    )
     slug = sluggable_fields.SluggableField(
         decider=ProfileSlug,
         populate_from="get_full_name",

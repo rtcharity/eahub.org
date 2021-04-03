@@ -1,7 +1,6 @@
 import logging
 import uuid
-from typing import Any, Union
-from typing import Set
+from typing import Any, Set, Union
 
 from django.core.cache import cache
 from django.db.models import ManyToManyField
@@ -18,9 +17,7 @@ from eahub.profiles.legacy import (
     GivingPledge,
     OrganisationalAffiliation,
 )
-from eahub.profiles.models import Membership
-from eahub.profiles.models import Profile, ProfileAnalyticsLog, ProfileTag
-
+from eahub.profiles.models import Membership, Profile, ProfileAnalyticsLog, ProfileTag
 
 logger = logging.getLogger(__name__)
 

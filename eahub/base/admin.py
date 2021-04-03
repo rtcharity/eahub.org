@@ -6,8 +6,8 @@ from django.contrib import admin
 from rangefilter.filter import DateRangeFilter
 from solo.admin import SingletonModelAdmin
 
-from eahub.base.models import User
 from eahub.base import models
+from eahub.base.models import User
 from eahub.profiles.models import Profile
 
 

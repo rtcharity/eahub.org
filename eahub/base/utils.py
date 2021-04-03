@@ -1,6 +1,6 @@
 import csv
 
-import environ
+from django.conf import settings
 from django.http import HttpResponse
 
 from eahub.profiles import models
@@ -15,8 +15,7 @@ def user_display(user):
 
 
 def get_admin_email():
-    env = environ.Env()
-    return list(env.dict("ADMINS").values())[0]
+    return list(settings.ADMINS)[0]
 
 
 class ExportCsvMixin:
