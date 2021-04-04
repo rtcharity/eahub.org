@@ -1,35 +1,34 @@
 {% load static %}
 
 <footer>
-    <div class="container">
-        <div class="row footer__links">
-            <div class="col col-24 col-md-12 col-lg-6">
-                <a class="footer__item" href="https://feedback.eahub.org" target="_blank">Post feedback</a>
-                <a class="footer__item" href="https://github.com/rtcharity/eahub.org/" target="_blank" rel="nofollow">
-                    Source code
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
-                <a class="footer__item" href="mailto:contact@eahub.org" target="_blank">contact@eahub.org</a>
-            </div>
-            <div class="col col-24 col-md-12 order-md-3 order-lg-2 col-lg-6">
-                <a class="footer__item" href="https://www.eawork.club/" target="_blank" rel="nofollow">
-                    Opportunities Board
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
-                <a class="footer__item" href="https://resources.eahub.org" target="_blank" rel="nofollow">
-                    EA Resources
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
-                <a class="footer__item" href="https://donationswap.eahub.org/" target="_blank" rel="nofollow">
-                    EA Donation Swap
-                    <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-            <div class="col col-24 col-md-12 order-md-2 order-lg-3 col-lg-6">
-                <a class="footer__item" href="{% url 'about' %}">About us</a>
-                <a class="footer__item" href="{% url 'privacy_policy' %}">Privacy Policy</a>
-                <span class="footer__item">Effective Altruism Hub © {% now "Y" %}</span>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row footer__links">
+      <div class="col col-24 col-md-12 col-lg-6">
+        <a class="footer__item" href="https://meta.eahub.org/" target="_blank">Post feedback</a>
+        <a class="footer__item" href="https://github.com/rtcharity/eahub.org/" target="_blank" rel="nofollow">
+          Source code
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a class="footer__item" href="mailto:contact@eahub.org" target="_blank">contact@eahub.org</a>
+      </div>
+      <div class="col col-24 col-md-12 order-md-3 order-lg-2 col-lg-6">
+        <a class="footer__item" href="https://meta.eahub.org/">
+          Community
+        </a>
+        <a class="footer__item" href="https://resources.eahub.org" target="_blank" rel="nofollow">
+          EA Resources
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a class="footer__item" href="https://donationswap.eahub.org/" target="_blank" rel="nofollow">
+          EA Donation Swap
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+      <div class="col col-24 col-md-12 order-md-2 order-lg-3 col-lg-6">
+        <a class="footer__item" href="{% url 'about' %}">About us</a>
+        <a class="footer__item" href="{% url 'privacy_policy' %}">Privacy Policy</a>
+        <span class="footer__item">Effective Altruism Hub © {% now "Y" %}</span>
+      </div>
     </div>
+  </div>
 </footer>
