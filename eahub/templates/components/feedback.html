@@ -3,7 +3,7 @@
 
   
   <!-- Button trigger modal -->
-  <button type="button" class="feedbackbtn primary-btn" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+  <button type="button" class="feedbackbtn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
     Feedback?
   </button>
 
@@ -31,13 +31,13 @@
 
               <div class="modal-footer">
                 <button  id="closebtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
-                <input onClick="ajaxsubmit()" value="Submit" class="btn submitbtn" />
+                <input id="feedbackSubmit" value="Submit" class="btn submitbtn btn-primary" />
               </div>
               </form>
               <div id="successmsg" style="display:none">
                   <p>Your feedback has been received, thank you!</p>
               <button  id="closebtn2"  type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button> 
-              <button id="submit2" style="width: auto;" onClick="refreshFeedback()" class="submitbtn btn-primary">Submit more feedback</button>
+              <button id="feedbackSubmitAgain" style="width: auto;" onClick="refreshFeedback()" class="btn submitbtn btn-primary">Submit more feedback</button>
               </div>
           </div>     
 
@@ -45,6 +45,13 @@
     </div>  
   </div>
 
-  <script src="{% static 'components/feedback.js' %}" type="text/javascript"></script>
+  {% if settings.DJANGO_ENV.value == "local" %}
+      <script data-is-reload-on-page-edit defer
+              src="{{ settings.WEBPACK_DEV_URL }}/component_feedback.bundle.js"
+      ></script>
+    {% else %}
+      <script data-is-reload-on-page-edit defer src="{% static 'dist/component_feedback.js' %}"
+      ></script>
+  {% endif %}
 
 {% endblock feedback %}
