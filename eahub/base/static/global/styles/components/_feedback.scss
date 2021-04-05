@@ -6,7 +6,7 @@
 
 @media (max-width: 600px) {
   .feedbackbtn {
-    bottom: -30px; 
+    bottom: -30px;
   }
 }
 
@@ -14,13 +14,7 @@
   position: fixed;
   transform: rotate(-90deg);
   transform-origin: top left;
-  color: #fff;
   text-align: center;
   right: -65px;
-}
-
-#closebtn, #closebtn2, .submitbtn {
-  color: #fff;
-  width: 30%;
 }
 

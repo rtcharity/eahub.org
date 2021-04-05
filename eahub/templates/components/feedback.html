@@ -3,7 +3,7 @@
 
   
   <!-- Button trigger modal -->
-  <button type="button" class="feedbackbtn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
+  <button type="button" class="btn feedbackbtn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
     Feedback?
   </button>
 
@@ -11,37 +11,33 @@
     <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
       <div class="modal-dialog">
       <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="feedbackModalLabel">Leave Feedback</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-
-            <form id="form" class="form-group" method="post" action="/feedback/submit/">
-              <p>Do you have any feedback for us?</p>
-              {% csrf_token %}
-
-              <textarea class="form-control" name="message" cols="37" rows="5" required="required"></textarea>
-              <div id="errormsg" style="display:none" class='alert alert-danger'>
-                Feedback message field is required</div>
-
-              <label for="email">Email (optional)</label>
-              <input class="form-control" type="text" name="email">
-              <input id="page_url" type="hidden" name="page_url" value="">
-
-              <div class="modal-footer">
-                <button  id="closebtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> 
-                <input id="feedbackSubmit" value="Submit" class="btn submitbtn btn-primary" />
-              </div>
-              </form>
-              <div id="successmsg" style="display:none">
-                  <p>Your feedback has been received, thank you!</p>
-              <button  id="closebtn2"  type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Close</button> 
-              <button id="feedbackSubmitAgain" style="width: auto;" onClick="refreshFeedback()" class="btn submitbtn btn-primary">Submit more feedback</button>
-              </div>
-          </div>     
-
+        <div class="modal-header">
+          <h5 class="modal-title" id="feedbackModalLabel">Leave Feedback</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body">
+          <form id="feedbackForm" class="form-group" method="post" action="/feedback/submit/">
+            <p>Do you have any feedback for us?</p>
+            {% csrf_token %}
+
+            <textarea class="form-control" name="message" cols="37" rows="5" required="required"></textarea>
+            <div id="feedbackErrorMsg" style="display:none" class="alert alert-warning" role="alert">
+              Feedback message field is required</div>
+
+            <label for="email">Email (optional)</label>
+            <input class="form-control" type="text" name="email">
+            <input id="page_url" type="hidden" name="page_url" value="">
+          </form>
+          <div id="feedbackSuccessMsg" style="display:none">
+            <p>Your feedback has been received, thank you!</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <input id="feedbackSubmit" value="Submit" class="btn submitbtn btn-primary" />
+          <button id="feedbackSubmitAgain" style="display:none" class="btn submitbtn btn-primary">Submit more feedback</button>
+        </div>
+       </div>
+      </div>
     </div>  
   </div>
 
