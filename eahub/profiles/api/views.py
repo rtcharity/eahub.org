@@ -1,12 +1,13 @@
 from rest_framework import mixins
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.request import Request
-from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from eahub.profiles.api.serializers import ProfileSerializer, TagSerializer
-from eahub.profiles.models import Profile, ProfileTag, ProfileTagStatus, ProfileTagType
+from eahub.profiles.api.serializers import ProfileSerializer
+from eahub.profiles.api.serializers import ProfileTagSerializer
+from eahub.profiles.models import Profile
+from eahub.profiles.models import ProfileTag
+from eahub.profiles.models import ProfileTagStatus
+from eahub.profiles.models import ProfileTagType
+from eahub.tags.views import create_tag_view_factory
 
 
 class ProfileViewSet(
@@ -18,17 +19,10 @@ class ProfileViewSet(
     serializer_class = ProfileSerializer
 
 
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def create_tag_view(request: Request) -> Response:
-    tag, is_created = ProfileTag.objects.get_or_create(
-        name=request.data["name"].strip(),
-    )
-    if is_created:
-        tag.author = Profile.objects.get(user=request.user)
-        tag.status = ProfileTagStatus.PENDING
-
-    tag_type = ProfileTagType.objects.get(type=request.data["type"])
-    tag.types.add(tag_type)
-    tag.save()
-    return Response(TagSerializer(tag).data)
+create_tag_view = create_tag_view_factory(
+    tag_model=ProfileTag,
+    tagged_model=Profile,
+    tag_status_enum=ProfileTagStatus,
+    tag_type_model=ProfileTagType,
+    tag_serializer=ProfileTagSerializer,
+)

@@ -1,5 +1,6 @@
 import uuid
 from typing import List, Optional
+from typing import Type
 
 from django import urls
 from django.conf import settings
@@ -26,6 +27,7 @@ from eahub.profiles.legacy import (
     OrganisationalAffiliation,
 )
 from eahub.profiles.validators import validate_sluggable_name
+from eahub.tags.models import Tag
 
 
 class ProfileSlug(sluggable_models.Slug):
@@ -81,32 +83,15 @@ class ProfileTagStatus(Enum):
     PENDING = "pending"
 
 
-class ProfileTag(models.Model):
-    name = models.CharField(max_length=128, unique=True)
+class ProfileTag(Tag):
     types = models.ManyToManyField(ProfileTagType)
-    author = models.ForeignKey(
-        "profiles.Profile", on_delete=models.SET_NULL, null=True, blank=True
-    )
-    description = models.TextField(blank=True)
-    synonyms = models.CharField(blank=True, max_length=1024)
     status = EnumField(
         ProfileTagStatus, default=ProfileTagStatus.APPROVED, max_length=64
     )
-    is_featured = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    tag_type_enum = ProfileTagTypeEnum
 
-    def get_types_formatted(self) -> List[str]:
-        return [type_instance.type.value for type_instance in self.types.all()]
-
-    def count(self) -> int:
-        count = 0
-        for enum_member in ProfileTagTypeEnum:
-            lookup_name = f"tags_{enum_member.value}__in"
-            count += Profile.objects.filter(**{lookup_name: [self]}).count()
-        return count
-
-    def __str__(self):
-        return self.name
+    def get_model(self) -> Type[models.Model]:
+        return Profile
 
 
 class ProfileManager(models.Manager):
@@ -255,6 +240,9 @@ class Profile(models.Model):
         blank=True,
         related_name="tags_ea_involvement",
     )
+
+    # jobs_viewed = models.ManyToManyField(Job, blank=True, related_name="viewed_by")
+    # jobs_hidden = models.ManyToManyField(Job, blank=True, related_name="hidden_by")
 
     objects = ProfileManager()
 
