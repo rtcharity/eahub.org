@@ -1,16 +1,9 @@
-from django import forms
+from django.forms import ModelForm
 
-from .models import Feedback
+from eahub.feedback.models import Feedback
 
 
-class FeedbackForm(forms.ModelForm):
+class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
-        fields = ("message", "email", "page_url")
-        widgets = {
-            "message": forms.Textarea(
-                attrs={"rows": 3, "maxlength": 5000, "required": "true"}
-            )
-        }
-        # todo: replace with CreateView
-        labels = {"message": ("Feedback"), "email": ("Email address (optional)")}
+        fields = ["message", "email", "page_url"]

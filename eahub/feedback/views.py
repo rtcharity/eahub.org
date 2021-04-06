@@ -1,17 +1,9 @@
-from django.http import HttpResponse, JsonResponse
+from django.views.generic.edit import CreateView
 
-from .forms import FeedbackForm
-from .models import Feedback
+from eahub.feedback.models import Feedback
 
 
-def ajax_post_view(request):
+class FeedbackCreate(CreateView):
     model = Feedback
-    form_class = FeedbackForm
-    if request.method == "POST":
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            form.save()
-            #todo: replace with CreateView
-            return HttpResponse(status=200)
-        else:
-            return HttpResponse(status=418)
+    fields = ["message", "email", "page_url"]
+    success_url = "/"

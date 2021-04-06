@@ -1,7 +1,6 @@
 async function ajaxSubmit(){
-  document.getElementById('page_url').value = window.location.pathname;
   const form = document.getElementById('feedbackForm');
-  const response = await fetch(form.action, {
+  await fetch(form.action, {
     method: form.method,
     body: new URLSearchParams(new FormData(form)),
     headers: {
@@ -31,4 +30,3 @@ function refreshFeedback() {
 
 document.getElementById("feedbackSubmit").onclick = ajaxSubmit;
 document.getElementById("feedbackSubmitAgain").onclick = refreshFeedback;
-

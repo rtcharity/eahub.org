@@ -1,6 +1,6 @@
 from django.urls import path
 
-from . import views
+from eahub.feedback import views
 
 app_name = "feedback"
-urlpatterns = [path("submit/", views.ajax_post_view, name="submit_feedback")]
+urlpatterns = [path("submit/", views.FeedbackCreate.as_view(), name="submit_feedback")]

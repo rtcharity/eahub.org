@@ -1,53 +1,74 @@
-{% block feedback %}
 {% load static %}
 
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn feedbackbtn btn-primary" data-bs-toggle="modal" data-bs-target="#feedbackModal">
-    Feedback?
-  </button>
 
-    <!-- Modal -->
-    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+{% block feedback %}
+
+  <div class="feedback-component">
+    <button type="button" class="btn feedback__btn btn-primary"
+      data-bs-toggle="modal" data-bs-target="#feedbackModal"
+    >
+      Feedback?
+    </button>
+
+    <div class="modal fade" id="feedbackModal" tabindex="-1"
+      aria-labelledby="feedbackModalLabel" aria-hidden="true"
+    >
       <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="feedbackModalLabel">Leave Feedback</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form id="feedbackForm" class="form-group" method="post" action="/feedback/submit/">
-            <p>Do you have any feedback for us?</p>
-            {% csrf_token %}
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="feedbackModalLabel">Leave Feedback</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="feedbackForm" method="post" action="{% url 'feedback:submit_feedback' %}"
+            >
+              <p>Do you have any feedback for us?</p>
+              {% csrf_token %}
 
-            <textarea class="form-control" name="message" cols="37" rows="5" required="required"></textarea>
-            <div id="feedbackErrorMsg" style="display:none" class="alert alert-warning" role="alert">
-              Feedback message field is required</div>
+              <div class="mb-3">
+                {% include 'includes/field.html' with field=feedback_form.message rows=3 %}
+                <div id="feedbackErrorMsg" style="display:none"
+                  class="alert alert-warning" role="alert"
+                >
+                  Feedback message field is required
+                </div>
+              </div>
 
-            <label for="email">Email (optional)</label>
-            <input class="form-control" type="text" name="email">
-            <input id="page_url" type="hidden" name="page_url" value="">
-          </form>
-          <div id="feedbackSuccessMsg" style="display:none">
-            <p>Your feedback has been received, thank you!</p>
+              {% include 'includes/field.html' with field=feedback_form.email %}
+
+              <input id="page_url" type="hidden" name="page_url"
+                value="{{ request.path }}"
+              >
+            </form>
+            <div id="feedbackSuccessMsg" style="display:none">
+              <p>Your feedback has been received, thank you!</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input id="feedbackSubmit" value="Submit"
+              class="btn submitbtn btn-primary"
+            />
+            <button id="feedbackSubmitAgain" style="display:none"
+              class="btn submitbtn btn-primary"
+            >Submit more feedback
+            </button>
           </div>
         </div>
-        <div class="modal-footer">
-          <input id="feedbackSubmit" value="Submit" class="btn submitbtn btn-primary" />
-          <button id="feedbackSubmitAgain" style="display:none" class="btn submitbtn btn-primary">Submit more feedback</button>
-        </div>
-       </div>
       </div>
-    </div>  
-  </div>
+    </div>
 
-  {% if settings.DJANGO_ENV.value == "local" %}
+    {% if settings.DJANGO_ENV.value == "local" %}
       <script data-is-reload-on-page-edit defer
-              src="{{ settings.WEBPACK_DEV_URL }}/component_feedback.bundle.js"
+        src="{{ settings.WEBPACK_DEV_URL }}/component_feedback.bundle.js"
       ></script>
     {% else %}
-      <script data-is-reload-on-page-edit defer src="{% static 'dist/component_feedback.js' %}"
+      <script data-is-reload-on-page-edit defer
+        src="{% static 'dist/component_feedback.js' %}"
       ></script>
-  {% endif %}
+    {% endif %}
+
+  </div>
 
 {% endblock feedback %}
