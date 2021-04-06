@@ -46,6 +46,7 @@ class EAHubSocialAccountAdapter(DefaultSocialAccountAdapter):
             try:
                 sociallogin.connect(request, user)
             except:
-                logger.exception("user SSO connection failed")
+                # ie the user already has connected SSO
+                pass
         except User.DoesNotExist:
             pass
