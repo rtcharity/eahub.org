@@ -1,162 +1,172 @@
 {% extends 'base_bs5.html' %}
 
-{% load static sekizai_tags crispy_forms_field %}
+{% load static sekizai_tags crispy_forms_field socialaccount %}
 
 {% block title %}Home{% endblock %}
 
 {% block navbar %}
-    {% include 'components/navbar.html' %}
+  {% include 'components/navbar.html' %}
 {% endblock %}
 
 {% block content %}
-    {% addtoblock 'body_classes' %}homepage home{% endaddtoblock %}
-    
-    {% include 'includes/messages.html' with messages=messages %}
+  {% addtoblock 'body_classes' %}homepage home{% endaddtoblock %}
 
-    <div class="container">
-        <div class="row home__intro justify-content-center">
-            <div class="col-sm-24 col-lg-8 order-1 order-lg-0 align-self-end">
-                <h1>EA Hub</h1>
-                <p class="home__subtitle">
-                    A global directory for effective altruists to connect
-                </p>
-                <button type="button" id="signup-btn" class="btn btn-primary btn-lg btn-secondary gtm-btn-join">
-                    Join the Community
-                </button>
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        document.querySelector('#signup-btn').addEventListener('click', () => {
-                            document.querySelector('.join__title').scrollIntoView({behavior: 'smooth'});
-                            setTimeout(() => {
-                                document.querySelector('input[name="name"]').focus();
-                            }, 600);
-                        });
-                    });
-                </script>
-            </div>
-            <div class="col col-lg-16 d-flex justify-content-end">
-                <img class="home__map" src="{% static 'global/images/home/map.svg' %}" alt="world map">
-            </div>
-        </div>
+  {% include 'includes/messages.html' with messages=messages %}
+
+  <div class="container">
+    <div class="row home__intro justify-content-center">
+      <div class="col-sm-24 col-lg-8 order-1 order-lg-0 align-self-end">
+        <h1>EA Hub</h1>
+        <p class="home__subtitle">
+          A global directory for effective altruists to connect
+        </p>
+        <button type="button" id="signup-btn"
+          class="btn btn-primary btn-lg btn-secondary gtm-btn-join"
+        >
+          Join the Community
+        </button>
+        <script>
+          document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('#signup-btn').addEventListener('click', () => {
+              document.querySelector('.join__title').scrollIntoView({behavior: 'smooth'});
+              setTimeout(() => {
+                document.querySelector('input[name="name"]').focus();
+              }, 600);
+            });
+          });
+        </script>
+      </div>
+      <div class="col col-lg-16 d-flex justify-content-end">
+        <img class="home__map" src="{% static 'global/images/home/map.svg' %}"
+          alt="world map"
+        >
+      </div>
     </div>
-    <div class="container home__hero">
-        <div class="hero__img"
-             style="background-image: url({% static "global/images/home/profiles-screen.webp" %})"
-        ></div>
-        <div class="container hero__text-wrap">
-            <div class="row">
-                <div class="col col-lg-9 offset-lg-13 hero__text">
-                    <h2 class="hero__title">Profiles Directory</h2>
-                    <p>Search our directory of thousands of EAs from around the world</p>
-                    <a href="{% url 'profiles' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
-                </div>
-            </div>
+  </div>
+  <div class="container home__hero">
+    <div class="hero__img"
+      style="background-image: url({% static "global/images/home/profiles-screen.webp" %})"
+    ></div>
+    <div class="container hero__text-wrap">
+      <div class="row">
+        <div class="col col-lg-9 offset-lg-13 hero__text">
+          <h2 class="hero__title">Profiles Directory</h2>
+          <p>Search our directory of thousands of EAs from around the world</p>
+          <a href="{% url 'profiles' %}"
+            class="btn btn-outline-secondary btn-lg"
+          >Browse</a>
         </div>
+      </div>
     </div>
-    <div class="container home__hero" data-image-pos="right">
-        <div class="hero__img"
-             style="background-image: url({% static "global/images/home/groups-screen.webp" %})"
-        ></div>
-        <div class="container hero__text-wrap">
-            <div class="row">
-                <div class="col col-lg-9 offset-lg-4 hero__text">
-                    <h2 class="hero__title">Groups Directory</h2>
-                    <p>Connect with local, national and virtual groups</p>
-                    <a href="{% url 'groups' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
-                </div>
-            </div>
+  </div>
+  <div class="container home__hero" data-image-pos="right">
+    <div class="hero__img"
+      style="background-image: url({% static "global/images/home/groups-screen.webp" %})"
+    ></div>
+    <div class="container hero__text-wrap">
+      <div class="row">
+        <div class="col col-lg-9 offset-lg-4 hero__text">
+          <h2 class="hero__title">Groups Directory</h2>
+          <p>Connect with local, national and virtual groups</p>
+          <a href="{% url 'groups' %}" class="btn btn-outline-secondary btn-lg">Browse</a>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="container join-community">
-        <h2 class="join__title">Join the Community</h2>
+  <div class="container join-community">
+    <h2 class="join__title">Join the Community</h2>
 
-        <div class="row row-cols-1 row-cols-lg-2">
-            <div class="col order-2 order-lg-1 join__map-col">
-                <div class="join__map-block" id="homepage-map"></div>
-                <script defer>
-                    async function loadMap() {
-                        const response = await fetch({% url 'homepage_map' %});
-                        const homepageMapElem = document.getElementById('homepage-map');
-                        homepageMapElem.innerHTML = await response.text();
+    <div class="row row-cols-1 row-cols-lg-2">
+      <div class="col order-2 order-lg-1 join__map-col">
+        <div class="join__map-block" id="homepage-map"></div>
+        <script defer>
+          async function loadMap() {
+            const response = await fetch({% url 'homepage_map' %});
+            const homepageMapElem = document.getElementById('homepage-map');
+            homepageMapElem.innerHTML = await response.text();
 
-                        const scriptsNotExecuted = homepageMapElem.querySelectorAll('script');
-                        Array.from(scriptsNotExecuted).forEach(scriptNotExecuted => {
-                            const scriptToExecute = document.createElement('script');
-                            Array
-                                .from(scriptNotExecuted.attributes)
-                                .forEach(
-                                    attr => scriptToExecute.setAttribute(attr.name, attr.value
-                                )
-                            );
-                            scriptToExecute.appendChild(document.createTextNode(scriptNotExecuted.innerHTML));
-                            scriptNotExecuted.parentNode.replaceChild(scriptToExecute, scriptNotExecuted);
-                        });
-                    }
+            const scriptsNotExecuted = homepageMapElem.querySelectorAll('script');
+            Array.from(scriptsNotExecuted).forEach(scriptNotExecuted => {
+              const scriptToExecute = document.createElement('script');
+              Array.from(scriptNotExecuted.attributes).forEach(
+                attr => scriptToExecute.setAttribute(attr.name, attr.value
+                )
+              );
+              scriptToExecute.appendChild(document.createTextNode(scriptNotExecuted.innerHTML));
+              scriptNotExecuted.parentNode.replaceChild(scriptToExecute, scriptNotExecuted);
+            });
+          }
 
-                    const homepageMapObserver = new window.IntersectionObserver(([entry]) => {
-                        if (entry.isIntersecting) {
-                            loadMap();
-                            homepageMapObserver.disconnect();
-                        }
-                    }, {root: null, threshold: 0,});
-                    homepageMapObserver.observe(document.querySelector('#homepage-map'));
-                </script>
-            </div>
+          const homepageMapObserver = new window.IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+              loadMap();
+              homepageMapObserver.disconnect();
+            }
+          }, {root: null, threshold: 0,});
+          homepageMapObserver.observe(document.querySelector('#homepage-map'));
+        </script>
+      </div>
 
-            <div class="col order-1 order-lg-2 join__form-col">
-                <form action="{% url 'account_signup' %}" method="post">
-                    {% csrf_token %}
+      <div class="col order-1 order-lg-2 join__form-col">
+        <a href="{% provider_login_url 'google' %}">Login with Google</a>
 
-                    <div class="form-floating">
-                        <input type="text"
-                            class="form-control form-control-lg"
-                            name="{{ form.first_name.name }}"
-                            placeholder="First Name"
-                            id="{{ form.first_name.id }}"
-                            required>
-                        <label for="{{ form.first_name.id }}">First Name</label>
-                    </div>
+        <form action="{% url 'account_signup' %}" method="post">
+          {% csrf_token %}
 
-                    <div class="form-floating">
-                        <input type="text"
-                            class="form-control form-control-lg"
-                            name="{{ form.last_name.name }}"
-                            placeholder="Last Name"
-                            id="{{ form.last_name.id }}"
-                            required>
-                        <label for="{{ form.last_name.id }}">Last Name</label>
-                    </div>
+          <div class="form-floating">
+            <input type="text"
+              class="form-control form-control-lg"
+              name="{{ form.first_name.name }}"
+              placeholder="First Name"
+              id="{{ form.first_name.id }}"
+              required
+            >
+            <label for="{{ form.first_name.id }}">First Name</label>
+          </div>
 
-                    <div class="form-floating">
-                        <input type="email"
-                            class="form-control form-control-lg"
-                            name="{{ form.email.name }}"
-                            placeholder="Email"
-                            id="{{ form.email.id }}"
-                            required>
-                        <label for="{{ form.email.id }}">Email</label>
-                    </div>
+          <div class="form-floating">
+            <input type="text"
+              class="form-control form-control-lg"
+              name="{{ form.last_name.name }}"
+              placeholder="Last Name"
+              id="{{ form.last_name.id }}"
+              required
+            >
+            <label for="{{ form.last_name.id }}">Last Name</label>
+          </div>
 
-                    <div class="form-floating">
-                        <input type="password"
-                            class="form-control form-control-lg"
-                            name="{{ form.password1.name }}"
-                            placeholder="Password"
-                            id="{{ form.password1.id }}"
-                            required>
-                        <label for="{{ form.password1.id }}">Password</label>
-                    </div>
+          <div class="form-floating">
+            <input type="email"
+              class="form-control form-control-lg"
+              name="{{ form.email.name }}"
+              placeholder="Email"
+              id="{{ form.email.id }}"
+              required
+            >
+            <label for="{{ form.email.id }}">Email</label>
+          </div>
 
-                    {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
-                    
-                    <button type="submit" class="btn btn-primary">Sign Up</button>
-                </form>
-            </div>
-        </div>
+          <div class="form-floating">
+            <input type="password"
+              class="form-control form-control-lg"
+              name="{{ form.password1.name }}"
+              placeholder="Password"
+              id="{{ form.password1.id }}"
+              required
+            >
+            <label for="{{ form.password1.id }}">Password</label>
+          </div>
+
+          {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
+
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
     </div>
+  </div>
 {% endblock %}
 
 {% block footer %}
-    {% include 'includes/footer.html' %}
+  {% include 'includes/footer.html' %}
 {% endblock %}
