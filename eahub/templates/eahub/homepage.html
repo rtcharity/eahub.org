@@ -109,7 +109,16 @@
       </div>
 
       <div class="col order-1 order-lg-2 join__form-col">
-        <a href="{% provider_login_url 'google' %}">Login with Google</a>
+      
+        <div class="join__sso">
+          <a href="{% provider_login_url 'google' %}">
+            <div class="sso__google-btn">
+              <img class="sso__icon" src="{% static 'global/images/home/google.svg' %}">
+              <span>Sign in with Google</span>
+            </div>
+          </a>
+          <div class="sso__or">or</div>
+        </div>
 
         <form action="{% url 'account_signup' %}" method="post">
           {% csrf_token %}
