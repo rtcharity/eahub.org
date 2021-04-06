@@ -4,12 +4,20 @@ from django.db import models
 from enumfields import Enum
 from enumfields import EnumField
 
+from eahub.profiles.models import Profile
 from eahub.tags.models import Tag
+
+
+class JobStatus(Enum):
+    PENDING = "pending"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+    NEEDS_INFO = "needs_info"
 
 
 class JobTagTypeEnum(Enum):
     SKILL = "skill"
-    MARKET = "market"
+    AREA = "area"
     TYPE = "type"
     LOCATION = "location"
 
@@ -49,10 +57,12 @@ class Job(models.Model):
     description_teaser = models.CharField(max_length=512)
     description = models.TextField()
 
-    experience_min = models.PositiveIntegerField(null=True)
-    experience_max = models.PositiveIntegerField(null=True)
-    salary_min = models.PositiveIntegerField(null=True)
-    salary_max = models.PositiveIntegerField(null=True)
+    experience_min = models.PositiveIntegerField(null=True, blank=True)
+    experience_max = models.PositiveIntegerField(null=True, blank=True)
+    
+    salary_min = models.PositiveIntegerField(null=True, blank=True)
+    salary_max = models.PositiveIntegerField(null=True, blank=True)
+    salary_currency = models.PositiveIntegerField(null=True)  # https://github.com/django-money/django-money
 
     tags_location = models.ManyToManyField(
         JobTag,
@@ -66,11 +76,11 @@ class Job(models.Model):
         blank=True,
         related_name="tags_skill",
     )
-    tags_market = models.ManyToManyField(
+    tags_area = models.ManyToManyField(
         JobTag,
-        limit_choices_to={"types__type": JobTagTypeEnum.MARKET},
+        limit_choices_to={"types__type": JobTagTypeEnum.AREA},
         blank=True,
-        related_name="tags_market",
+        related_name="tags_area",
     )
     tags_type = models.ManyToManyField(
         JobTag,
@@ -78,15 +88,26 @@ class Job(models.Model):
         blank=True,
         related_name="tags_type",
     )
-    
-    visibility = EnumField(
-        JobVisibility, default=JobVisibility.PUBLIC, max_length=256,
+
+    author = models.ForeignKey(
+        Profile, blank=False, null=True, on_delete=models.SET_NULL
     )
-    is_immigration_support = models.BooleanField(default=False)
-    is_remote = models.BooleanField(default=False)
+    visibility = EnumField(
+        JobVisibility,
+        default=JobVisibility.PUBLIC,
+        max_length=256,
+    )
+    status = EnumField(
+        JobStatus,
+        default=JobStatus.PENDING,
+        max_length=256,
+    )
+    is_visa_sponsor = models.BooleanField(default=False, verbose_name="Visa sponsoring")
+    is_remote_only = models.BooleanField(default=False, verbose_name="Remote only")
 
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     expires_at = models.DateTimeField(blank=True, null=True)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
