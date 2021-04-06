@@ -27,7 +27,9 @@ class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
 
 
 class EAHubSocialAccountAdapter(DefaultSocialAccountAdapter):
-    def save_user(self, request: HttpRequest, sociallogin: SocialLogin, form=None) -> User:
+    def save_user(
+        self, request: HttpRequest, sociallogin: SocialLogin, form=None
+    ) -> User:
         user: User = super().save_user(request, sociallogin, form)
         Profile.objects.create(
             user=user,
