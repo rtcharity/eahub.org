@@ -2,7 +2,10 @@
 
 
 html {
-    scroll-padding-top: $toolbar-height;
-    padding-top: $toolbar-height;
-    height: 100%;
+  scroll-padding-top: $toolbar-height;
+  padding-top: $toolbar-height;
+  height: 100%;
+}
+.modal-open {
+  overflow: initial;
 }

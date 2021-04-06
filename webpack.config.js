@@ -22,6 +22,7 @@ const config = {
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
     component_tables: './eahub/base/static/components/tables.js',
     component_local_groups_edit: './eahub/base/static/components/local-groups-edit.js',
+    component_feedback: './eahub/base/static/components/feedback.js',
   },
   output: {
     filename: '[name].js',

@@ -11,6 +11,7 @@ from djangocms_helpers.utils.send_email import send_email
 from eahub.base.models import FeedbackURLConfig, MessagingLog, User
 from eahub.base.utils import get_admin_email
 from eahub.base.views import ReportAbuseView, SendMessageView
+from eahub.feedback.forms import FeedbackForm
 from eahub.profiles.forms import DeleteProfileForm, ProfileForm
 from eahub.profiles.models import Profile, ProfileSlug
 
@@ -161,4 +162,4 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
 
 
 def profiles(request) -> HttpResponse:
-    return render(request, "eahub/profiles.html")
+    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm()})
