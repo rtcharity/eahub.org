@@ -1,5 +1,4 @@
 import fnmatch
-import logging
 
 from allauth.account import adapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
@@ -10,9 +9,6 @@ from django.http import HttpRequest
 
 from eahub.base.models import User
 from eahub.profiles.models import Profile
-
-
-logger = logging.getLogger(__name__)
 
 
 class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
