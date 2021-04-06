@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "eahub.base.apps.BaseConfig",
     "eahub.localgroups.apps.LocalGroupsConfig",
     "eahub.profiles.apps.ProfilesConfig",
+    "eahub.feedback",
 ]
 
 MIDDLEWARE = [
@@ -367,6 +368,7 @@ ADMIN_REORDER = [
             },
             {"model": "base.FeedbackURLConfig", "label": "URL of feedback page"},
             {"model": "base.MessagingLog", "label": "Messaging logs"},
+            {"model": "feedback.Feedback", "label": "User feedback"},
         ],
     },
 ]
