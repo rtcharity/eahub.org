@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "authtools",
     "algoliasearch_django",
     "sekizai",
@@ -245,6 +246,17 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy(
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy(
     "profiles_app:edit_profile"
 )
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 
 IS_ENABLE_ALGOLIA = env.bool("IS_ENABLE_ALGOLIA", default=False)
@@ -358,6 +370,7 @@ ADMIN_REORDER = [
         "label": "Website administration",
         "models": [
             {"model": "base.User", "label": "User accounts"},
+            {"model": "socialaccount.SocialApp", "label": "SSO configs"},
             {"model": "account.EmailAddress", "label": "User account email addresses"},
             {"model": "auth.Group", "label": "Admin permission groups"},
             {"model": "sites.Site", "label": "Domain management & site name"},
