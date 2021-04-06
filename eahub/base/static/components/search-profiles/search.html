@@ -45,12 +45,14 @@
                       <img v-if="item.image"
                           class="search__hit-image"
                           height="150"
+                          loading="lazy"
                           v-bind:src="item.image" width="150"
                       >
                       <img v-else
                           data-is-empty="true"
                           class="search__hit-image"
                           height="150"
+                          loading="lazy"
                           v-bind:src="profileEmptyImages[item.objectID % 10]"
                           width="150"
                       >
