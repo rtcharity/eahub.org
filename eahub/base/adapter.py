@@ -1,4 +1,5 @@
 import fnmatch
+import logging
 
 from allauth.account import adapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
@@ -9,6 +10,9 @@ from django.http import HttpRequest
 
 from eahub.base.models import User
 from eahub.profiles.models import Profile
+
+
+logger = logging.getLogger(__name__)
 
 
 class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
@@ -35,3 +39,13 @@ class EAHubSocialAccountAdapter(DefaultSocialAccountAdapter):
             last_name=user.last_name,
         )
         return user
+
+    def pre_social_login(self, request: HttpRequest, sociallogin: SocialLogin):
+        try:
+            user = User.objects.get(email=sociallogin.user.email)
+            try:
+                sociallogin.connect(request, user)
+            except:
+                logger.exception("user SSO connection failed")
+        except User.DoesNotExist:
+            pass
