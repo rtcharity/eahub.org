@@ -8,7 +8,12 @@ from solo.models import SingletonModel
 
 
 class User(authtools_models.AbstractEmailUser):
-    def has_profile(self):
+    # django-allauth puts Google or EA.org SSO data in those fields only, not Profile
+    # because they have a slightly inflexible architecture
+    first_name = models.CharField(max_length=256, blank=True)
+    last_name = models.CharField(max_length=256, blank=True)
+
+    def has_profile(self) -> bool:
         return hasattr(self, "profile")
 
 

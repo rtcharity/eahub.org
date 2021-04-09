@@ -1,8 +1,14 @@
 import fnmatch
 
 from allauth.account import adapter
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
+from allauth.socialaccount.models import SocialLogin
 from django.conf import settings
 from django.core import exceptions
+from django.http import HttpRequest
+
+from eahub.base.models import User
+from eahub.profiles.models import Profile
 
 
 class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
@@ -18,3 +24,27 @@ class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
                 code="blacklisted",
             )
         return email
+
+
+class EAHubSocialAccountAdapter(DefaultSocialAccountAdapter):
+    def save_user(
+        self, request: HttpRequest, sociallogin: SocialLogin, form=None
+    ) -> User:
+        user: User = super().save_user(request, sociallogin, form)
+        Profile.objects.create(
+            user=user,
+            first_name=user.first_name,
+            last_name=user.last_name,
+        )
+        return user
+
+    def pre_social_login(self, request: HttpRequest, sociallogin: SocialLogin):
+        try:
+            user = User.objects.get(email=sociallogin.user.email)
+            try:
+                sociallogin.connect(request, user)
+            except:
+                # ie the user already has connected SSO
+                pass
+        except User.DoesNotExist:
+            pass
