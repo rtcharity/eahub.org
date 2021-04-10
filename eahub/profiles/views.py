@@ -22,7 +22,7 @@ def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
-        return redirect("profile", slug=profile.slug, permanent=True)
+        return redirect("profiles_app:profile", slug=profile.slug, permanent=True)
     return render(
         request,
         template_name="eahub/profile.html",
