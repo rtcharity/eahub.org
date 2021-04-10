@@ -27,7 +27,7 @@ def create_tag_view_factory(
             name=request.data["name"].strip(),
         )
         if is_created:
-            tag.author = tagged_model.objects.get(user=request.user)
+            tag.author = tagged_model.objects.get(user=request.user.profile)
             tag.status = tag_status_enum.PENDING
 
         tag_type = tag_type_model.objects.get(type=request.data["type"])
