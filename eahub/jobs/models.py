@@ -1,6 +1,8 @@
 from typing import Type
 
 from django.db import models
+from djmoney.models.fields import CurrencyField
+from djmoney.settings import CURRENCY_CHOICES
 from enumfields import Enum
 from enumfields import EnumField
 
@@ -9,6 +11,7 @@ from eahub.tags.models import Tag
 
 
 class JobStatus(Enum):
+    DRAFT = "draft"
     PENDING = "pending"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -51,18 +54,20 @@ class JobVisibility(Enum):
 
 
 class Job(models.Model):
-    title = models.CharField(max_length=256)
-    company = models.CharField(max_length=256)
-    company_logo = models.ImageField()
-    description_teaser = models.CharField(max_length=512)
-    description = models.TextField()
+    title = models.CharField(max_length=256, null=True)
+    company = models.CharField(max_length=256, null=True)
+    company_logo = models.ImageField(null=True)
+    description_teaser = models.CharField(max_length=512, null=True)
+    description = models.TextField(null=True)
 
     experience_min = models.PositiveIntegerField(null=True, blank=True)
     experience_max = models.PositiveIntegerField(null=True, blank=True)
-    
+
     salary_min = models.PositiveIntegerField(null=True, blank=True)
     salary_max = models.PositiveIntegerField(null=True, blank=True)
-    salary_currency = models.PositiveIntegerField(null=True)  # https://github.com/django-money/django-money
+    salary_currency = CurrencyField(
+        choices=CURRENCY_CHOICES, blank=True, default="USD"
+    )
 
     tags_location = models.ManyToManyField(
         JobTag,
@@ -99,7 +104,7 @@ class Job(models.Model):
     )
     status = EnumField(
         JobStatus,
-        default=JobStatus.PENDING,
+        default=JobStatus.DRAFT,
         max_length=256,
     )
     is_visa_sponsor = models.BooleanField(default=False, verbose_name="Visa sponsoring")

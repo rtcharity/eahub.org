@@ -25,33 +25,36 @@
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'profiles_app:my_profile' %}">
-                            <span class="fa-icon"><i class="fa fa-user"></i></span> My Profile
+                            My Profile
                         </a>
                     </li>
                 {% else %}
                     <li class="nav-item">
                         <a class="nav-link nav__login"
                             href="{% url 'account_login' %}">
-                            <span class="fa-icon"><i class="fa fa-sign-in-alt"></i></span> Log In
+                            Log In
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_signup' %}">
-                            <span class="fa-icon"><i class="fa fa-user-plus"></i></span> Sign Up
+                            Sign Up
                         </a>
                     </li>
                 {% endif %}
 
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profiles' %}">
-                        <span class="fa-icon"><i class="fa fa-users"></i></span>
                         Profiles
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'groups' %}">
-                        <span class="fa-icon"><i class="fa fa-globe"></i></span>
                         Groups
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'jobs:create' %}">
+                        Post Job
                     </a>
                 </li>
 

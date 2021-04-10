@@ -1,3 +1,7 @@
+from django.http import HttpRequest
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.generic import CreateView
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
@@ -27,3 +31,34 @@ create_tag_view = create_tag_view_factory(
     tag_type_model=JobTagType,
     tag_serializer=JobTagSerializer,
 )
+
+
+def jobs_list_view(request: HttpRequest) -> HttpResponse:
+    return render(request, "jobs/job_list.html")
+
+
+class JobCreateView(CreateView):
+    model = Job
+    template_name = "jobs/job_create.html"
+    fields = [
+        "title",
+        "company",
+        "company_logo",
+        "description_teaser",
+        "description",
+        "experience_min",
+        "experience_max",
+        "salary_min",
+        "salary_max",
+        "salary_currency",
+        "visibility",
+        "is_visa_sponsor",
+        "is_remote_only",
+        "expires_at",
+    ]
+
+    def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        self.object = Job.objects.create(
+            author=self.request.user.profile,
+        )
+        return super().get(request, *args, **kwargs)

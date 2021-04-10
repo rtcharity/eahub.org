@@ -62,4 +62,5 @@ urlpatterns = [
     ),
     path("select2/", include("django_select2.urls")),
     path("feedback/", include("eahub.feedback.urls")),
+    path("jobs/", include("eahub.jobs.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
