@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google",
+    "allauth.socialaccount.providers.auth0",
     "authtools",
     "algoliasearch_django",
     "sekizai",
@@ -254,7 +255,10 @@ SOCIALACCOUNT_PROVIDERS = {
             "access_type": "online",
         },
         "VERIFIED_EMAIL": True,
-    }
+    },
+    "auth0": {
+        "AUTH0_URL": "https://effectivealtruism.auth0.com",
+    },
 }
 
 

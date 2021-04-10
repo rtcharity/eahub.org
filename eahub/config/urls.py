@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.sitemaps.views import sitemap
 from django.http import Http404
 from django.urls import include, path
+from django.views.generic import RedirectView
 from django.views.generic import TemplateView
 
 from eahub.base import views
