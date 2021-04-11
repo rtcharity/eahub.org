@@ -30,8 +30,12 @@ class ProfileTagWidget(ManyToManyWidget):
         tag_names: List[str] = value.split(";")
         tags = []
         for tag_name in tag_names:
+            tag_name = tag_name.strip()
+            is_potential_non_public = tag_name == "LGBTQ+"
+            if is_potential_non_public:
+                continue
             tag, is_created = ProfileTag.objects.get_or_create(
-                name=tag_name,
+                name__iexact=tag_name,
             )
             if is_created:
                 tag_types = []
@@ -74,10 +78,19 @@ class ProfileResource(ModelResource):
     tags_expertise_area = fields.Field(
         attribute="tags_expertise_area",
         widget=ProfileTagWidget(
-            enum_types=[
-                ProfileTagTypeEnum.EXPERTISE_AREA,
-                ProfileTagTypeEnum.CAUSE_AREA,
-            ],
+            enum_types=[ProfileTagTypeEnum.EXPERTISE_AREA],
+        ),
+    )
+    tags_cause_area_expertise = fields.Field(
+        attribute="tags_cause_area_expertise",
+        widget=ProfileTagWidget(
+            enum_types=[ProfileTagTypeEnum.CAUSE_AREA_EXPERTISE],
+        ),
+    )
+    tags_cause_area = fields.Field(
+        attribute="tags_cause_area",
+        widget=ProfileTagWidget(
+            enum_types=[ProfileTagTypeEnum.CAUSE_AREA],
         ),
     )
     tags_career_interest = fields.Field(
@@ -86,10 +99,10 @@ class ProfileResource(ModelResource):
             enum_types=[ProfileTagTypeEnum.CAREER_INTEREST],
         ),
     )
-    tags_generic = fields.Field(
-        attribute="tags_generic",
+    tags_affiliation = fields.Field(
+        attribute="tags_affiliation",
         widget=ProfileTagWidget(
-            enum_types=[ProfileTagTypeEnum.GENERIC],
+            enum_types=[ProfileTagTypeEnum.AFFILIATION],
         ),
     )
     tags_organisational_affiliation = fields.Field(
@@ -129,9 +142,15 @@ class ProfileResource(ModelResource):
             "tags_university",
             "tags_ea_involvement",
             "tags_expertise_area",
+            "tags_cause_area_expertise",
+            "tags_cause_area",
             "tags_career_interest",
-            "tags_generic",
+            "tags_affiliation",
         ]
+
+    def import_field(self, field: str, obj: Profile, data: dict, is_m2m: bool = False):
+        regex = r"(.*)(?P<linkedin>(https://www\.)?((linkedin.com|linked.in)(/in)?/[a-z0-9](-?[a-z0-9])*)/?)?(.*)"
+        super().import_field(field, obj, data, is_m2m)
 
 
 class ProfileAnalyticsResource(ModelResource):

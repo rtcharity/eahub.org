@@ -1,4 +1,5 @@
 from allauth.account import app_settings, utils
+from allauth.account.forms import ResetPasswordKeyForm
 from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
@@ -21,8 +22,18 @@ from eahub.profiles.forms import SignupForm
 from eahub.profiles.models import Profile
 
 
+class EAHubResetPasswordKeyForm(ResetPasswordKeyForm):
+    password2 = None
+
+    def clean(self) -> dict:
+        """override password2 validation"""
+        return self.cleaned_data
+
+
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
     template_name = "account/password_reset_from_key.html"
+    form_class = EAHubResetPasswordKeyForm
+    success_url = reverse_lazy("profiles_app:edit_profile")
 
     def form_valid(self, form):
         super().form_valid(form)
