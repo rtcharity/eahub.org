@@ -4,9 +4,10 @@ from eahub.profiles.models import (
     ProfileTagType,
     ProfileTagTypeEnum,
 )
-from eahub.tags.serializers import tag_model_serializer_factory
-from eahub.tags.serializers import tagged_model_serializer_factory
-
+from eahub.tags.serializers import (
+    tag_model_serializer_factory,
+    tagged_model_serializer_factory,
+)
 
 ProfileSerializer = tagged_model_serializer_factory(
     tagged_model_cls=Profile,

@@ -1,6 +1,5 @@
 import uuid
-from typing import List, Optional
-from typing import Type
+from typing import List, Optional, Type
 
 from django import urls
 from django.conf import settings

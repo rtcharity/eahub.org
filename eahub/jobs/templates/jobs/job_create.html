@@ -27,7 +27,6 @@
       algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,
       algoliaApplicationId: `{{ settings.ALGOLIA.APPLICATION_ID }}`,
       algoliaIndexName: `{{ settings.ALGOLIA.INDEX_NAME_TAGS }}`,
-      profilePk: {{ profile.pk }},
     }
   </script>
 
@@ -71,46 +70,12 @@
             {% include 'includes/field.html' with form=form field=form.salary_currency %}
           </div>
         </div>
-        {% include 'includes/field.html' with form=form field=form.image %}
 
-        <div class="row row-cols-1 row-cols-lg-3">
-          <div class="col">
-            {% include 'includes/field.html' with form=form field=form.facebook_url %}
-          </div>
-          <div class="col">
-            {% include 'includes/field.html' with form=form field=form.linkedin_url %}
-          </div>
-          <div class="col">
-            {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="https://example.com" %}
-          </div>
-        </div>
+        {% include 'includes/field.html' with form=form field=form.visibility %}
+        {% include 'includes/field.html' with form=form field=form.is_visa_sponsor %}
+        {% include 'includes/field.html' with form=form field=form.is_remote_only %}
+        {% include 'includes/field.html' with form=form field=form.expires_at %}
 
-        <div class="row row-cols-1 row-cols-lg-2">
-          <div class="col">
-            {% include 'includes/field.html' with form=form rows=3 field=form.offering placeholder="How can you help other community members?" %}
-          </div>
-          <div class="col">
-            {% include 'includes/field.html' with form=form rows=3 field=form.looking_for placeholder="How can other community members help you?" %}
-          </div>
-        </div>
-
-
-        <h2>Community</h2>
-        {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
-
-        {% if profile.topics_i_speak_about %}
-          {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
-        {% endif %}
-        <div class="mb-5"
-          data-type-name="speech_topic"
-          data-type-label="Topics I Speak About"
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-        {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
-
-        {% include 'includes/field.html' with form=form field=form.local_groups %}
 
         <div class="mb-5"
           data-type-name="organisational_affiliation"
@@ -118,89 +83,6 @@
         >
           <div class="vue-profile-tag-input"></div>
         </div>
-
-        <div class="mb-5"
-          data-type-name="affiliation"
-          data-type-label="Affiliations"
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-        <div class="mb-5"
-          data-type-name="pledge"
-          data-type-label="Giving Pledges"
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-
-        <h2>Career</h2>
-        <div class="row row-cols-2">
-          <div class="col">
-            {% include 'includes/field.html' with form=form field=form.job_title %}
-          </div>
-          <div class="col col-bool-with-margin-top">
-            {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
-          </div>
-        </div>
-
-        <div class="mb-5"
-          data-type-name="career_interest"
-          data-type-label="Career Areas of Interest"
-          data-type-label-short="area"
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-        <div class="mb-5"
-          data-type-name="expertise_area"
-          data-type-label="Career Areas of Expertise"
-          data-type-label-short="area"
-
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-        {% if profile.expertise_areas_other %}
-          {% include 'includes/field.html' with form=form rows=1 field=form.expertise_areas_other %}
-        {% endif %}
-
-        <div class="mb-5"
-          data-type-name="cause_area"
-          data-type-label="Cause Areas of Interest"
-          data-type-label-short="area"
-          data-input-popup-intro="Cause areas you are interested in learning more about or that you want to develop expertise in."
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-        {% if profile.cause_areas_other %}
-          {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
-        {% endif %}
-
-        <div class="mb-5"
-          data-type-name="cause_area_expertise"
-          data-type-label="Cause Areas of Expertise"
-          data-type-label-short="area"
-          data-input-popup-intro="Cause areas you have expertise in."
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-
-        <h2>Tags</h2>
-        <div class="mb-5"
-          data-type-name="generic"
-          data-type-label=""
-          data-input-popup-intro="Use this field to tag any other relevant things you'd like others to be able to find about you."
-        >
-          <div class="vue-profile-tag-input"></div>
-        </div>
-
-        <h2>Settings</h2>
-        {% include 'includes/field.html' with form=form field=form.is_public %}
-        {% include 'includes/field.html' with form=form field=form.allow_messaging %}
-        <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
 
       </div>
 
@@ -218,8 +100,9 @@
 
   </form>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js" defer></script>
-  <script src="{% static 'django_select2/django_select2.js' %}" defer></script>
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js"></script>
+  <script defer src="{% static 'django_select2/django_select2.js' %}"></script>
   {{ form.media.css }}
 
 {% endblock %}

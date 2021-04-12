@@ -1,8 +1,6 @@
 from django.urls import path
 
-from eahub.jobs.views import JobCreateView
-from eahub.jobs.views import jobs_list_view
-
+from eahub.jobs.views import JobCreateView, jobs_list_view
 
 app_name = "jobs"
 

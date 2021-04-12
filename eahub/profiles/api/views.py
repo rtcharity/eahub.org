@@ -1,12 +1,8 @@
 from rest_framework import mixins
 from rest_framework.viewsets import GenericViewSet
 
-from eahub.profiles.api.serializers import ProfileSerializer
-from eahub.profiles.api.serializers import ProfileTagSerializer
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileTag
-from eahub.profiles.models import ProfileTagStatus
-from eahub.profiles.models import ProfileTagType
+from eahub.profiles.api.serializers import ProfileSerializer, ProfileTagSerializer
+from eahub.profiles.models import Profile, ProfileTag, ProfileTagStatus, ProfileTagType
 from eahub.tags.views import create_tag_view_factory
 
 

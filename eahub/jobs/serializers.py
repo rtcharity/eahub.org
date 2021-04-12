@@ -1,10 +1,8 @@
-from eahub.jobs.models import Job
-from eahub.jobs.models import JobTag
-from eahub.jobs.models import JobTagType
-from eahub.jobs.models import JobTagTypeEnum
-from eahub.tags.serializers import tag_model_serializer_factory
-from eahub.tags.serializers import tagged_model_serializer_factory
-
+from eahub.jobs.models import Job, JobTag, JobTagType, JobTagTypeEnum
+from eahub.tags.serializers import (
+    tag_model_serializer_factory,
+    tagged_model_serializer_factory,
+)
 
 JobSerializer = tagged_model_serializer_factory(
     tagged_model_cls=Job,

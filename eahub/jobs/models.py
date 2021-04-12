@@ -3,8 +3,7 @@ from typing import Type
 from django.db import models
 from djmoney.models.fields import CurrencyField
 from djmoney.settings import CURRENCY_CHOICES
-from enumfields import Enum
-from enumfields import EnumField
+from enumfields import Enum, EnumField
 
 from eahub.profiles.models import Profile
 from eahub.tags.models import Tag
@@ -65,9 +64,7 @@ class Job(models.Model):
 
     salary_min = models.PositiveIntegerField(null=True, blank=True)
     salary_max = models.PositiveIntegerField(null=True, blank=True)
-    salary_currency = CurrencyField(
-        choices=CURRENCY_CHOICES, blank=True, default="USD"
-    )
+    salary_currency = CurrencyField(choices=CURRENCY_CHOICES, blank=True, default="USD")
 
     tags_location = models.ManyToManyField(
         JobTag,

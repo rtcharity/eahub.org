@@ -1,9 +1,7 @@
-from typing import List
-from typing import Type
+from typing import List, Type
 
 from django.db import models
-from enumfields import Enum
-from enumfields import EnumField
+from enumfields import Enum, EnumField
 
 
 class Tag(models.Model):
