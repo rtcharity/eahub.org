@@ -24,7 +24,11 @@
     <div class="vue-search-component-container"
          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+         {% if approved_user %}
          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES_INTERNAL }}"
+         {% else %}
+         algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES_PUBLIC }}"
+         {% endif %}
          profile-empty-images-raw="
              {% static 'global/images/avatars/Avatar0.jpg' %},
              {% static 'global/images/avatars/Avatar1.jpg' %},

@@ -25,7 +25,7 @@ class UserAdmin(
         "last_login",
         "is_superuser",
         "is_staff",
-        "is_profile_public",
+        "visibility",
     ]
     change_links = ["profile"]
     list_filter = [
@@ -33,7 +33,7 @@ class UserAdmin(
         "is_staff",
         "is_active",
         "profile__is_approved",
-        "profile__is_public",
+        "profile__visibility",
         ("date_joined", DateRangeFilter),
         ("last_login", DateRangeFilter),
     ]
@@ -54,15 +54,6 @@ class UserAdmin(
 
     approve_profiles.short_description = "Approve selected users' profiles"
     approve_profiles.allowed_permissions = ["change"]
-
-    def is_profile_public(self, user):
-        profile = get_profile(user)
-        if profile is None:
-            return profile
-        return profile.is_public
-
-    is_profile_public.short_description = "Public?"
-    is_profile_public.boolean = False
 
 
 def get_profile(user: User) -> Optional[Profile]:

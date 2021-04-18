@@ -7,5 +7,5 @@ from eahub.profiles.models import Profile
 class ProfilesSitemap(GenericSitemap):
     def items(self) -> QuerySet:
         return Profile.objects.filter(
-            is_approved=True, is_public=True, user__is_active=True
+            is_approved=True, is_publicly_visible=True, user__is_active=True
         )

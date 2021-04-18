@@ -385,6 +385,9 @@ class Profile(models.Model):
     def get_image_placeholder(self) -> str:
         return f"Avatar{self.id % 10}.jpg"
 
+    def is_publicly_visible(self) -> bool:
+        return self.visibility == VisibilityEnum.PUBLIC
+
 
 class ProfileAnalyticsLog(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
