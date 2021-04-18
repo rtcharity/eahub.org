@@ -3,6 +3,7 @@ from allauth.account.models import EmailAddress
 from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpRequest
+from enumfields.admin import EnumFieldListFilter
 from import_export.admin import ImportExportMixin
 from rangefilter.filter import DateRangeFilter
 
@@ -49,17 +50,17 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
         "expertise_areas_other",
         "looking_for",
         "offering",
-        "is_public",
+        "visibility",
         "date_joined",
     )
     list_filter = [
         "user__emailaddress__verified",
         "is_approved",
-        "is_public",
         "email_visible",
         "available_to_volunteer",
         "user__date_joined",
         GivingPledgesFilter,
+        ("visibility", EnumFieldListFilter)
     ]
     search_fields = [
         "user__email",

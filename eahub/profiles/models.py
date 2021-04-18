@@ -120,7 +120,7 @@ class ProfileManager(models.Manager):
         if user.is_superuser:
             return self.all()
         return self.filter(
-            models.Q(is_public=True, is_approved=True) | models.Q(user_id=user.pk)
+            models.Q(is_publicly_visible=True, is_approved=True) | models.Q(user_id=user.pk)
         )
 
 
@@ -338,10 +338,10 @@ class Profile(models.Model):
         return self.is_approved and self.visibility == VisibilityEnum.PUBLIC and self.user.is_active
 
     def is_searchable_internal(self) -> bool:
-        return self.is_approved and self.visibility == VisibilityEnum.INTERNAL and self.user.is_active
+        return self.is_approved and self.visibility in [VisibilityEnum.INTERNAL, VisibilityEnum.PUBLIC] and self.user.is_active
 
     def is_can_receive_message(self) -> bool:
-        return self.is_approved and self.is_public and self.allow_messaging
+        return self.is_approved and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL] and self.allow_messaging
 
     def is_organiser(self) -> bool:
         return self.user.localgroup_set.exists()
@@ -387,6 +387,9 @@ class Profile(models.Model):
 
     def is_publicly_visible(self) -> bool:
         return self.visibility == VisibilityEnum.PUBLIC
+
+    def is_private(self) -> bool:
+        return self.visibility == VisibilityEnum.PRIVATE
 
 
 class ProfileAnalyticsLog(models.Model):

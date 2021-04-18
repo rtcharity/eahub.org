@@ -199,7 +199,7 @@
           </div>
           
           <h2>Settings</h2>
-          {% include 'includes/field.html' with form=form field=form.is_public %}
+          {% include 'includes/field.html' with form=form field=form.visibility %}
           {% include 'includes/field.html' with form=form field=form.allow_messaging %}
           <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
 

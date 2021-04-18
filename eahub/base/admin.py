@@ -3,6 +3,7 @@ from typing import Optional
 import django_admin_relation_links
 from authtools import admin as authtools_admin
 from django.contrib import admin
+from enumfields.admin import EnumFieldListFilter
 from rangefilter.filter import DateRangeFilter
 from solo.admin import SingletonModelAdmin
 
@@ -25,7 +26,7 @@ class UserAdmin(
         "last_login",
         "is_superuser",
         "is_staff",
-        "visibility",
+        "profile_visibility",
     ]
     change_links = ["profile"]
     list_filter = [
@@ -33,7 +34,7 @@ class UserAdmin(
         "is_staff",
         "is_active",
         "profile__is_approved",
-        "profile__visibility",
+        ("profile__visibility", EnumFieldListFilter),
         ("date_joined", DateRangeFilter),
         ("last_login", DateRangeFilter),
     ]
@@ -54,6 +55,14 @@ class UserAdmin(
 
     approve_profiles.short_description = "Approve selected users' profiles"
     approve_profiles.allowed_permissions = ["change"]
+
+    def profile_visibility(self, user):
+        profile = get_profile(user)
+        if profile is None:
+            return profile
+        return profile.visibility
+
+    profile_visibility.short_description = "Profile Visibility"
 
 
 def get_profile(user: User) -> Optional[Profile]:
