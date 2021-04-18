@@ -47,12 +47,12 @@ class ProfileTestCase(EAHubTestCase):
 
         self.assertEqual(first_name, analytics_logs_name.first().new_value)
         self.assertEqual("True", analytics_logs_is_approved.first().new_value)
-        self.assertEqual("private", analytics_logs_visibility.first().new_value)
+        self.assertEqual("Private", analytics_logs_visibility.first().new_value)
         self.assertEqual("user1", analytics_logs_slug.first().new_value)
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(13, len(analytics_logs))
+        self.assertEqual(14, len(analytics_logs))
         self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(
