@@ -52,6 +52,12 @@ def slugify_user(name):
     return slug
 
 
+class VisibilityEnum(Enum):
+    PUBLIC = "public"
+    INTERNAL = "internal"
+    PRIVATE = "private"
+
+
 class ProfileTagTypeEnum(Enum):
     GENERIC = "generic"
     AFFILIATION = "affiliation"
@@ -175,6 +181,7 @@ class Profile(models.Model):
     local_groups = models.ManyToManyField(
         LocalGroup, through="Membership", blank=True, verbose_name="EA Groups"
     )
+    visibility = EnumField(VisibilityEnum, max_length=16, default=VisibilityEnum.PRIVATE)
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 
     tags_generic = models.ManyToManyField(
