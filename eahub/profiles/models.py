@@ -334,8 +334,11 @@ class Profile(models.Model):
         else:
             return None
 
-    def is_searchable(self) -> bool:
-        return self.is_approved and self.is_public and self.user.is_active
+    def is_searchable_public(self) -> bool:
+        return self.is_approved and self.visibility == VisibilityEnum.PUBLIC and self.user.is_active
+
+    def is_searchable_internal(self) -> bool:
+        return self.is_approved and self.visibility == VisibilityEnum.INTERNAL and self.user.is_active
 
     def is_can_receive_message(self) -> bool:
         return self.is_approved and self.is_public and self.allow_messaging

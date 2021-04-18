@@ -265,9 +265,13 @@ ALGOLIA = {
     "API_KEY_READ_ONLY": env.str(
         "API_KEY_READ_ONLY", default="19fd60051efeddf42e707383bf2f15a7"
     ),
-    "INDEX_NAME_PROFILES": env.str(
-        "ALGOLIA_INDEX_NAME_PROFILES",
+    "INDEX_NAME_PROFILES_PUBLIC": env.str(
+        "ALGOLIA_INDEX_NAME_PROFILES_PUBLIC",
         default="profiles_stage",
+    ),
+    "INDEX_NAME_PROFILES_INTERNAL": env.str(
+        "ALGOLIA_INDEX_NAME_PROFILES_INTERNAL",
+        default="profiles_stage_internal",
     ),
     "INDEX_NAME_TAGS": env.str(
         "ALGOLIA_INDEX_NAME_TAGS",
