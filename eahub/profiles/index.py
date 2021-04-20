@@ -63,7 +63,7 @@ if settings.IS_ENABLE_ALGOLIA:
                 ProfileInternalIndex(model, client, settings),
             ]
 
-        def raw_search(self, query='', params=None):
+        def raw_search(self, query="", params=None):
             res = {}
             for index in self.indices:
                 res[index.name] = index.raw_search(query, params)

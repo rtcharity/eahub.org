@@ -7,7 +7,9 @@ from eahub.profiles.models import VisibilityEnum
 from eahub.tests.cases import EAHubTestCase
 
 
-@override_settings(STATICFILES_STORAGE='django.contrib.staticfiles.storage.StaticFilesStorage')
+@override_settings(
+    STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
+)
 class ProfileMessagingTestCase(EAHubTestCase):
     def test_save_analytics_on_profile_creation(self):
         profile_sender = self.gen.profile()

@@ -120,7 +120,8 @@ class ProfileManager(models.Manager):
         if user.is_superuser:
             return self.all()
         return self.filter(
-            models.Q(is_publicly_visible=True, is_approved=True) | models.Q(user_id=user.pk)
+            models.Q(is_publicly_visible=True, is_approved=True)
+            | models.Q(user_id=user.pk)
         )
 
 
@@ -181,7 +182,9 @@ class Profile(models.Model):
     local_groups = models.ManyToManyField(
         LocalGroup, through="Membership", blank=True, verbose_name="EA Groups"
     )
-    visibility = EnumField(VisibilityEnum, max_length=16, default=VisibilityEnum.PRIVATE)
+    visibility = EnumField(
+        VisibilityEnum, max_length=16, default=VisibilityEnum.PRIVATE
+    )
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 
     tags_generic = models.ManyToManyField(
@@ -335,13 +338,25 @@ class Profile(models.Model):
             return None
 
     def is_searchable_public(self) -> bool:
-        return self.is_approved and self.visibility == VisibilityEnum.PUBLIC and self.user.is_active
+        return (
+            self.is_approved
+            and self.visibility == VisibilityEnum.PUBLIC
+            and self.user.is_active
+        )
 
     def is_searchable_internal(self) -> bool:
-        return self.is_approved and self.visibility in [VisibilityEnum.INTERNAL, VisibilityEnum.PUBLIC] and self.user.is_active
+        return (
+            self.is_approved
+            and self.visibility in [VisibilityEnum.INTERNAL, VisibilityEnum.PUBLIC]
+            and self.user.is_active
+        )
 
     def is_can_receive_message(self) -> bool:
-        return self.is_approved and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL] and self.allow_messaging
+        return (
+            self.is_approved
+            and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
+            and self.allow_messaging
+        )
 
     def is_organiser(self) -> bool:
         return self.user.localgroup_set.exists()
