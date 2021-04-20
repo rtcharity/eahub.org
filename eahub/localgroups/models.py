@@ -76,7 +76,7 @@ class LocalGroup(models.Model):
         return urls.reverse("group", args=[self.slug])
 
     def public_organisers(self):
-        return self.organisers.filter(profile__is_public=True).order_by(
+        return self.organisers.filter(profile__is_publicly_visible=True).order_by(
             "profile__name", "profile__slug"
         )
 

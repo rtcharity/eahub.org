@@ -49,10 +49,10 @@
           >
         {% endthumbnail %}
       
-        {% if not profile.is_public %}
+        {% if profile.is_private %}
           <div class="alert alert-warning"
             role="alert"
-            title="This profile is not public. Click on 'Edit' to change your settings."
+            title="This profile is private. Click on 'Edit' to change your settings."
           >
             <i class="fa fa-lock"></i> Invisible profile
           </div>

@@ -6,10 +6,9 @@ from eahub.profiles.models import Profile, ProfileTag
 
 if settings.IS_ENABLE_ALGOLIA:
 
-    @register(Profile)
-    class ProfileIndex(AlgoliaIndex):
-        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES"]
-        should_index = "is_searchable"
+    class ProfilePublicIndex(AlgoliaIndex):
+        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_PUBLIC"]
+        should_index = "is_searchable_public"
 
         fields = [
             "job_title",
@@ -50,6 +49,49 @@ if settings.IS_ENABLE_ALGOLIA:
             ["offering", "offering"],
             ["looking_for", "looking_for"],
         ]
+
+    class ProfileInternalIndex(AlgoliaIndex):
+        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_INTERNAL"]
+        should_index = "is_searchable_internal"
+        fields = ProfilePublicIndex.fields
+
+    @register(Profile)
+    class ProfileMetaIndex(AlgoliaIndex):
+        def __init__(self, model, client, settings):
+            self.indices = [
+                ProfilePublicIndex(model, client, settings),
+                ProfileInternalIndex(model, client, settings),
+            ]
+
+        def raw_search(self, query='', params=None):
+            res = {}
+            for index in self.indices:
+                res[index.name] = index.raw_search(query, params)
+            return res
+
+        def update_records(self, qs, batch_size=1000, **kwargs):
+            for index in self.indices:
+                index.update_records(qs, batch_size, **kwargs)
+
+        def reindex_all(self, batch_size=1000):
+            for index in self.indices:
+                index.reindex_all(batch_size)
+
+        def set_settings(self):
+            for index in self.indices:
+                index.set_settings()
+
+        def clear_index(self):
+            for index in self.indices:
+                index.clear_index()
+
+        def save_record(self, instance, update_fields=None, **kwargs):
+            for index in self.indices:
+                index.save_record(instance, update_fields, **kwargs)
+
+        def delete_record(self, instance):
+            for index in self.indices:
+                index.delete_record(instance)
 
     @register(ProfileTag)
     class ProfileTagIndex(AlgoliaIndex):

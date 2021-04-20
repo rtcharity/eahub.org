@@ -26,8 +26,8 @@ class ProfileTestCase(EAHubTestCase):
         analytics_logs_is_approved = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="is_approved"
         )
-        analytics_logs_is_public = ProfileAnalyticsLog.objects.filter(
-            profile=profile, field="is_public"
+        analytics_logs_visibility = ProfileAnalyticsLog.objects.filter(
+            profile=profile, field="visibility"
         )
         analytics_logs_slug = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="slug"
@@ -47,12 +47,12 @@ class ProfileTestCase(EAHubTestCase):
 
         self.assertEqual(first_name, analytics_logs_name.first().new_value)
         self.assertEqual("True", analytics_logs_is_approved.first().new_value)
-        self.assertEqual("True", analytics_logs_is_public.first().new_value)
+        self.assertEqual("Private", analytics_logs_visibility.first().new_value)
         self.assertEqual("user1", analytics_logs_slug.first().new_value)
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(13, len(analytics_logs))
+        self.assertEqual(14, len(analytics_logs))
         self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(

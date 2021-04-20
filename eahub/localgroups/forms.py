@@ -23,7 +23,7 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
             already_selected=already_selected
         )
         queryset = queryset.filter(
-            models.Q(profile__is_public=True, profile__is_approved=True)
+            models.Q(profile__is_publicly_visible=True, profile__is_approved=True)
             | models.Q(already_selected=True)
             | models.Q(pk=user.pk)
         )
