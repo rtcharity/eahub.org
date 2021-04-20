@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.forms import ModelForm
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -11,7 +12,6 @@ from djangocms_helpers.utils.send_email import send_email
 from eahub.base.models import FeedbackURLConfig, MessagingLog, User
 from eahub.base.utils import get_admin_email
 from eahub.base.views import ReportAbuseView, SendMessageView
-from eahub.config.settings import ALGOLIA
 from eahub.feedback.forms import FeedbackForm
 from eahub.profiles.forms import DeleteProfileForm, ProfileForm
 from eahub.profiles.models import Profile, ProfileSlug
@@ -149,6 +149,12 @@ class ProfileUpdate(UpdateView):
 
     def get_object(self, queryset=None) -> Profile:
         return Profile.objects.get(user=self.request.user)
+    
+    def form_valid(self, form: ModelForm) -> HttpResponse:
+        return super().form_valid(form)
+
+    def _is_import_conformation_form(self) -> bool:
+        return bool(self.request.GET.get("import"))
 
 
 @login_required
