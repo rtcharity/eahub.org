@@ -146,7 +146,9 @@ def get_talent_search_data(user, filters):
 def get_private_profiles(user):
     k_anonymity = 15
     private_profiles = (
-        Profile.objects.filter(is_publicly_visible=False, lat__isnull=False, lon__isnull=False)
+        Profile.objects.filter(
+            is_publicly_visible=False, lat__isnull=False, lon__isnull=False
+        )
         .exclude(user_id=user.id)
         .values("lat", "lon")
         .annotate(count=Count("*"))

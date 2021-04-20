@@ -60,7 +60,7 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
         "available_to_volunteer",
         "user__date_joined",
         GivingPledgesFilter,
-        ("visibility", EnumFieldListFilter)
+        ("visibility", EnumFieldListFilter),
     ]
     search_fields = [
         "user__email",
