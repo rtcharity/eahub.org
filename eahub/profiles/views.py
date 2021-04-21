@@ -164,3 +164,4 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
 
 def profiles(request) -> HttpResponse:
     return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm() })
+
