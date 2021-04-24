@@ -149,7 +149,7 @@ class ProfileUpdate(UpdateView):
 
     def get_object(self, queryset=None) -> Profile:
         return Profile.objects.get(user=self.request.user)
-    
+
     def form_valid(self, form: ModelForm) -> HttpResponse:
         return super().form_valid(form)
 
@@ -169,5 +169,4 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
 
 
 def profiles(request) -> HttpResponse:
-    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm() })
-
+    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm()})
