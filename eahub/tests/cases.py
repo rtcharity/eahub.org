@@ -11,6 +11,7 @@ from eahub.profiles.models import (
     ProfileTag,
     ProfileTagType,
     ProfileTagTypeEnum,
+    VisibilityEnum
 )
 
 
@@ -33,6 +34,7 @@ class Gen:
             first_name=kwargs.pop("first_name", self.faker.first_name()),
             last_name=kwargs.pop("last_name", self.faker.last_name()),
             is_approved=kwargs.pop("is_approved", True),
+            visibility=kwargs.pop("visibility", VisibilityEnum.PRIVATE),
             **kwargs,
         )
 

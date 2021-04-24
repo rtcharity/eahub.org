@@ -169,13 +169,5 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
 
 
 def profiles(request) -> HttpResponse:
-    approved_user = False
-    if request.user.is_authenticated:
-        profiles = Profile.objects.all().filter(user=request.user)
-        if len(profiles) == 1 and profiles[0].is_approved:
-            approved_user = True
-    return render(
-        request,
-        "eahub/profiles.html",
-        {"feedback_form": FeedbackForm(), "approved_user": approved_user},
-    )
+    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm() })
+

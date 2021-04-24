@@ -24,7 +24,7 @@
     <div class="vue-search-component-container"
          algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
          algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
-         {% if approved_user %}
+         {% if user.profile.is_approved %}
          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES_INTERNAL }}"
          {% else %}
          algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES_PUBLIC }}"
