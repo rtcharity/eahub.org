@@ -1,6 +1,8 @@
+import re
 from typing import Any, List, Optional
 
 from import_export import fields
+from import_export.fields import Field
 from import_export.resources import ModelResource
 from import_export.widgets import ManyToManyWidget, Widget
 
@@ -27,22 +29,25 @@ class ProfileTagWidget(ManyToManyWidget):
     def clean(self, value: str, row: dict = None, *args, **kwargs) -> List[ProfileTag]:
         if not value:
             return self.model.objects.none()
-        tag_names: List[str] = value.split(";")
+        
+        is_eag_import = "\n" in value
+        separator = "\n" if is_eag_import else ";"
+        tag_names: List[str] = value.split(separator)
         tags = []
         for tag_name in tag_names:
             tag_name = tag_name.strip()
-            is_potential_non_public = tag_name == "LGBTQ+"
-            if is_potential_non_public:
-                continue
-            tag, is_created = ProfileTag.objects.get_or_create(
-                name__iexact=tag_name,
-            )
-            if is_created:
-                tag_types = []
-                for enum_type in self.enum_types:
-                    tag_types.append(ProfileTagType.objects.get(type=enum_type))
-                tag.types.add(*tag_types)
-                tag.save()
+            tag_existing = ProfileTag.objects.filter(name__iexact=tag_name).first()
+            if tag_existing:
+                tag = tag_existing
+            else:
+                tag = ProfileTag.objects.create(name=tag_name)
+
+            tag_types = []
+            for enum_type in self.enum_types:
+                tag_types.append(ProfileTagType.objects.get(type=enum_type))
+            tag.types.add(*tag_types)
+            tag.save()
+
             tags.append(tag)
         return tags
 
@@ -117,6 +122,7 @@ class ProfileResource(ModelResource):
             enum_types=[ProfileTagTypeEnum.SPEECH_TOPIC],
         ),
     )
+    _linkedin_regex = r"(?P<bio_before>.*)(?P<url>(https://www\.)?((linkedin.com|linked.in)(/in)?/[a-z0-9](-?[a-z0-9])*)/?)?(?P<bio_after>.*)"
 
     class Meta:
         model = Profile
@@ -134,6 +140,9 @@ class ProfileResource(ModelResource):
             "available_to_volunteer",
             "linkedin_url",
             "facebook_url",
+            "facebook_url",
+            "calendly_url",
+            "twitter",
             "personal_website_url",
             "country",
             "city_or_town",
@@ -148,9 +157,15 @@ class ProfileResource(ModelResource):
             "tags_affiliation",
         ]
 
-    def import_field(self, field: str, obj: Profile, data: dict, is_m2m: bool = False):
-        regex = r"(.*)(?P<linkedin>(https://www\.)?((linkedin.com|linked.in)(/in)?/[a-z0-9](-?[a-z0-9])*)/?)?(.*)"
-        super().import_field(field, obj, data, is_m2m)
+    def import_field(self, field: Field, obj: Profile, data: dict, is_m2m: bool = False):
+        if field.column_name == "linkedin_url":
+            match = re.search(self._linkedin_regex, data[field.attribute])
+            if match.group("url"):
+                obj.linkedin_url = match.group("url")
+            if match.group("bio_before") or match.group("bio_after"):
+                obj.summary += f"{match.group('bio_before')} {match.group('bio_after')}"
+        else:
+            super().import_field(field, obj, data, is_m2m)
 
 
 class ProfileAnalyticsResource(ModelResource):

@@ -148,6 +148,8 @@ class Profile(models.Model):
     )
     linkedin_url = models.URLField(max_length=400, blank=True, verbose_name="Linkedin")
     facebook_url = models.URLField(max_length=400, blank=True, verbose_name="Facebook")
+    calendly_url = models.CharField(max_length=512, blank=True)
+    twitter = models.CharField(max_length=512, blank=True)
     personal_website_url = models.URLField(
         max_length=400, blank=True, verbose_name="Personal Website"
     )

@@ -1,13 +1,9 @@
-from django.test import override_settings
 from django.urls import reverse
 
 from eahub.profiles.models import VisibilityEnum
 from eahub.tests.cases import EAHubTestCase
 
 
-@override_settings(
-    STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
-)
 class ProfileTestCase(EAHubTestCase):
     def test_private_profile_hidden(self):
         profile = self.gen.profile(

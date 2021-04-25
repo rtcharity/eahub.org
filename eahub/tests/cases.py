@@ -55,7 +55,10 @@ class Gen:
         return tag
 
 
-@override_settings(IS_ENABLE_ALGOLA=False)
+@override_settings(
+    IS_ENABLE_ALGOLA=False,
+    STATICFILES_STORAGE="django.contrib.staticfiles.storage.StaticFilesStorage"
+)
 class EAHubTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
