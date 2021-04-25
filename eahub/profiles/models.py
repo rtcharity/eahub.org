@@ -189,7 +189,7 @@ class Profile(models.Model):
     )
     visibility = EnumField(
         VisibilityEnum,
-        max_length=16, 
+        max_length=16,
         default=VisibilityEnum.PRIVATE,
         verbose_name="Profile visibility"
     )
