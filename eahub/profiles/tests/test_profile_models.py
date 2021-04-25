@@ -47,7 +47,7 @@ class ProfileTestCase(EAHubTestCase):
 
         self.assertEqual(first_name, analytics_logs_name.first().new_value)
         self.assertEqual("True", analytics_logs_is_approved.first().new_value)
-        self.assertEqual("Private", analytics_logs_visibility.first().new_value)
+        self.assertEqual("Private: Visible to you only", analytics_logs_visibility.first().new_value)
         self.assertEqual("user1", analytics_logs_slug.first().new_value)
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
