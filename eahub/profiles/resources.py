@@ -167,8 +167,11 @@ class ProfileResource(ModelResource):
     ):
         super().after_save_instance(instance, using_transactions, dry_run)
         if dry_run is False:
-            EmailAddress.objects.filter(user=instance.user, primary=True).update(
-                verified=True
+            EmailAddress.objects.filter(
+                user=instance.user, email=instance.user.email
+            ).update(verified=True)
+            EmailAddress.objects.get_or_create(
+                user=instance.user, email=instance.user.email, verified=True
             )
 
     def import_field(
