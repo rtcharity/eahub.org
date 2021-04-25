@@ -1,0 +1,24 @@
+{% extends 'base_bs5.html' %}
+
+{% load static %}
+
+{% block title %}Internal profile{% endblock %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="profile-internal">
+        <h2 class="mb-3 mt-4">Internal profile</h2>
+        <p>
+            <a href="{% url 'account_signup' %}">Sign up</a> or <a href="{% url 'account_login' %}">log in</a> to view it.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'includes/footer.html' %}
+{% endblock %}

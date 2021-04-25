@@ -23,7 +23,7 @@ class ProfileTestCase(EAHubTestCase):
         response = self.client.get(
             reverse("profiles_app:profile", args=([profile.slug]))
         )
-        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.status_code, 403)
 
     def test_internal_profile_visible_to_approved_user(self):
         profile = self.gen.profile(

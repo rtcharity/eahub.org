@@ -14,13 +14,17 @@ from eahub.base.utils import get_admin_email
 from eahub.base.views import ReportAbuseView, SendMessageView
 from eahub.feedback.forms import FeedbackForm
 from eahub.profiles.forms import DeleteProfileForm, ProfileForm
-from eahub.profiles.models import Profile, ProfileSlug
+from eahub.profiles.models import Profile, ProfileSlug, VisibilityEnum
 
 
 def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
     profile: Profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
+        if profile.visibility == VisibilityEnum.INTERNAL:
+            return render(
+                request, template_name="eahub/profile_internal.html", status=403
+            )
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profiles_app:profile", slug=profile.slug, permanent=True)
