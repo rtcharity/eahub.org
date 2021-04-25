@@ -144,17 +144,22 @@ class SendProfileMessageView(SendMessageView):
 @method_decorator(login_required, name="dispatch")
 class ProfileUpdate(UpdateView):
     model = Profile
-    template_name = "eahub/edit_profile.html"
+    template_name = "eahub/profile_update.html"
     form_class = ProfileForm
 
     def get_object(self, queryset=None) -> Profile:
         return Profile.objects.get(user=self.request.user)
 
-    def form_valid(self, form: ModelForm) -> HttpResponse:
-        return super().form_valid(form)
 
-    def _is_import_conformation_form(self) -> bool:
-        return bool(self.request.GET.get("import"))
+class ProfileUpdateImport(ProfileUpdate):
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["is_import_conformation"] = True
+        return context
+
+    def form_valid(self, form: ModelForm) -> HttpResponse:
+
+        return super().form_valid(form)
 
 
 @login_required
