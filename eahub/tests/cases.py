@@ -11,7 +11,7 @@ from eahub.profiles.models import (
     ProfileTag,
     ProfileTagType,
     ProfileTagTypeEnum,
-    VisibilityEnum
+    VisibilityEnum,
 )
 
 

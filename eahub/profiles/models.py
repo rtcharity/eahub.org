@@ -58,9 +58,9 @@ class VisibilityEnum(Enum):
     PRIVATE = "private"
 
     class Labels:
-        PUBLIC = 'Public: Visible to anyone on the Web'
-        INTERNAL = 'Internal: Visible to anyone on the Hub'
-        PRIVATE = 'Private: Visible to you only'
+        PUBLIC = "Public: Visible to anyone on the Web"
+        INTERNAL = "Internal: Visible to anyone on the Hub"
+        PRIVATE = "Private: Visible to you only"
 
 
 class ProfileTagTypeEnum(Enum):
@@ -191,7 +191,7 @@ class Profile(models.Model):
         VisibilityEnum,
         max_length=16,
         default=VisibilityEnum.PRIVATE,
-        verbose_name="Profile visibility"
+        verbose_name="Profile visibility",
     )
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 

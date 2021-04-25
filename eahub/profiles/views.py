@@ -11,7 +11,6 @@ from djangocms_helpers.utils.send_email import send_email
 from eahub.base.models import FeedbackURLConfig, MessagingLog, User
 from eahub.base.utils import get_admin_email
 from eahub.base.views import ReportAbuseView, SendMessageView
-from eahub.config.settings import ALGOLIA
 from eahub.feedback.forms import FeedbackForm
 from eahub.profiles.forms import DeleteProfileForm, ProfileForm
 from eahub.profiles.models import Profile, ProfileSlug, VisibilityEnum
@@ -21,11 +20,9 @@ def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
     profile: Profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
-        if profile.visibility==VisibilityEnum.INTERNAL:
+        if profile.visibility == VisibilityEnum.INTERNAL:
             return render(
-                request,
-                template_name="eahub/profile_internal.html",
-                status=403
+                request, template_name="eahub/profile_internal.html", status=403
             )
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
@@ -169,5 +166,4 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
 
 
 def profiles(request) -> HttpResponse:
-    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm() })
-
+    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm()})
