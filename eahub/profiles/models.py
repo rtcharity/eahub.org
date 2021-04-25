@@ -58,9 +58,9 @@ class VisibilityEnum(Enum):
     PRIVATE = "private"
 
     class Labels:
-        PUBLIC = "Public: Visible to anyone on the Web"
-        INTERNAL = "Internal: Visible to anyone on the Hub"
-        PRIVATE = "Private: Visible to you only"
+        PUBLIC = "Public (visible to anyone on the web)"
+        INTERNAL = "Internal (visible to approved Hub users)"
+        PRIVATE = "Private (visible to you only)"
 
 
 class ProfileTagTypeEnum(Enum):

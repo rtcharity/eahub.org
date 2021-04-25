@@ -23,14 +23,14 @@ def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
         if profile.visibility == VisibilityEnum.INTERNAL:
             return render(
-                request, template_name="eahub/profile_internal.html", status=403
+                request, template_name="profiles/profile_internal.html", status=403
             )
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profiles_app:profile", slug=profile.slug, permanent=True)
     return render(
         request,
-        template_name="eahub/profile.html",
+        template_name="profiles/profile.html",
         context={
             "profile": profile,
             "is_render_cause_area_section": (
@@ -148,7 +148,7 @@ class SendProfileMessageView(SendMessageView):
 @method_decorator(login_required, name="dispatch")
 class ProfileUpdate(UpdateView):
     model = Profile
-    template_name = "eahub/profile_update.html"
+    template_name = "profiles/profile_update.html"
     form_class = ProfileForm
 
     def get_object(self, queryset=None) -> Profile:
@@ -162,7 +162,16 @@ class ProfileUpdateImport(ProfileUpdate):
         return context
 
     def form_valid(self, form: ModelForm) -> HttpResponse:
-
+        if form.cleaned_data["visibility"] == VisibilityEnum.PUBLIC:
+            messages.success(
+                self.request,
+                "Thank you for publicly publishing your Hub profile! Your profile is now visible to everyone on the web.",
+            )
+        elif form.cleaned_data["visibility"] == VisibilityEnum.INTERNAL:
+            messages.success(
+                self.request,
+                "Thank you for internally publishing your Hub profile! Your profile is now visible to approved Hub users.",
+            )
         return super().form_valid(form)
 
 
@@ -174,8 +183,8 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
         return redirect("account_logout")
     else:
         form = DeleteProfileForm()
-        return render(request, "eahub/delete_profile.html", {"form": form})
+        return render(request, "profiles/delete_profile.html", {"form": form})
 
 
 def profiles(request) -> HttpResponse:
-    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm()})
+    return render(request, "profiles/profiles.html", {"feedback_form": FeedbackForm()})

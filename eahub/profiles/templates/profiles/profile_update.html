@@ -13,7 +13,7 @@
 {% block content %}
   {% addtoblock 'body_classes' %}profile-edit-body{% endaddtoblock %}
 
-  {% include 'includes/messages.html' %}
+  {% include 'includes/messages.html' with messages=messages %}
 
   <script>
     const DJANGO = {
@@ -37,7 +37,12 @@
       </div>
     {% endif %}
 
-    <form method="post" action="{% url 'profiles_app:edit_profile' %}"
+    <form method="post"
+      {% if is_import_confirmation %}
+        action="{% url 'profiles_app:edit_profile' %}"
+      {% else %}
+        action="{% url 'profiles_app:profile_update_import' %}"
+      {% endif %}
       enctype="multipart/form-data"
       id="profile-update-form"
     >

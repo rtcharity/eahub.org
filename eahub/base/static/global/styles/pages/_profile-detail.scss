@@ -13,6 +13,9 @@
       max-width: 1280px;
     }
   }
+  .alert {
+    margin-bottom: 0;
+  }
   .prof__header {
     position: relative;
     
@@ -194,7 +197,6 @@
         }
         .alert {
           margin-top: auto;
-          margin-bottom: 0;
         }
       }
       .btn-edit {
