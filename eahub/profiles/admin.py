@@ -82,10 +82,6 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
         del actions["delete_selected"]
         return actions
 
-    @options(desc="Giving Pledges", order="profile.giving_pledges")
-    def giving_pledges_readable(self, obj: Profile):
-        return obj.get_pretty_giving_pledges()
-
     @options(desc="email", order="user__email")
     def email(self, obj: Profile):
         return obj.user.email

@@ -1,6 +1,7 @@
 import re
 from typing import Any, List, Optional
 
+from allauth.account.models import EmailAddress
 from import_export import fields
 from import_export.fields import Field
 from import_export.resources import ModelResource
@@ -154,20 +155,34 @@ class ProfileResource(ModelResource):
             "tags_cause_area",
             "tags_career_interest",
             "tags_affiliation",
+            "is_approved",
+            "visibility",
         ]
+
+    def after_save_instance(
+        self,
+        instance: Profile,
+        using_transactions: bool,
+        dry_run: bool,
+    ):
+        super().after_save_instance(instance, using_transactions, dry_run)
+        if dry_run is False:
+            EmailAddress.objects.filter(user=instance.user, primary=True).update(
+                verified=True
+            )
 
     def import_field(
         self, field: Field, obj: Profile, data: dict, is_m2m: bool = False
     ):
         if field.column_name == "linkedin_url":
             match = re.search(
-                r"(?P<bio_before>.*)(?P<url>(https://www\.)?((linkedin.com|linked.in)(/in)?/[a-z0-9](-?[a-z0-9])*)/?)?(?P<bio_after>.*)",
+                r"(?P<url>(https://www\.)?((linkedin.com|linked.in)(/in)?/[a-z0-9](-?[a-z0-9])*)/?)",
                 data[field.attribute],
             )
-            if match.group("url"):
+            if match and match.group("url"):
                 obj.linkedin_url = match.group("url")
-            if match.group("bio_before") or match.group("bio_after"):
-                obj.summary += f"{match.group('bio_before')} {match.group('bio_after')}"
+            else:
+                obj.summary = data[field.attribute]
         else:
             super().import_field(field, obj, data, is_m2m)
 
