@@ -192,7 +192,7 @@ class Profile(models.Model):
     visibility = EnumField(
         VisibilityEnum,
         max_length=16,
-        default=VisibilityEnum.PRIVATE,
+        default=VisibilityEnum.PUBLIC,
         verbose_name="Profile visibility",
     )
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
