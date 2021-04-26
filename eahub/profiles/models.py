@@ -414,10 +414,6 @@ class Profile(models.Model):
         return self.visibility == VisibilityEnum.PRIVATE
 
 
-class ProfileInternal(Profile):
-    pass
-
-
 class ProfileAnalyticsLog(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     time = models.DateTimeField(default=timezone.now)
