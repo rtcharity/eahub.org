@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
             model_name="profile",
             name="visibility",
             field=enumfields.fields.EnumField(
-                default="private",
+                default="public",
                 enum=eahub.profiles.models.VisibilityEnum,
                 max_length=16,
             ),
