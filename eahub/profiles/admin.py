@@ -55,7 +55,7 @@ class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
         "expertise_areas_other",
         "looking_for",
         "offering",
-        "visibility",
+        "get_visibility",
         "date_joined",
     )
     list_filter = [
@@ -113,6 +113,10 @@ class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
     @options(desc="date joined", order="user__date_joined")
     def date_joined(self, obj: Profile):
         return obj.user.date_joined
+
+    @options(desc="Visibility")
+    def get_visibility(self, profile: Profile) -> str:
+        return profile.visibility.value
 
     @options(desc="Approve selected profiles", allowed_permissions=["change"])
     def approve_profiles(self, request: HttpRequest, queryset: QuerySet):
