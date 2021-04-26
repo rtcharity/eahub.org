@@ -51,7 +51,7 @@ if settings.IS_ENABLE_ALGOLIA:
         ]
 
     class ProfileInternalIndex(AlgoliaIndex):
-        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_PUBLIC"]
+        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_INTERNAL"]
         should_index = "is_searchable_internal"
         fields = ProfilePublicIndex.fields
 
