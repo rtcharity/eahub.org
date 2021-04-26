@@ -135,6 +135,8 @@ class ProfileResource(ModelResource):
             "first_name",
             "last_name",
             "summary",
+            "offering",
+            "looking_for",
             "organization",
             "study_subject",
             "job_title",
