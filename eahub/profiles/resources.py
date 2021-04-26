@@ -133,6 +133,7 @@ class ProfileResource(ModelResource):
             "user",
             "first_name",
             "last_name",
+            "summary",
             "organization",
             "study_subject",
             "job_title",
@@ -188,10 +189,6 @@ class ProfileResource(ModelResource):
                 obj.summary = data[field.attribute]
         else:
             super().import_field(field, obj, data, is_m2m)
-
-    def skip_row(self, instance, original) -> bool:
-        is_profile_exists = getattr(original, "pk") is not None
-        return is_profile_exists
 
 
 class ProfileAnalyticsResource(ModelResource):

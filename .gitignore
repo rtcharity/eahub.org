@@ -91,6 +91,7 @@ ENV/
 media/
 data.tar.gz
 *.sql
+/*.csv
 
 # JS dependencies
 node_modules
