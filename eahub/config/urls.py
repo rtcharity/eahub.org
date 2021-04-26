@@ -39,6 +39,11 @@ urlpatterns = [
         views.CustomisedPasswordResetFromKeyView.as_view(),
         name="account_reset_password_from_key",
     ),
+    url(
+        "profile/import-confirmation/set-password/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$",
+        views.ImportPasswordResetFromKeyView.as_view(),
+        name="profile_import_password_set",
+    ),
     path("accounts/", include("allauth.urls")),
     path("profile/", include("eahub.profiles.urls")),
     path("profiles/", profiles, name="profiles"),

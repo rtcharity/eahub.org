@@ -1,8 +1,13 @@
 from adminutils import options
+from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
 from allauth.account.models import EmailAddress
+from allauth.account.utils import user_pk_to_url_str
 from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpRequest
+from django.http import HttpResponse
+from django.urls import reverse
+from django_object_actions import DjangoObjectActions
 from enumfields.admin import EnumFieldListFilter
 from import_export.admin import ImportExportMixin
 from rangefilter.filter import DateRangeFilter
@@ -34,7 +39,7 @@ class GivingPledgesFilter(admin.SimpleListFilter):
 
 
 @admin.register(Profile)
-class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
+class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
     actions = ["approve_profiles", "delete_profiles_and_users"]
     model = Profile
     resource_class = ProfileResource
@@ -76,11 +81,26 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
         "tags_speech_topic",
         "tags_pledge",
     ]
+    
+    change_actions = [
+        "generate_password_reset_link",
+    ]
 
     def get_actions(self, request: HttpRequest) -> dict:
         actions: dict = super().get_actions(request)
         del actions["delete_selected"]
         return actions
+
+    def generate_password_reset_link(self, request: HttpRequest, obj: Profile):
+        token_generator = EmailAwarePasswordResetTokenGenerator()
+        url = reverse(
+            "profile_import_password_set",
+            kwargs=dict(
+                uidb36=user_pk_to_url_str(obj.user),
+                key=token_generator.make_token(obj.user),
+            ),
+        )
+        return HttpResponse(url)
 
     @options(desc="email", order="user__email")
     def email(self, obj: Profile):

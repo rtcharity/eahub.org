@@ -41,8 +41,12 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
             self.request,
             self.reset_user,
             email_verification=app_settings.EMAIL_VERIFICATION,
-            redirect_url=reverse("profiles_app:edit_profile"),
+            redirect_url=self.success_url,
         )
+
+
+class ImportPasswordResetFromKeyView(CustomisedPasswordResetFromKeyView):
+    success_url = reverse_lazy("profiles_app:profile_update_import")
 
 
 class CustomisedPasswordChangeView(LoginRequiredMixin, PasswordChangeView):

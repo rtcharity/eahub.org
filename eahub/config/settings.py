@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "sekizai",
     "captcha",
     "crispy_forms",
+    "django_object_actions",
     "django_cleanup.apps.CleanupConfig",
     "django_pwned_passwords",
     "django_extensions",
@@ -191,7 +192,7 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_URL = "account_login"
 LOGIN_REDIRECT_URL = "profiles_app:my_profile"
 LOGOUT_REDIRECT_URL = "index"
-PASSWORD_RESET_TIMEOUT_DAYS = 3
+PASSWORD_RESET_TIMEOUT_DAYS = 6
 
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
