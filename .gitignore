@@ -89,9 +89,9 @@ ENV/
 .DS_Store
 .idea
 media/
+data/*
 data.tar.gz
 *.sql
-/*.csv
 
 # JS dependencies
 node_modules

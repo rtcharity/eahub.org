@@ -1,6 +1,7 @@
 import re
 from typing import Any, List, Optional
 
+from algoliasearch_django.decorators import disable_auto_indexing
 from allauth.account.models import EmailAddress
 from import_export import fields
 from import_export.fields import Field
@@ -189,6 +190,10 @@ class ProfileResource(ModelResource):
                 obj.summary = data[field.attribute]
         else:
             super().import_field(field, obj, data, is_m2m)
+
+    def import_data(self, *args, **kwargs):
+        with disable_auto_indexing():
+            super().import_data(self, *args, **kwargs)
 
 
 class ProfileAnalyticsResource(ModelResource):
