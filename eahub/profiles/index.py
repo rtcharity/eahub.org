@@ -50,6 +50,12 @@ if settings.IS_ENABLE_ALGOLIA:
             ["looking_for", "looking_for"],
         ]
 
+    class ProfileInternalIndex(AlgoliaIndex):
+        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_PUBLIC"]
+        should_index = "is_searchable_internal"
+        fields = ProfilePublicIndex.fields
+
+
     @register(Profile)
     class ProfileMetaIndex(AlgoliaIndex):
         def __init__(self, model, client, settings):
