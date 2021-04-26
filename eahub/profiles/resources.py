@@ -191,9 +191,24 @@ class ProfileResource(ModelResource):
         else:
             super().import_field(field, obj, data, is_m2m)
 
-    def import_data(self, *args, **kwargs):
+    def import_data(
+        self,
+        dataset,
+        dry_run: bool = False,
+        raise_errors: bool = False,
+        use_transactions: Optional[bool] = None,
+        collect_failed_rows: bool = False,
+        **kwargs,
+    ):
         with disable_auto_indexing():
-            super().import_data(self, *args, **kwargs)
+            return super().import_data(
+                dataset,
+                dry_run=dry_run,
+                raise_errors=raise_errors,
+                use_transactions=use_transactions,
+                collect_failed_rows=collect_failed_rows,
+                **kwargs,
+            )
 
 
 class ProfileAnalyticsResource(ModelResource):

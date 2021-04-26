@@ -21,7 +21,7 @@ class Command(base.BaseCommand):
                 email for email in emails_to_import if email not in emails_existing
             ]
             df_only_created = df.loc[df["user"].isin(emails_filtered)]
-            chunks_amount = len(df_only_created) // 20
+            chunks_amount = len(df_only_created) // 50
 
             for chunk_index, chunk in enumerate(
                 numpy.array_split(df_only_created, chunks_amount)
