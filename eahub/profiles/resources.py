@@ -9,6 +9,7 @@ from import_export.resources import ModelResource
 from import_export.widgets import ManyToManyWidget, Widget
 
 from eahub.base.models import User
+from eahub.localgroups.models import LocalGroup
 from eahub.profiles.models import (
     Profile,
     ProfileAnalyticsLog,
@@ -63,6 +64,10 @@ class ProfileResource(ModelResource):
     user = fields.Field(
         attribute="user",
         widget=UserWidget(),
+    )
+    local_groups = fields.Field(
+        attribute="local_groups",
+        widget=ManyToManyWidget(model=LocalGroup, field="name"),
     )
     tags_career_stage = fields.Field(
         attribute="tags_career_stage",
@@ -144,13 +149,12 @@ class ProfileResource(ModelResource):
             "available_to_volunteer",
             "linkedin_url",
             "facebook_url",
-            "facebook_url",
             "calendly_url",
             "twitter",
             "personal_website_url",
             "country",
             "city_or_town",
-            "linkedin",
+            "local_groups",
             "tags_career_stage",
             "tags_university",
             "tags_ea_involvement",
