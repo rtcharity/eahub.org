@@ -40,13 +40,19 @@ class Command(base.BaseCommand):
         ).count()
         print("before event announcement:", count)
 
+        count = Profile.objects.filter(
+            user__email__in=emails_to_import,
+            user__date_joined__lt=datetime.datetime(2021, 1, 1, tzinfo=pytz.utc),
+        ).count()
+        print("before 2021:", count)
+
         count = (
             ProfileAnalyticsLog.objects.filter(
                 profile__user__email__in=emails_to_import,
                 time__gt=eag_event_start,
                 time__lt=datetime.datetime.now(tz=pytz.utc),
             )
-            .values("action_uuid")
+            .values("profile__user__email")
             .distinct()
             .count()
         )
