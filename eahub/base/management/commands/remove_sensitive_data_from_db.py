@@ -4,6 +4,7 @@ from faker import Faker
 
 from eahub.base.models import User
 from eahub.profiles.models import Profile, ProfileAnalyticsLog
+from eahub.profiles.models import VisibilityEnum
 
 
 class Command(base.BaseCommand):
@@ -25,7 +26,7 @@ class Command(base.BaseCommand):
         ProfileAnalyticsLog.objects.all().delete()
 
         User.objects.filter(profile__id__in=profiles_to_delete).delete()
-        User.objects.filter(profile__is_publicly_visible=False).delete()
+        User.objects.filter(profile__visibility=VisibilityEnum.PRIVATE).delete()
 
         fake_password_hash = make_password("fake_password")
         User.objects.update(password=fake_password_hash)

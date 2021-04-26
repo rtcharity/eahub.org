@@ -19,7 +19,7 @@ from django.views.generic.edit import FormView
 from eahub.base.forms import ReportAbuseForm, SendMessageForm
 from eahub.localgroups.models import LocalGroup as Group
 from eahub.profiles.forms import SignupForm
-from eahub.profiles.models import Profile
+from eahub.profiles.models import Profile, VisibilityEnum
 
 
 class EAHubResetPasswordKeyForm(ResetPasswordKeyForm):
@@ -150,10 +150,10 @@ def get_talent_search_data(user, filters):
 def get_private_profiles(user):
     k_anonymity = 15
     private_profiles = (
-        Profile.objects.filter(
-            is_publicly_visible=False, lat__isnull=False, lon__isnull=False
-        )
+        Profile.objects.filter(lat__isnull=False, lon__isnull=False)
         .exclude(user_id=user.id)
+        .exclude(visibility=VisibilityEnum.PRIVATE)
+        .exclude(visibility=VisibilityEnum.INTERNAL)
         .values("lat", "lon")
         .annotate(count=Count("*"))
         .filter(count__gte=k_anonymity)

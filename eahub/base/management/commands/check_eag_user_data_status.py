@@ -5,8 +5,7 @@ import pandas as pd
 import pytz
 from django.core.management import base
 
-from eahub.profiles.models import Profile
-from eahub.profiles.models import ProfileAnalyticsLog
+from eahub.profiles.models import Profile, ProfileAnalyticsLog
 
 
 class Command(base.BaseCommand):

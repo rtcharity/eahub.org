@@ -4,8 +4,7 @@ from allauth.account.models import EmailAddress
 from allauth.account.utils import user_pk_to_url_str
 from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpRequest
-from django.http import HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.urls import reverse
 from django_object_actions import DjangoObjectActions
 from enumfields.admin import EnumFieldListFilter
@@ -81,7 +80,7 @@ class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
         "tags_speech_topic",
         "tags_pledge",
     ]
-    
+
     change_actions = [
         "generate_password_reset_link",
     ]

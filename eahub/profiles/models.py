@@ -125,7 +125,7 @@ class ProfileManager(models.Manager):
         if user.is_superuser:
             return self.all()
         return self.filter(
-            models.Q(is_publicly_visible=True, is_approved=True)
+            models.Q(visibility=VisibilityEnum.PUBLIC, is_approved=True)
             | models.Q(user_id=user.pk)
         )
 
@@ -409,9 +409,6 @@ class Profile(models.Model):
 
     def get_image_placeholder(self) -> str:
         return f"Avatar{self.id % 10}.jpg"
-
-    def is_publicly_visible(self) -> bool:
-        return self.visibility == VisibilityEnum.PUBLIC
 
     def is_private(self) -> bool:
         return self.visibility == VisibilityEnum.PRIVATE

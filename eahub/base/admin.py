@@ -41,7 +41,7 @@ class UserAdmin(
     ]
     search_fields = ["email", "profile__first_name", "profile__last_name"]
     actions = ["approve_profiles"]
-    
+
     @options(desc="Approved", boolean=True)
     def is_profile_approved(self, user) -> Optional[bool]:
         profile = get_profile(user)
