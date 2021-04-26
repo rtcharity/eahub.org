@@ -6,7 +6,6 @@ from eahub.profiles.models import Profile, ProfileTag, ProfileInternal
 
 if settings.IS_ENABLE_ALGOLIA:
 
-    @register(Profile)
     class ProfilePublicIndex(AlgoliaIndex):
         index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_PUBLIC"]
         should_index = "is_searchable_public"
@@ -50,13 +49,6 @@ if settings.IS_ENABLE_ALGOLIA:
             ["offering", "offering"],
             ["looking_for", "looking_for"],
         ]
-
-
-    @register(ProfileInternal)
-    class ProfileInternalIndex(AlgoliaIndex):
-        index_name = settings.ALGOLIA["INDEX_NAME_PROFILES_INTERNAL"]
-        should_index = "is_searchable_internal"
-        fields = ProfilePublicIndex.fields
 
     @register(Profile)
     class ProfileMetaIndex(AlgoliaIndex):
