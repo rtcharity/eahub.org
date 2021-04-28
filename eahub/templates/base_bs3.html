@@ -17,3 +17,20 @@
     <link  rel="stylesheet" href="{% static 'dist/global_bs3.css' %}">
   {% endif %}
 {% endblock static %}
+
+{% block messages %}
+
+{% if messages %}
+<div class="container" style="padding-top: 20px; max-width: 70%">
+  {% for message in messages %}
+  <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable" {% endif %}>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div>{{ message }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% endblock messages %}

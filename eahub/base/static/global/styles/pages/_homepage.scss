@@ -303,7 +303,23 @@
     }
   }
 }
-
 .alert-success {
   background: green;
+}
+
+.hub-success {
+  color: #4a6a65 ;
+  background-color: #e5efee;
+  border-color: #d7e7e5;
+  border: none;
+  font-weight: normal;
+  border-radius: 4px;
+}
+
+.hub-error {
+  background-color: #E4F5B1;
+  border: none;
+  color: black;
+  font-weight: normal;
+  border-radius: 4px;
 }

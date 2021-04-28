@@ -559,10 +559,12 @@ textarea {
 }
 
 .hub-success {
-  background-color: #A7DBAB;
+  color: #4a6a65 ;
   border: none;
-  color: black;
+  background-color: #e5efee;
+  border-color: #d7e7e5;
   font-weight: normal;
+  border-radius: 4px;
 }
 
 .hub-error {
