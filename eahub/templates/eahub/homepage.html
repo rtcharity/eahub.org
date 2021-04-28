@@ -11,8 +11,6 @@
 {% block content %}
   {% addtoblock 'body_classes' %}homepage home{% endaddtoblock %}
 
-  {% include 'includes/messages.html' with messages=messages %}
-
   <div class="container">
     <div class="row home__intro justify-content-center">
       <div class="col-sm-24 col-lg-8 order-1 order-lg-0 align-self-end">
@@ -41,6 +39,7 @@
           alt="world map"
         >
       </div>
+        </div>
     </div>
   </div>
   <div class="container home__hero">

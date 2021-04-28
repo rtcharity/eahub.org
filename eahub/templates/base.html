@@ -137,6 +137,25 @@
     {% endblock %}
 
     <main>
+
+      <br>
+      {% if messages %}
+      <div class="container mb-5 mt-5">
+        <div class="row">
+          <!-- remove the col-xs-10 row if want full width -->
+          <div class="col-m-4"> 
+          {% for message in messages %}
+          <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable"{% endif %}>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <div>{{ message }}</div>
+          </div>
+          {% endfor %}
+          </div>
+      </div>
+      {% endif %} 
+
       {% block content %}{% endblock %}
     </main>
       
