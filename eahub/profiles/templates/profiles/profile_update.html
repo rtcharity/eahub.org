@@ -16,12 +16,12 @@
   {% include 'includes/messages.html' with messages=messages %}
 
   <script>
-    const DJANGO = {
+    window.DJANGO = {
       algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,
       algoliaApplicationId: `{{ settings.ALGOLIA.APPLICATION_ID }}`,
       algoliaIndexName: `{{ settings.ALGOLIA.INDEX_NAME_TAGS }}`,
       profilePk: {{ profile.pk }},
-      isImportConfirmation: {{ is_import_conformation|lower }},
+      isImportConfirmation: {{ is_import_conformation|lower|default:"false" }},
     }
   </script>
 

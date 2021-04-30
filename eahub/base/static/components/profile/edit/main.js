@@ -19,20 +19,20 @@ function initTagInputs() {
     render(createElement) {
       return createElement(App, {
         props: {
-          algoliaApiKey: DJANGO.algoliaApiKey,
-          algoliaApplicationId: DJANGO.algoliaApplicationId,
-          algoliaIndex: DJANGO.algoliaIndexName,
-          profilePk: DJANGO.profilePk,
+          algoliaApiKey: window.DJANGO.algoliaApiKey,
+          algoliaApplicationId: window.DJANGO.algoliaApplicationId,
+          algoliaIndex: window.DJANGO.algoliaIndexName,
+          profilePk: window.DJANGO.profilePk,
           typeName: this.$el
-          .parentElement.getAttribute('data-type-name'),
+            .parentElement.getAttribute('data-type-name'),
           typeLabel: this.$el
-          .parentElement.getAttribute('data-type-label'),
+            .parentElement.getAttribute('data-type-label'),
           typeLabelShort: this.$el
-          .parentElement.getAttribute('data-type-label-short'),
+            .parentElement.getAttribute('data-type-label-short'),
           searchResultsCols: this.$el
-          .parentElement.getAttribute('data-search-results-cols'),
+            .parentElement.getAttribute('data-search-results-cols'),
           inputPopupIntro: this.$el
-          .parentElement.getAttribute('data-input-popup-intro'),
+            .parentElement.getAttribute('data-input-popup-intro'),
         }
       })
     },
