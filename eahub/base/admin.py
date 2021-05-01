@@ -1,8 +1,10 @@
 from typing import Optional
 
 import django_admin_relation_links
+from adminutils import options
 from authtools import admin as authtools_admin
 from django.contrib import admin
+from enumfields.admin import EnumFieldListFilter
 from rangefilter.filter import DateRangeFilter
 from solo.admin import SingletonModelAdmin
 
@@ -25,7 +27,7 @@ class UserAdmin(
         "last_login",
         "is_superuser",
         "is_staff",
-        "is_profile_public",
+        "get_visibility",
     ]
     change_links = ["profile"]
     list_filter = [
@@ -33,36 +35,30 @@ class UserAdmin(
         "is_staff",
         "is_active",
         "profile__is_approved",
-        "profile__is_public",
+        ("profile__visibility", EnumFieldListFilter),
         ("date_joined", DateRangeFilter),
         ("last_login", DateRangeFilter),
     ]
     search_fields = ["email", "profile__first_name", "profile__last_name"]
     actions = ["approve_profiles"]
 
-    def is_profile_approved(self, user):
+    @options(desc="Approved", boolean=True)
+    def is_profile_approved(self, user) -> Optional[bool]:
         profile = get_profile(user)
         if profile is None:
-            return profile
+            return None
         return profile.is_approved
 
-    is_profile_approved.short_description = "Approved?"
-    is_profile_approved.boolean = True
-
+    @options(desc="Approve selected users' profiles", allowed_permissions=["change"])
     def approve_profiles(self, request, queryset):
         Profile.objects.filter(user__in=queryset).update(is_approved=True)
 
-    approve_profiles.short_description = "Approve selected users' profiles"
-    approve_profiles.allowed_permissions = ["change"]
-
-    def is_profile_public(self, user):
+    @options(desc="Visibility")
+    def get_visibility(self, user) -> str:
         profile = get_profile(user)
         if profile is None:
-            return profile
-        return profile.is_public
-
-    is_profile_public.short_description = "Public?"
-    is_profile_public.boolean = False
+            return ""
+        return profile.visibility.value
 
 
 def get_profile(user: User) -> Optional[Profile]:

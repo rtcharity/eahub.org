@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "sekizai",
     "captcha",
     "crispy_forms",
+    "django_object_actions",
     "django_cleanup.apps.CleanupConfig",
     "django_pwned_passwords",
     "django_extensions",
@@ -191,7 +192,7 @@ AUTHENTICATION_BACKENDS = [
 LOGIN_URL = "account_login"
 LOGIN_REDIRECT_URL = "profiles_app:my_profile"
 LOGOUT_REDIRECT_URL = "index"
-PASSWORD_RESET_TIMEOUT_DAYS = 3
+PASSWORD_RESET_TIMEOUT_DAYS = 6
 
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
@@ -265,9 +266,13 @@ ALGOLIA = {
     "API_KEY_READ_ONLY": env.str(
         "API_KEY_READ_ONLY", default="19fd60051efeddf42e707383bf2f15a7"
     ),
-    "INDEX_NAME_PROFILES": env.str(
-        "ALGOLIA_INDEX_NAME_PROFILES",
+    "INDEX_NAME_PROFILES_PUBLIC": env.str(
+        "ALGOLIA_INDEX_NAME_PROFILES_PUBLIC",
         default="profiles_stage",
+    ),
+    "INDEX_NAME_PROFILES_INTERNAL": env.str(
+        "ALGOLIA_INDEX_NAME_PROFILES_INTERNAL",
+        default="profiles_stage_internal",
     ),
     "INDEX_NAME_TAGS": env.str(
         "ALGOLIA_INDEX_NAME_TAGS",

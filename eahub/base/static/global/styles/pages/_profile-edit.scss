@@ -16,6 +16,19 @@ $input-height: 37px;
   margin-bottom: 150px;
   padding-bottom: 8rem;
   
+  .alert-import {
+    font-size: 1rem;
+    margin-bottom: 3.5rem;
+    
+    .btn-link {
+      font-size: 1rem;
+      padding: 0;
+      line-height: initial;
+      vertical-align: initial;
+      text-decoration: initial;
+    }
+  }
+  
   h1 {
     font-size: 3rem;
     margin-bottom: 4rem;
@@ -25,6 +38,7 @@ $input-height: 37px;
     
     .btn-submit__container {
       display: flex;
+      flex-direction: column;
       justify-content: flex-end;
       position: sticky;
       $navbar-height: 63px;
@@ -35,6 +49,7 @@ $input-height: 37px;
         display: flex;
         justify-content: center;
         min-width: 100%;
+        margin-bottom: 1rem;
       }
     }
   }
@@ -127,7 +142,8 @@ $input-height: 37px;
   .btn-submit__container[data-pos="bottom"] {
     margin-top: 5rem;
     .btn {
-      width: 150px;
+      min-width: 150px;
+      margin-right: 1rem;
     }
   }
 }

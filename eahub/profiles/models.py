@@ -52,6 +52,17 @@ def slugify_user(name):
     return slug
 
 
+class VisibilityEnum(Enum):
+    PUBLIC = "public"
+    INTERNAL = "internal"
+    PRIVATE = "private"
+
+    class Labels:
+        PUBLIC = "Public (visible to anyone on the web)"
+        INTERNAL = "Internal (visible to approved Hub users)"
+        PRIVATE = "Private (visible to you only)"
+
+
 class ProfileTagTypeEnum(Enum):
     GENERIC = "generic"
     AFFILIATION = "affiliation"
@@ -114,7 +125,8 @@ class ProfileManager(models.Manager):
         if user.is_superuser:
             return self.all()
         return self.filter(
-            models.Q(is_public=True, is_approved=True) | models.Q(user_id=user.pk)
+            models.Q(visibility=VisibilityEnum.PUBLIC, is_approved=True)
+            | models.Q(user_id=user.pk)
         )
 
 
@@ -141,6 +153,8 @@ class Profile(models.Model):
     )
     linkedin_url = models.URLField(max_length=400, blank=True, verbose_name="Linkedin")
     facebook_url = models.URLField(max_length=400, blank=True, verbose_name="Facebook")
+    calendly_url = models.CharField(max_length=512, blank=True)
+    twitter = models.CharField(max_length=512, blank=True)
     personal_website_url = models.URLField(
         max_length=400, blank=True, verbose_name="Personal Website"
     )
@@ -174,6 +188,12 @@ class Profile(models.Model):
 
     local_groups = models.ManyToManyField(
         LocalGroup, through="Membership", blank=True, verbose_name="EA Groups"
+    )
+    visibility = EnumField(
+        VisibilityEnum,
+        max_length=16,
+        default=VisibilityEnum.PUBLIC,
+        verbose_name="Profile visibility",
     )
     slugs = contenttypes_fields.GenericRelation(ProfileSlug)
 
@@ -327,11 +347,26 @@ class Profile(models.Model):
         else:
             return None
 
-    def is_searchable(self) -> bool:
-        return self.is_approved and self.is_public and self.user.is_active
+    def is_searchable_public(self) -> bool:
+        return (
+            self.is_approved
+            and self.visibility == VisibilityEnum.PUBLIC
+            and self.user.is_active
+        )
+
+    def is_searchable_internal(self) -> bool:
+        return (
+            self.is_approved
+            and self.visibility in [VisibilityEnum.INTERNAL, VisibilityEnum.PUBLIC]
+            and self.user.is_active
+        )
 
     def is_can_receive_message(self) -> bool:
-        return self.is_approved and self.is_public and self.allow_messaging
+        return (
+            self.is_approved
+            and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
+            and self.allow_messaging
+        )
 
     def is_organiser(self) -> bool:
         return self.user.localgroup_set.exists()
@@ -374,6 +409,9 @@ class Profile(models.Model):
 
     def get_image_placeholder(self) -> str:
         return f"Avatar{self.id % 10}.jpg"
+
+    def is_private(self) -> bool:
+        return self.visibility == VisibilityEnum.PRIVATE
 
 
 class ProfileAnalyticsLog(models.Model):

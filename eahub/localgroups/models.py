@@ -76,9 +76,11 @@ class LocalGroup(models.Model):
         return urls.reverse("group", args=[self.slug])
 
     def public_organisers(self):
-        return self.organisers.filter(profile__is_public=True).order_by(
-            "profile__name", "profile__slug"
-        )
+        from eahub.profiles.models import VisibilityEnum
+
+        return self.organisers.filter(
+            profile__visibility=VisibilityEnum.PUBLIC
+        ).order_by("profile__name", "profile__slug")
 
     def organisers_names(self):
         profile_names = []

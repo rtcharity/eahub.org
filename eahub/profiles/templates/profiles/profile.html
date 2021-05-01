@@ -33,7 +33,7 @@
 {% block content %}
   {% addtoblock 'body_classes' %}profile-detail{% endaddtoblock %}
 
-  {% include 'includes/messages.html' %}
+  {% include 'includes/messages.html' with messages=messages %}
 
   <div class="container prof__header mt-6 mb-2 mb-lg-5">
     <div class="row">
@@ -48,11 +48,11 @@
             data-is-empty="true"
           >
         {% endthumbnail %}
-      
-        {% if not profile.is_public %}
+
+        {% if profile.is_private %}
           <div class="alert alert-warning"
             role="alert"
-            title="This profile is not public. Click on 'Edit' to change your settings."
+            title="This profile is private. Click on 'Edit' to change your settings."
           >
             <i class="fa fa-lock"></i> Invisible profile
           </div>

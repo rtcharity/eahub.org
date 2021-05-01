@@ -22,7 +22,7 @@ class ProfileViewSet(
 @permission_classes([IsAuthenticated])
 def create_tag_view(request: Request) -> Response:
     tag, is_created = ProfileTag.objects.get_or_create(
-        name=request.data["name"].strip(),
+        name__iexact=request.data["name"].strip(),
     )
     if is_created:
         tag.author = Profile.objects.get(user=request.user)

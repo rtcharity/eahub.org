@@ -7,6 +7,7 @@ from django.db import models
 from eahub.base import models as base_models
 from eahub.localgroups.models import LocalGroup, LocalGroupType
 from eahub.profiles import models as profiles_models
+from eahub.profiles.models import VisibilityEnum
 
 
 class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
@@ -23,7 +24,9 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
             already_selected=already_selected
         )
         queryset = queryset.filter(
-            models.Q(profile__is_public=True, profile__is_approved=True)
+            models.Q(
+                profile__visibility=VisibilityEnum.PUBLIC, profile__is_approved=True
+            )
             | models.Q(already_selected=True)
             | models.Q(pk=user.pk)
         )

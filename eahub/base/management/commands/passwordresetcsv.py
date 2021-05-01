@@ -1,11 +1,11 @@
 import csv
 
-from django import urls
-from django.contrib.auth import tokens
+from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
+from allauth.account.utils import user_pk_to_url_str
 from django.core.management import base
-from django.utils import encoding, http
+from django.urls import reverse
 
-from ....profiles import models
+from eahub.profiles.models import Profile
 
 
 class Command(base.BaseCommand):
@@ -15,22 +15,19 @@ class Command(base.BaseCommand):
         self.stdout.ending = None
         writer = csv.writer(self.stdout)
         writer.writerow(["Email Address", "Name", "One-Time Login Link"])
-        for profile in models.Profile.objects.select_related("user").filter(
-            user__password="", user__is_active=True
-        ):
+        token_generator = EmailAwarePasswordResetTokenGenerator()
+        for profile in Profile.objects.select_related("user")[:10]:
             user = profile.user
             writer.writerow(
                 [
                     user.email,
                     profile.get_full_name(),
-                    urls.reverse(
-                        "password_reset_confirm",
-                        kwargs={
-                            "uidb64": http.urlsafe_base64_encode(
-                                encoding.force_bytes(user.pk)
-                            ),
-                            "token": tokens.default_token_generator.make_token(user),
-                        },
+                    reverse(
+                        "account_reset_password_from_key",
+                        kwargs=dict(
+                            uidb36=user_pk_to_url_str(user),
+                            key=token_generator.make_token(user),
+                        ),
                     ),
                 ]
             )

@@ -1,8 +1,13 @@
 from adminutils import options
+from allauth.account.forms import EmailAwarePasswordResetTokenGenerator
 from allauth.account.models import EmailAddress
+from allauth.account.utils import user_pk_to_url_str
 from django.contrib import admin, messages
 from django.db.models import QuerySet
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
+from django.urls import reverse
+from django_object_actions import DjangoObjectActions
+from enumfields.admin import EnumFieldListFilter
 from import_export.admin import ImportExportMixin
 from rangefilter.filter import DateRangeFilter
 
@@ -33,7 +38,7 @@ class GivingPledgesFilter(admin.SimpleListFilter):
 
 
 @admin.register(Profile)
-class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
+class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
     actions = ["approve_profiles", "delete_profiles_and_users"]
     model = Profile
     resource_class = ProfileResource
@@ -49,17 +54,17 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
         "expertise_areas_other",
         "looking_for",
         "offering",
-        "is_public",
+        "get_visibility",
         "date_joined",
     )
     list_filter = [
         "user__emailaddress__verified",
         "is_approved",
-        "is_public",
         "email_visible",
         "available_to_volunteer",
         "user__date_joined",
         GivingPledgesFilter,
+        ("visibility", EnumFieldListFilter),
     ]
     search_fields = [
         "user__email",
@@ -76,14 +81,25 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
         "tags_pledge",
     ]
 
+    change_actions = [
+        "generate_password_reset_link",
+    ]
+
     def get_actions(self, request: HttpRequest) -> dict:
         actions: dict = super().get_actions(request)
         del actions["delete_selected"]
         return actions
 
-    @options(desc="Giving Pledges", order="profile.giving_pledges")
-    def giving_pledges_readable(self, obj: Profile):
-        return obj.get_pretty_giving_pledges()
+    def generate_password_reset_link(self, request: HttpRequest, obj: Profile):
+        token_generator = EmailAwarePasswordResetTokenGenerator()
+        url = reverse(
+            "profile_import_password_set",
+            kwargs=dict(
+                uidb36=user_pk_to_url_str(obj.user),
+                key=token_generator.make_token(obj.user),
+            ),
+        )
+        return HttpResponse(url)
 
     @options(desc="email", order="user__email")
     def email(self, obj: Profile):
@@ -96,6 +112,10 @@ class ProfileAdmin(ImportExportMixin, admin.ModelAdmin):
     @options(desc="date joined", order="user__date_joined")
     def date_joined(self, obj: Profile):
         return obj.user.date_joined
+
+    @options(desc="Visibility")
+    def get_visibility(self, profile: Profile) -> str:
+        return profile.visibility.value
 
     @options(desc="Approve selected profiles", allowed_permissions=["change"])
     def approve_profiles(self, request: HttpRequest, queryset: QuerySet):

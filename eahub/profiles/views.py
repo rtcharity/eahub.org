@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.forms import ModelForm
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -13,19 +14,23 @@ from eahub.base.utils import get_admin_email
 from eahub.base.views import ReportAbuseView, SendMessageView
 from eahub.feedback.forms import FeedbackForm
 from eahub.profiles.forms import DeleteProfileForm, ProfileForm
-from eahub.profiles.models import Profile, ProfileSlug
+from eahub.profiles.models import Profile, ProfileSlug, VisibilityEnum
 
 
 def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
     slug_entry = get_object_or_404(ProfileSlug, slug=slug)
     profile: Profile = slug_entry.content_object
     if not (profile and request.user.has_perm("profiles.view_profile", profile)):
+        if profile.visibility == VisibilityEnum.INTERNAL:
+            return render(
+                request, template_name="profiles/profile_internal.html", status=403
+            )
         raise Http404("No profile exists with that slug.")
     if slug_entry.redirect:
         return redirect("profiles_app:profile", slug=profile.slug, permanent=True)
     return render(
         request,
-        template_name="eahub/profile.html",
+        template_name="profiles/profile.html",
         context={
             "profile": profile,
             "is_render_cause_area_section": (
@@ -143,11 +148,31 @@ class SendProfileMessageView(SendMessageView):
 @method_decorator(login_required, name="dispatch")
 class ProfileUpdate(UpdateView):
     model = Profile
-    template_name = "eahub/edit_profile.html"
+    template_name = "profiles/profile_update.html"
     form_class = ProfileForm
 
     def get_object(self, queryset=None) -> Profile:
         return Profile.objects.get(user=self.request.user)
+
+
+class ProfileUpdateImport(ProfileUpdate):
+    def get_context_data(self, **kwargs) -> dict:
+        context = super().get_context_data(**kwargs)
+        context["is_import_conformation"] = True
+        return context
+
+    def form_valid(self, form: ModelForm) -> HttpResponse:
+        if form.cleaned_data["visibility"] == VisibilityEnum.PUBLIC:
+            messages.success(
+                self.request,
+                "Thank you for publicly publishing your Hub profile! Your profile is now visible to everyone on the web.",
+            )
+        elif form.cleaned_data["visibility"] == VisibilityEnum.INTERNAL:
+            messages.success(
+                self.request,
+                "Thank you for internally publishing your Hub profile! Your profile is now visible to approved Hub users.",
+            )
+        return super().form_valid(form)
 
 
 @login_required
@@ -158,8 +183,8 @@ def delete_profile(request: HttpRequest) -> HttpResponse:
         return redirect("account_logout")
     else:
         form = DeleteProfileForm()
-        return render(request, "eahub/delete_profile.html", {"form": form})
+        return render(request, "profiles/delete_profile.html", {"form": form})
 
 
 def profiles(request) -> HttpResponse:
-    return render(request, "eahub/profiles.html", {"feedback_form": FeedbackForm()})
+    return render(request, "profiles/profiles.html", {"feedback_form": FeedbackForm()})

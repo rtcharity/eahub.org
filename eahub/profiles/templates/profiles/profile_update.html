@@ -8,29 +8,55 @@
 {% endblock navbar %}
 
 {% block title %}Edit Profile{% endblock %}
+{% render_block 'form_before' %}
 
 {% block content %}
   {% addtoblock 'body_classes' %}profile-edit-body{% endaddtoblock %}
 
-  {% include 'includes/messages.html' %}
+  {% include 'includes/messages.html' with messages=messages %}
 
   <script>
-    const DJANGO = {
+    window.DJANGO = {
       algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,
       algoliaApplicationId: `{{ settings.ALGOLIA.APPLICATION_ID }}`,
       algoliaIndexName: `{{ settings.ALGOLIA.INDEX_NAME_TAGS }}`,
       profilePk: {{ profile.pk }},
+      isImportConfirmation: {{ is_import_conformation|lower|default:"false" }},
     }
   </script>
 
   <div class="container profile-edit">
+  
+    {% if is_import_conformation %}
+      <div class="alert alert-secondary alert-import" role="alert">
+        Welcome! We've imported your profile, for now it's visible only to you.
+        Please review it before publishing.
+      </div>
+    {% endif %}
 
-    <form method="post" action="{% url 'profiles_app:edit_profile' %}" enctype="multipart/form-data">
+    <form method="post"
+      {% if is_import_confirmation %}
+        action="{% url 'profiles_app:edit_profile' %}"
+      {% else %}
+        action="{% url 'profiles_app:profile_update_import' %}"
+      {% endif %}
+      enctype="multipart/form-data"
+      id="profile-update-form"
+    >
       {% csrf_token %}
 
       <div class="row">
-        <div class="col-24 col-lg-21">
-          <h1>Edit your profile</h1>
+        <div class="
+          col-24
+          {% if is_import_conformation %}col-xl-20{% else %}col-lg-21{% endif %}
+        ">
+        
+          {% if is_import_conformation %}
+            <h1>Complete Import</h1>
+          {% else %}
+            <h1>Edit your profile</h1>
+          {% endif %}
+        
           <div class="row row-cols-2">
             <div class="col">
               {% include 'includes/field.html' with form=form field=form.first_name %}
@@ -199,22 +225,75 @@
           </div>
           
           <h2>Settings</h2>
-          {% include 'includes/field.html' with form=form field=form.is_public %}
+          {% include 'includes/field.html' with form=form field=form.visibility %}
           {% include 'includes/field.html' with form=form field=form.allow_messaging %}
           <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
 
         </div>
-        
-        <div class="col-3 btn-submit__col d-none d-lg-block">
+
+        <div class="
+          col-{% if is_import_conformation %}4{% else %}3{% endif %}
+          btn-submit__col
+          d-none
+          {% if is_import_conformation %}d-xl-block{% else %}d-lg-block{% endif %}
+        ">
           <div class="btn-submit__container">
-            <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+            {% if is_import_conformation %}
+              <button class="btn btn-primary btn-submit btn-submit-public"
+                type="button"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-trigger="hover"
+                data-bs-placement="left"
+                data-bs-content="Visible to everyone on the web"
+              >
+                Publish Publicly
+              </button>
+              
+              <button class="btn btn-primary btn-submit btn-submit-internal"
+                type="button"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-trigger="hover"
+                data-bs-placement="left"
+                data-bs-content="Visible only to approved EAHub users"
+              >
+                Publish Internally
+              </button>
+            {% else %}
+              <button class="btn btn-lg btn-primary btn-submit" type="submit">
+                Save
+              </button>
+            {% endif %}
           </div>
         </div>
 
       </div>
 
       <div class="btn-submit__container" data-pos="bottom">
-      <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+        {% if is_import_conformation %}
+          <button class="btn btn-primary btn-submit btn-submit-public"
+            type="button"
+            data-bs-toggle="popover"
+            data-bs-trigger="hover"
+            data-bs-placement="top"
+            data-bs-content="Visible to everyone on the web"
+          >
+            Publish Publicly
+          </button>
+
+          <button class="btn btn-primary btn-submit btn-submit-internal"
+            type="button"
+            data-bs-toggle="popover"
+            data-bs-trigger="hover"
+            data-bs-placement="top"
+            data-bs-content="Visible only to approved EAHub users"
+          >
+            Publish Internally
+          </button>
+        {% else %}
+          <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+        {% endif %}
       </div>
 
     </form>
@@ -225,9 +304,9 @@
         src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
       ></script>
     {% else %}
-      <script defer src="{% static "dist/component_profile_edit.js" %}"
-      ></script>
+      <script defer src="{% static "dist/component_profile_edit.js" %}"></script>
     {% endif %}
+  
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js" defer></script>
     <script src="{% static 'django_select2/django_select2.js' %}" defer></script>
     {{ form.media.css }}
