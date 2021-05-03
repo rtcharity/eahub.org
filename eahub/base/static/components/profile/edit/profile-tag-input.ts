@@ -66,8 +66,11 @@ export default class ProfileTagInputComponent extends Vue {
     async processTagSearchInput(value: string) {
         if (value.endsWith(',')) {
             this.algoliaInput.value = '';
-            const tagName = value.slice(0, -1);
-            this.tagsToCreate.push({name: tagName})
+            const tagName: string = value.slice(0, -1).trim();
+            if (tagName === "") {
+                return;
+            }
+            this.tagsToCreate.push({name: tagName});
             const tag = await this.createTag(tagName);
             this.tagsToCreate = [];
             await this.selectTag(tag);
