@@ -36,9 +36,9 @@
 
     <form method="post"
       {% if is_import_confirmation %}
-        action="{% url 'profiles_app:edit_profile' %}"
-      {% else %}
         action="{% url 'profiles_app:profile_update_import' %}"
+      {% else %}
+        action="{% url 'profiles_app:edit_profile' %}"
       {% endif %}
       enctype="multipart/form-data"
       id="profile-update-form"
