@@ -165,6 +165,7 @@ class ProfileResource(ModelResource):
             "tags_affiliation",
             "is_approved",
             "visibility",
+            "user__date_joined",
         ]
 
     def after_save_instance(
