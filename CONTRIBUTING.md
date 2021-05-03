@@ -24,11 +24,11 @@ give as much information as possible:
 * Give information about your environment (browser, device, screen width, operational system, etc.)  
 
 
-### Suggesting enhancements  
+### Suggesting Enhancements  
 You can suggest new features and other improvements on [meta.eahub.org](https://meta.eahub.org/c/feature-requests/). You 
 will have to sign up first.  
 
-### Your first code contribution  
+### Your First Code Contribution  
 The EA Hub is an open source project and we welcome developers to make contributions. You can find a list of first good 
 GitHub issues to work on [here](https://github.com/rtcharity/eahub.org/labels/Good%20First%20Issue).  
 
@@ -66,6 +66,3 @@ squashed one:
 1. Do not end the subject line with a period
 1. Use the imperative mood in the subject line
 1. Use the body to explain what and why vs. how  
-
- 
- 
