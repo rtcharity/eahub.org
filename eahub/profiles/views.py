@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.forms import ModelForm
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView
@@ -99,23 +101,42 @@ class SendProfileMessageView(SendMessageView):
     def form_valid(self, form) -> HttpResponse:
         recipient = self.get_recipient()
         sender_name = form.cleaned_data["your_name"]
-        send_email(
-            email_subject=f"{sender_name} sent you a message",
-            template_path_without_extension="emails/message_profile",
-            template_context={
+        sender_email_address = form.cleaned_data["your_email_address"]
+        message = form.cleaned_data["your_message"]
+        feedback_url = FeedbackURLConfig.get_solo().site_url
+        profile_edit_url = self.request.build_absolute_uri(reverse("profiles_app:edit_profile"))
+        txt_message = render_to_string(
+            "emails/message_profile.txt",
+            {
                 "sender_name": sender_name,
                 "recipient": recipient.get_full_name(),
-                "message": form.cleaned_data["your_message"],
+                "message": message,
                 "admin_email": get_admin_email(),
-                "feedback_url": FeedbackURLConfig.get_solo().site_url,
-                "profile_edit_url": self.request.build_absolute_uri(
-                    reverse("profiles_app:edit_profile")
-                ),
+                "feedback_url": feedback_url,
+                "profile_edit_url": profile_edit_url,
             },
-            email_destination=recipient.user.email,
-            email_from=get_admin_email(),
-            email_reply_to=form.cleaned_data["your_email_address"],
         )
+        html_message = render_to_string(
+            "emails/message_profile.html",
+            {
+                "sender_name": sender_name,
+                "recipient": recipient.get_full_name(),
+                "message": message,
+                "admin_email": get_admin_email(),
+                "feedback_url": feedback_url,
+                "profile_edit_url": profile_edit_url,
+            },
+        )
+        email = EmailMultiAlternatives(
+            subject=f"{sender_name} sent you a message",
+            body=txt_message,
+            from_email=get_admin_email(),
+            to=[form.cleaned_data["your_email_address"]],
+            reply_to=[sender_email_address])
+        email.attach_alternative(html_message, "text/html")
+
+        email.send()
+
         MessagingLog.objects.create(
             sender_email=form.cleaned_data["your_email_address"],
             recipient_email=recipient.user.email,
