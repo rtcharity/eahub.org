@@ -39,7 +39,7 @@ class GivingPledgesFilter(admin.SimpleListFilter):
 
 @admin.register(Profile)
 class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
-    actions = ["approve_profiles", "delete_profiles_and_users"]
+    actions = ["approve_profiles", "delete_profiles_and_users", "unapprove_profiles"]
     model = Profile
     resource_class = ProfileResource
     list_display = (
@@ -120,6 +120,10 @@ class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
     @options(desc="Approve selected profiles", allowed_permissions=["change"])
     def approve_profiles(self, request: HttpRequest, queryset: QuerySet):
         queryset.update(is_approved=True)
+
+    @options(desc="Unapprove selected profiles", allowed_permissions=["change"])
+    def unapprove_profiles(self, request: HttpRequest, queryset: QuerySet):
+        queryset.update(is_approved=False)
 
     @options(desc="Delete selected profiles & users", allowed_permissions=["delete"])
     def delete_profiles_and_users(self, request: HttpRequest, queryset: QuerySet):
