@@ -7,7 +7,7 @@ from eahub.tests.cases import EAHubTestCase
 
 
 class ProfileMessagingTestCase(EAHubTestCase):
-    def test_save_analytics_on_profile_creation(self):
+    def test_profile_messaging(self):
         profile_sender = self.gen.profile()
         profile_recipient = self.gen.profile(visibility=VisibilityEnum.INTERNAL)
         message_body = "test message body"

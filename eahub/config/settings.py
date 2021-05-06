@@ -351,11 +351,6 @@ else:
         "provided together"
     )
 
-# feature flags
-FLAGS = {
-    "MESSAGING_FLAG": [("boolean", env.bool("IS_MESSAGING_ENABLED", default=False))]
-}
-
 
 ADMIN_REORDER = [
     {

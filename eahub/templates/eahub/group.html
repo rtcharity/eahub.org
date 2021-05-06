@@ -25,10 +25,8 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
-      {% load feature_flags %}
-      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
       {% if request.user.id is not None %}
-      {% if messaging_flag and group.has_organisers_with_messaging_enabled or group.email %}
+      {% if group.has_organisers_with_messaging_enabled or group.email %}
       <div class="btn btn-default purple">
         <a href="{% url 'message_group' group.slug  %}"><i class="fa fa-envelope"></i> Send Message</a>
       </div>
