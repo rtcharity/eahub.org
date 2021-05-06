@@ -139,8 +139,8 @@ class SendGroupMessageView(SendMessageView):
         )
         MessagingLog.objects.create(
             sender_email=form.cleaned_data["your_email_address"],
-            recipient_email=recipient.email,
-            recipient_type=MessagingLog.USER,
+            recipient_email=", ".join(recipient.get_messaging_emails(self.request)),
+            recipient_type=MessagingLog.GROUP,
         )
 
         messages.success(
