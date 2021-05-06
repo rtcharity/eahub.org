@@ -10,8 +10,8 @@ from django.views.generic import UpdateView
 from djangocms_helpers.utils.send_email import send_email
 
 from eahub.base.models import FeedbackURLConfig, MessagingLog, User
-from eahub.base.utils import get_admin_email
 from eahub.base.views import ReportAbuseView, SendMessageView
+from eahub.config import settings
 from eahub.feedback.forms import FeedbackForm
 from eahub.profiles.forms import DeleteProfileForm, ProfileForm
 from eahub.profiles.models import Profile, ProfileSlug, VisibilityEnum
@@ -106,14 +106,14 @@ class SendProfileMessageView(SendMessageView):
                 "sender_name": sender_name,
                 "recipient": recipient.get_full_name(),
                 "message": form.cleaned_data["your_message"],
-                "admin_email": get_admin_email(),
+                "admin_email": settings.DEFAULT_FROM_EMAIL,
                 "feedback_url": FeedbackURLConfig.get_solo().site_url,
                 "profile_edit_url": self.request.build_absolute_uri(
                     reverse("profiles_app:edit_profile")
                 ),
             },
             email_destination=recipient.user.email,
-            email_from=get_admin_email(),
+            email_from=settings.DEFAULT_FROM_EMAIL,
             email_reply_to=form.cleaned_data["your_email_address"],
         )
         MessagingLog.objects.create(

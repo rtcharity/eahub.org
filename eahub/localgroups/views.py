@@ -19,8 +19,8 @@ from flags.state import flag_enabled
 from rules.contrib import views as rules_views
 
 from ..base.models import FeedbackURLConfig, MessagingLog
-from ..base.utils import get_admin_email
 from ..base.views import ReportAbuseView, SendMessageView
+from ..config import settings
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
@@ -114,7 +114,7 @@ class SendGroupMessageView(SendMessageView):
         subject = f"{sender_name} sent a message to {recipient.get_full_name()}"
         sender_email_address = form.cleaned_data["your_email_address"]
         feedback_url = FeedbackURLConfig.get_solo().site_url
-        admins_email = get_admin_email()
+        admins_email = settings.DEFAULT_FROM_EMAIL
 
         txt_message = render_to_string(
             "emails/message_group.txt",

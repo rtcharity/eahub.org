@@ -23,3 +23,5 @@ class ProfileMessagingTestCase(EAHubTestCase):
         )
         self.assertEqual(200, response.status_code)
         self.assertIn(message_body, mail.outbox[0].body)
+        self.assertEqual("EA Hub <admin@eahub.org>", mail.outbox[0].from_email)
+        self.assertEqual(profile_recipient.user.email, mail.outbox[0].to[0])
