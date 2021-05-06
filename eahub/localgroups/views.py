@@ -133,13 +133,13 @@ class SendGroupMessageView(SendMessageView):
                     reverse("profiles_app:edit_profile")
                 ),
             },
-            email_destination=recipient.get_messaging_emails(self.request),
+            email_destination=sorted(recipient.get_messaging_emails(self.request))[0],
             email_from=settings.DEFAULT_FROM_EMAIL,
             email_reply_to=form.cleaned_data["your_email_address"],
         )
         MessagingLog.objects.create(
             sender_email=form.cleaned_data["your_email_address"],
-            recipient_email=", ".join(recipient.get_messaging_emails(self.request)),
+            recipient_email=recipient.get_messaging_emails(self.request)[0],
             recipient_type=MessagingLog.GROUP,
         )
 
