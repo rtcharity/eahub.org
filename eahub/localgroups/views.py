@@ -161,9 +161,8 @@ class SendGroupMessageView(SendMessageView):
 
     def post(self, request, *args, **kwargs):
         group = self.get_recipient()
-        if (
-            request.user.has_perm("profiles.message_users")
-            and (group.email or group.has_organisers_with_messaging_enabled)
+        if request.user.has_perm("profiles.message_users") and (
+            group.email or group.has_organisers_with_messaging_enabled
         ):
             return super().post(request, *args, **kwargs)
 
