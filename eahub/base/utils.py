@@ -15,7 +15,7 @@ def user_display(user):
 
 
 def get_admin_email():
-    return list(settings.ADMINS)[0]
+    return settings.DEFAULT_FROM_EMAIL
 
 
 class ExportCsvMixin:
