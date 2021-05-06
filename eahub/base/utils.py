@@ -14,10 +14,6 @@ def user_display(user):
     return profile.get_full_name()
 
 
-def get_admin_email():
-    return settings.DEFAULT_FROM_EMAIL
-
-
 class ExportCsvMixin:
     def export_csv(self, request, queryset, model, filename):
         response = HttpResponse(content_type="text/csv")
