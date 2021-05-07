@@ -7,7 +7,7 @@ from eahub.tests.cases import EAHubTestCase
 
 
 class ProfileMessagingTestCase(EAHubTestCase):
-    def test_save_analytics_on_profile_creation(self):
+    def test_profile_messaging(self):
         profile_sender = self.gen.profile()
         profile_recipient = self.gen.profile(visibility=VisibilityEnum.INTERNAL)
         message_body = "test message body"
@@ -23,3 +23,5 @@ class ProfileMessagingTestCase(EAHubTestCase):
         )
         self.assertEqual(200, response.status_code)
         self.assertIn(message_body, mail.outbox[0].body)
+        self.assertEqual("EA Hub <admin@eahub.org>", mail.outbox[0].from_email)
+        self.assertEqual(profile_recipient.user.email, mail.outbox[0].to[0])

@@ -9,7 +9,6 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_enumfield import enum
-from flags.state import flag_enabled
 from geopy import geocoders
 
 from eahub.base.models import User
@@ -107,13 +106,13 @@ class LocalGroup(models.Model):
         )
 
     def get_messaging_emails(self, request):
-        if not self.email and flag_enabled("MESSAGING_FLAG", request=request):
+        if not self.email:
             return [
                 user.email
                 for user in self.organisers.all()
                 if user.profile.allow_messaging
             ]
-        elif self.email:
+        else:
             return [self.email]
 
     def geocode(self):
