@@ -79,12 +79,22 @@ To debug the python code in the docker container:
 
 A list of common issues  
 
-### Docker Exception: "Error while fetching server API version"  
+### Docker Engine not running    
 * Error message:
 ```
 docker.errors.DockerException: Error while fetching server API version: (2, 'CreateFile', 'The system cannot find the file specified.')
 [2888] Failed to execute script docker-compose
 ```
 * Fix: Make sure Docker Engine is running  
+
+### Filesharing not enabled  
+* Error message:  
+```
+ERROR: for db  Cannot create container for service db: status code not OK but 500: \u02d9\u02d9\u02d9\u02d9
+FDocker.Core, Version=3.4.0.64130, Culture=neutral, PublicKeyToken=null
+Docker.Core.DockerException ClassNameMessageDataInnerExceptionHelpURLStackTraceStringRemoteStackTraceStringRemoteStackIndexExceptionMethodHRWatsonBucketsSystem.Collections.IDictionarySystem.Exception
+Docker.Core.DockerExceptionFilesharing has been cancelled    
+```  
+* Fix: Enable file sharing in docker for the local directory into which you have cloned the repo  
 
    
