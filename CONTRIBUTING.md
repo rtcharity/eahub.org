@@ -22,7 +22,7 @@ give as much information as possible:
 * Describe the behaviour you observed after following these steps.    
 * Explain which behaviour expected to see and why.  
 * Provide a screenshot of the bug.  
-* Give information about your environment (browser, device, screen width, etc.)  
+* Give information about your environment (browser, device, screen width, operational system, etc.)  
 
 ### Suggesting Enhancements  
 You can suggest new features and other improvements on [meta.eahub.org](https://meta.eahub.org/c/feature-requests/). You 
@@ -33,7 +33,7 @@ The EA Hub is an open source project and we welcome developers to make contribut
 GitHub issues to work on [here](https://github.com/rtcharity/eahub.org/labels/Good%20First%20Issue).  
 
 If you'd like to work on one of these GitHub issues or would like to pick up another of 
-[our GitHUb issues](https://github.com/rtcharity/eahub.org/issues), **please first get in touch with us** so that we 
+[our GitHub issues](https://github.com/rtcharity/eahub.org/issues), **please first get in touch with us** so that we 
 can discuss which issue would be ideal for you to work on and help you in case you have any questions. To get in touch, 
 join the [contributions channel](https://discord.gg/CQueVjk3fc) on EA Hub's discord server and post a short message 
 that you'd like to contribute.  
@@ -44,8 +44,6 @@ Having clear commit messages on your branch will, however, make the code review 
 guidelines (adapted from [here](https://chris.beams.io/posts/git-commit/)) for all commits, but especially for the final, 
 squashed one:  
 1. Separate subject from body with a blank line
-1. Limit the subject line to 50 characters
-1. Capitalize the subject line
 1. Do not end the subject line with a period
 1. Use the imperative mood in the subject line
 1. Use the body to explain what and why vs. how  
@@ -64,6 +62,10 @@ refactoring, styling changes etc.
 - Explains why these changes were made  
 - Has screenshots of the relevant frontend changes (where applicable)    
 1. All status checks have passed  
+
+The Hub is fully run by volunteers, and it might take us some time to review your pull request. To help us review your 
+pull request in a timely manner, please make sure to reach out to us first on the [contributions channel](https://discord.gg/CQueVjk3fc) 
+and also mention to us there once your pull request is ready to review.  
 
 
 
