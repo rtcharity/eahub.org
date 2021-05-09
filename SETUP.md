@@ -81,7 +81,8 @@ A list of common issues
 
 ### Docker Exception: "Error while fetching server API version"  
 * Error message:
-```docker.errors.DockerException: Error while fetching server API version: (2, 'CreateFile', 'The system cannot find the file specified.')
+```
+docker.errors.DockerException: Error while fetching server API version: (2, 'CreateFile', 'The system cannot find the file specified.')
 [2888] Failed to execute script docker-compose
 ```
 * Fix: Make sure Docker Engine is running  
