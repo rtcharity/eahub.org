@@ -1,6 +1,6 @@
 # Setup  
 
-Instructions on how to run the project locally.  
+Instructions for developers on how to build and run the project, how to run tests and debug.    
 
 ## Requirements  
 - [Docker Compose](https://docs.docker.com/compose/install/)  and [Docker Enginge](https://docs.docker.com/engine/install/)
