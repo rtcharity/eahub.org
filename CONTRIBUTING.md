@@ -38,16 +38,6 @@ can discuss which issue would be ideal for you to work on and help you in case y
 join the [contributions channel](https://discord.gg/CQueVjk3fc) on EA Hub's discord server and post a short message 
 that you'd like to contribute.  
 
-### Git Commit Messages  
-Since we have enabled squash-merging, all commits on your branch will be squashed into one when merging into master. 
-Having clear commit messages on your branch will, however, make the code review easier. Hence, please follow the following 
-guidelines (adapted from [here](https://chris.beams.io/posts/git-commit/)) for all commits, but especially for the final, 
-squashed one:  
-1. Separate subject from body with a blank line
-1. Do not end the subject line with a period
-1. Use the imperative mood in the subject line
-1. Use the body to explain what and why vs. how  
-
 ### Pull Requests  
 When making a pull request, put yourself in the shoes of the reviewer and think what information they need to review 
 your code effectively.  
@@ -66,6 +56,18 @@ refactoring, styling changes etc.
 The Hub is fully run by volunteers, and it might take us some time to review your pull request. To help us review your 
 pull request in a timely manner, please make sure to reach out to us first on the [contributions channel](https://discord.gg/CQueVjk3fc) 
 and also mention to us there once your pull request is ready to review.  
+
+### Git Commit Messages  
+Since we have enabled squash-merging, all commits on your branch will be squashed into one when merging into master. 
+Having clear commit messages on your branch will, however, make the code review easier. Hence, please follow the following 
+guidelines (adapted from [here](https://chris.beams.io/posts/git-commit/)) for all commits, but especially for the final, 
+squashed one:  
+1. Separate subject from body with a blank line
+1. Do not end the subject line with a period
+1. Use the imperative mood in the subject line
+1. Use the body to explain what and why vs. how  
+
+
 
 
 
