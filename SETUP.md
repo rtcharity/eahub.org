@@ -8,7 +8,9 @@ Instructions on how to run the project locally.
     comes with Docker Compose and Engine.  
 - [Nodejs 10.x](https://nodejs.org/en/download/) (or higher)     
 
-## Running first time  
+## Run project locally
+
+### Running first time  
 - Clone [repo](https://github.com/rtcharity/eahub.org)  
 - Build and run frontend  
   - In main folder, run ```npm ci``` to install node dependencies  
@@ -20,22 +22,23 @@ Instructions on how to run the project locally.
 - Project will be served on ```localhost:8000```  
 - The email client will be served on ```localhost:1080```  
 
-## Running after changes to ```packages.json```  
+### Running after changes to ```packages.json```  
 ```npm install```  
 You have to run this if new node dependencies have been added since you've last built the project.  
 
-## Running after changes to ```requirements.txt```  
+### Running after changes to ```requirements.txt```  
 ```docker-compose build```  
 You have to run this if new python dependencies have been added since you've last built the project in order to rebuild 
 the django backend.    
 
-## Running after making changes to django models  
+### Running after new migration files have been added     
+```docker-compose run --rm web bash -c "python manage.py migrate"```  
+You have to run this if new migration files have been added since you've last built the project.  
+
+### Create migration files after making changes to django models  
 ```docker-compose run --rm web bash -c "python manage.py makemigrations"```  
 If you've made changes to any of the django models, you will have to run this command to create database migration files.  
 
-## Running after new migration files have been added     
-```docker-compose run --rm web bash -c "python manage.py migrate"```  
-You have to run this if new migration files have been added since you've last built the project.  
 
 ## Running tests  
 ```
@@ -48,7 +51,7 @@ Running a particular python test, e.g., test_localgroups_model.py:
 docker-compose run --rm web pytest eahub/tests/test_localgroups_model.py
 ```  
 
-### Formatting  
+## Formatting  
 Run automatic formatting:  
 ```
 docker-compose run --rm web black eahub
@@ -64,6 +67,13 @@ docker-compose run --rm web isort -rc --atomic eahub
 ## Admin panel  
 - To access the admin panel locally, you will have to create a superuser: ```docker-compose run --rm web bash -c "python manage.py createsuperuser```  
 - Then log in with the chosen username and password and go to localhost:8000/admin  
+
+## Debugging python code  
+
+To debug the python code in the docker container:  
+1) Add ```import ipdb``` to the python file you want to debug
+2) Add ```ipdb.set_trace()``` on the line where you want to set a breakpoint  
+3) Run ```docker-compose run --service-ports web```  
 
 ## Troubleshooting  
 
