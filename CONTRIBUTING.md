@@ -23,7 +23,6 @@ give as much information as possible:
 * Provide a screenshot of the bug.  
 * Give information about your environment (browser, device, screen width, operational system, etc.)  
 
-
 ### Suggesting Enhancements  
 You can suggest new features and other improvements on [meta.eahub.org](https://meta.eahub.org/c/feature-requests/). You 
 will have to sign up first.  
