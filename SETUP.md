@@ -97,4 +97,14 @@ Docker.Core.DockerExceptionFilesharing has been cancelled
 ```  
 * Fix: Enable file sharing in docker for the local directory into which you have cloned the repo  
 
-   
+### Node dependencies not installed  
+* Error message:  
+```
+> eahub.org@0.0.0 build-watch C:\Users\sebja\code\eahub.org-test
+> webpack-dev-server --config webpack.config.js
+
+'webpack-dev-server' is not recognized as an internal or external command,
+operable program or batch file.
+
+```   
+* Fix: Run ```npm ci```  

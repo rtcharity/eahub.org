@@ -38,6 +38,8 @@ join the [contributions channel](https://discord.gg/CQueVjk3fc) on EA Hub's disc
 that you'd like to contribute.  
 
 ### Pull Requests  
+To make a pull request, please fork the repo, create a branch on your fork and then make a PR into the main repo.
+
 When making a pull request, put yourself in the shoes of the reviewer and think what information they need to review 
 your code effectively.  
 

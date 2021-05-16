@@ -2,8 +2,7 @@
 <p align="center">
     <a href="https://eahub.org/">EAHub.org</a> |
     <a href="https://discord.gg/NH5PybDUj9">Discord</a> |
-    <a href="https://blog.eahub.org/">News</a> |
-    <a href="https://meta.eahub.org/c/feature-requests/">Feedback</a>
+    <a href="https://meta.eahub.org/">News and Feedback</a>
 </p>
 
 The EA Hub enables collaboration and facilitates connections between EAs to make it easier to learn, network, collaborate on projects, and find career opportunities. By improving community infrastructure projects, individuals, and groups, initiatives can build traction more effectively.
