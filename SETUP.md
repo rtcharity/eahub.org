@@ -27,9 +27,13 @@ Instructions for developers on how to build and run the project, how to run test
 You have to run this if new node dependencies have been added since you've last built the project.  
 
 ### Running after changes to ```requirements.txt```  
-```docker-compose build```  
+```docker-compose build --no-cache web```  
 You have to run this if new python dependencies have been added since you've last built the project in order to rebuild 
 the django backend.    
+
+### Running after adding new python package 
+```docker-compose run --rm web bash -c "pip-compile requirements.in > requirements.txt"```   
+You have to run this if you want to a new python package.    
 
 ### Running after new migration files have been added     
 ```docker-compose run --rm web bash -c "python manage.py migrate"```  
