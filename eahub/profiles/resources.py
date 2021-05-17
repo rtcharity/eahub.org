@@ -193,7 +193,7 @@ class ProfileResource(ModelResource):
             )
             if match and match.group("url"):
                 obj.linkedin_url = match.group("url")
-            else:
+            elif data[field.attribute]:
                 obj.summary = data[field.attribute]
         else:
             super().import_field(field, obj, data, is_m2m)
