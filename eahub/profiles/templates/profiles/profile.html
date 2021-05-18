@@ -54,7 +54,10 @@
             role="alert"
             title="This profile is private. Click on 'Edit' to change your settings."
           >
-            <i class="fa fa-lock"></i> Invisible profile
+            <i class="fa fa-lock"></i> Private profile
+            <a href="{% url 'profiles_app:profile_Edit' profile.slug %}" class="btn btn-primary prof__msg-btn">
+              Change profile visibility
+            </a>
           </div>
         {% endif %}
         {% if not profile.is_approved %}
