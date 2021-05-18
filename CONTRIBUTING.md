@@ -1,6 +1,5 @@
 # Contributing to EA Hub  
 
-
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:  
 
 ## Code of Conduct  
@@ -39,6 +38,8 @@ join the [contributions channel](https://discord.gg/CQueVjk3fc) on EA Hub's disc
 that you'd like to contribute.  
 
 ### Pull Requests  
+To make a pull request, please fork the repo, create a branch on your fork and then make a PR into the main repo.
+
 When making a pull request, put yourself in the shoes of the reviewer and think what information they need to review 
 your code effectively.  
 
@@ -66,12 +67,3 @@ squashed one:
 1. Do not end the subject line with a period
 1. Use the imperative mood in the subject line
 1. Use the body to explain what and why vs. how  
-
-
-
-
-
-  
-
- 
- 
