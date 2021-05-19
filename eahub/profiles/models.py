@@ -413,6 +413,9 @@ class Profile(models.Model):
     def is_private(self) -> bool:
         return self.visibility == VisibilityEnum.PRIVATE
 
+    def is_internal(self) -> bool:
+        return self.visibility == VisibilityEnum.INTERNAL
+
 
 class ProfileAnalyticsLog(models.Model):
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
