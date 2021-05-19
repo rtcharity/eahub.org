@@ -49,7 +49,7 @@
           >
         {% endthumbnail %}
 
-        {% if profile.is_private %}
+        {% if profile.is_private and request.user.id == profile.user_id %}
           <div class="alert alert-warning prof__warning mt-2"
             role="alert"
             title="This profile is private. Click on 'Change visibility' to make it internal or public."
@@ -62,7 +62,7 @@
               Change profile visibility
             </a>
           </div>
-        {% elif profile.is_internal %}
+        {% elif profile.is_internal and request.user.id == profile.user_id %}
           <div class="alert alert-warning prof__warning mt-2"
             role="alert"
             title="This profile is internal. Click on 'Change visibility' to make it public."
