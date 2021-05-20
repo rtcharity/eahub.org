@@ -49,12 +49,31 @@
           >
         {% endthumbnail %}
 
-        {% if profile.is_private %}
-          <div class="alert alert-warning"
+        {% if profile.is_private and request.user.id == profile.user_id %}
+          <div class="alert alert-warning prof__warning mt-2"
             role="alert"
-            title="This profile is private. Click on 'Edit' to change your settings."
+            title="This profile is private. Click on 'Change visibility' to make it internal or public."
           >
-            <i class="fa fa-lock"></i> Invisible profile
+           <div class="row">
+              <div class="col col-auto pe-0"><i class="fa fa-lock"></i></div>
+             <div class="col col-18 ps-0"><b>Private</b> <br>Visible to you only</div>
+            </div>
+            <a href="{% url 'profiles_app:edit_profile' %}#profile_edit_visibility" class="btn btn-primary prof__msg-btn mt-2">
+              Change profile visibility
+            </a>
+          </div>
+        {% elif profile.is_internal and request.user.id == profile.user_id %}
+          <div class="alert alert-warning prof__warning mt-2"
+            role="alert"
+            title="This profile is internal. Click on 'Change visibility' to make it public."
+          >
+            <div class="row">
+              <div class="col col-auto pe-0"><i class="fa fa-lock"></i></div>
+              <div class="col col-18 ps-0"><b>Internal</b> <br>Visible to users only</div>
+            </div>
+            <a href="{% url 'profiles_app:edit_profile' %}#profile_edit_visibility" class="btn btn-primary prof__msg-btn mt-2">
+              Change profile visibility
+            </a>
           </div>
         {% endif %}
         {% if not profile.is_approved %}
@@ -63,7 +82,7 @@
             data-is-image-empty="{% if not profile.image %}true{% endif %}"
             title="This profile has not yet been approved, so other people can't see it yet."
           >
-            <i class="fa fa-lock"></i> Awaiting approval
+            <i class="fa fa-lock"></i><span class="ps-0">Awaiting approval</span>
           </div>
         {% endif %}
 
