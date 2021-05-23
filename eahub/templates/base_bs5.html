@@ -21,3 +21,19 @@
     <link  rel="stylesheet" href="{% static 'dist/global_bs5.css' %}">
   {% endif %}
 {% endblock static %}
+
+{% block messages %}
+
+  {% if messages %}
+  <div class="container" style="padding-top: 20px; max-width: 70%">
+      {% for message in messages %}
+      <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable"{% endif %}>
+        <button type="button" style="float:right" class="btn-close" data-bs-dismiss="alert" aria-label="Close"> 
+        </button>
+        <div>{{ message }}</div>
+      </div>
+      {% endfor %}
+      </div>
+  {% endif %} 
+
+{% endblock %}

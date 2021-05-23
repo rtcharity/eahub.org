@@ -13,8 +13,6 @@
 {% block content %}
   {% addtoblock 'body_classes' %}profile-edit-body{% endaddtoblock %}
 
-  {% include 'includes/messages.html' with messages=messages %}
-
   <script>
     window.DJANGO = {
       algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,

@@ -12,9 +12,7 @@
   <div class="container account-floating-form">
     <h1>Sign Up</h1>
     <div class="container account-floating-form">
-        <h1>Sign Up</h1>
-
-        {% include 'includes/messages.html' %}        
+        <h1>Sign Up</h1>      
     
         <form method="POST" action="{% url 'account_signup' %}">
             {% csrf_token %}
