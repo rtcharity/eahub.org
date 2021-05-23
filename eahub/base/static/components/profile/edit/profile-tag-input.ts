@@ -1,9 +1,11 @@
 import {SearchClient} from 'algoliasearch/dist/algoliasearch-lite';
-import algoliasearch from 'algoliasearch/lite';
-import HttpService from 'eahub/base/static/components/services/http';
 import {Ref} from 'vue-property-decorator';
 import {Provide} from 'vue-property-decorator';
 import {Component, Prop, Vue} from 'vue-property-decorator';
+import algoliasearch from 'algoliasearch/lite';
+import * as Sentry from '@sentry/browser';
+
+import HttpService from 'eahub/base/static/components/services/http';
 
 
 interface Tag {
@@ -136,9 +138,10 @@ export default class ProfileTagInputComponent extends Vue {
             data[`tags_${this.typeName}_pks`] = tagsPksSelected;
             await this.http.patch(this.tagsUrl, data);
             tag.isLoading = false;
-        } catch (e) {
+        } catch (exc) {
             this.unselectTag(tag.pk);
-            alert(`An error occurred:\n ${e}`);
+            Sentry.captureException(exc);
+            alert(`An error occurred:\n ${exc}`);
         }
         this.algoliaInput.value = '';
 
@@ -158,9 +161,10 @@ export default class ProfileTagInputComponent extends Vue {
             data[`tags_${this.typeName}_pks`] = tagsSelectedNew.map(tag => tag.pk);
             await this.http.patch(this.tagsUrl, data);
             this.tagsSelected = tagsSelectedNew;
-        } catch (e) {
+        } catch (exc) {
             tagToDrop.isLoading = false;
-            alert(`An error occurred:\n ${e}`);
+            Sentry.captureException(exc);
+            alert(`An error occurred:\n ${exc}`);
         }
         
         this.isLoadingInProgress = false;
