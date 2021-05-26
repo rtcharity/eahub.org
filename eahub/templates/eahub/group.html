@@ -81,9 +81,9 @@
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.region %}<li class="list-group-item"><b>Region: </b>{{ group.region }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
-        {% if group.public_organisers or (user.id is not None and user.is_approved and group.public_and_internal_organisers) or group.organisers_freetext %}
+        {% if group.public_organisers or user.id is not None and user.profile.is_approved and group.public_and_internal_organisers or group.organisers_freetext %}
         <li class="list-group-item"><b>Organisers:</b>
-          {% if user.id is not None and user.is_approved %}
+          {% if user.id is not None and user.profile.is_approved %}
           {% for organiser in group.public_and_internal_organisers %}
             <a href="{{ organiser.profile.get_absolute_url }}" rel="nofollow">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
