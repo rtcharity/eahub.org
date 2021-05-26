@@ -5,7 +5,7 @@ from faker import Faker
 from model_bakery import baker
 
 from eahub.base.models import User
-from eahub.localgroups.models import LocalGroup
+from eahub.localgroups.models import LocalGroup, Organisership
 from eahub.profiles.models import (
     Profile,
     ProfileTag,
@@ -20,12 +20,17 @@ class Gen:
         self.faker = Faker()
 
     def group(self, **kwargs) -> LocalGroup:
-        return baker.make(
+        users = kwargs.pop("users")
+        group = baker.make(
             "localgroups.LocalGroup",
             slug="",
             name=kwargs.pop("name", self.faker.unique.company()),
             **kwargs,
         )
+        for user in users:
+            o = Organisership(user=user, local_group=group)
+            o.save()
+        return group
 
     def profile(self, **kwargs) -> Profile:
         return baker.make(

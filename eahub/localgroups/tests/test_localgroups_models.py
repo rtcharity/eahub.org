@@ -1,52 +1,28 @@
-from django.test import TestCase
-
 from eahub.base.models import User
 from eahub.localgroups.models import LocalGroup, Organisership
-from eahub.profiles.models import Profile
+from eahub.profiles.models import Profile, VisibilityEnum
+from eahub.tests.cases import EAHubTestCase
 
 
-class LocalGroupTestCase(TestCase):
+class LocalGroupTestCase(EAHubTestCase):
     def test_organisers_names(self):
-        local_group = LocalGroup()
-        local_group.save()
+        first_name1 = "ada"
+        last_name1 = "khan"
+        first_name2 = "bob"
+        last_name2 = "xi"
 
-        user1 = User()
-        user1.email = "user1@email.com"
-        user1.save()
-
-        user2 = User()
-        user2.email = "user2@email.com"
-        user2.save()
-
-        profile1 = Profile()
-        name1 = "Peter"
-        profile1.first_name = name1
-        profile1.user = user1
-        profile1.save()
-
-        profile2 = Profile()
-        name2 = "Mary"
-        profile2.first_name = name2
-        profile2.user = user2
-        profile2.save()
-
-        o1 = Organisership(user=user1, local_group=local_group)
-        o1.save()
-
-        o2 = Organisership(user=user2, local_group=local_group)
-        o2.save()
+        profile1 = self.gen.profile(first_name=first_name1, last_name=last_name1)
+        profile2 = self.gen.profile(first_name=first_name2, last_name=last_name2)
+        local_group = self.gen.group(users=[profile1.user, profile2.user])
 
         organiser_names = local_group.organisers_names()
 
-        self.assertEqual(f"{name1}, {name2}", organiser_names)
+        self.assertIn(f"{first_name1} {last_name1}", organiser_names)
+        self.assertIn(f"{first_name2} {last_name2}", organiser_names)
 
     def test_organisers_names_handles_users_without_profiles(self):
-        local_group = LocalGroup()
-        local_group.save()
-        user_without_profile = User()
-        user_without_profile.save()
-        o = Organisership(user=user_without_profile, local_group=local_group)
-        o.save()
+        user_without_profile = self.gen.user()
+        local_group = self.gen.group(users=[user_without_profile])
 
         organisers_names = local_group.organisers_names()
 
@@ -82,3 +58,19 @@ class LocalGroupTestCase(TestCase):
         ]
 
         self.assertListEqual(expected_field_names, actual)
+
+    def test_public_and_internal_organisers(self):
+
+        profile_public = self.gen.profile(visibility=VisibilityEnum.PUBLIC)
+        profile_internal = self.gen.profile(visibility=VisibilityEnum.INTERNAL)
+        profile_private = self.gen.profile(visibility=VisibilityEnum.PRIVATE)
+
+        group = self.gen.group(users=[profile_private.user, profile_internal.user, profile_public.user])
+
+        actual = group.public_and_internal_organisers()
+
+        self.assertCountEqual([profile_internal, profile_public], [x.profile for x in list(actual)])
+
+
+
+

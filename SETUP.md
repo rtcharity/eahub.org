@@ -52,7 +52,7 @@ This will run all tests, including end-to-end.
 
 Running a particular python test, e.g., test_localgroups_model.py:  
 ```
-docker-compose run --rm web pytest eahub/tests/test_localgroups_model.py
+docker-compose run --rm web pytest eahub/localgroups/tests/test_localgroups_model.py
 ```  
 
 ## Formatting  

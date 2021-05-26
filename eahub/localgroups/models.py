@@ -81,6 +81,13 @@ class LocalGroup(models.Model):
             profile__visibility=VisibilityEnum.PUBLIC
         ).order_by("profile__name", "profile__slug")
 
+    def public_and_internal_organisers(self):
+        from eahub.profiles.models import VisibilityEnum
+
+        return self.organisers.filter(
+            profile__visibility__in=[VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
+        ).order_by("profile__name", "profile__slug")
+
     def organisers_names(self):
         profile_names = []
         for user in self.organisers.all():
