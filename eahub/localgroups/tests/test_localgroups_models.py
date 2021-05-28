@@ -22,7 +22,7 @@ class LocalGroupTestCase(EAHubTestCase):
 
     def test_organisers_names_handles_users_without_profiles(self):
         user_without_profile = self.gen.user()
-        local_group = self.gen.group(users=[user_without_profile])
+        local_group = self.gen.group(organisers=[user_without_profile])
 
         organisers_names = local_group.organisers_names()
 
@@ -65,7 +65,7 @@ class LocalGroupTestCase(EAHubTestCase):
         profile_internal = self.gen.profile(visibility=VisibilityEnum.INTERNAL)
         profile_private = self.gen.profile(visibility=VisibilityEnum.PRIVATE)
 
-        group = self.gen.group(users=[profile_private.user, profile_internal.user, profile_public.user])
+        group = self.gen.group(organisers=[profile_private.user, profile_internal.user, profile_public.user])
 
         actual = group.public_and_internal_organisers()
 
