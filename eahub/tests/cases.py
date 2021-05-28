@@ -12,6 +12,7 @@ from eahub.profiles.models import (
     ProfileTagType,
     ProfileTagTypeEnum,
     VisibilityEnum,
+    Membership
 )
 
 
@@ -19,17 +20,24 @@ class Gen:
     def __init__(self):
         self.faker = Faker()
 
-    def group(self, **kwargs) -> LocalGroup:
-        users = kwargs.pop("users")
+    def group(self, organisers=None, members=None, **kwargs) -> LocalGroup:
         group = baker.make(
             "localgroups.LocalGroup",
             slug="",
             name=kwargs.pop("name", self.faker.unique.company()),
             **kwargs,
         )
-        for user in users:
-            o = Organisership(user=user, local_group=group)
-            o.save()
+
+        if organisers:
+            for organiser in organisers:
+                o = Organisership(user=organiser, local_group=group)
+                o.save()
+
+        if members:
+            for member in members:
+                m = Membership(profile=member.profile, local_group=group)
+                m.save()
+
         return group
 
     def profile(self, **kwargs) -> Profile:

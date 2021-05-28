@@ -152,3 +152,27 @@ class ProfileTestCase(EAHubTestCase):
                 for x in analytics_logs_update
             )
         )
+
+    def test_get_public_local_groups_organising(self):
+        profile = self.gen.profile()
+        group_not_public = self.gen.group(organisers=[profile.user], is_public=False, name="NonPublicGroup")
+        group_public = self.gen.group(organisers=[profile.user], is_public=True, name="PublicGroupOrganising")
+        group_member_of_not_organising = self.gen.group(members=[profile.user], is_public=True, name="PublicGroupMemberOf")
+
+        groups_organising = profile.get_public_local_groups_organising()
+
+        self.assertCountEqual([group_public], groups_organising)
+
+    def test_get_local_groups(self):
+        profile = self.gen.profile()
+        group_not_public = self.gen.group(members=[profile.user], is_public=False)
+        group_public = self.gen.group(members=[profile.user], is_public=True)
+        group_not_member_of = self.gen.group(members=[self.gen.profile().user], is_public=True)
+
+        groups_member_of = profile.get_public_local_groups_member_of()
+
+        self.assertCountEqual([group_public], groups_member_of)
+
+
+
+

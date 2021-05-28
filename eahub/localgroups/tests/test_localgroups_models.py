@@ -13,7 +13,7 @@ class LocalGroupTestCase(EAHubTestCase):
 
         profile1 = self.gen.profile(first_name=first_name1, last_name=last_name1)
         profile2 = self.gen.profile(first_name=first_name2, last_name=last_name2)
-        local_group = self.gen.group(users=[profile1.user, profile2.user])
+        local_group = self.gen.group(organisers=[profile1.user, profile2.user])
 
         organiser_names = local_group.organisers_names()
 
