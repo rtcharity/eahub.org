@@ -401,11 +401,21 @@ class Profile(models.Model):
     def get_tags_speech_topic_formatted(self) -> List[str]:
         return [tag.name for tag in self.tags_speech_topic.all()]
 
+    def get_public_local_groups_member_of(self) -> List[LocalGroup]:
+        return self.local_groups.filter(is_public=True)
+
+    def get_public_local_groups_organising(self) -> List[LocalGroup]:
+        return [
+            group
+            for group in LocalGroup.objects.all()
+            if group.organisers.filter(id=self.user.id).exists() and group.is_public
+        ]
+
     def get_local_groups_formatted(self) -> List[str]:
-        return [group.name for group in self.local_groups.all()]
+        return [group.name for group in self.get_public_local_groups_member_of()]
 
     def get_organizer_of_local_groups_formatted(self) -> List[str]:
-        return [group.name for group in self.user.localgroup_set.all()]
+        return [group.name for group in self.get_public_local_groups_organising()]
 
     def get_image_placeholder(self) -> str:
         return f"Avatar{self.id % 10}.jpg"

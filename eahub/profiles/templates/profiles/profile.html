@@ -341,16 +341,16 @@
                 </div>
               {% endif %}
 
-              {% if profile.local_groups.exists %}
+              {% if profile.get_public_local_groups_member_of.exists %}
                 <div class="card__section">
                   <div class="card__subtitle">Local group membership</div>
-                  {% if profile.local_groups.all.count == 1 %}
+                  {% if profile.get_public_local_groups_member_of|length == 1 %}
                     <a href="{% url 'group' profile.local_groups.first.slug %}">
-                      {{ profile.local_groups.first.name }}
+                      {{ profile.get_public_local_groups_member_of.first.name }}
                     </a>
                   {% else %}
                     <ul>
-                      {% for group in profile.local_groups.all %}
+                      {% for group in profile.get_public_local_groups_member_of %}
                         <li>
                           <a class="list-item"
                             href="{% url 'group' group.slug %}"
@@ -362,21 +362,25 @@
                 </div>
               {% endif %}
 
-              {% if profile.user.localgroup_set.exists %}
+              {% if profile.get_public_local_groups_organising %}
                 <div class="card__section">
                   <div class="card__subtitle">Organiser of</div>
-                  {% if profile.user.localgroup_set.all.count == 1 %}
+                  {% if profile.get_public_local_groups_organising|length == 1 %}
                     <a
-                      href="{% url 'group' profile.user.localgroup_set.first.slug %}"
+                      href="{% url 'group' profile.get_public_local_groups_organising.0.slug %}"
                     >
-                      {{ profile.user.localgroup_set.first.name }}
+                      {{ profile.get_public_local_groups_organising.0.name }}
                     </a>
                   {% else %}
-                    {% for group in profile.user.localgroup_set.all %}
-                      <a class="list-item"
-                        href="{% url 'group' group.slug %}"
-                      >{{ group.name }}</a>, 
+                    <ul>
+                    {% for group in profile.get_public_local_groups_organising %}
+                      <li>
+                        <a class="list-item"
+                          href="{% url 'group' group.slug %}"
+                        >{{ group }}</a>
+                      </li>
                     {% endfor %}
+                    </ul>
                   {% endif %}
                 </div>
               {% endif %}

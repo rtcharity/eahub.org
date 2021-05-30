@@ -39,18 +39,12 @@ class LocalGroupsMessagingTestCase(EAHubTestCase):
 
     def test_group_messaging_sends_to_first_organiser(self):
         profile_sender = self.gen.profile()
-        localgroup_recipient = self.gen.group()
+
         profile_organiser = self.gen.profile()
         profile_organiser_2 = self.gen.profile()
-        o1 = Organisership(
-            user=profile_organiser.user, local_group=localgroup_recipient
+        localgroup_recipient = self.gen.group(
+            organisers=[profile_organiser.user, profile_organiser_2.user]
         )
-        o1.save()
-
-        o2 = Organisership(
-            user=profile_organiser_2.user, local_group=localgroup_recipient
-        )
-        o2.save()
 
         message_body = "test message body"
         self.client.force_login(profile_sender.user)

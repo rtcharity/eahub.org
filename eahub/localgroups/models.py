@@ -10,6 +10,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_enumfield import enum
 from geopy import geocoders
+from typing import List, Optional
+
 
 from eahub.base.models import User
 
@@ -74,11 +76,18 @@ class LocalGroup(models.Model):
     def get_absolute_url(self):
         return urls.reverse("group", args=[self.slug])
 
-    def public_organisers(self):
+    def public_organisers(self) -> List[User]:
         from eahub.profiles.models import VisibilityEnum
 
         return self.organisers.filter(
             profile__visibility=VisibilityEnum.PUBLIC
+        ).order_by("profile__name", "profile__slug")
+
+    def public_and_internal_organisers(self) -> List[User]:
+        from eahub.profiles.models import VisibilityEnum
+
+        return self.organisers.filter(
+            profile__visibility__in=[VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
         ).order_by("profile__name", "profile__slug")
 
     def organisers_names(self):
