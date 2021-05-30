@@ -65,12 +65,16 @@ class LocalGroupTestCase(EAHubTestCase):
         profile_internal = self.gen.profile(visibility=VisibilityEnum.INTERNAL)
         profile_private = self.gen.profile(visibility=VisibilityEnum.PRIVATE)
 
-        group = self.gen.group(organisers=[profile_private.user, profile_internal.user, profile_public.user])
+        group = self.gen.group(
+            organisers=[
+                profile_private.user,
+                profile_internal.user,
+                profile_public.user,
+            ]
+        )
 
         actual = group.public_and_internal_organisers()
 
-        self.assertCountEqual([profile_internal, profile_public], [x.profile for x in list(actual)])
-
-
-
-
+        self.assertCountEqual(
+            [profile_internal, profile_public], [x.profile for x in list(actual)]
+        )

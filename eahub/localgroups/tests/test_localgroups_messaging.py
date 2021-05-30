@@ -42,7 +42,9 @@ class LocalGroupsMessagingTestCase(EAHubTestCase):
 
         profile_organiser = self.gen.profile()
         profile_organiser_2 = self.gen.profile()
-        localgroup_recipient = self.gen.group(organisers=[profile_organiser.user, profile_organiser_2.user])
+        localgroup_recipient = self.gen.group(
+            organisers=[profile_organiser.user, profile_organiser_2.user]
+        )
 
         message_body = "test message body"
         self.client.force_login(profile_sender.user)

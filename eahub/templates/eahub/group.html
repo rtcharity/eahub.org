@@ -85,11 +85,11 @@
         <li class="list-group-item"><b>Organisers:</b>
           {% if user.id is not None and user.profile.is_approved %}
           {% for organiser in group.public_and_internal_organisers %}
-            <a href="{{ organiser.profile.get_absolute_url }}" rel="nofollow">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
+            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
           {% else %}
           {% for organiser in group.public_organisers %}
-            <a href="{{ organiser.profile.get_absolute_url }}" rel="nofollow">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
+            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
           {% endif %}
           {{ group.organisers_freetext }}

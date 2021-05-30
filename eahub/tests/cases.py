@@ -12,7 +12,7 @@ from eahub.profiles.models import (
     ProfileTagType,
     ProfileTagTypeEnum,
     VisibilityEnum,
-    Membership
+    Membership,
 )
 
 

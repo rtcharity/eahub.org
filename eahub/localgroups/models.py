@@ -74,14 +74,14 @@ class LocalGroup(models.Model):
     def get_absolute_url(self):
         return urls.reverse("group", args=[self.slug])
 
-    def public_organisers(self):
+    def public_organisers(self) -> List[User]:
         from eahub.profiles.models import VisibilityEnum
 
         return self.organisers.filter(
             profile__visibility=VisibilityEnum.PUBLIC
         ).order_by("profile__name", "profile__slug")
 
-    def public_and_internal_organisers(self):
+    def public_and_internal_organisers(self) -> List[User]:
         from eahub.profiles.models import VisibilityEnum
 
         return self.organisers.filter(
