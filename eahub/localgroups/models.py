@@ -10,6 +10,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_enumfield import enum
 from geopy import geocoders
+from typing import List, Optional
+
 
 from eahub.base.models import User
 
