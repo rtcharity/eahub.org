@@ -120,12 +120,18 @@ Much of these instructions were taken from [GitHub Docs' "Collaborating with pul
 
 ## Create a pull request to merge your forked repo branch with the main EAHub repo
 
-This section assumes you have changes added and committed in your forked local git repo which you've pushed from your local git repo to your forked remote (on GitHub) repo, aka origin.
+This section assumes you have changes added and committed in your forked local git repo which you've pushed from your local git repo to your forked remote (on GitHub) repo, aka origin. 
 
-(1) Go to https://github.com/rtcharity/eahub.org/pulls
+(1) Please open and read / keep handy for reference GitHub's ["Creating a pull request from a fork"](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) guide.
 
-(2) Click "Create Pull Request" and under "Compare changes", click on "compare across forks"
+(2) Go to https://github.com/rtcharity/eahub.org/pulls
 
-(3) Select rtcharity/eahub.org as the "base repository" then select the appropriate branch as the "base" (likely the "default" branch).
+(3) Click "Create Pull Request" and under "Compare changes", click on "compare across forks"
 
-(4) Select your forked repo as the "head repository" then select the branch you made changes to as the "compare".
+(4) Select rtcharity/eahub.org as the "base repository" then select the appropriate branch as the "base" (likely the "default" branch).
+
+(5) Select your forked repo as the "head repository" then select the branch you made changes to as the "compare".
+
+(6) Click "Create Pull Request"
+
+(7) Review the Pull Requests section above and make any necessary changes to ensure your pull request matches our style and follows our guidelines.
