@@ -1,0 +1,21 @@
+.feedback-component {
+  @media (min-width: 601px) {
+    .feedback__btn {
+      top: 60%;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .feedback__btn {
+      bottom: -30px;
+    }
+  }
+
+  .feedback__btn {
+    position: fixed;
+    transform: rotate(-90deg);
+    transform-origin: top left;
+    text-align: center;
+    right: -65px;
+  }
+}

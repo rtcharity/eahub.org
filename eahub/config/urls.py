@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.sitemaps.views import sitemap
@@ -7,10 +8,10 @@ from django.http import Http404
 from django.urls import include, path
 from django.views.generic import TemplateView
 
-from ..base import views
-from ..profiles.models import Profile
-from ..profiles.sitemap import ProfilesSitemap
-from ..profiles.views import profiles
+from eahub.base import views
+from eahub.profiles.models import Profile
+from eahub.profiles.sitemap import ProfilesSitemap
+from eahub.profiles.views import profiles
 
 
 def staff_or_404(u):
@@ -38,21 +39,18 @@ urlpatterns = [
         views.CustomisedPasswordResetFromKeyView.as_view(),
         name="account_reset_password_from_key",
     ),
+    url(
+        "profile/import-confirmation/set-password/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$",
+        views.ImportPasswordResetFromKeyView.as_view(),
+        name="profile_import_password_set",
+    ),
     path("accounts/", include("allauth.urls")),
     path("profile/", include("eahub.profiles.urls")),
     path("profiles/", profiles, name="profiles"),
-    path("candidates/", views.candidates, name="candidates"),
-    path("speakers/", views.speakers, name="speakers"),
-    path("volunteers/", views.volunteers, name="volunteers"),
     path("group/", include("eahub.localgroups.urls")),
     path("groups/", views.groups, name="groups"),
     path("admin/", admin.site.urls, name="admin"),
     path("about/", views.about, name="about"),
-    path(
-        "newsletter/",
-        TemplateView.as_view(template_name="eahub/newsletter.html"),
-        name="newsletter",
-    ),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
     path("robots.txt", views.RobotsTxtView.as_view(), name="robots.txt"),
     path("robots933456.txt", views.health_check, name="health_check"),
@@ -67,4 +65,6 @@ urlpatterns = [
         },
         name="django.contrib.sitemaps.views.sitemap",
     ),
-]
+    path("select2/", include("django_select2.urls")),
+    path("feedback/", include("eahub.feedback.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

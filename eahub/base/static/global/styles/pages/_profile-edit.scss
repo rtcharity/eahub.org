@@ -1,0 +1,306 @@
+@import 'eahub/base/static/global/styles/bootstrap-variables';
+
+$input-height: 37px;
+
+
+.profile-edit-body {
+  .container {
+    @include media-breakpoint-up(xl) {
+      max-width: 1280px;
+    }
+  }
+}
+
+.profile-edit {
+  margin-top: 4.5rem;
+  margin-bottom: 150px;
+  padding-bottom: 8rem;
+  
+  .alert-import {
+    font-size: 1rem;
+    margin-bottom: 3.5rem;
+    
+    .btn-link {
+      font-size: 1rem;
+      padding: 0;
+      line-height: initial;
+      vertical-align: initial;
+      text-decoration: initial;
+    }
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 4rem;
+  }
+  .btn-submit__col {
+    padding-top: 15px;
+    
+    .btn-submit__container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: sticky;
+      $navbar-height: 63px;
+      top: $navbar-height + $grid-gutter-width;
+      z-index: 3;
+      
+      .btn-submit {
+        display: flex;
+        justify-content: center;
+        min-width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+  h2 {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    
+    &::after {
+      content: '';
+      display: block;
+      width: 125px;
+      margin-top: 1rem;
+      border-bottom: 5px solid $color-secondary;
+    }
+  }
+  .col-bool-with-margin-top {
+    display: flex;
+    align-items: flex-end;
+  
+    .form-check-input {
+      margin-top: 12px;
+    }
+    .form-check-label {
+      margin-top: 12px - 4px;
+    }
+  }
+  .form-group {
+    margin-bottom: 2.5rem;
+    position: relative;
+    
+    &.form-group__password {
+      input {
+        font-size: 0.5rem;
+        height: $input-height - 2px;
+      }
+    }
+    &.form-check {
+      height: $input-height;
+      margin-bottom: 2.5rem;
+  
+      .form-check-input {
+        margin-top: 12px;
+      }
+      .form-check-label {
+        margin-top: 12px - 4px;
+      }
+    }
+    .form-text {
+      font-size: 0.7rem;
+    }
+    .control-label {
+      display: block;
+      margin-bottom: 0.75rem;
+      font-size: 1.15rem;
+    }
+    .select2-container {
+  
+      &.select2-container--focus {
+        .select2-selection {
+          border-color: #aaa;
+        }
+      }
+      .select2-selection {
+        border-radius: 0;
+        border-color: $gray-400;
+        
+        .select2-selection__choice {
+          border: 0;
+          background: #ddefec94;
+          color: #0b5046;
+          border-radius: 0;
+        }
+      }
+    }
+    .btn-input-edit {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      height: $input-height - 2px;
+    }
+    .invalid-feedback {
+      display: block;
+    }
+  }
+  .form-check {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .btn-submit__container[data-pos="bottom"] {
+    margin-top: 5rem;
+    .btn {
+      min-width: 150px;
+      margin-right: 1rem;
+    }
+  }
+}
+
+.profile-edit-tags {
+  position: relative;
+  
+  &[data-is-loading=true] {
+    &:hover {
+      cursor: wait;
+    }
+  }
+  .ais-RefinementList,
+  .ais-InfiniteHits-loadMore,
+  .ais-SearchBox-reset,
+  .ais-SearchBox-submit {
+    display: none;
+  }
+  .selected {
+    display: none;
+  }
+  %tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.4rem;
+    margin: 0.3rem;
+    margin-right: 0;
+    background: #ddefec94;
+    color: #0b5046;
+  }
+  .tags__input-container {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
+    min-height: $input-height;
+    border: 1px solid $gray-400;
+    
+    .tags__selected {
+      display: flex;
+      flex-wrap: wrap;
+      
+      .tags__tag {
+        @extend %tag;
+        
+        .btn-close {
+          margin-left: 0.2rem;
+          padding: 0;
+          background-size: 0.7em;
+          
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        .spinner-border {
+          margin-left: 3px;
+          $size: 15px;
+          width: $size;
+          height: $size;
+          border-width: 0.1em;
+        }
+      }
+    }
+    .ais-SearchBox {
+      display: inline-flex;
+      flex-grow: 2;
+      min-height: 35px;
+      
+      .ais-SearchBox-form {
+        display: flex;
+        width: 100%;
+        
+        input {
+          width: 100%;
+          border: 0;
+          margin-left: 0.4rem;
+          
+          &:focus {
+            outline: none;
+          }
+          &:disabled {
+            background: initial;
+          }
+        }
+      }
+    }
+  }
+  .tags__result-box-background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 0;
+  }
+  .ais-StateResults {
+    position: absolute;
+    width: 100%;
+    margin-top: -1px;
+    margin-bottom: 1.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    box-shadow: 0 4px 11px 0 #00000040;
+    border: 1px solid #e2e2e2;
+    border-radius: 0;
+    background: white;
+    z-index: 3;
+    
+    .tags__intro {
+      margin-top: 0.6rem;
+      padding-left: 0.25rem;
+      font-size: 0.8rem;
+      color: $gray-600;
+      ul {
+        margin-bottom: 0;
+      }
+      p {
+        margin-bottom: 0.4rem;
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+    
+    .row {
+      padding-bottom: 0.75rem;
+      
+      .tag {
+        margin-top: 0.75rem;
+        padding-left: 1rem;
+        
+        &[data-is-loading=true] {
+          &:hover {
+            cursor: wait;
+          }
+        }
+        .tag__name {
+          @extend %tag;
+          margin: 0;
+      
+          &:hover {
+            cursor: pointer;
+            background: #b0dcd594;
+          }
+        }
+        .tag__count {
+          margin-left: 0.4rem;
+          color: $gray-600;
+          font-size: 0.7rem;
+        }
+        .tag__desc,
+        .tag__synonyms {
+          margin-top: 0.2rem;
+          padding-left: 7px;
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}

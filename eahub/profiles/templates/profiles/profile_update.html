@@ -1,0 +1,318 @@
+{% extends 'base_bs5.html' %}
+
+{% load crispy_forms_field crispy_forms_tags static widget_tweaks sekizai_tags %}
+
+
+{% block navbar %}
+  {% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+{% block title %}Edit Profile{% endblock %}
+{% render_block 'form_before' %}
+
+{% block content %}
+  {% addtoblock 'body_classes' %}profile-edit-body{% endaddtoblock %}
+
+  {% include 'includes/messages.html' with messages=messages %}
+
+  <script>
+    window.DJANGO = {
+      algoliaApiKey: `{{ settings.ALGOLIA.API_KEY_READ_ONLY }}`,
+      algoliaApplicationId: `{{ settings.ALGOLIA.APPLICATION_ID }}`,
+      algoliaIndexName: `{{ settings.ALGOLIA.INDEX_NAME_TAGS }}`,
+      profilePk: {{ profile.pk }},
+      isImportConfirmation: {{ is_import_conformation|lower|default:"false" }},
+    }
+  </script>
+
+  <div class="container profile-edit">
+  
+    {% if is_import_conformation %}
+      <div class="alert alert-secondary alert-import" role="alert">
+        Welcome! We've imported your profile, for now it's visible only to you.
+        Please review it before publishing.
+      </div>
+    {% endif %}
+
+    <form method="post"
+      {% if is_import_confirmation %}
+        action="{% url 'profiles_app:profile_update_import' %}"
+      {% else %}
+        action="{% url 'profiles_app:edit_profile' %}"
+      {% endif %}
+      enctype="multipart/form-data"
+      id="profile-update-form"
+    >
+      {% csrf_token %}
+
+      <div class="row">
+        <div class="
+          col-24
+          {% if is_import_conformation %}col-xl-20{% else %}col-lg-21{% endif %}
+        ">
+        
+          {% if is_import_conformation %}
+            <h1>Complete Import</h1>
+          {% else %}
+            <h1>Edit your profile</h1>
+          {% endif %}
+        
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.first_name %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.last_name %}
+            </div>
+          </div>
+
+          <div class="row row-cols-2">
+            <div class="col">
+              <div class="form-group">
+                <label class="control-label">Email</label>
+                <input value="{{ profile.user.email}}" class="form-control" disabled>
+                <a class="btn btn-secondary btn-input-edit"
+                  href="{% url 'account_email' %}">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group form-group__password">
+                <label class="control-label">Password</label>
+                <input type="text" value="●●●●●●●●●●●●●●" class="form-control" disabled>
+                <a class="btn btn-secondary btn-input-edit"
+                  href="{% url 'account_change_password' %}">
+                  <i class="fa fa-pencil-alt"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.city_or_town %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.country %}
+            </div>
+          </div>
+          {% include 'includes/field.html' with form=form field=form.image %}
+
+          {% include 'includes/field.html' with form=form rows=7 field=form.summary placeholder="In West Philadelphia born and raised. On the playground is where I spent most of my days." %}
+
+          <div class="row row-cols-1 row-cols-lg-3">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.facebook_url %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.linkedin_url %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.personal_website_url placeholder="https://example.com" %}
+            </div>
+          </div>
+
+          <div class="row row-cols-1 row-cols-lg-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form rows=3 field=form.offering placeholder="How can you help other community members?" %}
+            </div>
+            <div class="col">
+              {% include 'includes/field.html' with form=form rows=3 field=form.looking_for placeholder="How can other community members help you?" %}
+            </div>
+          </div>
+
+
+          <h2>Community</h2>
+          {% include 'includes/field.html' with form=form field=form.available_as_speaker %}
+
+          {% if profile.topics_i_speak_about %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.topics_i_speak_about %}
+          {% endif %}
+          <div class="mb-5"
+            data-type-name="speech_topic"
+            data-type-label="Topics I Speak About"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          {% include 'includes/field.html' with form=form field=form.available_to_volunteer %}
+
+          {% include 'includes/field.html' with form=form field=form.local_groups %}
+
+          <div class="mb-5"
+            data-type-name="organisational_affiliation"
+            data-type-label="Organisational Affiliations"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="affiliation"
+            data-type-label="Affiliations"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="pledge"
+            data-type-label="Giving Pledges"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+
+          <h2>Career</h2>
+          <div class="row row-cols-2">
+            <div class="col">
+              {% include 'includes/field.html' with form=form field=form.job_title %}
+            </div>
+            <div class="col col-bool-with-margin-top">
+              {% include 'includes/field.html' with form=form field=form.open_to_job_offers %}
+            </div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="career_interest"
+            data-type-label="Career Areas of Interest"
+            data-type-label-short="area"
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          <div class="mb-5"
+            data-type-name="expertise_area"
+            data-type-label="Career Areas of Expertise"
+            data-type-label-short="area"
+
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          {% if profile.expertise_areas_other %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.expertise_areas_other %}
+          {% endif %}
+
+          <div class="mb-5"
+            data-type-name="cause_area"
+            data-type-label="Cause Areas of Interest"
+            data-type-label-short="area"
+            data-input-popup-intro="Cause areas you are interested in learning more about or that you want to develop expertise in."
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+          {% if profile.cause_areas_other %}
+            {% include 'includes/field.html' with form=form rows=1 field=form.cause_areas_other %}
+          {% endif %}
+
+          <div class="mb-5"
+            data-type-name="cause_area_expertise"
+            data-type-label="Cause Areas of Expertise"
+            data-type-label-short="area"
+            data-input-popup-intro="Cause areas you have expertise in."
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+
+
+          <h2>Tags</h2>
+          <div class="mb-5"
+            data-type-name="generic"
+            data-type-label=""
+            data-input-popup-intro="Use this field to tag any other relevant things you'd like others to be able to find about you."
+          >
+            <div class="vue-profile-tag-input"></div>
+          </div>
+          
+          <h2>Settings</h2>
+          {% include 'includes/field.html' with form=form field=form.visibility %}
+          {% include 'includes/field.html' with form=form field=form.allow_messaging %}
+          <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
+
+        </div>
+
+        <div class="
+          col-{% if is_import_conformation %}4{% else %}3{% endif %}
+          btn-submit__col
+          d-none
+          {% if is_import_conformation %}d-xl-block{% else %}d-lg-block{% endif %}
+        ">
+          <div class="btn-submit__container">
+            {% if is_import_conformation %}
+              <button class="btn btn-primary btn-submit btn-submit-public"
+                type="button"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-trigger="hover"
+                data-bs-placement="left"
+                data-bs-content="Visible to everyone on the web"
+              >
+                Publish Publicly
+              </button>
+              
+              <button class="btn btn-primary btn-submit btn-submit-internal"
+                type="button"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-trigger="hover"
+                data-bs-placement="left"
+                data-bs-content="Visible only to approved EAHub users"
+              >
+                Publish Internally
+              </button>
+            {% else %}
+              <button class="btn btn-lg btn-primary btn-submit" type="submit">
+                Save
+              </button>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
+      <div class="btn-submit__container" data-pos="bottom" id="profile_edit_visibility">
+        {% if is_import_conformation %}
+          <button class="btn btn-primary btn-submit btn-submit-public"
+            type="button"
+            data-bs-toggle="popover"
+            data-bs-trigger="hover"
+            data-bs-placement="top"
+            data-bs-content="Visible to everyone on the web"
+          >
+            Publish Publicly
+          </button>
+
+          <button class="btn btn-primary btn-submit btn-submit-internal"
+            type="button"
+            data-bs-toggle="popover"
+            data-bs-trigger="hover"
+            data-bs-placement="top"
+            data-bs-content="Visible only to approved EAHub users"
+          >
+            Publish Internally
+          </button>
+        {% else %}
+          <button class="btn btn-lg btn-primary btn-submit" type="submit">Save</button>
+        {% endif %}
+      </div>
+
+    </form>
+
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script
+        defer
+        src="{{ settings.WEBPACK_DEV_URL }}/component_profile_edit.bundle.js"
+      ></script>
+    {% else %}
+      <script defer src="{% static "dist/component_profile_edit.js" %}"></script>
+    {% endif %}
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.12/js/select2.min.js" defer></script>
+    <script src="{% static 'django_select2/django_select2.js' %}" defer></script>
+    {{ form.media.css }}
+  </div>
+
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

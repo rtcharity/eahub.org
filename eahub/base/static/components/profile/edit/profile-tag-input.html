@@ -1,0 +1,107 @@
+<div class="profile-edit-tags form-group" :data-is-loading="String(isLoadingInProgress)">
+
+  <ais-instant-search
+      :search-client="searchClient"
+      :index-name="algoliaIndex"
+  >
+    <label class="control-label">{{ typeLabel }}</label>
+    
+    <div class="tags__input-container">
+      <div class="tags__selected">
+        
+        <div
+          class="tags__tag"
+          v-for="tag of tagsSelected"
+        >
+          {{ tag.name }}
+          <button
+              type="button"
+              class="btn-close"
+              aria-label="Close"
+              v-if="!tag.isLoading"
+              :disabled="isLoadingInProgress"
+              v-on:click="unselectTag(tag.pk)"
+          ></button>
+          <div v-if="tag.isLoading" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        
+        <div
+          class="tags__tag"
+          v-for="tag of tagsToCreate"
+        >
+          {{ tag.name }}
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        
+      </div>
+      <ais-search-box>
+        <div slot-scope="{ currentRefinement, refine }" class="ais-SearchBox-form">
+          <input
+            type="search"
+            placeholder="Find or create tags with a comma..."
+            :disabled="isLoadingInProgress"
+            v-model="currentRefinement"
+            ref="algoliaInput"
+            @focus="showResultsPopup()"
+            @input="processTagSearchInput($event.currentTarget.value); refine($event.currentTarget.value)"
+          >
+        </div>
+      </ais-search-box>
+    </div>
+
+    <ais-refinement-list
+        attribute="types"
+        ref="typesRef"
+    />
+    <ais-configure :hits-per-page.camel="9"/>
+
+    <div class="tags__result-box-background"
+      v-show="isShowResultsPopup"
+      @click="isShowResultsPopup = false"
+    ></div>
+
+    <ais-state-results
+      v-show="isShowResultsPopup"
+    >
+      <div>
+        <div class="tags__intro">
+          <p>
+            {{ inputPopupIntro }}
+            Try to find an existing {{ typeLabelShort || "tag" }} 
+            instead of creating a new one.
+          </p>
+        </div>
+
+        <ais-infinite-hits>
+          <div
+            :class="`row row-cols-1 row-cols-xl-2 row-cols-xxl-${searchResultsCols || 3}`"
+            slot-scope="{ items }" v-show="items"
+          >
+            <div class="col tag"
+                v-for="item of items"
+                :key="item.objectID"
+                :class="{selected: isSelected(item.objectID)}"
+                v-on:click="isLoadingInProgress ? null : selectTag(item)"
+            >
+              <div class="tag__name">
+                <ais-highlight :hit="item" attribute="name"/> 
+              </div>
+              <span class="tag__count" v-if="item.count">{{item.count}}</span>
+              <div class="tag__desc" v-if="item.description">
+                <ais-highlight :hit="item" attribute="description"/>
+              </div>
+              <div class="tag__synonyms" v-if="item.synonyms">
+                <span class="fst-italic">Also:</span>
+                <ais-highlight :hit="item" attribute="synonyms"/>
+              </div>
+            </div>
+          </div>
+        </ais-infinite-hits>
+      </div>
+    </ais-state-results>
+  </ais-instant-search>
+</div>

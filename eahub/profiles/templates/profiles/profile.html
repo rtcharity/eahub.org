@@ -1,0 +1,438 @@
+{% extends 'base_bs5.html' %}
+
+{% load thumbnail crispy_forms_tags sekizai_tags static feature_flags %}
+
+
+{% block title %}{{ profile.get_full_name }}{% endblock %}
+
+
+{% addtoblock 'head' %}
+  {% if profile.image %}
+    {% block meta_image %}
+      <meta property="og:image"
+        content="{% thumbnail profile.image "200x200" crop="center" %}"
+      >
+      <meta property="og:image:width" content="200">
+      <meta property="og:image:height" content="200">
+      <meta property="og:image:type" content="image/png">
+    {% endblock %}
+  {% endif %}
+  {% block meta_info %}
+    <meta name="description" content="{{ profile.summary }}">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="{{ profile.get_full_name }} - EA Hub">
+    <meta property="og:description" content="{{ profile.summary }}">
+  {% endblock %}
+{% endaddtoblock %}
+
+
+{% block navbar %}
+  {% include 'components/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+  {% addtoblock 'body_classes' %}profile-detail{% endaddtoblock %}
+
+  {% include 'includes/messages.html' with messages=messages %}
+
+  <div class="container prof__header mt-6 mb-2 mb-lg-5">
+    <div class="row">
+      <div class="col col-auto mb-3 mb-lg-0">
+        {% thumbnail profile.image "200x200" crop="center" as im %}
+          <img class="prof__img mb-3 mb-md-0" loading="lazy" src="{{ im.url }}" width="200" height="200" alt="photo">
+        {% empty %}
+          <img class="prof__img mb-3 mb-md-0" loading="lazy"
+            src="/static/global/images/avatars/{{ profile.get_image_placeholder }}"
+            alt="photo"
+            width="150" height="150"
+            data-is-empty="true"
+          >
+        {% endthumbnail %}
+
+        {% if profile.is_private and request.user.id == profile.user_id %}
+          <div class="alert alert-warning prof__warning mt-2"
+            role="alert"
+            title="This profile is private. Click on 'Change visibility' to make it internal or public."
+          >
+           <div class="row">
+              <div class="col col-auto pe-0"><i class="fa fa-lock"></i></div>
+             <div class="col col-18 ps-0"><b>Private</b> <br>Visible to you only</div>
+            </div>
+            <a href="{% url 'profiles_app:edit_profile' %}#profile_edit_visibility" class="btn btn-primary prof__msg-btn mt-2">
+              Change profile visibility
+            </a>
+          </div>
+        {% elif profile.is_internal and request.user.id == profile.user_id %}
+          <div class="alert alert-warning prof__warning mt-2"
+            role="alert"
+            title="This profile is internal. Click on 'Change visibility' to make it public."
+          >
+            <div class="row">
+              <div class="col col-auto pe-0"><i class="fa fa-lock"></i></div>
+              <div class="col col-18 ps-0"><b>Internal</b> <br>Visible to users only</div>
+            </div>
+            <a href="{% url 'profiles_app:edit_profile' %}#profile_edit_visibility" class="btn btn-primary prof__msg-btn mt-2">
+              Change profile visibility
+            </a>
+          </div>
+        {% endif %}
+        {% if not profile.is_approved %}
+          <div class="alert alert-warning"
+            role="alert"
+            data-is-image-empty="{% if not profile.image %}true{% endif %}"
+            title="This profile has not yet been approved, so other people can't see it yet."
+          >
+            <i class="fa fa-lock"></i><span class="ps-0">Awaiting approval</span>
+          </div>
+        {% endif %}
+
+        {% if request.user.id is not None and request.user.id != profile.user_id and profile.is_can_receive_message %}
+          <a href="{% url 'profiles_app:message_profile' profile.slug %}"
+             class="btn btn-primary prof__msg-btn"
+          >
+            <i class="fa fa-pencil-alt"></i> Send Message
+          </a>
+        {% endif %}
+      
+      </div>
+
+      {% if request.user.id == profile.user_id %}
+        <div class="prof__btns col col-auto d-block d-lg-none">
+          <a class="btn btn-primary"
+            href="{% url 'profiles_app:edit_profile' %}"
+          >
+            <span><i class="fa fa-pencil-alt"></i> Edit</span>
+          </a>
+        </div>
+      {% endif %}
+
+      <div class="col-xs-24 col-lg-18">
+        <div class="prof__title row">
+          <h1 class="col col-auto">{{ profile.get_full_name }}</h1>
+
+          <div class="col col-auto d-flex">
+            {% if profile.facebook_url %}
+              <a class="prof_social-link" href="{{ profile.facebook_url }}"
+                rel="nofollow"
+              >
+                <i class="fab fa-facebook-square"></i>
+              </a>
+            {% endif %}
+          
+            {% if profile.linkedin_url %}
+              <a class="prof_social-link" href="{{ profile.linkedin_url }}"
+                rel="nofollow"
+              >
+                <i class="fab fa-linkedin"></i>
+              </a>
+            {% endif %}
+          
+            {% if profile.personal_website_url %}
+              <a class="prof_social-link"
+                href="{{ profile.personal_website_url }}"
+                rel="nofollow"
+                data-bs-content="Personal website" data-bs-toggle="popover" data-bs-container="body" data-bs-trigger="hover focus" data-bs-placement="bottom"
+              >
+                <i class="fa fa-link"></i>
+              </a>
+            {% endif %}
+          </div>
+        
+          {% if profile.job_title %}
+            <div class="prof__job-title col col-24">{{ profile.job_title }}</div>
+          {% endif %}
+
+          {% if profile.tags_generic.exists %}
+            <div class="prof__tags col col-24 {% if profile.job_title %}col-lg-auto{% endif %} align-self-start">
+              {% for tag in profile.get_tags_generic_formatted %}
+                <span class="prof__tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+          
+          {% if request.user.id == profile.user_id %}
+            <div class="prof__btns col col-24 d-none d-lg-flex">
+              <a class="btn btn-primary"
+                href="{% url 'profiles_app:edit_profile' %}"
+              >
+                <span><i class="fa fa-pencil-alt"></i> Edit</span>
+              </a>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="prof__summary">
+          {{ profile.summary|default:''|urlize|linebreaks }}
+
+          {% if profile.offering or profile.looking_for %}
+            <div class="row row-cols-1 row-cols-lg-2 summary__sections">
+              {% if profile.offering %}
+                <div class="summary__section col">
+                  <div class="summary__subtitle">Offering</div>
+                  {{ profile.offering|urlize|linebreaks }}
+                </div>
+              {% endif %}
+              {% if profile.looking_for %}
+                <div class="summary__section col">
+                  <div class="summary__subtitle">Looking for</div>
+                  {{ profile.looking_for|urlize|linebreaks }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container prof__cards">
+    <div class="row row-cols-1 row-cols-md-3">
+
+      {% if is_render_cause_area_section %}
+        <div class="col mb-4 mb-md-0">
+          <div class="card">
+            <div class="card-body">
+            
+              <div class="row row-cols-2 card__header">
+                <div class="col col-auto">
+                  <img class="card__img mb-2"
+                    src="{% static 'global/images/profile-detail/heart-and-box.webp' %}"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="col col-heading">
+                  <h3 class="card__heading">Cause Areas</h3>
+                </div>
+              </div>
+              {% if profile.get_tags_cause_area_formatted %}
+                <div class="card__section">
+                  {% if profile.get_tags_cause_area_formatted|length == 1 %}
+                    <p>{{ profile.get_tags_cause_area_formatted.0 }}</p>
+                  {% else %}
+                    <ul>
+                      {% for area in profile.get_tags_cause_area_formatted %}
+                        <li>{{ area }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                
+                  {% if profile.cause_areas_other %}
+                    <p>{{ profile.cause_areas_other }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if profile.get_tags_cause_area_expertise_formatted %}
+                <div class="card__section">
+                  {% if profile.get_tags_cause_area_expertise_formatted|length == 1 %}
+                    <p>{{ profile.get_tags_cause_area_expertise_formatted.0 }}</p>
+                  {% else %}
+                    <ul>
+                      {% for area in profile.get_tags_cause_area_expertise_formatted %}
+                        <li>{{ area }}</li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
+              
+              {% if profile.get_tags_pledge_formatted %}
+                <div class="card__section">
+                  <div class="card__subtitle">Giving Pledges Taken</div>
+                  <ul>
+                    {% for pledge in profile.get_tags_pledge_formatted %}
+                      <li>{{ pledge }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              {% if profile.available_to_volunteer %}
+                <div class="alert alert-secondary">Available to volunteer</div>
+              {% endif %}
+            
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if is_render_career_section  %}
+        <div class="col mb-4 mb-md-0">
+          <div class="card">
+            <div class="card-body">
+              <div class="row row-cols-2 card__header">
+                <div class="col col-auto">
+                  <img class="card__img mb-2"
+                    src="{% static 'global/images/profile-detail/briefcase.webp' %}"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="col col-heading">
+                  <h3 class="card__heading">Career</h3>
+                </div>
+              </div>
+  
+              {% if profile.get_tags_expertise_formatted or profile.expertise_areas_other %}
+                <div class="card__section">
+                  <div class="card__subtitle">Areas of expertise</div>
+                  <ul>
+                    {% for area in profile.get_tags_expertise_formatted %}
+                      <li>{{ area }}</li>
+                    {% endfor %}
+                  </ul>
+                  {% if profile.expertise_areas_other %}
+                    <p>{{ profile.expertise_areas_other }}</p>
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if profile.get_tags_career_interest_formatted %}
+                <div class="card__section">
+                  <div class="card__subtitle">Career interest areas</div>
+                  <ul>
+                    {% for interest in profile.get_tags_career_interest_formatted %}
+                      <li>{{ interest }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              {% if profile.open_to_job_offers %}
+                <div class="alert alert-secondary">Open to job offers</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if is_render_community_section %}
+        <div class="col mb-4 mb-md-0">
+          <div class="card">
+            <div class="card-body">
+              <div class="row row-cols-2 card__header">
+                <div class="col col-auto">
+                  <img class="card__img mb-2"
+                    src="{% static 'global/images/profile-detail/round-profile-pics.webp' %}"
+                    loading="lazy"
+                  >
+                </div>
+                <div class="col col-heading">
+                  <h3 class="card__heading">Community</h3>
+                </div>
+              </div>
+
+              {% if profile.get_tags_organisational_affiliation_formatted %}
+                <div class="card__section">
+                  <div class="card__subtitle">Organisational affiliations</div>
+                  {{ profile.get_tags_organisational_affiliation_formatted|join:", " }}
+                </div>
+              {% endif %}
+
+              {% if profile.get_tags_affiliation_formatted %}
+                <div class="card__section">
+                  <div class="card__subtitle">Affiliations</div>
+
+                  {% if profile.get_tags_affiliation_formatted|length == 1 %}
+                    <p>{{ profile.get_tags_affiliation_formatted.0 }}</p>
+                  {% else %}
+                  <ul>
+                    {% for affiliation in profile.get_tags_affiliation_formatted %}
+                      <li>{{ affiliation }}</li>
+                    {% endfor %}
+                  </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if profile.get_public_local_groups_member_of.exists %}
+                <div class="card__section">
+                  <div class="card__subtitle">Local group membership</div>
+                  {% if profile.get_public_local_groups_member_of|length == 1 %}
+                    <a href="{% url 'group' profile.local_groups.first.slug %}">
+                      {{ profile.get_public_local_groups_member_of.first.name }}
+                    </a>
+                  {% else %}
+                    <ul>
+                      {% for group in profile.get_public_local_groups_member_of %}
+                        <li>
+                          <a class="list-item"
+                            href="{% url 'group' group.slug %}"
+                          >{{ group.name }}</a>
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if profile.get_public_local_groups_organising %}
+                <div class="card__section">
+                  <div class="card__subtitle">Organiser of</div>
+                  {% if profile.get_public_local_groups_organising|length == 1 %}
+                    <a
+                      href="{% url 'group' profile.get_public_local_groups_organising.0.slug %}"
+                    >
+                      {{ profile.get_public_local_groups_organising.0.name }}
+                    </a>
+                  {% else %}
+                    <ul>
+                    {% for group in profile.get_public_local_groups_organising %}
+                      <li>
+                        <a class="list-item"
+                          href="{% url 'group' group.slug %}"
+                        >{{ group }}</a>
+                      </li>
+                    {% endfor %}
+                    </ul>
+                  {% endif %}
+                </div>
+              {% endif %}
+
+              {% if profile.topics_i_speak_about or profile.tags_speech_topic.exists %}
+                <div class="card__section">
+                  <div class="card__subtitle">Topics I speak about</div>
+                  {{ profile.topics_i_speak_about|urlize|linebreaks }}
+                  <ul>
+                    {% for topic in profile.tags_speech_topic.all %}
+                      <li class="list-item">{{ topic }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+              {% if profile.available_as_speaker %}
+                <div class="alert alert-secondary">Available as speaker</div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    
+    </div>
+
+    {% if lat and lon %}
+      <div class="row mt-3">
+        <div class="col-24">
+          {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="prof__buttons-bottom container">
+    {% if user.id != profile.user_id %}
+      <a class="btn btn-outline-secondary btn-sm"
+        href="{% url 'profiles_app:report_abuse_profile' profile.slug %}"
+      >
+        <i class="fa fa-flag"></i> Report abuse
+      </a>
+    {% endif %}
+  </div>
+
+  {% if settings.DJANGO_ENV.value == "local" %}
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_profile_detail.bundle.js"></script>
+  {% else %}
+    <script defer src="{% static "dist/component_profile_detail.js" %}"></script>
+  {% endif %}
+
+{% endblock %}
+
+{% block footer %}
+  {% include 'includes/footer.html' %}
+{% endblock %}

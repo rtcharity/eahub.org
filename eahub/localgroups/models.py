@@ -9,10 +9,11 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_enumfield import enum
-from flags.state import flag_enabled
 from geopy import geocoders
+from typing import List, Optional
 
-from ..base.models import User
+
+from eahub.base.models import User
 
 
 class LocalGroupType(enum.Enum):
@@ -75,16 +76,25 @@ class LocalGroup(models.Model):
     def get_absolute_url(self):
         return urls.reverse("group", args=[self.slug])
 
-    def public_organisers(self):
-        return self.organisers.filter(profile__is_public=True).order_by(
-            "profile__name", "profile__slug"
-        )
+    def public_organisers(self) -> List[User]:
+        from eahub.profiles.models import VisibilityEnum
+
+        return self.organisers.filter(
+            profile__visibility=VisibilityEnum.PUBLIC
+        ).order_by("profile__name", "profile__slug")
+
+    def public_and_internal_organisers(self) -> List[User]:
+        from eahub.profiles.models import VisibilityEnum
+
+        return self.organisers.filter(
+            profile__visibility__in=[VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
+        ).order_by("profile__name", "profile__slug")
 
     def organisers_names(self):
         profile_names = []
         for user in self.organisers.all():
             try:
-                profile_names.append(user.profile.name)
+                profile_names.append(user.profile.get_full_name())
             except User.profile.RelatedObjectDoesNotExist:
                 profile_names.append("User profile missing")
         return ", ".join(profile_names)
@@ -98,20 +108,20 @@ class LocalGroup(models.Model):
                 [
                     user
                     for user in self.organisers.all()
-                    if user.profile.get_can_receive_message()
+                    if user.profile.is_can_receive_message()
                 ]
             )
             > 0
         )
 
     def get_messaging_emails(self, request):
-        if not self.email and flag_enabled("MESSAGING_FLAG", request=request):
+        if not self.email:
             return [
                 user.email
                 for user in self.organisers.all()
                 if user.profile.allow_messaging
             ]
-        elif self.email:
+        else:
             return [self.email]
 
     def geocode(self):

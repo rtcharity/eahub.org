@@ -14,7 +14,8 @@ class SignUpTest(E2ETestCase):
 
         self.find("#signup-btn").click()
 
-        self.find("[name='name']").send_keys("Test User")
+        self.find("[name='first_name']").send_keys("Test")
+        self.find("[name='last_name']").send_keys("User")
         self.find("[name='email']").send_keys(user_email)
         self.find("[name='password1']").send_keys(user_password)
 
@@ -31,5 +32,5 @@ class SignUpTest(E2ETestCase):
         self.find("[name='login']").send_keys(user_email)
         self.find("[name='password']").send_keys(user_password)
         self.find("[type='submit']").click()
-        self.selenium.get(self.live_server_url + reverse("my_profile"))
+        self.selenium.get(self.live_server_url + reverse("profiles_app:my_profile"))
         self.find(".prof__btns .btn")

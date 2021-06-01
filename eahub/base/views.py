@@ -1,4 +1,5 @@
 from allauth.account import app_settings, utils
+from allauth.account.forms import ResetPasswordKeyForm
 from allauth.account.views import PasswordChangeView, PasswordResetFromKeyView
 from django.conf import settings
 from django.contrib import messages
@@ -18,11 +19,21 @@ from django.views.generic.edit import FormView
 from eahub.base.forms import ReportAbuseForm, SendMessageForm
 from eahub.localgroups.models import LocalGroup as Group
 from eahub.profiles.forms import SignupForm
-from eahub.profiles.models import Profile
+from eahub.profiles.models import Profile, VisibilityEnum
+
+
+class EAHubResetPasswordKeyForm(ResetPasswordKeyForm):
+    password2 = None
+
+    def clean(self) -> dict:
+        """override password2 validation"""
+        return self.cleaned_data
 
 
 class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
     template_name = "account/password_reset_from_key.html"
+    form_class = EAHubResetPasswordKeyForm
+    success_url = reverse_lazy("profiles_app:edit_profile")
 
     def form_valid(self, form):
         super().form_valid(form)
@@ -30,8 +41,12 @@ class CustomisedPasswordResetFromKeyView(PasswordResetFromKeyView):
             self.request,
             self.reset_user,
             email_verification=app_settings.EMAIL_VERIFICATION,
-            redirect_url=reverse("edit_profile"),
+            redirect_url=self.success_url,
         )
+
+
+class ImportPasswordResetFromKeyView(CustomisedPasswordResetFromKeyView):
+    success_url = reverse_lazy("profiles_app:profile_update_import")
 
 
 class CustomisedPasswordChangeView(LoginRequiredMixin, PasswordChangeView):
@@ -80,47 +95,6 @@ def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
 
 
-@login_required
-def candidates(request):
-    candidates_data = get_talent_search_data(request.user, {"open_to_job_offers": True})
-    return render(
-        request,
-        "eahub/talentsearch.html",
-        {
-            "page_name": "Candidates",
-            "profiles": candidates_data["rows"],
-            "include_summary": True,
-        },
-    )
-
-
-@login_required
-def speakers(request):
-    speakers_data = get_talent_search_data(request.user, {"available_as_speaker": True})
-    return render(
-        request,
-        "eahub/talentsearch.html",
-        {
-            "page_name": "Speakers",
-            "profiles": speakers_data["rows"],
-            "include_summary": True,
-            "include_topics_i_speak_about": True,
-        },
-    )
-
-
-@login_required
-def volunteers(request):
-    volunteers_data = get_talent_search_data(
-        request.user, {"available_to_volunteer": True}
-    )
-    return render(
-        request,
-        "eahub/talentsearch.html",
-        {"page_name": "Volunteers", "profiles": volunteers_data["rows"]},
-    )
-
-
 def groups(request):
     groups_data = get_groups_data()
     return render(
@@ -156,7 +130,7 @@ def get_profiles_data(user):
         {
             "lat": profile.lat,
             "lng": profile.lon,
-            "label": profile.name,
+            "label": profile.get_full_name(),
             "path": f"/profile/{profile.slug}",
         }
         for profile in rows
@@ -176,8 +150,10 @@ def get_talent_search_data(user, filters):
 def get_private_profiles(user):
     k_anonymity = 15
     private_profiles = (
-        Profile.objects.filter(is_public=False, lat__isnull=False, lon__isnull=False)
+        Profile.objects.filter(lat__isnull=False, lon__isnull=False)
         .exclude(user_id=user.id)
+        .exclude(visibility=VisibilityEnum.PRIVATE)
+        .exclude(visibility=VisibilityEnum.INTERNAL)
         .values("lat", "lon")
         .annotate(count=Count("*"))
         .filter(count__gte=k_anonymity)
@@ -212,11 +188,11 @@ class ReportAbuseView(FormView):
         reasons = form.cleaned_data
         reportee = self.profile()
         type = self.get_type()
-        subject = f"EA {type} reported as abuse: {reportee.name}"
+        subject = f"EA {type} reported as abuse: {reportee.get_full_name()}"
         message = render_to_string(
             "emails/report_{}_abuse.txt".format(type),
             {
-                "profile_name": reportee.name,
+                "profile_name": reportee.get_full_name(),
                 "profile_url": "https://{0}/profile/{1}".format(
                     get_current_site(self.request).domain, reportee.slug
                 ),

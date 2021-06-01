@@ -5,6 +5,7 @@ import dj_database_url
 import environ
 import sentry_sdk
 from django.core import exceptions
+from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from django_storage_url import dsn_configured_storage_class
 from dotenv import find_dotenv, load_dotenv
@@ -42,23 +43,29 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "authtools",
     "algoliasearch_django",
     "sekizai",
     "captcha",
     "crispy_forms",
+    "django_object_actions",
     "django_cleanup.apps.CleanupConfig",
     "django_pwned_passwords",
     "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
-    "eahub.base.apps.BaseConfig",
-    "eahub.localgroups.apps.LocalGroupsConfig",
-    "eahub.profiles.apps.ProfilesConfig",
     "import_export",
     "rangefilter",
     "flags",
+    "rest_framework",
     "solo",
+    "widget_tweaks",
+    "django_select2",
+    "eahub.base.apps.BaseConfig",
+    "eahub.localgroups.apps.LocalGroupsConfig",
+    "eahub.profiles.apps.ProfilesConfig",
+    "eahub.feedback",
 ]
 
 MIDDLEWARE = [
@@ -66,7 +73,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.middleware.cache.UpdateCacheMiddleware",
     "django_referrer_policy.middleware.ReferrerPolicyMiddleware",
-    "django_feature_policy.FeaturePolicyMiddleware",
+    "django_feature_policy.PermissionsPolicyMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.cache.FetchFromCacheMiddleware",
@@ -133,6 +140,7 @@ USE_L10N = True
 USE_TZ = True
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[]) + ["127.0.0.1", "*"]
+META_SITE_PROTOCOL = "https" if DJANGO_ENV == DjangoEnv.PROD else "http"
 
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -182,9 +190,9 @@ AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 LOGIN_URL = "account_login"
-LOGIN_REDIRECT_URL = "my_profile"
+LOGIN_REDIRECT_URL = "profiles_app:my_profile"
 LOGOUT_REDIRECT_URL = "index"
-PASSWORD_RESET_TIMEOUT_DAYS = 3
+PASSWORD_RESET_TIMEOUT_DAYS = 6
 
 SESSION_COOKIE_SECURE = SECURE_SSL_REDIRECT
 SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
@@ -233,6 +241,23 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_SIGNUP_REDIRECT_URL = reverse_lazy("profiles_app:edit_profile")
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
+SOCIALACCOUNT_ADAPTER = "eahub.base.adapter.EAHubSocialAccountAdapter"
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "VERIFIED_EMAIL": True,
+    }
+}
+
 
 IS_ENABLE_ALGOLIA = env.bool("IS_ENABLE_ALGOLIA", default=False)
 ALGOLIA = {
@@ -241,37 +266,42 @@ ALGOLIA = {
     "API_KEY_READ_ONLY": env.str(
         "API_KEY_READ_ONLY", default="19fd60051efeddf42e707383bf2f15a7"
     ),
-    "INDEX_NAME_PROFILES": env.str(
-        "ALGOLIA_INDEX_NAME_PROFILES", default="profiles_stage"
+    "INDEX_NAME_PROFILES_PUBLIC": env.str(
+        "ALGOLIA_INDEX_NAME_PROFILES_PUBLIC",
+        default="profiles_stage",
+    ),
+    "INDEX_NAME_PROFILES_INTERNAL": env.str(
+        "ALGOLIA_INDEX_NAME_PROFILES_INTERNAL",
+        default="profiles_stage_internal",
+    ),
+    "INDEX_NAME_TAGS": env.str(
+        "ALGOLIA_INDEX_NAME_TAGS",
+        default="tags_stage",
     ),
 }
 
 RECAPTCHA_PRIVATE_KEY = env.str("RECAPTCHA_SECRET_KEY", "")
 RECAPTCHA_PUBLIC_KEY = env.str("RECAPTCHA_SITE_KEY", "")
 
-# django-crispy-forms
 CRISPY_TEMPLATE_PACK = "bootstrap3"
 
-# django-feature-policy
-FEATURE_POLICY = {
-    "accelerometer": "none",
-    "ambient-light-sensor": "none",
-    "autoplay": "none",
-    "camera": "none",
-    "encrypted-media": "none",
-    "fullscreen": "none",
-    "geolocation": "none",
-    "gyroscope": "none",
-    "magnetometer": "none",
-    "microphone": "none",
-    "midi": "none",
-    "payment": "none",
-    "picture-in-picture": "none",
-    "speaker": "none",
-    "sync-xhr": "none",
-    "usb": "none",
-    "vr": "none",
-}
+if DJANGO_ENV != DjangoEnv.LOCAL:
+    PERMISSIONS_POLICY = {
+        "accelerometer": [],
+        "autoplay": [],
+        "camera": [],
+        "encrypted-media": [],
+        "fullscreen": [],
+        "geolocation": [],
+        "gyroscope": [],
+        "magnetometer": [],
+        "microphone": [],
+        "midi": [],
+        "payment": [],
+        "picture-in-picture": [],
+        "sync-xhr": [],
+        "usb": [],
+    }
 
 PWNED_VALIDATOR_ERROR = mark_safe(
     "For your security, consider using a password that hasn't been "
@@ -321,11 +351,6 @@ else:
         "provided together"
     )
 
-# feature flags
-FLAGS = {
-    "MESSAGING_FLAG": [("boolean", env.bool("IS_MESSAGING_ENABLED", default=False))]
-}
-
 
 ADMIN_REORDER = [
     {
@@ -334,6 +359,8 @@ ADMIN_REORDER = [
         "models": [
             {"model": "profiles.Profile", "label": "Profiles"},
             {"model": "localgroups.LocalGroup", "label": "Groups"},
+            "profiles.ProfileTag",
+            "profiles.ProfileTagType",
             {"model": "profiles.ProfileAnalyticsLog", "label": "Profile update logs"},
         ],
     },
@@ -342,6 +369,7 @@ ADMIN_REORDER = [
         "label": "Website administration",
         "models": [
             {"model": "base.User", "label": "User accounts"},
+            {"model": "socialaccount.SocialApp", "label": "SSO configs"},
             {"model": "account.EmailAddress", "label": "User account email addresses"},
             {"model": "auth.Group", "label": "Admin permission groups"},
             {"model": "sites.Site", "label": "Domain management & site name"},
@@ -352,6 +380,7 @@ ADMIN_REORDER = [
             },
             {"model": "base.FeedbackURLConfig", "label": "URL of feedback page"},
             {"model": "base.MessagingLog", "label": "Messaging logs"},
+            {"model": "feedback.Feedback", "label": "User feedback"},
         ],
     },
 ]

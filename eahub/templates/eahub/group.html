@@ -25,10 +25,8 @@
     </div>
     <div class="col-xs-12 col-md-6">
       <h1 class="word-break">{{ group.name }}</h1>
-      {% load feature_flags %}
-      {% flag_enabled 'MESSAGING_FLAG' as messaging_flag %}
-      {% if request.user.id is not None %}
-      {% if messaging_flag and group.has_organisers_with_messaging_enabled or group.email %}
+      {% if request.user.id is not None and request.user.profile.is_approved %}
+      {% if group.has_organisers_with_messaging_enabled or group.email %}
       <div class="btn btn-default purple">
         <a href="{% url 'message_group' group.slug  %}"><i class="fa fa-envelope"></i> Send Message</a>
       </div>
@@ -83,11 +81,17 @@
         {% if group.city_or_town %}<li class="list-group-item"><b>City/Town: </b>{{ group.city_or_town }}</li>{% endif %}
         {% if group.region %}<li class="list-group-item"><b>Region: </b>{{ group.region }}</li>{% endif %}
         {% if group.country %}<li class="list-group-item"><b>Country: </b>{{ group.country }}</li>{% endif %}
-        {% if group.public_organisers or group.organisers_freetext %}
+        {% if group.public_organisers or user.id is not None and user.profile.is_approved and group.public_and_internal_organisers or group.organisers_freetext %}
         <li class="list-group-item"><b>Organisers:</b>
-          {% for organiser in group.public_organisers %}
-            <a href="{{ organiser.profile.get_absolute_url }}" rel="nofollow">{{ organiser.profile.name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
+          {% if user.id is not None and user.profile.is_approved %}
+          {% for organiser in group.public_and_internal_organisers %}
+            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
           {% endfor %}
+          {% else %}
+          {% for organiser in group.public_organisers %}
+            <a href="{{ organiser.profile.get_absolute_url }}">{{ organiser.profile.get_full_name }}</a>{% if forloop.counter < group.public_organisers.count or group.organisers_freetext %}, {% endif %}
+          {% endfor %}
+          {% endif %}
           {{ group.organisers_freetext }}
         </li>
         {% endif %}

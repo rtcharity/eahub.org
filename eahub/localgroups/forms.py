@@ -1,11 +1,13 @@
+import django_select2.forms
 import us
 from django import forms
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from ..base import models as base_models
-from ..profiles import models as profiles_models
-from . import models as localgroups_models
+from eahub.base import models as base_models
+from eahub.localgroups.models import LocalGroup, LocalGroupType
+from eahub.profiles import models as profiles_models
+from eahub.profiles.models import VisibilityEnum
 
 
 class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
@@ -21,12 +23,13 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
         queryset = base_models.User.objects.select_related("profile").annotate(
             already_selected=already_selected
         )
-        if not user.is_superuser:
-            queryset = queryset.filter(
-                models.Q(profile__is_public=True)
-                | models.Q(already_selected=True)
-                | models.Q(pk=user.pk)
+        queryset = queryset.filter(
+            models.Q(
+                profile__visibility=VisibilityEnum.PUBLIC, profile__is_approved=True
             )
+            | models.Q(already_selected=True)
+            | models.Q(pk=user.pk)
+        )
         queryset = queryset.order_by(
             "-already_selected", "profile__name", "profile__slug", "email"
         )
@@ -37,7 +40,7 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
             profile = value.profile
         except profiles_models.Profile.DoesNotExist:
             return value.email
-        return profile.name
+        return profile.get_full_name()
 
     def prepare_value(self, value):
         if isinstance(value, base_models.User):
@@ -84,16 +87,12 @@ class LocalGroupForm(forms.ModelForm):
             user=user,
             local_group=instance,
             required=False,
-            widget=forms.SelectMultiple(
-                attrs={"class": "form-control multiselect-form"}
-            ),
+            widget=django_select2.forms.Select2MultipleWidget(),
         )
         self.fields["local_group_types"] = forms.MultipleChoiceField(
-            widget=forms.SelectMultiple(
-                attrs={"class": "form-control multiselect-form"}
-            ),
+            widget=django_select2.forms.Select2MultipleWidget(),
             required=False,
-            choices=localgroups_models.LocalGroupType.choices(),
+            choices=LocalGroupType.choices(),
         )
 
     def clean(self):
@@ -112,7 +111,7 @@ class LocalGroupForm(forms.ModelForm):
         return data
 
     class Meta:
-        model = localgroups_models.LocalGroup
+        model = LocalGroup
         fields = [
             "name",
             "is_active",

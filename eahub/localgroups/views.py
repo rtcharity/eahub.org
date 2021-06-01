@@ -8,19 +8,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
 from django.core.mail import EmailMultiAlternatives, send_mail
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
-from flags.state import flag_enabled
+from djangocms_helpers.utils.send_email import send_email
 from rules.contrib import views as rules_views
 
 from ..base.models import FeedbackURLConfig, MessagingLog
-from ..base.utils import get_admin_email
 from ..base.views import ReportAbuseView, SendMessageView
+from ..config import settings
 from ..profiles.models import Profile
 from .forms import LocalGroupForm
 from .models import LocalGroup
@@ -104,74 +104,54 @@ class ReportGroupAbuseView(ReportAbuseView):
 
 
 class SendGroupMessageView(SendMessageView):
+    def get_initial(self) -> dict:
+        data_initial = super().get_initial()
+        profile = Profile.objects.get(user=self.request.user)
+        data_initial["your_name"] = profile.get_full_name()
+        data_initial["your_email_address"] = profile.user.email
+        return data_initial
+
     def get_recipient(self):
         return LocalGroup.objects.get(slug=self.kwargs["slug"], is_public=True)
 
     def form_valid(self, form):
-        message = form.cleaned_data["your_message"]
         recipient = self.get_recipient()
+        if len(recipient.get_messaging_emails(self.request)) == 0:
+            return HttpResponse(status=500)
         sender_name = form.cleaned_data["your_name"]
-        subject = f"{sender_name} wants to connect with {recipient.name}!"
-        sender_email_address = form.cleaned_data["your_email_address"]
-        feedback_url = FeedbackURLConfig.get_solo().site_url
-        admins_email = get_admin_email()
 
-        txt_message = render_to_string(
-            "emails/message_group.txt",
-            {
+        send_email(
+            email_subject=f"{sender_name} sent you a message",
+            template_path_without_extension="emails/message_profile",
+            template_context={
                 "sender_name": sender_name,
-                "group_name": recipient.name,
-                "message": message,
-                "feedback_url": feedback_url,
-                "admins_email": admins_email,
+                "recipient": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "admin_email": settings.DEFAULT_FROM_EMAIL,
+                "feedback_url": FeedbackURLConfig.get_solo().site_url,
+                "profile_edit_url": self.request.build_absolute_uri(
+                    reverse("profiles_app:edit_profile")
+                ),
             },
+            email_destination=sorted(recipient.get_messaging_emails(self.request))[0],
+            email_from=settings.DEFAULT_FROM_EMAIL,
+            email_reply_to=form.cleaned_data["your_email_address"],
         )
-        html_message = render_to_string(
-            "emails/message_group.html",
-            {
-                "sender_name": sender_name,
-                "group_name": recipient.name,
-                "message": message,
-                "feedback_url": feedback_url,
-                "admins_email": admins_email,
-            },
+        MessagingLog.objects.create(
+            sender_email=form.cleaned_data["your_email_address"],
+            recipient_email=recipient.get_messaging_emails(self.request)[0],
+            recipient_type=MessagingLog.GROUP,
         )
-
-        recipient_emails = recipient.get_messaging_emails(self.request)
-
-        email = EmailMultiAlternatives(
-            subject=subject,
-            body=txt_message,
-            from_email=admins_email,
-            to=recipient_emails,
-            reply_to=[sender_email_address],
-        )
-        email.attach_alternative(html_message, "text/html")
-
-        email.send()
-
-        send_action_uuid = uuid.uuid4()
-        for recipient_email in recipient_emails:
-            log = MessagingLog(
-                sender_email=sender_email_address,
-                recipient_email=recipient_email,
-                recipient_type=MessagingLog.GROUP,
-                send_action_uuid=send_action_uuid,
-            )
-            log.save()
 
         messages.success(
-            self.request, "Your message to " + recipient.name + " has been sent"
+            self.request, f"Your message to {recipient.name} has been sent"
         )
         return redirect(reverse("group", args=([recipient.slug])))
 
     def get(self, request, *args, **kwargs):
         group = self.get_recipient()
 
-        if group.email or (
-            flag_enabled("MESSAGING_FLAG", request=request)
-            and group.has_organisers_with_messaging_enabled()
-        ):
+        if group.email or group.has_organisers_with_messaging_enabled():
             if not request.user.has_perm("profiles.message_users"):
                 raise PermissionDenied
 
@@ -181,13 +161,8 @@ class SendGroupMessageView(SendMessageView):
 
     def post(self, request, *args, **kwargs):
         group = self.get_recipient()
-        if (
-            request.user.has_perm("profiles.message_users")
-            and group.email
-            or (
-                flag_enabled("MESSAGING_FLAG", request=request)
-                and group.has_organisers_with_messaging_enabled
-            )
+        if request.user.has_perm("profiles.message_users") and (
+            group.email or group.has_organisers_with_messaging_enabled
         ):
             return super().post(request, *args, **kwargs)
 
@@ -203,7 +178,7 @@ def claim_group(request, slug):
         user_eahub_url = "https://{0}/profile/{1}".format(
             get_current_site(request).domain, request.user.profile.slug
         )
-        user_name = request.user.profile.name
+        user_name = request.user.profile.get_full_name()
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
         user_name = request.user.email
@@ -247,7 +222,7 @@ def report_group_inactive(request, slug):
         "emails/report_group_inactive.txt",
         {
             "user_eahub_url": user_eahub_url,
-            "user_name": request.user.profile.name,
+            "user_name": request.user.profile.get_full_name(),
             "group_name": group.name,
             "group_url": "https://{0}/group/{1}".format(
                 get_current_site(request).domain, group.slug
@@ -286,7 +261,7 @@ def send_mail_on_change(request, template, name, slug):
         user_eahub_url = "https://{0}/profile/{1}".format(
             get_current_site(request).domain, request.user.profile.slug
         )
-        user_name = request.user.profile.name
+        user_name = request.user.profile.get_full_name()
     except Profile.DoesNotExist:
         user_eahub_url = "about:blank"
         user_name = request.user.email

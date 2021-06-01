@@ -4,6 +4,7 @@ import django.contrib.postgres.fields
 import django_enumfield.db.fields
 from django.db import migrations
 
+import eahub.profiles.legacy
 import eahub.profiles.models
 
 
@@ -17,7 +18,7 @@ class Migration(migrations.Migration):
             name="organisational_affiliations",
             field=django.contrib.postgres.fields.ArrayField(
                 base_field=django_enumfield.db.fields.EnumField(
-                    default=1, enum=eahub.profiles.models.OrganisationalAffiliation
+                    default=1, enum=eahub.profiles.legacy.OrganisationalAffiliation
                 ),
                 blank=True,
                 default=list,

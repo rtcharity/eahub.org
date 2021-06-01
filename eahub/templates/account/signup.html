@@ -1,83 +1,109 @@
 {% extends 'base_bs5.html' %}
 
-{% load crispy_forms_field crispy_forms_tags %}
+{% load crispy_forms_field crispy_forms_tags socialaccount static %}
 
 {% block navbar %}
-    {% include 'components/navbar.html' %}
+  {% include 'components/navbar.html' %}
 {% endblock navbar %}
 
 {% block title %}Sign Up{% endblock %}
 
 {% block content %}
-    <div class="container account-floating-form">
-        <h1>Sign Up</h1>
+  <div class="container account-floating-form">
+    <h1>Sign Up</h1>
 
-        {% include 'includes/messages.html' %}        
-    
-        <form method="POST" action="{% url 'account_signup' %}">
-            {% csrf_token %}
+    {% include 'includes/messages.html' with messages=messages %}
 
-            {% if form.errors %}
-                <div class="form-group mb-4">
-                    {% for error in form.non_field_errors %}
-                        <p class="error">{{ error|escape }}</p>
-                    {% endfor %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <p class="error">{{ error|escape }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-            <div class="form-floating">
-                <input type="text"
-                    class="form-control form-control-lg"
-                    name="{{ form.name.name }}"
-                    placeholder="Full Name"
-                    id="{{ form.name.id }}"
-                    required>
-                <label for="{{ form.name.id }}">Full Name</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="email"
-                    class="form-control form-control-lg"
-                    name="{{ form.email.name }}"
-                    placeholder="Email"
-                    id="{{ form.email.id }}"
-                    required>
-                <label for="{{ form.email.id }}">Email</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="password"
-                    class="form-control form-control-lg"
-                    name="{{ form.password1.name }}"
-                    placeholder="Password"
-                    id="{{ form.password1.id }}"
-                    required>
-                <label for="{{ form.password1.id }}">Password</label>
-            </div>
-
-            {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
-
-            <div class="field">
-                {% if 'captcha_error' in request.GET %}
-                    <div class="alert alert-danger login-danger">Captcha error</div>
-                {% endif %}
-            </div>
-
-            <div class="fs-6 additional-links">
-                <a href="{% url 'privacy_policy' %}" rel="nofollow">Privacy Policy</a>
-            </div>
-
-            <input class="btn btn-primary btn-lg" type="submit" value="Sign Up">
-        </form>
+    <div class="join__sso join__sso-with-margin">
+      <a href="{% provider_login_url 'google' %}">
+        <div class="sso__google-btn">
+          <img class="sso__icon"
+            src="{% static 'global/images/home/google.svg' %}"
+          >
+          <span>Sign In with Google</span>
+        </div>
+      </a>
+      <div class="sso__or">or</div>
     </div>
+
+    <form method="POST" action="{% url 'account_signup' %}">
+      {% csrf_token %}
+
+      {% if form.errors %}
+        <div class="form-group mb-4">
+          {% for error in form.non_field_errors %}
+            <p class="error">{{ error|escape }}</p>
+          {% endfor %}
+          {% for field in form %}
+            {% for error in field.errors %}
+              <p class="error">{{ error|escape }}</p>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="form-floating">
+        <input type="text"
+          class="form-control form-control-lg"
+          name="{{ form.first_name.name }}"
+          placeholder="Full Name"
+          id="{{ form.first_name.id }}"
+          required
+        >
+        <label for="{{ form.first_name.id }}">First Name</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="text"
+          class="form-control form-control-lg"
+          name="{{ form.last_name.name }}"
+          placeholder="Full Name"
+          id="{{ form.last_name.id }}"
+          required
+        >
+        <label for="{{ form.last_name.id }}">Last Name</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="email"
+          class="form-control form-control-lg"
+          name="{{ form.email.name }}"
+          placeholder="Email"
+          id="{{ form.email.id }}"
+          required
+        >
+        <label for="{{ form.email.id }}">Email</label>
+      </div>
+
+      <div class="form-floating">
+        <input type="password"
+          class="form-control form-control-lg"
+          name="{{ form.password1.name }}"
+          placeholder="Password"
+          id="{{ form.password1.id }}"
+          required
+        >
+        <label for="{{ form.password1.id }}">Password</label>
+      </div>
+
+      {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
+
+      <div class="field">
+        {% if 'captcha_error' in request.GET %}
+          <div class="alert alert-danger login-danger">Captcha error</div>
+        {% endif %}
+      </div>
+
+      <div class="fs-6 additional-links">
+        <a href="{% url 'privacy_policy' %}" rel="nofollow">Privacy Policy</a>
+      </div>
+
+      <input class="btn btn-primary btn-lg" type="submit" value="Sign Up">
+    </form>
+  </div>
 {% endblock %}
 
 
 {% block footer %}
-    {% include 'includes/footer.html' %}
+  {% include 'includes/footer.html' %}
 {% endblock %}

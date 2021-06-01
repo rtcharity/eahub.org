@@ -3,6 +3,10 @@
 {% load static %}
 
 {% block static %}
+  <script>
+    const DJANGO_ENV = '{{ settings.DJANGO_ENV.value }}';
+  </script>
+  
   {% if settings.DJANGO_ENV.value == 'local' %}
     <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor_bs5.bundle.js"></script>
     <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor_bs5.css">

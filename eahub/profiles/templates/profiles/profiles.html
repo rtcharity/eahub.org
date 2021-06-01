@@ -1,0 +1,65 @@
+{% extends 'base_bs5.html' %}
+
+{% load static sekizai_tags thumbnail %}
+
+{% block title %}Profiles Directory{% endblock %}
+
+{% block navbar %}
+  {% include 'components/navbar_search.html' %}
+{% endblock navbar %}
+
+{% block content %}
+  
+  {% addtoblock 'js' %}
+    {% if settings.DJANGO_ENV.value == 'local' %}
+    <script src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
+    {% else %}
+    <script src="{% static 'dist/component_tables.js' %}"></script>
+    {% endif %}
+  {% endaddtoblock %}
+
+  {% addtoblock "body_classes" %}profiles-search-body{% endaddtoblock %}
+
+  <div class="container">
+    <div class="vue-search-component-container"
+         algolia-api-key="{{ settings.ALGOLIA.API_KEY_READ_ONLY }}"
+         algolia-application-id="{{ settings.ALGOLIA.APPLICATION_ID }}"
+         {% if user.profile.is_approved %}
+         algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES_INTERNAL }}"
+         {% else %}
+         algolia-index="{{ settings.ALGOLIA.INDEX_NAME_PROFILES_PUBLIC }}"
+         {% endif %}
+         profile-empty-images-raw="
+             {% static 'global/images/avatars/Avatar0.jpg' %},
+             {% static 'global/images/avatars/Avatar1.jpg' %},
+             {% static 'global/images/avatars/Avatar2.jpg' %},
+             {% static 'global/images/avatars/Avatar3.jpg' %},
+             {% static 'global/images/avatars/Avatar4.jpg' %},
+             {% static 'global/images/avatars/Avatar5.jpg' %},
+             {% static 'global/images/avatars/Avatar6.jpg' %},
+             {% static 'global/images/avatars/Avatar7.jpg' %},
+             {% static 'global/images/avatars/Avatar8.jpg' %},
+             {% static 'global/images/avatars/Avatar9.jpg' %},
+         "
+    >
+      <div class="vue-search-component"></div>
+    </div>
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script data-is-reload-on-page-edit defer
+              src="{{ settings.WEBPACK_DEV_URL }}/component_search_profiles.bundle.js"
+      ></script>
+    {% else %}
+      <script data-is-reload-on-page-edit defer src="{% static "dist/component_search_profiles.js" %}"
+      ></script>
+    {% endif %}
+  </div>
+
+  {% block feedback %}
+    {% include 'components/feedback.html' %}
+  {% endblock feedback %}
+
+{% endblock %}
+
+{% block footer %}
+    {% include 'includes/footer.html' %}
+{% endblock %}
