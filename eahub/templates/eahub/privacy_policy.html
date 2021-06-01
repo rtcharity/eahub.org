@@ -1,8 +1,9 @@
 {% extends 'base_bs5.html' %}
 
+{% load static %}
+
 {% block title %}Privacy Policy{% endblock %}
 
-<!--navbar block required include after bs3 to bs5 upgrade for page to format correctly-->
 {% block navbar %}
     {% include 'components/navbar.html' %}
 {% endblock %}
@@ -69,4 +70,8 @@
 
 <p>303 East Pender Street, Vancouver, BC, V6A 0J3, Canada</p>
 </div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'includes/footer.html' %}
 {% endblock %}
