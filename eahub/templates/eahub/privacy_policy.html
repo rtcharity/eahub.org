@@ -1,16 +1,9 @@
-{% extends 'base_bs5.html' %}
-
-{% load static %}
+{% extends 'base.html' %}
 
 {% block title %}Privacy Policy{% endblock %}
 
-{% block navbar %}
-    {% include 'components/navbar.html' %}
-{% endblock %}
-
 {% block content %}
 <div class="container info">
-<br>
 <h1>Rethink Charity Privacy Policy</h1>
 <p>This Privacy Policy describes how your personal information is collected, used, and shared when you visit eahub.org (the “Site”).</p>
 
@@ -70,8 +63,4 @@
 
 <p>303 East Pender Street, Vancouver, BC, V6A 0J3, Canada</p>
 </div>
-{% endblock %}
-
-{% block footer %}
-    {% include 'includes/footer.html' %}
 {% endblock %}
