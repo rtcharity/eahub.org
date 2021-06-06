@@ -1,4 +1,5 @@
 import {SearchClient} from 'algoliasearch/dist/algoliasearch-lite';
+import {AxiosError} from 'axios';
 import {Ref} from 'vue-property-decorator';
 import {Provide} from 'vue-property-decorator';
 import {Component, Prop, Vue} from 'vue-property-decorator';
@@ -137,12 +138,26 @@ export default class ProfileTagInputComponent extends Vue {
             let data = {};
             data[`tags_${this.typeName}_pks`] = tagsPksSelected;
             await this.http.patch(this.tagsUrl, data);
-            tag.isLoading = false;
         } catch (exc) {
             this.unselectTag(tag.pk);
-            Sentry.captureException(exc);
+            Sentry.captureException(
+                exc,
+                {
+                    contexts: {
+                        data: {
+                            tagRaw: tagRaw,
+                            tag: tag,
+                            tagsSelected: this.tagsSelected,
+                            typeName: this.typeName,
+                            profilePk: this.profilePk,
+                            response: exc.response,
+                        },
+                    } 
+                }
+            );
             alert(`An error occurred:\n ${exc}`);
         }
+        tag.isLoading = false;
         this.algoliaInput.value = '';
 
         this.isLoadingInProgress = false;
@@ -163,7 +178,19 @@ export default class ProfileTagInputComponent extends Vue {
             this.tagsSelected = tagsSelectedNew;
         } catch (exc) {
             tagToDrop.isLoading = false;
-            Sentry.captureException(exc);
+            Sentry.captureException(
+                exc,
+                {
+                    contexts: {
+                        data: {
+                            pkToDrop: pkToDrop,
+                            tagsSelected: this.tagsSelected,
+                            profilePk: this.profilePk,
+                            response: exc.response,
+                        },
+                    } 
+                }
+            );
             alert(`An error occurred:\n ${exc}`);
         }
         
