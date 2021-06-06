@@ -6,6 +6,7 @@ from allauth.socialaccount.models import SocialLogin
 from django.conf import settings
 from django.core import exceptions
 from django.http import HttpRequest
+from django.urls import reverse
 
 from eahub.base.models import User
 from eahub.profiles.models import Profile
@@ -24,6 +25,13 @@ class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
                 code="blacklisted",
             )
         return email
+    
+    def get_login_redirect_url(self, request: HttpRequest) -> str:
+        redirect_url = request.POST.get("next", "")
+        if redirect_url:
+            return redirect_url
+        else:
+            return reverse(settings.LOGIN_REDIRECT_URL)
 
 
 class EAHubSocialAccountAdapter(DefaultSocialAccountAdapter):

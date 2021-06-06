@@ -26,7 +26,7 @@
       <div class="sso__or">or</div>
     </div>
 
-    <form method="POST" action="{% url 'account_login' %}">
+    <form method="POST">
       {% csrf_token %}
 
       {% if form.errors %}
