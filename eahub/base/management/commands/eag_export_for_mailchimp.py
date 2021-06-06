@@ -20,7 +20,11 @@ class Command(base.BaseCommand):
                     profile = Profile.objects.get(user__email=line.strip())
                 except Profile.DoesNotExist:
                     continue
-                if profile.visibility == VisibilityEnum.PRIVATE:
+                
+                if (
+                    profile.visibility == VisibilityEnum.PRIVATE and
+                    not profile.user.password
+                ):
                     password_reset_link = reverse(
                         "account_reset_password_from_key",
                         kwargs=dict(
@@ -35,9 +39,24 @@ class Command(base.BaseCommand):
                             profile.last_name,
                             f"https://eahub.org{password_reset_link}",
                             "EA Global Reconnect",
-                            "EAGR - 2021.05.17, EAGR - 2021.06.06",
+                            "EAGR,EAGR - 2021.06.06,EAGR-created",
                         ]
                     )
+                elif (
+                    profile.visibility == VisibilityEnum.PRIVATE and
+                    profile.user.password
+                ):
+                    df_mailchimp_raw.append(
+                        [
+                            profile.user.email,
+                            profile.first_name,
+                            profile.last_name,
+                            f"https://eahub.org{reverse('profiles_app:profile_update_import')}",
+                            "EA Global Reconnect",
+                            "EAGR,EAGR - 2021.06.06,EAGR-updated",
+                        ]
+                    )
+
         df = pandas.DataFrame(
             df_mailchimp_raw,
             columns=[
