@@ -361,14 +361,14 @@ textarea {
 #map_selector input{
   margin: 5px;
 }
-#profile_page_map {
+#group_page_map {
   height: 350px;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
 }
 
-#profile_page_map.map_placeholder{
+#group_page_map.map_placeholder{
   opacity: 0.1;
   background-color: black;
   color:white;
