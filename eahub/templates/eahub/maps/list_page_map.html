@@ -5,8 +5,10 @@
 {% addtoblock 'js' %}
   {% if settings.DJANGO_ENV.value == 'local' %}
     <script src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH_YVPm3n9YSwGKOK_NcWMto9WclW5JVs&callback=initMap"></script>
   {% else %}
     <script src="{% static 'dist/component_maps.js' %}"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd56szczqWtMDNuMKvODiFPsZUgScLdfY&callback=initMap"></script>
   {% endif %}
 {% endaddtoblock %}
 
@@ -22,5 +24,4 @@
     window.initHeatmapList(mapType);
   }
 </script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
 {% endblock %}

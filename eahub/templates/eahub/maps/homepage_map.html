@@ -3,10 +3,12 @@
 {{ map_locations|json_script:'map-locations' }}
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/OverlappingMarkerSpiderfier/1.0.3/oms.min.js"></script>
-<script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd56szczqWtMDNuMKvODiFPsZUgScLdfY&callback=initMap"></script>
+
 {% if settings.DJANGO_ENV.value == 'local' %}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH_YVPm3n9YSwGKOK_NcWMto9WclW5JVs&callback=initMap"></script>
     <script id="maps-script" defer src="{{ settings.WEBPACK_DEV_URL }}/component_maps.bundle.js"></script>
 {% else %}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd56szczqWtMDNuMKvODiFPsZUgScLdfY&callback=initMap"></script>
     <script id="maps-script" defer src="{% static 'dist/component_maps.js' %}"></script>
 {% endif %}
 <script defer>

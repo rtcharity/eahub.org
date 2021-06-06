@@ -405,14 +405,6 @@
       {% endif %}
     
     </div>
-
-    {% if lat and lon %}
-      <div class="row mt-3">
-        <div class="col-24">
-          {% include 'eahub/maps/profile_page_map.html' with lat=profile.lat lon=profile.lon active=profile.active %}
-        </div>
-      </div>
-    {% endif %}
   </div>
 
   <div class="prof__buttons-bottom container">

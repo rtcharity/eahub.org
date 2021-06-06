@@ -11,7 +11,7 @@
 {% endaddtoblock %}
 
 {% if lat and lon %}
-  <div id="profile_page_map" class="map"></div>
+  <div id="group_page_map" class="map"></div>
 
   <script>var isIE = false</script><!--[if IE]><script>isIE = true;</script><![endif]-->
   <script>
@@ -22,13 +22,17 @@
       var mapLocations = {
         profiles: [{lat: lat, lng: lon, active: active}]
       };
-      var htmlElements = { map: document.getElementById('profile_page_map') }
+      var htmlElements = { map: document.getElementById('group_page_map') }
       window.initHeatmapProfile(mapLocations, htmlElements);
     }
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLtS7sdF1wauFJa1feNmGLlTAJI8VBokI&callback=initMap"></script>
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCH_YVPm3n9YSwGKOK_NcWMto9WclW5JVs&callback=initMap"></script>
+  {% else %}
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd56szczqWtMDNuMKvODiFPsZUgScLdfY&callback=initMap"></script>
+  {% endif %}
 {% else %}
-  <div id="profile_page_map" class="map_placeholder">
+  <div id="group_page_map" class="map_placeholder">
     <h1><i class="fa fa-map" aria-hidden="true"></i><br>No map data</h1>
   </div>
 {% endif %}
