@@ -20,7 +20,7 @@ class Command(base.BaseCommand):
                     profile = Profile.objects.get(user__email=line.strip())
                 except Profile.DoesNotExist:
                     continue
-                if profile.visibility != VisibilityEnum.PUBLIC:
+                if profile.visibility == VisibilityEnum.PRIVATE:
                     password_reset_link = reverse(
                         "account_reset_password_from_key",
                         kwargs=dict(
