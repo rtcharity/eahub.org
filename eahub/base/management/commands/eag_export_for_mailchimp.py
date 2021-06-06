@@ -7,6 +7,7 @@ from django.core.management import base
 from django.urls import reverse
 
 from eahub.profiles.models import Profile
+from eahub.profiles.models import VisibilityEnum
 
 
 class Command(base.BaseCommand):
@@ -15,25 +16,28 @@ class Command(base.BaseCommand):
         token_generator = EmailAwarePasswordResetTokenGenerator()
         with open("data/mailchimp-emails.csv") as file:
             for line in file:
-                print(line)
-                profile = Profile.objects.get(user__email=line.strip())
-                password_reset_link = reverse(
-                    "account_reset_password_from_key",
-                    kwargs=dict(
-                        uidb36=user_pk_to_url_str(profile.user),
-                        key=token_generator.make_token(profile.user),
-                    ),
-                )
-                df_mailchimp_raw.append(
-                    [
-                        profile.user.email,
-                        profile.first_name,
-                        profile.last_name,
-                        f"https://eahub.org{password_reset_link}",
-                        "EA Global Reconnect",
-                        "EAGR - 2021.05.17",
-                    ]
-                )
+                try:
+                    profile = Profile.objects.get(user__email=line.strip())
+                except Profile.DoesNotExist:
+                    continue
+                if profile.visibility != VisibilityEnum.PUBLIC:
+                    password_reset_link = reverse(
+                        "account_reset_password_from_key",
+                        kwargs=dict(
+                            uidb36=user_pk_to_url_str(profile.user),
+                            key=token_generator.make_token(profile.user),
+                        ),
+                    )
+                    df_mailchimp_raw.append(
+                        [
+                            profile.user.email,
+                            profile.first_name,
+                            profile.last_name,
+                            f"https://eahub.org{password_reset_link}",
+                            "EA Global Reconnect",
+                            "EAGR - 2021.05.17, EAGR - 2021.06.06",
+                        ]
+                    )
         df = pandas.DataFrame(
             df_mailchimp_raw,
             columns=[
@@ -45,4 +49,4 @@ class Command(base.BaseCommand):
                 "TAGS",
             ],
         )
-        df.to_csv(f"data/eag-mailchimp-05-17.csv", index=False)
+        df.to_csv(f"data/eag-mailchimp-06-06.csv", index=False)
