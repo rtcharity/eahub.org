@@ -87,7 +87,8 @@ class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
 
     def get_actions(self, request: HttpRequest) -> dict:
         actions: dict = super().get_actions(request)
-        del actions["delete_selected"]
+        if "delete_selected" in actions:
+            del actions["delete_selected"]
         return actions
 
     def generate_password_reset_link(self, request: HttpRequest, obj: Profile):

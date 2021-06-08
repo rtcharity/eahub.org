@@ -5,6 +5,8 @@ from .models import Profile, VisibilityEnum
 
 @rules.predicate
 def profile_is_visible(user, profile):
+    if profile is None:
+        return False
     return (
         profile.visibility == VisibilityEnum.PUBLIC
         or (profile.visibility == VisibilityEnum.INTERNAL and is_approved(user))
@@ -13,6 +15,8 @@ def profile_is_visible(user, profile):
 
 @rules.predicate
 def is_profile_of_user(user, profile):
+    if profile is None:
+        return False
     return user == profile.user
 
 
