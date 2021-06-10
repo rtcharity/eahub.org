@@ -65,7 +65,7 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
     queryset = LocalGroup.objects.filter(is_public=True)
     form_class = LocalGroupForm
     template_name = "eahub/edit_group.html"
-    permission_required = "localgroups.change_local_group"
+    permission_required = "localgroups.edit_group"
 
     def get_form_kwargs(self):
         return {**super().get_form_kwargs(), "user": self.request.user}
@@ -84,7 +84,7 @@ class LocalGroupUpdateView(rules_views.PermissionRequiredMixin, edit_views.Updat
 class LocalGroupDeleteView(rules_views.PermissionRequiredMixin, edit_views.DeleteView):
     queryset = LocalGroup.objects.filter(is_public=True)
     template_name = "eahub/delete_group.html"
-    permission_required = "localgroups.delete_local_group"
+    permission_required = "localgroups.delete_group"
 
     def delete(self, *args, **kwargs):
         self.object = self.get_object()
