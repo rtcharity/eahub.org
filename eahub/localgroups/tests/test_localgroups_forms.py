@@ -14,5 +14,7 @@ class LocalGroupFormsTestCase(EAHubTestCase):
         form = LocalGroupForm(user=profile_public.user)
         organisers_to_choose_from = form.fields["organisers"].queryset
 
-        self.assertCountEqual([profile_public.user, profile_internal.user], organisers_to_choose_from)
+        self.assertCountEqual(
+            [profile_public.user, profile_internal.user], organisers_to_choose_from
+        )
         self.assertNotIn(profile_private.user, organisers_to_choose_from)

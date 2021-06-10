@@ -3,16 +3,22 @@ import rules
 from ..profiles.models import Profile
 
 
-
 def is_organiser(user, local_group):
     return local_group.organisers.filter(pk=user.pk).exists()
 
+
 @rules.predicate
 def can_edit_group(user, local_group):
-    return user.has_perm("localgroups.change_localgroup") or is_organiser(user, local_group)
+    return user.has_perm("localgroups.change_localgroup") or is_organiser(
+        user, local_group
+    )
+
 
 def can_delete_group(user, local_group):
-    return user.has_perm("localgroups.delete_localgroup") or is_organiser(user, local_group)
+    return user.has_perm("localgroups.delete_localgroup") or is_organiser(
+        user, local_group
+    )
+
 
 @rules.predicate
 def is_approved(user):
