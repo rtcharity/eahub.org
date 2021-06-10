@@ -13,7 +13,7 @@ def can_edit_group(user, local_group):
         user, local_group
     )
 
-
+@rules.predicate
 def can_delete_group(user, local_group):
     return user.has_perm("localgroups.delete_localgroup") or is_organiser(
         user, local_group

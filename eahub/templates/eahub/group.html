@@ -111,7 +111,7 @@
       </div>
       <div class="panel-body">
         {{ group.other_info|default:'N/A'|urlize|linebreaks }}
-        {% has_perm 'localgroups.medit_group' user group as can_edit_local_group %}
+        {% has_perm 'localgroups.edit_group' user group as can_edit_local_group %}
         {% if can_edit_local_group %}
           <br>
           <a href="{% url 'localgroups_update' group.slug %}">
