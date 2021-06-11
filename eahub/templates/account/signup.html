@@ -11,44 +11,6 @@
 {% block content %}
   <div class="container account-floating-form">
     <h1>Sign Up</h1>
-    <div class="container account-floating-form">
-        <h1>Sign Up</h1>      
-    
-        <form method="POST" action="{% url 'account_signup' %}">
-            {% csrf_token %}
-
-            {% if form.errors %}
-                <div class="form-group mb-4">
-                    {% for error in form.non_field_errors %}
-                        <p class="error">{{ error|escape }}</p>
-                    {% endfor %}
-                    {% for field in form %}
-                        {% for error in field.errors %}
-                            <p class="error">{{ error|escape }}</p>
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-
-            <div class="form-floating">
-                <input type="text"
-                    class="form-control form-control-lg"
-                    name="{{ form.first_name.name }}"
-                    placeholder="Full Name"
-                    id="{{ form.first_name.id }}"
-                    required>
-                <label for="{{ form.first_name.id }}">First Name</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="text"
-                    class="form-control form-control-lg"
-                    name="{{ form.last_name.name }}"
-                    placeholder="Full Name"
-                    id="{{ form.last_name.id }}"
-                    required>
-                <label for="{{ form.last_name.id }}">Last Name</label>
-            </div>
 
     <div class="join__sso join__sso-with-margin">
       <a href="{% provider_login_url 'google' %}">
