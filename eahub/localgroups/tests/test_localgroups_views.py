@@ -55,7 +55,7 @@ class GroupViewTestCase(EAHubTestCase):
 
         group = self.gen.group(organisers=[profile.user])
 
-        self.assert_post_status_code("localgroups_delete", group.slug, 302)
+        self.assert_post_status_code("localgroups_delete", group.slug, 200)
 
     def test_group_delete_permitted_for_staff(self):
         profile = self.gen.profile(is_approved=True)
@@ -69,14 +69,14 @@ class GroupViewTestCase(EAHubTestCase):
 
         group = self.gen.group()
 
-        self.assert_post_status_code("localgroups_delete", group.slug, 302)
+        self.assert_post_status_code("localgroups_delete", group.slug, 200)
 
     def assert_get_status_code(self, url_name, slug, status_code):
-        response_get = self.client.get(reverse(url_name, args=([slug])))
+        response_get = self.client.get(reverse(url_name, args=([slug])), follow=True)
 
         self.assertEqual(response_get.status_code, status_code)
 
     def assert_post_status_code(self, url_name, slug, status_code):
-        response_post = self.client.post(reverse(url_name, args=([slug])))
+        response_post = self.client.post(reverse(url_name, args=([slug])), follow=True)
 
         self.assertEqual(response_post.status_code, status_code)
