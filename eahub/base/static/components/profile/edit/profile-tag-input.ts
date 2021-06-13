@@ -1,5 +1,4 @@
 import {SearchClient} from 'algoliasearch/dist/algoliasearch-lite';
-import {AxiosError} from 'axios';
 import {Ref} from 'vue-property-decorator';
 import {Provide} from 'vue-property-decorator';
 import {Component, Prop, Vue} from 'vue-property-decorator';
@@ -150,7 +149,7 @@ export default class ProfileTagInputComponent extends Vue {
                             tagsSelected: this.tagsSelected,
                             typeName: this.typeName,
                             profilePk: this.profilePk,
-                            response: exc.response,
+                            responseRaw: JSON.stringify(exc.response),
                         },
                     } 
                 }
@@ -186,7 +185,7 @@ export default class ProfileTagInputComponent extends Vue {
                             pkToDrop: pkToDrop,
                             tagsSelected: this.tagsSelected,
                             profilePk: this.profilePk,
-                            response: exc.response,
+                            responseRaw: JSON.stringify(exc.response),
                         },
                     } 
                 }
