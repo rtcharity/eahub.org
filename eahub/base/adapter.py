@@ -25,7 +25,7 @@ class EmailBlacklistingAdapter(adapter.DefaultAccountAdapter):
                 code="blacklisted",
             )
         return email
-    
+
     def get_login_redirect_url(self, request: HttpRequest) -> str:
         redirect_url = request.POST.get("next", "")
         if redirect_url:

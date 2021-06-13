@@ -27,6 +27,9 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
             models.Q(
                 profile__visibility=VisibilityEnum.PUBLIC, profile__is_approved=True
             )
+            | models.Q(
+                profile__visibility=VisibilityEnum.INTERNAL, profile__is_approved=True
+            )
             | models.Q(already_selected=True)
             | models.Q(pk=user.pk)
         )
