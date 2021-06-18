@@ -51,7 +51,9 @@ class UserAdmin(
 
     @options(desc="Approve selected users' profiles", allowed_permissions=["change"])
     def approve_profiles(self, request, queryset):
-        Profile.objects.filter(user__in=queryset).update(is_approved=True)
+        for profile in Profile.objects.filter(user__in=queryset):
+            profile.is_approved = True
+            profile.save()
 
     @options(desc="Visibility")
     def get_visibility(self, user) -> str:
