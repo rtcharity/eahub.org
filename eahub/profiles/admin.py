@@ -120,11 +120,15 @@ class ProfileAdmin(ImportExportMixin, DjangoObjectActions, admin.ModelAdmin):
 
     @options(desc="Approve selected profiles", allowed_permissions=["change"])
     def approve_profiles(self, request: HttpRequest, queryset: QuerySet):
-        queryset.update(is_approved=True)
+        for profile in Profile.objects.filter(user__in=queryset):
+            profile.is_approved = True
+            profile.save()
 
     @options(desc="Unapprove selected profiles", allowed_permissions=["change"])
     def unapprove_profiles(self, request: HttpRequest, queryset: QuerySet):
-        queryset.update(is_approved=False)
+        for profile in Profile.objects.filter(user__in=queryset):
+            profile.is_approved = False
+            profile.save()
 
     @options(desc="Delete selected profiles & users", allowed_permissions=["delete"])
     def delete_profiles_and_users(self, request: HttpRequest, queryset: QuerySet):

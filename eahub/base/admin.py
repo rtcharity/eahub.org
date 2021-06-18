@@ -40,7 +40,6 @@ class UserAdmin(
         ("last_login", DateRangeFilter),
     ]
     search_fields = ["email", "profile__first_name", "profile__last_name"]
-    actions = ["approve_profiles"]
 
     @options(desc="Approved", boolean=True)
     def is_profile_approved(self, user) -> Optional[bool]:
@@ -48,12 +47,6 @@ class UserAdmin(
         if profile is None:
             return None
         return profile.is_approved
-
-    @options(desc="Approve selected users' profiles", allowed_permissions=["change"])
-    def approve_profiles(self, request, queryset):
-        for profile in Profile.objects.filter(user__in=queryset):
-            profile.is_approved = True
-            profile.save()
 
     @options(desc="Visibility")
     def get_visibility(self, user) -> str:
