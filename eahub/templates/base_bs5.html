@@ -3,34 +3,33 @@
 {% load static %}
 
 {% block static %}
-<script>
-  const DJANGO_ENV = '{{ settings.DJANGO_ENV.value }}';
-</script>
-
-{% if settings.DJANGO_ENV.value == 'local' %}
-<script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor_bs5.bundle.js"></script>
-<link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor_bs5.css">
-
-<script defer src="{{ settings.WEBPACK_DEV_URL }}/global_bs5.bundle.js"></script>
-<link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global_bs5.css">
-{% else %}
-<script defer src="{% static 'dist/vendor_bs5.js' %}"></script>
-<link rel="stylesheet" href="{% static 'dist/vendor_bs5.css' %}">
-
-<script defer src="{% static 'dist/global_bs5.js' %}"></script>
-<link rel="stylesheet" href="{% static 'dist/global_bs5.css' %}">
-{% endif %}
+  <script>
+    const DJANGO_ENV = '{{ settings.DJANGO_ENV.value }}';
+  </script>
+  
+  {% if settings.DJANGO_ENV.value == 'local' %}
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/vendor_bs5.bundle.js"></script>
+    <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/vendor_bs5.css">
+    
+    <script defer src="{{ settings.WEBPACK_DEV_URL }}/global_bs5.bundle.js"></script>
+    <link rel="stylesheet" href="{{ settings.WEBPACK_DEV_URL }}/global_bs5.css">
+  {% else %}
+    <script defer src="{% static 'dist/vendor_bs5.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'dist/vendor_bs5.css' %}">
+  
+    <script defer src="{% static 'dist/global_bs5.js' %}"></script>
+    <link  rel="stylesheet" href="{% static 'dist/global_bs5.css' %}">
+  {% endif %}
 {% endblock static %}
 
 {% block messages %}
 
 {% if messages %}
-<div class="container" style="padding-top: 20px; max-width: 70%">
+<div class="container mt-2 w-75">
   {% for message in messages %}
-  <div {% if message.tags %} class="alert alert-{{message.tags}} hub-{{message.tags}} alert alert-dismissable" {% endif %}>
-    <button type="button" style="float:right" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-    </button>
-    <div>{{ message }}</div>
+  <div class="alert {% for tag in message.tags %} alert-{{ tag }} {% endfor %} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
   {% endfor %}
 </div>
