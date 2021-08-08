@@ -47,7 +47,7 @@ if settings.IS_ENABLE_ALGOLIA:
             ["get_local_groups_formatted", "local_groups"],
             ["get_organizer_of_local_groups_formatted", "organizer_of_local_groups"],
             ["offering", "offering"],
-            ["looking_for", "looking_for"]
+            ["looking_for", "looking_for"],
         ]
 
     class ProfileInternalIndex(AlgoliaIndex):

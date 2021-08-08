@@ -15,13 +15,13 @@ def migrate_profiles_to_privacy_agreement(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profiles', '0027_add_fields_twitter_and_calendly'),
+        ("profiles", "0027_add_fields_twitter_and_calendly"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='profile',
-            name='privacy_policy_agreed',
+            model_name="profile",
+            name="privacy_policy_agreed",
             field=models.BooleanField(default=False),
         ),
         migrations.RunPython(

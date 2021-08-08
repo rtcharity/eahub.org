@@ -52,7 +52,9 @@ urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
     path("about/", views.about, name="about"),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
-    path("community-guidelines/", views.community_guidelines, name="community_guidelines"),
+    path(
+        "community-guidelines/", views.community_guidelines, name="community_guidelines"
+    ),
     path("robots.txt", views.RobotsTxtView.as_view(), name="robots.txt"),
     path("robots933456.txt", views.health_check, name="health_check"),
     path("ads.txt", views.AdsTxtView.as_view(), name="ads.txt"),
