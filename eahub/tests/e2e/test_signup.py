@@ -31,6 +31,7 @@ class SignUpTest(E2ETestCase):
         self.selenium.get(self.live_server_url + reverse("account_login"))
         self.find("[name='login']").send_keys(user_email)
         self.find("[name='password']").send_keys(user_password)
+        self.find("[name='privacy_policy_agreed'").click()
         self.find("[type='submit']").click()
         self.selenium.get(self.live_server_url + reverse("profiles_app:my_profile"))
         self.find(".prof__btns .btn")
