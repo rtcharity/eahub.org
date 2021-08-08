@@ -16,7 +16,7 @@ footer {
         .col {
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: flex-start;
     
             &:last-of-type {
                 @include media-breakpoint-up(md) {

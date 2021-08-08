@@ -95,6 +95,10 @@ def privacy_policy(request):
     return render(request, "eahub/privacy_policy.html")
 
 
+def community_guidelines(request):
+    return render(request, "eahub/community_guidelines.html")
+
+
 def groups(request):
     groups_data = get_groups_data()
     return render(
