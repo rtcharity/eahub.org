@@ -275,6 +275,7 @@ class Profile(models.Model):
         blank=True,
         related_name="tags_ea_involvement",
     )
+    privacy_policy_agreed = models.BooleanField(null=False, default=False)
 
     objects = ProfileManager()
 

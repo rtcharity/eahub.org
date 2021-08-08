@@ -31,6 +31,9 @@ class SignupForm(forms.Form):
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
         private_key=settings.RECAPTCHA_PRIVATE_KEY,
     )
+    privacy_policy_agreed = forms.BooleanField(
+        required=True
+    )
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
