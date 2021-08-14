@@ -16,7 +16,9 @@ class ProfileTestCase(EAHubTestCase):
 
     def test_save_analytics_on_profile_creation(self):
         first_name = "User1"
-        profile = self.gen.profile(first_name=first_name, last_name="", privacy_policy_agreed=True)
+        profile = self.gen.profile(
+            first_name=first_name, last_name="", privacy_policy_agreed=True
+        )
 
         analytics_logs = ProfileAnalyticsLog.objects.filter(profile=profile)
 
