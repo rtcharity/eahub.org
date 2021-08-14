@@ -16,7 +16,7 @@ class ProfileTestCase(EAHubTestCase):
 
     def test_save_analytics_on_profile_creation(self):
         first_name = "User1"
-        profile = self.gen.profile(first_name=first_name, last_name="")
+        profile = self.gen.profile(first_name=first_name, last_name="", privacy_policy_agreed=True)
 
         analytics_logs = ProfileAnalyticsLog.objects.filter(profile=profile)
 
@@ -44,6 +44,9 @@ class ProfileTestCase(EAHubTestCase):
         analytics_logs_allow_messaging = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="allow_messaging"
         )
+        analytics_logs_privacy_policy_agreed = ProfileAnalyticsLog.objects.filter(
+            profile=profile, field="privacy_policy_agreed"
+        )
 
         self.assertEqual(first_name, analytics_logs_name.first().new_value)
         self.assertEqual("True", analytics_logs_is_approved.first().new_value)
@@ -54,8 +57,9 @@ class ProfileTestCase(EAHubTestCase):
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(14, len(analytics_logs))
+        self.assertEqual(15, len(analytics_logs))
         self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
+        self.assertEqual("True", analytics_logs_privacy_policy_agreed.first().new_value)
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(
             all(
