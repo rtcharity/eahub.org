@@ -86,13 +86,8 @@
         <label for="{{ form.password1.id }}">Password</label>
       </div>
 
-      <div class="form-floating mb-4 p-3 row">
-        <div class="col-1 col-bool-with-margin-top">
-          {% crispy_field form.privacy_policy_agreed %}
-        </div>
-        <div class="col fs-6">
-          I hereby confirm that I have read, understood and agree to the EA Hub <a href="{% url 'community_guidelines' %}" target="_blank">Community Guidelines</a> and <a href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy.</a>
-        </div>
+      <div class="field mt-4 mb-4">
+        {% include 'includes/field.html' with form=form field=form.privacy_policy_agreed %}
       </div>
 
       {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
