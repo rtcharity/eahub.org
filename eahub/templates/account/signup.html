@@ -86,6 +86,10 @@
         <label for="{{ form.password1.id }}">Password</label>
       </div>
 
+      <div class="field mt-4 mb-4">
+        {% include 'includes/field.html' with form=form field=form.privacy_policy_agreed %}
+      </div>
+
       {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
 
       <div class="field">
@@ -94,12 +98,11 @@
         {% endif %}
       </div>
 
-      <div class="fs-6 additional-links">
-        <a href="{% url 'privacy_policy' %}" rel="nofollow">Privacy Policy</a>
-      </div>
+
 
       <input class="btn btn-primary btn-lg" type="submit" value="Sign Up">
     </form>
+
   </div>
 {% endblock %}
 

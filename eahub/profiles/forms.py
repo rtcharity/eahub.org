@@ -3,6 +3,8 @@ from captcha import fields
 from django import forms
 from django.conf import settings
 from django.forms import ModelForm
+from django.urls import reverse_lazy
+from django.utils.safestring import mark_safe
 
 from eahub.config.settings import DjangoEnv
 
@@ -31,11 +33,19 @@ class SignupForm(forms.Form):
         public_key=settings.RECAPTCHA_PUBLIC_KEY,
         private_key=settings.RECAPTCHA_PRIVATE_KEY,
     )
+    privacy_policy_agreed = forms.BooleanField(required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         if settings.DJANGO_ENV == DjangoEnv.E2E:
             del self.fields["captcha"]
+
+        community_guidelines_url = reverse_lazy("community_guidelines")
+        privacy_policy_url = reverse_lazy("privacy_policy")
+
+        self.fields["privacy_policy_agreed"].label = mark_safe(
+            f'I hereby confirm that I have read, understood and agree to the EA Hub <a href="{community_guidelines_url}" target="_blank">Community Guidelines</a> and <a href="{privacy_policy_url}" target="_blank">Privacy Policy.</a>'
+        )
 
     def signup(self, request, user):
         Profile.objects.create(

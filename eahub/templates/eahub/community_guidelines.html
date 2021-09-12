@@ -1,0 +1,34 @@
+{% extends 'base_bs5.html' %}
+
+{% load static %}
+
+{% block title %}Community Guidelines{% endblock %}
+
+{% block navbar %}
+    {% include 'components/navbar.html' %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container info">
+<br>
+<h1>Community Guidelines</h1>
+
+<p>Our mission is to facilitate connections and collaborations between community members. We want the Hub to be a safe and welcoming space to allow this to happen, so we request that you follow the following community guidelines:</p>
+
+<ul>
+    <li>Be kind, respectful and courteous</li>
+    <li>Avoid advertising services and products on your profile or via messaging, unless it is explicitly related to effective altruism.</li>
+</ul>
+
+<p>We do not tolerate discrimination, threats of violence, harassment, misinformation, disinformation, or other things which may harm users.</p>
+<p>We will take action if these guidelines are violated. Depending on the situation, we may give a warning or suspend the individual temporarily or permanently.</p>
+
+<p>Please report behavior that goes against our community guidelines by emailing <a href="mailto:contact@eahub.org">contact@eahub.org</a> or click the ‘Report an Issue’ button on a user’s profile.</p>
+<br>
+</div>
+{% endblock %}
+
+{% block footer %}
+    {% include 'includes/footer.html' %}
+{% endblock %}

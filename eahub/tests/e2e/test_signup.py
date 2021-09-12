@@ -18,6 +18,7 @@ class SignUpTest(E2ETestCase):
         self.find("[name='last_name']").send_keys("User")
         self.find("[name='email']").send_keys(user_email)
         self.find("[name='password1']").send_keys(user_password)
+        self.find("[name='privacy_policy_agreed'").click()
 
         self.find("form button[type='submit']").click()
 

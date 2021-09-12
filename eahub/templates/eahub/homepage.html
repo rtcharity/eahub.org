@@ -167,6 +167,10 @@
             <label for="{{ form.password1.id }}">Password</label>
           </div>
 
+          <div class="field mt-4 mb-4">
+            {% include 'includes/field.html' with form=form field=form.privacy_policy_agreed %}
+          </div>
+
           {% if form.captcha %}{% crispy_field form.captcha %}{% endif %}
 
           <button type="submit" class="btn btn-primary">Sign Up</button>
