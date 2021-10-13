@@ -35,12 +35,14 @@ class Command(base.BaseCommand):
                 profile_tag_types = ProfileTagType.objects.filter(type=profile_tag_type_enum)
                 profile_tag_type = profile_tag_types[0]
                 if not profile_tag_types:
+                  print(f"Tag {tag_name} does not exist")
                   continue
-                if not isinstance(value, str):
-                  continue
-                for single_value in [x.strip() for x in value.split(",")]:
+                for single_value in value.split(","):
                   profile_tags = ProfileTag.objects.filter(name=single_value)
-                  if not profile_tags.exists():
+                  if not profile_tag.types.filter(type=profile_tag_type_enum).exists():
+                    types_prop = list(profile_tag.types.all())
+                    types_prop.append(profile_tag_type)
+                    profile_tag.types.set(types_prop)
                     profile_tag = ProfileTag(name=single_value,author=profile)
                     profile_tag.save()
                     profile_tag.types.set([profile_tag_type])
@@ -65,7 +67,7 @@ class Command(base.BaseCommand):
             profile.is_approved = True
             profile.save()
             count_saved += 1
-            print(f"Saved user with email {email}")
+            print(f"Save user with email {email}")
 
       print(f"Saved {count_saved} users, skipped {count_skipped} users")
 
