@@ -67,7 +67,7 @@ class Command(base.BaseCommand):
             profile.is_approved = True
             profile.save()
             count_saved += 1
-            print(f"Save user with email {email}")
+            print(f"Saved user with email {email}")
 
       print(f"Saved {count_saved} users, skipped {count_skipped} users")
 
