@@ -7,8 +7,8 @@ from django.core.management import base
 
 class Command(base.BaseCommand):
   def handle(self, *args, **options):
-      headers = pandas.read_csv("data/test_book.csv", index_col=0, nrows=0).columns.tolist()
-      users_from_csv = pandas.read_csv(f"data/test_book.csv")
+      headers = pandas.read_csv("data/users_new_sample.csv", index_col=0, nrows=0).columns.tolist()
+      users_from_csv = pandas.read_csv(f"data/users_new_sample.csv")
       count_saved = 0
       count_skipped = 0
       for i, row in users_from_csv.iterrows():
@@ -20,7 +20,7 @@ class Command(base.BaseCommand):
             user = User()
             user.email = email
             user.save()
-            profile = Profile(user=user)
+            profile = Profile(user=user,first_name=row["first_name"],last_name=row["last_name"])
             profile.save()
             for header in headers:
               value = row[header]
@@ -41,7 +41,7 @@ class Command(base.BaseCommand):
                   continue
                 for single_value in value.split(","):
                   profile_tags = ProfileTag.objects.filter(name=single_value)
-                  if profile_tags:
+                  if profile_tags.exists():
                     for profile_tag in profile_tags:
                       tag_prop = getattr(profile, header)
                       tags_on_profile = list(tag_prop.all())
@@ -56,13 +56,16 @@ class Command(base.BaseCommand):
                     profile_tag.save()
                     profile_tag.types.set([profile_tag_type])
                     profile_tag.save()
+              elif header == "personal_website_url":
+                if isinstance(row[header], str):
+                  profile.personal_website_url = row[header]
               else:
                 profile.__dict__[header] = row[header]
             profile.visibility = VisibilityEnum.PRIVATE
             profile.is_approved = True
             profile.save()
             count_saved += 1
-            print(f"Save user with email {email}")
+            print(f"Saved user with email {email}")
 
       print(f"Saved {count_saved} users, skipped {count_skipped} users")
 
