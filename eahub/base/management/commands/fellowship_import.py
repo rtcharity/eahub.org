@@ -35,14 +35,10 @@ class Command(base.BaseCommand):
                 profile_tag_types = ProfileTagType.objects.filter(type=profile_tag_type_enum)
                 profile_tag_type = profile_tag_types[0]
                 if not profile_tag_types:
-                  print(f"Tag {tag_name} does not exist")
                   continue
                 for single_value in value.split(","):
                   profile_tags = ProfileTag.objects.filter(name=single_value)
-                  if not profile_tag.types.filter(type=profile_tag_type_enum).exists():
-                    types_prop = list(profile_tag.types.all())
-                    types_prop.append(profile_tag_type)
-                    profile_tag.types.set(types_prop)
+                  if not profile_tags.exists():
                     profile_tag = ProfileTag(name=single_value,author=profile)
                     profile_tag.save()
                     profile_tag.types.set([profile_tag_type])
