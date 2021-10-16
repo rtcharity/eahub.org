@@ -56,7 +56,7 @@ class Command(base.BaseCommand):
 
               elif "url" in header:
                 if isinstance(row[header], str):
-                  profile.personal_website_url = row[header]
+                  profile.__dict__[header] = row[header]
               else:
                 profile.__dict__[header] = row[header]
             profile.visibility = VisibilityEnum.PRIVATE
