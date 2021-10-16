@@ -7,8 +7,8 @@ from django.core.management import base
 
 class Command(base.BaseCommand):
   def handle(self, *args, **options):
-      headers = pandas.read_csv("data/users_new_sample.csv", index_col=0, nrows=0).columns.tolist()
-      users_from_csv = pandas.read_csv(f"data/users_new_sample.csv")
+      headers = pandas.read_csv("data/users_new_final.csv", index_col=0, nrows=0).columns.tolist()
+      users_from_csv = pandas.read_csv(f"data/users_new_final.csv")
       count_saved = 0
       count_skipped = 0
       for i, row in users_from_csv.iterrows():
@@ -39,24 +39,26 @@ class Command(base.BaseCommand):
                   continue
                 if not isinstance(value, str):
                   continue
-                for single_value in value.split(","):
+                for single_value in [x.strip() for x in value.split(",")]:
                   profile_tags = ProfileTag.objects.filter(name=single_value)
-                  if profile_tags.exists():
-                    for profile_tag in profile_tags:
-                      tag_prop = getattr(profile, header)
-                      tags_on_profile = list(tag_prop.all())
-                      tags_on_profile.append(profile_tag)
-                      tag_prop.set(tags_on_profile)
-                      if not profile_tag.types.filter(type=profile_tag_type_enum).exists():
-                        types_prop = list(profile_tag.types.all())
-                        types_prop.append(profile_tag_type)
-                        profile_tag.types.set(types_prop)
-                  else:
+                  if not profile_tags.exists():
+                    print(single_value + " does not exist")
                     profile_tag = ProfileTag(name=single_value,author=profile)
                     profile_tag.save()
                     profile_tag.types.set([profile_tag_type])
                     profile_tag.save()
-              elif header == "personal_website_url":
+                  profile_tags = ProfileTag.objects.filter(name=single_value)
+                  for profile_tag in profile_tags:
+                    tag_prop = getattr(profile, header)
+                    tags_on_profile = list(tag_prop.all())
+                    tags_on_profile.append(profile_tag)
+                    tag_prop.set(tags_on_profile)
+                    if not profile_tag.types.filter(type=profile_tag_type_enum).exists():
+                      types_prop = list(profile_tag.types.all())
+                      types_prop.append(profile_tag_type)
+                      profile_tag.types.set(types_prop)
+
+              elif "url" in header:
                 if isinstance(row[header], str):
                   profile.personal_website_url = row[header]
               else:
