@@ -25,7 +25,7 @@ class Command(base.BaseCommand):
             for header in headers:
               value = row[header]
               if header == "local_groups":
-                group = LocalGroup.objects.filter(name__iexact=value)
+                group = LocalGroup.objects.filter(name=value)
                 if group:
                   m = Membership(profile=profile, local_group=group[0])
                   m.save()
