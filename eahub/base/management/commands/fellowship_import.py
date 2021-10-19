@@ -25,7 +25,7 @@ class Command(base.BaseCommand):
             for header in headers:
               value = row[header]
               if header == "local_groups":
-                group = LocalGroup.objects.filter(name=value)
+                group = LocalGroup.objects.filter(name__iexact=value)
                 if group:
                   m = Membership(profile=profile, local_group=group[0])
                   m.save()
@@ -39,13 +39,13 @@ class Command(base.BaseCommand):
                 if not isinstance(value, str):
                   continue
                 for single_value in [x.strip() for x in value.split(",")]:
-                  profile_tags = ProfileTag.objects.filter(name=single_value)
+                  profile_tags = ProfileTag.objects.filter(name__iexact=single_value)
                   if not profile_tags.exists():
                     profile_tag = ProfileTag(name=single_value,author=profile)
                     profile_tag.save()
                     profile_tag.types.set([profile_tag_type])
                     profile_tag.save()
-                  profile_tags = ProfileTag.objects.filter(name=single_value)
+                  profile_tags = ProfileTag.objects.filter(name__iexact=single_value)
                   for profile_tag in profile_tags:
                     tag_prop = getattr(profile, header)
                     tags_on_profile = list(tag_prop.all())
