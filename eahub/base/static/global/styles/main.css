@@ -955,3 +955,16 @@ table td {
 .grecaptcha-badge {
   visibility: hidden;
 }
+
+.btn-find-forum-groups {
+    background-color: #512B52;
+    border: #512B52;
+    height: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 2rem;
+}
+
+.btn-find-forum-groups:hover{
+    background-color: #716171;
+}

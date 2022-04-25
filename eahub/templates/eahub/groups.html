@@ -8,76 +8,14 @@
 
 {% block content %}
 
-{% addtoblock 'js' %}
-  {% if settings.DJANGO_ENV.value == 'local' %}
-    <script defer src="{{ settings.WEBPACK_DEV_URL }}/component_tables.bundle.js"></script>
-  {% else %}
-    <script defer src="{% static 'dist/component_tables.js' %}"></script>
-  {% endif %}
-{% endaddtoblock %}
-
 <div class="container animated fadeIn">
   <br>
-  <h2>Directory of Local EA Groups</h2>
-  <p style="text-align: center">For non-local groups, head to this <a href="https://resources.eagroups.org/support-and-funding-for-groups/connecting-with-the-broader-ea-community-and-keeping-up-to-date#h.vsbhqulcisco">list of groups based on cause-area, career paths, or affiliations</a>.</p>
-  <br><br>
-  <div class="row">
-    <div class="col-sm-4">
-      <div class="profile-action">
-        <div class="list-group">
-          {% if user.is_authenticated %}
-            {% has_perm 'localgroups.create_local_group' user as can_create_local_group %}
-            {% if can_create_local_group %}
-              <a href="{% url 'localgroups_create' %}" class="list-group-item"><i class="fa fa-plus"></i> Create a Group</a>
-            {% else %}
-              <span class="list-group-item disabled" title="You can't create a group until your profile is confirmed."><i class="fa fa-plus"></i> Create a Group</span>
-            {% endif %}
-          {% else %}
-            <span class="list-group-item disabled" title="You must be logged in to create a group."><i class="fa fa-plus"></i> Register a Group</span>
-          {% endif %}
-        </div>
-        <div class="list-group">
-          <a href="https://resources.eagroups.org" class="list-group-item"><i class="fa fa-book"></i> EA Groups Resource Centre</a>
-        </div>
-        <div class="list-group">
-          <a href="mailto:contact@eahub.org" class="list-group-item"><i class="fa fa-envelope"></i> Contact EA Hub</a>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-8">
-        {% include 'eahub/maps/list_page_map.html' with map_type="groups" map_locations=map_locations %}
-    </div>
+  <br>
+  <div class="text-center">
+    <a href="https://forum.effectivealtruism.org/community"><button type="button" class="btn btn-find-forum-groups btn-large btn-primary">Find groups on the EA Forum</button></a>
   </div>
-</div>
-
-<br><br>
-
-<div class="container animated fadeIn">
-  <div class="search">
-     Search: <input type="text" id="filterbox">
-  </div>
-  <table id="datatable-groups" class="table enable-datatable table-striped table-bordered dataTable">
-      <thead>
-          <tr>
-              <th>Name</th>
-              <th>Location</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for group in groups %}
-          <tr>
-              <td>
-                  <a href="{% url 'group' group.slug %}">{{ group.name|default_if_none:'' }}</a>
-              </td>
-              <td>
-                {% if group.country %}{{ group.country }}{% endif %}
-                {% if group.country and group.city_or_town %}/{% endif %}
-                {% if group.city_or_town %}{{ group.city_or_town }}{% endif %}
-              </td>
-          </tr>
-          {% endfor %}
-      </tbody>
-  </table>
+  <br>
+  <p>As the EA Hub <a href="https://forum.effectivealtruism.org/posts/FdWv7t8Pyxyxe6xnb/the-ea-hub-is-suspending-new-feature-development-with-plans" target="_blank">has suspended feature development and plans to retire</a>, we recommend that you use the EA Forum's Groups feature instead.</p>
 </div>
 
 {% endblock %}
