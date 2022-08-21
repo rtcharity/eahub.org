@@ -92,20 +92,28 @@ DATABASES = {
     )
 }
 
-DEBUG = env.bool("DEBUG", default=False)
+# DEBUG = env.bool("DEBUG", default=False)
+DEBUG = env.bool("DEBUG", default=True)  # roland
 
 vars().update(
     env.email_url(
         "EMAIL_URL",
         backend="django.core.mail.backends.smtp.EmailBackend",
-        default="smtp://mail:1025",
+        #default="smtp://mail:25",
+        #default="smtp://mail:1025",
+        default="smtp://localhost:25",  # roland
     )
 )
 ADMINS = list(
-    env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items()
+    #env.dict("ADMINS", default={"EA Hub Tech Team": "admins@eahub.org"}).items()
+    env.dict("ADMINS", default={"EA Hub Tech Team Dev": "roland@simplify.ee"}).items()  # roland
 )
-DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
-GROUPS_EMAIL = env.str("GROUPS_EMAIL", "admin@eahub.org")
+# DEFAULT_FROM_EMAIL = "EA Hub <admin@eahub.org>"
+DEFAULT_FROM_EMAIL = "EA Hub Dev <roland@simplify.ee>"  # roland
+
+# GROUPS_EMAIL = env.str("GROUPS_EMAIL", "admin@eahub.org")
+GROUPS_EMAIL = env.str("GROUPS_EMAIL", "roland@simplify.ee")  # roland
+
 EMAIL_SUBJECT_PREFIX = "[EA Hub] "
 MANAGERS = ADMINS
 SERVER_EMAIL = DEFAULT_FROM_EMAIL
@@ -137,7 +145,8 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+# USE_TZ = True
+USE_TZ = False  # roland: this resolves "AssertionError: database connection isn't set to UTC"
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[]) + ["127.0.0.1", "*"]
 META_SITE_PROTOCOL = "https" if DJANGO_ENV == DjangoEnv.PROD else "http"
@@ -200,7 +209,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cached_db"
 SITE_ID = 1
 
 
-STATIC_ROOT = os.path.join(base_dir, "static_build/")
+STATIC_ROOT = os.path.join(str(base_dir), "static_build/")  # roland: str() for Python 3.5 compatibility
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     "eahub/base/static/",
@@ -223,7 +232,7 @@ if env.str("DEFAULT_STORAGE_DSN", ""):
     AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
 else:
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = os.path.join(base_dir, "data/media/")
+    MEDIA_ROOT = os.path.join(str(base_dir), "data/media/")  # roland: str() for Python 3.5 compatibility
 
 
 ACCOUNT_ADAPTER = "eahub.base.adapter.EmailBlacklistingAdapter"
@@ -240,7 +249,10 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"   
+ACCOUNT_EMAIL_VERIFICATION = "optional"    # roland: options: 'none|optional|mandatory'; set to 'none'
+
 ACCOUNT_SIGNUP_REDIRECT_URL = reverse_lazy("profiles_app:edit_profile")
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
@@ -316,7 +328,8 @@ THUMBNAIL_PRESERVE_FORMAT = True
 
 WEBPACK_DEV_URL = env("WEBPACK_DEV_URL", default="http://localhost:8090/assets")
 
-DOMAIN = env.str("DOMAIN", "localhost:8000")
+# DOMAIN = env.str("DOMAIN", "localhost:8000")
+DOMAIN = env.str("DOMAIN", "localhost:9000")  # roland
 
 SETTINGS_EXPORT = [
     "WEBPACK_DEV_URL",
@@ -331,7 +344,8 @@ ADMIN_SITE_HEADER = "EA Hub Staff Portal"
 BLACKLISTED_EMAIL_PATTERNS = env.list("BLACKLISTED_EMAIL_PATTERNS", default=[])
 
 LEAN_MANAGERS = list(
-    env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items()
+    # env.dict("LEAN_MANAGERS", default={"Lean Org": "admin@eahub.org"}).items()
+    env.dict("LEAN_MANAGERS", default={"Lean Org Dev": "roland@simplify.ee"}).items()  # roland
 )
 local_groups_airtable_api_key = env.str("LOCAL_GROUPS_AIRTABLE_API_KEY", default=None)
 local_groups_airtable_base_key = env.str("LOCAL_GROUPS_AIRTABLE_BASE_KEY", default=None)

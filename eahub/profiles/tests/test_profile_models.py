@@ -46,6 +46,9 @@ class ProfileTestCase(EAHubTestCase):
         analytics_logs_allow_messaging = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="allow_messaging"
         )
+        analytics_logs_allow_messaging = ProfileAnalyticsLog.objects.filter(    # roland
+            profile=profile, field="opt_in_to_matchmaking"
+        )
         analytics_logs_privacy_policy_agreed = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="privacy_policy_agreed"
         )
