@@ -20,7 +20,7 @@ class CauseArea(enum.Enum):
     OTHER_POLICY_REFORMS = 15
     OTHER_EXISTENTIAL_RISKS = 16
 
-    labels = {
+    __labels__ = {
         LONG_TERM_FUTURE: "Long-term future",
         GLOBAL_HEALTH_AND_DEVELOPMENT: "Global health and development",
         GLOBAL_PRIORITIES_RESEARCH: "Global priorities research",
@@ -72,7 +72,7 @@ class ExpertiseArea(enum.Enum):
     INFORMATION_SECURITY = 28
     PSYCHOLOGY_OF_DECISION_MAKING = 29
 
-    labels = {
+    __labels__ = {
         MANAGEMENT: "Management",
         OPERATIONS: "Operations",
         RESEARCH: "Research",
@@ -112,7 +112,7 @@ class GivingPledge(enum.Enum):
     ONE_FOR_THE_WORLD = 3
     FOUNDERS_PLEDGE = 4
 
-    labels = {
+    __labels__ = {
         GIVING_WHAT_WE_CAN: "Giving What We Can",
         THE_LIFE_YOU_CAN_SAVE: "The Life You Can Save",
         ONE_FOR_THE_WORLD: "One for the World",
@@ -216,7 +216,7 @@ class OrganisationalAffiliation(enum.Enum):
     HIGH_IMPACT_CAREERS_IN_GOVERNMENT = 92
     SPARKWAVE = 93
 
-    labels = {
+    __labels__ = {
         EIGHTY_THOUSAND_HOURS: "80,000 Hours",
         ANIMAL_CHARITY_EVALUATORS: "Animal Charity Evaluators (ACE)",
         BERI: "Berkeley Existential Risk Initiative (BERI)",

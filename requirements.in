@@ -14,28 +14,28 @@ django-cleanup
 django-upload-path
 django-sluggable
 django-autoslug
-django-enumfield < 2
+django-enumfield>=3.0
 django-enumfields  # a better version of django-enumfield
 django-crispy-forms
 django-widget-tweaks  # a better version of django-crispy-forms
 django-allauth
-django-authtools
+django-authtools>=2.0.0
 django-pwned-passwords
 django-recaptcha
 django-webpack-loader
 django-admin-rangefilter
 django-admin-relation-links
 django-settings-export
-django-sekizai
+django-sekizai>=4.0.0
 django-environ
 django-extensions  # for python manage.py clear_cache on deployment
 algoliasearch-django  # for profiles & groups search
-https://control.divio.com/api/v1/apps/serve/aldryn-django/2.2.17.1/152a6e71-0596-4bfc-9d14-d94bb1e1a6ca/aldryn-django-2.2.17.1.tar.gz#egg=aldryn-django==2.2.17.1
+django>=3.2
 django-import-export
 django-referrer-policy
 django-feature-policy
 rules
-django-flags  # for feature flags
+django-flags>=5.0.11  # for feature flags
 django-modeladmin-reorder  # reorder admin panel homepage apps
 django-adminutils  # a set of shortcuts for admin.py composition
 djangorestframework
@@ -43,6 +43,10 @@ django-storage-url
 django-solo
 djangocms-helpers  # for send_email function
 django-select2
+
+# db packages
+dj-database-url
+psycopg2
 
 # dev packages (might try to move it out for deployment speed optimization)
 
@@ -58,4 +62,4 @@ pytest
     pytest-flake8
 pip-tools
 faker
-model_bakery
+model_bakery>=1.7.0
