@@ -9,6 +9,7 @@ geographiclib  # for maps
     geopy
 airtable-python-wrapper  # for airtable import, which we don't do anymore - consider dropping it
 boto3
+yurl # for parsing storage url
 
 django-cleanup
 django-upload-path
@@ -30,10 +31,9 @@ django-sekizai>=4.0.0
 django-environ
 django-extensions  # for python manage.py clear_cache on deployment
 algoliasearch-django  # for profiles & groups search
-django>=3.2
 django-import-export
 django-referrer-policy
-django-feature-policy
+django-feature-policy==3.8.0
 rules
 django-flags>=5.0.11  # for feature flags
 django-modeladmin-reorder  # reorder admin panel homepage apps
@@ -59,7 +59,7 @@ pytest
     pytest-django
     pytest-selenium
     pytest-black
-    pytest-flake8
+    pytest-flake8==1.1.0
 pip-tools
 faker
 model_bakery>=1.7.0

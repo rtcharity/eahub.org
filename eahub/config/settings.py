@@ -7,9 +7,11 @@ import sentry_sdk
 from django.core import exceptions
 from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
-from django_storage_url import dsn_configured_storage_class
 from dotenv import find_dotenv, load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
+from django_storage_url import dsn_configured_storage_class
+
+from eahub.config.utils import parse_storage_url
 
 env = environ.Env()
 base_dir = environ.Path(__file__) - 3
@@ -210,11 +212,9 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 if env.str("DEFAULT_STORAGE_DSN", ""):
     DEFAULT_STORAGE_DSN = env.str("DEFAULT_STORAGE_DSN", "")
-    from aldryn_django.storage import parse_storage_url
-
     media_config = parse_storage_url(DEFAULT_STORAGE_DSN)
     MEDIA_URL = media_config["MEDIA_URL"]
-    DEFAULT_FILE_STORAGE = "aldryn_django.storage.S3MediaStorage"
+    DEFAULT_FILE_STORAGE = dsn_configured_storage_class('DEFAULT_STORAGE_DSN')
     AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
     AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
     AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
@@ -384,3 +384,5 @@ ADMIN_REORDER = [
         ],
     },
 ]
+
+
