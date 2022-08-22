@@ -1,3 +1,4 @@
+import os
 import yurl
 
 from six.moves.urllib import parse
