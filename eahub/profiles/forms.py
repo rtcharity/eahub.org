@@ -60,6 +60,7 @@ class DeleteProfileForm(forms.Form):
 
 
 class ProfileForm(ModelForm):
+
     class Meta:
         model = Profile
         fields = [
@@ -94,5 +95,5 @@ class ProfileForm(ModelForm):
                         "name__icontains",
                     ]
                 }
-            )
+            ),
         }

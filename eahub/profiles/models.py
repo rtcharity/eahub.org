@@ -175,16 +175,18 @@ class Profile(models.Model):
         help_text="Your email address won't be visible to them",
     )
     opt_in_to_matchmaking = models.BooleanField(      # roland
-        blank=True,       # TODO: what is this?   # TODO: set to False?
-        default=True,     # TODO: what is this?   # TODO: set to False?
+        blank=False,    
+        default=True,     # TODO: set to False?
         verbose_name="Allow approved users to be matched with me",
         help_text="Your email address WILL be visible to the matched users",
     )
+
+    number_of_matchmaking_introductions_per_period__choices = [(x, str(x)) for x in range(1, 5 + 1)]   # TODO: tune
     number_of_matchmaking_introductions_per_period = models.IntegerField( 
-        blank=1,       # TODO: tune
+        blank=False,     
         default=1,     # TODO: tune
         verbose_name="Up to how many times per month are you willing to be matched?",
-        validators = [MinValueValidator(1), MaxValueValidator(5)]
+        choices=number_of_matchmaking_introductions_per_period__choices   # this makes the form field into a dropdown so the user has no way to enter invalid values and get errors during form submission
     )
 
     summary = models.TextField(

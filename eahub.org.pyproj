@@ -15,7 +15,7 @@
     <CommandLineArguments>runserver 0.0.0.0:9000</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <Environment>PYTHONUNBUFFERED=1
-PYTHONINSPECT=1
+PYTHONINSPECT=
 PYTHONASYNCIODEBUG=1
 PYTHONLEGACYWINDOWSSTDIO=1</Environment>
   </PropertyGroup>
