@@ -212,15 +212,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 if env.str("DEFAULT_STORAGE_DSN", ""):
     DEFAULT_STORAGE_DSN = env.str("DEFAULT_STORAGE_DSN", "")
     media_config = parse_storage_url(DEFAULT_STORAGE_DSN)
-    MEDIA_URL = media_config["MEDIA_URL"]
-
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    AWS_MEDIA_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
-    AWS_MEDIA_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
-    AWS_MEDIA_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
-    AWS_MEDIA_STORAGE_HOST = media_config["AWS_MEDIA_STORAGE_HOST"]
-    AWS_MEDIA_BUCKET_PREFIX = media_config["AWS_MEDIA_BUCKET_PREFIX"]
-    AWS_MEDIA_DOMAIN = media_config["AWS_MEDIA_DOMAIN"]
+    AWS_ACCESS_KEY_ID = media_config["AWS_MEDIA_ACCESS_KEY_ID"]
+    AWS_SECRET_ACCESS_KEY = media_config["AWS_MEDIA_SECRET_ACCESS_KEY"]
+    AWS_STORAGE_BUCKET_NAME = media_config["AWS_MEDIA_STORAGE_BUCKET_NAME"]
+    AWS_S3_CUSTOM_DOMAIN = media_config["AWS_MEDIA_CUSTOM_DOMAIN"]
+    AWS_QUERYSTRING_AUTH = True
+    AWS_S3_FILE_OVERWRITE = False
 else:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = os.path.join(base_dir, "data/media/")
