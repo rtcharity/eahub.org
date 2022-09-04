@@ -43,6 +43,8 @@ django-storage-url
 django-solo
 djangocms-helpers  # for send_email function
 django-select2
+django-storages==1.11.1 # 1.12+ pobably needs an update of boto3 & its reqs, otherwise throws an ssl error on upload
+boto3>=1.18.38
 
 # db packages
 dj-database-url
