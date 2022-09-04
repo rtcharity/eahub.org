@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from django.utils.safestring import mark_safe
 from dotenv import find_dotenv, load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
-from django_storage_url import dsn_configured_storage_class
 
 from eahub.config.utils import parse_storage_url
 
