@@ -9,10 +9,6 @@ def parse_storage_url(url):
   url = parse.urlparse(url)
 
   scheme = url.scheme.split('+', 1)
-  schemes = {
-    's3': 'aldryn_django.storage.S3MediaStorage',
-    'djfs': 'fs.django_storage.DjeeseFSStorage',
-  }
 
   if scheme[0] == 's3':
     query = parse.parse_qs(url.query)
