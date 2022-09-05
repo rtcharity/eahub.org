@@ -10,6 +10,11 @@ from eahub.profiles.models import (
 )
 
 
+# roland: https://www.django-rest-framework.org/api-guide/fields/#listfield
+class StringListField(serializers.ListField):   
+    child = serializers.CharField()
+
+
 class TagTypeSerializer(EnumSupportSerializerMixin, serializers.ModelSerializer):
     class Meta:
         model = ProfileTagType
@@ -72,3 +77,47 @@ class ProfileSerializer(serializers.ModelSerializer):
             tags_new = validated_data.pop(field_name)
             tags_field = getattr(instance, field_name)
             tags_field.set(tags_new)
+
+
+# roland
+class SimilaritySearchProfileSerializer(serializers.ModelSerializer):
+
+    # see also class ProfilePublicIndex at eahub\profiles\index.py
+    # see also class Profile at eahub\profiles\models.py
+
+    url = serializers.CharField(source='get_absolute_url')
+    image = serializers.CharField(source='get_image_url')
+    name = serializers.CharField(source='get_full_name')
+    messaging_url = serializers.CharField(source='get_messaging_url_if_can_receive_message')
+
+    local_groups = StringListField(source='get_local_groups_formatted')
+    expertise = StringListField(source='get_tags_expertise_formatted')
+    cause_areas = StringListField(source='get_tags_cause_area_formatted')
+
+    class Meta:
+        model = Profile
+        fields = [
+            "url",
+            "image",
+            # "objectID",
+            "name",
+            "job_title",
+            "available_to_volunteer",
+            "open_to_job_offers",
+            "available_as_speaker",
+            "is_organiser",
+            "country",
+            "city_or_town",   # verbose_name="City"
+            "messaging_url",
+            "personal_website_url",
+            "linkedin_url",
+            "facebook_url",
+            "local_groups",
+            "summary",
+            "offering",
+            "looking_for",
+            "expertise",
+            "expertise_areas_other",
+            "cause_areas",
+            "cause_areas_other",
+        ]

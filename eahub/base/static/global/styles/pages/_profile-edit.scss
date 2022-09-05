@@ -158,6 +158,7 @@ $input-height: 37px;
   }
   .ais-RefinementList,
   .ais-InfiniteHits-loadMore,
+  .similaritySearch-InfiniteHits-loadMore, /* roland */
   .ais-SearchBox-reset,
   .ais-SearchBox-submit {
     display: none;
@@ -239,7 +240,8 @@ $input-height: 37px;
     bottom: 0;
     z-index: 0;
   }
-  .ais-StateResults {
+  .ais-StateResults,
+  .similaritySearch-StateResults /* roland */ {
     position: absolute;
     width: 100%;
     margin-top: -1px;

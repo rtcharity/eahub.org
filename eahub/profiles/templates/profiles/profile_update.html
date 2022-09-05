@@ -228,7 +228,7 @@
           {% include 'includes/field.html' with form=form field=form.visibility %}
           {% include 'includes/field.html' with form=form field=form.allow_messaging %}
           {% include 'includes/field.html' with form=form field=form.opt_in_to_matchmaking %}<!-- roland -->
-          {% include 'includes/field.html' with form=form field=form.number_of_matchmaking_introductions_per_period %}<!-- roland TODO: enable only when opt_in_to_matchmaking is turned on. TODO: limit min and max value from UI input field scroll buttons too -->
+          {% include 'includes/field.html' with form=form field=form.number_of_matchmaking_introductions_per_period %}<!-- roland TODO: enable only when opt_in_to_matchmaking is turned on. -->
           <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
 
         </div>
