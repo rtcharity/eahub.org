@@ -219,6 +219,9 @@ if env.str("DEFAULT_STORAGE_DSN", ""):
     AWS_S3_CUSTOM_DOMAIN = media_config["AWS_MEDIA_CUSTOM_DOMAIN"]
     AWS_QUERYSTRING_AUTH = False
     AWS_S3_FILE_OVERWRITE = False
+    AWS_S3_OBJECT_PARAMETERS = {
+        "ACL": "public-read"
+    }
 else:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = os.path.join(base_dir, "data/media/")
