@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.7-nodejs10
+FROM nikolaik/python-nodejs:python3.9-nodejs14
 
 
 RUN mkdir /app
