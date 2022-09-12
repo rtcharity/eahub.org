@@ -28,7 +28,6 @@ def parse_storage_url(url):
       'AWS_MEDIA_ACCESS_KEY_ID': parse.unquote(url.username or ''),
       'AWS_MEDIA_SECRET_ACCESS_KEY': parse.unquote(url.password or ''),
       'AWS_MEDIA_STORAGE_BUCKET_NAME': bucket_name,
-      'AWS_MEDIA_CUSTOM_DOMAIN': url.hostname,
     })
 
   return config
