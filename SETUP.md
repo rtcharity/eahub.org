@@ -16,7 +16,7 @@ Instructions for developers on how to build and run the project, how to run test
   - In main folder, run ```npm ci``` to install node dependencies  
   - Run ```npm run build-watch``` to serve frontend files    
 - Build and run backend
-  - In main folder in separate terminal window, run ```docker-compose run --rm web bash -c "python manage.py migrate``` 
+  - In main folder in separate terminal window, run ```docker-compose run --rm web bash -c "python manage.py migrate"``` 
     to build docker container and create database tables  
   - Run ```docker-compose up web``` to start docker container  
 - Project will be served on ```localhost:8000```  
@@ -69,7 +69,7 @@ docker-compose run --rm web isort -rc --atomic eahub
 
 
 ## Admin panel  
-- To access the admin panel locally, you will have to create a superuser: ```docker-compose run --rm web bash -c "python manage.py createsuperuser```  
+- To access the admin panel locally, you will have to create a superuser: ```docker-compose run --rm web bash -c "python manage.py createsuperuser"```  
 - Then log in with the chosen username and password and go to localhost:8000/admin  
 
 ## Debugging python code  
