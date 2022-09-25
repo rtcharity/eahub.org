@@ -142,6 +142,7 @@ for tag_m2m_rel in [
 
 
 m2m_changed.connect(reindex_algolia_on_m2m_change, sender=ProfileTag.types.through)
+m2m_changed.connect(reindex_algolia_on_m2m_change, sender=Profile.local_groups.through)
 
 
 def _save_logs_for_profile_creation(instance: Profile):
