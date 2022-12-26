@@ -6,18 +6,16 @@
 #
 airtable-python-wrapper==0.15.3
     # via -r requirements.in
-algoliasearch-django==2.0.0
-    # via -r requirements.in
 algoliasearch==2.6.2
     # via algoliasearch-django
+algoliasearch-django==2.0.0
+    # via -r requirements.in
 asgiref==3.5.2
     # via django
-atomicwrites==1.4.1
-    # via pytest
 attrs==22.1.0
     # via pytest
 autocommand==2.2.1
-    # via jaraco.text
+    # via jaraco-text
 black==22.6.0
     # via
     #   -r requirements.in
@@ -48,11 +46,6 @@ click==8.1.3
     # via
     #   black
     #   pip-tools
-colorama==0.4.5
-    # via
-    #   build
-    #   click
-    #   pytest
 cryptography==37.0.4
     # via pyjwt
 defusedxml==0.7.1
@@ -63,6 +56,32 @@ diff-match-patch==20200713
     # via django-import-export
 dj-database-url==1.0.0
     # via -r requirements.in
+django==3.2.15
+    # via
+    #   algoliasearch-django
+    #   dj-database-url
+    #   django-adminutils
+    #   django-allauth
+    #   django-appconf
+    #   django-authtools
+    #   django-classy-tags
+    #   django-extensions
+    #   django-feature-policy
+    #   django-flags
+    #   django-import-export
+    #   django-modeladmin-reorder
+    #   django-recaptcha
+    #   django-referrer-policy
+    #   django-sekizai
+    #   django-select2
+    #   django-settings-export
+    #   django-solo
+    #   django-storage-url
+    #   django-storages
+    #   django-upload-path
+    #   djangocms-helpers
+    #   djangorestframework
+    #   model-bakery
 django-admin-rangefilter==0.8.7
     # via -r requirements.in
 django-admin-relation-links==0.2.5
@@ -117,8 +136,8 @@ django-select2==7.10.0
     # via -r requirements.in
 django-settings-export==1.2.1
     # via -r requirements.in
-django-sluggable @ git+https://github.com/thoas/django-sluggable.git@ab01785412e25ab8c6db48ead7188e6245fb82a0
-    # latest release does not contain fix for Django 3.2, so need to reference latest commit
+django-sluggable==0.7.0
+    # via -r requirements.in
 django-solo==2.0.0
     # via -r requirements.in
 django-storage-url==0.9.0
@@ -133,32 +152,6 @@ django-webpack-loader==1.6.0
     # via -r requirements.in
 django-widget-tweaks==1.4.12
     # via -r requirements.in
-django==3.2.15
-    # via
-    #   algoliasearch-django
-    #   dj-database-url
-    #   django-adminutils
-    #   django-allauth
-    #   django-appconf
-    #   django-authtools
-    #   django-classy-tags
-    #   django-extensions
-    #   django-feature-policy
-    #   django-flags
-    #   django-import-export
-    #   django-modeladmin-reorder
-    #   django-recaptcha
-    #   django-referrer-policy
-    #   django-sekizai
-    #   django-select2
-    #   django-settings-export
-    #   django-solo
-    #   django-storage-url
-    #   django-storages
-    #   django-upload-path
-    #   djangocms-helpers
-    #   djangorestframework
-    #   model-bakery
 djangocms-helpers==2.2.2.0
     # via -r requirements.in
 djangorestframework==3.13.1
@@ -167,13 +160,13 @@ et-xmlfile==1.1.0
     # via openpyxl
 faker==14.1.0
     # via -r requirements.in
-flake8-isort==4.2.0
-    # via -r requirements.in
 flake8==5.0.4
     # via
     #   flake8-isort
     #   pep8-naming
     #   pytest-flake8
+flake8-isort==4.2.0
+    # via -r requirements.in
 furl==2.1.3
     # via django-storage-url
 geographiclib==1.52
@@ -189,30 +182,30 @@ gunicorn==20.1.0
 idna==3.3
     # via requests
 inflect==6.0.0
-    # via jaraco.text
+    # via jaraco-text
 iniconfig==1.1.1
     # via pytest
 isort==5.10.1
     # via
     #   -r requirements.in
     #   flake8-isort
-jaraco.classes==3.2.2
-    # via jaraco.collections
-jaraco.collections==3.5.2
+jaraco-classes==3.2.2
+    # via jaraco-collections
+jaraco-collections==3.5.2
     # via cherrypy
-jaraco.context==4.1.2
-    # via jaraco.text
-jaraco.functools==3.5.1
+jaraco-context==4.1.2
+    # via jaraco-text
+jaraco-functools==3.5.1
     # via
     #   cheroot
-    #   jaraco.text
+    #   jaraco-text
     #   tempora
-jaraco.text==3.9.1
-    # via jaraco.collections
-jasmine-core==3.99.0
-    # via jasmine
+jaraco-text==3.9.1
+    # via jaraco-collections
 jasmine==3.99.0
     # via -r requirements.in
+jasmine-core==3.99.0
+    # via jasmine
 jellyfish==0.6.1
     # via us
 jinja2==2.11.3
@@ -233,9 +226,9 @@ more-itertools==8.14.0
     # via
     #   cheroot
     #   cherrypy
-    #   jaraco.classes
-    #   jaraco.functools
-    #   jaraco.text
+    #   jaraco-classes
+    #   jaraco-functools
+    #   jaraco-text
 mypy-extensions==0.4.3
     # via black
 oauthlib==3.2.0
@@ -284,6 +277,17 @@ pyjwt[crypto]==2.4.0
     # via django-allauth
 pyparsing==3.0.9
     # via packaging
+pytest==6.2.5
+    # via
+    #   -r requirements.in
+    #   pytest-base-url
+    #   pytest-black
+    #   pytest-django
+    #   pytest-flake8
+    #   pytest-html
+    #   pytest-metadata
+    #   pytest-selenium
+    #   pytest-variables
 pytest-base-url==1.4.2
     # via pytest-selenium
 pytest-black==0.3.12
@@ -300,17 +304,6 @@ pytest-selenium==3.0.0
     # via -r requirements.in
 pytest-variables==1.9.0
     # via pytest-selenium
-pytest==6.2.5
-    # via
-    #   -r requirements.in
-    #   pytest-base-url
-    #   pytest-black
-    #   pytest-django
-    #   pytest-flake8
-    #   pytest-html
-    #   pytest-metadata
-    #   pytest-selenium
-    #   pytest-variables
 python-dateutil==2.8.2
     # via
     #   botocore
@@ -324,14 +317,10 @@ pytz==2022.2.1
     #   django
     #   djangorestframework
     #   tempora
-# pywin32==304 # does not work in linux container
-    # via cherrypy
 pyyaml==6.0
     # via
     #   jasmine
     #   tablib
-requests-oauthlib==1.3.1
-    # via django-allauth
 requests==2.28.1
     # via
     #   airtable-python-wrapper
@@ -340,6 +329,8 @@ requests==2.28.1
     #   pytest-base-url
     #   pytest-selenium
     #   requests-oauthlib
+requests-oauthlib==1.3.1
+    # via django-allauth
 rules==3.3
     # via -r requirements.in
 s3transfer==0.6.0
@@ -372,15 +363,8 @@ toml==0.10.2
     # via
     #   pytest
     #   pytest-black
-tomli==2.0.1
-    # via
-    #   black
-    #   build
-    #   pep517
 typing-extensions==4.3.0
-    # via
-    #   black
-    #   pydantic
+    # via pydantic
 urllib3==1.26.12
     # via
     #   botocore
@@ -389,7 +373,7 @@ urllib3==1.26.12
     #   sentry-sdk
 us==2.0.2
     # via -r requirements.in
-wheel==0.37.1
+wheel==0.38.1
     # via pip-tools
 whitenoise[brotli]==6.2.0
     # via -r requirements.in
@@ -399,7 +383,7 @@ xlwt==1.3.0
     # via tablib
 yurl==1.0.0
     # via -r requirements.in
-zc.lockfile==2.0
+zc-lockfile==2.0
     # via cherrypy
 
 # The following packages are considered to be unsafe in a requirements file:
