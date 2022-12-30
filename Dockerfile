@@ -13,7 +13,9 @@ COPY webpack.config.js .
 COPY tsconfig.json .
 RUN npm ci
 COPY /eahub/base/static/ ./eahub/base/static/
-RUN npm run build
+ARG SENTRY_AUTH_TOKEN
+ENV SENTRY_AUTH_TOKEN ${SENTRY_AUTH_TOKEN}
+RUN SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN npm run build
 
 
 COPY . .

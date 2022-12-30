@@ -3,7 +3,10 @@ version: "2"
 
 services:
     web-base:
-        build: .
+        build:
+            context: .
+            args:
+                - SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN
         command: gunicorn --reload --bind=0.0.0.0:8000 eahub.config.wsgi
         ports:
             - 8000:8000
