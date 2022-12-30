@@ -1,4 +1,5 @@
 from django import urls
+from django.views.generic.base import RedirectView
 
 from . import views
 
@@ -10,7 +11,7 @@ urlpatterns = [
         views.report_group_inactive,
         name="report_group_inactive",
     ),
-    urls.path("<slug:slug>/", views.LocalGroupDetailView.as_view(), name="group"),
+    urls.path("<slug:slug>/", RedirectView.as_view(url="https://forum.effectivealtruism.org/community", permanent=True), name="group"),
     urls.path(
         "<slug:slug>/edit/",
         views.LocalGroupUpdateView.as_view(),
@@ -30,5 +31,5 @@ urlpatterns = [
         "<slug:slug>/message/",
         views.SendGroupMessageView.as_view(),
         name="message_group",
-    ),
+    )
 ]
