@@ -20,7 +20,7 @@
     function initMap() {
         const intervalId = setInterval(() => {
             if (isMapsLogicLoaded) {
-                window.initHeatmapFull('groups');
+                window.initHeatmapFull();
                 clearInterval(intervalId);
             }
         }, 100);
@@ -28,24 +28,3 @@
 </script>
 
 <div id="map" class="join__map"></div>
-
-<div id="map_selector" class="btn-group join__map-config" role="group">
-    <input type="radio"
-        class="btn-check"
-        name="map_selector"
-        id="map_selector_ind"
-        value="individuals"
-        autocomplete="off"
-    >
-    <label class="btn btn-outline-light btn-lg" for="map_selector_ind">Individuals</label>
-
-    <input type="radio"
-        class="btn-check"
-        name="map_selector"
-        id="map_selector_groups"
-        value="groups"
-        autocomplete="off"
-        checked
-    >
-    <label class="btn btn-outline-light btn-lg" for="map_selector_groups">Groups</label>
-</div>

@@ -1,6 +1,7 @@
 from django.core import mail
 from django.template.response import TemplateResponse
 from django.urls import reverse
+import pytest
 
 from eahub.base.models import MessagingLog
 from eahub.localgroups.models import Organisership
@@ -8,6 +9,7 @@ from eahub.tests.cases import EAHubTestCase
 
 
 class LocalGroupsMessagingTestCase(EAHubTestCase):
+    @pytest.mark.skip(reason="Not needed because of groups redirect")
     def test_group_messaging_sends_to_group_email(self):
         profile_sender = self.gen.profile()
         localgroup_recipient = self.gen.group(email="group@test.com")
@@ -37,6 +39,7 @@ class LocalGroupsMessagingTestCase(EAHubTestCase):
             )[0].recipient_type,
         )
 
+    @pytest.mark.skip(reason="Not needed because of groups redirect")
     def test_group_messaging_sends_to_first_organiser(self):
         profile_sender = self.gen.profile()
 

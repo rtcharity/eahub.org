@@ -341,50 +341,6 @@
                 </div>
               {% endif %}
 
-              {% if profile.get_public_local_groups_member_of.exists %}
-                <div class="card__section">
-                  <div class="card__subtitle">Local group membership</div>
-                  {% if profile.get_public_local_groups_member_of|length == 1 %}
-                    <a href="{% url 'group' profile.local_groups.first.slug %}">
-                      {{ profile.get_public_local_groups_member_of.first.name }}
-                    </a>
-                  {% else %}
-                    <ul>
-                      {% for group in profile.get_public_local_groups_member_of %}
-                        <li>
-                          <a class="list-item"
-                            href="{% url 'group' group.slug %}"
-                          >{{ group.name }}</a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </div>
-              {% endif %}
-
-              {% if profile.get_public_local_groups_organising %}
-                <div class="card__section">
-                  <div class="card__subtitle">Organiser of</div>
-                  {% if profile.get_public_local_groups_organising|length == 1 %}
-                    <a
-                      href="{% url 'group' profile.get_public_local_groups_organising.0.slug %}"
-                    >
-                      {{ profile.get_public_local_groups_organising.0.name }}
-                    </a>
-                  {% else %}
-                    <ul>
-                    {% for group in profile.get_public_local_groups_organising %}
-                      <li>
-                        <a class="list-item"
-                          href="{% url 'group' group.slug %}"
-                        >{{ group }}</a>
-                      </li>
-                    {% endfor %}
-                    </ul>
-                  {% endif %}
-                </div>
-              {% endif %}
-
               {% if profile.topics_i_speak_about or profile.tags_speech_topic.exists %}
                 <div class="card__section">
                   <div class="card__subtitle">Topics I speak about</div>

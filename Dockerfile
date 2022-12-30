@@ -15,7 +15,6 @@ RUN npm ci
 COPY /eahub/base/static/ ./eahub/base/static/
 RUN npm run build
 
-
 COPY . .
 RUN mkdir /app/static_build
 ENV DJANGO_ENV="docker_build"
