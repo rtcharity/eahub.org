@@ -29,13 +29,12 @@ export default class Heatmap {
   setup() {
     if (this.type === 'individuals') {
       this.render(this.locations.profiles, this.locations.private_profiles);
-      this.selectorInd.checked = true;
+      if (this.selectorInd != null) this.selectorInd.checked = true;
     }
     if (this.type === 'groups') {
       this.render(this.locations.groups);
-      this.selectorGroups.checked = true;
+      if (this.selectorGroups != null) this.selectorGroups.checked = true;
     }
-    this.toggle();
   }
 
   toggle() {
