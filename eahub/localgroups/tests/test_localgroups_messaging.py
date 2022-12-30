@@ -1,6 +1,7 @@
 from django.core import mail
 from django.template.response import TemplateResponse
 from django.urls import reverse
+import pytest
 
 from eahub.base.models import MessagingLog
 from eahub.localgroups.models import Organisership

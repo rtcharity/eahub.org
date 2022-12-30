@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
+import pytest
 
 from eahub.localgroups.models import LocalGroup
 from eahub.tests.cases import EAHubTestCase
