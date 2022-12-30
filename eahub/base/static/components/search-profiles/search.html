@@ -86,12 +86,6 @@
                       >
                         <i class="fa fa-chalkboard-teacher"></i>
                       </div>
-                      <div class="search__hit-status"
-                          v-bind:is-true="item.is_organiser"
-                          v-tooltip="'Group Organiser'"
-                      >
-                        <i class="fa fa-globe"></i>
-                      </div>
                     </div>
                     <div class="search__hit-location-block">
                       <span>{{ item.country }}</span>
@@ -132,12 +126,6 @@
                           <i class="fab fa-facebook-f"></i>
                         </a>
                       </div>
-                    </div>
-                    <div class="search__hit-local-group-block"
-                        v-if="item.local_groups.length"
-                    >
-                      <strong>Local groups:</strong>
-                      <span>{{ item.local_groups.join(', ') }}</span>
                     </div>
                   </div>
                   <div

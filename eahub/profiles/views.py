@@ -47,10 +47,8 @@ def profile_detail_or_redirect(request: HttpRequest, slug: str) -> HttpResponse:
                 or profile.expertise_areas_other
             ),
             "is_render_community_section": (
-                profile.local_groups.exists()
-                or profile.tags_affiliation.exists()
+                profile.tags_affiliation.exists()
                 or profile.tags_organisational_affiliation.exists()
-                or profile.user.localgroup_set.exists
                 or profile.topics_i_speak_about
                 or profile.available_as_speaker
             ),

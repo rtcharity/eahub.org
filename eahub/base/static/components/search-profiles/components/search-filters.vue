@@ -160,17 +160,6 @@
       />
     </div>
     <div class="search__filter-item search__filter-item--with-title">
-      <h4 class="search__filter-title">EA groups</h4>
-      <ais-refinement-list
-          attribute="local_groups"
-          searchable
-          show-more
-          :limit="5"
-          :searchablePlaceholder="'filter groups...'"
-          :show-more-limit="25"
-      />
-    </div>
-    <div class="search__filter-item search__filter-item--with-title">
       <h4 class="search__filter-title">Organisational affiliations</h4>
       <ais-refinement-list
           attribute="organisational_affiliations"
