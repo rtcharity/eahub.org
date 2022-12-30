@@ -7,6 +7,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.http import Http404
 from django.urls import include, path
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 
 from eahub.base import views
 from eahub.profiles.models import Profile
@@ -48,7 +49,7 @@ urlpatterns = [
     path("profile/", include("eahub.profiles.urls")),
     path("profiles/", profiles, name="profiles"),
     path("group/", include("eahub.localgroups.urls")),
-    path("groups/", views.groups, name="groups"),
+    path("groups/", RedirectView.as_view(url="https://forum.effectivealtruism.org/community", permanent=True), name="groups"),
     path("admin/", admin.site.urls, name="admin"),
     path("about/", views.about, name="about"),
     path("privacy-policy/", views.privacy_policy, name="privacy_policy"),
