@@ -11,8 +11,6 @@ services:
             - ./data:/data:rw
         env_file:
             - .env
-        environment:
-            - SENTRY_AUTH_TOKEN="${SENTRY_AUTH_TOKEN}"
     web:
         extends: web-base
         depends_on:

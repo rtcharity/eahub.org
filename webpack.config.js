@@ -155,7 +155,7 @@ if (isDevelopmentMode) {
 } else {
   config.plugins.push(
     new SentryWebpackPlugin({
-      authToken: process.env.SENTRY_AUTH_TOKEN,
+      authToken: "976919191ba34e08bbcf30b3d0f1ce572c3baa5a9ff34899a0ee13ced5efd527",
       org: 'eahub',
       project: 'eahub-front',
       include: '.',
