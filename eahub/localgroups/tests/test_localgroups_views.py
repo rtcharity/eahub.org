@@ -49,6 +49,7 @@ class GroupViewTestCase(EAHubTestCase):
         self.assert_post_status_code("localgroups_delete", group.slug, 403)
         self.assert_get_status_code("localgroups_update", group.slug, 403)
 
+    @pytest.mark.skip(reason="Not needed because of groups redirect")
     def test_group_delete_permitted_for_organiser(self):
         profile = self.gen.profile(is_approved=True)
         self.client.force_login(profile.user)
@@ -57,6 +58,7 @@ class GroupViewTestCase(EAHubTestCase):
 
         self.assert_post_status_code("localgroups_delete", group.slug, 200)
 
+    @pytest.mark.skip(reason="Not needed because of groups redirect")
     def test_group_delete_permitted_for_staff(self):
         profile = self.gen.profile(is_approved=True)
 
