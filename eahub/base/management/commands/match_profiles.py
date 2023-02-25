@@ -11,6 +11,8 @@ class Command(base.BaseCommand):
         for profile in Profile.objects.all():
             profiles.append(
                 {
+                    "is_matchable": profile.get_is_matchable(),
+
                     "summary": profile.summary,
                     "offering": profile.offering,
                     "looking_for": profile.looking_for,

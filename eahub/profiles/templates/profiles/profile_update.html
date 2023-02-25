@@ -227,6 +227,8 @@
           <h2>Settings</h2>
           {% include 'includes/field.html' with form=form field=form.visibility %}
           {% include 'includes/field.html' with form=form field=form.allow_messaging %}
+          {% include 'includes/field.html' with form=form field=form.opt_in_to_matchmaking %}
+          {% include 'includes/field.html' with form=form field=form.number_of_matchmaking_introductions_per_period %}<!-- optional TODO: enable only when opt_in_to_matchmaking is turned on. -->
           <a href="{% url 'profiles_app:delete_profile' %}">Delete My Profile</a>
 
         </div>

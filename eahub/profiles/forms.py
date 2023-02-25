@@ -60,6 +60,7 @@ class DeleteProfileForm(forms.Form):
 
 
 class ProfileForm(ModelForm):
+
     class Meta:
         model = Profile
         fields = [
@@ -84,6 +85,8 @@ class ProfileForm(ModelForm):
             "topics_i_speak_about",
             "local_groups",
             "allow_messaging",
+            "opt_in_to_matchmaking",
+            "number_of_matchmaking_introductions_per_period",
         ]
         widgets = {
             "local_groups": django_select2.forms.Select2MultipleWidget(
@@ -92,5 +95,5 @@ class ProfileForm(ModelForm):
                         "name__icontains",
                     ]
                 }
-            )
+            ),
         }

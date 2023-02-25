@@ -5,7 +5,7 @@ from django import urls
 from django.conf import settings
 from django.contrib.contenttypes import fields as contenttypes_fields
 from django.contrib.postgres import fields as postgres_fields
-from django.core.validators import MaxLengthValidator
+from django.core.validators import MaxLengthValidator, MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django_enumfield import enum
@@ -173,6 +173,20 @@ class Profile(models.Model):
         default=True,
         verbose_name="Allow approved users to message me",
         help_text="Your email address won't be visible to them",
+    )
+    opt_in_to_matchmaking = models.BooleanField(
+        blank=False,    
+        default=True,     # TODO: set to False?
+        verbose_name="Allow approved users to be matched with me",
+        help_text="Your email address WILL be visible to the matched users",
+    )
+
+    number_of_matchmaking_introductions_per_period__choices = [(x, str(x)) for x in range(1, 5 + 1)]   # TODO: tune
+    number_of_matchmaking_introductions_per_period = models.IntegerField( 
+        blank=False,     
+        default=1,     # TODO: tune
+        verbose_name="Up to how many times per month are you willing to be matched?",
+        choices=number_of_matchmaking_introductions_per_period__choices   # this makes the form field into a dropdown so the user has no way to enter invalid values and get errors during form submission
     )
 
     summary = models.TextField(
@@ -367,6 +381,13 @@ class Profile(models.Model):
             self.is_approved
             and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
             and self.allow_messaging
+        )
+
+    def is_matchable(self) -> bool:
+        return (
+            self.is_approved
+            and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
+            and self.opt_in_to_matchmaking
         )
 
     def is_organiser(self) -> bool:

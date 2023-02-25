@@ -6,7 +6,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from eahub.profiles.api.serializers import ProfileSerializer, TagSerializer
+from eahub.profiles.api.serializers import SimilaritySearchProfileSerializer
 from eahub.profiles.models import Profile, ProfileTag, ProfileTagStatus, ProfileTagType
+from eahub.profiles.models import VisibilityEnum
 
 
 class ProfileViewSet(
@@ -34,3 +36,22 @@ def create_tag_view(request: Request) -> Response:
     tag.types.add(tag_type)
     tag.save()
     return Response(TagSerializer(tag).data)
+
+
+@api_view(["GET"])
+def similarity_search_view(request: Request) -> Response:
+    profile_id = request.query_params["id"].strip()   # https://www.django-rest-framework.org/api-guide/requests/
+
+    profile = Profile.objects.filter(   # see def is_searchable_public()
+                  is_approved=True, 
+                  visibility=VisibilityEnum.PUBLIC,   # TODO: when should we use [VisibilityEnum.INTERNAL, VisibilityEnum.PUBLIC] ?
+                  user__is_active=True, 
+                  id=profile_id   # for debugging, TODO: remove later
+              ).first()
+
+    # TODO: similarity search
+
+    return Response(SimilaritySearchProfileSerializer(
+        [profile, profile, profile],   # TODO: return similarity search results not profile
+        many=True
+    ).data)

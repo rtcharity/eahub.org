@@ -13,7 +13,8 @@ $spacing-xxs: 5px;
 .profiles-search-body {
   font-family: Arial, Helvetica, serif;
 }
-.profiles-search-component {
+.profiles-search-component,
+.profiles-similarity-search-component {
   margin-top: $grid-gutter-width;
   margin-bottom: $spacing-xxl;
   

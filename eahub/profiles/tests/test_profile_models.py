@@ -46,6 +46,12 @@ class ProfileTestCase(EAHubTestCase):
         analytics_logs_allow_messaging = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="allow_messaging"
         )
+        analytics_logs_opt_in_to_matchmaking = ProfileAnalyticsLog.objects.filter(
+            profile=profile, field="opt_in_to_matchmaking"
+        )
+        analytics_logs_number_of_matchmaking_introductions_per_period = ProfileAnalyticsLog.objects.filter(
+            profile=profile, field="number_of_matchmaking_introductions_per_period"
+        )
         analytics_logs_privacy_policy_agreed = ProfileAnalyticsLog.objects.filter(
             profile=profile, field="privacy_policy_agreed"
         )
@@ -59,8 +65,10 @@ class ProfileTestCase(EAHubTestCase):
         self.assertEqual(str(profile.id), analytics_logs_id.first().new_value)
         self.assertEqual(str(profile.user), analytics_logs_user_id.first().new_value)
         self.assertEqual("False", analytics_logs_email_visible.first().new_value)
-        self.assertEqual(15, len(analytics_logs))
+        self.assertEqual(17, len(analytics_logs))
         self.assertEqual("True", analytics_logs_allow_messaging.first().new_value)
+        self.assertEqual("True", analytics_logs_opt_in_to_matchmaking.first().new_value)
+        self.assertEqual("1", analytics_logs_number_of_matchmaking_introductions_per_period.first().new_value)
         self.assertEqual("True", analytics_logs_privacy_policy_agreed.first().new_value)
         self.assertTrue(all(x.action == "Create" for x in analytics_logs))
         self.assertTrue(

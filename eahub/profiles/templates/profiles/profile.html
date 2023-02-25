@@ -363,6 +363,37 @@
     </div>
   </div>
 
+  <div class="container"><!-- similarity search -->
+
+    <h1>Similar profiles</h1><!-- TODO: tune the style? TODO: add top margin? -->
+
+    <div class="vue-similarity-search-component-container"
+         profile-pk="{{ profile.pk }}"
+         profile-empty-images-raw="
+             {% static 'global/images/avatars/Avatar0.jpg' %},
+             {% static 'global/images/avatars/Avatar1.jpg' %},
+             {% static 'global/images/avatars/Avatar2.jpg' %},
+             {% static 'global/images/avatars/Avatar3.jpg' %},
+             {% static 'global/images/avatars/Avatar4.jpg' %},
+             {% static 'global/images/avatars/Avatar5.jpg' %},
+             {% static 'global/images/avatars/Avatar6.jpg' %},
+             {% static 'global/images/avatars/Avatar7.jpg' %},
+             {% static 'global/images/avatars/Avatar8.jpg' %},
+             {% static 'global/images/avatars/Avatar9.jpg' %},
+         "
+    >
+      <div class="vue-similarity-search-component"></div>
+    </div>    
+    {% if settings.DJANGO_ENV.value == "local" %}
+      <script data-is-reload-on-page-edit defer
+              src="{{ settings.WEBPACK_DEV_URL }}/component_similarity_search.bundle.js"
+      ></script>
+    {% else %}
+      <script data-is-reload-on-page-edit defer src="{% static "dist/component_similarity_search.js" %}"
+      ></script>
+    {% endif %}
+  </div>
+
   <div class="prof__buttons-bottom container">
     {% if user.id != profile.user_id %}
       <a class="btn btn-outline-secondary btn-sm"
