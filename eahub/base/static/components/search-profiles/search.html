@@ -145,7 +145,7 @@
                   >
                     <div class="row search__hit-summary" v-if="item.summary">
                       <h5>Summary</h5>
-                      <ais-snippet :hit="item" attribute="summary"/><!-- TODO roland: replace newlines with <br>? -->
+                      <ais-snippet :hit="item" attribute="summary"/>
                     </div>
                     <div class="row" v-if="item.offering || item.looking_for">
                       <div v-if="item.offering"

@@ -6,9 +6,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from eahub.profiles.api.serializers import ProfileSerializer, TagSerializer
-from eahub.profiles.api.serializers import SimilaritySearchProfileSerializer  # roland
+from eahub.profiles.api.serializers import SimilaritySearchProfileSerializer
 from eahub.profiles.models import Profile, ProfileTag, ProfileTagStatus, ProfileTagType
-from eahub.profiles.models import VisibilityEnum  # roland
+from eahub.profiles.models import VisibilityEnum
 
 
 class ProfileViewSet(
@@ -38,7 +38,6 @@ def create_tag_view(request: Request) -> Response:
     return Response(TagSerializer(tag).data)
 
 
-# roland
 @api_view(["GET"])
 def similarity_search_view(request: Request) -> Response:
     profile_id = request.query_params["id"].strip()   # https://www.django-rest-framework.org/api-guide/requests/

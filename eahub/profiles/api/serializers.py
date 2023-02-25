@@ -10,7 +10,7 @@ from eahub.profiles.models import (
 )
 
 
-# roland: https://www.django-rest-framework.org/api-guide/fields/#listfield
+# https://www.django-rest-framework.org/api-guide/fields/#listfield
 class StringListField(serializers.ListField):   
     child = serializers.CharField()
 
@@ -79,7 +79,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             tags_field.set(tags_new)
 
 
-# roland
 class SimilaritySearchProfileSerializer(serializers.ModelSerializer):
 
     # see also class ProfilePublicIndex at eahub\profiles\index.py

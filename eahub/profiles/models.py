@@ -174,7 +174,7 @@ class Profile(models.Model):
         verbose_name="Allow approved users to message me",
         help_text="Your email address won't be visible to them",
     )
-    opt_in_to_matchmaking = models.BooleanField(      # roland
+    opt_in_to_matchmaking = models.BooleanField(
         blank=False,    
         default=True,     # TODO: set to False?
         verbose_name="Allow approved users to be matched with me",
@@ -383,7 +383,7 @@ class Profile(models.Model):
             and self.allow_messaging
         )
 
-    def is_matchable(self) -> bool:   # roland
+    def is_matchable(self) -> bool:
         return (
             self.is_approved
             and self.visibility in [VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]

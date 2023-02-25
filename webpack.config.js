@@ -7,9 +7,7 @@ const SentryWebpackPlugin = require("@sentry/webpack-plugin");
 
 
 const config = {
-  mode: 
-        (process.env.NODE_ENV !== 'prod' ? 'development'  //roland
-                                        : 'production'),
+  mode: 'production',
 
   context: __dirname,
   entry: {
@@ -19,7 +17,7 @@ const config = {
     vendor_bs5: './eahub/base/static/vendor/main_bs5.js',
 
     component_search_profiles: './eahub/base/static/components/search-profiles/main.js',
-    component_similarity_search: './eahub/base/static/components/similarity-search/main.js',    //roland
+    component_similarity_search: './eahub/base/static/components/similarity-search/main.js',
     component_profile_edit: './eahub/base/static/components/profile/edit/main.js',
     component_profile_detail: './eahub/base/static/components/profile/profile-detail.js',
     component_maps: './eahub/base/static/components/maps/main.js',
