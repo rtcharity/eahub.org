@@ -7,7 +7,7 @@ from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.core.mail import EmailMultiAlternatives, send_mail
+from django.core.mail import EmailMultiAlternatives, send_mail, EmailMessage
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -15,7 +15,6 @@ from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.views.generic import detail as detail_views
 from django.views.generic import edit as edit_views
-from djangocms_helpers.utils.send_email import send_email
 from rules.contrib import views as rules_views
 
 from ..base.models import FeedbackURLConfig, MessagingLog
@@ -119,11 +118,9 @@ class SendGroupMessageView(SendMessageView):
         if len(recipient.get_messaging_emails(self.request)) == 0:
             return HttpResponse(status=500)
         sender_name = form.cleaned_data["your_name"]
-
-        send_email(
-            email_subject=f"{sender_name} sent you a message",
-            template_path_without_extension="emails/message_profile",
-            template_context={
+        message = render_to_string(
+            "emails/message_group.txt",
+            {
                 "sender_name": sender_name,
                 "recipient": recipient.name,
                 "message": form.cleaned_data["your_message"],
@@ -132,11 +129,32 @@ class SendGroupMessageView(SendMessageView):
                 "profile_edit_url": self.request.build_absolute_uri(
                     reverse("profiles_app:edit_profile")
                 ),
-            },
-            email_destination=sorted(recipient.get_messaging_emails(self.request))[0],
-            email_from=settings.DEFAULT_FROM_EMAIL,
-            email_reply_to=form.cleaned_data["your_email_address"],
+            }
         )
+        html_msg = render_to_string(
+            "emails/message_group.html",
+            {
+                "sender_name": sender_name,
+                "recipient": recipient.name,
+                "message": form.cleaned_data["your_message"],
+                "admin_email": settings.DEFAULT_FROM_EMAIL,
+                "feedback_url": FeedbackURLConfig.get_solo().site_url,
+                "profile_edit_url": self.request.build_absolute_uri(
+                    reverse("profiles_app:edit_profile")
+                ),
+            }
+        )
+
+        email = EmailMessage(
+            f"{sender_name} sent you a message",
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [sorted(recipient.get_messaging_emails(self.request))[0]],
+            [],
+            reply_to=[form.cleaned_data["your_email_address"]]
+        )
+        email.attach_alternative(html_msg, "text/html")
+        email.send()
         MessagingLog.objects.create(
             sender_email=form.cleaned_data["your_email_address"],
             recipient_email=recipient.get_messaging_emails(self.request)[0],

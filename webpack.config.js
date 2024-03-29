@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require(`mini-css-extract-plugin`);
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
-const SentryWebpackPlugin = require("@sentry/webpack-plugin");
+const { sentryWebpackPlugin } = require("@sentry/webpack-plugin");
 
 
 const config = {
@@ -20,7 +20,6 @@ const config = {
     component_profile_detail: './eahub/base/static/components/profile/profile-detail.js',
     component_maps: './eahub/base/static/components/maps/main.js',
     component_group_page_actions: './eahub/base/static/components/group-page-actions.js',
-    component_tables: './eahub/base/static/components/tables.js',
     component_local_groups_edit: './eahub/base/static/components/local-groups-edit.js',
     component_feedback: './eahub/base/static/components/feedback.js',
   },
@@ -154,7 +153,7 @@ if (isDevelopmentMode) {
   config.output.publicPath = 'http://localhost:8090/assets/';
 } else {
   config.plugins.push(
-    new SentryWebpackPlugin({
+    sentryWebpackPlugin({
       authToken: "976919191ba34e08bbcf30b3d0f1ce572c3baa5a9ff34899a0ee13ced5efd527",
       org: 'eahub',
       project: 'eahub-front',

@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.9-nodejs14
+FROM nikolaik/python-nodejs:python3.9-nodejs18
 
 
 RUN mkdir /app
@@ -13,7 +13,7 @@ COPY webpack.config.js .
 COPY tsconfig.json .
 RUN npm ci
 COPY /eahub/base/static/ ./eahub/base/static/
-RUN npm run build
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run build
 
 COPY . .
 RUN mkdir /app/static_build

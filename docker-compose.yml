@@ -34,7 +34,7 @@ services:
         links:
             - db:postgres
     db:
-        image: postgres:9.6
+        image: postgres:13
         ports:
             - 5432:5432
         environment:
