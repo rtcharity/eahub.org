@@ -21,11 +21,9 @@ class E2ETestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        chrome_options = Options()
-
         cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
-            options=chrome_options
+            options=webdriver.ChromeOptions()
         )
 
         super().setUpClass()
