@@ -13,7 +13,7 @@ yurl # for parsing storage url
 
 django-cleanup
 django-upload-path
-django-sluggable
+git+https://github.com/thoas/django-sluggable.git@ab01785412e25ab8c6db48ead7188e6245fb82a0
 django-autoslug
 django-enumfield>=3.0
 django-enumfields  # a better version of django-enumfield

@@ -1,11 +1,10 @@
 from django.conf import settings
-from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.sitemaps.views import sitemap
 from django.http import Http404
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 
@@ -35,12 +34,12 @@ urlpatterns = [
         views.CustomisedPasswordChangeView.as_view(),
         name="account_reset_password",
     ),
-    url(
+    re_path(
         "accounts/password/reset/key/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$",
         views.CustomisedPasswordResetFromKeyView.as_view(),
         name="account_reset_password_from_key",
     ),
-    url(
+    re_path(
         "profile/import-confirmation/set-password/(?P<uidb36>[0-9A-Za-z]+)-(?P<key>.+)/$",
         views.ImportPasswordResetFromKeyView.as_view(),
         name="profile_import_password_set",

@@ -3,9 +3,10 @@ import socket
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings, tag
 from selenium import webdriver
-from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 from eahub.config.settings import DjangoEnv
 
@@ -20,11 +21,13 @@ class E2ETestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.host = socket.gethostbyname(socket.gethostname())
+        chrome_options = Options()
+
         cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
-            desired_capabilities=DesiredCapabilities.CHROME,
+            options=chrome_options
         )
+
         super().setUpClass()
 
     @classmethod

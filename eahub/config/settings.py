@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     "authtools",
     "algoliasearch_django",
     "sekizai",
-    "captcha",
+    "django_recaptcha",
     "crispy_forms",
     "django_object_actions",
     "django_cleanup.apps.CleanupConfig",
@@ -84,6 +84,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "admin_reorder.middleware.ModelAdminReorder",
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+    'allauth.account.middleware.AccountMiddleware'
 ]
 
 
@@ -244,6 +245,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_SIGNUP_REDIRECT_URL = reverse_lazy("profiles_app:edit_profile")
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
+
 SOCIALACCOUNT_ADAPTER = "eahub.base.adapter.EAHubSocialAccountAdapter"
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
