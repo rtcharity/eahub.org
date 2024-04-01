@@ -10,5 +10,5 @@ jobs:
               uses: actions/checkout@v2
             - name: run pytest
               shell: bash
-              run: docker-compose run --use-aliases web-e2e pytest eahub/tests/e2e/test_signup.py
+              run: docker-compose run --use-aliases web-e2e pytest
 
