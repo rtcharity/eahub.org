@@ -18,6 +18,7 @@ django-autoslug
 django-enumfield>=3.0
 django-enumfields  # a better version of django-enumfield
 django-crispy-forms
+crispy-bootstrap3
 django-widget-tweaks  # a better version of django-crispy-forms
 django-allauth
 django-authtools>=2.0.0

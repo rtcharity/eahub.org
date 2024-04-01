@@ -53,6 +53,8 @@ click==8.1.7
     # via
     #   black
     #   pip-tools
+crispy-bootstrap3==2024.1
+    # via -r requirements.in
 cryptography==42.0.5
     # via pyjwt
 defusedxml==0.7.1
@@ -66,6 +68,7 @@ dj-database-url==2.1.0
 django==4.2.11
     # via
     #   algoliasearch-django
+    #   crispy-bootstrap3
     #   dj-database-url
     #   django-adminutils
     #   django-allauth
@@ -109,7 +112,9 @@ django-classy-tags==4.1.0
 django-cleanup==8.1.0
     # via -r requirements.in
 django-crispy-forms==2.1
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   crispy-bootstrap3
 django-enumfield==3.1
     # via -r requirements.in
 django-enumfields==2.1.1
@@ -273,7 +278,7 @@ pathspec==0.12.1
     # via black
 pep8-naming==0.13.3
     # via -r requirements.in
-pillow==10.2.0
+pillow==10.3.0
     # via -r requirements.in
 pip-tools==7.4.1
     # via -r requirements.in

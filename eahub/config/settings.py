@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "sekizai",
     "django_recaptcha",
     "crispy_forms",
+    "crispy_bootstrap3",
     "django_object_actions",
     "django_cleanup.apps.CleanupConfig",
     "django_extensions",
@@ -386,5 +387,9 @@ ADMIN_REORDER = [
         ],
     },
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap3"
+
+CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 
