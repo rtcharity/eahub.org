@@ -34,7 +34,7 @@ class UserMultipleChoiceField(forms.ModelMultipleChoiceField):
             | models.Q(pk=user.pk)
         )
         queryset = queryset.order_by(
-            "-already_selected", "profile__name", "profile__slug", "email"
+            "-already_selected", "profile__last_name", "profile__slug", "email"
         )
         forms.ModelMultipleChoiceField.__init__(self, queryset=queryset, **kwargs)
 

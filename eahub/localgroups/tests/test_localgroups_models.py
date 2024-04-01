@@ -75,6 +75,6 @@ class LocalGroupTestCase(EAHubTestCase):
 
         actual = group.public_and_internal_organisers()
 
-        self.assertCountEqual(
-            [profile_internal, profile_public], [x.profile for x in list(actual)]
+        self.assertQuerysetEqual(
+            [profile_internal, profile_public], [x.profile for x in list(actual)], ordered=False
         )
