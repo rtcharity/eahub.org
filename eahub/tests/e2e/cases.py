@@ -16,7 +16,7 @@ from eahub.config.settings import DjangoEnv
 )
 @tag("e2e")
 class E2ETestCase(StaticLiveServerTestCase):
-    host = "0.0.0.0"
+    host = "web"
     port = 8000
 
     @classmethod
