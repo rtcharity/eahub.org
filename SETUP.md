@@ -19,6 +19,7 @@ Instructions for developers on how to build and run the project, how to run test
   - In main folder in separate terminal window, run ```docker-compose run --rm web bash -c "python manage.py migrate"``` 
     to build docker container and create database tables  
   - Run ```docker-compose up web``` to start docker container  
+- Load seed data: ```docker-compose run --rm web bash -c "python manage.py load_seed_data"``` 
 - Project will be served on ```localhost:8000```  
 - The email client will be served on ```localhost:1080```  
 

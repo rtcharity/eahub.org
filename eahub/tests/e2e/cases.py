@@ -21,7 +21,7 @@ class E2ETestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
-
+        call_command('load_seed_data')
         cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
             options=webdriver.ChromeOptions()

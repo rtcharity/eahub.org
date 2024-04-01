@@ -16,5 +16,5 @@ class Command(BaseCommand):
         if env == DjangoEnv.LOCAL or env == DjangoEnv.E2E:
             socialApp = SocialApp(provider="google")
             socialApp.save()
-            socialApp.sites.set([Sites.objects.first()])
+            socialApp.sites.set([Site.objects.first()])
 
