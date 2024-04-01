@@ -1,5 +1,7 @@
 import socket
 
+from allauth.socialaccount.models import SocialApp
+from django.contrib.sites.models import Site
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings, tag
 from selenium import webdriver
@@ -21,6 +23,10 @@ class E2ETestCase(StaticLiveServerTestCase):
 
     @classmethod
     def setUpClass(cls):
+        socialApp = SocialApp(provider='google')
+        socialApp.save()
+        socialApp.sites.set([Site.objects.first()])
+
         cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
             options=webdriver.ChromeOptions()
