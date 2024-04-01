@@ -1,5 +1,6 @@
 import socket
 
+from django.core.management import call_command
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings, tag
 from selenium import webdriver
