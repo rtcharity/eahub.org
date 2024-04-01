@@ -16,11 +16,11 @@ from eahub.config.settings import DjangoEnv
 )
 @tag("e2e")
 class E2ETestCase(StaticLiveServerTestCase):
-    cls.host = "0.0.0.0"
-    cls.port = 8000
 
     @classmethod
     def setUpClass(cls):
+        cls.host = "0.0.0.0"
+        cls.port = 8000
         cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
             options=webdriver.ChromeOptions()
