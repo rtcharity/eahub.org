@@ -21,7 +21,7 @@ django-crispy-forms
 django-widget-tweaks  # a better version of django-crispy-forms
 django-allauth
 django-authtools>=2.0.0
-django-pwned-passwords
+pwned-passwords-django
 django-recaptcha
 django-webpack-loader
 django-admin-rangefilter

@@ -14,7 +14,7 @@ Instructions for developers on how to build and run the project, how to run test
 - Clone [repo](https://github.com/rtcharity/eahub.org)  
 - Build and run frontend  
   - In main folder, run ```npm ci``` to install node dependencies  
-  - Run ```npm run build-watch``` to serve frontend files    
+  - Run ```NODE_OPTIONS=--openssl-legacy-provider npm run build-watch``` to serve frontend files    
 - Build and run backend
   - In main folder in separate terminal window, run ```docker-compose run --rm web bash -c "python manage.py migrate"``` 
     to build docker container and create database tables  
