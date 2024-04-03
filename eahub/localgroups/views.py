@@ -7,7 +7,7 @@ from django.contrib.auth import mixins as auth_mixins
 from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.exceptions import PermissionDenied
-from django.core.mail import EmailMultiAlternatives, send_mail, EmailMessage
+from django.core.mail import EmailMultiAlternatives, send_mail
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
@@ -145,7 +145,7 @@ class SendGroupMessageView(SendMessageView):
             }
         )
 
-        email = EmailMessage(
+        email = EmailMultiAlternatives(
             f"{sender_name} sent you a message",
             message,
             settings.DEFAULT_FROM_EMAIL,

@@ -10,9 +10,6 @@ class SignUpTest(E2ETestCase):
         user_email = "test@eahub.org"
         user_password = "Wa4@;fh>A/~W#6SH"
 
-        print("LIVE SERVER URL")
-        print(self.live_server_url)
-
         self.selenium.get(self.live_server_url)
 
         self.find("#signup-btn").click()
