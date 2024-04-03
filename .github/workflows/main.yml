@@ -11,3 +11,4 @@ jobs:
             - name: run pytest
               shell: bash
               run: docker-compose run --use-aliases web-e2e pytest
+

@@ -9,7 +9,7 @@ from django.urls import reverse
 from django_object_actions import DjangoObjectActions
 from enumfields.admin import EnumFieldListFilter
 from import_export.admin import ImportExportMixin
-from rangefilter.filter import DateRangeFilter
+from rangefilter.filters import DateRangeFilter
 
 from eahub.base.models import User
 from eahub.profiles.legacy import GivingPledge

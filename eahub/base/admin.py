@@ -5,7 +5,7 @@ from adminutils import options
 from authtools import admin as authtools_admin
 from django.contrib import admin
 from enumfields.admin import EnumFieldListFilter
-from rangefilter.filter import DateRangeFilter
+from rangefilter.filters import DateRangeFilter
 from solo.admin import SingletonModelAdmin
 
 from eahub.base import models

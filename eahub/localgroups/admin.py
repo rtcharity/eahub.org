@@ -7,7 +7,7 @@ from django.db.models.functions import Concat
 from import_export import fields, widgets
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
-from rangefilter.filter import DateRangeFilter
+from rangefilter.filters import DateRangeFilter
 
 from eahub.base.models import User
 from eahub.base.utils import ExportCsvMixin

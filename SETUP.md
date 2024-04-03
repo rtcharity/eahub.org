@@ -14,26 +14,27 @@ Instructions for developers on how to build and run the project, how to run test
 - Clone [repo](https://github.com/rtcharity/eahub.org)  
 - Build and run frontend  
   - In main folder, run ```npm ci``` to install node dependencies  
-  - Run ```npm run build-watch``` to serve frontend files    
+  - Run ```NODE_OPTIONS=--openssl-legacy-provider npm run build-watch``` to serve frontend files    
 - Build and run backend
   - In main folder in separate terminal window, run ```docker-compose run --rm web bash -c "python manage.py migrate"``` 
     to build docker container and create database tables  
   - Run ```docker-compose up web``` to start docker container  
+- Load seed data: ```docker-compose run --rm web bash -c "python manage.py load_seed_data"``` 
 - Project will be served on ```localhost:8000```  
 - The email client will be served on ```localhost:1080```  
 
 ### Running after changes to ```packages.json```  
 ```npm install```  
-You have to run this if new node dependencies have been added since you've last built the project.  
-
-### Running after changes to ```requirements.txt```  
-```docker-compose build --no-cache web```  
-You have to run this if new python dependencies have been added since you've last built the project in order to rebuild 
-the django backend.    
+You have to run this if new node dependencies have been added since you've last built the project.
 
 ### Running after adding new python package 
 ```docker-compose run --rm web bash -c "pip-compile requirements.in > requirements.txt"```   
 You have to run this if you want to a new python package.    
+
+### Running after changes to ```requirements.txt```  
+```docker-compose build --no-cache web```  
+You have to run this if new python dependencies have been added since you've last built the project in order to rebuild 
+the django backend.
 
 ### Running after new migration files have been added     
 ```docker-compose run --rm web bash -c "python manage.py migrate"```  

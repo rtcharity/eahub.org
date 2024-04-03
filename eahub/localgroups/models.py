@@ -88,7 +88,7 @@ class LocalGroup(models.Model):
 
         return self.organisers.filter(
             profile__visibility__in=[VisibilityEnum.PUBLIC, VisibilityEnum.INTERNAL]
-        ).order_by("profile__name", "profile__slug")
+        ).order_by("profile__last_name", "profile__slug")
 
     def organisers_names(self):
         profile_names = []

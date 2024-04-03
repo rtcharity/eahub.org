@@ -48,11 +48,11 @@ INSTALLED_APPS = [
     "authtools",
     "algoliasearch_django",
     "sekizai",
-    "captcha",
+    "django_recaptcha",
     "crispy_forms",
+    "crispy_bootstrap3",
     "django_object_actions",
     "django_cleanup.apps.CleanupConfig",
-    "django_pwned_passwords",
     "django_extensions",
     "rules.apps.AutodiscoverRulesConfig",
     "sorl.thumbnail",
@@ -84,6 +84,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "admin_reorder.middleware.ModelAdminReorder",
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
+    'allauth.account.middleware.AccountMiddleware',
+    "pwned_passwords_django.middleware.pwned_passwords_middleware",
 ]
 
 
@@ -179,7 +181,7 @@ ROOT_URLCONF = "eahub.config.urls"
 AUTH_USER_MODEL = "base.User"
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
-    {"NAME": "django_pwned_passwords.password_validation.PWNEDPasswordValidator"},
+    {"NAME": "pwned_passwords_django.validators.PwnedPasswordsValidator"},
     {
         "NAME": (
             "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
@@ -244,6 +246,7 @@ ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_SIGNUP_REDIRECT_URL = reverse_lazy("profiles_app:edit_profile")
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = ACCOUNT_SIGNUP_REDIRECT_URL
+
 SOCIALACCOUNT_ADAPTER = "eahub.base.adapter.EAHubSocialAccountAdapter"
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
@@ -384,5 +387,9 @@ ADMIN_REORDER = [
         ],
     },
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap3"
+
+CRISPY_TEMPLATE_PACK = "bootstrap3"
 
 

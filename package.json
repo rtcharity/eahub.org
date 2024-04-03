@@ -30,7 +30,7 @@
     "@popperjs/core": "^2.6.0",
     "@sentry/browser": "^5.28.0",
     "@sentry/tracing": "^5.28.0",
-    "@sentry/webpack-plugin": "^1.14.0",
+    "@sentry/webpack-plugin": "^2.16.0",
     "@vue/cli": "^4.5.15",
     "algoliasearch": "^4.3.1",
     "app-root-path": "^2.2.1",
@@ -71,6 +71,6 @@
     "webpack-dev-server": "^3.11.3"
   },
   "dependencies": {
-    "node-sass": "npm:sass@^1.49.0"
+    "sass": "^1.72.0"
   }
 }

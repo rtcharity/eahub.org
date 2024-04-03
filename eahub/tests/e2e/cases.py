@@ -1,11 +1,13 @@
 import socket
 
+from django.core.management import call_command
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings, tag
 from selenium import webdriver
-from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
 
 from eahub.config.settings import DjangoEnv
 
@@ -15,16 +17,17 @@ from eahub.config.settings import DjangoEnv
 )
 @tag("e2e")
 class E2ETestCase(StaticLiveServerTestCase):
-    host = "0.0.0.0"
+    host = 'web-e2e'
     port = 8000
 
     @classmethod
     def setUpClass(cls):
-        cls.host = socket.gethostbyname(socket.gethostname())
+        call_command('load_seed_data')
         cls.selenium = webdriver.Remote(
             command_executor="http://selenium-hub:4444/wd/hub",
-            desired_capabilities=DesiredCapabilities.CHROME,
+            options=webdriver.ChromeOptions()
         )
+
         super().setUpClass()
 
     @classmethod
