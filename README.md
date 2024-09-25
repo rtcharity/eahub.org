@@ -1,9 +1,5 @@
 <h1 align="center">EA Hub</h1>
-<p align="center">
-    <a href="https://eahub.org/">EAHub.org</a> |
-    <a href="https://discord.gg/NH5PybDUj9">Discord</a> |
-    <a href="https://meta.eahub.org/">News and Feedback</a>
-</p>
+<b>The EA Hub has retired (<a href="https://forum.effectivealtruism.org/posts/m3HxhPLDuNcRm8qRN/the-ea-hub-is-retiring">announcement</a>. This repo is archived.)</b>
 
 The EA Hub enables collaboration and facilitates connections between EAs to make it easier to learn, network, collaborate on projects, and find career opportunities. By improving community infrastructure projects, individuals, and groups, initiatives can build traction more effectively.
 
